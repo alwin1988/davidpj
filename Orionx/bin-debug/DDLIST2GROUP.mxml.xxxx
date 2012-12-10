@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:listdata="services.listdata.*"
+			   xmlns:model="com.vstyran.transform.model.*"
+			   xmlns:view1="view.*"
+			   xmlns:local="*"
+			   minWidth="955" minHeight="600" creationComplete="init(event)"
+			   viewSourceURL="srcview/index.html">
+	<fx:Script>
+		<![CDATA[
+			import com.vstyran.transform.consts.GuidelineType;
+			import com.vstyran.transform.consts.TransformationType;
+			import com.vstyran.transform.events.GuidelineEvent;
+			import com.vstyran.transform.model.Guideline;
+			import com.vstyran.transform.utils.DataUtil;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.core.IVisualElement;
+			import mx.events.DragEvent;
+			import mx.events.FlexEvent;
+			import mx.graphics.ImageSnapshot;
+			import mx.graphics.codec.PNGEncoder;
+			import mx.managers.DragManager;
+			import mx.resources.Locale;
+			import mx.utils.ObjectUtil;
+			
+			import spark.components.Image;
+			
+			import valueObjects.Group1;
+			
+			private var vo:Group1 = new Group1();
+			[Bindable]
+			private var Ac:ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var AcQty:ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var deletedObjects:ArrayCollection = new ArrayCollection();
+			
+			private var objcount:int = 0;
+			private var gid:int = 0;
+			
+			protected function init(event:FlexEvent):void
+			{
+				getDataResult.token = listData.getData();
+			}
+			
+			protected function list_dragStartHandler(event:DragEvent):void
+			{
+				vo = event.target.selectedItem as Group1;
+				taDetail.text = ObjectUtil.toString(vo);
+			}
+			
+			protected function group1_dragEnterHandler(event:DragEvent):void
+			{
+				var dropTarget:Group = event.currentTarget as Group;
+				DragManager.acceptDragDrop(dropTarget);
+			}
+			
+			protected function group1_dragDropHandler(event:DragEvent):void
+			{
+				gid += 1 ;
+				var data:Object = new Object();
+				data = event.dragSource.dataForFormat('itemsByIndex');
+				var g:Group1 = data[0] as Group1;
+				
+				var img:Image = new Image();
+				img.id = gid.toString();
+				img.toolTip = gid.toString();
+				img.source = "assets/"+ vo.image;
+				img.width =  Number( vo.width );
+				img.height = Number(vo.height);
+				img.x = event.localX - img.width/2;
+				img.y = event.localY - img.height/2;
+				img.addEventListener(MouseEvent.MOUSE_DOWN,function (e:MouseEvent) : void {
+					select(img,e);
+				});
+				g_target.addElement(img);
+				addToCart(g);
+				
+				var qty:AcQtyModel = new AcQtyModel();
+				qty.gid = gid.toString();
+				qty.id = g.id;
+				AcQty.addItem(qty);
+
+				
+			}
+			
+			private function addToCart(g:Group1):void
+			{
+				for(var i:int = 0; i < Ac.length; i++)
+				{
+					if(Ac[i].g.id == g.id)
+					{
+						Ac[i].qty++;
+						return;
+					}
+				}
+				
+				Ac.addItem(new AcModel(g,1));
+				
+			}
+			
+			protected function g_target_mouseUpHandler(event:MouseEvent):void
+			{
+				//--- Do Not Think.
+			}
+			
+			protected function tool_deleteTargetHandler(event:Event):void
+			{
+				
+				for(var i:int = 0; i< AcQty.length ; i++ ) {
+					if(AcQty[i].gid == tool.target.id ){
+					for(var j:int=0; j<Ac.length;j++ ){
+						
+						if(Ac[j].g.id == AcQty[i].id ) {
+							Ac[j].qty -=1;
+							AcQty.removeItemAt(i);
+							if(Ac[j].qty <= 0 ){
+								Ac.removeItemAt(j);
+							}
+							break;
+						}
+					}
+					}
+				}
+				deletedObjects.addItem(tool.target);
+				g_target.removeElement(tool.target);
+				deselect();
+				
+			}
+			
+			private function deselect():void
+			{
+				tool.target = null;
+				tool.visible = false;
+				tool.includeInLayout = false;
+			}
+			
+			protected function tool_guidelinesUpdateHandler(event:GuidelineEvent):void
+			{
+				if(event.cross && event.cross.vGuideline)
+					vGuide.x = event.cross.vGuideline.value;
+				vGuide.visible = (event.cross && event.cross.vGuideline);
+				
+				if(event.cross && event.cross.hGuideline)
+					hGuide.y = event.cross.hGuideline.value;
+				hGuide.visible = (event.cross && event.cross.hGuideline);
+				
+				passiveGuideGroup.removeAllElements();
+				if(event.cross)
+				{
+					if(showPassiveGuides.selected)
+					{
+						for each (var vguide:Guideline in event.cross.getVGuidelines()) 
+						{
+							var vGuideLine:VGuideLine = new VGuideLine();
+							vGuideLine.x = vguide.value;
+							passiveGuideGroup.addElement(vGuideLine);
+						}
+						for each (var hguide:Guideline in event.cross.getHGuidelines()) 
+						{
+							var hGuideLine:HGuideLine = new HGuideLine();
+							hGuideLine.y = hguide.value;
+							passiveGuideGroup.addElement(hGuideLine);
+						}
+					}
+					
+					if(event.transformationType == TransformationType.ROTATE)
+					{
+						if(event.cross.rGuideline)
+						{
+							var rTargetGuideLine:RGuideLine = new RGuideLine();
+							rTargetGuideLine.update(tool.target, passiveGuideGroup);
+							passiveGuideGroup.addElement(rTargetGuideLine);
+						}
+						
+						for each (var rguide:Guideline in event.cross.getRGuidelines()) 
+						{
+							var rGuideLine:RGuideLine = new RGuideLine();
+							rGuideLine.update(rguide.userData as Image, passiveGuideGroup);
+							passiveGuideGroup.addElement(rGuideLine);
+						}
+					}
+				}
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				for each (var image:Image in deletedObjects) 
+				{
+					g_target.addElement(image);
+				}
+				
+				deletedObjects.removeAll();
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var img:Image = new Image();
+				img.source = "image1.png";
+//				img.scaleMode="stretch";
+				img.id = "img"+objcount.toString();
+				img.width = 80;
+				img.height = 80;
+				img.x = border.x;
+				img.y = border.y;
+				img.toolTip = img.id;
+				img.addEventListener(MouseEvent.MOUSE_DOWN,function (e:MouseEvent) : void {
+					select(img,e);
+				});
+				g_target.addElement(img);
+				objcount += 1 ;
+			}
+			
+			private function select(target:Image, event:MouseEvent):void
+			{
+				tool.target = target;
+				tool.visible = true;
+				tool.includeInLayout = true;
+				updateGuides();				
+				tool.startMoving(event);
+			}
+			
+			protected function updateGuides():void
+			{
+				var guidelines:Vector.<Guideline> = new Vector.<Guideline>();
+				
+				for (var i:int = 0; i < g_target.numElements; i++) 
+				{
+					var element:IVisualElement = g_target.getElementAt(i);
+					
+					if(element is Image && tool.target != element)
+					{
+						
+						var box:Rectangle = DataUtil.createData(element as Image).getBoundingBox();
+						
+						guidelines.push(new Guideline(GuidelineType.VERTICAL_EDGE, box.x, 3));
+						guidelines.push(new Guideline(GuidelineType.VERTICAL_CENTER, box.x+box.width/2, 3));
+						guidelines.push(new Guideline(GuidelineType.VERTICAL_EDGE, box.x+box.width, 3));
+						
+						guidelines.push(new Guideline(GuidelineType.HORIZONTAL_EDGE, box.y, 3));
+						guidelines.push(new Guideline(GuidelineType.HORIZONTAL_CENTER, box.y+box.height/2, 3));
+						guidelines.push(new Guideline(GuidelineType.HORIZONTAL_EDGE, box.y+box.height, 3));
+						
+						if((element as Image).rotation%90 != 0)
+						{
+							var guideLine:Guideline = new Guideline(GuidelineType.ROTATION, (element as Image).rotation, 3);
+							guideLine.userData = element;
+							guidelines.push(guideLine);
+						}
+					}
+				}
+				tool.guidelines = guidelines;
+			}
+			
+			private function saveImage(currImg:*,dpi:int=500):void {
+				tool.visible = false;
+				var image:ImageSnapshot = ImageSnapshot.captureImage(currImg,dpi,new PNGEncoder());
+				var file:FileReference = new FileReference();
+				file.save(image.data, DateDisplay4.format(new Date())+".png");
+//				tool.visible = true;
+			}
+			
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				saveImage(g_target);
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<fx:Component className="VGuideLine">
+			<s:Line alpha="0.1" y="45" height="230">
+				<s:stroke>
+					<s:SolidColorStroke/>
+				</s:stroke>
+			</s:Line>
+		</fx:Component>                                       
+		<fx:Component className="HGuideLine">
+			<s:Line alpha="0.1" x="30" width="400">
+				<s:stroke>
+					<s:SolidColorStroke/>
+				</s:stroke>
+			</s:Line>
+		</fx:Component>                                       
+		<fx:Component className="RGuideLine">
+			<s:Line>
+				<fx:Script>
+					<![CDATA[
+						import com.vstyran.transform.utils.TransformUtil;
+						
+						import mx.core.UIComponent;
+						
+						import spark.components.Group;
+						
+						public function update(target:UIComponent, passiveGuideGroup:Group):void
+						{
+							var m:Matrix = TransformUtil.getMatrix(target, passiveGuideGroup);
+							
+							var stPoimt:Point =  m.transformPoint(new Point(target.width/2, target.height/2));
+							var endPoimt:Point =  m.transformPoint(new Point(target.width, target.height/2));
+							this.xFrom = stPoimt.x;
+							this.yFrom = stPoimt.y;
+							this.xTo = endPoimt.x;
+							this.yTo = endPoimt.y;
+						}
+					]]>
+				</fx:Script>
+				<s:stroke>
+					<s:SolidColorStroke color="#AA0000"/>
+				</s:stroke>
+			</s:Line>
+		</fx:Component>      
+		<s:CallResponder id="getDataResult"/>
+		<listdata:ListData id="listData"
+						   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+						   showBusyCursor="true"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:DateTimeFormatter id="DateDisplay4" 	 dateTimePattern="yyyyMMddhhmmss" />
+	</fx:Declarations>
+	
+	<s:HGroup width="100%">
+		<s:Button x="50" y="14" label="Revert deleted" click="button1_clickHandler(event)" enabled="{deletedObjects.length > 0}"/>
+		<s:CheckBox x="536" y="12" id="showPassiveGuides" label="Show passive guidelines" selected="true"/>
+		<s:Button x="166" y="14" label="Add Image" click="button2_clickHandler(event)"/>
+		<s:Button label="Save" click="button3_clickHandler(event)" />
+	</s:HGroup>	
+	
+	<mx:HDividedBox width="90%" height="90%" top="20" bottom="20" left="20" right="5">
+		<s:List id="list" width="100" height="100%"
+				dragEnabled="true"
+				dragStart="list_dragStartHandler(event)"
+				labelField="id">
+			<s:AsyncListView list="{getDataResult.lastResult}"/>
+			<s:itemRenderer>
+				<fx:Component>
+					<s:ItemRenderer>
+						<fx:Script>
+							<![CDATA[
+								import mx.events.FlexEvent;
+								override public function set data(value:Object):void {      
+									if(value != null)  {
+										super.data = value;
+									}   
+								}
+							]]>
+						</fx:Script>
+						<s:HGroup width="{data.width}" height="{data.height}" 
+									paddingLeft="5" paddingRight="5" gap="3"
+								  >
+							<s:BitmapImage width="100%" height="100%" 
+										   smoothingQuality="high"
+										   scaleMode="stretch" smooth="true" 
+										   source="assets/{data.image}" />
+						</s:HGroup>
+					</s:ItemRenderer>
+				</fx:Component>
+			</s:itemRenderer>
+		</s:List>
+		<s:Group width="100%" height="100%" id="g_target"
+				 dragEnter="group1_dragEnterHandler(event)"
+				 dragDrop="group1_dragDropHandler(event)"
+				 mouseUp="g_target_mouseUpHandler(event)"
+				 >
+			<!-- background fill -->                                                                                          
+			<s:Rect top="0" right="0" left="0" bottom="0">                                                                    
+				<s:fill>                                                                                                      
+					<s:SolidColor color="#FFFFFF"/>                                                                           
+				</s:fill>                                                                                                     
+			</s:Rect>                                                                                                         
+			<s:Rect id="border" top="45" right="30" left="30" bottom="25">                                                    
+				<s:stroke>                                                                                                    
+					<s:SolidColorStroke color="#ACACAC"/>                                                                     
+				</s:stroke>                                                                                                   
+			</s:Rect> 
+			<local:Grid top="45" right="30" left="30" bottom="25" step="20" />
+
+			<!-- ###############Sample Data Start ############# -->			
+<!--			<s:Image id="imageTarget1" x="182" y="171" width="78" height="92" rotation="0" scaleMode="stretch"               
+					 smooth="true" source="@Embed('image1.png')" minHeight="20" minWidth="20" mouseDown="select(imageTarget1, event)"/>                                
+			<s:Image id="imageTarget2" x="55" y="77" width="100" height="83" rotation="0" scaleMode="stretch"               
+					 smooth="true" source="@Embed('image2.png')" minHeight="20" minWidth="20" mouseDown="select(imageTarget2, event)"/>                                
+			<s:Image id="imageTarget3" x="323" y="89" width="71" height="71" rotation="0" scaleMode="stretch"               
+					 smooth="true" source="@Embed('image3.png')" minHeight="20" minWidth="20" mouseDown="select(imageTarget3, event)"/>       -->                         
+			<!-- ###############Sample Data End ############# -->
+			
+			<!--target="{imageTarget1}" -->
+			
+			<view1:CustomUITransformTool id="tool" depth="3" 
+										 visible="false"
+										 x="{g_target.x + g_target.width/2}"
+										 y="{g_target.y + g_target.height/2}"
+										 skinClass="skins.CustomUITransformToolSkin" 
+										 deleteTarget="tool_deleteTargetHandler(event)"
+										 guidelinesUpdate="tool_guidelinesUpdateHandler(event)">      
+				<view1:grid>
+					<model:GridData x="{border.x}" y="{border.y}" cellHeight="20" cellWidth="20" fraction="5"/>
+				</view1:grid>
+				<view1:bounds>                                                                                                 
+					<model:Bounds x="{border.x}" y="{border.y}" width="{border.width}" height="{border.height}"/>                                                    
+				</view1:bounds>                                                                                                
+			</view1:CustomUITransformTool>    
+			<s:Group width="100%" height="100%" verticalCenter="0" horizontalCenter="0">
+				<s:Group id="passiveGuideGroup" top="0" bottom="0" left="0" right="0"/>
+				<s:Line id="vGuide" visible="false" height="{border.height}" depth="3" yFrom="45" yTo="275">
+					<s:stroke>
+						<s:SolidColorStroke color="#AA0000"/>
+					</s:stroke>
+				</s:Line>
+				<s:Line id="hGuide" visible="false" width="{border.width}" depth="3" xFrom="30" xTo="430">
+					<s:stroke>
+						<s:SolidColorStroke color="#AA0000"/>
+					</s:stroke>
+				</s:Line>
+			</s:Group>
+		</s:Group>
+		<s:VGroup width="120" height="100%">
+		<s:TextArea width="120" height="200" id="taDetail" />
+		<s:List width="120" height="100%" 
+				dataProvider="{Ac}" 
+				>
+				<s:itemRenderer>
+					<fx:Component>
+						<s:ItemRenderer>
+						<fx:Script>
+							<![CDATA[
+								import mx.events.FlexEvent;
+								
+								override public function set data(value:Object):void {      
+									if(value != null)  {
+										super.data = value;
+									}   
+								}
+								
+							]]>
+						</fx:Script>
+							<s:HGroup width="100%">
+								<mx:Text text="{data.qty}"/>
+								<s:BitmapImage width="{data.g.width}" height="{data.g.height}" 
+											   source="assets/{data.g.image}"
+											   smoothingQuality="high"
+											   smooth="true" scaleMode="stretch" />
+							</s:HGroup>
+						</s:ItemRenderer>
+					</fx:Component>
+				</s:itemRenderer>
+			
+		</s:List>	
+			
+			
+		</s:VGroup>
+	</mx:HDividedBox>
+</s:Application>

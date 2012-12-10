@@ -4,8 +4,10 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:model="com.vstyran.transform.model.*"
 			   xmlns:component="component.*"
-			   xmlns:view1="view.*"
-			   minWidth="955" minHeight="600" creationComplete="init()">
+			   xmlns:view="view.*"
+			   minWidth="955" minHeight="600" 
+			   creationComplete="init()" 
+			   >
 	<fx:Declarations>
 		<fx:Component className="VGuideLine">
 			<s:Line y="45" height="230" alpha="0.1">
@@ -63,42 +65,39 @@
 	</fx:Style>
 <fx:Script>
 	<![CDATA[
-		import skins.CustomUITransformToolSkin;
-		import skins.TransformToolSkin1;
-		import com.vstyran.transform.connectors.UIConnector;
-		import com.vstyran.transform.connectors.UIScaleConnector;
-		import com.vstyran.transform.consts.GuidelineType;
-		import com.vstyran.transform.consts.TransformationType;
-		import com.vstyran.transform.events.GuidelineEvent;
-		import com.vstyran.transform.model.Bounds;
-		import com.vstyran.transform.model.GridData;
-		import com.vstyran.transform.model.Guideline;
-		import com.vstyran.transform.utils.DataUtil;
-		import com.vstyran.transform.view.TransformTool;
-		
-		import component.vDataGrid;
-		
-		import mx.collections.ArrayCollection;
-		import mx.controls.CheckBox;
-		import mx.controls.DateChooser;
-		import mx.controls.RadioButton;
+		import component.cusCompTextArea;
+		import component.cusCompDateChooser;
+		import fromSkin.textAreaSkin;
+		import spark.components.TextArea;
 		import mx.controls.TextArea;
+		import fromSkin.buttonSkin;
+		import com.vstyran.transform.consts.GuidelineType;
+		import com.vstyran.transform.utils.DataUtil;
 		import mx.core.IVisualElement;
-		import mx.core.UIComponent;
-		import mx.events.DragEvent;
-		import mx.events.FlexEvent;
-		import mx.events.ResizeEvent;
 		import mx.managers.DragManager;
-		
-		
-		import view.CustomUITransformTool;
+		import fromSkin.comboBoxSkin;
+		import fromSkin.radioBtnSkin;
+		import spark.components.RadioButton;
+		import mx.controls.DateChooser;
+		import fromSkin.checkboxSkin;
+		import fromSkin.vDataGridSkin;
+		import component.vDataGrid;
+		import fromSkin.txtinputSkin;
+		import mx.events.DragEvent;
+		import mx.events.ResizeEvent;
+		import com.vstyran.transform.model.Guideline;
+		import com.vstyran.transform.events.GuidelineEvent;
+		import com.vstyran.transform.model.GridData;
+		import mx.core.UIComponent;
+		import mx.collections.ArrayCollection;
+
 		
 		
 		[Bindable]	public var compList:ArrayCollection;
 		[Bindable]	public var compList2:ArrayCollection;
 		[Bindable]
 		private var deletedObjects:ArrayCollection = new ArrayCollection();
-		private var tool:CustomUITransformTool;
+//		private var tool:CustomUITransformTool;
 //		private var uiConnector:UIConnector;
 //		private var uiScaleConnector:UIScaleConnector;
 		private var _currentTarget:UIComponent;
@@ -111,8 +110,8 @@
 		{
 //			uiConnector = new UIConnector();
 //			uiScaleConnector = new UIScaleConnector();
-			tool = new CustomUITransformTool();
-			tool.setStyle("skinClass", Class(CustomUITransformToolSkin));
+//			tool = new CustomUITransformTool();
+//			tool.setStyle("skinClass", Class(CustomUITransformToolSkin));
 			bounds.x = GG.x;
 			bounds.y = GG.y;
 			bounds.width = GG.width;
@@ -247,12 +246,13 @@
 						bt.x = event.localX;
 						bt.y = event.localY;
 						bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						bt.setStyle("skinClass", Class(buttonSkin));
 						GG.addElement(bt);		
 						break;
 					}
 					case "TextInput":
 					{
-						var tx:TextInput = new TextInput();
+						var tx:spark.components.TextInput = new spark.components.TextInput();
 						//tx.text = data[0].list;
 //						tx.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
 						tx.doubleClickEnabled = true;
@@ -260,19 +260,22 @@
 						tx.x = event.localX;
 						tx.y = event.localY;
 						tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						tx.setStyle("skinClass", Class(txtinputSkin));
 						GG.addElement(tx);
 						break;
 					}
 					case "CheckBox":
 					{
-						var ck:CheckBox = new CheckBox();
+						var ck:spark.components.CheckBox = new spark.components.CheckBox();
 						ck.doubleClickEnabled = true;
+						ck.label = "checkbox 1";
 						//ck.label = data[0].list;
 //						ck.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
 //						ck.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 						ck.x = event.localX;
 						ck.y = event.localY;
 						ck.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						ck.setStyle("skinClass", Class(checkboxSkin));
 						GG.addElement(ck);
 						break;
 					}
@@ -285,12 +288,13 @@
 						dg.x = event.localX;
 						dg.y = event.localY;
 						dg.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						dg.setStyle("skinClass",Class(vDataGridSkin));
 						GG.addElement(dg);
 						break;
 					}
 					case "DateChooser":
 					{
-						var dc:DateChooser = new DateChooser();
+						var dc:cusCompDateChooser = new cusCompDateChooser();
 						dc.doubleClickEnabled = true;
 //						dc.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
 //						dc.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
@@ -310,12 +314,13 @@
 						rd.x = event.localX;
 						rd.y = event.localY;
 						rd.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						rd.setStyle("skinClass",Class(radioBtnSkin));
 						GG.addElement(rd);
 						break;
 					}
 					case "TextArea":
 					{	
-						var ta:TextArea = new TextArea();
+						var ta:cusCompTextArea = new cusCompTextArea();
 						ta.text = "Text Area";
 						ta.doubleClickEnabled = true;
 //						ta.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
@@ -323,7 +328,9 @@
 						ta.x = event.localX;
 						ta.y = event.localY;
 						ta.addEventListener(MouseEvent.MOUSE_DOWN,select);
-						GG.addElement(ta);								
+						ta.setStyle("skinClass",Class(textAreaSkin));
+						GG.addElement(ta);
+						
 						break;
 					}
 					case 9:
@@ -348,6 +355,7 @@
 						cb.x = event.localX;
 						cb.y = event.localY;
 						cb.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						cb.setStyle("skinClass",Class(comboBoxSkin));
 						GG.addElement(cb);
 						break;
 					}
@@ -464,10 +472,58 @@
 				<s:Group width="100%" height="100%">
 					<s:Group id="GG" width="100%" height="100%" resize="GG_resizeHandler(event)">
 						<component:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
-										  height="{GG.height}" step="20"/> 
-	
+										  height="{GG.height}" step="20"/>
 					</s:Group>
-						
+					<view:CustomUITransformTool id="tool" depth="3" 
+										  skinClass="skins.CustomUITransformToolSkin"
+										  >
+						<view:bounds>
+							<model:Bounds x="30" y="25" width="400" height="250"/>
+						</view:bounds>
+						<view:actionContent>
+							<!--				<s:HGroup left="-24" top="0" bottom="0" width="16" gap="1" horizontalAlign="right">
+							<s:Label text="Label" />
+							</s:HGroup>-->
+							<s:HGroup right="-24" top="0" bottom="0" width="16" gap="1" horizontalAlign="left">
+								<!--			<s:Button label="Bring to front" height="16" icon="@Embed(source='icons/bring_to_front-icon.gif')" 
+								click="bringToFrontHandler(event)"/>
+								<s:Button label="Bring forward" height="16" icon="@Embed(source='icons/move_forward.png')" 
+								click="bringForwardHandler(event)"/>
+								<s:Button label="Send backward" height="16" icon="@Embed(source='icons/move_backward.png')" 
+								click="sendBackwardHandler(event)"/>
+								<s:Button label="Send to back" height="16" icon="@Embed(source='icons/send_to_back-icon.gif')" 
+								click="sendToBackHandler(event)"/>
+								-->			
+								<s:VGroup>
+									<s:HGroup gap="3">
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Spacer/>
+										<s:Button width="12" height="10">
+											
+										</s:Button>
+									</s:HGroup>
+									<s:HGroup gap="3">
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Spacer/>
+										<s:Button width="12" height="10">
+											
+										</s:Button>				
+									</s:HGroup>
+								</s:VGroup>
+								<s:NumericStepper width="40"/>
+							</s:HGroup>
+						</view:actionContent>
+					</view:CustomUITransformTool>
 					<s:Group width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 						<s:Group id="passiveGuideGroup" left="0" right="0" top="0" bottom="0"/>
 						<s:Line id="vGuide" visible="false" height="100%" depth="3" yFrom="45"

@@ -514,8 +514,8 @@
 								<mx:DataGridColumn dataField="icon"
 												   headerText="Detail index fields"
 												   itemRenderer="ImageRenderer"/>									
-								<mx:DataGridColumn dataField="Name" headerText="Header Index fields"/>
-							
+								<mx:DataGridColumn dataField="icon" headerText="Header Index fields" itemRenderer="ImageRenderer"/>
+								
 							</mx:columns>
 						</mx:DataGrid>				
 					</s:NavigatorContent>					

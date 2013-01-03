@@ -65,6 +65,14 @@
 	</fx:Style>
 <fx:Script>
 	<![CDATA[
+		import itemrenders.TextInputItemRender;
+		import itemrenders.ComboboxItemRender;
+		import itemrenders.ButtonItemRender;
+		import spark.components.gridClasses.GridColumn;
+		import mx.core.DragSource;
+		import mx.core.FlexGlobals;
+		import flashx.textLayout.formats.WhiteSpaceCollapse;
+		import mx.events.FlexEvent;
 		import component.cusCompTextArea;
 		import component.cusCompDateChooser;
 		import fromSkin.textAreaSkin;
@@ -105,7 +113,8 @@
 		private var bounds:Bounds = new Bounds();
 		private	var griddata:GridData = new GridData(); // กำหนดการ snap to grid
 
-
+		private var updateComplete:Boolean = false;
+		
 		protected function init():void
 		{
 //			uiConnector = new UIConnector();
@@ -204,6 +213,16 @@
 				tool.visible = true;
 			}
 		}
+
+		public function checkDelete(event:KeyboardEvent):void
+		{
+			if (event.keyCode == Keyboard.DELETE)
+			{
+				trace("test");
+				GG.removeElement(event.currentTarget as UIComponent);
+				tool.visible = false;
+			}
+		}
 		
 		protected function unselect(event:MouseEvent):void {
 				if(tool){
@@ -247,7 +266,14 @@
 						bt.y = event.localY;
 						bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
 						bt.setStyle("skinClass", Class(buttonSkin));
-						GG.addElement(bt);		
+						updateComplete = true;
+//						bt.addEventListener(FlexEvent.UPDATE_COMPLETE,updatecompletes);
+						GG.addElement(bt);
+//						GG.addEventListener(FlexEvent.UPDATE_COMPLETE,function(event:FlexEvent):void {
+////							updatecompletes(event);
+//							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+//						});
+							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 						break;
 					}
 					case "TextInput":
@@ -262,6 +288,7 @@
 						tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
 						tx.setStyle("skinClass", Class(txtinputSkin));
 						GG.addElement(tx);
+						
 						break;
 					}
 					case "CheckBox":
@@ -285,9 +312,12 @@
 						dg.doubleClickEnabled = true;
 //						dg.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
 //						dg.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+						dg.addEventListener(DragEvent.DRAG_ENTER,dgDragEnterHandler);
+						dg.addEventListener(DragEvent.DRAG_DROP,dgDragDropHandler);
 						dg.x = event.localX;
 						dg.y = event.localY;
 						dg.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						dg.addEventListener(KeyboardEvent.KEY_DOWN,checkDelete)
 						dg.setStyle("skinClass",Class(vDataGridSkin));
 						GG.addElement(dg);
 						break;
@@ -343,7 +373,8 @@
 						cc.x = event.localX;
 						cc.y = event.localY;
 						cc.addEventListener(MouseEvent.MOUSE_DOWN,select);
-						GG.addElement(cc);								
+						GG.addElement(cc);	
+						
 						break;
 					}						
 					case "ComboBox":
@@ -375,14 +406,31 @@
 			
 		}		
 
+		
+		private function updatecompletes(event:FlexEvent):void {
+				if(updateComplete){
+						tool.target = event  as UIComponent;
+						tool.showPreviewCover = true;
+//						tool.startMoving(event);
+						tool.visible = true;
+						updateComplete = false;
+//						event.target.removeEventListener(FlexEvent.CREATION_COMPLETE,updatecompletes);
+				}
+				GG.validateNow();
+		}
 		private function dragEnterHandler(event:DragEvent):void {
 			
 //			var dropTarget:Canvas = Canvas(event.currentTarget);// as Group;
 //			DragManager.acceptDragDrop(dropTarget);
 //			var dropTarget:Group = Group(event.currentTarget);// as Group;
 //			DragManager.acceptDragDrop(dropTarget);
-			var dropTarget:Box = Box(event.currentTarget);// as vBOX
-			DragManager.acceptDragDrop(dropTarget);
+			if(event.dragSource.hasFormat("itemrender")){
+					return;
+			
+			}else{
+				var dropTarget:Box = Box(event.currentTarget);// as vBOX
+				DragManager.acceptDragDrop(dropTarget);
+			}
 		}
 		
 		protected function button1_clickHandler(event:MouseEvent):void
@@ -454,6 +502,63 @@
 			tool.guidelines = guidelines;
 		}
 		
+		private function dgDragEnterHandler(event:DragEvent):void {
+			if(event.dragSource.hasFormat('itemrender')){
+				var dropTarget:vDataGrid = vDataGrid(event.currentTarget);// as dataGrid
+				DragManager.acceptDragDrop(dropTarget);
+//			} else if(event.dragSource.hasFormat('ComboBox')){
+//				
+//			} else if(event.dragSource.hasFormat('TextInput')){
+				
+			} else {}
+		}			
+		
+		private function dgDragDropHandler(event:DragEvent):void {
+			
+			if(event.target.className == "vDataGrid"){
+ 				if(!event.target.isDelele){ 
+					event.target.isDelele = !event.target.isDelele;
+//					event.target.dataProvider = event.target.Ac;
+					event.target.columns.removeAll();
+				}
+ 				
+				var col:GridColumn = new GridColumn();
+				col.dataField = "dataField"+ (event.target.columns.length+1).toString();
+				col.headerText = "Column " + (event.target.columns.length+1).toString();
+				if(event.dragSource.hasFormat('Button')){
+					col.itemRenderer = new ClassFactory(ButtonItemRender);
+					event.target.columns.addItem(col);
+				} else if(event.dragSource.hasFormat('ComboBox')){
+					col.itemRenderer = new ClassFactory(ComboboxItemRender);
+					event.target.columns.addItem(col);
+				} else if(event.dragSource.hasFormat('TextInput')){
+					col.itemRenderer = new ClassFactory(TextInputItemRender);					
+					event.target.columns.addItem(col);
+				}
+			}
+		}
+		
+		
+		private function dragIt(event:MouseEvent, value:uint):void  
+		{ 
+			tool.visible = false;
+			var dragInitiator:UIComponent = event.currentTarget as  UIComponent; 
+			var dragSource:DragSource = new DragSource();
+			if(event.currentTarget.className == "Button"){
+				dragSource.addData(dragInitiator, "itemrender");
+				dragSource.addData(dragInitiator, "Button");
+				
+			} else if(event.currentTarget.className == "ComboBox"){
+				dragSource.addData(dragInitiator, "itemrender");
+				dragSource.addData(dragInitiator, "ComboBox");
+				
+			} else if(event.currentTarget.className == "TextInput"){
+				dragSource.addData(dragInitiator, "itemrender");
+				dragSource.addData(dragInitiator, "TextInput");
+			}
+			DragManager.doDrag(dragInitiator, dragSource, event);
+		}
+		
 	]]>
 </fx:Script>
 	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
@@ -470,7 +575,9 @@
 						click="box1_clickHandler(event)" dragDrop="dragDropHandler(event);"
 						dragEnter="dragEnterHandler(event);">
 				<s:Group width="100%" height="100%">
-					<s:Group id="GG" width="100%" height="100%" resize="GG_resizeHandler(event)">
+					<s:Group id="GG" width="100%" height="100%" resize="GG_resizeHandler(event)"
+							 
+							 >
 						<component:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
 										  height="{GG.height}" step="20"/>
 					</s:Group>
@@ -574,7 +681,18 @@
 								
 							</mx:columns>
 						</mx:DataGrid>				
-					</s:NavigatorContent>					
+					</s:NavigatorContent>
+					<mx:Form id="frmItemrender"  label="ItemRenders" verticalGap="0">
+						<s:FormItem label="Button">
+							<s:Button mouseMove="dragIt(event, 10);" />
+						</s:FormItem>
+						<s:FormItem label="TextInput">
+							<s:TextInput  editable="false" mouseMove="dragIt(event, 10);"/>
+						</s:FormItem>
+						<s:FormItem label="ComboBox" >
+							<s:ComboBox mouseMove="dragIt(event, 10);"/>
+						</s:FormItem>
+					</mx:Form >
 					<mx:Form id="shippingAddress" label="Document Index Fields">
 						
 						<mx:FormItem id="sfirstNameItem" label="First Name">

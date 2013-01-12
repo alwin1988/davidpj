@@ -15,6 +15,7 @@
   </compiler>
   <applications>
     <application path="OrionXerverFormDesigner.mxml"/>
+    <application path="Main.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

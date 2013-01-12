@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:model="com.vstyran.transform.model.*" 
+		 xmlns:compx="component.*" 
+		 xmlns:view="view.*" 
+		 width="100%" height="100%" 
+		 creationComplete="init()" 
+		 >
+	<fx:Declarations>
+		<fx:Component className="VGuideLine">
+			<s:Line y="45" height="230" alpha="0.1">
+				<s:stroke>
+					<s:SolidColorStroke/>
+				</s:stroke>
+			</s:Line>
+		</fx:Component>                                       
+		<fx:Component className="HGuideLine">
+			<s:Line x="30" width="400" alpha="0.1">
+				<s:stroke>
+					<s:SolidColorStroke/>
+				</s:stroke>
+			</s:Line>
+		</fx:Component>                                       
+		<fx:Component className="RGuideLine">
+			<s:Line>
+				<fx:Script>
+					<![CDATA[
+						import mx.core.UIComponent;
+						
+						
+					]]>
+				</fx:Script>
+				<s:stroke>
+					<s:SolidColorStroke color="#AA0000"/>
+				</s:stroke>
+			</s:Line>
+		</fx:Component>    
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import david.view.configs.Constants;
+			import mx.controls.Alert;
+			import component.vComboBox;
+			import com.vstyran.transform.events.GuidelineEvent;
+			import com.vstyran.transform.model.Bounds;
+			import com.vstyran.transform.model.GridData;
+			import com.vstyran.transform.model.Guideline;
+			
+			import component.cusCompDateChooser;
+			import component.cusCompTextArea;
+			import component.vDataGrid;
+			
+			import david.view.fromSkin.buttonSkin;
+			import david.view.fromSkin.checkboxSkin;
+			import david.view.fromSkin.radioBtnSkin;
+			import david.view.fromSkin.textAreaSkin;
+			import david.view.fromSkin.txtinputSkin;
+			import david.view.fromSkin.vDataGridSkin;
+			
+			import itemrenders.ButtonItemRender;
+			import itemrenders.ComboboxItemRender;
+			import itemrenders.TextInputItemRender;
+			
+			import mx.controls.ComboBox;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.DragEvent;
+			import mx.events.ResizeEvent;
+			import mx.managers.DragManager;
+			
+			import spark.components.RadioButton;
+			import spark.components.gridClasses.GridColumn;
+			
+			private var bounds:Bounds = new Bounds();
+			private	var griddata:GridData = new GridData(); // กำหนดการ snap to grid
+			private var _currentTarget:UIComponent;
+
+			
+			public function init():void {
+				toolInit();
+				frmSetting();
+			}
+			
+			private function frmSetting():void {
+				
+				// Form Main
+//				frmMainID.maxWidth = Constants.formMaxWidth;
+				frmMainID.minWidth = Constants.formMinWidth;
+				
+				// Form Title
+				frmTitleBox.height = Constants.formTitleBoxHeight;
+				frmTitleBox.setStyle('backgroundColor',Constants.formTitleBoxBackgroundColor);
+				frmTitleBox.alpha = Constants.formTitleBoxAlpha;
+				frmTitleBox.setStyle('horizontalAlign',Constants.formTitleHorizontalAlign);
+				frmTitleBox.setStyle('verticalAlign',Constants.formTitleVerticalAlign);
+				frmTitleBox.setStyle('fontFamily',Constants.formTitleFontFamily);
+				frmTitleBox.setStyle('fontSize',Constants.formTitleFontSize);
+				frmTitleBox.setStyle('fontStyle',Constants.formTitleFontStyle);
+				lblfrmTitle.text = Constants.formTitleLabel;
+				
+				// Form SubTitle
+				frmSub.height = Constants.formSubtitleBoxHeight;
+				frmSub.setStyle('backgroundColor',Constants.formSubtitleBoxBackgroundColor);
+				frmSub.alpha = Constants.formSubtitleBoxAlpha;
+				frmSub.setStyle('horizontalAlign',Constants.formSubtitleHorizontalAlign);
+				frmSub.setStyle('verticalAlign',Constants.formSubtitleVerticalAlign);
+				frmSub.setStyle('fontFamily',Constants.formSubtitleFontFamily);
+				frmSub.setStyle('fontSize',Constants.formSubtitleFontSize);
+				frmSub.setStyle('fontStyle',Constants.formSubtitleFontStyle);
+				lblfrmSubTitle.text = Constants.formSubtitleLabel;
+				
+							
+				
+				
+				
+				
+				
+				
+				
+				
+			}
+			
+			private function toolInit():void {
+				bounds.x = GG.x;
+				bounds.y = GG.y;
+				bounds.width = GG.width;
+				bounds.height = GG.height;
+				tool.bounds = bounds;
+				griddata.cellHeight = 20;
+				griddata.cellWidth = 20;
+				griddata.fraction = 5;
+				griddata.x = 1;
+				griddata.y = 1;
+				tool.grid  = griddata;
+				tool.visible = false;
+				GG.addElement(tool);
+			}
+				
+			
+			
+			private function tool_keyDownHandler(event:KeyboardEvent):void {
+				
+				trace(event.keyCode);
+				if(event.keyCode == Keyboard.DELETE){
+					if(tool.visible ){
+						GG.removeElement(tool.target as UIComponent);
+						tool.target = null;
+						tool.visible = false;
+					}
+				} 
+			}
+			
+			protected function tool_guidelinesUpdateHandler(event:GuidelineEvent):void
+			{
+				
+				if(event.cross && event.cross.vGuideline)
+					vGuide.x = event.cross.vGuideline.value;
+				vGuide.visible = (event.cross && event.cross.vGuideline);
+				
+				if(event.cross && event.cross.hGuideline)
+					hGuide.y = event.cross.hGuideline.value;
+				hGuide.visible = (event.cross && event.cross.hGuideline);
+				
+				passiveGuideGroup.removeAllElements();
+				if(event.cross)
+				{
+					if(showPassiveGuides.selected)
+					{
+						for each (var vguide:Guideline in event.cross.getVGuidelines()) 
+						{
+							var vGuideLine:VGuideLine = new VGuideLine();
+							vGuideLine.x = vguide.value;
+							passiveGuideGroup.addElement(vGuideLine);
+						}
+						for each (var hguide:Guideline in event.cross.getHGuidelines()) 
+						{
+							var hGuideLine:HGuideLine = new HGuideLine();
+							hGuideLine.y = hguide.value;
+							passiveGuideGroup.addElement(hGuideLine);
+						}
+					}
+				}
+			}	
+			
+			protected function select(event:MouseEvent):void
+			{
+				if(_currentTarget != event.currentTarget)
+				{
+					tool.target = event.currentTarget as UIComponent;
+					tool.showPreviewCover = true;
+					tool.startMoving(event);
+					tool.visible = true;
+					if(tool.target.className == "ComboBox"){
+						tool.target.enabled = true;
+					}
+				}
+			}
+			
+			protected function unselect(event:MouseEvent):void {
+				if(tool){
+					tool.visible = false;
+				}
+			}	
+			
+			protected function GG_resizeHandler(event:ResizeEvent):void
+			{
+				bounds.x = GG.x;
+				bounds.y = GG.y;
+				bounds.width = GG.width;
+				bounds.height = GG.height;
+				if (tool!=null)
+				{
+					tool.bounds = bounds;
+				}
+			}
+			
+			public function update(target:UIComponent, passiveGuideGroup:Group):void
+			{
+//				var m:Matrix = TransformUtil.getMatrix(target, passiveGuideGroup);
+//				
+//				var stPoimt:Point =  m.transformPoint(new Point(target.width/2, target.height/2));
+//				var endPoimt:Point =  m.transformPoint(new Point(target.width, target.height/2));
+//				this.xFrom = stPoimt.x;
+//				this.yFrom = stPoimt.y;
+//				this.xTo = endPoimt.x;
+//				this.yTo = endPoimt.y;
+			}
+			
+			protected function box1_clickHandler(event:MouseEvent):void
+			{
+				if(event.target.className == "Box"){
+					if(tool){
+						tool.visible = false;
+					}
+				}
+				
+			}
+
+			// releases the mouse button while over the Canvas container.
+			private function dragDropHandler(event:DragEvent):void {
+				
+				// Get the data identified by the color format
+				// from the drag source.
+				var data:Object;
+				
+				if( event.dragSource.hasFormat('img')) {
+					
+					data = event.dragSource.dataForFormat('img');
+					
+					switch(data.toolTip)
+					{
+						case "Button":
+						{
+							var bt:Button = new Button();
+							//bt.label = data[0].list;
+							bt.doubleClickEnabled = true;
+							//						bt.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						bt.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							bt.x = event.localX;
+							bt.y = event.localY;
+							bt.width = 70;
+							bt.height = 24;
+							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							bt.setStyle("skinClass", Class(buttonSkin));
+							FlexGlobals.topLevelApplication.updateComplete = true;
+							//						bt.addEventListener(FlexEvent.UPDATE_COMPLETE,updatecompletes);
+							
+							if( (bt.x+bt.width) >= GG.width){
+								bt.x = GG.width - bt.width;
+							}
+							
+							GG.addElement(bt);
+							//						GG.addEventListener(FlexEvent.UPDATE_COMPLETE,function(event:FlexEvent):void {
+							////							updatecompletes(event);
+							//							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							//						});
+							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "TextInput":
+						{
+							var tx:spark.components.TextInput = new spark.components.TextInput();
+							//tx.text = data[0].list;
+							//						tx.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							tx.doubleClickEnabled = true;
+							//						tx.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							tx.x = event.localX;
+							tx.y = event.localY;
+							tx.width = 120;
+							tx.height = 24;
+
+							
+							tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							tx.setStyle("skinClass", Class(txtinputSkin));
+							
+							if((tx.x + tx.width) >= GG.width){
+								tx.x = GG.width - tx.width;
+							}
+							GG.addElement(tx);
+							tx.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "CheckBox":
+						{
+							var ck:spark.components.CheckBox = new spark.components.CheckBox();
+							ck.doubleClickEnabled = true;
+							ck.label = "checkbox 1";
+							//ck.label = data[0].list;
+							//						ck.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						ck.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							ck.x = event.localX;
+							ck.y = event.localY;
+							ck.width = 120;
+							ck.height = 24;
+
+							ck.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							ck.setStyle("skinClass", Class(checkboxSkin));
+							if((ck.x + ck.width) >= GG.width){
+								ck.x = GG.width - ck.width;
+							}
+							GG.addElement(ck);
+							ck.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "DataGrid":
+						{
+							var dg:vDataGrid = new vDataGrid();
+							dg.doubleClickEnabled = true;
+							//						dg.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						dg.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							dg.addEventListener(DragEvent.DRAG_ENTER,dgDragEnterHandler);
+							dg.addEventListener(DragEvent.DRAG_DROP,dgDragDropHandler);
+							dg.x = event.localX;
+							dg.y = event.localY;
+							dg.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							dg.setStyle("skinClass",Class(vDataGridSkin));
+							
+							if((dg.x + dg.width) >= GG.width){
+								dg.x = GG.width - dg.width;
+							}
+							GG.addElement(dg);
+							dg.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "DateChooser":
+						{
+							var dc:cusCompDateChooser = new cusCompDateChooser();
+							dc.doubleClickEnabled = true;
+							//						dc.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						dc.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							dc.x = event.localX;
+							dc.y = event.localY;
+							dc.width = 200;
+							dc.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							if((dc.x + dc.width) >= GG.width){
+								dc.x = GG.width - dc.width;
+							}
+							GG.addElement(dc);
+							dc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "RadioButton":
+						{
+							var rd:RadioButton = new RadioButton();
+							rd.doubleClickEnabled = true;
+							rd.label = "Radio Button";
+							//						rd.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						rd.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							rd.x = event.localX;
+							rd.y = event.localY;
+							rd.width = 120;
+							rd.height = 24;
+							rd.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							rd.setStyle("skinClass",Class(radioBtnSkin));
+							
+							if((rd.x + rd.width) >= GG.width){
+								rd.x = GG.width - rd.width;
+							}
+							GG.addElement(rd);
+							rd.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "TextArea":
+						{	
+							var ta:cusCompTextArea = new cusCompTextArea();
+							ta.text = "Text Area";
+							ta.doubleClickEnabled = true;
+							//						ta.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						ta.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							ta.x = event.localX;
+							ta.y = event.localY;
+							ta.width = 120;
+							ta.height = 40;
+
+							ta.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							ta.setStyle("skinClass",Class(textAreaSkin));
+							
+							if((ta.x + ta.width) >= GG.width){
+								ta.x = GG.width - ta.width;
+							}
+							GG.addElement(ta);
+							ta.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case 9:
+						{	
+							var cc:customComponent = new customComponent();
+							//ta.text = "Text Area";
+							//ta.doubleClickEnabled = true;
+							//						ta.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
+							//						ta.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							cc.x = event.localX;
+							cc.y = event.localY;
+							cc.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							
+							
+							if((cc.x + cc.width) >= GG.width){
+								cc.x = GG.width - cc.width;
+							}
+							GG.addElement(cc);	
+							cc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}						
+						case "ComboBox":
+						{
+							var cb:vComboBox = new vComboBox();
+							cb.x = event.localX;
+							cb.y = event.localY;
+							cb.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							if((cb.x + cb.width) >= GG.width){
+								cb.x = GG.width - cb.width;
+							}
+							GG.addElement(cb);
+							cb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						default:
+						{
+							break;
+						}
+							
+					} // cacse 
+					
+				} 
+				//			else if(event.dragSource.hasFormat('canvasmove')){
+				//				data = event.dragSource.dataForFormat('canvasmove');
+				//				data.x = event.localX;
+				//				data.y = event.localY;
+				//			}
+				
+			}		
+			private function dgDragEnterHandler(event:DragEvent):void {
+				if(event.dragSource.hasFormat('itemrender')){
+					var dropTarget:vDataGrid = vDataGrid(event.currentTarget);// as dataGrid
+					DragManager.acceptDragDrop(dropTarget);
+					//			} else if(event.dragSource.hasFormat('ComboBox')){
+					//				
+					//			} else if(event.dragSource.hasFormat('TextInput')){
+					
+				} else {}
+			}			
+			
+			private function dgDragDropHandler(event:DragEvent):void {
+				
+				if(event.target.className == "vDataGrid"){
+					if(!event.target.isDelele){ 
+						event.target.isDelele = !event.target.isDelele;
+						//					event.target.dataProvider = event.target.Ac;
+						event.target.columns.removeAll();
+					}
+					
+					var col:GridColumn = new GridColumn();
+					col.dataField = "dataField"+ (event.target.columns.length+1).toString();
+					col.headerText = "Column " + (event.target.columns.length+1).toString();
+					if(event.dragSource.hasFormat('Button')){
+						col.itemRenderer = new ClassFactory(ButtonItemRender);
+						event.target.columns.addItem(col);
+					} else if(event.dragSource.hasFormat('ComboBox')){
+						col.itemRenderer = new ClassFactory(ComboboxItemRender);
+						event.target.columns.addItem(col);
+					} else if(event.dragSource.hasFormat('TextInput')){
+						col.itemRenderer = new ClassFactory(TextInputItemRender);					
+						event.target.columns.addItem(col);
+					}
+				}
+			}
+
+			private function dragEnterHandler(event:DragEvent):void {
+				
+				//			var dropTarget:Canvas = Canvas(event.currentTarget);// as Group;
+				//			DragManager.acceptDragDrop(dropTarget);
+				//			var dropTarget:Group = Group(event.currentTarget);// as Group;
+				//			DragManager.acceptDragDrop(dropTarget);
+				if(event.dragSource.hasFormat("itemrender")){
+					return;
+					
+				}else{
+					var dropTarget:Box = Box(event.currentTarget);// as vBOX
+					DragManager.acceptDragDrop(dropTarget);
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<mx:VBox top="0" width="100%" height="100%" horizontalCenter="0">
+		<mx:VBox id="frmMainID" width="100%" height="100%" borderColor="black" borderStyle="solid"
+				 verticalGap="0">
+			<mx:VBox id="frmTitleBox" width="100%" height="20" backgroundColor="blue"
+					 horizontalAlign="center" verticalAlign="middle">
+					 <mx:Text text="form Title Label" id="lblfrmTitle" />
+			</mx:VBox>
+			<mx:VBox id="frmSub" width="100%" height="20" backgroundColor="yellow">
+					 <mx:Text text="form Title Label" id="lblfrmSubTitle" />
+			</mx:VBox>
+			<mx:Box width="100%" height="100%" backgroundColor="#FFFFFF"
+					click="box1_clickHandler(event)" dragDrop="dragDropHandler(event);"
+					dragEnter="dragEnterHandler(event);">
+				<s:Group width="100%" height="100%">
+					<s:Group id="GG" width="100%" height="100%" resize="GG_resizeHandler(event)"
+							 keyDown="tool_keyDownHandler(event)"
+							 >
+						<compx:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
+										  height="{GG.height}" step="20"/>
+					</s:Group>
+					
+					<view:CustomUITransformTool id="tool" depth="3"
+												skinClass="david.view.skins.CustomUITransformToolSkin"
+
+												>
+						<view:bounds>
+							<model:Bounds x="30" y="25" width="400" height="250"/>
+						</view:bounds>
+						<view:actionContent>
+	<!--						<s:HGroup right="-24" top="0" bottom="0" width="16" gap="1" horizontalAlign="left">
+								<s:VGroup>
+									<s:HGroup gap="3">
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Spacer/>
+										<s:Button width="12" height="10">
+											
+										</s:Button>
+									</s:HGroup>
+									<s:HGroup gap="3">
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Button width="10" height="10">
+											
+										</s:Button>
+										<s:Spacer/>
+										<s:Button width="12" height="10">
+											
+										</s:Button>				
+									</s:HGroup>
+								</s:VGroup>
+								<s:NumericStepper width="40"/>
+							</s:HGroup>-->
+						</view:actionContent>
+					</view:CustomUITransformTool>
+					<s:Group width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
+						<s:Group id="passiveGuideGroup" left="0" right="0" top="0" bottom="0"/>
+						<s:Line id="vGuide" visible="false" height="100%" depth="3" yFrom="45"
+								yTo="275">
+							<s:stroke>
+								<s:SolidColorStroke color="#AA0000"/>
+							</s:stroke>
+						</s:Line>
+						<s:Line id="hGuide" visible="false" width="100%" depth="3" xFrom="30"
+								xTo="430">
+							<s:stroke>
+								<s:SolidColorStroke color="#AA0000"/>
+							</s:stroke>
+						</s:Line>
+					</s:Group>
+				</s:Group>
+			</mx:Box>
+			<mx:HBox width="100%" height="20" backgroundColor="black">
+				<s:Spacer width="100%"/>
+				<mx:CheckBox id="showPassiveGuides" label="Show passive guidelines"
+							 selected="true"/>
+				<s:Button/>
+				<s:Button/>
+			</mx:HBox>
+		</mx:VBox>
+	</mx:VBox>
+</s:Group>

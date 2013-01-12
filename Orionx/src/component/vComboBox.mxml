@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 focusEnabled="true"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="145" height="23">
+	<fx:Script>
+		<![CDATA[
+			[Bindable] public var vEanble:Boolean = true
+		]]>
+	</fx:Script>
+<!--<s:Image left="0" right="0" top="0" bottom="0" 
+		 scaleMode="stretch" smooth="true" smoothingQuality="high"
+		 source="@Embed('assets/imgCombobox.png')"/>-->
+<s:ComboBox x="0" y="0"  enabled="{vEanble}" top="0" bottom="0" left="0" right="0"/>
+<s:Label left="{-(lbl1.width+10)}" verticalAlign="middle" top="0" bottom="0" width="62" text="Label" textAlign="right" id="lbl1" />
+</s:Group>

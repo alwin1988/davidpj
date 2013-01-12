@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VDividedBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="350" height="100%">
+	<fx:Script>
+		<![CDATA[
+			import david.view.configs.Constants;
+			
+			import mx.core.DragSource;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.managers.DragManager;
+			
+			private function dragIt(event:MouseEvent, value:uint):void  
+			{ 
+				FlexGlobals.topLevelApplication.vdFormDesign.tool.visible = false;
+				var dragInitiator:UIComponent = event.currentTarget as  UIComponent; 
+				var dragSource:DragSource = new DragSource();
+				if(event.currentTarget.className == "Button"){
+					dragSource.addData(dragInitiator, "itemrender");
+					dragSource.addData(dragInitiator, "Button");
+					
+				} else if(event.currentTarget.className == "ComboBox"){
+					dragSource.addData(dragInitiator, "itemrender");
+					dragSource.addData(dragInitiator, "ComboBox");
+					
+				} else if(event.currentTarget.className == "TextInput"){
+					dragSource.addData(dragInitiator, "itemrender");
+					dragSource.addData(dragInitiator, "TextInput");
+				}
+				DragManager.doDrag(dragInitiator, dragSource, event);
+			}
+
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var evt:CustomCompEvent = new CustomCompEvent(CustomCompEvent.BUTTON_ONE);
+				dispatchEvent(evt);
+				
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:VBox width="350" height="400">
+		<mx:HBox id="clientId" width="350" height="30" 
+				 backgroundColor="blue"
+				 verticalAlign="{Constants.clientTitleBoxVerticalAlign}"
+				 horizontalAlign="{Constants.clientTitleBoxHorizontalAlign}"
+				 fontFamily="{Constants.clientTitleBoxFontFamily}" 
+				 fontSize="{Constants.clientTitleBoxFontSize}" 
+				 fontStyle="{Constants.clientTitleBoxFontStyle}"
+				 paddingLeft="5" paddingTop="5">
+				<s:Label color="white" text="{Constants.clientTitleBoxLabel}">
+				
+			</s:Label>
+		</mx:HBox>
+		<mx:Panel id="teachID" width="350" 
+				  dropShadowVisible="false" 
+				  headerHeight="20"
+				  height="{Constants.teachHeight}"
+				  backgroundColor="{Constants.teachBackgroundColor}"
+				  alpha="{Constants.teachAlpha}"
+				  verticalAlign="{Constants.teachTitleVerticalAlign}"
+				  horizontalAlign="{Constants.teachTitleHorizontalAlign}"
+				  fontFamily="{Constants.teachTitleFontFamily}"
+				  fontSize="{Constants.teachTitleFontSize}"
+				  fontStyle="{Constants.teachTitleFontStyle}"
+				  title="{Constants.teachTitleLabel}">
+			
+		</mx:Panel>
+		<mx:Accordion width="350" height="100%"
+					  
+					  >
+			<s:NavigatorContent width="100%" height="100%" label="First Section"
+								
+								
+								>
+				<mx:DataGrid width="100%" height="100%" dataProvider="{FlexGlobals.topLevelApplication.compList}"
+							 dragEnabled="false" dragMoveEnabled="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="icon"
+										   headerText="Detail index fields"
+										   itemRenderer="ImageRenderer"/>									
+						<mx:DataGridColumn dataField="icon" headerText="Header Index fields" itemRenderer="ImageRenderer"/>
+						
+					</mx:columns>
+				</mx:DataGrid>				
+			</s:NavigatorContent>
+			<mx:Form id="frmItemrender"  label="ItemRenders" verticalGap="0">
+				<s:FormItem label="Button">
+					<s:Button mouseMove="dragIt(event, 10);" />
+				</s:FormItem>
+				<s:FormItem label="TextInput">
+					<s:TextInput  editable="false" mouseMove="dragIt(event, 10);"/>
+				</s:FormItem>
+				<s:FormItem label="ComboBox" >
+					<s:ComboBox mouseMove="dragIt(event, 10);"/>
+				</s:FormItem>
+			</mx:Form >
+			<mx:Form id="shippingAddress" label="Document Index Fields">
+				
+				<mx:FormItem id="sfirstNameItem" label="First Name">
+					<mx:TextInput id="sfirstName"/>
+				</mx:FormItem>
+				
+				<!-- Additional contents goes here. -->
+				
+			</mx:Form>					
+			<mx:Form id="billingAddress" label="Workflow Fields">
+				<!-- Form contents goes here. -->
+				<s:List width="100%" height="100%" dataProvider="{FlexGlobals.topLevelApplication.compList}"
+						dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
+						itemRenderer="listitemrender">
+				</s:List>
+			</mx:Form>
+			
+			<mx:Form id="creditCardInfo" label="Buttons">
+				<!-- Form contents goes here. -->
+			</mx:Form>
+			
+			<mx:Form id="submitOrder" label="Boxes and Panels">
+				<!-- Form contents goes here. -->
+			</mx:Form>
+			<mx:Form id="submitOrder1" label="Rules">
+				<!-- Form contents goes here. -->
+			</mx:Form>
+			<mx:Form id="submitOrder3" label="Text labels">
+				<!-- Form contents goes here. -->
+			</mx:Form>					
+		</mx:Accordion>				
+	</mx:VBox>	
+	<mx:HBox width="350" height="25" minHeight="21" maxHeight="21" verticalAlign="middle">
+		<s:Button width="21">
+			
+		</s:Button>
+		<s:Button width="21">
+			
+		</s:Button>
+		<s:Button width="21">
+			
+		</s:Button>
+		<s:Button width="21">
+			
+		</s:Button>
+		<s:Button width="21" label="1" click="button1_clickHandler(event)">
+			
+		</s:Button>
+		<s:Button width="21" label="2" click="button2_clickHandler(event)">
+			
+		</s:Button>
+		<s:Button width="21" label="3" click="button3_clickHandler(event)">
+			
+		</s:Button>
+		<s:Button width="21" label="4" click="button4_clickHandler(event)">
+			
+		</s:Button>		
+		<s:ComboBox width="100%">
+			
+		</s:ComboBox>
+	</mx:HBox>
+	<mx:VBox width="350" height="100%" verticalGap="0">
+		<mx:TabNavigator width="350" height="100%" borderStyle="solid" paddingBottom="0"
+						 id="tabControl" 
+						 fontFamily="{Constants.tabLabelsFontFamily}"
+						 fontSize="{Constants.tabLabelsFontSize}"
+						 fontStyle="{Constants.tabLabelsFontStyle}"
+						 paddingTop="0" verticalGap="0">
+			<mx:VBox width="350" height="100%" label="Form" verticalGap="0">						
+				<mx:DataGrid width="100%" height="80" headerHeight="20"
+							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+							 fontSize="{Constants.dgHeaderLabelsFontSize}"
+							 fontStyle="{Constants.dgHeaderLabelsFontStyle}"
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+							 >
+					<mx:columns>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid width="100%" height="80" headerHeight="20">
+					<mx:columns>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid width="100%" height="80" headerHeight="20">
+					<mx:columns>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>					
+			</mx:VBox>
+			
+			<mx:VBox width="100%" height="100%" label="Panels / Datagrids">
+				<!-- Stocks view goes here. -->
+				
+			</mx:VBox>
+			
+			<mx:VBox width="350" height="100%" label="Fields / Controls" verticalGap="0">
+				<mx:HBox width="100%" horizontalAlign="center" paddingBottom="15"
+						 paddingTop="15">
+					<s:ComboBox width="90%"/>
+				</mx:HBox>
+				
+				<mx:DataGrid width="100%" height="80" headerHeight="20"
+							 
+							 >
+					<mx:columns>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid width="100%" height="80" headerHeight="20">
+					<mx:columns>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:DataGrid width="100%" height="80" headerHeight="20">
+					<mx:columns>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+						<mx:DataGridColumn>
+							
+						</mx:DataGridColumn>
+					</mx:columns>
+				</mx:DataGrid>					
+			</mx:VBox>   
+			<mx:VBox width="100%" height="100%" label="String">
+				<!-- Futures view goes here. -->
+			</mx:VBox>   
+		</mx:TabNavigator>
+		<mx:HBox width="350" height="20" backgroundColor="black">
+			<s:Spacer width="100%"/>
+			<s:Button>
+				
+			</s:Button>
+			<s:Button>
+				
+			</s:Button>
+		</mx:HBox>
+	</mx:VBox>
+
+</mx:VDividedBox>

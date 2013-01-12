@@ -5,10 +5,9 @@
 			   xmlns:model="com.vstyran.transform.model.*"
 			   xmlns:component="component.*"
 			   xmlns:view="view.*"
-			   minWidth="955" minHeight="600" 
-			   creationComplete="init()" 
-			   xmlns:components="david.view.components.*" 
-			   >
+			   xmlns:components="david.view.components.*"
+			   minWidth="955" minHeight="600" creationComplete="init()"
+			   viewSourceURL="srcview/index.html">
 	<fx:Declarations>
 		
 	</fx:Declarations>
@@ -31,9 +30,40 @@
 		
 		import david.view.configs.Constants;
 		
+		import mx.collections.ArrayCollection;
 		import mx.core.IVisualElement;
 		import mx.core.UIComponent;
+		import mx.events.FlexEvent;
 
+		
+		[Bindable]	public var compList:ArrayCollection;
+		[Bindable]	public var compList2:ArrayCollection;
+		[Bindable] 	private var deletedObjects:ArrayCollection = new ArrayCollection();
+		[Bindable]	public var updateComplete:Boolean = false;
+		
+		protected function init():void
+		{
+			compList = new ArrayCollection([
+				{icon:"assets/Button.png",list:"Button",obj:1},
+				{icon:"assets/CheckBox.png",list:"CheckBox",obj:2},
+				{icon:"assets/ComboBox.png",list:"ComboBox",obj:3},
+				{icon:"assets/DataGrid.png",list:"DataGrid",obj:4},
+				{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
+				{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
+				{icon:"assets/TextInput.png",list:"TextInput",obj:7},
+				{icon:"assets/TextArea.png",list:"TextArea",obj:8}
+			]);
+		}
+		
+		private function updatecompletes(event:FlexEvent):void {
+			if(updateComplete){
+				vdFormDesign.tool.target = event  as UIComponent;
+				vdFormDesign.tool.showPreviewCover = true;
+				vdFormDesign.tool.visible = true;
+				updateComplete = false;
+			}
+			vdFormDesign.GG.validateNow();
+		}
 
 		protected function updateGuides():void
 		{

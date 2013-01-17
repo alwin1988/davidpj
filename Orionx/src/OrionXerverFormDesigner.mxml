@@ -102,6 +102,9 @@
 </fx:Script>
 	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
 		<components:FormDeisgn id="vdFormDesign" minWidth="{Constants.formMinWidth}"/>
-		<components:ControlDesign id="vdControlDesign" width="350" />
+		<components:ControlDesign id="vdControlDesign" width="350"/>
+		<mx:VBox width="0" height="100%">
+			
+		</mx:VBox>
 	</mx:HDividedBox>
 </s:Application>

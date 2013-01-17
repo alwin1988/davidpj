@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VDividedBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="350" height="100%">
+<mx:VDividedBox xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				width="350" height="100%" minWidth="350" maxWidth="350">
 	<fx:Script>
 		<![CDATA[
 			import david.view.configs.Constants;
@@ -67,58 +67,48 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<mx:VBox width="350" height="400">
-		<mx:HBox id="clientId" width="350" height="30" 
-				 backgroundColor="blue"
-				 verticalAlign="{Constants.clientTitleBoxVerticalAlign}"
-				 horizontalAlign="{Constants.clientTitleBoxHorizontalAlign}"
-				 fontFamily="{Constants.clientTitleBoxFontFamily}" 
-				 fontSize="{Constants.clientTitleBoxFontSize}" 
+		<mx:HBox id="clientId" width="350" height="30" backgroundColor="blue"
+				 fontFamily="{Constants.clientTitleBoxFontFamily}"
+				 fontSize="{Constants.clientTitleBoxFontSize}"
 				 fontStyle="{Constants.clientTitleBoxFontStyle}"
-				 paddingLeft="5" paddingTop="5">
+				 horizontalAlign="{Constants.clientTitleBoxHorizontalAlign}" paddingLeft="5"
+				 paddingTop="5" verticalAlign="{Constants.clientTitleBoxVerticalAlign}">
 				<s:Label color="white" text="{Constants.clientTitleBoxLabel}">
 				
 			</s:Label>
 		</mx:HBox>
-		<mx:Panel id="teachID" width="350" 
-				  dropShadowVisible="false" 
-				  headerHeight="20"
-				  height="{Constants.teachHeight}"
-				  backgroundColor="{Constants.teachBackgroundColor}"
-				  alpha="{Constants.teachAlpha}"
-				  verticalAlign="{Constants.teachTitleVerticalAlign}"
-				  horizontalAlign="{Constants.teachTitleHorizontalAlign}"
-				  fontFamily="{Constants.teachTitleFontFamily}"
+		<mx:Panel id="teachID" width="350" height="{Constants.teachHeight}"
+				  alpha="{Constants.teachAlpha}" backgroundColor="{Constants.teachBackgroundColor}"
+				  dropShadowVisible="false" fontFamily="{Constants.teachTitleFontFamily}"
 				  fontSize="{Constants.teachTitleFontSize}"
-				  fontStyle="{Constants.teachTitleFontStyle}"
-				  title="{Constants.teachTitleLabel}">
+				  fontStyle="{Constants.teachTitleFontStyle}" headerHeight="20"
+				  horizontalAlign="{Constants.teachTitleHorizontalAlign}"
+				  title="{Constants.teachTitleLabel}"
+				  verticalAlign="{Constants.teachTitleVerticalAlign}">
 			
 		</mx:Panel>
-		<mx:Accordion width="350" height="100%"
-					  
-					  >
-			<s:NavigatorContent width="100%" height="100%" label="First Section"
-								
-								
-								>
-				<mx:DataGrid width="100%" height="100%" dataProvider="{FlexGlobals.topLevelApplication.compList}"
+		<mx:Accordion width="350" height="100%">
+			<s:NavigatorContent width="100%" height="100%" label="First Section">
+				<mx:DataGrid width="100%" height="100%"
+							 dataProvider="{FlexGlobals.topLevelApplication.compList}"
 							 dragEnabled="false" dragMoveEnabled="false">
 					<mx:columns>
-						<mx:DataGridColumn dataField="icon"
-										   headerText="Detail index fields"
+						<mx:DataGridColumn dataField="icon" headerText="Detail index fields"
 										   itemRenderer="ImageRenderer"/>									
-						<mx:DataGridColumn dataField="icon" headerText="Header Index fields" itemRenderer="ImageRenderer"/>
+						<mx:DataGridColumn dataField="icon" headerText="Header Index fields"
+										   itemRenderer="ImageRenderer"/>
 						
 					</mx:columns>
 				</mx:DataGrid>				
 			</s:NavigatorContent>
-			<mx:Form id="frmItemrender"  label="ItemRenders" verticalGap="0">
+			<mx:Form id="frmItemrender" label="ItemRenders" verticalGap="0">
 				<s:FormItem label="Button">
-					<s:Button mouseMove="dragIt(event, 10);" />
+					<s:Button mouseMove="dragIt(event, 10);"/>
 				</s:FormItem>
 				<s:FormItem label="TextInput">
-					<s:TextInput  editable="false" mouseMove="dragIt(event, 10);"/>
+					<s:TextInput editable="false" mouseMove="dragIt(event, 10);"/>
 				</s:FormItem>
-				<s:FormItem label="ComboBox" >
+				<s:FormItem label="ComboBox">
 					<s:ComboBox mouseMove="dragIt(event, 10);"/>
 				</s:FormItem>
 			</mx:Form >
@@ -133,9 +123,9 @@
 			</mx:Form>					
 			<mx:Form id="billingAddress" label="Workflow Fields">
 				<!-- Form contents goes here. -->
-				<s:List width="100%" height="100%" dataProvider="{FlexGlobals.topLevelApplication.compList}"
-						dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-						itemRenderer="listitemrender">
+				<s:List width="100%" height="100%"
+						dataProvider="{FlexGlobals.topLevelApplication.compList}" dragEnabled="true"
+						dragMoveEnabled="true" dropEnabled="true" itemRenderer="listitemrender">
 				</s:List>
 			</mx:Form>
 			
@@ -184,19 +174,17 @@
 		</s:ComboBox>
 	</mx:HBox>
 	<mx:VBox width="350" height="100%" verticalGap="0">
-		<mx:TabNavigator width="350" height="100%" borderStyle="solid" paddingBottom="0"
-						 id="tabControl" 
+		<mx:TabNavigator id="tabControl" width="350" height="100%" borderStyle="solid"
 						 fontFamily="{Constants.tabLabelsFontFamily}"
 						 fontSize="{Constants.tabLabelsFontSize}"
-						 fontStyle="{Constants.tabLabelsFontStyle}"
-						 paddingTop="0" verticalGap="0">
+						 fontStyle="{Constants.tabLabelsFontStyle}" paddingBottom="0" paddingTop="0"
+						 verticalGap="0">
 			<mx:VBox width="350" height="100%" label="Form" verticalGap="0">						
-				<mx:DataGrid width="100%" height="80" headerHeight="20"
+				<mx:DataGrid width="100%" height="80"
 							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
 							 fontSize="{Constants.dgHeaderLabelsFontSize}"
-							 fontStyle="{Constants.dgHeaderLabelsFontStyle}"
-							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
-							 >
+							 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
 					<mx:columns>
 						<mx:DataGridColumn>
 							
@@ -234,14 +222,11 @@
 			</mx:VBox>
 			
 			<mx:VBox width="350" height="100%" label="Fields / Controls" verticalGap="0">
-				<mx:HBox width="100%" horizontalAlign="center" paddingBottom="15"
-						 paddingTop="15">
+				<mx:HBox width="100%" horizontalAlign="center" paddingBottom="15" paddingTop="15">
 					<s:ComboBox width="90%"/>
 				</mx:HBox>
 				
-				<mx:DataGrid width="100%" height="80" headerHeight="20"
-							 
-							 >
+				<mx:DataGrid width="100%" height="80" headerHeight="20">
 					<mx:columns>
 						<mx:DataGridColumn>
 							

@@ -10,7 +10,7 @@ package david.view.configs
 		public static const formTitleBoxBackgroundColor:uint = 0x0000ff;
 		public static const formTitleBoxAlpha:Number = 1; // 0.0 - 1
 		public static const formTitleVerticalAlign:String = 'middle';	 // "top", "middle", and "bottom". 
-		public static const formTitleHorizontalAlign:String = 'center';	 // "left", "center", and "right".
+		public static const formTitleHorizontalAlign:String = 'left';	 // "left", "center", and "right".
 		public static const formTitleFontFamily:String = 'Tahoma';
 		public static const formTitleFontSize:Number = 19;
 		public static const formTitleFontStyle:String = 'normal';  //"normal" and "italic".

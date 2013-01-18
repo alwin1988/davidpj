@@ -45,9 +45,13 @@ package david.view.configs
 		public static const teachTitleFontSize:Number = 16 ;
 		public static const teachTitleFontStyle:String = 'normal';
 		public static const teachTitleLabel:String = 'Instructions';
+		public static const teachHeaderHeight:Number = 0;
+		public static const teachHeaderBackgroundColor:uint = 0x0;
+		public static const teachHeaderAlpha:Number = 1;
+		public static const teachBoxHeight:Number = 300;
 
 		//############### dock ###############//
-		public static const dockTitlesVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
+//nouser		public static const dockTitlesVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
 		public static const dockTitlesHorizontalAlign:String = 'left';	 // "left", "center", and "right".
 		public static const dockTitlesFontFamily:String = 'Tahoma';
 		public static const dockTitlesFontSize:Number = 16;
@@ -55,6 +59,11 @@ package david.view.configs
 		public static const dockTitlesLabel:String = 'Dock Label';
 		public static const dockBackgroundColor:uint = 0xff00ff;
 		public static const dockAlpha:Number = 1;
+		public static const dockTitlesHeight:Number = 25;
+		public static const dockTitlesBackgroundColor:uint = 0xff00ff;
+//nouser		public static const dockTitlesAlpha:Number = 1;
+//nouser		public static const dockDgRowDiv:String = '';
+		public static const dockBoxHeight:Number = 300;
 		//############### tab ###############//
 		public static const tabLabelsVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
 		public static const tabLabelsHorizontalAlign:String = 'left';	// "left", "center", and "right".
@@ -63,23 +72,51 @@ package david.view.configs
 		public static const tabLabelsFontStyle:String = 'normal';
 		public static const tabLabelsLabel:String = 'Tab label';  //คิดว่าไม่มีนะ หรือไม่ก็ต้องเพิ่ม box ละ
 
-		//############### sub header ###############//
-		public static const subheaderLabelsVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
-		public static const subheaderLabelsHorizontalAlign:String = 'left';	// "left", "center", and "right".
+		//############### sub header ###############// combobox 
+//nouser		public static const subheaderLabelsVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
+//nouser		public static const subheaderLabelsHorizontalAlign:String = 'left';	// "left", "center", and "right".
 		public static const subheaderLabelsFontFamily:String = 'Tahoma';
 		public static const subheaderLabelsFontSize:Number = 16;
 		public static const subheaderLabelsFontStyle:String = 'normal';
-		public static const subheaderLabelsLabel:String = 'subHeader Label';
+//nouser 		public static const subheaderLabelsLabel:String = 'subHeader Label';
 
 		//############### dg ###############//
 		public static const dgHeaderLabelsVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
-		public static const dgHeaderLabelsHorizontalAlign:String = 'left';//ไม่มี	 // "left", "center", and "right".
+//ไม่มี		public static const dgHeaderLabelsHorizontalAlign:String = 'left';//ไม่มี	 // "left", "center", and "right".
 		public static const dgHeaderLabelsFontFamily:String = 'Tahoma';
 		public static const dgHeaderLabelsFontSize:Number = 16;
 		public static const dgHeaderLabelsFontStyle:String = 'normal';
-		public static const dgHeaderLabelsLabel:String = 'dgHeader Label'; //ไม่มี
+//ไม่มี		public static const dgHeaderLabelsLabel:String = 'dgHeader Label'; //ไม่มี
+		
+		public static const widthControl:String = '';
+		
+//สำหรับชุดนี้ไม่ทราบว่าเอาที่ไหน หาไม่ได้ 		
+		public static const propHeaderHeight:Number = 30;
+		public static const propHeaderBackgroundColor:uint = 0xff00ff;
+		public static const propHeaderAlpha:Number = 1;
+		public static const propDgHeight:Number = 35;
+		public static const propDgBackgroundColor:uint = 0x00ffff;
+		public static const propDgAlpha:Number = 1;
+		public static const propSubheaderHeight:Number = 35;
+	//ไม่ได้ 	public static const propDgColDiv:String = '';
 
-
+		
+		
+		
+	//ใช้ไม่ได้	public static const dgCol1VerticalAlign:String = 'top';
+	// ไม่มี	public static const dgCol1HorizontalAlign:String = '';
+		public static const dgCol1FontFamily:String = 'Tahoma';
+		public static const dgCol1FontSize:Number =  12;
+		public static const dgCol1FontStyle:String = "normal";
+		public static const dgCol1Label:String = "label col1";
+		
+		//ใช้ไม่ได้	public static const dgCol2VerticalAlign:String = 'top';
+	//ไม่มี	public static const dgCol2HorizontalAlign:String = '';
+		public static const dgCol2FontFamily:String = 'Tahoma';
+		public static const dgCol2FontSize:Number = 12;
+		public static const dgCol2FontStyle:String = 'normal';
+		public static const dgCol2Label:String = 'label col2';
+		
 	
 	}
 }

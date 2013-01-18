@@ -87,8 +87,19 @@
 				  verticalAlign="{Constants.teachTitleVerticalAlign}">
 			
 		</mx:Panel>
-		<mx:Accordion width="350" height="100%">
-			<s:NavigatorContent width="100%" height="100%" label="First Section">
+		<mx:Accordion width="350" id="dock"
+					  textAlign="{Constants.dockTitlesHorizontalAlign}"
+					  fontFamily="{Constants.dockTitlesFontFamily}"
+					  fontSize="{Constants.dockTitlesFontSize}"
+					  fontStyle="{Constants.dockTitlesFontStyle}"
+					  label="{Constants.dockTitlesLabel}"
+					  alpha="{Constants.dockAlpha}"
+					  headerHeight="{Constants.dockTitlesHeight}"
+					  backgroundColor="{Constants.dockTitlesBackgroundColor}"
+					  height="{Constants.dockBoxHeight}"
+					  >
+			<s:NavigatorContent width="100%" height="100%" 
+								label="First Section">
 				<mx:DataGrid width="100%" height="100%"
 							 dataProvider="{FlexGlobals.topLevelApplication.compList}"
 							 dragEnabled="false" dragMoveEnabled="false">
@@ -144,6 +155,8 @@
 			</mx:Form>					
 		</mx:Accordion>				
 	</mx:VBox>	
+	<mx:VBox width="350">
+		
 	<mx:HBox width="350" height="25" minHeight="21" maxHeight="21" verticalAlign="middle">
 		<s:Button width="21">
 			
@@ -173,18 +186,55 @@
 			
 		</s:ComboBox>
 	</mx:HBox>
+								<s:HGroup right="-24" top="0" bottom="0" width="16" gap="1" horizontalAlign="left">
+		<s:VGroup>
+		<s:HGroup gap="3">
+		<s:Button width="10" height="10">
+		
+		</s:Button>
+		<s:Button width="10" height="10">
+		
+		</s:Button>
+		<s:Spacer/>
+		<s:Button width="12" height="10">
+		
+		</s:Button>
+		</s:HGroup>
+		<s:HGroup gap="3">
+		<s:Button width="10" height="10">
+		
+		</s:Button>
+		<s:Button width="10" height="10">
+		
+		</s:Button>
+		<s:Spacer/>
+		<s:Button width="12" height="10">
+		
+		</s:Button>				
+		</s:HGroup>
+		</s:VGroup>
+		<s:NumericStepper width="40"/>
+		</s:HGroup>	
+	</mx:VBox>
 	<mx:VBox width="350" height="100%" verticalGap="0">
 		<mx:TabNavigator id="tabControl" width="350" height="100%" borderStyle="solid"
 						 fontFamily="{Constants.tabLabelsFontFamily}"
 						 fontSize="{Constants.tabLabelsFontSize}"
 						 fontStyle="{Constants.tabLabelsFontStyle}" paddingBottom="0" paddingTop="0"
 						 verticalGap="0">
-			<mx:VBox width="350" height="100%" label="Form" verticalGap="0">						
+			<mx:VBox width="350" height="100%" label="Form"  
+					 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+					 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+					 fontFamily="{Constants.tabLabelsFontFamily}"
+					 fontSize="{Constants.tabLabelsFontSize}"
+					 fontStyle="{Constants.tabLabelsFontStyle}"
+					 verticalGap="0">						
 				<mx:DataGrid width="100%" height="80"
 							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
 							 fontSize="{Constants.dgHeaderLabelsFontSize}"
 							 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
-							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+							 >
 					<mx:columns>
 						<mx:DataGridColumn>
 							
@@ -194,39 +244,92 @@
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:DataGrid width="100%" height="80" headerHeight="20">
-					<mx:columns>
-						<mx:DataGridColumn>
-							
+				<mx:DataGrid width="100%" 
+							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+							 fontSize="{Constants.dgHeaderLabelsFontSize}"
+							 fontStyle="{Constants.dgHeaderLabelsFontStyle}"
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+							 height="80" headerHeight="20" >
+					
+					<mx:columns >
+						<mx:DataGridColumn headerText="{Constants.dgCol1Label}" 
+										   fontFamily="{Constants.dgCol1FontFamily}"
+										   fontSize="{Constants.dgCol1FontSize}"
+										   fontStyle="{Constants.dgCol1FontStyle}"
+										   id="dgCol1"  >
+<!--										   textAlign="{Constants.dgCol1VerticalAlign}"-->
 						</mx:DataGridColumn>
-						<mx:DataGridColumn>
-							
+						<mx:DataGridColumn id="dgCol2" 
+										   fontFamily="{Constants.dgCol2FontFamily}"
+										   fontSize="{Constants.dgCol2FontSize}"
+										   fontStyle="{Constants.dgCol2FontStyle}"
+										   headerText="{Constants.dgCol2Label}"
+										   >
+<!--										   textAlign="{Constants.dgCol2VerticalAlign}"-->
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:DataGrid width="100%" height="80" headerHeight="20">
+				<mx:DataGrid width="100%" height="80" 
+							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+							 fontSize="{Constants.dgHeaderLabelsFontSize}"
+							 fontStyle="{Constants.dgHeaderLabelsFontStyle}"
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+							 headerHeight="20">
 					<mx:columns>
-						<mx:DataGridColumn>
+						<mx:DataGridColumn id="dg2col"
+										   fontFamily="{Constants.dgCol1FontFamily}"
+										   fontSize="{Constants.dgCol1FontSize}"
+										   fontStyle="{Constants.dgCol1FontStyle}"
+										   headerText="{Constants.dgCol1Label}"
+											>
+<!--										   textAlign="{Constants.dgCol1VerticalAlign}"-->
 							
 						</mx:DataGridColumn>
-						<mx:DataGridColumn>
+						<mx:DataGridColumn id="dg2col2"
+										   fontFamily="{Constants.dgCol2FontFamily}"
+										   fontSize="{Constants.dgCol2FontSize}"
+										   fontStyle="{Constants.dgCol2FontStyle}"
+										   headerText="{Constants.dgCol2Label}"
+											>
+<!--										   textAlign="{Constants.dgCol2VerticalAlign}"-->
 							
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>					
 			</mx:VBox>
 			
-			<mx:VBox width="100%" height="100%" label="Panels / Datagrids">
+			<mx:VBox width="100%" height="100%" label="Panels / Datagrids" 
+					 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+					 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+					 fontFamily="{Constants.tabLabelsFontFamily}"
+					 fontSize="{Constants.tabLabelsFontSize}"
+					 fontStyle="{Constants.tabLabelsFontStyle}"
+					 >
 				<!-- Stocks view goes here. -->
 				
 			</mx:VBox>
 			
-			<mx:VBox width="350" height="100%" label="Fields / Controls" verticalGap="0">
+			<mx:VBox width="350" height="100%" label="Fields / Controls" 
+					 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+					 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+					 fontFamily="{Constants.tabLabelsFontFamily}"
+					 fontSize="{Constants.tabLabelsFontSize}"
+					 fontStyle="{Constants.tabLabelsFontStyle}"
+					 verticalGap="0">
 				<mx:HBox width="100%" horizontalAlign="center" paddingBottom="15" paddingTop="15">
-					<s:ComboBox width="90%"/>
+					<s:ComboBox width="90%"
+								fontFamily="{Constants.subheaderLabelsFontFamily}"
+								fontSize="{Constants.subheaderLabelsFontSize}"
+								fontStyle="{Constants.subheaderLabelsFontStyle}"
+								/>
 				</mx:HBox>
 				
-				<mx:DataGrid width="100%" height="80" headerHeight="20">
+				<mx:DataGrid width="100%" 
+							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+							 fontSize="{Constants.dgHeaderLabelsFontSize}"
+							 fontStyle="{Constants.dgHeaderLabelsFontStyle}"
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+							 height="80" headerHeight="20">
 					<mx:columns>
 						<mx:DataGridColumn>
 							
@@ -236,7 +339,12 @@
 						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
-				<mx:DataGrid width="100%" height="80" headerHeight="20">
+				<mx:DataGrid width="100%" height="80" 
+							 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+							 fontSize="{Constants.dgHeaderLabelsFontSize}"
+							 fontStyle="{Constants.dgHeaderLabelsFontStyle}"
+							 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+							 headerHeight="20">
 					<mx:columns>
 						<mx:DataGridColumn>
 							
@@ -257,7 +365,13 @@
 					</mx:columns>
 				</mx:DataGrid>					
 			</mx:VBox>   
-			<mx:VBox width="100%" height="100%" label="String">
+			<mx:VBox width="100%" height="100%" label="String"
+					 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+					 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+					 fontFamily="{Constants.tabLabelsFontFamily}"
+					 fontSize="{Constants.tabLabelsFontSize}"
+					 fontStyle="{Constants.tabLabelsFontStyle}"
+					 >
 				<!-- Futures view goes here. -->
 			</mx:VBox>   
 		</mx:TabNavigator>

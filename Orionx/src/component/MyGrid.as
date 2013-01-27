@@ -1,5 +1,7 @@
 package component
 {
+	import david.view.configs.Constants;
+	
 	import flash.display.Graphics;
 	
 	import spark.primitives.supportClasses.FilledElement;
@@ -92,11 +94,13 @@ package component
 			for (j = 0; j <= columnCount; j++) 
 			{
 				if(j%mysetep==0){
-					g.lineStyle(mylineThickness,my_color,_lineAlpha);
+//					g.lineStyle(mylineThickness,my_color,_lineAlpha);
+					g.lineStyle(Constants.gridLineThickness,Constants.gridLineColor,Constants.gridLineApha);
 					g.moveTo(this.x+j*_step,this.y);
 					g.lineTo(this.x+j*_step,this.y+height)
 				} else {
-					g.lineStyle(_lineThickness,_color,_lineAlpha);
+//					g.lineStyle(_lineThickness,_color,_lineAlpha);
+					g.lineStyle(Constants.gridLineThickness,Constants.gridLineColor,Constants.gridLineApha);
 					g.moveTo(this.x+j*_step,this.y);
 					g.lineTo(this.x+j*_step,this.y+height)
 				}
@@ -104,11 +108,13 @@ package component
 			
 			for( i = 0; i <= rowCount;  i++ ) {
 				if(i%mysetep==0){
-					g.lineStyle(mylineThickness,my_color,_lineAlpha);
+//					g.lineStyle(mylineThickness,my_color,_lineAlpha);
+					g.lineStyle(Constants.gridLineThickness,Constants.gridLineColor,Constants.gridLineApha);
 					g.moveTo(this.x,this.y+i*_step);
 					g.lineTo(this.x+width,this.y+i*_step)
 				} else {
-					g.lineStyle(_lineThickness,_color,_lineAlpha);
+//					g.lineStyle(_lineThickness,_color,_lineAlpha);
+					g.lineStyle(Constants.gridLineThickness,Constants.gridLineColor,Constants.gridLineApha);
 					g.moveTo(this.x,this.y+i*_step);
 					g.lineTo(this.x+width,this.y+i*_step)
 				}

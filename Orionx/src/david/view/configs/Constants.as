@@ -137,7 +137,7 @@ package david.view.configs
 		
 		public static const gridSize:Number = 20;
 		public static const gridBackgroundColor:uint = 0xFFFFFF;
-		public static const gridLineColor:uint = 0xdddddd;
+		public static const gridLineColor:uint =0xFF0000; //Red  //0xdddddd;
 		public static const gridLineApha:Number = 1;
 		public static const gridLineThickness:Number = 1;
 		

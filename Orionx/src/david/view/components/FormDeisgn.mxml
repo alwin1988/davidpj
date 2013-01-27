@@ -514,7 +514,7 @@
 			<mx:VBox id="frmSub" width="100%" height="20" backgroundColor="yellow">
 					 <mx:Text text="form Title Label" id="lblfrmSubTitle" />
 			</mx:VBox>
-			<mx:Box width="100%" height="100%" backgroundColor="#FFFFFF"
+			<mx:Box width="100%" height="100%" backgroundColor="{Constants.gridBackgroundColor}"
 					click="box1_clickHandler(event)" dragDrop="dragDropHandler(event);"
 					dragEnter="dragEnterHandler(event);">
 				<s:Group width="100%" height="100%">
@@ -522,7 +522,7 @@
 							 keyDown="tool_keyDownHandler(event)"
 							 >
 						<compx:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
-										  height="{GG.height}" step="20"/>
+										  height="{GG.height}" step="{Constants.gridSize}"/>
 					</s:Group>
 					
 					<view:CustomUITransformTool id="tool" depth="3"

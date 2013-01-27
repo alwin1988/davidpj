@@ -98,8 +98,9 @@
 					  backgroundColor="{Constants.dockTitlesBackgroundColor}"
 					  height="{Constants.dockBoxHeight}"
 					  >
-			<s:NavigatorContent width="100%" height="100%" 
-								label="First Section">
+			<s:NavigatorContent x="-10" y="0" width="100%" 
+								fontFamily="{Constants.fieldFont}"
+								height="100%" label="First Section">
 				<mx:DataGrid width="100%" height="100%"
 							 dataProvider="{FlexGlobals.topLevelApplication.compList}"
 							 dragEnabled="false" dragMoveEnabled="false">
@@ -150,8 +151,12 @@
 			<mx:Form id="submitOrder1" label="Rules">
 				<!-- Form contents goes here. -->
 			</mx:Form>
-			<mx:Form id="submitOrder3" label="Text labels">
+			<mx:Form id="submitOrder3" label="Titles &amp; Subtitles">
 				<!-- Form contents goes here. -->
+				<mx:Text text="This is Title" fontFamily="{Constants.titleFont}" textAlign="{Constants.titlelAlign}" />
+				<mx:Text text="This is SubTitle" fontFamily="{Constants.subtitleFOnt}" textAlign="{Constants.subtitleAlign}"/>
+				
+						 
 			</mx:Form>					
 		</mx:Accordion>				
 	</mx:VBox>	

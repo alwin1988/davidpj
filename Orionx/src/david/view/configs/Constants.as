@@ -117,6 +117,41 @@ package david.view.configs
 		public static const dgCol2FontStyle:String = 'normal';
 		public static const dgCol2Label:String = 'label col2';
 		
+//		Title font size, color, etc. (same as others)
+		public static const titleFont:String = 'Tahoma';
+//		Title position (like left, right, center)
+		public static const titlelAlign:String = "left";
+//		Subtitle font ...
+		public static const subtitleFOnt:String = 'Tahoma';
+//			Subtitle position (like left, right, center)
+		public static const subtitleAlign:String = "left";
+//		Legend font ...
+//		Legend position (like left, right, center)
 	
+		
+		
+		public static const fieldFont:String = "Tahoma";
+//		public static const fieldLabelFont
+//		public static const fieldLabelPos
+//		public static const fieldLabelGap
+		
+		public static const gridSize:Number = 20;
+		public static const gridBackgroundColor:uint = 0xFFFFFF;
+		public static const gridLineColor:uint = 0xdddddd;
+		public static const gridLineApha:Number = 1;
+		public static const gridLineThickness:Number = 1;
+		
+		public static const marginLineColor:uint = 0x0;
+		public static const marginLineAlpha = 1;
+		public static const marginLineThickness = 0.4;
+		
+		public static const colWidth:Number 
+		public static const colDivColor:uint = 0xff0000;
+		public static const colDivAlpha:uint = 1;
+		
+		
+		
+		
+		
 	}
 }

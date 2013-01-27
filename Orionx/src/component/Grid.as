@@ -1,5 +1,7 @@
 package component
 {
+	import david.view.configs.Constants;
+	
 	import flash.display.Graphics;
 	
 	import spark.primitives.supportClasses.FilledElement;
@@ -43,7 +45,7 @@ package component
 		{
 			var columnCount:Number = Math.floor(width/_step);
 			var rowCount:Number = Math.floor(height/_step);
-			g.lineStyle(0.4,0xdddddd,0.4);
+			g.lineStyle(Constants.gridLineThickness,Constants.gridLineColor,Constants.gridLineApha);
 			for (var i:int = 0; i <= rowCount; i++) 
 			{
 				for (var j:int = 0; j <= columnCount; j++) 
@@ -66,7 +68,8 @@ package component
 			}
 			
 			
-			g.lineStyle(0.4,0xff0000,1);
+			
+			g.lineStyle(0.4,Constants.colDivColor,Constants.colDivAlpha);
 			g.drawRect(this.x,this.y,width,height);
 			
 		}

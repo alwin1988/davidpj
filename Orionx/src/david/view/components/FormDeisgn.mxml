@@ -40,6 +40,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.utils.ObjectUtil;
 			import david.view.configs.Constants;
 			import mx.controls.Alert;
 			import component.vComboBox;
@@ -243,13 +244,17 @@
 				
 				// Get the data identified by the color format
 				// from the drag source.
+				
+				//ImageRenderer.selected;
+				
 				var data:Object;
 				
 				if( event.dragSource.hasFormat('img')) {
 					
 					data = event.dragSource.dataForFormat('img');
 					
-					switch(data.toolTip)
+					//switch(data.toolTip)
+					switch(FlexGlobals.topLevelApplication.selected)
 					{
 						case "Button":
 						{
@@ -279,6 +284,36 @@
 							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
+						case "ButtonIR":
+						{
+//							Alert.show('ButtonIr');
+//							Alert.show(ObjectUtil.toString(event.target.className,event.currentTarget.className));
+							if(event.currentTarget.className == "vDataGrid"){
+								if(!event.target.isDelele){ 
+									event.target.isDelele = !event.target.isDelele;
+									//					event.target.dataProvider = event.target.Ac;
+									event.target.columns.removeAll();
+								}
+								
+								var col:GridColumn = new GridColumn();
+								col.dataField = "dataField"+ (event.target.columns.length+1).toString();
+								col.headerText = "Column " + (event.target.columns.length+1).toString();
+								if(event.dragSource.hasFormat('ButtonIR')){
+									col.itemRenderer = new ClassFactory(ButtonItemRender);
+									event.target.columns.addItem(col);
+								} else if(event.dragSource.hasFormat('ComboBoxIR')){
+									col.itemRenderer = new ClassFactory(ComboboxItemRender);
+									event.target.columns.addItem(col);
+								} else if(event.dragSource.hasFormat('TextInputIR')){
+									col.itemRenderer = new ClassFactory(TextInputItemRender);					
+									event.target.columns.addItem(col);
+								}
+							}
+							
+							
+							break;
+						}
+							
 						case "TextInput":
 						{
 							var tx:spark.components.TextInput = new spark.components.TextInput();

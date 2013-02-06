@@ -40,17 +40,18 @@
 		[Bindable]	public var compList2:ArrayCollection;
 		[Bindable] 	private var deletedObjects:ArrayCollection = new ArrayCollection();
 		[Bindable]	public var updateComplete:Boolean = false;
+		public  var selected:String="";
 		
 		protected function init():void
 		{
 			compList = new ArrayCollection([
-				{icon:"assets/Button.png",list:"Button",obj:1},
-				{icon:"assets/CheckBox.png",list:"CheckBox",obj:2},
-				{icon:"assets/ComboBox.png",list:"ComboBox",obj:3},
+				{icon:"assets/Button.png",list:"Button",obj:1,icon2:"assets/Button.png",detail:"ButtonIR"},
+				{icon:"assets/ComboBox.png",list:"ComboBox",obj:3,obj:1,icon2:"assets/ComboBox.png",detail:"ComboBoxIR"},
+				{icon:"assets/TextInput.png",list:"TextInput",obj:7,icon2:"assets/TextInput.png",detail:"TextInputIR"},
+				{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},
 				{icon:"assets/DataGrid.png",list:"DataGrid",obj:4},
 				{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
 				{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
-				{icon:"assets/TextInput.png",list:"TextInput",obj:7},
 				{icon:"assets/TextArea.png",list:"TextArea",obj:8}
 			]);
 		}

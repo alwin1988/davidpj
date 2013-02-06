@@ -11,14 +11,15 @@ package
 	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	import mx.managers.DragManager;
+	import mx.utils.ObjectUtil;
 	
-	public class ImageRenderer extends HBox
+	public class DetailImageRenderer extends HBox
 	{
 		//private var imageReference:Image = null;
 		private var img:Image = new Image();
 		private var lbl:Label = new Label();
 		
-//		public static var selected:String="";
+		public static var selected:String="";
 
 		[Embed("assets/Button.png")]
 		private var Button:Class;
@@ -71,8 +72,9 @@ package
 		
 		override public function set data(value:Object):void
 		{
+//			Alert.show(ObjectUtil.toString(value));
 			//if(value != null && imageReference == null)
-			if(value != null)
+			if(value.detail != null)
 			{
 				/*if(value.InStock > 0) {
 					img.source = "assets/in_stock.png";
@@ -80,45 +82,46 @@ package
 				else if(value.InStock == 0){
 					img.source = "assets/not_in_stock.png";
 				}*/
-				if (value.list == "Button")
+				if (value.detail == "ButtonIR")
 				{
 					img.source = Button;
+					
 				}
-				else if (value.list == "CheckBox")
-				{
-					img.source = CheckBox;
-				}
-				else if (value.list == "ComboBox")
-				{
-					img.source = ComboBox;
-				}
-				else if (value.list == "DataGrid")
-				{
-					img.source = DataGrid;
-				}
-				else if (value.list == "DateChooser")
-				{
-					img.source = DateChooser;
-				}
-				else if (value.list == "RadioButton")
-				{
-					img.source = RadioButton;
-				}
-				else if (value.list == "TextArea")
-				{
-					img.source = TextArea;
-				}
-				else if (value.list == "TextInput")
-				{
-					img.source = TextInput;
-				}				
+//				else if (value.detail == "CheckBox")
+//				{
+//					img.source = CheckBox;
+//				}
+//				else if (value.detail == "ComboBox")
+//				{
+//					img.source = ComboBox;
+//				}
+//				else if (value.detail == "DataGrid")
+//				{
+//					img.source = DataGrid;
+//				}
+//				else if (value.detail == "DateChooser")
+//				{
+//					img.source = DateChooser;
+//				}
+//				else if (value.detail == "RadioButton")
+//				{
+//					img.source = RadioButton;
+//				}
+//				else if (value.detail == "TextArea")
+//				{
+//					img.source = TextArea;
+//				}
+//				else if (value.detail == "TextInput")
+//				{
+//					img.source = TextInput;
+//				}				
 				//img.source = value.icon;
 				addChild(img);
 				img.addEventListener(MouseEvent.MOUSE_DOWN, doDrag);
-				lbl.text = "(" + value.list + ")";
+				lbl.text = "(" + value.detail + ")";
 				addChild(lbl);
 				lbl.addEventListener(MouseEvent.MOUSE_DOWN, doDrag);
-				img.toolTip = value.list;
+				img.toolTip = value.detail;
 				//imageReference = img;
 				//setStyle("verticalAlign", "middle");
 				//setStyle("paddingLeft","5");
@@ -137,47 +140,51 @@ package
 			var dragImg:Image = new Image();
 			//dragImg.source = img.source;
 
-			if (img.toolTip == "Button")
-			{
-				dragImg.source = Button1;
-				FlexGlobals.topLevelApplication.selected="Button";
+			if( img.toolTip == "ButtonIR" ) {
+				dragImg.source = "Button";
+				FlexGlobals.topLevelApplication.selected = "ButtonIR";
+//				Alert.show('ButtonIR');
 			}
-			else if (img.toolTip == "CheckBox")
-			{
-				dragImg.source = CheckBox1;
-				FlexGlobals.topLevelApplication.selected="CheckBox";
-			}
-			else if (img.toolTip == "ComboBox")
-			{
-				dragImg.source = ComboBox1;
-				FlexGlobals.topLevelApplication.selected="ComboBox";
-			}
-	
-			else if (img.toolTip == "DataGrid")
-			{
-				dragImg.source = DataGrid1;
-				FlexGlobals.topLevelApplication.selected="DataGrid";
-			}
-			else if (img.toolTip == "DateChooser")
-			{
-				dragImg.source = DateChooser1;
-				FlexGlobals.topLevelApplication.selected="DateChooser";
-			}
-			else if (img.toolTip == "RadioButton")
-			{
-				dragImg.source = RadioButton1;
-				FlexGlobals.topLevelApplication.selected="RadioButton";
-			}
-			else if (img.toolTip == "TextArea")
-			{
-				dragImg.source = TextArea1;
-				FlexGlobals.topLevelApplication.selected="TextArea";
-			}
-			else if (img.toolTip == "TextInput")
-			{
-				dragImg.source = TextInput1;
-				FlexGlobals.topLevelApplication.selected="TextInput";
-			}
+//			if (img.toolTip == "Button")
+//			{
+//				dragImg.source = Button1;
+//				selected="Button";
+//			}
+//			else if (img.toolTip == "CheckBox")
+//			{
+//				dragImg.source = CheckBox1;
+//				selected="CheckBox";
+//			}
+//			else if (img.toolTip == "ComboBox")
+//			{
+//				dragImg.source = ComboBox1;
+//				selected="ComboBox";
+//			}
+//			else if (img.toolTip == "DataGrid")
+//			{
+//				dragImg.source = DataGrid1;
+//				selected="DataGrid";
+//			}
+//			else if (img.toolTip == "DateChooser")
+//			{
+//				dragImg.source = DateChooser1;
+//				selected="DateChooser";
+//			}
+//			else if (img.toolTip == "RadioButton")
+//			{
+//				dragImg.source = RadioButton1;
+//				selected="RadioButton";
+//			}
+//			else if (img.toolTip == "TextArea")
+//			{
+//				dragImg.source = TextArea1;
+//				selected="TextArea";
+//			}
+//			else if (img.toolTip == "TextInput")
+//			{
+//				dragImg.source = TextInput1;
+//				selected="TextInput";
+//			}
 			
 			dragImg.move(target.mouseX,target.mouseY);
 			

@@ -37,10 +37,10 @@
 				<cursors:RotateCursor mouseChildren="false" mouseEnabled="false"/>
 			</vector:CursorItem>
 			
-			<vector:hint>
+<!--			<vector:hint>
 				<controls:Hint alpha="0.6"/>
 			</vector:hint>
-		</vector:CursorManager>
+-->		</vector:CursorManager>
 	</fx:Declarations>
 	
 	<controls:Control id="moveControl" top="0" left="0" right="0" bottom="0"

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("org.yang.chen.components.ToggleTextInput")]
+	</fx:Metadata>
+	
+	<s:states>
+		<s:State name="display"/>
+		<s:State name="normal"/>
+		<s:State name="disabled" stateGroups="disabledStates"/>
+		<s:State name="normalWithPrompt"/>
+		<s:State name="disabledWithPrompt" stateGroups="disabledStates"/>
+	</s:states>
+	
+	<s:HGroup verticalAlign="middle" verticalCenter="0" width="100%" gap="-1">
+		<!--Border-->
+		<s:Group verticalCenter="0" width="100%">
+			<!-- border --> 
+			<!--- @private -->
+			<s:Rect left="0" right="0" top="0" bottom="0" id="border" excludeFrom="display">
+				<s:stroke>     
+					<!--- @private -->
+					<s:SolidColorStroke id="borderStroke" weight="1" />
+				</s:stroke>
+			</s:Rect>
+			
+			<!-- fill -->
+			<!--- Defines the appearance of the TextInput component's background. -->
+			<s:Rect id="background" left="1" right="1" top="1" bottom="1" excludeFrom="display">
+				<s:fill>
+					<!--- @private Defines the background fill color. -->
+					<s:SolidColor id="bgFill" color="0xFFFFFF" />
+				</s:fill>
+			</s:Rect>
+			
+			<!-- shadow -->
+			<!--- @private -->
+			<s:Rect left="1" top="1" right="1" height="1" id="shadow" excludeFrom="display">
+				<s:fill>
+					<s:SolidColor color="0x000000" alpha="0.12" />
+				</s:fill>
+			</s:Rect>
+			
+			<!--Text-->
+			<s:RichEditableText id="textDisplay" widthInChars="10"
+								verticalAlign="middle" verticalCenter="0"
+								left="5" right="5" top="5" bottom="5" visible.display="false"/>
+			
+			<!-- Prompt text -->
+			<s:Label id="promptDisplay" maxDisplayedLines="1" 
+					 left="5" right="5" verticalAlign="middle" verticalCenter="0"
+					 mouseEnabled="false" mouseChildren="false"
+					 includeIn="normalWithPrompt,disabledWithPrompt" />
+			
+			<s:Button id="labelButton" focusSkin="{null}" includeIn="display" buttonMode="true" skinClass="org.yang.chen.skins.TTILabelButtonSkin"/>
+			<s:Button id="addButton" focusSkin="{null}" includeIn="display" buttonMode="true"/>
+		
+		</s:Group>
+		<s:HGroup right="0" verticalCenter="0" height="100%" gap="-1">
+			<s:Button id="confirmButton" label="Confirm" height="100%" excludeFrom="display"/>
+			<s:Button id="cancelButton" label="Cancel" height="100%" excludeFrom="display"/>
+		</s:HGroup>
+	</s:HGroup>
+</s:Skin>

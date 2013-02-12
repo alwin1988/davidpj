@@ -265,6 +265,8 @@
 							//						bt.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 							bt.x = event.localX;
 							bt.y = event.localY;
+							bt.minWidth = 20;
+							bt.minHeight = 20;
 							bt.width = 70;
 							bt.height = 24;
 							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
@@ -325,6 +327,8 @@
 							tx.y = event.localY;
 							tx.width = 120;
 							tx.height = 24;
+							tx.minWidth = 20;
+							tx.minHeight = 20;
 
 							
 							tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
@@ -349,6 +353,8 @@
 							ck.y = event.localY;
 							ck.width = 120;
 							ck.height = 24;
+							ck.minWidth = 20;
+							ck.minHeight = 20;
 
 							ck.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							ck.setStyle("skinClass", Class(checkboxSkin));
@@ -371,6 +377,8 @@
 							dg.y = event.localY;
 							dg.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							dg.setStyle("skinClass",Class(vDataGridSkin));
+							dg.minWidth = 20;
+							dg.minHeight = 20;
 							
 							if((dg.x + dg.width) >= GG.width){
 								dg.x = GG.width - dg.width;
@@ -388,6 +396,9 @@
 							dc.x = event.localX;
 							dc.y = event.localY;
 							dc.width = 200;
+							dc.minWidth = 20;
+							dc.minHeight = 20;
+
 							dc.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							if((dc.x + dc.width) >= GG.width){
 								dc.x = GG.width - dc.width;
@@ -407,6 +418,9 @@
 							rd.y = event.localY;
 							rd.width = 120;
 							rd.height = 24;
+							rd.minWidth = 20;
+							rd.minHeight = 20;
+
 							rd.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							rd.setStyle("skinClass",Class(radioBtnSkin));
 							
@@ -428,6 +442,9 @@
 							ta.y = event.localY;
 							ta.width = 120;
 							ta.height = 40;
+							ta.minWidth = 20;
+							ta.minHeight = 20;
+
 
 							ta.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							ta.setStyle("skinClass",Class(textAreaSkin));
@@ -448,6 +465,9 @@
 							//						ta.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 							cc.x = event.localX;
 							cc.y = event.localY;
+							cc.minWidth = 20;
+							cc.minHeight = 20;
+
 							cc.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							
 							
@@ -463,6 +483,9 @@
 							var cb:vComboBox = new vComboBox();
 							cb.x = event.localX;
 							cb.y = event.localY;
+							cb.minWidth = 20;
+							cb.minHeight = 20;
+
 							cb.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							if((cb.x + cb.width) >= GG.width){
 								cb.x = GG.width - cb.width;
@@ -560,9 +583,9 @@
 										  height="{GG.height}" step="{Constants.gridSize}"/>
 					</s:Group>
 					
-					<view:CustomUITransformTool id="tool" depth="3"
+					<view:CustomUITransformTool id="tool" depth="3"  
 												skinClass="david.view.skins.CustomUITransformToolSkin"
-
+												liveTransformation="false" showPreviewCover="true"
 												>
 						<view:bounds>
 							<model:Bounds x="30" y="25" width="400" height="250"/>

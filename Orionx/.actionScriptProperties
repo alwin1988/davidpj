@@ -16,9 +16,9 @@
   <applications>
     <application path="OrionXerverFormDesigner.mxml"/>
     <application path="Main.mxml"/>
+    <application path="Preview.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>
-

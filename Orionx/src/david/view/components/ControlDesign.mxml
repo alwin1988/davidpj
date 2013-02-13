@@ -7,6 +7,8 @@
 		<![CDATA[
 			import david.view.configs.Constants;
 			
+			import mx.controls.ComboBox;
+			import mx.controls.Image;
 			import mx.core.DragSource;
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
@@ -70,6 +72,40 @@
 
 			
 			
+			protected function dg2_mouseMoveHandler(event:MouseEvent):void
+			{
+			
+				FlexGlobals.topLevelApplication.vdFormDesign.tool.visible = false;
+				var dragSource:DragSource = new DragSource();
+				var dragImg:UIComponent;
+//				dragImg.source = dg2.selectedItem.icon2;
+//				dragImg.width  = 24;
+//				dragImg.height = 24;
+				
+				var dragInitiator:UIComponent = event.currentTarget as  UIComponent;
+//				dragImg.move(dragInitiator.mouseX,dragInitiator.mouseY);
+				
+				if(dg2.selectedItem.detail == 'ButtonIR'){
+					dragImg = new Button();
+					dragImg.width = 100; dragImg.height = 24;
+				} else if(dg2.selectedItem.detail == 'ComboBoxIR'){
+					dragImg = new mx.controls.ComboBox();
+					dragImg.width = 150; dragImg.height = 24;
+				} else if(dg2.selectedItem.detail == 'TextInputIR'){
+					dragImg = new mx.controls.TextInput();
+					dragImg.width = 150; dragImg.height = 24;
+				} else {
+					dragImg = event.currentTarget as  UIComponent; 
+				}
+				
+				
+				
+				dragSource.addData(dragInitiator, "itemrender");
+				dragSource.addData(dragInitiator, dg2.selectedItem.detail);
+				DragManager.doDrag(dragInitiator, dragSource, event,dragImg);
+				
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -111,8 +147,6 @@
 									fontFamily="{Constants.fieldFont}">-->
 					<mx:HBox id="container2dg" width="100%" height="100%" label="First Section"
 							 horizontalGap="0">
-						
-						
 						<mx:DataGrid id="dg1" width="100%"
 									 dataProvider="{FlexGlobals.topLevelApplication.compList}"
 									 dragEnabled="false" draggableColumns="false"
@@ -123,12 +157,15 @@
 							</mx:columns>
 						</mx:DataGrid>		
 						<mx:DataGrid id="dg2" width="100%"
-									 dataProvider="{FlexGlobals.topLevelApplication.compList}"
-									 dragEnabled="false" draggableColumns="false"
-									 dragMoveEnabled="false" dropEnabled="false" verticalScrollPolicy="off">
+									 dataProvider="{FlexGlobals.topLevelApplication.compList2}"
+									 dragEnabled="true" 
+									 dragMoveEnabled="false" 
+									 dropEnabled="false" 
+									 mouseDown="dg2_mouseMoveHandler(event)"
+									 verticalScrollPolicy="auto">
 							<mx:columns>					
-								<mx:DataGridColumn dataField="icon2" headerText="Detail index fields"
-												   itemRenderer="DetailImageRenderer"/>									
+								<mx:DataGridColumn dataField="icon" headerText="Detail index fields"
+												   itemRenderer="DetailItemrenderer"/>									
 							</mx:columns>
 						</mx:DataGrid>					
 					</mx:HBox>

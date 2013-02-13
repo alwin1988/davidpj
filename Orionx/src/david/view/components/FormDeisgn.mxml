@@ -286,35 +286,35 @@
 							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
-						case "ButtonIR":
-						{
-//							Alert.show('ButtonIr');
-//							Alert.show(ObjectUtil.toString(event.target.className,event.currentTarget.className));
-							if(event.currentTarget.className == "vDataGrid"){
-								if(!event.target.isDelele){ 
-									event.target.isDelele = !event.target.isDelele;
-									//					event.target.dataProvider = event.target.Ac;
-									event.target.columns.removeAll();
-								}
-								
-								var col:GridColumn = new GridColumn();
-								col.dataField = "dataField"+ (event.target.columns.length+1).toString();
-								col.headerText = "Column " + (event.target.columns.length+1).toString();
-								if(event.dragSource.hasFormat('ButtonIR')){
-									col.itemRenderer = new ClassFactory(ButtonItemRender);
-									event.target.columns.addItem(col);
-								} else if(event.dragSource.hasFormat('ComboBoxIR')){
-									col.itemRenderer = new ClassFactory(ComboboxItemRender);
-									event.target.columns.addItem(col);
-								} else if(event.dragSource.hasFormat('TextInputIR')){
-									col.itemRenderer = new ClassFactory(TextInputItemRender);					
-									event.target.columns.addItem(col);
-								}
-							}
-							
-							
-							break;
-						}
+//						case "ButtonIR":
+//						{
+////							Alert.show('ButtonIr');
+////							Alert.show(ObjectUtil.toString(event.target.className,event.currentTarget.className));
+//							if(event.currentTarget.className == "vDataGrid"){
+//								if(!event.target.isDelele){ 
+//									event.target.isDelele = !event.target.isDelele;
+//									//					event.target.dataProvider = event.target.Ac;
+//									event.target.columns.removeAll();
+//								}
+//								
+//								var col:GridColumn = new GridColumn();
+//								col.dataField = "dataField"+ (event.target.columns.length+1).toString();
+//								col.headerText = "Column " + (event.target.columns.length+1).toString();
+//								if(event.dragSource.hasFormat('ButtonIR')){
+//									col.itemRenderer = new ClassFactory(ButtonItemRender);
+//									event.target.columns.addItem(col);
+//								} else if(event.dragSource.hasFormat('ComboBoxIR')){
+//									col.itemRenderer = new ClassFactory(ComboboxItemRender);
+//									event.target.columns.addItem(col);
+//								} else if(event.dragSource.hasFormat('TextInputIR')){
+//									col.itemRenderer = new ClassFactory(TextInputItemRender);					
+//									event.target.columns.addItem(col);
+//								}
+//							}
+//							
+//							
+//							break;
+//						}
 							
 						case "TextInput":
 						{
@@ -532,13 +532,13 @@
 					var col:GridColumn = new GridColumn();
 					col.dataField = "dataField"+ (event.target.columns.length+1).toString();
 					col.headerText = "Column " + (event.target.columns.length+1).toString();
-					if(event.dragSource.hasFormat('Button')){
+					if(event.dragSource.hasFormat('ButtonIR')){
 						col.itemRenderer = new ClassFactory(ButtonItemRender);
 						event.target.columns.addItem(col);
-					} else if(event.dragSource.hasFormat('ComboBox')){
+					} else if(event.dragSource.hasFormat('ComboBoxIR')){
 						col.itemRenderer = new ClassFactory(ComboboxItemRender);
 						event.target.columns.addItem(col);
-					} else if(event.dragSource.hasFormat('TextInput')){
+					} else if(event.dragSource.hasFormat('TextInputIR')){
 						col.itemRenderer = new ClassFactory(TextInputItemRender);					
 						event.target.columns.addItem(col);
 					}
@@ -583,9 +583,10 @@
 										  height="{GG.height}" step="{Constants.gridSize}"/>
 					</s:Group>
 					
-					<view:CustomUITransformTool id="tool" depth="3"  
+					<view:CustomUITransformTool id="tool" depth="3"
 												skinClass="david.view.skins.CustomUITransformToolSkin"
-												liveTransformation="false" showPreviewCover="true"
+												liveTransformation="true" showPreviewCover="true"
+												
 												>
 						<view:bounds>
 							<model:Bounds x="30" y="25" width="400" height="250"/>

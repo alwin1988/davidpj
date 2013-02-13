@@ -42,6 +42,16 @@
 		[Bindable]	public var updateComplete:Boolean = false;
 		public  var selected:String="";
 		
+		private var _idx:int= 0;
+		
+		
+		public function get getIdx():String {
+			_idx +=1;
+			return 'id' + _idx.toString();
+		}
+		
+		
+		
 		protected function init():void
 		{
 			compList = new ArrayCollection([

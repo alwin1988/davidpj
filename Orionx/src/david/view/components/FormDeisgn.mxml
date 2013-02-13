@@ -40,6 +40,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.vstyran.transform.events.TransformEvent;
 			import mx.utils.ObjectUtil;
 			import david.view.configs.Constants;
 			import mx.controls.Alert;
@@ -193,15 +194,13 @@
 					tool.showPreviewCover = true;
 					tool.startMoving(event);
 					tool.visible = true;
-					if(tool.target.className == "ComboBox"){
-						tool.target.enabled = true;
-					}
 				}
 			}
 			
 			protected function unselect(event:MouseEvent):void {
 				if(tool){
 					tool.visible = false;
+					ComponentList.enableCombobox(null);
 				}
 			}	
 			
@@ -234,6 +233,7 @@
 				if(event.target.className == "Box"){
 					if(tool){
 						tool.visible = false;
+						ComponentList.enableCombobox(null);
 					}
 				}
 				
@@ -259,12 +259,10 @@
 						case "Button":
 						{
 							var bt:Button = new Button();
-							//bt.label = data[0].list;
 							bt.doubleClickEnabled = true;
-							//						bt.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						bt.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 							bt.x = event.localX;
 							bt.y = event.localY;
+							bt.id = FlexGlobals.topLevelApplication.getIdx;
 							bt.minWidth = 20;
 							bt.minHeight = 20;
 							bt.width = 70;
@@ -272,72 +270,32 @@
 							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							bt.setStyle("skinClass", Class(buttonSkin));
 							FlexGlobals.topLevelApplication.updateComplete = true;
-							//						bt.addEventListener(FlexEvent.UPDATE_COMPLETE,updatecompletes);
-							
 							if( (bt.x+bt.width) >= GG.width){
 								bt.x = GG.width - bt.width;
 							}
-							
 							GG.addElement(bt);
-							//						GG.addEventListener(FlexEvent.UPDATE_COMPLETE,function(event:FlexEvent):void {
-							////							updatecompletes(event);
-							//							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							//						});
+							ComponentList.Accomp.addItem(bt);
 							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
-//						case "ButtonIR":
-//						{
-////							Alert.show('ButtonIr');
-////							Alert.show(ObjectUtil.toString(event.target.className,event.currentTarget.className));
-//							if(event.currentTarget.className == "vDataGrid"){
-//								if(!event.target.isDelele){ 
-//									event.target.isDelele = !event.target.isDelele;
-//									//					event.target.dataProvider = event.target.Ac;
-//									event.target.columns.removeAll();
-//								}
-//								
-//								var col:GridColumn = new GridColumn();
-//								col.dataField = "dataField"+ (event.target.columns.length+1).toString();
-//								col.headerText = "Column " + (event.target.columns.length+1).toString();
-//								if(event.dragSource.hasFormat('ButtonIR')){
-//									col.itemRenderer = new ClassFactory(ButtonItemRender);
-//									event.target.columns.addItem(col);
-//								} else if(event.dragSource.hasFormat('ComboBoxIR')){
-//									col.itemRenderer = new ClassFactory(ComboboxItemRender);
-//									event.target.columns.addItem(col);
-//								} else if(event.dragSource.hasFormat('TextInputIR')){
-//									col.itemRenderer = new ClassFactory(TextInputItemRender);					
-//									event.target.columns.addItem(col);
-//								}
-//							}
-//							
-//							
-//							break;
-//						}
-							
 						case "TextInput":
 						{
 							var tx:spark.components.TextInput = new spark.components.TextInput();
-							//tx.text = data[0].list;
-							//						tx.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
 							tx.doubleClickEnabled = true;
-							//						tx.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							tx.id = FlexGlobals.topLevelApplication.getIdx;
 							tx.x = event.localX;
 							tx.y = event.localY;
 							tx.width = 120;
 							tx.height = 24;
 							tx.minWidth = 20;
 							tx.minHeight = 20;
-
-							
 							tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							tx.setStyle("skinClass", Class(txtinputSkin));
-							
 							if((tx.x + tx.width) >= GG.width){
 								tx.x = GG.width - tx.width;
 							}
 							GG.addElement(tx);
+							ComponentList.Accomp.addItem(tx);
 							tx.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
@@ -346,22 +304,20 @@
 							var ck:spark.components.CheckBox = new spark.components.CheckBox();
 							ck.doubleClickEnabled = true;
 							ck.label = "checkbox 1";
-							//ck.label = data[0].list;
-							//						ck.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						ck.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							ck.id = FlexGlobals.topLevelApplication.getIdx;
 							ck.x = event.localX;
 							ck.y = event.localY;
 							ck.width = 120;
 							ck.height = 24;
 							ck.minWidth = 20;
 							ck.minHeight = 20;
-
 							ck.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							ck.setStyle("skinClass", Class(checkboxSkin));
 							if((ck.x + ck.width) >= GG.width){
 								ck.x = GG.width - ck.width;
 							}
 							GG.addElement(ck);
+							ComponentList.Accomp.addItem(ck);
 							ck.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
@@ -369,8 +325,6 @@
 						{
 							var dg:vDataGrid = new vDataGrid();
 							dg.doubleClickEnabled = true;
-							//						dg.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						dg.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
 							dg.addEventListener(DragEvent.DRAG_ENTER,dgDragEnterHandler);
 							dg.addEventListener(DragEvent.DRAG_DROP,dgDragDropHandler);
 							dg.x = event.localX;
@@ -379,11 +333,12 @@
 							dg.setStyle("skinClass",Class(vDataGridSkin));
 							dg.minWidth = 20;
 							dg.minHeight = 20;
-							
+							dg.id = FlexGlobals.topLevelApplication.getIdx;							
 							if((dg.x + dg.width) >= GG.width){
 								dg.x = GG.width - dg.width;
 							}
 							GG.addElement(dg);
+							ComponentList.Accomp.addItem(dg);
 							dg.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
@@ -391,19 +346,17 @@
 						{
 							var dc:cusCompDateChooser = new cusCompDateChooser();
 							dc.doubleClickEnabled = true;
-							//						dc.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						dc.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
-							dc.x = event.localX;
+							dc.id = FlexGlobals.topLevelApplication.getIdx;							dc.x = event.localX;
 							dc.y = event.localY;
 							dc.width = 200;
 							dc.minWidth = 20;
 							dc.minHeight = 20;
-
 							dc.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							if((dc.x + dc.width) >= GG.width){
 								dc.x = GG.width - dc.width;
 							}
 							GG.addElement(dc);
+							ComponentList.Accomp.addItem(dc);
 							dc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
@@ -412,8 +365,7 @@
 							var rd:RadioButton = new RadioButton();
 							rd.doubleClickEnabled = true;
 							rd.label = "Radio Button";
-							//						rd.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						rd.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+							rd.id = FlexGlobals.topLevelApplication.getIdx;
 							rd.x = event.localX;
 							rd.y = event.localY;
 							rd.width = 120;
@@ -428,6 +380,7 @@
 								rd.x = GG.width - rd.width;
 							}
 							GG.addElement(rd);
+							ComponentList.Accomp.addItem(rd);
 							rd.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
@@ -436,9 +389,7 @@
 							var ta:cusCompTextArea = new cusCompTextArea();
 							ta.text = "Text Area";
 							ta.doubleClickEnabled = true;
-							//						ta.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						ta.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
-							ta.x = event.localX;
+							ta.id = FlexGlobals.topLevelApplication.getIdx;							ta.x = event.localX;
 							ta.y = event.localY;
 							ta.width = 120;
 							ta.height = 40;
@@ -453,17 +404,14 @@
 								ta.x = GG.width - ta.width;
 							}
 							GG.addElement(ta);
+							ComponentList.Accomp.addItem(ta);
 							ta.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
 						case 9:
 						{	
 							var cc:customComponent = new customComponent();
-							//ta.text = "Text Area";
-							//ta.doubleClickEnabled = true;
-							//						ta.addEventListener(MouseEvent.DOUBLE_CLICK,showComponentProperity);
-							//						ta.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
-							cc.x = event.localX;
+							cc.id = FlexGlobals.topLevelApplication.getIdx;							cc.x = event.localX;
 							cc.y = event.localY;
 							cc.minWidth = 20;
 							cc.minHeight = 20;
@@ -475,6 +423,7 @@
 								cc.x = GG.width - cc.width;
 							}
 							GG.addElement(cc);	
+							ComponentList.Accomp.addItem(cc);
 							cc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}						
@@ -485,12 +434,13 @@
 							cb.y = event.localY;
 							cb.minWidth = 20;
 							cb.minHeight = 20;
-
+							cb.id = FlexGlobals.topLevelApplication.getIdx;
 							cb.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							if((cb.x + cb.width) >= GG.width){
 								cb.x = GG.width - cb.width;
 							}
 							GG.addElement(cb);
+							ComponentList.Accomp.addItem(cb);
 							cb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
 							break;
 						}
@@ -502,33 +452,25 @@
 					} // cacse 
 					
 				} 
-				//			else if(event.dragSource.hasFormat('canvasmove')){
-				//				data = event.dragSource.dataForFormat('canvasmove');
-				//				data.x = event.localX;
-				//				data.y = event.localY;
-				//			}
+				
+				for(var i:int=0;i<ComponentList.Accomp.length;i++){
+					trace(ComponentList.Accomp[i].id + ':' + ComponentList.Accomp[i].className );  
+				}
 				
 			}		
 			private function dgDragEnterHandler(event:DragEvent):void {
 				if(event.dragSource.hasFormat('itemrender')){
 					var dropTarget:vDataGrid = vDataGrid(event.currentTarget);// as dataGrid
 					DragManager.acceptDragDrop(dropTarget);
-					//			} else if(event.dragSource.hasFormat('ComboBox')){
-					//				
-					//			} else if(event.dragSource.hasFormat('TextInput')){
-					
 				} else {}
 			}			
 			
 			private function dgDragDropHandler(event:DragEvent):void {
-				
 				if(event.target.className == "vDataGrid"){
 					if(!event.target.isDelele){ 
 						event.target.isDelele = !event.target.isDelele;
-						//					event.target.dataProvider = event.target.Ac;
 						event.target.columns.removeAll();
 					}
-					
 					var col:GridColumn = new GridColumn();
 					col.dataField = "dataField"+ (event.target.columns.length+1).toString();
 					col.headerText = "Column " + (event.target.columns.length+1).toString();
@@ -546,20 +488,27 @@
 			}
 
 			private function dragEnterHandler(event:DragEvent):void {
-				
-				//			var dropTarget:Canvas = Canvas(event.currentTarget);// as Group;
-				//			DragManager.acceptDragDrop(dropTarget);
-				//			var dropTarget:Group = Group(event.currentTarget);// as Group;
-				//			DragManager.acceptDragDrop(dropTarget);
 				if(event.dragSource.hasFormat("itemrender")){
 					return;
-					
 				}else{
 					var dropTarget:Box = Box(event.currentTarget);// as vBOX
 					DragManager.acceptDragDrop(dropTarget);
 				}
 			}
 
+			protected function tool_transformationStartHandler(event:TransformEvent):void
+			{
+//				ComponentList.disableCombobox(event.currentTarget.id);
+				trace(ObjectUtil.toString(event.data));
+			}
+			
+			protected function tool_transformationHandler(event:TransformEvent):void
+			{
+				trace(ObjectUtil.toString(event.data));
+				ComponentList.disableCombobox(event.currentTarget.target.id);
+			}	
+
+			
 		]]>
 	</fx:Script>
 	<mx:VBox top="0" width="100%" height="100%" horizontalCenter="0">
@@ -586,7 +535,8 @@
 					<view:CustomUITransformTool id="tool" depth="3"
 												skinClass="david.view.skins.CustomUITransformToolSkin"
 												liveTransformation="true" showPreviewCover="true"
-												
+												transformationStart="tool_transformationStartHandler(event)"
+												transformation="tool_transformationHandler(event)"
 												>
 						<view:bounds>
 							<model:Bounds x="30" y="25" width="400" height="250"/>

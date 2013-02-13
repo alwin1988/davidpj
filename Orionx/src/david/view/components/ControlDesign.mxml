@@ -74,16 +74,10 @@
 			
 			protected function dg2_mouseMoveHandler(event:MouseEvent):void
 			{
-			
 				FlexGlobals.topLevelApplication.vdFormDesign.tool.visible = false;
 				var dragSource:DragSource = new DragSource();
 				var dragImg:UIComponent;
-//				dragImg.source = dg2.selectedItem.icon2;
-//				dragImg.width  = 24;
-//				dragImg.height = 24;
-				
 				var dragInitiator:UIComponent = event.currentTarget as  UIComponent;
-//				dragImg.move(dragInitiator.mouseX,dragInitiator.mouseY);
 				
 				if(dg2.selectedItem.detail == 'ButtonIR'){
 					dragImg = new Button();
@@ -97,13 +91,9 @@
 				} else {
 					dragImg = event.currentTarget as  UIComponent; 
 				}
-				
-				
-				
 				dragSource.addData(dragInitiator, "itemrender");
 				dragSource.addData(dragInitiator, dg2.selectedItem.detail);
 				DragManager.doDrag(dragInitiator, dragSource, event,dragImg);
-				
 			}
 			
 		]]>

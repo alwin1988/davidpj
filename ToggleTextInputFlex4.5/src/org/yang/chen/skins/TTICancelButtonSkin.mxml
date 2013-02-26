@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:ns="library://ns.adobe.com/flex/mx"
+	alpha.disabled="0.7">
+	
+	<fx:Metadata>
+		[HostComponent("spark.components.Button")]
+	</fx:Metadata> 
+	
+	<s:states>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
+	</s:states>
+	
+	<!--- Transitions -->
+	<s:transitions>
+		<s:Transition fromState="up">
+			<s:Parallel duration="200">
+				<s:AnimateColor target="{color1}"/>
+				<s:AnimateColor target="{color2}"/>
+				<s:AnimateColor target="{color3}"/>
+				<s:AnimateColor target="{color4}"/>
+				<s:Animate target="{this}">
+					<s:SimpleMotionPath property="alpha"/>
+				</s:Animate>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	
+	<!--Background with outter stroke-->
+<!--		<s:stroke>
+			<s:SolidColorStroke color="0x676767" alpha="0.6" weight="1"/>
+		</s:stroke>-->
+	<s:Rect left="0" right="0" top="0" bottom="0" >
+		<s:filters>
+			<s:GlowFilter blurX="4" blurY="4" color="0x505050" alpha="0.5" inner="true" quality="3" strength="1" includeIn="down"/>
+			<s:GlowFilter blurX="3" blurY="3" color="0x505050" alpha="0.2" quality="3" strength="1" includeIn="down"/>
+		</s:filters>
+		
+		
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry id="color1"
+					color="0xffffff"
+					color.over="0xfcfdfe"
+					color.down="0xeaf5ff"/>
+				<s:GradientEntry id="color2"
+					color="0xf0f0f0"
+					color.over="0xd8e6f3"
+					color.down="0xcbddee"
+					ratio=".4"/>
+				<s:GradientEntry id="color3"
+					color="0xe8e8e8"
+					color.over="0xbfdbef"
+					color.down="0xabcfe8"
+					ratio=".4"/>
+				<s:GradientEntry id="color4"
+					color="0xf5f5f5"
+					color.over="0xd3e6f4"
+					color.down="0xc3dbed"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- Inner stroke -->
+<!--	topRightRadiusX="3" bottomRightRadiusX="3"-->
+<!--	<s:Rect left="1" top="1" right="1" bottom="1" >
+		<s:stroke>
+			<s:SolidColorStroke color="0xffffff" alpha=".7" weight="1"/>
+		</s:stroke>
+	</s:Rect>
+-->	
+	<!-- Close symbol -->
+	<s:Path left="2" right="2" top="2" bottom="3"
+			data="M340.4 139.975 342.85 137.5 345.4 137.5 341.675 141.25 345.525 145.1 342.975 145.1 340.4 142.525 337.85 145.1 335.3 145.1 339.125 141.25 335.375 137.5 337.925 137.5 340.4 139.975"
+			>
+		<s:fill>
+			<s:SolidColor color="0x505050"/>
+		</s:fill>
+	</s:Path> 
+</s:SparkSkin>

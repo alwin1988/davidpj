@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="530" height="240"
+			   backgroundColor="0xf0f0f0" close="handleCloseEvent()" chromeColor="0xf0f0f0">
+	<fx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			/**
+			 * Closes the title window.
+			 */
+			private function handleCloseEvent():void
+			{
+				PopUpManager.removePopUp(this);
+			}            
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Group top="10" bottom="10" left="10" right="10">
+		<s:VGroup width="100%" height="100%">
+			<s:Label width="100%">
+				<fx:String>1.Click on the label to start editing text.</fx:String>
+			</s:Label>
+			<s:Label width="100%">
+				<fx:String>2.Click on the confirm (tick) or cancel (cross) button to confirm or cancel changes made.</fx:String>
+			</s:Label>
+			<s:Label width="100%">
+				<fx:String>3.Select the "Minimalist" skin and use ENTER or ESC key to confirm or cancel changes made.</fx:String>
+			</s:Label>
+			<s:Label width="100%">
+				<fx:String>4.Use TAB key to browse through the text Inputs. Invalid changes will be canceled and valid changes will be commited.</fx:String>
+			</s:Label>
+			<s:Label width="100%">
+				<fx:String>5.When trying to confirm an invalid change by pressing ENTER or clicking the confirm button, the component will remain in editing mode (Try to enter an invalid email or phone number and press Enter).</fx:String>
+			</s:Label>
+			<s:Label width="100%">
+				<fx:String>6.The text area at the bottom shows the confirm events dispatched by the text inputs.</fx:String>
+			</s:Label>
+		</s:VGroup>
+		
+		<s:Button horizontalCenter="0" bottom="0" label="Cancel" click="handleCloseEvent();"/> 
+	</s:Group>
+	
+</s:TitleWindow>

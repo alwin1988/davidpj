@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("org.yang.chen.components.ToggleTextInput")]
+	</fx:Metadata>
+	
+	<s:states>
+		<s:State name="display"/>
+		<s:State name="normal"/>
+		<s:State name="disabled" stateGroups="disabledStates"/>
+		<s:State name="normalWithPrompt"/>
+		<s:State name="disabledWithPrompt" stateGroups="disabledStates"/>
+	</s:states>
+	
+	<s:HGroup verticalAlign="middle" verticalCenter="0" width="100%" gap="10">
+		<!--Border-->
+		<s:Group verticalCenter="0" width="100%">
+<!--			<s:Rect left="0" right="0" top="0" bottom="0" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}">
+				<s:fill>
+					<s:LinearGradient rotation="90">
+						<s:GradientEntry color="0x777777"/>
+						<s:GradientEntry color="0xcccccc"/>
+					</s:LinearGradient>
+				</s:fill>
+			</s:Rect>-->
+			
+			<s:Rect top="-1" left="-1" right="-5" bottom="-1" alpha="0.8" 
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}">
+					<s:fill>
+						<s:SolidColor color="0xfff000" />
+					</s:fill>
+			</s:Rect>
+			
+<!--			<s:Rect left="2" right="2" top="2" bottom="2" verticalCenter="0" 
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}"
+					>
+				<s:stroke>
+					<s:SolidColorStroke color="0x000000" alpha="1" />
+				</s:stroke>
+			</s:Rect>-->
+			
+			<!--Background-->
+			<s:Rect left="1" right="1" top="1" bottom="1" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}">
+				<s:fill>
+					<s:SolidColor color="0xfafafa" color.disabledStates="0xf4f4f4"/>
+				</s:fill>
+				<s:filters>
+					<s:DropShadowFilter blurX="1" blurY="1"  angle="90" distance="1" color="#888888" strength="1" inner="true" quality="2" alpha="0.3"/>
+				</s:filters>
+			</s:Rect>
+			
+			<!--Text-->
+			<s:RichEditableText id="textDisplay" widthInChars="10"
+								verticalAlign="middle" verticalCenter="0"
+								left="5" right="5" top="5" bottom="5" visible.display="false"
+								backgroundColor="0xffffff"
+								/>
+			
+			<!-- Prompt text -->
+			<s:Label id="promptDisplay" maxDisplayedLines="1" 
+					 left="5" right="5" verticalAlign="middle" verticalCenter="0"
+					 mouseEnabled="false" mouseChildren="false"
+					 includeIn="normalWithPrompt,disabledWithPrompt" />
+			
+			<s:Button id="labelButton" focusSkin="{null}" includeIn="display" buttonMode="true" skinClass="org.yang.chen.skins.TTIResponsiveLabelButtonSkin"/>
+			<s:Button id="addButton" includeIn="display" left="0" right="0" top="0" bottom="0"
+					  buttonMode="true" focusSkin="{null}"
+					  skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
+		
+		</s:Group>
+		
+		<s:VGroup right="0" gap="0" paddingBottom="0" paddingTop="0" height="100%" verticalAlign="middle" excludeFrom="display"	 >
+			<s:Button id="confirmButton"  width="100%" height="40%"
+					  skinClass="org.yang.chen.skins.btnYes"
+					  />
+			<s:Button id="cancelButton"  height="40%" width="100%"
+					  skinClass="org.yang.chen.skins.btnNo"/>
+		</s:VGroup>
+		</s:HGroup>
+</s:Skin>

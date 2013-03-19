@@ -3,7 +3,8 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009"
 	xmlns:s="library://ns.adobe.com/flex/spark"
 	xmlns:ns="library://ns.adobe.com/flex/mx"
-	alpha.disabled="0.7">
+	alpha.disabled="0.7"
+	>
 	
 	<fx:Metadata>
 		[HostComponent("spark.components.Button")]
@@ -32,14 +33,14 @@
 	</s:transitions>
 	
 	<!--Background with outter stroke-->
+<!--		<s:stroke>
+			<s:SolidColorStroke color="0x676767" alpha="0.6" weight="1"/>
+		</s:stroke>-->
 	<s:Rect left="0" right="0" top="0" bottom="0">
 		<s:filters>
 			<s:GlowFilter blurX="4" blurY="4" color="0x505050" alpha="0.5" inner="true" quality="3" strength="1" includeIn="down"/>
 			<s:GlowFilter blurX="3" blurY="3" color="0x505050" alpha="0.2" quality="3" strength="1" includeIn="down"/>
 		</s:filters>
-		<s:stroke>
-			<s:SolidColorStroke color="0x676767" alpha="0.6" weight="1"/>
-		</s:stroke>
 		<s:fill>
 			<s:LinearGradient rotation="90">
 				<s:GradientEntry id="color1"
@@ -65,15 +66,16 @@
 	</s:Rect>
 	
 	<!-- Inner stroke -->
-	<s:Rect left="1" top="1" right="1" bottom="1">
+<!--	<s:Rect left="1" top="1" right="1" bottom="1">
 		<s:stroke>
 			<s:SolidColorStroke color="0xffffff" alpha=".7" weight="1"/>
 		</s:stroke>
-	</s:Rect>
+	</s:Rect>-->
 	
 	<!-- Close symbol -->
-	<s:Path left="4" right="4" top="6" bottom="6"
-			data="M2.79639 4.49146 4.15234 7.11865C4.15234 7.11865 6.35596 1.77979 9.83057 0 9.74561 1.27124 9.40674 2.37305 10 3.72876 8.47461 4.06787 5.33887 7.88135 4.32178 9.74585 2.88135 7.96606 1.18652 6.61035 0 6.18652L2.79639 4.49146Z">
+	<s:Path left="2" right="2" top="2" bottom="1"
+			data="M2.79639 4.49146 4.15234 7.11865C4.15234 7.11865 6.35596 1.77979 9.83057 0 9.74561 1.27124 9.40674 2.37305 10 3.72876 8.47461 4.06787 5.33887 7.88135 4.32178 9.74585 2.88135 7.96606 1.18652 6.61035 0 6.18652L2.79639 4.49146Z"
+				>
 		<s:fill>
 			<s:SolidColor color="0x505050"/>
 		</s:fill>

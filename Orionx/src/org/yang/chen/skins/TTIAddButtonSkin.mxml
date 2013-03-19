@@ -17,13 +17,23 @@
 	</s:states>
 	
 	<!-- Text-->
-	<s:Label id="labelDisplay" top="5" bottom="5" left="5" right="5" focusEnabled="false"
-			 color.down="0x333333" color="0x6d6cb2"
-			 textDecoration.over="underline"
-			 textDecoration.down="underline"
-			 textAlign="center" 
-			 verticalAlign="middle" 
+<!--	<s:Rect top="-1" left="-1" right="-5" bottom="-1" alpha="0.8" includeIn="over">
+		<s:fill>
+			<s:SolidColor color="0xfff000" />
+		</s:fill>
+	</s:Rect>-->
+<!--			 textDecoration.over="underline"
+			 textDecoration.down="underline"-->
+	<s:Label id="labelDisplay" left="5" right="5" top="5" bottom="5" color="0x6d6cb2"
+			 focusEnabled="false" horizontalCenter="0" textAlign="left" verticalAlign="middle"
+			 verticalCenter="0"
 			 alpha.disabled="0.5"
-			 horizontalCenter="0" verticalCenter="0"> 
-	</s:Label> 
+			 color.down="0x333333"
+			 lineThrough.over="false" textDecoration.over="underline"> 
+	</s:Label>
+<!--	<s:Rect left="2" right="2" top="2" bottom="2" verticalCenter="0" >
+		<s:stroke>
+			<s:SolidColorStroke color="0x000000" alpha="0.6" />
+		</s:stroke>
+	</s:Rect>-->
 </s:SparkSkin>

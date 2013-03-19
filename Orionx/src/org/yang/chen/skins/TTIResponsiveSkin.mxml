@@ -7,6 +7,20 @@
 		[HostComponent("org.yang.chen.components.ToggleTextInput")]
 	</fx:Metadata>
 	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			protected function labelButton_clickHandler(event:MouseEvent):void
+			{
+//				Alert.show(labelButton.label,addButton.label);
+				
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	
 	<s:states>
 		<s:State name="display"/>
 		<s:State name="normal"/>
@@ -15,10 +29,11 @@
 		<s:State name="disabledWithPrompt" stateGroups="disabledStates"/>
 	</s:states>
 	
-	<s:HGroup verticalAlign="middle" verticalCenter="0" width="100%" gap="-1">
+	<s:HGroup verticalAlign="middle" verticalCenter="0" width="100%" gap="5">
 		<!--Border-->
-		<s:Group verticalCenter="0" width="100%">
-			<s:Rect left="0" right="0" top="0" bottom="0" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
+		<s:Group width="{textDisplay.contentWidth+10}" verticalCenter="0"
+				 verticalCenter.normal="0">
+<!--			<s:Rect left="0" right="0" top="0" bottom="0" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
 					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}">
 				<s:fill>
 					<s:LinearGradient rotation="90">
@@ -26,10 +41,20 @@
 						<s:GradientEntry color="0xcccccc"/>
 					</s:LinearGradient>
 				</s:fill>
+			</s:Rect>-->
+			
+			<s:Rect excludeFrom="display"
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}"
+					left="-1"  top="-1" bottom="-1" alpha="0.8"
+					left.normal="-1" top.normal="-1" bottom.normal="-1" width="{textDisplay.contentWidth+10}">
+					<s:fill>
+						<s:SolidColor color="0xfff000" />
+					</s:fill>
 			</s:Rect>
 			
+			
 			<!--Background-->
-			<s:Rect left="1" right="1" top="1" bottom="1" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
+<!--			<s:Rect left="1" right="1" top="1" bottom="1" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
 					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}">
 				<s:fill>
 					<s:SolidColor color="0xfafafa" color.disabledStates="0xf4f4f4"/>
@@ -37,12 +62,24 @@
 				<s:filters>
 					<s:DropShadowFilter blurX="1" blurY="1"  angle="90" distance="1" color="#888888" strength="1" inner="true" quality="2" alpha="0.3"/>
 				</s:filters>
-			</s:Rect>
+			</s:Rect>-->
 			
 			<!--Text-->
 			<s:RichEditableText id="textDisplay" widthInChars="10"
 								verticalAlign="middle" verticalCenter="0"
-								left="5" right="5" top="5" bottom="5" visible.display="false"/>
+								left="5" right="5" top="5" bottom="5" visible.display="false"
+								backgroundColor="0xfff000" backgroundAlpha="0"
+								focusedTextSelectionColor="0xfff000"
+								/>
+
+			
+<!--			<s:Rect left="2" right="2" top="1" bottom="0" verticalCenter="0"   excludeFrom="display"
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}"
+					>
+				<s:stroke>
+					<s:SolidColorStroke color="0xbcb2b2" alpha="0.4" />
+				</s:stroke>
+			</s:Rect>-->
 			
 			<!-- Prompt text -->
 			<s:Label id="promptDisplay" maxDisplayedLines="1" 
@@ -50,13 +87,24 @@
 					 mouseEnabled="false" mouseChildren="false"
 					 includeIn="normalWithPrompt,disabledWithPrompt" />
 			
-			<s:Button id="labelButton" focusSkin="{null}" includeIn="display" buttonMode="true" skinClass="org.yang.chen.skins.TTIResponsiveLabelButtonSkin"/>
-			<s:Button id="addButton" focusSkin="{null}" includeIn="display" buttonMode="true" skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
+			<s:Button id="labelButton" includeIn="display" left="0" right="0" top="0" bottom="0"
+					  buttonMode="true" chromeColor="#EF1C1C"
+					  click="labelButton_clickHandler(event)" focusSkin="{null}"
+					  skinClass="org.yang.chen.skins.TTIResponsiveLabelButtonSkin"
+					  textAlignLast="left"/>
 		
 		</s:Group>
-		<s:HGroup right="0" verticalCenter="0" gap="-1" height="100%">
-			<s:Button id="confirmButton" width="16" height="100%" excludeFrom="display" skinClass="org.yang.chen.skins.TTIConfirmButtonSkin"/>
-			<s:Button id="cancelButton" width="16" height="100%" excludeFrom="display" skinClass="org.yang.chen.skins.TTICancelButtonSkin"/>
+		<s:VGroup right="0" gap="0" paddingBottom="0" paddingTop="0" height="100%" verticalAlign="middle" excludeFrom="display"	 >
+			<s:Button id="confirmButton"  width="10" height="10"
+					  skinClass="org.yang.chen.skins.btnYes"
+					  />
+			<s:Button id="cancelButton"  height="10" width="10"
+					  skinClass="org.yang.chen.skins.btnNo"/>
+		</s:VGroup>
+		
 		</s:HGroup>
-	</s:HGroup>
+			<s:Button id="addButton" includeIn="display" left="0" top="1" 
+					  bottom="-1" click="labelButton_clickHandler(event)"
+					  buttonMode="true" focusSkin="{null}"
+					  skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
 </s:Skin>

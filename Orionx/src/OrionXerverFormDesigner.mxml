@@ -6,8 +6,7 @@
 			   xmlns:component="component.*"
 			   xmlns:view="view.*"
 			   xmlns:components="david.view.components.*"
-			   minWidth="955" minHeight="600" creationComplete="init()"
-			   viewSourceURL="srcview/index.html">
+			   minWidth="955" minHeight="600" creationComplete="init()">
 	<fx:Declarations>
 		
 	</fx:Declarations>
@@ -62,7 +61,8 @@
 				{icon:"assets/DataGrid.png",list:"DataGrid",obj:4},
 				{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
 				{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
-				{icon:"assets/TextArea.png",list:"TextArea",obj:8}
+				{icon:"assets/TextArea.png",list:"TextArea",obj:8},
+				{icon:"assets/ToggleTextInput.png",list:"ToggleTextInput",obj:9}
 			]);
 			
 			compList2 = new ArrayCollection ([

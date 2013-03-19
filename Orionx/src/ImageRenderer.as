@@ -44,6 +44,9 @@ package
 		[Embed("assets/TextInput.png")]
 		private var TextInput:Class;		
 
+		[Embed("assets/ToggleTextInput.png")]
+		private var ToggleTextInput:Class;
+		
 		/*=================================*/
 		[Embed("assets/real/Button.png")]
 		private var Button1:Class;
@@ -68,6 +71,9 @@ package
 		
 		[Embed("assets/real/TextInput.png")]
 		private var TextInput1:Class;		
+		
+		[Embed("assets/real/ToggleTextInput.png")]
+		private var ToggleTextInput1:Class;
 		
 		override public function set data(value:Object):void
 		{
@@ -111,7 +117,12 @@ package
 				else if (value.list == "TextInput")
 				{
 					img.source = TextInput;
-				}				
+				} 
+				else if( value.list == "ToggleTextInput"){
+					img.source = ToggleTextInput;
+				}
+				
+				
 				//img.source = value.icon;
 				addChild(img);
 				img.addEventListener(MouseEvent.MOUSE_DOWN, doDrag);
@@ -178,7 +189,10 @@ package
 				dragImg.source = TextInput1;
 				FlexGlobals.topLevelApplication.selected="TextInput";
 			}
-			
+			else if( img.toolTip == "ToggleTextInput"){
+				dragImg.source = ToggleTextInput1;
+				FlexGlobals.topLevelApplication.selected="ToggleTextInput";
+			}
 			dragImg.move(target.mouseX,target.mouseY);
 			
 			var dsource:DragSource = new DragSource();

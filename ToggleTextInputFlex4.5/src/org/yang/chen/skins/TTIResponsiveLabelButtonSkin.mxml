@@ -3,7 +3,8 @@
 			 xmlns:s="library://ns.adobe.com/flex/spark"
 			 xmlns:ns="library://ns.adobe.com/flex/mx"
 			 alpha.disabled="0.7"
-			 rollOverColor.over="#AEC7ED">
+			 rollOverColor.over="#FFF000"
+			 focusColor.up="#FFF000">
 	
 	<fx:Metadata>
 		[HostComponent("spark.components.Button")]

@@ -74,12 +74,12 @@
 					case userName:
 						logArea.appendText("User name changed.\n");
 						break;
-					case phoneNumber:
-						logArea.appendText("Phone number changed.\n");
-						break;
-					case email:
-						logArea.appendText("Email address changed.\n");
-						break;
+//					case phoneNumber:
+//						logArea.appendText("Phone number changed.\n");
+//						break;
+//					case email:
+//						logArea.appendText("Email address changed.\n");
+//						break;
 				}
 			}
 			
@@ -112,8 +112,8 @@
 			{
 				idNumber.text = "10001";
 				userName.text = "John Smith";
-				phoneNumber.text = "";
-				email.text = "";
+//				phoneNumber.text = "";
+//				email.text = "";
 				logArea.text = "";
 			}
 			
@@ -134,12 +134,12 @@
 	
 	<fx:Declarations>
 		<mx:StringValidator source="{idNumber}" property="text" required="true" requiredFieldError="ID number can't be empty"/>
-		<mx:EmailValidator source="{email}" property="text" required="false"
+<!--		<mx:EmailValidator source="{email}" property="text" required="false"
 			invalidCharError="Invalid character" invalidDomainError="Invalid domain" invalidIPDomainError="Invalid IP domain"
 			invalidPeriodsInDomainError="Invalid periods" missingAtSignError="Missing @ sign" missingPeriodInDomainError="Missing period"
 			missingUsernameError="Missing username" tooManyAtSignsError="Too many @ signs"/>
 		<mx:PhoneNumberValidator allowedFormatChars="-()" minDigits="8" source="{phoneNumber}" property="text" required="false"
-			invalidCharError="Invalid character" wrongLengthError="Please enter at least 8 digits"/>
+			invalidCharError="Invalid character" wrongLengthError="Please enter at least 8 digits"/>-->
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:VGroup width="100%" height="100%">
@@ -166,18 +166,18 @@
 				<s:layout>
 					<s:FormLayout gap="0"/>
 				</s:layout>
-				<s:FormItem label="ID Number:">
+				<s:FormItem label="">
 					<components:ToggleTextInput id="idNumber" text="10001" addButtonLabel="Add ID Number" confirm="log(event)"/>
 				</s:FormItem>
-				<s:FormItem label="User Name:">
+				<s:FormItem label="">
 					<components:ToggleTextInput id="userName" text="John Smith" addButtonLabel="Add User Name" confirm="log(event)"/>
 				</s:FormItem>
-				<s:FormItem label="Phone Number:">
+<!--				<s:FormItem label="Phone Number:">
 					<components:ToggleTextInput id="phoneNumber" addButtonLabel="Add Number" confirm="log(event)" />
 				</s:FormItem>
 				<s:FormItem label="Email Address:">
 					<components:ToggleTextInput id="email" addButtonLabel="Add Email Address" confirm="log(event)"/>
-				</s:FormItem>
+				</s:FormItem>-->
 				
 			</s:Form>
 		</s:Group>

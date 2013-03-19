@@ -13,7 +13,10 @@
 			protected function labelButton_clickHandler(event:MouseEvent):void
 			{
 //				Alert.show(labelButton.label,addButton.label);
+				
 			}
+			
+			
 		]]>
 	</fx:Script>
 	
@@ -28,7 +31,8 @@
 	
 	<s:HGroup verticalAlign="middle" verticalCenter="0" width="100%" gap="5">
 		<!--Border-->
-		<s:Group verticalCenter="0" width="100%">
+		<s:Group width="{textDisplay.contentWidth+10}" verticalCenter="0"
+				 verticalCenter.normal="0">
 <!--			<s:Rect left="0" right="0" top="0" bottom="0" radiusX.display="3" topLeftRadiusX.normal="3" bottomLeftRadiusX.normal="3"
 					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}">
 				<s:fill>
@@ -39,9 +43,10 @@
 				</s:fill>
 			</s:Rect>-->
 			
-			<s:Rect top="-1" left="-1" right="-5" bottom="-1" alpha="0.8" excludeFrom="display" 
+			<s:Rect excludeFrom="display"
 					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}"
-					>
+					left="-1"  top="-1" bottom="-1" alpha="0.8"
+					left.normal="-1" top.normal="-1" bottom.normal="-1" width="{textDisplay.contentWidth+10}">
 					<s:fill>
 						<s:SolidColor color="0xfff000" />
 					</s:fill>
@@ -63,17 +68,18 @@
 			<s:RichEditableText id="textDisplay" widthInChars="10"
 								verticalAlign="middle" verticalCenter="0"
 								left="5" right="5" top="5" bottom="5" visible.display="false"
-								backgroundColor="0xfff000" 
+								backgroundColor="0xfff000" backgroundAlpha="0"
+								focusedTextSelectionColor="0xfff000"
 								/>
 
 			
-			<s:Rect left="2" right="2" top="2" bottom="2" verticalCenter="0"   excludeFrom="display"
+<!--			<s:Rect left="2" right="2" top="1" bottom="0" verticalCenter="0"   excludeFrom="display"
 					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}"
 					>
 				<s:stroke>
-					<s:SolidColorStroke color="0x000000" alpha="1" />
+					<s:SolidColorStroke color="0xbcb2b2" alpha="0.4" />
 				</s:stroke>
-			</s:Rect>
+			</s:Rect>-->
 			
 			<!-- Prompt text -->
 			<s:Label id="promptDisplay" maxDisplayedLines="1" 
@@ -81,15 +87,13 @@
 					 mouseEnabled="false" mouseChildren="false"
 					 includeIn="normalWithPrompt,disabledWithPrompt" />
 			
-			<s:Button id="labelButton" includeIn="display" left="0" right="0" top="0" bottom="0" 
-					  buttonMode="true" focusSkin="{null}" textAlignLast="left" click="labelButton_clickHandler(event)"
-					  skinClass="org.yang.chen.skins.TTIResponsiveLabelButtonSkin" />
-			<s:Button id="addButton" includeIn="display" left="0" right="0" top="0" bottom="0" click="labelButton_clickHandler(event)"
-					  buttonMode="true" focusSkin="{null}"
-					  skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
+			<s:Button id="labelButton" includeIn="display" left="0" right="0" top="0" bottom="0"
+					  buttonMode="true" chromeColor="#EF1C1C"
+					  click="labelButton_clickHandler(event)" focusSkin="{null}"
+					  skinClass="org.yang.chen.skins.TTIResponsiveLabelButtonSkin"
+					  textAlignLast="left"/>
 		
 		</s:Group>
-		
 		<s:VGroup right="0" gap="0" paddingBottom="0" paddingTop="0" height="100%" verticalAlign="middle" excludeFrom="display"	 >
 			<s:Button id="confirmButton"  width="10" height="10"
 					  skinClass="org.yang.chen.skins.btnYes"
@@ -97,5 +101,10 @@
 			<s:Button id="cancelButton"  height="10" width="10"
 					  skinClass="org.yang.chen.skins.btnNo"/>
 		</s:VGroup>
+		
 		</s:HGroup>
+			<s:Button id="addButton" includeIn="display" left="0" top="1" 
+					  bottom="-1" click="labelButton_clickHandler(event)"
+					  buttonMode="true" focusSkin="{null}"
+					  skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
 </s:Skin>

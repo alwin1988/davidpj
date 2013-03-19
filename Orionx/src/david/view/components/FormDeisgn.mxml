@@ -40,6 +40,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import org.yang.chen.skins.TTIResponsiveSkin;
+			import component.ToggleTextInput;
 			import com.vstyran.transform.events.TransformEvent;
 			import mx.utils.ObjectUtil;
 			import david.view.configs.Constants;
@@ -442,6 +444,29 @@
 							GG.addElement(cb);
 							ComponentList.Accomp.addItem(cb);
 							cb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							break;
+						}
+						case "ToggleTextInput":{
+							
+							var tg:ToggleTextInput = new ToggleTextInput();
+							tg.doubleClickEnabled = true;
+							tg.addButtonLabel="Add User Name";
+							tg.id = FlexGlobals.topLevelApplication.getIdx;
+							tg.x = event.localX;
+							tg.y = event.localY;
+							tg.width = 120;
+							tg.height = 24;
+							tg.minWidth = 20;
+							tg.minHeight = 20;
+							tg.addEventListener(MouseEvent.MOUSE_DOWN,select);
+							tg.setStyle("skinClass", Class(TTIResponsiveSkin));
+							if((tg.x + tg.width) >= GG.width){
+								tg.x = GG.width - tx.width;
+							}
+							GG.addElement(tg);
+							ComponentList.Accomp.addItem(tg);
+							tg.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							
 							break;
 						}
 						default:

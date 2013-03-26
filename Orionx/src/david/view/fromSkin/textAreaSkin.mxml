@@ -22,7 +22,7 @@
 -->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
     xmlns:fb="http://ns.adobe.com/flashbuilder/2009" 
-    alpha.disabledStates="0.5" blendMode="normal">
+    alpha.disabledStates="0.5" blendMode="normal" xmlns:component="component.*">
 
     <fx:Metadata>
     <![CDATA[ 
@@ -299,6 +299,6 @@
                 includeIn="normalWithPrompt,disabledWithPrompt" 
                 includeInLayout="false"
                 />            
-	<s:Label left="{-(lbl1.width+10)}" verticalAlign="middle" top="0" bottom="0" width="62" text="Label" textAlign="right" id="lbl1" />
-
+<!--	<s:Label left="{-(lbl1.width+10)}" verticalAlign="middle" top="0" bottom="0" width="62" text="Label" textAlign="right" id="lbl1" />-->
+	<component:ToggleTextInput width="89" addButtonLabel="Label" skinClass="org.yang.chen.skins.TTIResponsiveSkin" left="{-(lbl1.width+10)}" id="lbl1" />
 </s:SparkSkin>

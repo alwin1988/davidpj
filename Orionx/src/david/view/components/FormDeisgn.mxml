@@ -40,6 +40,10 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import component.vRadioBtn;
+			import component.vCheckBox;
+			import component.vTextInput;
+			import component.vButton;
 			import org.yang.chen.skins.TTIResponsiveSkin;
 			import component.ToggleTextInput;
 			import com.vstyran.transform.events.TransformEvent;
@@ -232,7 +236,7 @@
 			
 			protected function box1_clickHandler(event:MouseEvent):void
 			{
-				if(event.target.className == "Box"){
+				if(event.target.className != null &&  event.target.className == "Box"){
 					if(tool){
 						tool.visible = false;
 						ComponentList.enableCombobox(null);
@@ -260,17 +264,17 @@
 					{
 						case "Button":
 						{
-							var bt:Button = new Button();
+							var bt:vButton = new vButton();
 							bt.doubleClickEnabled = true;
 							bt.x = event.localX;
 							bt.y = event.localY;
 							bt.id = FlexGlobals.topLevelApplication.getIdx;
-							bt.minWidth = 20;
+							bt.minWidth = 230;
 							bt.minHeight = 20;
-							bt.width = 70;
+							bt.width = 230;
 							bt.height = 24;
 							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							bt.setStyle("skinClass", Class(buttonSkin));
+//							bt.setStyle("skinClass", Class(buttonSkin));
 							FlexGlobals.topLevelApplication.updateComplete = true;
 							if( (bt.x+bt.width) >= GG.width){
 								bt.x = GG.width - bt.width;
@@ -282,17 +286,18 @@
 						}
 						case "TextInput":
 						{
-							var tx:spark.components.TextInput = new spark.components.TextInput();
+//							var tx:spark.components.TextInput = new spark.components.TextInput();
+							var tx:vTextInput = new vTextInput();
 							tx.doubleClickEnabled = true;
 							tx.id = FlexGlobals.topLevelApplication.getIdx;
 							tx.x = event.localX;
 							tx.y = event.localY;
-							tx.width = 120;
+							tx.width = 230;
 							tx.height = 24;
-							tx.minWidth = 20;
+							tx.minWidth = 230;
 							tx.minHeight = 20;
 							tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							tx.setStyle("skinClass", Class(txtinputSkin));
+//							tx.setStyle("skinClass", Class(txtinputSkin));
 							if((tx.x + tx.width) >= GG.width){
 								tx.x = GG.width - tx.width;
 							}
@@ -303,15 +308,16 @@
 						}
 						case "CheckBox":
 						{
-							var ck:spark.components.CheckBox = new spark.components.CheckBox();
+//							var ck:spark.components.CheckBox = new spark.components.CheckBox();
+							var ck:vCheckBox = new vCheckBox();
 							ck.doubleClickEnabled = true;
-							ck.label = "checkbox 1";
+							ck.chk.label = "checkbox 1";
 							ck.id = FlexGlobals.topLevelApplication.getIdx;
 							ck.x = event.localX;
 							ck.y = event.localY;
-							ck.width = 120;
+							ck.width = 200;
 							ck.height = 24;
-							ck.minWidth = 20;
+							ck.minWidth = 200;
 							ck.minHeight = 20;
 							ck.addEventListener(MouseEvent.MOUSE_DOWN,select);
 							ck.setStyle("skinClass", Class(checkboxSkin));
@@ -364,19 +370,20 @@
 						}
 						case "RadioButton":
 						{
-							var rd:RadioButton = new RadioButton();
+//							var rd:RadioButton = new RadioButton();
+							var rd:vRadioBtn = new vRadioBtn();
 							rd.doubleClickEnabled = true;
-							rd.label = "Radio Button";
+							rd.rdo.label = "Radio Button";
 							rd.id = FlexGlobals.topLevelApplication.getIdx;
 							rd.x = event.localX;
 							rd.y = event.localY;
-							rd.width = 120;
+							rd.width = 200;
 							rd.height = 24;
-							rd.minWidth = 20;
+							rd.minWidth = 200;
 							rd.minHeight = 20;
 
 							rd.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							rd.setStyle("skinClass",Class(radioBtnSkin));
+//							rd.setStyle("skinClass",Class(radioBtnSkin));
 							
 							if((rd.x + rd.width) >= GG.width){
 								rd.x = GG.width - rd.width;
@@ -434,7 +441,7 @@
 							var cb:vComboBox = new vComboBox();
 							cb.x = event.localX;
 							cb.y = event.localY;
-							cb.minWidth = 20;
+							cb.minWidth = 230;
 							cb.minHeight = 20;
 							cb.id = FlexGlobals.topLevelApplication.getIdx;
 							cb.addEventListener(MouseEvent.MOUSE_DOWN,select);

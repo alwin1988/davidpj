@@ -6,7 +6,8 @@
 			   xmlns:component="component.*"
 			   xmlns:view="view.*"
 			   xmlns:components="david.view.components.*"
-			   minWidth="955" minHeight="600" creationComplete="init()">
+			   minWidth="955" minHeight="600" creationComplete="init()"
+			   viewSourceURL="srcview/index.html">
 	<fx:Declarations>
 		
 	</fx:Declarations>

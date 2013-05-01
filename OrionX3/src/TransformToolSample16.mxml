@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  
+			   xmlns:view="com.vstyran.transform.view.*" 
+			   xmlns:model="com.vstyran.transform.model.*"
+			   xmlns:view1="view.*" xmlns:connectors="com.vstyran.transform.connectors.*"
+			   width="100%" height="100%" xmlns:local="*" 
+			   creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.DragSource;
+			import mx.core.UIComponent;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			
+			[Bindable] private var _currentTarget:UIComponent = new UIComponent();
+			private function init():void
+			{
+				button1.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button2.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button3.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button4.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button5.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button6.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button7.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				button8.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+				bdCon.height = calculateVboxSize(mainParent);
+				bdCon1.height = calculateVboxSize(mainParent1);
+			}
+			
+			private function calculateVboxSize(vg:VGroup):Number
+			{
+				if (vg.numElements >  0)
+				{
+					var totalH:Number=0;
+					for ( var i:int=0; i < vg.numElements; i++)
+					{
+						var obj:Object = vg.getElementAt(i) ;
+						totalH += obj.height;
+					}
+					totalH += vg.gap*(vg.numElements+1);
+					trace(totalH);
+					return totalH;
+				} else {
+					return 0;
+					
+				}
+			}
+			
+			private function mouseDownHandler(e):void
+			{
+				e.currentTarget.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler,false,0,true);
+			}
+			
+			private function mouseMoveHandler(event:MouseEvent):void {
+				event.currentTarget.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler,false);
+				
+				// Get the drag initiator component from the event object.
+				var dragInitiator:UIComponent = UIComponent(event.currentTarget);
+				
+				var dragItem = dragInitiator;
+				
+				// Create a DragSource object.
+				var ds:DragSource = new DragSource();
+				
+				// Add the data to the object.
+				ds.addData(dragItem, 'item');
+				
+				// Call the DragManager doDrag() method to start the drag. 
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+			
+			// Called when the user moves the drag indicator onto the drop target.
+			var newSlidePos = 0;
+			private function dragEnterHandler(event:DragEvent):void {
+				
+				// Accept the drag only if the user is dragging data 
+				
+				if (event.dragSource.hasFormat('item')) {
+					
+					if(event.localY < event.currentTarget.measuredHeight/event.currentTarget.numElements)
+					{
+						newSlidePos = 0;
+					}
+					else
+					{
+						newSlidePos = Math.floor(event.localY / (event.currentTarget.measuredHeight/event.currentTarget.numElements));
+					}
+					trace(newSlidePos);
+					// Get the drop target component from the event object.
+					var dropTarget = VGroup(event.currentTarget);
+					var num:Number = calculateVboxSize(dropTarget);
+					event.currentTarget.parent.height =  num;
+					// Accept the drop.
+					DragManager.acceptDragDrop(dropTarget);
+				}
+			}
+			
+			// Called if the target accepts the dragged object and the user 
+			// releases the mouse button while over the Canvas container. 
+			private function dragDropHandler(event:DragEvent):void {
+				// from the drag source.
+				var data = event.dragSource.dataForFormat('item');
+				//				event.currentTarget.
+				event.currentTarget.addElement(data);
+				bdCon.height = calculateVboxSize(mainParent);
+				bdCon1.height = calculateVboxSize(mainParent1);
+				event.currentTarget.setElementIndex(data,newSlidePos);
+				newSlidePos = 0;
+			}	
+				
+			protected function select(event:MouseEvent):void
+			{
+				_currentTarget = event.currentTarget as UIComponent;		
+				if( _currentTarget == null ){
+					return ;
+				} else {
+					uiConnector.target = _currentTarget;
+					tool.connector = uiConnector;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Group  id="GG" width="100%" height="100%" >
+		
+		<!-- background fill -->
+		<s:Rect x="-2" y="-6" width="100%" height="100%">
+			<s:fill>
+				<s:SolidColor color="#dddddd"/>
+			</s:fill>
+		</s:Rect>
+		<s:Rect id="border" width="100%" height="100%" >
+			<s:stroke>
+				<s:SolidColorStroke color="#ACACAC"/>
+			</s:stroke>
+		</s:Rect>
+		<s:BorderContainer id="bdCon" top="100" width="279" height="178" backgroundAlpha="0" borderColor="#f1f1f1"
+						   horizontalCenter="0"  mouseDown="select(event)">
+			<s:VGroup id="mainParent" width="100%" height="100%" dragDrop="dragDropHandler(event);"
+					  dragEnter="dragEnterHandler(event);" gap="5" horizontalAlign="center"
+					  horizontalCenter="0" verticalAlign="middle" verticalCenter="0">
+				<s:Button id="button1" height="20" label="Button1"/>
+				<s:Button id="button2" height="20" label="Button2"/>
+				<s:TextInput id="button3" height="20" text="Button3"/>
+				<s:Button id="button4" height="20" label="Button4"/>
+			</s:VGroup>
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="bdCon1" top="100" width="279" height="178" mouseDown="select(event)">
+			<s:VGroup id="mainParent1" width="100%" height="100%" dragDrop="dragDropHandler(event);"
+					  dragEnter="dragEnterHandler(event);" gap="5" >
+				<s:Button id="button5" height="20" label="Button5"/>
+				<s:Button id="button6" height="20" label="Button6"/>
+				<s:TextInput id="button7" height="20" text="Button7"/>
+				<s:Button id="button8" height="20" label="Button8"/>
+			</s:VGroup>
+		</s:BorderContainer>
+		
+		<s:TextArea id="textTarget" x="74" y="307" width="211" height="61" rotation="0" verticalScrollPolicy="off"  mouseDown="select(event)"
+				 fontSize="20" text="Simple text for resizing" minHeight="20" minWidth="20" borderVisible="false" focusThickness="0"/>
+		<view1:CustomTransformTool id="tool" skinClass="skins.CustomTransformToolSkin" textMode="true" maintainMoveShortcuts="true">
+			<connectors:UIConnector id="uiConnector" target="{textTarget}"/>
+			<view1:bounds>
+				<model:Bounds x="{GG.x}" y="{GG.y}" width="{GG.width}" height="{GG.height}"/>
+			</view1:bounds>
+		</view1:CustomTransformTool>
+		
+	</s:Group>
+</s:Application>

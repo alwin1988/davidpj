@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.DragSource;
+			import mx.core.UIComponent;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			
+			private function doDrag(event:MouseEvent):void
+			{
+				var button : UIComponent = UIComponent( event.target );
+				var dragSource:DragSource = new DragSource();
+				dragSource.addData(event.target.label,'compclass');
+				DragManager.doDrag( button, dragSource, event );
+			}
+			
+			private function dragAccept(event:DragEvent):void
+			{
+				var dropTarget:VBox = event.currentTarget as VBox;
+				DragManager.acceptDragDrop(dropTarget);
+			}
+			
+			private function dragDrop(event:DragEvent):void
+			{
+				var classString:String = event.dragSource.dataForFormat('compclass') as String;
+				var c:Class = getDefinitionByName(classString) as Class;
+				var obj:Object = new c();
+				event.target.addChild(obj);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:HBox width="100%" height="100%" horizontalGap="0">
+		<mx:HBox width="80%" height="{comlist.height}" verticalScrollPolicy="on">
+			<mx:VBox width="50%" height="100%" backgroundColor="#E3DFDF" id="vb2"
+					 dragEnter="dragAccept(event)"
+					 dragDrop="dragDrop(event)"
+					 >
+			</mx:VBox>
+			<mx:VBox width="50%" height="100%" backgroundColor="#BAB7B7" id="vb1"
+					 dragEnter="dragAccept(event)"
+					 dragDrop="dragDrop(event)"
+					 >
+			</mx:VBox>
+		</mx:HBox>
+		<mx:VBox width="20%" height="100%" paddingTop="20" id="comlist">
+			<s:Label width="100%" enabled="false" fontSize="23" fontWeight="bold"
+					 text="ComponentList" textAlign="center" verticalAlign="middle"/>
+			<s:Button label="mx.controls.Button" width="100%" mouseDown="doDrag(event)"  />
+			<s:Button label="mx.controls.CheckBox" width="100%"  />
+			<s:Button label="mx.controls.ComboBox" width="100%"  />
+			<s:Button label="mx.controls.List" width="100%"  />
+			<s:Button label="mx.controls.TextInput" width="100%"  />
+			<s:Button label="mx.controls.TextArea" width="100%"  />
+			
+		</mx:VBox>
+	</mx:HBox>
+</s:Application>

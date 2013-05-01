@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="270" height="27" gap="3" creationComplete="init()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			public function init():void
+			{
+				this.addEventListener(CustomCompEvent.BUTTON_ONE, buttonOne);
+				this.addEventListener(CustomCompEvent.BUTTON_TWO, buttonTwo);
+				this.addEventListener(CustomCompEvent.BUTTON_THREE, buttonThree);
+				this.addEventListener(CustomCompEvent.BUTTON_FOUR, buttonFour);
+			}
+			
+			public function buttonOne(event:CustomCompEvent):void
+			{
+				//number label fieldcontrol
+				Alert.show("button one");
+			}
+
+			public function buttonTwo(event:CustomCompEvent):void
+			{
+				Alert.show("button two");				
+			}
+			
+			public function buttonThree(event:CustomCompEvent):void
+			{
+				Alert.show("button three");				
+			}
+			
+			public function buttonFour(event:CustomCompEvent):void
+			{
+				Alert.show("button four");				
+			}			
+		]]>
+	</fx:Script>
+	<s:VGroup height="100%" paddingTop="0">
+		<mx:LinkButton label="Label" fontFamily="Tahoma">
+			
+		</mx:LinkButton>
+	</s:VGroup>
+	<s:TextInput width="130">
+		
+	</s:TextInput>
+	<s:VGroup gap="2">
+		<s:HGroup gap="3">
+			<s:Button width="10" height="10">
+				
+			</s:Button>
+			<s:Button width="10" height="10">
+				
+			</s:Button>
+			<s:Spacer/>
+			<s:Button width="12" height="10">
+				
+			</s:Button>
+		</s:HGroup>
+		<s:HGroup gap="3">
+			<s:Button width="10" height="10">
+				
+			</s:Button>
+			<s:Button width="10" height="10">
+				
+			</s:Button>
+			<s:Spacer/>
+			<s:Button width="12" height="10">
+				
+			</s:Button>				
+		</s:HGroup>
+	</s:VGroup>	
+	<s:NumericStepper width="40">
+		
+	</s:NumericStepper>	
+</s:HGroup>

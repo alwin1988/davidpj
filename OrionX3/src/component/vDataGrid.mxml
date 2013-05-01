@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:components="org.yang.chen.components.*"
+		 focusEnabled="true"
+		 width="300" height="100%" 
+		 >
+	<fx:Script>
+		<![CDATA[
+			[Bindable] public var isDelele:Boolean = false;
+			[Bindable] public var vEanble:Boolean = true
+		]]>
+	</fx:Script>
+	<s:HGroup width="100%" height="100%" verticalAlign="top" > 
+		<components:ToggleTextInput  addButtonLabel="Label" width="10%" 
+									 skinClass="org.yang.chen.skins.TTIResponsiveSkin" />
+		<mx:DataGrid id="dgGrid" width="100%" height="100%" variableRowHeight="true" enabled="{vEanble}">
+			<mx:columns>
+<!--				<mx:DataGridColumn/>
+				<mx:DataGridColumn/>
+				<mx:DataGridColumn/>-->
+			</mx:columns>
+
+			<s:ArrayList>
+				<fx:Object dataField1="data1" dataField2="data1" dataField3="data1"></fx:Object>
+				<fx:Object dataField1="data2" dataField2="data2" dataField3="data2"></fx:Object>
+				<fx:Object dataField1="data3" dataField2="data3" dataField3="data3"></fx:Object>
+				<fx:Object dataField1="data4" dataField2="data4" dataField3="data4"></fx:Object>
+				<fx:Object dataField1="data5" dataField2="data5" dataField3="data5"></fx:Object>
+				<fx:Object dataField1="data6" dataField2="data6" dataField3="data6"></fx:Object>
+				<fx:Object dataField1="data7" dataField2="data7" dataField3="data7"></fx:Object>
+				<fx:Object dataField1="data8" dataField2="data8" dataField3="data8"></fx:Object>
+				<fx:Object dataField1="data9" dataField2="data9" dataField3="data9"></fx:Object>
+			</s:ArrayList>
+		</mx:DataGrid>
+	</s:HGroup>
+</s:Group>
+
+
+
+
+
+
+

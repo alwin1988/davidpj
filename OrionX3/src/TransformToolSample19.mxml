@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  
+			   xmlns:view="com.vstyran.transform.view.*" 
+			   xmlns:model="com.vstyran.transform.model.*"
+			   xmlns:connectors="com.vstyran.transform.connectors.*"
+			   width="850" height="500" xmlns:local="*" 
+			   viewSourceURL="http://vstyran-flex.ho.ua/TransformTool2/examples/TransformToolSample19/srcview/index.html"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.vstyran.transform.connectors.UIConnector;
+			import com.vstyran.transform.model.Bounds;
+			
+			import mx.core.IVisualElement;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import skins.CustomTransformToolSkin;
+			
+			import view.CustomTransformTool;
+			
+			
+			private var tool:CustomTransformTool
+			private var uiConnector:UIConnector;
+//			private var uiScaleConnector:UIScaleConnector;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				uiConnector = new UIConnector();
+//				uiScaleConnector = new UIScaleConnector();
+				tool = new CustomTransformTool();
+				tool.setStyle("skinClass", Class(CustomTransformToolSkin));
+				var bounds:Bounds = new Bounds();
+				bounds.x = designArea.x;
+				bounds.y = designArea.y;
+				bounds.width = designArea.width;
+				bounds.height = designArea.height;
+				tool.textMode = true;
+				tool.maintainMoveShortcuts = true;
+				tool.bounds = bounds;
+				tool.visible = true;
+				setCurrentTarget(img1);
+				
+				designArea.addElement(tool);
+			}
+			
+			protected function select(event:MouseEvent):void
+			{
+				_currentTarget = event.currentTarget as UIComponent;		
+				if( _currentTarget == null ){
+					return ;
+				} else {
+					uiConnector.target = _currentTarget;
+					tool.connector = uiConnector;
+				}
+			}
+			
+			
+			private var _currentTarget:UIComponent;
+
+			public function setCurrentTarget(value:UIComponent):Boolean
+			{
+				_currentTarget = value;
+				
+//				uiScaleConnector.target = null;
+				uiConnector.target = null;
+				
+				if(_currentTarget == null) {
+						return false;
+					
+				} else {
+					
+//				if(_currentTarget is mx.controls.Label)
+//				{
+//					uiScaleConnector.target = _currentTarget;
+//					tool.connector = uiScaleConnector;
+//					return true;
+//				} else {
+					uiConnector.target = _currentTarget;
+					tool.connector = uiConnector;
+					return true;
+				}
+//				}
+			}
+			
+			protected function designArea_keyDownHandler(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.DELETE && event.target == tool) {
+					if(event.target.connector.target != null){
+						designArea.removeElement(event.target.connector.target as IVisualElement);
+						setCurrentTarget(null);
+						tool.visible = false;
+					}
+				}
+				
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				tool.visible = false;
+				
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				tool.visible = true;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:ArrayCollection id="Ac">
+			<s:Button label="test"  id="bt1"/>
+			<s:Button label="test"  id="bt2" />
+			<s:Button label="test"  id="bt3" />
+			<s:Button label="test"  id="bt4" />
+			<s:Button label="test"  id="bt5" />
+		</s:ArrayCollection>
+	</fx:Declarations>
+	<s:Group id="designArea" width="100%" height="100%" 
+			 keyDown="designArea_keyDownHandler(event)">
+		<s:Rect id="border" width="100%" height="100%" >
+			<s:stroke>
+				<s:SolidColorStroke color="#ACACAC"/>
+			</s:stroke>
+		</s:Rect>
+	<s:Rect x="10" y="10" width="830" height="480">
+		<s:fill>
+			<s:SolidColor color="#dddddd"/>
+		</s:fill>
+	</s:Rect>
+
+		<s:Image id="imageTarget2" x="557" y="213" width="120" height="70" rotation="0" scaleMode="stretch" mouseChildren="false"
+				 smooth="true" source="@Embed('image2.jpg')" minHeight="20" minWidth="20" mouseDown="select(event)"/>
+		<mx:DataGrid x="109" y="228" variableRowHeight="true" mouseDown="select(event)">
+			<mx:columns>
+				<mx:DataGridColumn dataField="dataField1" />
+				<mx:DataGridColumn dataField="dataField2" />
+				<mx:DataGridColumn dataField="dataField3" />
+			</mx:columns>
+			<s:ArrayList>
+				<fx:Object dataField1="data1" dataField2="data1" dataField3="data1"></fx:Object>
+				<fx:Object dataField1="data2" dataField2="data2" dataField3="data2"></fx:Object>
+				<fx:Object dataField1="data3" dataField2="data3" dataField3="data3"></fx:Object>
+				<fx:Object dataField1="data4" dataField2="data4" dataField3="data4"></fx:Object>
+				<fx:Object dataField1="data5" dataField2="data5" dataField3="data5"></fx:Object>
+				<fx:Object dataField1="data6" dataField2="data6" dataField3="data6"></fx:Object>
+				<fx:Object dataField1="data7" dataField2="data7" dataField3="data7"></fx:Object>
+				<fx:Object dataField1="data8" dataField2="data8" dataField3="data8"></fx:Object>
+				<fx:Object dataField1="data9" dataField2="data9" dataField3="data9"></fx:Object>
+			</s:ArrayList>
+		</mx:DataGrid>
+		<s:TextArea id="ta1" x="212" y="61" width="210" height="80" rotation="0" verticalScrollPolicy="off"
+					fontSize="20" text="Simple text for resizing" minHeight="20" minWidth="20" borderVisible="false" focusThickness="0"
+					mouseDown="select(event)"
+					/>
+		<s:Label id="lbl2" x="477" y="381" width="153" height="24" rotation="0" paddingRight="5" paddingLeft="5"
+				 fontSize="24" text="Simple text 2" minHeight="20" minWidth="20" mouseDown="select(event)"/>
+		<s:Image id="img1" x="40" y="63" width="120" height="70" rotation="0" scaleMode="stretch" mouseChildren="false"
+				 smooth="true" source="@Embed('image1.jpg')" minHeight="20" minWidth="20" mouseDown="select(event)"/>
+		
+		<s:ComboBox id="combobox1" x="322" y="172" mouseDown="select(event)"/>
+		
+		<s:Label id="lbl1" x="485" y="109" width="153" height="24" rotation="0" paddingRight="5" paddingLeft="5"
+				 fontSize="24" text="Simple text 1" minHeight="20" minWidth="20" mouseDown="select(event)"/>
+
+	
+	
+	</s:Group>
+		<s:Button x="10" y="469" label="false" click="button1_clickHandler(event)"/>
+		<s:Button x="88" y="469" label="True" click="button2_clickHandler(event)"/>
+</s:Application>

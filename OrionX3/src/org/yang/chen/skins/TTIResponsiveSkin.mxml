@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		creationComplete.display="{gwidth = textDisplay.contentWidth+10;}"
+		>
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("org.yang.chen.components.ToggleTextInput")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+
+			
+			public var cancelGwidth:Number;
+			private var _gwidth:Number;
+			
+			[Bindable]
+			public function get gwidth():Number
+			{
+					return _gwidth;
+			}
+			
+			public function set gwidth(value:Number):void
+			{
+				if(value < 30 ){
+					_gwidth  = 30;
+				} else {
+					_gwidth = value; // + 10;
+				}
+			}
+
+
+			
+			
+			protected function textDisplay_keyUpHandler(event:KeyboardEvent):void
+			{
+				gwidth = textDisplay.contentWidth;
+				trace('gwidth='+ gwidth.toString());
+			}
+			
+			protected function cancelButton_clickHandler(event:MouseEvent):void
+			{
+				trace('cancel button click');
+				trace("gwidth="+gwidth.toString() );
+				gwidth = cancelGwidth;
+				trace("cancelwidth=" + cancelGwidth.toString());
+			}
+			
+			protected function textDisplay_focusInHandler(event:FocusEvent):void
+			{	trace('focus hander');
+				trace("before cancelgwidth=" + cancelGwidth.toString());
+				cancelGwidth = gwidth;
+				trace("after cancelgwidth=" + cancelGwidth.toString());
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:states>
+		<s:State name="display"/>
+		<s:State name="normal"/>
+		<s:State name="disabled" stateGroups="disabledStates"/>
+		<s:State name="normalWithPrompt"/>
+		<s:State name="disabledWithPrompt" stateGroups="disabledStates"/>
+	</s:states>
+	
+	<s:HGroup width="100%" gap="0" verticalAlign="middle" verticalCenter="0"
+			  chromeColor="#FDFBFB">
+		<!--Border-->
+		<s:Group width="{gwidth+10}" verticalCenter="0" >
+			<s:Rect excludeFrom="display"
+					visible="{!(currentState == 'display' &amp;&amp; 'over,down'.indexOf(labelButton.skin.currentState) == -1 )}"
+					left="-1"  top="-1" bottom="-1" alpha="0.8"
+					left.normal="-1" top.normal="-1" bottom.normal="-1" width="{gwidth+10}">
+					<s:fill>
+						<s:SolidColor color="0xfff000" />
+					</s:fill>
+			</s:Rect>
+			
+			<!--Text-->
+			<s:RichEditableText id="textDisplay" widthInChars="10"
+								focusIn="textDisplay_focusInHandler(event)"
+								keyUp="textDisplay_keyUpHandler(event)"
+								verticalAlign="middle" verticalCenter="0"
+								left="5" right="5"  top="5" bottom="5" visible.display="false"
+								backgroundColor="0xffffff" backgroundAlpha="0"
+								focusedTextSelectionColor="0xfff000"
+								/>
+
+			
+			<!-- Prompt text -->
+			<s:Label id="promptDisplay" maxDisplayedLines="1" 
+					 left="5" right="5" verticalAlign="middle" verticalCenter="0"
+					 mouseEnabled="false" mouseChildren="false"
+					 includeIn="normalWithPrompt,disabledWithPrompt" />
+			
+			<s:Button id="labelButton" includeIn="display" left="0" right="0" top="0" bottom="0"
+					  buttonMode="true" chromeColor="#EF1C1C"
+					  focusSkin="{null}" 
+					  skinClass="org.yang.chen.skins.TTIResponsiveLabelButtonSkin"
+					  textAlignLast="left"/>
+		
+		</s:Group>
+		
+		<s:Group excludeFrom="display" width="15" height="100%" chromeColor="0xffffff"  >
+		<s:Rect width="100%" height="100%">
+			<s:fill>
+				<s:SolidColor color="0xffffff" />
+			</s:fill>
+		</s:Rect>
+			
+		<s:VGroup width="15" height="100%" horizontalAlign="right" gap="1" >
+			
+			<s:Button id="confirmButton"  width="10" height="10" buttonMode="true"
+					  skinClass="org.yang.chen.skins.btnYes"
+					  />
+<!--					  skinClass="org.yang.chen.skins.btnNo"  -->
+			<s:Button id="cancelButton"  height="10" width="10" click="cancelButton_clickHandler(event)"
+					  skinClass="org.yang.chen.skins.btnNo" buttonMode="true"/>
+		</s:VGroup>
+	</s:Group>	
+		
+		</s:HGroup>
+			<s:Button id="addButton" includeIn="display" left="0" top="1" 
+					  bottom="-1"
+					  buttonMode="true" focusSkin="{null}"
+					  skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
+</s:Skin>

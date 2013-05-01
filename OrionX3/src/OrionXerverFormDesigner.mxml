@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:model="com.vstyran.transform.model.*"
+			   xmlns:component="component.*"
+			   xmlns:view="view.*"
+			   xmlns:components="david.view.components.*"
+			   minWidth="955" minHeight="600" creationComplete="init()">
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		mx|DataGrid {
+			backgroundColor: #cccccc;
+			alternatingItemColors: #cccccc, #cccccc;
+			headerColors: #999999, #999999;
+			horizontalGridLines: true;
+			verticalGridLineColor: #ffffff;
+		}
+		global
+		{
+		}
+	</fx:Style>
+<fx:Script>
+	<![CDATA[
+		import david.view.components.ControlDesign;
+		import david.view.configs.Constants;
+		
+		import mx.collections.ArrayCollection;
+		import mx.containers.Panel;
+		import mx.managers.PopUpManager;
+
+		
+		[Bindable]	public var compList:ArrayCollection;
+		[Bindable]	public var compList2:ArrayCollection;
+		[Bindable] 	private var deletedObjects:ArrayCollection = new ArrayCollection();
+		[Bindable]	public var updateComplete:Boolean = false;
+		public  var selected:String="";
+		
+		private var _idx:int= 0;
+		
+		
+		public function get getIdx():String {
+			_idx +=1;
+			return 'id' + _idx.toString();
+		}
+		
+		
+		
+		protected function init():void
+		{
+			compList = new ArrayCollection([
+				{icon:"assets/Button.png",list:"Button",obj:1},
+				{icon:"assets/ComboBox.png",list:"ComboBox",obj:3,obj:1},
+				{icon:"assets/TextInput.png",list:"TextInput",obj:7},
+				{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},
+				{icon:"assets/DataGrid.png",list:"DataGrid",obj:4},
+				{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
+				{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
+				{icon:"assets/TextArea.png",list:"TextArea",obj:8},
+				{icon:"assets/ToggleTextInput.png",list:"ToggleTextInput",obj:9}
+			]);
+			
+			compList2 = new ArrayCollection ([
+				
+				{icon2:"assets/Button.png",detail:"ButtonIR"},
+				{icon2:"assets/ComboBox.png",detail:"ComboBoxIR"},
+				{icon2:"assets/TextInput.png",detail:"TextInputIR"},
+			]);
+			
+			var panel:Panel = new Panel();
+			panel.width=350;
+			panel.percentHeight=100;
+			
+			var vdControlDesign:ControlDesign = new ControlDesign();
+			//panel.addChild(vdControlDesign);
+			//panel.isPopUp=false;
+			PopUpManager.addPopUp(vdControlDesign,this,false);
+			//PopUpManager.centerPopUp(
+		}
+		
+	]]>
+</fx:Script>
+	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
+		<components:FormDeisgn id="vdFormDesign" minWidth="{Constants.formMinWidth}"/>
+		<!--<components:ControlDesign id="vdControlDesign" width="350"/>-->
+		<mx:VBox width="350" height="100%">
+			
+		</mx:VBox>
+	</mx:HDividedBox>
+</s:Application>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true">
+	<fx:Script>
+		<![CDATA[
+			
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+//				img1.source = data.icon;
+//				lbl1.text = data.list;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:HGroup gap="2" paddingLeft="5" paddingRight="5" horizontalAlign="left" verticalAlign="middle">
+	<s:Image id="img1" source="{data.icon}"/>	
+	<s:Label id="lbl1" text="{data.list}"/>
+	</s:HGroup>	
+	
+</s:ItemRenderer>

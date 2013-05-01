@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  gap="0"
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="278" height="300">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup width="100%" ><s:FormItem label="Name" width="100%" > <s:TextInput /></s:FormItem>	</s:HGroup>
+	<s:HGroup width="100%" ><s:FormItem label="Color" width="100%"  > <s:TextInput /></s:FormItem></s:HGroup>
+	<s:HGroup width="100%" ><s:FormItem label="Line" width="100%"  > <s:TextInput /></s:FormItem></s:HGroup>
+	<s:HGroup width="100%" ><s:FormItem label="x" width="100%" > <s:TextInput  /></s:FormItem></s:HGroup>
+	<s:HGroup width="100%" ><s:FormItem label="y" width="100%"  > <s:TextInput /></s:FormItem></s:HGroup>
+	<s:HGroup width="100%" ><s:FormItem label="width" width="100%"  > <s:TextInput /></s:FormItem></s:HGroup>
+	<s:HGroup width="100%" ><s:FormItem label="height" width="100%"  > <s:TextInput /></s:FormItem></s:HGroup>
+</s:VGroup>

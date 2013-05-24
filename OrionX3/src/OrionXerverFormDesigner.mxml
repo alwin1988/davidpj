@@ -54,6 +54,7 @@
 		{
 			compList = new ArrayCollection([
 				{icon:"assets/Button.png",list:"Button",obj:1},
+				{icon:"assets/vLayout.png",list:"vLayout",obj:10},
 				{icon:"assets/ComboBox.png",list:"ComboBox",obj:3,obj:1},
 				{icon:"assets/TextInput.png",list:"TextInput",obj:7},
 				{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx" 
+		xmlns:resize="flex.utils.spark.resize.*"
+		creationComplete="init()"
+		minHeight="200" minWidth="200"
+		> 
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("th.co.shopsthai.ascomponent.rzmvasBroderContainer")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import flex.utils.spark.resize.MoveManager;
+			import flex.utils.spark.resize.ResizeManager;
+			import flex.utils.spark.resize.ResizeManagerL;
+			import flex.utils.spark.resize.ResizeManagerR;
+			
+//			[Bindable] private var resizeManagerR:ResizeManagerR;
+//			[Bindable] private var resizeManagerL:ResizeManagerL;
+			[Bindable] private var resizeManagerR:ResizeManager;
+			[Bindable] private var resizeManagerL:ResizeManager;
+			[Bindable] public var moveManager:MoveManager;
+			
+			protected function init():void
+			{
+				moveManager = new MoveManager(hostComponent,moveControl);
+				moveManager.bringToFrontOnMove = true;
+//				resizeManagerR = new ResizeManagerR(hostComponent,resizeControlR,'horizontal');
+//				resizeManagerL = new ResizeManagerL(hostComponent,resizeControlL,'horizontal');
+				resizeManagerR = new ResizeManager(hostComponent,resizeControlR,'horizontal');
+				resizeManagerL = new ResizeManager(hostComponent,resizeControlL,'horizontal');
+				resizeManagerL.constrainToParentBounds = true;
+				resizeManagerR.constrainToParentBounds = true;
+				resizeControlL.visible = hostComponent.LR;
+				resizeControlR.visible = hostComponent.RR;
+				moveControl.visible = hostComponent.MV;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="disabled" />
+		<s:State name="normal" />
+	</s:states>
+	
+	<!-- SkinParts
+	name=resizeControl, type=flex.utils.spark.resize.ResizeHandleLines, required=true
+	name=contentGroup, type=spark.components.Group, required=false
+	name=moveControl, type=spark.components.Group, required=true
+	-->
+	<s:Rect top="0" bottom="0" right="0" left="0" >
+		<s:stroke>
+			<s:SolidColorStroke color="BLACK" />
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="{hostComponent.color}" />
+		</s:fill>
+	</s:Rect>
+	<s:Group id="contentGroup" top="0" bottom="0" right="0" left="0" />
+	<s:Group id="moveControl" width="20" height="20" top="0" right="0" >
+		<resize:DragHandle right="2" top="1"
+						   dotColor="#8B8B8B"
+						   fillAlpha="0"/>
+	</s:Group>
+	<!--<resize:ResizeHandleLines id="resizeControl" bottom="0" right="0" />-->
+	<resize:ResizeHandleLinesR id="resizeControlR" bottom="0" right="0" />
+	<resize:ResizeHandleLinesL id="resizeControlL" bottom="0" left="0" />
+	
+	
+</s:Skin>

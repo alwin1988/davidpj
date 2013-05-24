@@ -6,7 +6,7 @@
 		 xmlns:compx="component.*" 
 		 xmlns:view="view.*" 
 		 width="100%" height="100%" 
-		 creationComplete="init()" 
+		 creationComplete="init()" xmlns:ascomponent="th.co.shopsthai.ascomponent.*" 
 		 >
 	<fx:Declarations>
 		<fx:Component className="VGuideLine">
@@ -40,6 +40,14 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.geom.RoundedRectangle;
+			import th.co.shopsthai.ascomponent.rzmvasBroderContainer;
+			import th.co.shopsthai.resize.rzmvasBroderContainerSkin;
+			import spark.layouts.VerticalLayout;
+			import org.osmf.utils.Version;
+			import flex.utils.spark.resize.ResizableDraggableTitleWindowSkin;
+			import spark.components.TitleWindow;
+			import th.co.shopsthai.resize.rzmvButtonSkin;
 			import mx.core.DragSource;
 			import mx.controls.Label;
 			import skins.CustomTransformToolSkin;
@@ -206,37 +214,37 @@
 				} 
 			}
 			
-			protected function tool_guidelinesUpdateHandler(event:GuidelineEvent):void
-			{
-				
-				if(event.cross && event.cross.vGuideline)
-					vGuide.x = event.cross.vGuideline.value;
-				vGuide.visible = (event.cross && event.cross.vGuideline);
-				
-				if(event.cross && event.cross.hGuideline)
-					hGuide.y = event.cross.hGuideline.value;
-				hGuide.visible = (event.cross && event.cross.hGuideline);
-				
-				passiveGuideGroup.removeAllElements();
-				if(event.cross)
-				{
-					if(showPassiveGuides.selected)
-					{
-						for each (var vguide:Guideline in event.cross.getVGuidelines()) 
-						{
-							var vGuideLine:VGuideLine = new VGuideLine();
-							vGuideLine.x = vguide.value;
-							passiveGuideGroup.addElement(vGuideLine);
-						}
-						for each (var hguide:Guideline in event.cross.getHGuidelines()) 
-						{
-							var hGuideLine:HGuideLine = new HGuideLine();
-							hGuideLine.y = hguide.value;
-							passiveGuideGroup.addElement(hGuideLine);
-						}
-					}
-				}
-			}	
+//			protected function tool_guidelinesUpdateHandler(event:GuidelineEvent):void
+//			{
+//				
+//				if(event.cross && event.cross.vGuideline)
+//					vGuide.x = event.cross.vGuideline.value;
+//				vGuide.visible = (event.cross && event.cross.vGuideline);
+//				
+//				if(event.cross && event.cross.hGuideline)
+//					hGuide.y = event.cross.hGuideline.value;
+//				hGuide.visible = (event.cross && event.cross.hGuideline);
+//				
+//				passiveGuideGroup.removeAllElements();
+//				if(event.cross)
+//				{
+//					if(showPassiveGuides.selected)
+//					{
+//						for each (var vguide:Guideline in event.cross.getVGuidelines()) 
+//						{
+//							var vGuideLine:VGuideLine = new VGuideLine();
+//							vGuideLine.x = vguide.value;
+//							passiveGuideGroup.addElement(vGuideLine);
+//						}
+//						for each (var hguide:Guideline in event.cross.getHGuidelines()) 
+//						{
+//							var hGuideLine:HGuideLine = new HGuideLine();
+//							hGuideLine.y = hguide.value;
+//							passiveGuideGroup.addElement(hGuideLine);
+//						}
+//					}
+//				}
+//			}	
 			
 			protected function select(event:MouseEvent):void
 			{
@@ -307,6 +315,7 @@
 			
 
 			// releases the mouse button while over the Canvas container.
+			private var PGG:rzmvasBroderContainer;
 			private function dragDropHandler(event:DragEvent):void {
 				
 				// Get the data identified by the color format
@@ -325,24 +334,50 @@
 					{
 						case "Button":
 						{
-							var bt:vButton = new vButton();
-							bt.doubleClickEnabled = true;
-							bt.x = event.localX;
-							bt.y = event.localY;
-							bt.id = FlexGlobals.topLevelApplication.getIdx;
-							bt.minWidth = 230;
-							bt.minHeight = 20;
-							bt.width = 230;
-							bt.height = 24;
-							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
-//							bt.setStyle("skinClass", Class(buttonSkin));
-							FlexGlobals.topLevelApplication.updateComplete = true;
-							if( (bt.x+bt.width) >= GG.width){
-								bt.x = GG.width - bt.width;
-							}
-							GG.addElement(bt);
-							ComponentList.Accomp.addItem(bt);
-							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+//							var bt:vButton = new vButton();
+//							bt.doubleClickEnabled = true;
+//							bt.x = event.localX;
+//							bt.y = event.localY;
+//							bt.id = FlexGlobals.topLevelApplication.getIdx;
+//							bt.minWidth = 230;
+//							bt.minHeight = 20;
+//							bt.width = 230;
+//							bt.height = 24;
+//							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
+////							bt.setStyle("skinClass", Class(buttonSkin));
+//							FlexGlobals.topLevelApplication.updateComplete = true;
+//							if( (bt.x+bt.width) >= GG.width){
+//								bt.x = GG.width - bt.width;
+//							}
+//							GG.addElement(bt);
+//							ComponentList.Accomp.addItem(bt);
+//							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
+							//-------------NEW ---------------------
+								var bt:TitleWindow= new TitleWindow();
+								bt.doubleClickEnabled = true;
+								bt.x = event.localX;
+								bt.y = event.localY;
+								bt.id = FlexGlobals.topLevelApplication.getIdx;
+								bt.minWidth = 230;
+								bt.minHeight = 220;
+								bt.width = 230;
+								bt.height = 224;
+								bt.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
+								PGG.addElement(bt);
+								ComponentList.Accomp.addItem(bt);
+							
+							//-------------NEW ---------------------
+							break;
+						}
+						case "vLayout":{
+							PGG = new rzmvasBroderContainer();
+							PGG.setStyle('skinClass',rzmvasBroderContainerSkin);
+							PGG.layout = new VerticalLayout();
+							PGG.percentWidth = 100;
+							PGG.percentHeight = 100;
+							PGG.MV = true;
+							PGG.RR = true;
+							supGG.addElement(PGG);
 							break;
 						}
 						case "TextInput":
@@ -763,18 +798,20 @@
 			<mx:VBox id="frmSub" width="100%" height="20" backgroundColor="yellow">
 					 <mx:Text text="form Title Label" id="lblfrmSubTitle" />
 			</mx:VBox>
+			<s:Group id="GG" />
 			<mx:Box width="100%" height="100%" backgroundColor="{Constants.gridBackgroundColor}"
 					click="box1_clickHandler(event)" dragDrop="dragDropHandler(event);"
 					dragEnter="dragEnterHandler(event);" 
 					paddingTop="15"
 					paddingLeft="15" paddingRight="15"
 					paddingBottom="30">
-				<s:Group width="100%" height="100%">
-					<s:Group id="GG" width="100%" height="100%" resize="GG_resizeHandler(event)"
-							 keyDown="tool_keyDownHandler(event)"
-							 >
-						<compx:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
-										  height="{GG.height}" step="{Constants.gridSize}"/>
+				<s:Group width="100%" height="100%" id="supGG">
+<!--					<ascomponent:rzmvasBroderContainer id="GG" width="100%" height="100%" >-->
+<!--					<		 
+							 resize="GG_resizeHandler(event)"
+						keyDown="tool_keyDownHandler(event)"-->
+						<!--<compx:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
+										  height="{GG.height}" step="{Constants.gridSize}"/>-->
 						<!--<s:BorderContainer id="bdCon" top="100" width="279" height="178"
 										   backgroundAlpha="0" backgroundColor="#6366EC"
 										   borderColor="#f1f1f1" horizontalCenter="0"
@@ -802,9 +839,9 @@
 								<s:Button id="button8" height="20" label="Button8"/>
 							</s:VGroup>
 						</s:BorderContainer>-->
-					</s:Group>
+	<!--				</ascomponent:rzmvasBroderContainer>-->
 					
-					<s:Group width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
+					<!--<s:Group width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 						<s:Group id="passiveGuideGroup" left="0" right="0" top="0" bottom="0"/>
 						<s:Line id="vGuide" visible="false" height="100%" depth="3" yFrom="45"
 								yTo="275">
@@ -818,7 +855,7 @@
 								<s:SolidColorStroke color="#AA0000"/>
 							</s:stroke>
 						</s:Line>
-					</s:Group>
+					</s:Group>-->
 				</s:Group>
 			</mx:Box>
 			<mx:HBox width="100%" height="20" backgroundColor="black">

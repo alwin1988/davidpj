@@ -5,4 +5,8 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<s:Group width="100%" height="100%">
+		<s:TitleWindow skinClass="flex.utils.spark.resize.ResizableDraggableTitleWindowSkin" />
+	</s:Group>
+			 
 </s:Application>

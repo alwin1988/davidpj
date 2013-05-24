@@ -75,6 +75,9 @@ package
 		[Embed("assets/real/ToggleTextInput.png")]
 		private var ToggleTextInput1:Class;
 		
+		[Embed("assets/real/vLayout.png")]
+		private var vLayout:Class;		
+		
 		override public function set data(value:Object):void
 		{
 			//if(value != null && imageReference == null)
@@ -121,7 +124,9 @@ package
 				else if( value.list == "ToggleTextInput"){
 					img.source = ToggleTextInput;
 				}
-				
+				else if( value.list == "vLayout"){
+					img.source = vLayout;
+				}				
 				
 				//img.source = value.icon;
 				addChild(img);
@@ -192,6 +197,10 @@ package
 			else if( img.toolTip == "ToggleTextInput"){
 				dragImg.source = ToggleTextInput1;
 				FlexGlobals.topLevelApplication.selected="ToggleTextInput";
+			}
+			else if( img.toolTip == "vLayout"){
+				dragImg.source = vLayout;
+				FlexGlobals.topLevelApplication.selected="vLayout";
 			}
 			dragImg.move(target.mouseX,target.mouseY);
 			

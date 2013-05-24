@@ -99,7 +99,7 @@ package david.view.configs
 		public static const dockTitlesLabel:String = 'Dock Label';
 		public static const dockBackgroundColor:uint = 0xff00ff;
 		public static const dockAlpha:Number = 1;
-		public static const dockTitlesHeight:Number = 14;
+		public static const dockTitlesHeight:Number = 20;
 		public static const dockTitlesBackgroundColor:uint = 0xff00ff;
 		//nouser		public static const dockTitlesAlpha:Number = 1;
 		//nouser		public static const dockDgRowDiv:String = '';

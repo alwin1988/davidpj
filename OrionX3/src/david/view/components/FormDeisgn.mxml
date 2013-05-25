@@ -6,7 +6,8 @@
 		 xmlns:compx="component.*" 
 		 xmlns:view="view.*" 
 		 width="100%" height="100%" 
-		 creationComplete="init()" xmlns:ascomponent="th.co.shopsthai.ascomponent.*" 
+		 creationComplete="init()" 
+		 xmlns:ascomponent="th.co.shopsthai.ascomponent.*" 
 		 >
 	<fx:Declarations>
 		<fx:Component className="VGuideLine">
@@ -316,6 +317,7 @@
 
 			// releases the mouse button while over the Canvas container.
 			private var PGG:rzmvasBroderContainer;
+
 			private function dragDropHandler(event:DragEvent):void {
 				
 				// Get the data identified by the color format

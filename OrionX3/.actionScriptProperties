@@ -14,16 +14,16 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="TransformToolSample19.mxml"/>
     <application path="Preview.mxml"/>
+    <application path="test.mxml"/>
+    <application path="TransformToolSample16.mxml"/>
+    <application path="TransformToolSample19.mxml"/>
     <application path="TransformToolSample191.mxml"/>
     <application path="OrionXerverFormDesigner.mxml"/>
     <application path="Col2App.mxml"/>
     <application path="Main.mxml"/>
     <application path="OrionX.mxml"/>
     <application path="TransformToolSample161.mxml"/>
-    <application path="TransformToolSample16.mxml"/>
-    <application path="test.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

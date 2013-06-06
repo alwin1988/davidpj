@@ -6,107 +6,105 @@
 			   xmlns:component="component.*"
 			   xmlns:view="view.*"
 			   xmlns:components="david.view.components.*"
-			   minWidth="955" minHeight="600" creationComplete="init()">
+			   creationComplete="init()" width="100%" height="100%">
 	<fx:Declarations>
 		
 	</fx:Declarations>
 	<!--Commenting this out for now.  David
 	fx:Style>
-		@namespace s "library://ns.adobe.com/flex/spark";
-		@namespace mx "library://ns.adobe.com/flex/mx";
-		mx|DataGrid {
-			backgroundColor: #cccccc;
-			alternatingItemColors: #cccccc, #cccccc;
-			headerColors: #999999, #999999;
-			horizontalGridLines: true;
-			verticalGridLineColor: #ffffff;
-		}
-		global
-		{
-		}
+	@namespace s "library://ns.adobe.com/flex/spark";
+	@namespace mx "library://ns.adobe.com/flex/mx";
+	mx|DataGrid {
+	backgroundColor: #cccccc;
+	alternatingItemColors: #cccccc, #cccccc;
+	headerColors: #999999, #999999;
+	horizontalGridLines: true;
+	verticalGridLineColor: #ffffff;
+	}
+	global
+	{
+	}
 	</fx:Style-->
-<fx:Script>
-	<![CDATA[
-		import david.view.components.Console;
-		import david.view.configs.Constants;
-		
-		import mx.collections.ArrayCollection;
-		import mx.containers.Panel;
-		import mx.managers.PopUpManager;
-
-		
-		[Bindable]	public var compList:ArrayCollection;
-		[Bindable]	public var compList2:ArrayCollection;
-		[Bindable] 	private var deletedObjects:ArrayCollection = new ArrayCollection();
-		[Bindable]	public var updateComplete:Boolean = false;
-		public  var selected:String="";
-		
-		private var _idx:int= 0;
-		public var vdConsole:Console = new Console();		
-		
-		public function get getIdx():String {
-			_idx +=1;
-			return 'id' + _idx.toString();
-		}
+	<fx:Script>
+		<![CDATA[
+			import david.view.components.Console;
+			import david.view.configs.Constants;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.Panel;
+			import mx.managers.PopUpManager;
+			
+			
+			[Bindable]	public var compList:ArrayCollection;
+			[Bindable]	public var compList2:ArrayCollection;
+			[Bindable] 	private var deletedObjects:ArrayCollection = new ArrayCollection();
+			[Bindable]	public var updateComplete:Boolean = false;
+			public  var selected:String="";
+			
+			private var _idx:int= 0;
+			
+			
+			public function get getIdx():String {
+				_idx +=1;
+				return 'id' + _idx.toString();
+			}
+			
+			protected function init():void
+			{
+				compList = new ArrayCollection([
+					{icon:"assets/Button.png",list:"Button",obj:1},
+					{icon:"assets/ComboBox.png",list:"ComboBox",obj:3},
+					{icon:"assets/TextInput.png",list:"TextInput",obj:7},
+					{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},
+					{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
+					{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
+					{icon:"assets/TextArea.png",list:"TextArea",obj:8},
+					{icon:"assets/ToggleTextInput.png",list:"ToggleTextInput",obj:9},
+					{icon:"assets/TreeIcons/NumericStepper.png",list:"NumericStepper",obj:10},
+					{icon:"assets/TreeIcons/HSlider.png",list:"HSlider",obj:11},
+					{icon:"assets/TreeIcons/VSlider.png",list:"VSlider",obj:12},
+					{icon:"assets/TreeIcons/Button.png",list:"PopUpButton",obj:13},
+					{icon:"assets/ComboBox.png",list:"DropDownList",obj:14}
+				]);
 				
-		protected function init():void
-		{
-			compList = new ArrayCollection([
-				{icon:"assets/Button.png",list:"Button",obj:1},
-				{icon:"assets/vLayout.png",list:"vLayout",obj:10},
-				{icon:"assets/ComboBox.png",list:"ComboBox",obj:3,obj:1},
-				{icon:"assets/TextInput.png",list:"TextInput",obj:7},
-				{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},
-				{icon:"assets/DataGrid.png",list:"DataGrid",obj:4},
-				{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
-				{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
-				{icon:"assets/TextArea.png",list:"TextArea",obj:8},
-				{icon:"assets/ToggleTextInput.png",list:"ToggleTextInput",obj:9}
-			]);
-			
-			compList2 = new ArrayCollection ([
+				compList2 = new ArrayCollection ([
+					
+					{icon2:"assets/Button.png",detail:"ButtonIR"},
+					{icon2:"assets/ComboBox.png",detail:"ComboBoxIR"},
+					{icon2:"assets/TextInput.png",detail:"TextInputIR"},
+				]);
 				
-				{icon2:"assets/Button.png",detail:"ButtonIR"},
-				{icon2:"assets/ComboBox.png",detail:"ComboBoxIR"},
-				{icon2:"assets/TextInput.png",detail:"TextInputIR"},
-			]);
+				var panel:Panel = new Panel();
+				panel.width=350;
+				panel.percentHeight=100;
+				panel.y=0;
+				var vdConsole:Console = new Console();
+				//vdConsole.percentHeight = 100;
+				//panel.addChild(vdConsole);
+				//panel.isPopUp=false;
+				vdConsole.height =  this.height;
+				vdConsole.x = vBoxImgBased.x;
+				PopUpManager.addPopUp(vdConsole,this,false);
+				//PopUpManager.addPopUp(panel,this,false);
+			}
 			
-			var panel:Panel = new Panel();
-			panel.width=350;
-			panel.percentHeight=100;
+			private function frmSetting():void {
+				
+				// Form Main
+				vdFormDesign.maxWidth = Constants.formMaxWidth;
+				vdFormDesign.minWidth = Constants.formMinWidth;
+			}
 			
-
-			//panel.addChild(vdConsole);
-			//panel.isPopUp=false;
-			PopUpManager.addPopUp(vdConsole,this,false);
-			vdConsole.height = this.height;
-			vdConsole.x = this.width - vdConsole.width;
-			//PopUpManager.centerPopUp(
 			
-//			var twc:TWComponent = new TWComponent();
-//			twc.y = 0 ;
-//			twc = TWComponent(PopUpManager.createPopUp(this,TWComponent,false));
-//			twc.height = this.height;
-			
-		}
-		
-		private function frmSetting():void {
-			
-			// Form Main
-			vdFormDesign.maxWidth = Constants.formMaxWidth;
-			vdFormDesign.minWidth = Constants.formMinWidth;
-		}
-
-
-	]]>
-</fx:Script>
+		]]>
+	</fx:Script>
 	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
-		<components:FormDesign id="vdFormDesign" minWidth="{vdFormDesign.minWidth}" maxWidth="{vdFormDesign.maxWidth}" width="{this.width - vdConsole.width-50}"/>
+		<components:FormDesign id="vdFormDesign" minWidth="{vdFormDesign.minWidth}" maxWidth="{vdFormDesign.maxWidth}"/>
 		<!--<components:Console id="vdConsole" width="350"/>-->
-		<mx:VBox width="100%" height="100%">
-		<s:Image width="100%" height="100%" 
-				 scaleMode="stretch" fillMode="scale"
-				 source="@Embed('assets/dummyimage.jpg')"/>
+		<mx:VBox id="vBoxImgBased" width="100%" height="100%">
+			<s:Image id="imgBased" width="100%" height="100%" 
+					 scaleMode="stretch" fillMode="scale"
+					 source="@Embed('assets/dummyimage.jpg')"/>
 		</mx:VBox>
 	</mx:HDividedBox>
 </s:Application>

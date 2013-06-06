@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
-				xmlns:s="library://ns.adobe.com/flex/spark"
-				xmlns:mx="library://ns.adobe.com/flex/mx"
-				width="350" minWidth="350" maxWidth="350" height="100%"
-				backgroundAlpha="0" creationComplete="init()"
-				title="{Constants.clientTitleBoxLabel}"
-				windowMoving="titleWin_windowMovingHandler(event);" xmlns:local="*">
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="350" minWidth="350" maxWidth="350" height="100%"
+			   backgroundAlpha="0" creationComplete="init()"
+			   title="{Constants.clientTitleBoxLabel}"
+			   windowMoving="titleWin_windowMovingHandler(event);" xmlns:local="*">
 	<fx:Script>
 		<![CDATA[
 			import david.view.configs.Constants;
@@ -21,7 +21,7 @@
 			import mx.managers.DragManager;
 			
 			import spark.events.TitleWindowBoundsEvent;
-	
+			
 			
 			public var removeBox:TestAddBox = null;
 			
@@ -39,7 +39,7 @@
 			}
 			
 			private function init():void {
-//				dock.height = Constants.dockBoxHeight;
+				//				dock.height = Constants.dockBoxHeight;
 				rightVDividedBoxID.width = 0; //default
 				
 				/* container2dg.percentHeight=100;
@@ -67,7 +67,7 @@
 				}
 				DragManager.doDrag(dragInitiator, dragSource, event);
 			}
-
+			
 			
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
@@ -93,30 +93,30 @@
 				// TODO Auto-generated method stub
 				
 			}
-
-//			protected function dg2_mouseMoveHandler(event:MouseEvent):void
-//			{
-//				FlexGlobals.topLevelApplication.vdFormDesign.tool.visible = false;
-//				var dragSource:DragSource = new DragSource();
-//				var dragImg:UIComponent;
-//				var dragInitiator:UIComponent = event.currentTarget as  UIComponent;
-//				
-//				if(dg2.selectedItem.detail == 'ButtonIR'){
-//					dragImg = new Button();
-//					dragImg.width = 100; dragImg.height = 24;
-//				} else if(dg2.selectedItem.detail == 'ComboBoxIR'){
-//					dragImg = new mx.controls.ComboBox();
-//					dragImg.width = 150; dragImg.height = 24;
-//				} else if(dg2.selectedItem.detail == 'TextInputIR'){
-//					dragImg = new mx.controls.TextInput();
-//					dragImg.width = 150; dragImg.height = 24;
-//				} else {
-//					dragImg = event.currentTarget as  UIComponent; 
-//				}
-//				dragSource.addData(dragInitiator, "itemrender");
-//				dragSource.addData(dragInitiator, dg2.selectedItem.detail);
-//				DragManager.doDrag(dragInitiator, dragSource, event,dragImg);
-//			}
+			
+			//			protected function dg2_mouseMoveHandler(event:MouseEvent):void
+			//			{
+			//				FlexGlobals.topLevelApplication.vdFormDesign.tool.visible = false;
+			//				var dragSource:DragSource = new DragSource();
+			//				var dragImg:UIComponent;
+			//				var dragInitiator:UIComponent = event.currentTarget as  UIComponent;
+			//				
+			//				if(dg2.selectedItem.detail == 'ButtonIR'){
+			//					dragImg = new Button();
+			//					dragImg.width = 100; dragImg.height = 24;
+			//				} else if(dg2.selectedItem.detail == 'ComboBoxIR'){
+			//					dragImg = new mx.controls.ComboBox();
+			//					dragImg.width = 150; dragImg.height = 24;
+			//				} else if(dg2.selectedItem.detail == 'TextInputIR'){
+			//					dragImg = new mx.controls.TextInput();
+			//					dragImg.width = 150; dragImg.height = 24;
+			//				} else {
+			//					dragImg = event.currentTarget as  UIComponent; 
+			//				}
+			//				dragSource.addData(dragInitiator, "itemrender");
+			//				dragSource.addData(dragInitiator, dg2.selectedItem.detail);
+			//				DragManager.doDrag(dragInitiator, dragSource, event,dragImg);
+			//			}
 			
 			//-- ############################ Start : See Test ########################################## --// 
 			protected function descExtendsButtonClick(fromButton:String):void
@@ -143,7 +143,7 @@
 			{
 				rightVDividedBoxID.removeElement(TestAddBox(event.currentTarget));
 				checkDescElementCount();
-			
+				
 			}
 			
 			private function checkDescElementCount():void
@@ -163,512 +163,395 @@
 	
 	<mx:HBox id="HboxMainID" width="100%" height="100%" 
 			 verticalGap="0" horizontalGap="0" backgroundColor="white">
-		<mx:VDividedBox width="100%" height="100%" backgroundColor="white">
-			<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" backgroundColor="white">
-				<!--<mx:HBox id="clientId" width="100%" height="30" minHeight="30" backgroundColor="black"
-				fontFamily="{Constants.clientTitleBoxFontFamily}"
-				fontSize="{Constants.clientTitleBoxFontSize}"
-				fontStyle="{Constants.clientTitleBoxFontStyle}"
-				horizontalAlign="{Constants.clientTitleBoxHorizontalAlign}" paddingLeft="5"
-				paddingTop="5" verticalAlign="{Constants.clientTitleBoxVerticalAlign}">
-				<s:Label color="white" text="{Constants.clientTitleBoxLabel}">
-				
-				</s:Label>
-				</mx:HBox>-->
-				<mx:TitleWindow id="teachID" 
-								width="100%" height="{Constants.teachHeight}" minHeight="{Constants.teachHeight}"
-								alpha="{Constants.teachAlpha}" backgroundColor="{Constants.teachBackgroundColor}"
-								dropShadowVisible="false" 
-								fontFamily="{Constants.teachTitleFontFamily}"
-								fontSize="{Constants.teachTitleFontSize}"
-								fontStyle="{Constants.teachTitleFontStyle}" headerHeight="20"
-								horizontalAlign="{Constants.teachTitleHorizontalAlign}"
-								title="{Constants.teachTitleLabel}"
-								verticalAlign="{Constants.teachTitleVerticalAlign}">				
-				</mx:TitleWindow>
-				
-				<mx:Canvas width="100%" height="100%" backgroundColor="white"
-						   horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-					<s:Spacer height="5"/>
-					<mx:Accordion id="Dock" width="100%" height="100%"
-								  label="{Constants.dockTitlesLabel}" alpha="{Constants.dockAlpha}"
-								  backgroundColor="{Constants.dockTitlesBackgroundColor}"
-								  fontFamily="{Constants.dockTitlesFontFamily}"
-								  fontSize="{Constants.dockTitlesFontSize}"
-								  fontStyle="{Constants.dockTitlesFontStyle}"
-								  headerHeight="{Constants.dockTitlesHeight}"
-								  textAlign="{Constants.dockTitlesHorizontalAlign}">
-						
-						<!--<s:NavigatorContent x="-10" y="0" width="100%" label="First Section"
-						fontFamily="{Constants.fieldFont}">-->
-						<!--mx:HBox id="container2dg" width="100%" height="100%" label="Fields"
-								 horizontalGap="0">
-							<mx:DataGrid id="dg1" width="100%"
-										 dataProvider="{FlexGlobals.topLevelApplication.compList}"
-										 dragEnabled="false" draggableColumns="false"
-										 dragMoveEnabled="false" dropEnabled="false" verticalScrollPolicy="off">
-								<mx:columns>
-									<mx:DataGridColumn dataField="icon" headerText="Header Index fields"
-													   itemRenderer="ImageRenderer"/>								
-								</mx:columns>
-							</mx:DataGrid>		
-							<mx:DataGrid id="dg2" width="100%"
-										 dataProvider="{FlexGlobals.topLevelApplication.compList2}"
-										 dragEnabled="true" 
-										 dragMoveEnabled="false" 
-										 dropEnabled="false" 
-										 mouseDown="dg2_mouseMoveHandler(event)"
-										 verticalScrollPolicy="auto">
-								<mx:columns>					
-									<mx:DataGridColumn dataField="icon" headerText="Detail index fields"
-													   itemRenderer="DetailItemrenderer"/>									
-								</mx:columns>
-							</mx:DataGrid>					
-						</mx:HBox-->
-						<!--mx:HBox width="100%" height="100%" label="xx" horizontalGap="0">
-						<s:DataGrid width="100%" requestedRowCount="4">
-						<s:columns>
-						<s:ArrayList>
-						<s:GridColumn dataField="dataField1" headerText="Column 1"></s:GridColumn>
-						</s:ArrayList>
-						</s:columns>
-						<s:typicalItem>
-						<fx:Object dataField1="Sample Data" dataField2="Sample Data"
-						dataField3="Sample Data"></fx:Object>
-						</s:typicalItem>
-						<s:ArrayList>
-						<fx:Object dataField1="data1" dataField2="data1" dataField3="data1"></fx:Object>
-						<fx:Object dataField1="data2" dataField2="data2" dataField3="data2"></fx:Object>
-						<fx:Object dataField1="data3" dataField2="data3" dataField3="data3"></fx:Object>
-						<fx:Object dataField1="data4" dataField2="data4" dataField3="data4"></fx:Object>
-						</s:ArrayList>
-						</s:DataGrid>
-						<s:DataGrid width="100%" requestedRowCount="4">
-						<s:columns>
-						<s:ArrayList>
-						<s:GridColumn dataField="dataField2" headerText="Column 2"></s:GridColumn>
-						</s:ArrayList>
-						</s:columns>
-						<s:typicalItem>
-						<fx:Object dataField1="Sample Data" dataField2="Sample Data"
-						dataField3="Sample Data"></fx:Object>
-						</s:typicalItem>
-						<s:ArrayList>
-						<fx:Object dataField1="data1" dataField2="data1" dataField3="data1"></fx:Object>
-						<fx:Object dataField1="data2" dataField2="data2" dataField3="data2"></fx:Object>
-						<fx:Object dataField1="data3" dataField2="data3" dataField3="data3"></fx:Object>
-						<fx:Object dataField1="data4" dataField2="data4" dataField3="data4"></fx:Object>
-						</s:ArrayList>
-						</s:DataGrid>		
-						</mx:HBox>		
-						</s:NavigatorContent-->
-						
-						<!--Dock section 1:  Workflow fields-->
-						<mx:VBox id="Fields" label="Workflow Fields" 
-								 width="100%" height="100%" verticalGap="0"
-								 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-							<s:BorderContainer width="100%" height="100%" borderVisible="false">							
-								<s:layout>
-									<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-													  gap="0"/>
-								</s:layout>
-								<s:VGroup width="100%" height="100%"
-										  paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="0">
-									<mx:Tree id="tree1" 
-											 width="345" height="100%"
-											 labelField="@label" rowHeight="18"
-											 showRoot="true" borderSkin="{null}" 
-											 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal">
-										<mx:XMLListCollection>
-											<fx:XMLList>
-												<folder label="HeaderField1"/>
-												<folder label="HeaderField2"/>
-												<folder label="HeaderField3"/>
-												<folder label="HeaderField4"/>
-												<folder label="HeaderField5"/>
-												<folder label="HeaderField6"/>
-												<folder label="DetailFieldSet">
-													<Pfolder label="DetailField1"/>
-													<Pfolder label="DetailField2"/>
-													<Pfolder label="DetailField3"/>
-													<Pfolder label="DetailField4"/>
-													<Pfolder label="DetailField5"/>
-													<Pfolder label="DetailField6"/>
-													<Pfolder label="DetailField7"/>
-													<Pfolder label="DetailField8"/>
-													<Pfolder label="DetailField9"/>
-													<Pfolder label="DetailField10"/>
-													<Pfolder label="DetailField11"/>
-													<Pfolder label="DetailField12"/>
-												</folder>
-												<folder label="HeaderField7"/>
-												<folder label="HeaderField8"/>
-												<folder label="HeaderField9"/>
-												<folder label="HeaderField10"/>
-											</fx:XMLList>
-										</mx:XMLListCollection>
-									</mx:Tree>
-								</s:VGroup>
-							</s:BorderContainer>
-						</mx:VBox>
-						
-						<!--Dock section 2:  Generic Fields-->				
-						<mx:Form id="Generic" label="Generic Fields">
-							<s:List width="100%" height="100%"
-									dataProvider="{FlexGlobals.topLevelApplication.compList}"
-									dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-									itemRenderer="listitemrender">
-							</s:List>
-						</mx:Form>
-						
-						<!--mx:Form id="creditCardInfo" label="Buttons">
-						</mx:Form>
-						
-						<mx:Form id="submitOrder" label="Boxes and Panels">
-						</mx:Form>
-						<mx:Form id="submitOrder1" label="Rules">
-						</mx:Form-->
-						
-						<!--Dock section 3:  Spacers-->
-						<mx:VBox id="Spacers" label="Spacers" 
-								 width="100%" height="{Dock.height}" verticalGap="0"
-								 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-							<s:BorderContainer width="100%" height="{Dock.height}" borderVisible="false">								
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="left"
-													  paddingTop="0" paddingBottom="0" 
-													  paddingLeft="0" paddingRight="0" gap="0"/>	
-								</s:layout>
-								<s:VGroup width="100%" height="100%"
-										  paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="5">
-								<!--s:Image source="@Embed('assets/v_spacer1.png')"/-->
-								<!--Vertical spacer-->
-								<s:Image source="@Embed('assets/v_spacer2.png')"/>
-								<!--Horizontal spacer-->
-								<s:Image source="@Embed('assets/v_spacer2.png')"/>
-								<!--s:Image source="@Embed('assets/v_spacer3.png')"/>
-								<s:Image source="@Embed('assets/v_spacer4.png')"/>
-								<s:Image source="@Embed('assets/v_spacer5.png')"/>
-								<s:Image source="@Embed('assets/v_spacer6.png')"/-->
-								</s:VGroup>
-							</s:BorderContainer>
-						</mx:VBox>
-						
-						<!--Dock section 4:  Panels/Datagrids-->
-						<mx:VBox id="Panels" label="Panels &amp; Datagrids"
-								 width="100%" height="100%" verticalGap="0"
-								 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-							<local:FromLayoutContaner  width="100%" height="100%" />
-						</mx:VBox>
+		<mx:VBox width="100%" height="100%" backgroundColor="white">
+			<mx:VDividedBox width="100%" height="100%" backgroundColor="white">
+				<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" backgroundColor="white" paddingLeft="5" paddingRight="5">
+					<!--<mx:HBox id="clientId" width="100%" height="30" minHeight="30" backgroundColor="black"
+					fontFamily="{Constants.clientTitleBoxFontFamily}"
+					fontSize="{Constants.clientTitleBoxFontSize}"
+					fontStyle="{Constants.clientTitleBoxFontStyle}"
+					horizontalAlign="{Constants.clientTitleBoxHorizontalAlign}" paddingLeft="5"
+					paddingTop="5" verticalAlign="{Constants.clientTitleBoxVerticalAlign}">
+					<s:Label color="white" text="{Constants.clientTitleBoxLabel}">
+					
+					</s:Label>
+					</mx:HBox>-->
+					<mx:TitleWindow id="teachID" 
+									width="100%" height="{Constants.teachHeight}" minHeight="{Constants.teachHeight}"
+									alpha="{Constants.teachAlpha}" backgroundColor="{Constants.teachBackgroundColor}"
+									dropShadowVisible="false" 
+									fontFamily="{Constants.teachTitleFontFamily}"
+									fontSize="{Constants.teachTitleFontSize}"
+									fontStyle="{Constants.teachTitleFontStyle}" headerHeight="20"
+									horizontalAlign="{Constants.teachTitleHorizontalAlign}"
+									title="{Constants.teachTitleLabel}"
+									verticalAlign="{Constants.teachTitleVerticalAlign}" paddingLeft="5" paddingRight="5">				
+					</mx:TitleWindow>
+					
+					<mx:Canvas width="100%" height="100%" backgroundColor="white"
+							   horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+						<s:Spacer height="5"/>
+						<mx:Accordion id="Dock" width="100%" height="100%"
+									  label="{Constants.dockTitlesLabel}" alpha="{Constants.dockAlpha}"
+									  backgroundColor="{Constants.dockTitlesBackgroundColor}"
+									  fontFamily="{Constants.dockTitlesFontFamily}"
+									  fontSize="{Constants.dockTitlesFontSize}"
+									  fontStyle="{Constants.dockTitlesFontStyle}"
+									  headerHeight="{Constants.dockTitlesHeight}"
+									  textAlign="{Constants.dockTitlesHorizontalAlign}" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
 							
-						<!--Dock section 5:  Subform panels-->
-						<mx:VBox id="Subforms" label="Subform Panels" 
-								 width="100%" height="{Dock.height}" verticalGap="0"
-								 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-							<s:BorderContainer width="100%" height="{Dock.height}" borderVisible="false">								
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="left"
-													  paddingTop="0" paddingBottom="0" 
-													  paddingLeft="0" paddingRight="0" gap="0"/>	
-								</s:layout>
-								<s:VGroup width="100%" height="100%"
-										  paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="5">
-									<!--Subform border box container--> 
-									<s:Image source="@Embed('assets/v_spacer6.png')"/>
-									<!--Subform border box container with button--> 
-									<s:Image source="@Embed('assets/v_spacer6.png')"/>
-									<!--Subform panel container--> 
-									<s:Image source="@Embed('assets/v_spacer6.png')"/>
-									<!--Subform panel container with button--> 
-									<s:Image source="@Embed('assets/v_spacer6.png')"/>
-									<!--Subform frame container--> 
-									<s:Image source="@Embed('assets/v_spacer6.png')"/>
-									<!--Subform frame container with button--> 
-									<s:Image source="@Embed('assets/v_spacer6.png')"/>
-								</s:VGroup>
-							</s:BorderContainer>
-						</mx:VBox>
-
-						<!--mx:Form id="frmItemrender" label="ItemRenders" verticalGap="0">
-							<s:FormItem label="Button">
-								<s:Button mouseMove="dragIt(event, 10);"/>
-							</s:FormItem>
-							<s:FormItem label="TextInput">
-								<s:TextInput editable="false" mouseMove="dragIt(event, 10);"/>
-							</s:FormItem>
-							<s:FormItem label="ComboBox">
-								<s:ComboBox mouseMove="dragIt(event, 10);"/>
-							</s:FormItem>
-						</mx:Form >
-						<mx:Form id="shippingAddress" label="Document Index Fields">
+							<!--Dock section 1:  Workflow fields-->
+							<mx:VBox id="Fields" label="Workflow Fields" 
+									 width="100%" height="100%" verticalGap="0"
+									 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+								<s:BorderContainer width="100%" height="100%" borderVisible="false">							
+									<s:layout>
+										<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+														  gap="0"/>
+									</s:layout>
+									<s:VGroup width="100%" height="100%"
+											  paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="0">
+										<mx:Tree id="tree1" 
+												 width="100%" height="100%"
+												 labelField="@label" rowHeight="18"
+												 showRoot="true" borderSkin="{null}" 
+												 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal">
+											<mx:XMLListCollection>
+												<fx:XMLList>
+													<folder label="HeaderField1"/>
+													<folder label="HeaderField2"/>
+													<folder label="HeaderField3"/>
+													<folder label="HeaderField4"/>
+													<folder label="HeaderField5"/>
+													<folder label="HeaderField6"/>
+													<folder label="DetailFieldSet">
+														<Pfolder label="DetailField1"/>
+														<Pfolder label="DetailField2"/>
+														<Pfolder label="DetailField3"/>
+														<Pfolder label="DetailField4"/>
+														<Pfolder label="DetailField5"/>
+														<Pfolder label="DetailField6"/>
+														<Pfolder label="DetailField7"/>
+														<Pfolder label="DetailField8"/>
+														<Pfolder label="DetailField9"/>
+														<Pfolder label="DetailField10"/>
+														<Pfolder label="DetailField11"/>
+														<Pfolder label="DetailField12"/>
+													</folder>
+													<folder label="HeaderField7"/>
+													<folder label="HeaderField8"/>
+													<folder label="HeaderField9"/>
+													<folder label="HeaderField10"/>
+												</fx:XMLList>
+											</mx:XMLListCollection>
+										</mx:Tree>
+									</s:VGroup>
+								</s:BorderContainer>
+							</mx:VBox>
 							
-							<mx:FormItem id="sfirstNameItem" label="First Name">
-								<mx:TextInput id="sfirstName"/>
-							</mx:FormItem>
-						</mx:Form-->
+							<!--Dock section 2:  Generic Fields-->				
+							<!--<mx:Form id="Generic" label="Generic Fields" height="100%">-->
+							<mx:VBox id="Generic" label="Generic Fields" 
+									 width="100%" height="100%" verticalGap="0"
+									 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+								<s:List width="100%" height="100%"
+										dataProvider="{FlexGlobals.topLevelApplication.compList}"
+										dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
+										itemRenderer="listitemrender">
+								</s:List>
+							</mx:VBox>
+							
+							<!--Dock section 3:  Spacers-->
+							<mx:VBox id="Spacers" label="Spacers" 
+									 width="100%" height="{Dock.height}" verticalGap="0"
+									 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+								<s:BorderContainer width="100%" height="{Dock.height}" borderVisible="false">								
+									<s:layout>
+										<s:VerticalLayout horizontalAlign="left"
+														  paddingTop="0" paddingBottom="0" 
+														  paddingLeft="0" paddingRight="0" gap="0"/>	
+									</s:layout>
+									<s:VGroup width="100%" height="100%"
+											  paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="5">
+										<!--s:Image source="@Embed('assets/v_spacer1.png')"/-->
+										<!--Vertical spacer-->
+										<s:Image source="@Embed('assets/v_spacer2.png')"/>
+										<!--Horizontal spacer-->
+										<s:Image source="@Embed('assets/v_spacer2.png')"/>
+										<!--s:Image source="@Embed('assets/v_spacer3.png')"/>
+										<s:Image source="@Embed('assets/v_spacer4.png')"/>
+										<s:Image source="@Embed('assets/v_spacer5.png')"/>
+										<s:Image source="@Embed('assets/v_spacer6.png')"/-->
+									</s:VGroup>
+								</s:BorderContainer>
+							</mx:VBox>
+							
+							<!--Dock section 4:  Panels/Datagrids-->
+							<mx:VBox id="Panels" label="Panels &amp; Datagrids"
+									 width="100%" height="100%" verticalGap="0"
+									 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+								<local:FromLayoutContaner  width="100%" height="100%" />
+							</mx:VBox>
+							
+							<!--Dock section 5:  Subform panels-->
+							<mx:VBox id="Subforms" label="Subform Panels" 
+									 width="100%" height="{Dock.height}" verticalGap="0"
+									 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+								<s:BorderContainer width="100%" height="{Dock.height}" borderVisible="false">								
+									<s:layout>
+										<s:VerticalLayout horizontalAlign="left"
+														  paddingTop="0" paddingBottom="0" 
+														  paddingLeft="0" paddingRight="0" gap="0"/>	
+									</s:layout>
+									<s:VGroup width="100%" height="100%"
+											  paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="5">
+										<!--Subform border box container--> 
+										<s:Image source="@Embed('assets/v_spacer6.png')"/>
+										<!--Subform border box container with button--> 
+										<s:Image source="@Embed('assets/v_spacer6.png')"/>
+										<!--Subform panel container--> 
+										<s:Image source="@Embed('assets/v_spacer6.png')"/>
+										<!--Subform panel container with button--> 
+										<s:Image source="@Embed('assets/v_spacer6.png')"/>
+										<!--Subform frame container--> 
+										<s:Image source="@Embed('assets/v_spacer6.png')"/>
+										<!--Subform frame container with button--> 
+										<s:Image source="@Embed('assets/v_spacer6.png')"/>
+									</s:VGroup>
+								</s:BorderContainer>
+							</mx:VBox>
+							
+							<!--Dock section 7:  Rules-->
+							<mx:VBox id="Rules" label="Vertical and Horizontal Rules" 
+									 width="100%" height="100%" verticalGap="0"
+									 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+								<s:BorderContainer width="100%" height="100" borderVisible="false">								
+									<s:layout>
+										<s:VerticalLayout paddingTop="5" paddingBottom="5" 
+														  paddingLeft="5" paddingRight="5" gap="5"/>	
+									</s:layout>
+									<!--Single horizontal line--> 
+									<s:Image source="@Embed('assets/hrule.png')"/> 
+									<!--Double horizontal line--> 
+									<s:Image source="@Embed('assets/hrule.png')"/> 
+									<!--Single vertical line--> 
+									<s:Image source="@Embed('assets/vrule.png')"/>
+									<!--Double vertical line--> 
+									<s:Image source="@Embed('assets/vrule.png')"/>
+								</s:BorderContainer>
+							</mx:VBox>		
+						</mx:Accordion>				
+					</mx:Canvas>
+				</mx:VBox>
+				
+				<!-- Rack -->
+				<s:BorderContainer id="Rack" width="100%" height="25" minHeight="25" maxHeight="25" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle"
+											paddingLeft="5" paddingRight="5" paddingTop="2" paddingBottom="2" gap="2"/>
+					</s:layout>
+					<!-- Propup test buttons Add by See 06/05/2013 -->
+					<s:Button id="button_test1_id" width="21" label="B1" click="descExtendsButtonClick('B1')">
+					</s:Button>
+					<s:Button id="button_test2_id" width="21" label="B2" click="descExtendsButtonClick('B2')">
+					</s:Button>
+					<s:Button id="button_test3_id" width="21" label="B3" click="descExtendsButtonClick('B3')">
+					</s:Button>
+					<!-- -->
+					<s:Button width="21">
 						
-						<!--Dock section 7:  Rules-->
-						<mx:VBox id="Rules" label="Vertical and Horizontal Rules" 
-								 width="100%" height="100%" verticalGap="0"
-								 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-							<s:BorderContainer width="100%" height="100" borderVisible="false">								
-								<s:layout>
-									<s:VerticalLayout paddingTop="5" paddingBottom="5" 
-												 	  paddingLeft="5" paddingRight="5" gap="5"/>	
-								</s:layout>
-								<!--Single horizontal line--> 
-								<s:Image source="@Embed('assets/hrule.png')"/> 
-								<!--Double horizontal line--> 
-								<s:Image source="@Embed('assets/hrule.png')"/> 
-								<!--Single vertical line--> 
-								<s:Image source="@Embed('assets/vrule.png')"/>
-								<!--Double vertical line--> 
-								<s:Image source="@Embed('assets/vrule.png')"/>
-							</s:BorderContainer>
-						</mx:VBox>		
-					</mx:Accordion>				
-				</mx:Canvas>
-			</mx:VBox>
-			
-			<!-- Rack -->
-			<s:BorderContainer id="Rack" width="100%" height="25" minHeight="25" maxHeight="25" borderVisible="false">
-				<s:layout>
-					<s:HorizontalLayout verticalAlign="middle"
-										paddingLeft="5" paddingRight="5" paddingTop="2" paddingBottom="2" gap="2"/>
-				</s:layout>
-				<!-- Propup test buttons Add by See 06/05/2013 -->
-				<s:Button id="button_test1_id" width="21" label="B1" click="descExtendsButtonClick('B1')">
-				</s:Button>
-				<s:Button id="button_test2_id" width="21" label="B2" click="descExtendsButtonClick('B2')">
-				</s:Button>
-				<s:Button id="button_test3_id" width="21" label="B3" click="descExtendsButtonClick('B3')">
-				</s:Button>
-				<!-- -->
-				<s:Button width="21">
-					
-				</s:Button>
-				<s:Button width="21" label="1" click="button1_clickHandler(event)">
-					
-				</s:Button>
-				<s:Button width="21" label="2" click="button2_clickHandler(event)">
-					
-				</s:Button>
-				<s:Button width="21" label="3" click="button3_clickHandler(event)">
-					
-				</s:Button>
-				<s:Button width="21" label="4" click="button4_clickHandler(event)">
-					
-				</s:Button>		
-				<s:DropDownList height="21" width="100%"/>
-			</s:BorderContainer>
-			
-			<!--<s:HGroup right="-24" top="0" bottom="0" width="16" gap="1"
-			horizontalAlign="left">
-			<s:VGroup>
-			<s:HGroup gap="3">
-			<s:Button width="10" height="10">
-			
-			</s:Button>
-			<s:Button width="10" height="10">
-			
-			</s:Button>
-			<s:Spacer/>
-			<s:Button width="12" height="10">
-			
-			</s:Button>
-			</s:HGroup>
-			<s:HGroup gap="3">
-			<s:Button width="10" height="10">
-			
-			</s:Button>
-			<s:Button width="10" height="10">
-			
-			</s:Button>
-			<s:Spacer/>
-			<s:Button width="12" height="10">
-			
-			</s:Button>				
-			</s:HGroup>
-			</s:VGroup>
-			<s:NumericStepper width="40"/>
-			</s:HGroup>	-->
-			
-			<!-- Prop -->
-			<s:BorderContainer id="Prop" width="100%" height="100%" borderVisible="false">
-				<s:layout>
-					<s:VerticalLayout paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0"/>
-				</s:layout>
-				<mx:TabNavigator id="tabControl" width="100%" height="100%" borderStyle="solid" tabHeight="20"
-								 paddingTop="0" paddingBottom="0" verticalGap="0"
+					</s:Button>
+					<s:Button width="21" label="1" click="button1_clickHandler(event)">
+						
+					</s:Button>
+					<s:Button width="21" label="2" click="button2_clickHandler(event)">
+						
+					</s:Button>
+					<s:Button width="21" label="3" click="button3_clickHandler(event)">
+						
+					</s:Button>
+					<s:Button width="21" label="4" click="button4_clickHandler(event)">
+						
+					</s:Button>		
+					<s:DropDownList height="21" width="100%"/>
+				</s:BorderContainer>
+				
+				<!-- Prop -->
+				<s:BorderContainer id="Prop" width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingLeft="5" paddingRight="5" paddingTop="0" paddingBottom="0" gap="0"/>
+					</s:layout>
+					<mx:TabNavigator id="tabControl" width="100%" height="100%" borderStyle="solid" tabHeight="20"
+									 paddingTop="0" paddingBottom="0" verticalGap="0"
+									 fontFamily="{Constants.tabLabelsFontFamily}"
+									 fontSize="{Constants.tabLabelsFontSize}"
+									 fontStyle="{Constants.tabLabelsFontStyle}" >
+						<mx:VBox label="Form"
+								 width="100%" height="100%" 
 								 fontFamily="{Constants.tabLabelsFontFamily}"
 								 fontSize="{Constants.tabLabelsFontSize}"
-								 fontStyle="{Constants.tabLabelsFontStyle}" >
-					<mx:VBox label="Form"
-							 width="100%" height="100%" 
-							 fontFamily="{Constants.tabLabelsFontFamily}"
-							 fontSize="{Constants.tabLabelsFontSize}"
-							 fontStyle="{Constants.tabLabelsFontStyle}"
-							 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
-							 verticalAlign="{Constants.tabLabelsVerticalAlign}" verticalGap="0"
-							 verticalScrollPolicy="auto">						
-						<mx:DataGrid width="100%" height="80"
-									 rowHeight="16"
-									 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
-									 fontSize="{Constants.dgHeaderLabelsFontSize}"
-									 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
-									 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
-							<mx:columns>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-							</mx:columns>
-						</mx:DataGrid>
-						<mx:DataGrid width="100%" height="80"
-									 rowHeight="16"
-									 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
-									 fontSize="{Constants.dgHeaderLabelsFontSize}"
-									 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
-									 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
+								 fontStyle="{Constants.tabLabelsFontStyle}"
+								 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+								 verticalAlign="{Constants.tabLabelsVerticalAlign}" verticalGap="0"
+								 verticalScrollPolicy="auto">						
+							<mx:DataGrid width="100%" height="80"
+										 rowHeight="16"
+										 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+										 fontSize="{Constants.dgHeaderLabelsFontSize}"
+										 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
+										 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
+								<mx:columns>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+								</mx:columns>
+							</mx:DataGrid>
+							<mx:DataGrid width="100%" height="80"
+										 rowHeight="16"
+										 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+										 fontSize="{Constants.dgHeaderLabelsFontSize}"
+										 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
+										 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
+								
+								<mx:columns>
+									<mx:DataGridColumn id="dgCol1" fontFamily="{Constants.dgCol1FontFamily}"
+													   fontSize="{Constants.dgCol1FontSize}"
+													   fontStyle="{Constants.dgCol1FontStyle}"
+													   headerText="{Constants.dgCol1Label}">
+										<!--textAlign="{Constants.dgCol1VerticalAlign}"-->
+									</mx:DataGridColumn>
+									<mx:DataGridColumn id="dgCol2" fontFamily="{Constants.dgCol2FontFamily}"
+													   fontSize="{Constants.dgCol2FontSize}"
+													   fontStyle="{Constants.dgCol2FontStyle}"
+													   headerText="{Constants.dgCol2Label}">
+										<!--textAlign="{Constants.dgCol2VerticalAlign}"-->
+									</mx:DataGridColumn>
+								</mx:columns>
+							</mx:DataGrid>
+							<mx:DataGrid width="100%" height="80" 
+										 rowHeight="16"
+										 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+										 fontSize="{Constants.dgHeaderLabelsFontSize}"
+										 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
+										 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
+								<mx:columns>
+									<mx:DataGridColumn id="dg2col" fontFamily="{Constants.dgCol1FontFamily}"
+													   fontSize="{Constants.dgCol1FontSize}"
+													   fontStyle="{Constants.dgCol1FontStyle}"
+													   headerText="{Constants.dgCol1Label}">
+										<!--textAlign="{Constants.dgCol1VerticalAlign}"-->
+										
+									</mx:DataGridColumn>
+									<mx:DataGridColumn id="dg2col2" fontFamily="{Constants.dgCol2FontFamily}"
+													   fontSize="{Constants.dgCol2FontSize}"
+													   fontStyle="{Constants.dgCol2FontStyle}"
+													   headerText="{Constants.dgCol2Label}">
+										<!--textAlign="{Constants.dgCol2VerticalAlign}"-->
+										
+									</mx:DataGridColumn>
+								</mx:columns>
+							</mx:DataGrid>					
+						</mx:VBox>
+						
+						<mx:VBox label="Panels / Datagrids"
+								 width="100%" height="100%" verticalGap="0"
+								 fontFamily="{Constants.tabLabelsFontFamily}"
+								 fontSize="{Constants.tabLabelsFontSize}"
+								 fontStyle="{Constants.tabLabelsFontStyle}"
+								 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+								 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+								 verticalScrollPolicy="auto">
 							
-							<mx:columns>
-								<mx:DataGridColumn id="dgCol1" fontFamily="{Constants.dgCol1FontFamily}"
-												   fontSize="{Constants.dgCol1FontSize}"
-												   fontStyle="{Constants.dgCol1FontStyle}"
-												   headerText="{Constants.dgCol1Label}">
-									<!--textAlign="{Constants.dgCol1VerticalAlign}"-->
-								</mx:DataGridColumn>
-								<mx:DataGridColumn id="dgCol2" fontFamily="{Constants.dgCol2FontFamily}"
-												   fontSize="{Constants.dgCol2FontSize}"
-												   fontStyle="{Constants.dgCol2FontStyle}"
-												   headerText="{Constants.dgCol2Label}">
-									<!--textAlign="{Constants.dgCol2VerticalAlign}"-->
-								</mx:DataGridColumn>
-							</mx:columns>
-						</mx:DataGrid>
-						<mx:DataGrid width="100%" height="80" 
-									 rowHeight="16"
-									 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
-									 fontSize="{Constants.dgHeaderLabelsFontSize}"
-									 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
-									 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
-							<mx:columns>
-								<mx:DataGridColumn id="dg2col" fontFamily="{Constants.dgCol1FontFamily}"
-												   fontSize="{Constants.dgCol1FontSize}"
-												   fontStyle="{Constants.dgCol1FontStyle}"
-												   headerText="{Constants.dgCol1Label}">
-									<!--textAlign="{Constants.dgCol1VerticalAlign}"-->
-									
-								</mx:DataGridColumn>
-								<mx:DataGridColumn id="dg2col2" fontFamily="{Constants.dgCol2FontFamily}"
-												   fontSize="{Constants.dgCol2FontSize}"
-												   fontStyle="{Constants.dgCol2FontStyle}"
-												   headerText="{Constants.dgCol2Label}">
-									<!--textAlign="{Constants.dgCol2VerticalAlign}"-->
-									
-								</mx:DataGridColumn>
-							</mx:columns>
-						</mx:DataGrid>					
-					</mx:VBox>
-					
-					<mx:VBox label="Panels / Datagrids"
-							 width="100%" height="100%" verticalGap="0"
-							 fontFamily="{Constants.tabLabelsFontFamily}"
-							 fontSize="{Constants.tabLabelsFontSize}"
-							 fontStyle="{Constants.tabLabelsFontStyle}"
-							 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
-							 verticalAlign="{Constants.tabLabelsVerticalAlign}"
-							 verticalScrollPolicy="auto">
-						
-					</mx:VBox>
-					<mx:VBox label="Fields / Controls"
-							 width="100%" height="100%" verticalGap="0"
-							 fontFamily="{Constants.tabLabelsFontFamily}"
-							 fontSize="{Constants.tabLabelsFontSize}"
-							 fontStyle="{Constants.tabLabelsFontStyle}"
-							 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
-							 verticalAlign="{Constants.tabLabelsVerticalAlign}"
-							 verticalScrollPolicy="auto">
-						<mx:HBox width="100%" horizontalAlign="center" paddingBottom="15" paddingTop="15">
-							<s:ComboBox width="90%" fontFamily="{Constants.subheaderLabelsFontFamily}"
-										fontSize="{Constants.subheaderLabelsFontSize}"
-										fontStyle="{Constants.subheaderLabelsFontStyle}"/>
-						</mx:HBox>
-						
-						<mx:DataGrid width="100%" height="80"
-									 rowHeight="16"
-									 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
-									 fontSize="{Constants.dgHeaderLabelsFontSize}"
-									 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
-									 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
-									 verticalScrollPolicy="auto">
-							<mx:columns>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-							</mx:columns>
-						</mx:DataGrid>
-						<mx:DataGrid width="100%" height="80"
-									 rowHeight="16"
-									 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
-									 fontSize="{Constants.dgHeaderLabelsFontSize}"
-									 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
-									 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
-							<mx:columns>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-							</mx:columns>
-						</mx:DataGrid>
-						<mx:DataGrid width="100%" height="80" headerHeight="20">
-							rowHeight="16"
-							<mx:columns>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-								<mx:DataGridColumn>
-									
-								</mx:DataGridColumn>
-							</mx:columns>
-						</mx:DataGrid>					
-					</mx:VBox>   
-					<mx:VBox label="Strings"
-							 width="100%" height="100%" verticalGap="0"
-							 fontFamily="{Constants.tabLabelsFontFamily}"
-							 fontSize="{Constants.tabLabelsFontSize}"
-							 fontStyle="{Constants.tabLabelsFontStyle}"
-							 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
-							 verticalAlign="{Constants.tabLabelsVerticalAlign}"
-							 verticalScrollPolicy="auto">
-					</mx:VBox>   
-				</mx:TabNavigator>
-				
-				<s:BorderContainer width="100%" height="24" backgroundColor="black" borderVisible="false">
-					<s:layout>
-						<s:HorizontalLayout verticalAlign="middle"/>
-					</s:layout>
-					<s:Spacer width="100%"/>
-					<s:ButtonBar height="21"
-								 fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold">
-						<s:layout>
-							<s:ButtonBarHorizontalLayout gap="5" />
-						</s:layout>
-						<s:dataProvider>
-							<s:ArrayList source="[Save,Cancel]" />
-						</s:dataProvider>
-					</s:ButtonBar>
-					<s:Spacer width="5"/>
+						</mx:VBox>
+						<mx:VBox label="Fields / Controls"
+								 width="100%" height="100%" verticalGap="0"
+								 fontFamily="{Constants.tabLabelsFontFamily}"
+								 fontSize="{Constants.tabLabelsFontSize}"
+								 fontStyle="{Constants.tabLabelsFontStyle}"
+								 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+								 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+								 verticalScrollPolicy="auto">
+							<mx:HBox width="100%" horizontalAlign="center" paddingBottom="15" paddingTop="15">
+								<s:ComboBox width="90%" fontFamily="{Constants.subheaderLabelsFontFamily}"
+											fontSize="{Constants.subheaderLabelsFontSize}"
+											fontStyle="{Constants.subheaderLabelsFontStyle}"/>
+							</mx:HBox>
+							
+							<mx:DataGrid width="100%" height="80"
+										 rowHeight="16"
+										 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+										 fontSize="{Constants.dgHeaderLabelsFontSize}"
+										 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
+										 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}"
+										 verticalScrollPolicy="auto">
+								<mx:columns>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+								</mx:columns>
+							</mx:DataGrid>
+							<mx:DataGrid width="100%" height="80"
+										 rowHeight="16"
+										 fontFamily="{Constants.dgHeaderLabelsFontFamily}"
+										 fontSize="{Constants.dgHeaderLabelsFontSize}"
+										 fontStyle="{Constants.dgHeaderLabelsFontStyle}" headerHeight="20"
+										 verticalAlign="{Constants.dgHeaderLabelsVerticalAlign}">
+								<mx:columns>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+								</mx:columns>
+							</mx:DataGrid>
+							<mx:DataGrid width="100%" height="80" headerHeight="20">
+								rowHeight="16"
+								<mx:columns>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+									<mx:DataGridColumn>
+										
+									</mx:DataGridColumn>
+								</mx:columns>
+							</mx:DataGrid>					
+						</mx:VBox>   
+						<mx:VBox label="Strings"
+								 width="100%" height="100%" verticalGap="0"
+								 fontFamily="{Constants.tabLabelsFontFamily}"
+								 fontSize="{Constants.tabLabelsFontSize}"
+								 fontStyle="{Constants.tabLabelsFontStyle}"
+								 horizontalAlign="{Constants.tabLabelsHorizontalAlign}"
+								 verticalAlign="{Constants.tabLabelsVerticalAlign}"
+								 verticalScrollPolicy="auto">
+						</mx:VBox>   
+					</mx:TabNavigator>
 				</s:BorderContainer>
+			</mx:VDividedBox>
+			<s:BorderContainer width="100%" height="24" backgroundColor="black" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout verticalAlign="middle"/>
+				</s:layout>
+				<s:Spacer width="100%"/>
+				<s:ButtonBar height="21"
+							 fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold">
+					<s:layout>
+						<s:ButtonBarHorizontalLayout gap="5" />
+					</s:layout>
+					<s:dataProvider>
+						<s:ArrayList source="[Save,Cancel]" />
+					</s:dataProvider>
+				</s:ButtonBar>
+				<s:Spacer width="5"/>
 			</s:BorderContainer>
-		</mx:VDividedBox>
+		</mx:VBox>
 		<mx:VDividedBox id="rightVDividedBoxID" width="0" maxWidth="350" horizontalAlign="center">
 		</mx:VDividedBox>
 	</mx:HBox>

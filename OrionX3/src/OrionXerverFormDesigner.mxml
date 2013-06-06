@@ -10,7 +10,8 @@
 	<fx:Declarations>
 		
 	</fx:Declarations>
-	<fx:Style>
+	<!--Commenting this out for now.  David
+	fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
 		@namespace mx "library://ns.adobe.com/flex/mx";
 		mx|DataGrid {
@@ -23,10 +24,10 @@
 		global
 		{
 		}
-	</fx:Style>
+	</fx:Style-->
 <fx:Script>
 	<![CDATA[
-		import david.view.components.ControlDesign;
+		import david.view.components.Console;
 		import david.view.configs.Constants;
 		
 		import mx.collections.ArrayCollection;
@@ -47,9 +48,7 @@
 			_idx +=1;
 			return 'id' + _idx.toString();
 		}
-		
-		
-		
+				
 		protected function init():void
 		{
 			compList = new ArrayCollection([
@@ -76,20 +75,30 @@
 			panel.width=350;
 			panel.percentHeight=100;
 			
-			var vdControlDesign:ControlDesign = new ControlDesign();
-			//panel.addChild(vdControlDesign);
+			var vdConsole:Console = new Console();
+			//panel.addChild(vdConsole);
 			//panel.isPopUp=false;
-			PopUpManager.addPopUp(vdControlDesign,this,false);
+			PopUpManager.addPopUp(vdConsole,this,false);
 			//PopUpManager.centerPopUp(
 		}
 		
+		private function frmSetting():void {
+			
+			// Form Main
+			vdFormDesign.maxWidth = Constants.formMaxWidth;
+			vdFormDesign.minWidth = Constants.formMinWidth;
+		}
+
+
 	]]>
 </fx:Script>
 	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
-		<components:FormDeisgn id="vdFormDesign" minWidth="{Constants.formMinWidth}"/>
-		<!--<components:ControlDesign id="vdControlDesign" width="350"/>-->
-		<mx:VBox width="350" height="100%">
-			
+		<components:FormDesign id="vdFormDesign" minWidth="{vdFormDesign.minWidth}" maxWidth="{vdFormDesign.maxWidth}"/>
+		<!--<components:Console id="vdConsole" width="350"/>-->
+		<mx:VBox width="100%" height="100%">
+		<s:Image width="100%" height="100%" 
+				 scaleMode="stretch" fillMode="scale"
+				 source="@Embed('assets/dummyimage.jpg')"/>
 		</mx:VBox>
 	</mx:HDividedBox>
 </s:Application>

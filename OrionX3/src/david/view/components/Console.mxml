@@ -5,7 +5,7 @@
 				width="350" minWidth="350" maxWidth="350" height="70%"
 				backgroundAlpha="0" creationComplete="init()"
 				title="{Constants.clientTitleBoxLabel}"
-				windowMoving="titleWin_windowMovingHandler(event);">
+				windowMoving="titleWin_windowMovingHandler(event);" xmlns:local="*">
 	<fx:Script>
 		<![CDATA[
 			import david.view.configs.Constants;
@@ -358,73 +358,7 @@
 						<mx:VBox id="Panels" label="Panels &amp; Datagrids"
 								 width="100%" height="100%" verticalGap="0"
 								 horizontalScrollPolicy="off" verticalScrollPolicy="auto">
-							<s:BorderContainer width="100%" height="{Dock.height}" borderVisible="false">								
-								<s:layout>
-									<s:VerticalLayout paddingTop="5" paddingBottom="5" 
-													  paddingLeft="5" paddingRight="5" gap="5"/>	
-								</s:layout>
-								<s:BorderContainer width="100%" height="100%"
-												   borderVisible="false" dropShadowVisible="false">
-									<s:layout>
-										<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
-															paddingLeft="0" paddingRight="0" gap="5"/>
-									</s:layout>
-									<mx:Text text="Basic"/>
-									<s:Image source="@Embed('assets/b_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>									
-									<s:Image source="@Embed('assets/b_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<s:Image source="@Embed('assets/b_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-								</s:BorderContainer>
-								<s:BorderContainer width="100%" height="100%" borderVisible="false">
-									<s:layout>
-										<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
-															paddingLeft="0" paddingRight="0" gap="5"/>	
-									</s:layout>
-									<mx:Text text="Vertical"/>
-									<!--Border container with vertical layout-->
-									<s:Image source="@Embed('assets/v_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Panel container with vertical layout-->
-									<s:Image source="@Embed('assets/v_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Frame container with vertical layout-->
-									<s:Image source="@Embed('assets/v_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-								</s:BorderContainer>
-								<s:BorderContainer width="100%" height="100%" borderVisible="false">
-									<s:layout>
-										<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
-															paddingLeft="0" paddingRight="0" gap="5"/>	
-									</s:layout>
-									<mx:Text text="Horizontal"/>
-									<!--Border container with horizontal layout-->
-									<s:Image source="@Embed('assets/h_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Panel container with horizontal layout-->
-									<s:Image source="@Embed('assets/h_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Frame container with horizontal layout-->
-									<s:Image source="@Embed('assets/h_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-								</s:BorderContainer>
-								<s:BorderContainer width="100%" height="100%" borderVisible="false">
-									<s:layout>
-										<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
-															paddingLeft="0" paddingRight="0" gap="5"/>	
-									</s:layout>
-									<mx:Text text="Tile"/>
-									<!--Border container with tile layout-->
-									<s:Image source="@Embed('assets/t_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Panel container with tile layout-->
-									<s:Image source="@Embed('assets/t_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Frame container with tile layout-->
-									<s:Image source="@Embed('assets/t_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-								</s:BorderContainer>
-								<s:BorderContainer width="100%" height="100%" borderVisible="false">
-									<s:layout>
-										<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
-															paddingLeft="0" paddingRight="0" gap="5"/>	
-									</s:layout>
-									<mx:Text text="Datagrid"/>
-									<!--Datagrid-->
-									<s:Image source="@Embed('assets/d_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-									<!--Datagrid in panel container-->
-									<s:Image source="@Embed('assets/d_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
-								</s:BorderContainer>
-							</s:BorderContainer>
+							<local:FromLayoutContaner  width="100%" height="100%" />
 						</mx:VBox>
 							
 						<!--Dock section 5:  Subform panels-->

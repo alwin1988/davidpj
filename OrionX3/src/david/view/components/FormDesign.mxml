@@ -1,898 +1,354 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 xmlns:model="com.vstyran.transform.model.*" 
-		 xmlns:compx="component.*" 
-		 xmlns:view="view.*" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:ascomponent="th.co.shopsthai.ascomponent.*" 
 		 width="100%" height="100%" 
 		 creationComplete="init()" 
-		 xmlns:ascomponent="th.co.shopsthai.ascomponent.*" 
 		 >
 	<fx:Declarations>
-		<fx:Component className="VGuideLine">
-			<s:Line y="45" height="230" alpha="0.1">
-				<s:stroke>
-					<s:SolidColorStroke/>
-				</s:stroke>
-			</s:Line>
-		</fx:Component>                                       
-		<fx:Component className="HGuideLine">
-			<s:Line x="30" width="400" alpha="0.1">
-				<s:stroke>
-					<s:SolidColorStroke/>
-				</s:stroke>
-			</s:Line>
-		</fx:Component>                                       
-		<fx:Component className="RGuideLine">
-			<s:Line>
-				<fx:Script>
-					<![CDATA[
-						import mx.core.UIComponent;
-						
-						
-					]]>
-				</fx:Script>
-				<s:stroke>
-					<s:SolidColorStroke color="#AA0000"/>
-				</s:stroke>
-			</s:Line>
-		</fx:Component>    
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import mx.geom.RoundedRectangle;
-			import th.co.shopsthai.ascomponent.rzmvasBroderContainer;
-			import th.co.shopsthai.resize.rzmvasBroderContainerSkin;
-			import spark.layouts.VerticalLayout;
-			import org.osmf.utils.Version;
-			import flex.utils.spark.resize.ResizableDraggableTitleWindowSkin;
-			import spark.components.TitleWindow;
-			import th.co.shopsthai.resize.rzmvButtonSkin;
-			import mx.core.DragSource;
-			import mx.controls.Label;
-			import skins.CustomTransformToolSkin;
-			import com.vstyran.transform.connectors.UIScaleConnector;
-			import com.vstyran.transform.connectors.UIConnector;
-			import view.CustomTransformTool;
-			import mx.collections.ArrayCollection;
-			import mx.controls.dataGridClasses.DataGridColumn;
-			import flash.text.engine.TextLine;
-			import avmplus.FLASH10_FLAGS;
-			import component.vDateChooser;
-			import component.vTextArea;
-			import component.vRadioBtn;
-			import component.vCheckBox;
-			import component.vTextInput;
-			import component.vButton;
-			import org.yang.chen.skins.TTIResponsiveSkin;
-			import component.ToggleTextInput;
-			import com.vstyran.transform.events.TransformEvent;
-			import mx.utils.ObjectUtil;
-			import david.view.configs.Constants;
-			import mx.controls.Alert;
-			import component.vComboBox;
-			import com.vstyran.transform.events.GuidelineEvent;
-			import com.vstyran.transform.model.Bounds;
-			import com.vstyran.transform.model.GridData;
-			import com.vstyran.transform.model.Guideline;
+			import flex.utils.spark.resize.ResizableComboBoxSkin;
 			
-			import component.cusCompDateChooser;
-			import component.cusCompTextArea;
-			import component.vDataGrid;
-			
-			import david.view.fromSkin.buttonSkin;
-			import david.view.fromSkin.checkboxSkin;
-			import david.view.fromSkin.radioBtnSkin;
-			import david.view.fromSkin.textAreaSkin;
-			import david.view.fromSkin.txtinputSkin;
-			import david.view.fromSkin.vDataGridSkin;
-			
-			import itemrenders.ButtonItemRender;
-			import itemrenders.ComboboxItemRender;
-			import itemrenders.TextInputItemRender;
-			
-			import mx.controls.ComboBox;
+			import mx.binding.utils.BindingUtils;
 			import mx.core.FlexGlobals;
+			import mx.core.IUIComponent;
 			import mx.core.UIComponent;
 			import mx.events.DragEvent;
-			import mx.events.ResizeEvent;
 			import mx.managers.DragManager;
+			import mx.utils.ObjectUtil;
 			
-			import spark.components.RadioButton;
-			import spark.components.gridClasses.GridColumn;
+			import spark.components.Button;
+			import spark.components.ComboBox;
+			import spark.layouts.HorizontalLayout;
+			import spark.layouts.TileLayout;
 			
-			private var bounds:Bounds = new Bounds();
-			private	var griddata:GridData = new GridData(); // กำหนดการ snap to grid
+			import th.co.shopsthai.ascomponent.rzmvasBroderContainer;
+			import th.co.shopsthai.resize.rzmvasBroderContainerSkin;
+			
 			private var _currentTarget:UIComponent;
-
-			public var tool:CustomTransformTool
-			private var uiConnector:UIConnector;
-			private var uiScaleConnector:UIScaleConnector;
-				
+			
+			
 			public function init():void {
-				toolInit();
-				frmSetting();
-				vginit();
-			}
 			
-			private function frmSetting():void {
-				
-				// Form Main
-				frmMainID.maxWidth = Constants.formMaxWidth;
-				frmMainID.minWidth = Constants.formMinWidth;
-
-				// Form Title
-//				frmTitleBox.height = Constants.formTitleBoxHeight;
-//				frmTitleBox.setStyle('backgroundColor',Constants.formTitleBoxBackgroundColor);
-//				frmTitleBox.alpha = Constants.formTitleBoxAlpha;
-//				frmTitleBox.setStyle('horizontalAlign',Constants.formTitleHorizontalAlign);
-//				frmTitleBox.setStyle('verticalAlign',Constants.formTitleVerticalAlign);
-//				frmTitleBox.setStyle('fontFamily',Constants.formTitleFontFamily);
-//				frmTitleBox.setStyle('fontSize',Constants.formTitleFontSize);
-//				frmTitleBox.setStyle('fontStyle',Constants.formTitleFontStyle);
-//				lblfrmTitle.text = Constants.formTitleLabel;
-				
-				// Form SubTitle
-//				frmSub.height = Constants.formSubtitleBoxHeight;
-//				frmSub.setStyle('backgroundColor',Constants.formSubtitleBoxBackgroundColor);
-//				frmSub.alpha = Constants.formSubtitleBoxAlpha;
-//				frmSub.setStyle('horizontalAlign',Constants.formSubtitleHorizontalAlign);
-//				frmSub.setStyle('verticalAlign',Constants.formSubtitleVerticalAlign);
-//				frmSub.setStyle('fontFamily',Constants.formSubtitleFontFamily);
-//				frmSub.setStyle('fontSize',Constants.formSubtitleFontSize);
-//				frmSub.setStyle('fontStyle',Constants.formSubtitleFontStyle);
-//				lblfrmSubTitle.text = Constants.formSubtitleLabel;		
-			}
-			
-			private function toolInit():void {
-				uiConnector = new UIConnector();
-				uiScaleConnector = new UIScaleConnector();
-				tool = new CustomTransformTool();
-				tool.setStyle("skinClass", Class(CustomTransformToolSkin));
-				var bounds:Bounds = new Bounds();
-				
-				
-				
-				bounds.x = GG.x;
-				bounds.y = GG.y;
-				bounds.width = GG.width;
-				bounds.height = GG.height;
-				
-				griddata.cellHeight = 20;
-				griddata.cellWidth = 20;
-				griddata.fraction = 5;
-				griddata.x = 1;
-				griddata.y = 1;
-
-				setCurrentTarget(null);
-				tool.textMode = true;
-				tool.maintainMoveShortcuts = true;
-				tool.connector =  uiConnector;
-				tool.bounds = bounds;
-				tool.grid  = griddata;
-				tool.visible = false;
-				GG.addElement(tool);
-			}
-				
-			public function setCurrentTarget(value:UIComponent):void
-			{
-				_currentTarget = value;
-				
-				uiScaleConnector.target = null;
-				uiConnector.target = null;
-				
-				if(_currentTarget == null)
-					return;
-				
-				if(_currentTarget is vButton || _currentTarget is vCheckBox || _currentTarget is vRadioBtn ||  _currentTarget is vDateChooser )
-				{
-					tool.textMode = false;
-					uiScaleConnector.target = _currentTarget;
-					tool.connector = uiScaleConnector;
-				}
-				else
-				{
-					tool.textMode = true;
-					uiConnector.target = _currentTarget;
-					tool.connector = uiConnector;
-				}
 			}
 			
 			
-			private function tool_keyDownHandler(event:KeyboardEvent):void {
-				
-				if(event.keyCode == Keyboard.DELETE){
-					if(tool.visible && _currentTarget != null ){
-						GG.removeElement(_currentTarget);
-//						tool.target = null;
-						setCurrentTarget(null);
-						tool.visible = false;
-					}
-				} 
+			private function dragEnterHandler(event:DragEvent):void {
+				DragManager.acceptDragDrop(event.currentTarget as IUIComponent);
 			}
 			
-//			protected function tool_guidelinesUpdateHandler(event:GuidelineEvent):void
-//			{
-//				
-//				if(event.cross && event.cross.vGuideline)
-//					vGuide.x = event.cross.vGuideline.value;
-//				vGuide.visible = (event.cross && event.cross.vGuideline);
-//				
-//				if(event.cross && event.cross.hGuideline)
-//					hGuide.y = event.cross.hGuideline.value;
-//				hGuide.visible = (event.cross && event.cross.hGuideline);
-//				
-//				passiveGuideGroup.removeAllElements();
-//				if(event.cross)
-//				{
-//					if(showPassiveGuides.selected)
-//					{
-//						for each (var vguide:Guideline in event.cross.getVGuidelines()) 
-//						{
-//							var vGuideLine:VGuideLine = new VGuideLine();
-//							vGuideLine.x = vguide.value;
-//							passiveGuideGroup.addElement(vGuideLine);
-//						}
-//						for each (var hguide:Guideline in event.cross.getHGuidelines()) 
-//						{
-//							var hGuideLine:HGuideLine = new HGuideLine();
-//							hGuideLine.y = hguide.value;
-//							passiveGuideGroup.addElement(hGuideLine);
-//						}
-//					}
-//				}
-//			}	
 			
-			protected function select(event:MouseEvent):void
-			{
-				trace(event.ctrlKey);
-				if(_currentTarget != event.currentTarget)
-				{
-					if(event.currentTarget == spark.components.Button ){
-						
-						
-					} else {
-						
-							setCurrentTarget(event.currentTarget as UIComponent);
-//							if(tool.target.className == 'vDataGrid'){
-//								ComponentList.disablevDataGrid(tool.target.id);
-//							}
-							tool.showPreviewCover = true;
-							tool.startMoving(event);
-							tool.visible = true;
-					}
-				}
-			}
 			
-			protected function unselect(event:MouseEvent):void {
-				if(tool){
-					tool.visible = false;
-					uiConnector.target = null;
-					uiScaleConnector.target = null;
-					ComponentList.enableCoponent(null);
-				}
-			}	
-			
-//			protected function GG_resizeHandler(event:ResizeEvent):void
-//			{
-//				bounds.x = GG.x;
-//				bounds.y = GG.y;
-//				bounds.width = GG.width;
-//				bounds.height = GG.height;
-//				if (tool!=null)
-//				{
-//					tool.bounds = bounds;
-//				}
-//			}
-			
-			public function update(target:UIComponent, passiveGuideGroup:Group):void
-			{
-//				var m:Matrix = TransformUtil.getMatrix(target, passiveGuideGroup);
-//				
-//				var stPoimt:Point =  m.transformPoint(new Point(target.width/2, target.height/2));
-//				var endPoimt:Point =  m.transformPoint(new Point(target.width, target.height/2));
-//				this.xFrom = stPoimt.x;
-//				this.yFrom = stPoimt.y;
-//				this.xTo = endPoimt.x;
-//				this.yTo = endPoimt.y;
-			}
-			
-			protected function box1_clickHandler(event:MouseEvent):void
-			{
-				if(event.target.hasOwnProperty('className') ){
-					if(event.target.className == "Box"){
-						if(tool){
-							tool.visible = false;
-							setCurrentTarget(null);
-							ComponentList.enableCoponent(null);
-						}
-					}
-				}
-			}
-			
-
-			// releases the mouse button while over the Canvas container.
-			private var PGG:rzmvasBroderContainer;
-
 			private function dragDropHandler(event:DragEvent):void {
 				
-				// Get the data identified by the color format
-				// from the drag source.
-				
-				//ImageRenderer.selected;
-				
-				var data:Object;
-				
-				if( event.dragSource.hasFormat('img')) {
+				if(event.dragSource.hasFormat('NEW')){
 					
-					data = event.dragSource.dataForFormat('img');
+					if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'BOX'		){
+						//					&& event.dragSource.dataForFormat('NEW') == 'NEW' 
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+//						br.layout = new VerticalLayout(); 
+						br.id = 'BOX' + FlexGlobals.topLevelApplication.getIdx;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						event.currentTarget.addElement(br);
+						br.MV = true;
+						br.RR = true;
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PANEL'		){
+						//					&& event.dragSource.dataForFormat('NEW') == 'NEW' 
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+//						br.layout = new VerticalLayout(); 
+						br.id = 'PANEL' + FlexGlobals.topLevelApplication.getIdx;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						event.currentTarget.addElement(br);
+						br.MV = true;
+						br.RR = true;
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TBBOX'		){
+						//					&& event.dragSource.dataForFormat('NEW') == 'NEW' 
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+//						br.layout = new VerticalLayout(); 
+						br.id = 'TBBOX' + FlexGlobals.topLevelApplication.getIdx;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						event.currentTarget.addElement(br);
+						br.MV = true;
+						br.RR = true;
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+						
+					} else	if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VBOX'		){
+							//					&& event.dragSource.dataForFormat('NEW') == 'NEW' 
+							var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+							br.layout = new VerticalLayout(); 
+							br.id = 'VBOX' + FlexGlobals.topLevelApplication.getIdx;
+							br.setStyle('skinClass',rzmvasBroderContainerSkin);
+							event.currentTarget.addElement(br);
+							br.MV = true;
+							br.RR = true;
+							br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+							br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+							br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+							br.x = event.currentTarget.x;
+							br.y = event.currentTarget.y;
+							//						acContainer.addItem(br);
+						} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VPANEL'		){
+							//					&& event.dragSource.dataForFormat('NEW') == 'NEW' 
+							var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+							br.layout = new VerticalLayout(); 
+							br.id = 'VPANEL' + FlexGlobals.topLevelApplication.getIdx;
+							br.setStyle('skinClass',rzmvasBroderContainerSkin);
+							event.currentTarget.addElement(br);
+							br.MV = true;
+							br.RR = true;
+							br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+							br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+							br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+							br.x = event.currentTarget.x;
+							br.y = event.currentTarget.y;
+							//						acContainer.addItem(br);
+						} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VTBBOX'		){
+							//					&& event.dragSource.dataForFormat('NEW') == 'NEW' 
+							var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+							br.layout = new VerticalLayout(); 
+							br.id = 'VTBBOX' + FlexGlobals.topLevelApplication.getIdx;
+							br.setStyle('skinClass',rzmvasBroderContainerSkin);
+							event.currentTarget.addElement(br);
+							br.MV = true;
+							br.RR = true;
+							br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+							br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+							br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+							br.x = event.currentTarget.x;
+							br.y = event.currentTarget.y;
+							//						acContainer.addItem(br);
+							
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TILEBOX' ) {
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+						var ly:TileLayout = new TileLayout();
+						ly.paddingBottom = 10;
+						ly.paddingLeft = 10;
+						ly.paddingTop = 10;
+						ly.paddingRight = 10;
+						
+						br.id = 'TILEBOX' + FlexGlobals.topLevelApplication.getIdx;
+						BindingUtils.bindProperty(br,'minWidth',ly,'columnWidth');
+						
+						
+						
+						br.minWidth = ly.columnWidth * ly.columnCount;
+						br.minHeight = ly.rowHeight * ly.rowCount;
+						br.layout = ly;
+						br.MV = true;
+						br.RR = true;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						event.currentTarget.addElement(br);
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+						
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HBOX' ) {
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+						br.layout = new HorizontalLayout(); 
+						br.id = 'HBOX' + FlexGlobals.topLevelApplication.getIdx;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						br.MV = true;
+						br.RR = true;
+						event.currentTarget.addElement(br);
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HPANEL' ) {
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+						br.layout = new HorizontalLayout(); 
+						br.id = 'HPANEL' + FlexGlobals.topLevelApplication.getIdx;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						br.MV = true;
+						br.RR = true;
+						event.currentTarget.addElement(br);
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HTBBOX' ) {
+						var br:rzmvasBroderContainer = new rzmvasBroderContainer();
+						br.layout = new HorizontalLayout(); 
+						br.id = 'HTBBOX' + FlexGlobals.topLevelApplication.getIdx;
+						br.setStyle('skinClass',rzmvasBroderContainerSkin);
+						br.MV = true;
+						br.RR = true;
+						event.currentTarget.addElement(br);
+						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						br.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
+						br.x = event.currentTarget.x;
+						br.y = event.currentTarget.y;
+						//						acContainer.addItem(br);
+						
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzBUTTON' ) {
+						var bt:Button = new Button();
+						bt.setStyle('skinClass',th.co.shopsthai.resize.rzmvButtonSkin);
+						bt.id = 'btn' + FlexGlobals.topLevelApplication.getIdx;
+						event.currentTarget.addElement(bt);
+//						bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						//					bt.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						//					bt.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						//					bt.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
+						bt.x = event.currentTarget.x;
+						bt.y = event.currentTarget.y;
+						//						acContainer.addItem(bt);
+						
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzCOMBO' ) {
+						var cmb:ComboBox = new ComboBox();
+						cmb.setStyle('skinClass',ResizableComboBoxSkin);
+						cmb.id = 'cmb' + FlexGlobals.topLevelApplication.getIdx;
+						event.currentTarget.addElement(cmb);
+//						cmb.addEventListener(MouseEvent.MOUSE_DOWN,select);
+						//					cmb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
+						//					cmb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
+						//					cmb.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
+						cmb.x = event.currentTarget.x;
+						cmb.y = event.currentTarget.y;
+						//						acContainer.addItem(cmb);
+						
+					} 
 					
-					//switch(data.toolTip)
-					switch(FlexGlobals.topLevelApplication.selected)
+					var i:int=0;
+					var arr:Array = new Array();
+					var o:Object;
+					for(i=0;i< event.target.numElements;i++ ){
+						o = new Object();
+						if(Object(event.target.getElementAt(i)).id != id){
+							trace('element at ',i,event.target.getElementAt(i).x,event.target.getElementAt(i).y);
+							o.idx = i;
+							o.x = event.target.getElementAt(i).x;
+							o.y = event.target.getElementAt(i).y;
+							o.id = Object(event.target.getElementAt(i)).id;
+						} else {
+							o.idx = i;
+							o.x = event.localX;
+							o.y = event.localY;
+							o.id = id;
+						}
+						arr.push(o);
+					}
+					
+					arr.sortOn(['y'],Array.NUMERIC);
+					trace('arr',ObjectUtil.toString(arr));
+					
+					var n:uint = 0;
+					for each (var item:Object in arr) 
 					{
-						case "Button":
-						{
-//							var bt:vButton = new vButton();
-//							bt.doubleClickEnabled = true;
-//							bt.x = event.localX;
-//							bt.y = event.localY;
-//							bt.id = FlexGlobals.topLevelApplication.getIdx;
-//							bt.minWidth = 230;
-//							bt.minHeight = 20;
-//							bt.width = 230;
-//							bt.height = 24;
-//							bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
-////							bt.setStyle("skinClass", Class(buttonSkin));
-//							FlexGlobals.topLevelApplication.updateComplete = true;
-//							if( (bt.x+bt.width) >= GG.width){
-//								bt.x = GG.width - bt.width;
-//							}
-//							GG.addElement(bt);
-//							ComponentList.Accomp.addItem(bt);
-//							bt.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							//-------------NEW ---------------------
-								var bt:TitleWindow= new TitleWindow();
-								bt.doubleClickEnabled = true;
-								bt.x = event.localX;
-								bt.y = event.localY;
-								bt.id = FlexGlobals.topLevelApplication.getIdx;
-								bt.minWidth = 230;
-								bt.minHeight = 220;
-								bt.width = 230;
-								bt.height = 224;
-								bt.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
-								PGG.addElement(bt);
-								ComponentList.Accomp.addItem(bt);
-							
-							//-------------NEW ---------------------
+						if(item.id == id ){
+							trace(n,item.id);
+							event.target.setElementIndex(event.target.getElementAt(item.idx),n);
 							break;
 						}
-						case "vLayout":{
-							PGG = new rzmvasBroderContainer();
-							PGG.setStyle('skinClass',rzmvasBroderContainerSkin);
-							PGG.layout = new VerticalLayout();
-							PGG.percentWidth = 100;
-							PGG.percentHeight = 100;
-							PGG.MV = true;
-							PGG.RR = true;
-							supGG.addElement(PGG);
-							break;
-						}
-						case "TextInput":
-						{
-//							var tx:spark.components.TextInput = new spark.components.TextInput();
-							var tx:vTextInput = new vTextInput();
-							tx.doubleClickEnabled = true;
-							tx.id = FlexGlobals.topLevelApplication.getIdx;
-							tx.x = event.localX;
-							tx.y = event.localY;
-							tx.width = 230;
-							tx.height = 24;
-							tx.minWidth = 230;
-							tx.minHeight = 20;
-							tx.addEventListener(MouseEvent.MOUSE_DOWN,select);
-//							tx.setStyle("skinClass", Class(txtinputSkin));
-							if((tx.x + tx.width) >= GG.width){
-								tx.x = GG.width - tx.width;
-							}
-							GG.addElement(tx);
-							ComponentList.Accomp.addItem(tx);
-							tx.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case "CheckBox":
-						{
-//							var ck:spark.components.CheckBox = new spark.components.CheckBox();
-							var ck:vCheckBox = new vCheckBox();
-							ck.doubleClickEnabled = true;
-							ck.chk.label = "checkbox 1";
-							ck.id = FlexGlobals.topLevelApplication.getIdx;
-							ck.x = event.localX;
-							ck.y = event.localY;
-							ck.width = 200;
-							ck.height = 24;
-							ck.minWidth = 200;
-							ck.minHeight = 20;
-							ck.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							ck.setStyle("skinClass", Class(checkboxSkin));
-							if((ck.x + ck.width) >= GG.width){
-								ck.x = GG.width - ck.width;
-							}
-							GG.addElement(ck);
-							ComponentList.Accomp.addItem(ck);
-							ck.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case "DataGrid":
-						{
-							var dg:vDataGrid = new vDataGrid();
-							dg.doubleClickEnabled = true;
-							dg.addEventListener(DragEvent.DRAG_ENTER,dgDragEnterHandler);
-							dg.addEventListener(DragEvent.DRAG_DROP,dgDragDropHandler);
-							dg.x = event.localX;
-							dg.y = event.localY;
-							dg.addEventListener(MouseEvent.CLICK,select);
-//							dg.setStyle("skinClass",Class(vDataGridSkin));
-							dg.minWidth = 20;
-							dg.minHeight = 20;
-							dg.width = 300;
-							dg.height = 200;
-							dg.id = FlexGlobals.topLevelApplication.getIdx;							
-							if((dg.x + dg.width) >= GG.width){
-								dg.x = GG.width - dg.width;
-							}
-							GG.addElement(dg);
-							ComponentList.Accomp.addItem(dg);
-							dg.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case "DateChooser":
-						{
-//							var dc:cusCompDateChooser = new cusCompDateChooser();
-							var dc:vDateChooser = new vDateChooser();
-							dc.doubleClickEnabled = true;
-							dc.id = FlexGlobals.topLevelApplication.getIdx;							
-							dc.x = event.localX;
-							dc.y = event.localY;
-							dc.width = 300;
-							dc.height = 200;
-							dc.minWidth = 300;
-							dc.minHeight = 200;
-							dc.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							if((dc.x + dc.width) >= GG.width){
-								dc.x = GG.width - dc.width;
-							}
-							GG.addElement(dc);
-							ComponentList.Accomp.addItem(dc);
-							dc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case "RadioButton":
-						{
-//							var rd:RadioButton = new RadioButton();
-							var rd:vRadioBtn = new vRadioBtn();
-							rd.doubleClickEnabled = true;
-							rd.rdo.label = "Radio Button";
-							rd.id = FlexGlobals.topLevelApplication.getIdx;
-							rd.x = event.localX;
-							rd.y = event.localY;
-							rd.width = 200;
-							rd.height = 24;
-							rd.minWidth = 200;
-							rd.minHeight = 20;
-
-							rd.addEventListener(MouseEvent.MOUSE_DOWN,select);
-//							rd.setStyle("skinClass",Class(radioBtnSkin));
-							
-							if((rd.x + rd.width) >= GG.width){
-								rd.x = GG.width - rd.width;
-							}
-							GG.addElement(rd);
-							ComponentList.Accomp.addItem(rd);
-							rd.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case "TextArea":
-						{	
-//							var ta:cusCompTextArea = new cusCompTextArea();
-							var ta:vTextArea = new vTextArea();
-							ta.tatxt1.text = "Text Area";
-							ta.doubleClickEnabled = true;
-							ta.id = FlexGlobals.topLevelApplication.getIdx;							
-							ta.x = event.localX;
-							ta.y = event.localY;
-							ta.width = 300;
-							ta.height = 50;
-							ta.minWidth = 200;
-							ta.minHeight = 50;
-
-
-							ta.addEventListener(MouseEvent.MOUSE_DOWN,select);
-//							ta.setStyle("skinClass",Class(textAreaSkin));
-							
-							if((ta.x + ta.width) >= GG.width){
-								ta.x = GG.width - ta.width;
-							}
-							GG.addElement(ta);
-							ComponentList.Accomp.addItem(ta);
-							ta.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case 9:
-						{	
-							var cc:customComponent = new customComponent();
-							cc.id = FlexGlobals.topLevelApplication.getIdx;							cc.x = event.localX;
-							cc.y = event.localY;
-							cc.minWidth = 20;
-							cc.minHeight = 20;
-
-							cc.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							
-							
-							if((cc.x + cc.width) >= GG.width){
-								cc.x = GG.width - cc.width;
-							}
-							GG.addElement(cc);	
-							ComponentList.Accomp.addItem(cc);
-							cc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}						
-						case "ComboBox":
-						{
-							var cb:vComboBox = new vComboBox();
-							cb.x = event.localX;
-							cb.y = event.localY;
-							cb.minWidth = 230;
-							cb.minHeight = 20;
-							cb.id = FlexGlobals.topLevelApplication.getIdx;
-							cb.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							if((cb.x + cb.width) >= GG.width){
-								cb.x = GG.width - cb.width;
-							}
-							GG.addElement(cb);
-							ComponentList.Accomp.addItem(cb);
-							cb.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							break;
-						}
-						case "ToggleTextInput":{
-							
-							var tg:ToggleTextInput = new ToggleTextInput();
-							tg.doubleClickEnabled = true;
-							tg.addButtonLabel="Add User Name";
-							tg.id = FlexGlobals.topLevelApplication.getIdx;
-							tg.x = event.localX;
-							tg.y = event.localY;
-							tg.width = 120;
-							tg.height = 24;
-							tg.minWidth = 20;
-							tg.minHeight = 20;
-							tg.addEventListener(MouseEvent.MOUSE_DOWN,select);
-							tg.setStyle("skinClass", Class(TTIResponsiveSkin));
-							if((tg.x + tg.width) >= GG.width){
-								tg.x = GG.width - tx.width;
-							}
-							GG.addElement(tg);
-							ComponentList.Accomp.addItem(tg);
-							tg.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));
-							
-							break;
-						}
-						default:
-						{
-							break;
-						}
-							
-					} // cacse 
+						n++;
+					}
 					
-				} 
-				
-				for(var i:int=0;i<ComponentList.Accomp.length;i++){
-//					trace(ComponentList.Accomp[i].id + ':' + ComponentList.Accomp[i].className );  
-				}
-				
-			}		
-			private function dgDragEnterHandler(event:DragEvent):void {
-				if(event.dragSource.hasFormat('itemrender')){
-					var dropTarget:vDataGrid = vDataGrid(event.currentTarget);// as dataGrid
-					DragManager.acceptDragDrop(dropTarget);
-				} else {}
-			}			
-			
-			private function dgDragDropHandler(event:DragEvent):void {
-				if(event.target.className == "vDataGrid"){
-					if(!event.target.isDelele){ 
-						event.target.isDelele = !event.target.isDelele;
-						event.target.dgGrid.columns = [];
-					}
-//					var col:GridColumn = new GridColumn();
-					var columns:Array = event.target.dgGrid.columns;
-					var col:DataGridColumn  = new DataGridColumn();
-					col.dataField = "dataField"+ (event.target.dgGrid.columns.length+1).toString();
-					col.headerText = "Column " + (event.target.dgGrid.columns.length+1).toString();
-					if(event.dragSource.hasFormat('ButtonIR')){
-						col.itemRenderer = new ClassFactory(ButtonItemRender);
-						columns.push(col);
-//						event.target.dgGrid.columns.push(col);
-					} else if(event.dragSource.hasFormat('ComboBoxIR')){
-						col.itemRenderer = new ClassFactory(ComboboxItemRender);
-						columns.push(col);
-					} else if(event.dragSource.hasFormat('TextInputIR')){
-						col.itemRenderer = new ClassFactory(TextInputItemRender);					
-						columns.push(col);
-					}
-					event.target.dgGrid.columns = columns;
-				}
-			}
-
-			private function dragEnterHandler(event:DragEvent):void {
-				if(event.dragSource.hasFormat("itemrender")){
-					return;
-				}else{
-					var dropTarget:Box = Box(event.currentTarget);// as vBOX
-					DragManager.acceptDragDrop(dropTarget);
-				}
-			}
-
-			protected function tool_transformationStartHandler(event:TransformEvent):void
-			{
-//				trace("event.target" + event.target );
-//				trace("event.currenttarget" + event.currentTarget );
-//				ComponentList.disableCombobox(event.currentTarget.id);
-//				trace(ObjectUtil.toString(event.data));
-			}
-			
-			protected function tool_transformationHandler(event:TransformEvent):void
-			{
-//				trace(ObjectUtil.toString(event.data));
-//				trace("event trans type = " + event.transformationType );
-				if(event.transformationType == 'resize'){
 				} else {
-//					trace('tooldata xy = ' + event.toolData.x.toString() + ":" + event.toolData.y.toString() );
+					
+					if(event.dragSource.hasFormat('cType')){
+						trace('aaa');
+						var data:* = event.dragSource.dataForFormat('item');
+						trace('data.id',data.id);
+						event.currentTarget.addElement(data);
+						
+						var i:int=0;
+						var arr:Array = new Array();
+						var o:Object;
+						for(i=0;i< event.target.numElements;i++ ){
+							o = new Object();
+							if(Object(event.target.getElementAt(i)).id != id){
+								trace('element at ',i,event.target.getElementAt(i).x,event.target.getElementAt(i).y);
+								o.idx = i;
+								o.x = event.target.getElementAt(i).x;
+								o.y = event.target.getElementAt(i).y;
+								o.id = Object(event.target.getElementAt(i)).id;
+							} else {
+								o.idx = i;
+								o.x = event.localX;
+								o.y = event.localY;
+								o.id = id;
+							}
+							arr.push(o);
+						}
+						
+						arr.sortOn(['y'],Array.NUMERIC);
+						trace('arr',ObjectUtil.toString(arr));
+						
+						var n:uint = 0;
+						for each (var item:Object in arr) 
+						{
+							if(item.id == id ){
+								trace(n,item.id);
+								event.target.setElementIndex(event.target.getElementAt(item.idx),n);
+								break;
+							}
+							n++;
+						}
+						event.target.layout = new VerticalLayout();
+					}
 				}
-				ComponentList.disableCombobox(event.currentTarget.target.id);
-			}	
-
-			protected function tool_transformationCompleteHandler(event:TransformEvent):void
+			}    
+			
+			protected function mouseRollOverHander(event:MouseEvent):void
 			{
-				trace('tooldata xy = ' + event.toolData.x.toString() + ":" + event.toolData.y.toString() );
+				trace('mouve over horver');
 			}
 			
-			
-			//-----------VGropu -------------------
-			private function vginit():void 
+			protected function mainParent_dragOverHandler(event:DragEvent):void
 			{
-//				button1.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button2.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button3.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button4.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button5.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button6.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button7.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				button8.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-//				bdCon.height = calculateVboxHeight(mainParent);
-//				bdCon1.height = calculateVboxHeight(mainParent1);
-//				bdCon.width = calculateVboxWidth(mainParent);
-//				bdCon1.width = calculateVboxWidth(mainParent1);				
+				trace('local xy', event.localX,":",event.localY);
+				
 			}
-			
-			//for vertical align
-//			private function calculateVboxHeight(vg:VGroup):Number
-//			{
-//				if (vg.numElements >  0)
-//				{
-//					var totalH:Number=0;
-//					for ( var i:int=0; i < vg.numElements; i++)
-//					{
-//						var obj:Object = vg.getElementAt(i) ;
-//						totalH += obj.height;
-//					}
-//					totalH += vg.gap*(vg.numElements+1);
-//					trace(totalH);
-//					return totalH;
-//				} else {
-//					return 0;
-//				}
-//			}
-			
-//			private function calculateVboxWidth(vg:VGroup):Number
-//			{
-//				if (vg.numElements >  0)
-//				{
-//					var maxW:Number=0;
-//					for ( var i:int=0; i < vg.numElements; i++)
-//					{
-//						var obj:Object = vg.getElementAt(i);
-//						
-//						if (maxW > obj.width)
-//						{
-//							
-//						}
-//						else
-//						{
-//							maxW = obj.width;
-//						}
-//					}
-//					maxW += vg.gap*(2);
-//					return maxW;
-//				} else {
-//					return 0;
-//				}
-//			}
-			
-			private function mouseDownHandler(e)
-			{
-				e.currentTarget.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler,false,0,true);
-			}
-			
-			private function mouseMoveHandler(event:MouseEvent):void {
-				event.currentTarget.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler,false);
-				
-				// Get the drag initiator component from the event object.
-				var dragInitiator:UIComponent = UIComponent(event.currentTarget);
-				
-				var dragItem = dragInitiator;
-				
-				// Create a DragSource object.
-				var ds:DragSource = new DragSource();
-				
-				// Add the data to the object.
-				ds.addData(dragItem, 'item');
-				
-				// Call the DragManager doDrag() method to start the drag. 
-				DragManager.doDrag(dragInitiator, ds, event);
-			}
-			
-			// Called when the user moves the drag indicator onto the drop target.
-			var newSlidePos = 0;
-			private function vgdragEnterHandler(event:DragEvent):void {
-				
-//				// Accept the drag only if the user is dragging data 
-//				
-//				if (event.dragSource.hasFormat('item')) {
-//					
-//					if(event.localY < event.currentTarget.measuredHeight/event.currentTarget.numElements)
-//					{
-//						newSlidePos = 0;
-//					}
-//					else
-//					{
-//						newSlidePos = Math.floor(event.localY / (event.currentTarget.measuredHeight/event.currentTarget.numElements));
-//					}
-//					trace(newSlidePos);
-//					// Get the drop target component from the event object.
-//					var dropTarget = VGroup(event.currentTarget);
-//					var num:Number = calculateVboxHeight(dropTarget);
-//					event.currentTarget.parent.height =  num;
-//					// Accept the drop.
-//					DragManager.acceptDragDrop(dropTarget);
-//				}
-			}
-			
-			// Called if the target accepts the dragged object and the user 
-			// releases the mouse button while over the Canvas container. 
-			private function vgdragDropHandler(event:DragEvent):void {
-//				// from the drag source.
-//				var data = event.dragSource.dataForFormat('item');
-//				//				event.currentTarget.
-//				event.currentTarget.addElement(data);
-//				bdCon.height = calculateVboxHeight(mainParent);
-//				bdCon1.height = calculateVboxHeight(mainParent1);
-//				bdCon.width = calculateVboxWidth(mainParent);
-//				bdCon1.width = calculateVboxWidth(mainParent1);						
-//				event.currentTarget.setElementIndex(data,newSlidePos);
-//				newSlidePos = 0;
-			} 
-			
-			
 		]]>
 	</fx:Script>
-	
-	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" borderVisible="false">
-		<s:layout>
-			<s:VerticalLayout/>
-		</s:layout>
-		<s:BorderContainer id="frmMainID" 
-						   width="100%" minWidth="{frmMainID.minWidth}" maxWidth="{frmMainID.maxWidth}" height="100%"  
-						   borderColor="black" borderStyle="solid">
-			<s:layout>
-				<s:VerticalLayout gap="0"/>
-			</s:layout>
-			<s:BorderContainer id="frmTitleBox" 
-							   width="100%" height="24" 
-							   backgroundColor="#00004F6C" borderVisible="false">
-				<s:layout>
-					<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"
-										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
-				</s:layout>
-				<mx:Text id="lblfrmTitle" text="FormTitle" 
-						fontFamily="Franklin Gothic Medium" fontSize="14" fontWeight="bold" color="white"/>
-			</s:BorderContainer>
-			<!--Commenting this out for now.  Will be used only if DJV - David
-			mx:VBox id="frmSub" width="100%" height="20" backgroundColor="yellow">
-					 <mx:Text text="form Title Label" id="lblfrmSubTitle" />
-			</mx:VBox-->
-			<s:Group id="GG" width="100%" height="100%">
-				<mx:Box width="100%" height="100%"
-						paddingTop="10"  paddingBottom="10" paddingLeft="10" paddingRight="10" 
-						backgroundColor="white"
-						click="box1_clickHandler(event)" dragDrop="dragDropHandler(event);"
-						dragEnter="dragEnterHandler(event);">
-					<s:BorderContainer id="supGG" 
-							 width="100%" height="100%"
-							 borderVisible="true" borderColor="yellow" borderWeight="2">
-<!--					<ascomponent:rzmvasBroderContainer id="GG" width="100%" height="100%" >-->
-<!--					<		 
-							 resize="GG_resizeHandler(event)"
-						keyDown="tool_keyDownHandler(event)"-->
-						<!--<compx:MyGrid id="myG" x="{GG.x}" y="{GG.y}" width="{GG.width}"
-										  height="{GG.height}" step="{Constants.gridSize}"/>-->
-						<!--<s:BorderContainer id="bdCon" top="100" width="279" height="178"
-										   backgroundAlpha="0" backgroundColor="#6366EC"
-										   borderColor="#f1f1f1" horizontalCenter="0"
-										   mouseDown="select(event)"
-										   >
-							<s:VGroup id="mainParent" width="100%" height="100%" 
-									  dragDrop="vgdragDropHandler(event);" 
-									  dragEnter="vgdragEnterHandler(event);" gap="5" horizontalAlign="center"
-									  horizontalCenter="0" verticalAlign="middle" verticalCenter="0">
-								<s:Button id="button1" height="20" label="Button1"/>
-								<s:Button id="button2" height="20" label="Button2"/>
-								<s:TextInput id="button3" height="20" text="Button3"/>
-								<s:Button id="button4" height="20" label="Button4"/>
-							</s:VGroup>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="bdCon1" top="100" width="279" height="178"
-										   backgroundColor="#B3A2A2" mouseDown="select(event)">
-							<s:VGroup id="mainParent1" width="100%" height="100%" dragDrop="vgdragDropHandler(event);"
-									  dragEnter="vgdragEnterHandler(event);" gap="5" horizontalAlign="center"
-									  horizontalCenter="0" verticalAlign="middle" verticalCenter="0">
-								<s:Button id="button5" height="20" label="Button5"/>
-								<s:Button id="button6" height="20" label="Button6"/>
-								<s:TextInput id="button7" height="20" text="Button7"/>
-								<s:Button id="button8" height="20" label="Button8"/>
-							</s:VGroup>
-						</s:BorderContainer>-->
-	<!--				</ascomponent:rzmvasBroderContainer>-->
-					
-					<!--<s:Group width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
-						<s:Group id="passiveGuideGroup" left="0" right="0" top="0" bottom="0"/>
-						<s:Line id="vGuide" visible="false" height="100%" depth="3" yFrom="45"
-								yTo="275">
-							<s:stroke>
-								<s:SolidColorStroke color="#AA0000"/>
-							</s:stroke>
-						</s:Line>
-						<s:Line id="hGuide" visible="false" width="100%" depth="3" xFrom="30"
-								xTo="430">
-							<s:stroke>
-								<s:SolidColorStroke color="#AA0000"/>
-							</s:stroke>
-						</s:Line>
-					</s:Group>-->
-					</s:BorderContainer>
-				</mx:Box>
-			</s:Group>
-			<s:BorderContainer width="100%" height="24" backgroundColor="#00004F6C" borderVisible="false">
-				<s:layout>
-					<s:HorizontalLayout verticalAlign="middle"/>
-				</s:layout>
-				<s:Spacer width="100%"/>
-				<!--Commenting this out.  Don't remember what it's for.  David
-				mx:CheckBox id="showPassiveGuides" label="Show passive guidelines"
-							 selected="true"/-->
-				<s:ButtonBar height="21"
-							 fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold">
-					<s:layout>
-						<s:ButtonBarHorizontalLayout gap="5" />
-					</s:layout>
-					<s:dataProvider>
-						<s:ArrayList source="[Send,Cancel]" />
-					</s:dataProvider>
-				</s:ButtonBar>
-				<s:Spacer width="10"/>
-			</s:BorderContainer>
-		</s:BorderContainer>
-	</s:BorderContainer>
+	<mx:VBox top="0" width="100%" height="100%" horizontalCenter="0">
+		<mx:VBox id="frmMainID" width="100%" height="100%" borderColor="black" borderStyle="solid"
+				 verticalGap="0">
+			<mx:VBox id="frmTitleBox" width="100%" height="20" backgroundColor="blue"
+					 horizontalAlign="center" verticalAlign="middle">
+				<mx:Text text="form Title Label" id="lblfrmTitle" />
+			</mx:VBox>
+			<mx:VBox id="frmSub" width="100%" height="20" backgroundColor="yellow">
+				<mx:Text text="form Title Label" id="lblfrmSubTitle" />
+			</mx:VBox>
+			<ascomponent:rzmvasBroderContainer id="mainParent"  backgroundAlpha="1" width="100%" height="100%"
+											   dragEnter="dragEnterHandler(event);"  
+											   dragDrop="dragDropHandler(event);"
+											   dragOver="mainParent_dragOverHandler(event)"
+											   mouseMove="mouseRollOverHander(event)"
+											   skinClass="th.co.shopsthai.resize.rzmvasBroderContainerSkin"
+											   backgroundColor="#565DEB" borderColor="#f1f1f1" horizontalCenter="0">
+				<ascomponent:layout>
+					<s:VerticalLayout   paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
+				</ascomponent:layout>
+			</ascomponent:rzmvasBroderContainer>	
+			</mx:VBox>
+	</mx:VBox>
 </s:Group>

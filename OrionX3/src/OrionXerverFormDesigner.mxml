@@ -42,7 +42,7 @@
 		public  var selected:String="";
 		
 		private var _idx:int= 0;
-		
+		public var vdConsole:Console = new Console();		
 		
 		public function get getIdx():String {
 			_idx +=1;
@@ -75,11 +75,19 @@
 			panel.width=350;
 			panel.percentHeight=100;
 			
-			var vdConsole:Console = new Console();
+
 			//panel.addChild(vdConsole);
 			//panel.isPopUp=false;
 			PopUpManager.addPopUp(vdConsole,this,false);
+			vdConsole.height = this.height;
+			vdConsole.x = this.width - vdConsole.width;
 			//PopUpManager.centerPopUp(
+			
+//			var twc:TWComponent = new TWComponent();
+//			twc.y = 0 ;
+//			twc = TWComponent(PopUpManager.createPopUp(this,TWComponent,false));
+//			twc.height = this.height;
+			
 		}
 		
 		private function frmSetting():void {
@@ -93,7 +101,7 @@
 	]]>
 </fx:Script>
 	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
-		<components:FormDesign id="vdFormDesign" minWidth="{vdFormDesign.minWidth}" maxWidth="{vdFormDesign.maxWidth}"/>
+		<components:FormDesign id="vdFormDesign" minWidth="{vdFormDesign.minWidth}" maxWidth="{vdFormDesign.maxWidth}" width="{this.width - vdConsole.width-50}"/>
 		<!--<components:Console id="vdConsole" width="350"/>-->
 		<mx:VBox width="100%" height="100%">
 		<s:Image width="100%" height="100%" 

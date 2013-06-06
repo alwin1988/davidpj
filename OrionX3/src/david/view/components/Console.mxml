@@ -2,7 +2,7 @@
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				width="350" minWidth="350" maxWidth="350" height="70%"
+				width="350" minWidth="350" maxWidth="350" height="100%"
 				backgroundAlpha="0" creationComplete="init()"
 				title="{Constants.clientTitleBoxLabel}"
 				windowMoving="titleWin_windowMovingHandler(event);" xmlns:local="*">

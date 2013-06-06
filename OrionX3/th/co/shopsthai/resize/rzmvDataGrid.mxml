@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="300" minHeight="100" minWidth="100"
+		 creationComplete="init()" xmlns:resize="flex.utils.spark.resize.*"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import flex.utils.spark.resize.MoveManager;
+			import flex.utils.spark.resize.ResizeManager;
+			
+			import mx.collections.ArrayCollection;
+			import mx.messaging.AbstractConsumer;
+			
+			[Bindable] public var moveManager:MoveManager;
+			[Bindable] public var resizeManager:ResizeManager;
+			[Bindable] public var aC:ArrayCollection = new ArrayCollection();
+			private function init():void {
+				moveManager = new MoveManager(this,movearea);
+				resizeManager = new ResizeManager(this,resizeHandle );
+				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:DataGrid top="0" left="0" bottom="0" right="0" dataProvider="{aC}" id="itemGrid">
+		
+	</s:DataGrid>
+	<s:Group id="movearea" right="0" top="0" width="20" height="20">
+		<resize:DragHandle right="2" top="1"
+						   dotColor="#8B8B8B"
+						   fillAlpha="0"/>
+	</s:Group>
+	<resize:ResizeHandleLines id="resizeHandle"
+							  enabled="{resizeManager.enabled}"
+							  bottom="1"
+							  right="1"
+							  visible="{resizeManager.enabled}"/>
+</s:Group>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%">
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+		 width="350" >
 	<fx:Script>
 		<![CDATA[
 			import mx.core.DragSource;
@@ -10,7 +12,6 @@
 			
 			private function newSelect(event:MouseEvent):void
 			{
-				trace('label',event.currentTarget.label);
 				var dragInitiator:Image = Image(event.currentTarget);
 				var dragItem:*  = dragInitiator;
 				var ds:DragSource = new DragSource();
@@ -18,10 +19,7 @@
 				ds.addData(event.currentTarget.id,'cType');
 				DragManager.doDrag(dragInitiator, ds, event);
 			}
-			
-			
-			
-			
+
 			
 		]]>
 	</fx:Script>
@@ -33,66 +31,66 @@
 			<s:VerticalLayout paddingTop="5" paddingBottom="5" 
 							  paddingLeft="5" paddingRight="5" gap="5"/>	
 		</s:layout>
-		<s:BorderContainer width="100%" height="100%"
-						   borderVisible="false" dropShadowVisible="false">
+		<s:BorderContainer width="100%" borderVisible="false" dropShadowVisible="false">
 			<s:layout>
 				<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
 									paddingLeft="0" paddingRight="0" gap="5"/>
 			</s:layout>
-			<mx:Text text="Basic"/>
-			<s:Image source="@Embed('assets/b_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale" mouseDown="newSelect(event)" id="VBOX"/>									
-			<s:Image source="@Embed('assets/b_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale" mouseDown="newSelect(event)" id="VBOX1"/>
-			<s:Image source="@Embed('assets/b_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale" mouseDown="newSelect(event)" id="VBOX2"/>
+			<mx:Text text="Basic"  width="70"/>
+			<s:Image source="@Embed('assets/b_box.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" mouseDown="newSelect(event)" id="BOX"/>									
+			<s:Image source="@Embed('assets/b_panel.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" mouseDown="newSelect(event)" id="PANEL"/>
+			<s:Image source="@Embed('assets/b_frame.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" mouseDown="newSelect(event)" id="TBBOX"/>
 		</s:BorderContainer>
-		<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		
+		<s:BorderContainer width="100%" borderVisible="false">
 			<s:layout>
 				<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
 									paddingLeft="0" paddingRight="0" gap="5"/>	
 			</s:layout>
-			<mx:Text text="Vertical"/>
+			<mx:Text text="Vertical" width="70"/>
 			<!--Border container with vertical layout-->
-			<s:Image source="@Embed('assets/v_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/v_box.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="VBOX" mouseDown="newSelect(event)" />
 			<!--Panel container with vertical layout-->
-			<s:Image source="@Embed('assets/v_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/v_panel.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="VPANEL" mouseDown="newSelect(event)" />
 			<!--Frame container with vertical layout-->
-			<s:Image source="@Embed('assets/v_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/v_frame.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="VTBBOX" mouseDown="newSelect(event)" />
 		</s:BorderContainer>
-		<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<s:BorderContainer width="100%"  borderVisible="false">
 			<s:layout>
 				<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
 									paddingLeft="0" paddingRight="0" gap="5"/>	
 			</s:layout>
-			<mx:Text text="Horizontal"/>
+			<mx:Text width="70" text="Horizontal"/>
 			<!--Border container with horizontal layout-->
-			<s:Image source="@Embed('assets/h_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/h_box.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="HBOX" mouseDown="newSelect(event)" />
 			<!--Panel container with horizontal layout-->
-			<s:Image source="@Embed('assets/h_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/h_panel.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="HPANEL" mouseDown="newSelect(event)" />
 			<!--Frame container with horizontal layout-->
-			<s:Image source="@Embed('assets/h_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/h_frame.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="HTBBOX" mouseDown="newSelect(event)" />
 		</s:BorderContainer>
-		<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<s:BorderContainer width="100%" borderVisible="false">
 			<s:layout>
 				<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
 									paddingLeft="0" paddingRight="0" gap="5"/>	
 			</s:layout>
-			<mx:Text text="Tile"/>
+			<mx:Text text="Tile" width="70"/>
 			<!--Border container with tile layout-->
-			<s:Image source="@Embed('assets/t_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/t_box.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="TBOX" mouseDown="newSelect(event)" />
 			<!--Panel container with tile layout-->
-			<s:Image source="@Embed('assets/t_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/t_panel.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="TPANEL" mouseDown="newSelect(event)" />
 			<!--Frame container with tile layout-->
-			<s:Image source="@Embed('assets/t_frame.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/t_frame.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="TTBBOX" mouseDown="newSelect(event)" />
 		</s:BorderContainer>
-		<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<s:BorderContainer width="100%"  borderVisible="false">
 			<s:layout>
 				<s:HorizontalLayout paddingTop="0" paddingBottom="0" 
 									paddingLeft="0" paddingRight="0" gap="5"/>	
 			</s:layout>
-			<mx:Text text="Datagrid"/>
+			<mx:Text text="Datagrid" width="70"/>
 			<!--Datagrid-->
-			<s:Image source="@Embed('assets/d_box.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/d_box.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="PANELGRID"  mouseDown="newSelect(event)" />
 			<!--Datagrid in panel container-->
-			<s:Image source="@Embed('assets/d_panel.png')" width="25%" height="25%" scaleMode="stretch" fillMode="scale"/>
+			<s:Image source="@Embed('assets/d_panel.png')" width="70" height="40" scaleMode="stretch" fillMode="scale" id="DBGRID" mouseDown="newSelect(event)" />
 		</s:BorderContainer>
 	</s:BorderContainer>
 </mx:VBox>

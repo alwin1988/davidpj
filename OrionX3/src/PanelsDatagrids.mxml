@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%">
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup1"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			[Embed("assets/b_box.png")]
+			public var b_box:Class;
+			
+			[Bindable]
+			[Embed("assets/b_frame.png")]
+			public var b_frame:Class;
+			
+			[Bindable]
+			[Embed("assets/b_panel.png")]
+			public var b_panel:Class;
+			
+			[Bindable]
+			[Embed("assets/d_box.png")]		
+			public var d_box:Class;
+			
+			[Bindable]
+			[Embed("assets/d_panel.png")]
+			public var d_panel:Class;
+			
+			[Bindable]
+			[Embed("assets/h_box.png")]
+			public var h_box:Class;
+			
+			[Bindable]
+			[Embed("assets/h_frame.png")]
+			public var h_frame:Class;
+			
+			[Bindable]
+			[Embed("assets/h_panel.png")]		
+			public var h_panel:Class;	
+
+			[Bindable]
+			[Embed("assets/pp.png")]
+			public var pp:Class;
+			
+			[Bindable]
+			[Embed("assets/t_box.png")]
+			public var t_box:Class;
+			
+			[Bindable]
+			[Embed("assets/t_frame.png")]		
+			public var t_frame:Class;	
+			
+			[Bindable]
+			[Embed("assets/t_panel.png")]		
+			public var t_panel:Class;	
+			
+			[Bindable]
+			[Embed("assets/v_box.png")]
+			public var v_box:Class;
+			
+			[Bindable]
+			[Embed("assets/v_frame.png")]		
+			public var v_frame:Class;	
+			
+			[Bindable]
+			[Embed("assets/v_panel.png")]		
+			public var v_panel:Class;				
+			
+			protected function radiobutton1_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<s:HGroup width="100%" height="50%">
+		<s:VGroup width="60" height="100%">
+			<s:RadioButton label="Basic" groupName="radiogroup1" change="radiobutton1_changeHandler(event)"/>
+			<s:RadioButton label="VBox" groupName="radiogroup1"/>
+			<s:RadioButton label="HBox" groupName="radiogroup1"/>
+			<s:RadioButton label="Title" groupName="radiogroup1"/>
+		</s:VGroup>
+		<s:HGroup width="100%" height="100%" >
+			<s:Image width="100%" height="100%" source="{b_box}" verticalAlign="top" minHeight="50" minWidth="50">
+				
+			</s:Image>
+			<s:Image width="100%" height="100%" source="{b_frame}" verticalAlign="top" minHeight="50" minWidth="50">
+				
+			</s:Image>
+			<s:Image width="100%" height="100%" source="{b_panel}" verticalAlign="top" minHeight="50" minWidth="50">
+				
+			</s:Image> 
+		</s:HGroup>
+	</s:HGroup>
+	<s:HGroup width="100%" height="50%">
+		<s:Image width="100%" height="100%" source="{d_box}" minHeight="50" minWidth="50">
+			
+		</s:Image>
+		<s:Image width="100%" height="100%" source="{d_panel}" minHeight="50" minWidth="50">
+			
+		</s:Image>
+		<s:Image width="100%" height="100%" source="{pp}" minHeight="50" minWidth="50">
+			
+		</s:Image> 	
+		<s:Image width="100%" height="100%" source="{pp}" minHeight="50" minWidth="50">
+			
+		</s:Image> 	
+	</s:HGroup>
+</s:Group>

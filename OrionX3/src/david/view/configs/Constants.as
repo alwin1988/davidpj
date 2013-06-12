@@ -2,7 +2,7 @@ package david.view.configs
 {
 	public class Constants
 	{
-
+		
 		//############### Form ###############//
 		public static const formMinWidth:Number = 200;	
 		public static const formMaxWidth:Number = 1000;
@@ -23,6 +23,7 @@ package david.view.configs
 		public static const formSubtitleFontFamily:String ="Franklin Gothic Medium";
 		public static const formSubtitleFontSize:Number = 14;
 		public static const formSubtitleFontStyle:String = 'bold-italic'; // what possible values?  Multiple?
+		public static const formSubtitleWeight:String = 'bold';
 		public static const formSubtitleLabel:String = 'Form Subtitle';
 		
 		
@@ -61,19 +62,24 @@ package david.view.configs
 		public static const teachBoxHeight:Number = 300;*/
 		
 		//############### Teach ###############//
-		public static const teachHeight:Number =  70;
+		public static const teachHeight:Number =  57;
 		public static const teachBackgroundColor:uint = 0xFFE87C;
 		public static const teachAlpha:Number = 1;
 		public static const teachTitleVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
 		public static const teachTitleHorizontalAlign:String = 'left';	 // "left", "center", and "right".
 		public static const teachTitleFontFamily:String = 'Franklin Gothic Medium';
-		public static const teachTitleFontSize:Number = 13 ;
+		public static const teachTitleFontSize:Number = 13;
+		public static const teachTitleFontWeight:String = 'normal';
 		public static const teachTitleFontStyle:String = 'normal';
 		public static const teachTitleLabel:String = 'Instructions';
 		public static const teachHeaderHeight:Number = 0;
 		public static const teachHeaderBackgroundColor:uint = 000000;
 		public static const teachHeaderAlpha:Number = 1;
 		public static const teachBoxHeight:Number = 300;
+		public static const teachTextFontFamily:String = 'Franklin Gothic Medium';
+		public static const teachTextFontSize:Number = 11;
+		public static const teachTextFontWeight:String = 'normal';
+		public static const teachTextFontStyle:String = 'normal';
 		
 		//############### dock ###############//
 		//nouser		public static const dockTitlesVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
@@ -95,15 +101,16 @@ package david.view.configs
 		public static const dockTitlesHorizontalAlign:String = 'left';	 // "left", "center", and "right".
 		public static const dockTitlesFontFamily:String = 'Franklin Gothic Medium';
 		public static const dockTitlesFontSize:Number = 12;
+		public static const dockTitlesFontWeight:String = 'normal';
 		public static const dockTitlesFontStyle:String = 'normal';
 		public static const dockTitlesLabel:String = 'Dock Label';
 		public static const dockBackgroundColor:uint = 0xff00ff;
 		public static const dockAlpha:Number = 1;
-		public static const dockTitlesHeight:Number = 20;
+		public static const dockTitlesHeight:Number = 18;
 		public static const dockTitlesBackgroundColor:uint = 0xff00ff;
 		//nouser		public static const dockTitlesAlpha:Number = 1;
 		//nouser		public static const dockDgRowDiv:String = '';
-//		public static const dockBoxHeight:Number = 300;
+		//		public static const dockBoxHeight:Number = 300;
 		
 		//############### tab ###############//
 		public static const tabLabelsVerticalAlign:String = 'top';	 // "top", "middle", and "bottom".
@@ -111,6 +118,7 @@ package david.view.configs
 		public static const tabLabelsFontFamily:String = 'Franklin Gothic Medium';
 		public static const tabLabelsFontSize:Number = 11;
 		public static const tabLabelsFontStyle:String = 'normal';
+		public static const tabLabelsFontWeight:String = 'normal';
 		public static const tabLabelsLabel:String = 'Tab label';  //คิดว่าไม่มีนะ หรือไม่ก็ต้องเพิ่ม box ละ
 		
 		//############### sub header ###############// combobox 
@@ -118,6 +126,7 @@ package david.view.configs
 		//nouser		public static const subheaderLabelsHorizontalAlign:String = 'left';	// "left", "center", and "right".
 		public static const subheaderLabelsFontFamily:String = 'Franklin Gothic Medium';
 		public static const subheaderLabelsFontSize:Number = 11;
+		public static const subheaderLabelsFontWeight:String = 'normal';
 		public static const subheaderLabelsFontStyle:String = 'normal';
 		//nouser 		public static const subheaderLabelsLabel:String = 'subHeader Label';
 		
@@ -126,6 +135,7 @@ package david.view.configs
 		//ไม่มี		public static const dgHeaderLabelsHorizontalAlign:String = 'left';//ไม่มี	 // "left", "center", and "right".
 		public static const dgHeaderLabelsFontFamily:String = 'Franklin Gothic Medium';
 		public static const dgHeaderLabelsFontSize:Number = 11;
+		public static const dgHeaderLabelsFontWeight:String = 'normal';
 		public static const dgHeaderLabelsFontStyle:String = 'normal';
 		//ไม่มี		public static const dgHeaderLabelsLabel:String = 'dgHeader Label'; //ไม่มี
 		
@@ -148,6 +158,7 @@ package david.view.configs
 		// ไม่มี	public static const dgCol1HorizontalAlign:String = '';
 		public static const dgCol1FontFamily:String = 'Franklin Gothic Medium';
 		public static const dgCol1FontSize:Number =  10;
+		public static const dgCol1FontWeight:String = "normal";
 		public static const dgCol1FontStyle:String = "normal";
 		public static const dgCol1Label:String = "label col1";
 		
@@ -155,6 +166,7 @@ package david.view.configs
 		//ไม่มี	public static const dgCol2HorizontalAlign:String = '';
 		public static const dgCol2FontFamily:String = 'Franklin Gothic Medium';
 		public static const dgCol2FontSize:Number = 10;
+		public static const dgCol2FontWeight:String = "normal";
 		public static const dgCol2FontStyle:String = 'normal';
 		public static const dgCol2Label:String = 'label col2';
 		
@@ -162,6 +174,7 @@ package david.view.configs
 		public static const titleFontFamily:String = 'Franklin Gothic Medium';
 		public static const titleFontSize:Number = 12;
 		public static const titleFontWeight:String = 'bold';
+		public static const titleFontStyle:String = 'normal';
 		public static const titleFontColor:uint = 0x000000;
 		//		Title position (like left, right, center)
 		public static const titlelAlign:String = "left";
@@ -169,6 +182,7 @@ package david.view.configs
 		public static const subtitleFontFamily:String = 'Franklin Gothic Medium';
 		public static const subtitleFontSize:Number = 11;
 		public static const subtitleFontWeight:String = 'bold';
+		public static const subtitleFontStyle:String = 'bold';
 		public static const subtitleFontColor:uint = 0x000000;
 		//			Subtitle position (like left, right, center)
 		public static const subtitleAlign:String = "left";

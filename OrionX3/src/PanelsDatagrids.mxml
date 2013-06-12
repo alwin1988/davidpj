@@ -15,87 +15,121 @@
 			public var b_box:Class;
 			
 			[Bindable]
-			[Embed("assets/b_frame.png")]
-			public var b_frame:Class;
-			
-			[Bindable]
 			[Embed("assets/b_panel.png")]
 			public var b_panel:Class;
 			
 			[Bindable]
-			[Embed("assets/d_box.png")]		
-			public var d_box:Class;
+			[Embed("assets/b_frame.png")]
+			public var b_frame:Class;
 			
 			[Bindable]
-			[Embed("assets/d_panel.png")]
-			public var d_panel:Class;
+			[Embed("assets/v_box.png")]		
+			public var v_box:Class;
+			
+			[Bindable]
+			[Embed("assets/v_panel.png")]
+			public var v_panel:Class;
+			
+			[Bindable]
+			[Embed("assets/v_frame.png")]
+			public var v_frame:Class;
 			
 			[Bindable]
 			[Embed("assets/h_box.png")]
 			public var h_box:Class;
 			
 			[Bindable]
-			[Embed("assets/h_frame.png")]
-			public var h_frame:Class;
-			
-			[Bindable]
 			[Embed("assets/h_panel.png")]		
 			public var h_panel:Class;	
-
+			
 			[Bindable]
-			[Embed("assets/pp.png")]
-			public var pp:Class;
+			[Embed("assets/h_frame.png")]
+			public var h_frame:Class;
 			
 			[Bindable]
 			[Embed("assets/t_box.png")]
 			public var t_box:Class;
 			
 			[Bindable]
-			[Embed("assets/t_frame.png")]		
-			public var t_frame:Class;	
-			
-			[Bindable]
 			[Embed("assets/t_panel.png")]		
 			public var t_panel:Class;	
 			
 			[Bindable]
-			[Embed("assets/v_box.png")]
-			public var v_box:Class;
+			[Embed("assets/t_frame.png")]		
+			public var t_frame:Class;	
 			
 			[Bindable]
-			[Embed("assets/v_frame.png")]		
-			public var v_frame:Class;	
+			[Embed("assets/d_box.png")]
+			public var d_box:Class;
 			
 			[Bindable]
-			[Embed("assets/v_panel.png")]		
-			public var v_panel:Class;				
+			[Embed("assets/d_panel.png")]		
+			public var d_panel:Class;	
+			
+			[Bindable]
+			[Embed("assets/p_box.png")]		
+			public var p_box:Class;
+			
+			[Bindable]
+			[Embed("assets/p_panel.png")]		
+			public var p_panel:Class;	
 			
 			protected function radiobutton1_changeHandler(event:Event):void
 			{
 				// TODO Auto-generated method stub
-				
+				img1.source=b_box;
+				img2.source=b_panel;
+				img3.source=b_frame;
+			}
+			
+			protected function radiobutton2_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				img1.source=v_box;
+				img2.source=v_panel;
+				img3.source=v_frame;				
+			}
+			
+			protected function radiobutton3_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				img1.source=h_box;
+				img2.source=h_panel;
+				img3.source=h_frame;				
+			}
+			
+			protected function radiobutton4_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				img1.source=t_box;
+				img2.source=t_panel;
+				img3.source=t_frame;				
 			}
 			
 		]]>
 	</fx:Script>
 	<s:layout>
-		<s:VerticalLayout/>
+		<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="5"/>
 	</s:layout>
 	<s:HGroup width="100%" height="50%">
-		<s:VGroup width="60" height="100%">
-			<s:RadioButton label="Basic" groupName="radiogroup1" change="radiobutton1_changeHandler(event)"/>
-			<s:RadioButton label="VBox" groupName="radiogroup1"/>
-			<s:RadioButton label="HBox" groupName="radiogroup1"/>
-			<s:RadioButton label="Title" groupName="radiogroup1"/>
+		<s:VGroup width="75" height="100%" gap="0">
+			<s:RadioButton label="Basic" groupName="radiogroup1" change="radiobutton1_changeHandler(event)"
+						   fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11" selected="true"/>
+			<s:RadioButton label="Vertical" groupName="radiogroup1" change="radiobutton2_changeHandler(event)"
+						   fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
+			<s:RadioButton label="Horizontal" groupName="radiogroup1" change="radiobutton3_changeHandler(event)"
+						   fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
+			<s:RadioButton label="Title" groupName="radiogroup1" change="radiobutton4_changeHandler(event)"
+						   fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
 		</s:VGroup>
 		<s:HGroup width="100%" height="100%" >
-			<s:Image width="100%" height="100%" source="{b_box}" verticalAlign="top" minHeight="50" minWidth="50">
+			<s:Image id="img1" width="90%" height="90%" source="{b_box}" verticalAlign="top" minHeight="50" minWidth="50">
 				
 			</s:Image>
-			<s:Image width="100%" height="100%" source="{b_frame}" verticalAlign="top" minHeight="50" minWidth="50">
+			<s:Image id="img2" width="90%" height="90%" source="{b_panel}" verticalAlign="top" minHeight="50" minWidth="50">
 				
 			</s:Image>
-			<s:Image width="100%" height="100%" source="{b_panel}" verticalAlign="top" minHeight="50" minWidth="50">
+			<s:Image id="img3" width="90%" height="90%" source="{b_frame}" verticalAlign="top" minHeight="50" minWidth="50">
 				
 			</s:Image> 
 		</s:HGroup>
@@ -107,10 +141,10 @@
 		<s:Image width="100%" height="100%" source="{d_panel}" minHeight="50" minWidth="50">
 			
 		</s:Image>
-		<s:Image width="100%" height="100%" source="{pp}" minHeight="50" minWidth="50">
+		<s:Image width="100%" height="100%" source="{p_box}" minHeight="50" minWidth="50">
 			
 		</s:Image> 	
-		<s:Image width="100%" height="100%" source="{pp}" minHeight="50" minWidth="50">
+		<s:Image width="100%" height="100%" source="{p_panel}" minHeight="50" minWidth="50">
 			
 		</s:Image> 	
 	</s:HGroup>

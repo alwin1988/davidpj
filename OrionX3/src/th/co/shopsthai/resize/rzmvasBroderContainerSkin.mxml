@@ -4,7 +4,7 @@
 		xmlns:mx="library://ns.adobe.com/flex/mx" 
 		xmlns:resize="flex.utils.spark.resize.*"
 		creationComplete="init()"
-		minHeight="200" minWidth="200"
+		minHeight="50" minWidth="50"
 		> 
 	<!-- host component -->
 	<fx:Metadata>
@@ -54,7 +54,7 @@
 	-->
 	<s:Rect top="0" bottom="0" right="0" left="0" >
 		<s:stroke>
-			<s:SolidColorStroke color="BLACK" />
+			<s:SolidColorStroke color="{hostComponent.bc}"  weight="{hostComponent.stockweg}"/>
 		</s:stroke>
 		<s:fill>
 			<s:SolidColor color="{hostComponent.color}" />

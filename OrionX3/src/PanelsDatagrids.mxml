@@ -119,9 +119,9 @@
 				img1.source=t_box;
 				img2.source=t_panel;
 				img3.source=t_frame;
-				img1.toolTip = "BOX";
-				img2.toolTip = "PANEL";
-				img3.toolTip = "TBBOX";
+				img1.toolTip = "TBOX";
+				img2.toolTip = "TPANEL";
+				img3.toolTip = "TTBBOX";
 				
 			}
 			

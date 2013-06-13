@@ -23,9 +23,10 @@
 <s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
              xmlns:s="library://ns.adobe.com/flex/spark" 
              xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+			 xmlns:resize="flex.utils.spark.resize.*"
              minWidth="21" minHeight="21" 
              alpha.disabled="0.5"
-			 creationComplete="init(event)" xmlns:resize="flex.utils.spark.resize.*"
+			 creationComplete="init(event)" 
 			 >
      
     <fx:Metadata>

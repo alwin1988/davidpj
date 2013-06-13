@@ -41,6 +41,14 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import spark.components.VSlider;
+			import spark.components.HSlider;
+			import spark.components.DropDownList;
+			import mx.controls.PopUpButton;
+			import spark.components.NumericStepper;
+			import mx.controls.DateChooser;
+			import spark.components.CheckBox;
+			import mx.controls.TextInput;
 			import mx.core.IUIComponent;
 			import spark.components.Button;
 			import th.co.shopsthai.resize.rzmvPanelDataGrid;
@@ -837,6 +845,7 @@
 						var tb:TitledBorderBox = new TitledBorderBox();
 						tb.id = 'TBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						tb.title = tb.id;
+						tb.width = 100; tb.height = 50;
 						tb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(tb);
 						tb.addEventListener(MouseEvent.CLICK,mouseClickselect);
@@ -876,6 +885,7 @@
 						var vtb:TitledBorderBox = new TitledBorderBox();
 						vtb.id = 'VTBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						vtb.title = vtb.id;
+						vtb.width = 100; vtb.height = 50;
 						vtb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(vtb);
 						vtb.addEventListener(MouseEvent.CLICK,mouseClickselect);
@@ -916,6 +926,7 @@
 						var htb:TitledBorderBox = new TitledBorderBox();
 						htb.id = 'HTBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						htb.title = htb.id;
+						htb.width = 100; htb.height = 50;
 						htb.layout = new HorizontalLayout();
 						htb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(htb);
@@ -956,6 +967,7 @@
 						var ttb:TitledBorderBox = new TitledBorderBox();
 						ttb.id = 'TTBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						ttb.title = ttb.id;
+						ttb.width = 100; ttb.height = 50;
 						ttb.layout = new TileLayout();
 						ttb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(ttb);
@@ -993,28 +1005,116 @@
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzBUTTON' ) {
 						var bt:Button = new Button();
 						bt.setStyle('skinClass',th.co.shopsthai.resize.rzmvButtonSkin);
-						bt.id = 'btn' + FlexGlobals.topLevelApplication.getIdx;
+						bt.id = 'rzBUTTON' + FlexGlobals.topLevelApplication.getIdx;
+						bt.label = bt.id;
 						event.currentTarget.addElement(bt);
-						//						bt.addEventListener(MouseEvent.MOUSE_DOWN,select);
-						bt.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
-						bt.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
-						bt.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
 						bt.x = event.currentTarget.x;
 						bt.y = event.currentTarget.y;
-						//						acContainer.addItem(bt);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzCOMBO' ) {
 						var cmb:ComboBox = new ComboBox();
 						cmb.setStyle('skinClass',ResizableComboBoxSkin);
-						cmb.id = 'cmb' + FlexGlobals.topLevelApplication.getIdx;
+						cmb.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
+						cmb.text = cmb.id;
 						event.currentTarget.addElement(cmb);
-						//						cmb.addEventListener(MouseEvent.MOUSE_DOWN,select);
-						cmb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
-						cmb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
-						cmb.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
 						cmb.x = event.currentTarget.x;
 						cmb.y = event.currentTarget.y;
-						//						acContainer.addItem(cmb);
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DropDownList' ) {
+						var ddl:DropDownList = new DropDownList();
+						ddl.setStyle('skinClass',ResizableComboBoxSkin);
+						ddl.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
+						event.currentTarget.addElement(ddl);
+						ddl.x = event.currentTarget.x;
+						ddl.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextInput' ) {
+						var txt:TextInput = new TextInput();
+						txt.id = 'TextInput' + FlexGlobals.topLevelApplication.getIdx;
+						txt.text = txt.id;
+						event.currentTarget.addElement(txt);
+						txt.x = event.currentTarget.x;
+						txt.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'ToggleTextInput' ) {
+						var tg:ToggleTextInput = new ToggleTextInput();
+						tg.id = 'ToggleTextInput' + FlexGlobals.topLevelApplication.getIdx;
+						tg.setStyle("skinClass", Class(TTIResponsiveSkin));
+						tg.doubleClickEnabled = true;
+						tg.addButtonLabel="Add User Name";
+						tg.x = event.localX;
+						tg.y = event.localY;
+						tg.width = 120;
+						tg.height = 24;
+						tg.minWidth = 20;
+						tg.minHeight = 20;
+						event.currentTarget.addElement(tg);
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextArea' ) {
+						var ta:TextInput = new TextInput();
+						ta.id = 'TextArea' + FlexGlobals.topLevelApplication.getIdx;
+						ta.text = ta.id;
+						ta.height = 100;
+						event.currentTarget.addElement(ta);
+						ta.x = event.currentTarget.x;
+						ta.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'CheckBox' ) {
+						var chk:CheckBox = new CheckBox();
+						chk.id = 'CheckBox' + FlexGlobals.topLevelApplication.getIdx;
+						chk.label = chk.id;
+						event.currentTarget.addElement(chk);
+						chk.x = event.currentTarget.x;
+						chk.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'RadioButton' ) {
+						var rdo:RadioButton = new RadioButton();
+						rdo.id = 'RadioButton' + FlexGlobals.topLevelApplication.getIdx;
+						rdo.label = rdo.id;
+						event.currentTarget.addElement(rdo);
+						rdo.x = event.currentTarget.x;
+						rdo.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DateChooser' ) {
+						var dc:DateChooser = new DateChooser();
+						dc.id = 'DateChooser' + FlexGlobals.topLevelApplication.getIdx;
+						dc.showToday = true;
+						dc.yearNavigationEnabled = true;
+						event.currentTarget.addElement(dc);
+						dc.x = event.currentTarget.x;
+						dc.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'NumericStepper' ) {
+						var nbs:NumericStepper = new NumericStepper();
+						nbs.id = 'NumericStepper' + FlexGlobals.topLevelApplication.getIdx;
+						nbs.maximum = 10;
+						nbs.minimum = 0;
+						nbs.stepSize = 1;
+						event.currentTarget.addElement(nbs);
+						nbs.x = event.currentTarget.x;
+						nbs.y = event.currentTarget.y;
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PopUpButton' ) {
+						var pop:PopUpButton = new PopUpButton();
+						pop.id = 'PopUpButton' + FlexGlobals.topLevelApplication.getIdx;
+						pop.label = pop.id;
+						event.currentTarget.addElement(pop);
+						pop.x = event.currentTarget.x;
+						pop.y = event.currentTarget.y;
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HSlider' ) {
+						var hsl:HSlider = new HSlider();
+						hsl.id = 'HSlider' + FlexGlobals.topLevelApplication.getIdx;
+						hsl.minimum = 0; hsl.maximum = 10; hsl.stepSize = 1;
+						event.currentTarget.addElement(hsl);
+						hsl.x = event.currentTarget.x;
+						hsl.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VSlider' ) {
+						var vsl:VSlider = new VSlider();
+						vsl.id = 'VSlider' + FlexGlobals.topLevelApplication.getIdx;
+						vsl.minimum = 0; vsl.maximum = 10; vsl.stepSize = 1;
+						event.currentTarget.addElement(vsl);
+						vsl.x = event.currentTarget.x;
+						vsl.y = event.currentTarget.y;
 						
 					} 
 					
@@ -1109,7 +1209,8 @@
 													   dragDrop="dragDropHandler(event);"
 													   dragOver="mainParent_dragOverHandler(event)"
 													   skinClass="th.co.shopsthai.resize.rzmvasBroderContainerSkin"
-													   borderColor="yellow" borderWeight="2"  
+													   borderColor="YELLOW" borderWeight="2"  
+													   bc="0xFFFF00" stockweg="2"
 													   >
 						<ascomponent:layout>
 							<s:VerticalLayout   paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>

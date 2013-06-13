@@ -21,6 +21,9 @@ package th.co.shopsthai.ascomponent
 		[Bindable] public var RR:Boolean = false;
 		[Bindable] public var MV:Boolean = false;
 		
+		[Bindable] public var bc:uint = 0xFF00FF;
+		[Bindable] public var stockweg:int  = 2;
+		
 		
 		[Bindable] public var color:uint = 0xFFFFFF;
 		

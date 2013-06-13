@@ -2,13 +2,18 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 width="100%" height="100%">
+		 width="100%" height="100%"
+		 creationComplete="group1_creationCompleteHandler(event)"
+		 >
 	<fx:Declarations>
 		<s:RadioButtonGroup id="radiogroup1"/>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.core.DragSource;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
 			
 			[Bindable]
 			[Embed("assets/b_box.png")]
@@ -80,6 +85,10 @@
 				img1.source=b_box;
 				img2.source=b_panel;
 				img3.source=b_frame;
+				
+				img1.toolTip = "BOX";
+				img2.toolTip = "PANEL";
+				img3.toolTip = "TBBOX";
 			}
 			
 			protected function radiobutton2_changeHandler(event:Event):void
@@ -88,6 +97,9 @@
 				img1.source=v_box;
 				img2.source=v_panel;
 				img3.source=v_frame;				
+				img1.toolTip = "VBOX";
+				img2.toolTip = "VPANEL";
+				img3.toolTip = "VTBBOX";
 			}
 			
 			protected function radiobutton3_changeHandler(event:Event):void
@@ -96,6 +108,9 @@
 				img1.source=h_box;
 				img2.source=h_panel;
 				img3.source=h_frame;				
+				img1.toolTip = "HBOX";
+				img2.toolTip = "HPANEL";
+				img3.toolTip = "HTBBOX";
 			}
 			
 			protected function radiobutton4_changeHandler(event:Event):void
@@ -103,7 +118,26 @@
 				// TODO Auto-generated method stub
 				img1.source=t_box;
 				img2.source=t_panel;
-				img3.source=t_frame;				
+				img3.source=t_frame;
+				img1.toolTip = "BOX";
+				img2.toolTip = "PANEL";
+				img3.toolTip = "TBBOX";
+				
+			}
+			
+			private function newSelect(event:MouseEvent):void
+			{
+				var dragInitiator:Image = Image(event.currentTarget);
+				var dragItem:*  = dragInitiator;
+				var ds:DragSource = new DragSource();
+				ds.addData('NEW','NEW');
+				ds.addData(event.currentTarget.toolTip,'cType');
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				radiobutton1_changeHandler(null);
 			}
 			
 		]]>
@@ -123,22 +157,22 @@
 						   fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
 		</s:VGroup>
 		<s:HGroup width="100%" height="100%" >
-			<s:Image id="img1" width="90%" height="90%" source="{b_box}" verticalAlign="top" minHeight="50" minWidth="50">
+			<s:Image id="img1" width="90%" height="90%" source="{b_box}" verticalAlign="top" minHeight="50" minWidth="50" mouseDown="newSelect(event)">
 				
 			</s:Image>
-			<s:Image id="img2" width="90%" height="90%" source="{b_panel}" verticalAlign="top" minHeight="50" minWidth="50">
+			<s:Image id="img2" width="90%" height="90%" source="{b_panel}" verticalAlign="top" minHeight="50" minWidth="50" mouseDown="newSelect(event)">
 				
 			</s:Image>
-			<s:Image id="img3" width="90%" height="90%" source="{b_frame}" verticalAlign="top" minHeight="50" minWidth="50">
+			<s:Image id="img3" width="90%" height="90%" source="{b_frame}" verticalAlign="top" minHeight="50" minWidth="50" mouseDown="newSelect(event)">
 				
 			</s:Image> 
 		</s:HGroup>
 	</s:HGroup>
 	<s:HGroup width="100%" height="50%">
-		<s:Image width="100%" height="100%" source="{d_box}" minHeight="50" minWidth="50">
+		<s:Image width="100%" height="100%" source="{d_box}" minHeight="50" minWidth="50" toolTip="DBGRID" mouseDown="newSelect(event)">
 			
 		</s:Image>
-		<s:Image width="100%" height="100%" source="{d_panel}" minHeight="50" minWidth="50">
+		<s:Image width="100%" height="100%" source="{d_panel}" minHeight="50" minWidth="50" toolTip="PANELGRID" mouseDown="newSelect(event)">
 			
 		</s:Image>
 		<s:Image width="100%" height="100%" source="{p_box}" minHeight="50" minWidth="50">

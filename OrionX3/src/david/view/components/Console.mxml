@@ -341,9 +341,9 @@
 										 verticalScrollPolicy="auto">
 									<s:List width="100%" height="100%" borderVisible="false"
 											dataProvider="{FlexGlobals.topLevelApplication.compList}"
-											dragEnabled="true" dragMoveEnabled="false" dropEnabled="true"
 											itemRenderer="listitemrender">
 									</s:List>
+<!--											dragEnabled="true" dragMoveEnabled="false" dropEnabled="true"-->
 								</mx:VBox>
 								
 								<!--Dock section 3:  Spacers-->

@@ -5,6 +5,8 @@
 				autoDrawBackground="true">
 	<fx:Script>
 		<![CDATA[
+			import mx.core.DragSource;
+			import mx.managers.DragManager;
 			
 			override public function set data(value:Object):void
 			{
@@ -13,9 +15,20 @@
 //				lbl1.text = data.list;
 			}
 			
+			private function newSelect(event:MouseEvent):void
+			{
+				var dragInitiator:Image = Image(img1);
+				var dragItem:*  = dragInitiator;
+				var ds:DragSource = new DragSource();
+				ds.addData('NEW','NEW');
+				ds.addData(data.list,'cType');
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+			
+			
 		]]>
 	</fx:Script>
-	<s:HGroup gap="2" paddingLeft="5" paddingRight="5" horizontalAlign="left" verticalAlign="middle">
+	<s:HGroup gap="2" paddingLeft="5" paddingRight="5" horizontalAlign="left" verticalAlign="middle" mouseDown="newSelect(event)">
 	<s:Image id="img1" source="{data.icon}"/>	
 	<s:Label id="lbl1" text="{data.list}"/>
 	</s:HGroup>	

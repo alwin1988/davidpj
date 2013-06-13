@@ -52,8 +52,8 @@
 			protected function init():void
 			{
 				compList = new ArrayCollection([
-					{icon:"assets/Button.png",list:"Button",obj:1},
-					{icon:"assets/ComboBox.png",list:"ComboBox",obj:3},
+					{icon:"assets/Button.png",list:"rzBUTTON",obj:1},
+					{icon:"assets/ComboBox.png",list:"rzCOMBO",obj:3},
 					{icon:"assets/TextInput.png",list:"TextInput",obj:7},
 					{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},
 					{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},

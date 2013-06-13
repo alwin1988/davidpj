@@ -1,13 +1,19 @@
 package flex.utils.spark.resize {
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-
+	
 	import mx.controls.Button;
 	import mx.core.Container;
 	import mx.core.EdgeMetrics;
+	import mx.core.IVisualElement;
+	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
 	import mx.managers.CursorManager;
+	
+	import spark.components.Group;
 
 	/**
 	 * Similar to the ResizeManager, this class adds support for moving a component by dragging it
@@ -141,11 +147,21 @@ package flex.utils.spark.resize {
 			}
 
 			// move above all others
-			if (bringToFrontOnMove && moveComponent.parent) {
-				var index:int = moveComponent.parent.getChildIndex(moveComponent);
-				var last:int = moveComponent.parent.numChildren - 1;
+			if (bringToFrontOnMove && moveComponent.automationOwner) {
+				for (var i:int = 0; i < Object(moveComponent.automationOwner).numElements ; i++) 
+				{
+					if( Object(moveComponent.automationOwner).getElementAt(i).id == moveComponent.id){
+						var index:int = i;
+						break;
+					}
+				}
+				
+				var idx:int = Object(moveComponent.automationOwner).getElementIndex(IVisualElement(moveComponent));
+				var last:int = Object(moveComponent.automationOwner).numElements - 1;
+				
 				if (index != last) {
-					moveComponent.parent.setChildIndex(moveComponent, last);
+//					Object(moveComponent.automationOwner).setElementIndex(IVisualElement(moveComponent),last);
+//					IVisualElementContainer(moveComponent.automationOwner).setElementIndex(moveComponent,
 				}
 			}
 
@@ -153,8 +169,8 @@ package flex.utils.spark.resize {
 			var bounds:Rectangle = null;
 			if (constrainToBounds != null) {
 				bounds = constrainToBounds;
-			} else if (constrainToParentBounds && moveComponent.parent) {
-				bounds = new Rectangle(0, 0, moveComponent.parent.width, moveComponent.parent.height);
+			} else if (constrainToParentBounds && moveComponent.automationOwner) {
+				bounds = new Rectangle(0, 0, moveComponent.automationOwner.width, moveComponent.automationOwner.height);
 				// need to reduce the size by the component's width/height
 				bounds.width = Math.max(0, bounds.width - moveComponent.width);
 				bounds.height = Math.max(0, bounds.height - moveComponent.height);

@@ -32,6 +32,7 @@
 			
 			import mx.collections.ArrayCollection;
 			import mx.containers.Panel;
+			import mx.events.ResizeEvent;
 			import mx.managers.PopUpManager;
 			
 			
@@ -39,6 +40,8 @@
 			[Bindable]	public var compList2:ArrayCollection;
 			[Bindable] 	private var deletedObjects:ArrayCollection = new ArrayCollection();
 			[Bindable]	public var updateComplete:Boolean = false;
+			[Bindable]	public var vdConsole:Console;
+			
 			public  var selected:String="";
 			
 			private var _idx:int= 0;
@@ -49,22 +52,34 @@
 				return 'id' + _idx.toString();
 			}
 			
+			public function resizeApplication(event:ResizeEvent):void
+			{
+				if(this.stage.stageHeight != event.oldHeight)
+				{
+					//perform action here or just use the above properties in any way you want
+					trace("test");
+					vdConsole.height=this.stage.stageHeight;
+				}			
+			}
+			
 			protected function init():void
 			{
+				this.addEventListener(ResizeEvent.RESIZE, resizeApplication);
+				
 				compList = new ArrayCollection([
-					{icon:"assets/Button.png",list:"rzBUTTON",obj:1},
-					{icon:"assets/ComboBox.png",list:"rzCOMBO",obj:3},
-					{icon:"assets/TextInput.png",list:"TextInput",obj:7},
-					{icon:"assets/CheckBox.png",list:"CheckBox",obj:2,obj:1},
-					{icon:"assets/DateChooser.png",list:"DateChooser",obj:5},
-					{icon:"assets/RadioButton.png",list:"RadioButton",obj:6},
-					{icon:"assets/TextArea.png",list:"TextArea",obj:8},
-					{icon:"assets/ToggleTextInput.png",list:"ToggleTextInput",obj:9},
+					{icon:"assets/TreeIcons/Button.png",list:"Button",obj:1},
+					{icon:"assets/TreeIcons/ComboBox.png",list:"ComboBox",obj:3},
+					{icon:"assets/TreeIcons/TextInput.png",list:"TextInput",obj:7},
+					{icon:"assets/TreeIcons/CheckBox.png",list:"CheckBox",obj:2,obj:1},
+					{icon:"assets/TreeIcons/DateChooser.png",list:"DateChooser",obj:5},
+					{icon:"assets/TreeIcons/RadioButton.png",list:"RadioButton",obj:6},
+					{icon:"assets/TreeIcons/TextArea.png",list:"TextArea",obj:8},
+					{icon:"assets/TreeIcons/ToggleTextInput.png",list:"ToggleTextInput",obj:9},
 					{icon:"assets/TreeIcons/NumericStepper.png",list:"NumericStepper",obj:10},
 					{icon:"assets/TreeIcons/HSlider.png",list:"HSlider",obj:11},
 					{icon:"assets/TreeIcons/VSlider.png",list:"VSlider",obj:12},
 					{icon:"assets/TreeIcons/Button.png",list:"PopUpButton",obj:13},
-					{icon:"assets/ComboBox.png",list:"DropDownList",obj:14}
+					{icon:"assets/TreeIcons/ComboBox.png",list:"DropDownList",obj:14}
 				]);
 				
 				compList2 = new ArrayCollection ([
@@ -78,7 +93,7 @@
 				panel.width=350;
 				panel.percentHeight=100;
 				panel.y=0;
-				var vdConsole:Console = new Console();
+				vdConsole = new Console();
 				//vdConsole.percentHeight = 100;
 				//panel.addChild(vdConsole);
 				//panel.isPopUp=false;
@@ -101,7 +116,7 @@
 	<mx:HDividedBox width="100%" height="100%" horizontalGap="20">
 		<components:FormDesign id="vdFormDesign" minWidth="{vdFormDesign.minWidth}" maxWidth="{vdFormDesign.maxWidth}"/>
 		<!--<components:Console id="vdConsole" width="350"/>-->
-		<mx:VBox id="vBoxImgBased" width="100%" height="100%" borderVisible="true" borderStyle="solid">
+		<mx:VBox id="vBoxImgBased" width="100%" height="100%">
 			<s:Image id="imgBased" width="100%" height="100%" 
 					 scaleMode="stretch" fillMode="scale"
 					 source="@Embed('assets/invoice-sample.png')"/>

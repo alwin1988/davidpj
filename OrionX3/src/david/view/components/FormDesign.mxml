@@ -41,6 +41,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.ui.resize.ResizableButton;
 			import spark.components.VSlider;
 			import spark.components.HSlider;
 			import spark.components.DropDownList;
@@ -1003,10 +1004,18 @@
 						panelGrid.x = event.currentTarget.x;
 						panelGrid.y = event.currentTarget.y;
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzBUTTON' ) {
-						var bt:Button = new Button();
-						bt.setStyle('skinClass',th.co.shopsthai.resize.rzmvButtonSkin);
+						var bt:ResizableButton = new ResizableButton();
 						bt.id = 'rzBUTTON' + FlexGlobals.topLevelApplication.getIdx;
 						bt.label = bt.id;
+						bt.movable="true"; bt.resizable="true";
+						bt.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void {
+							var dragInitiator:UIComponent = UIComponent(event.currentTarget);
+							var dragItem:*  = dragInitiator;
+							var ds:DragSource = new DragSource();
+							ds.addData('NEW','NEW');
+							ds.addData(event.currentTarget.toolTip,'cType');
+							DragManager.doDrag(dragInitiator, ds, event);
+							});
 						event.currentTarget.addElement(bt);
 						bt.x = event.currentTarget.x;
 						bt.y = event.currentTarget.y;
@@ -1016,6 +1025,7 @@
 						cmb.setStyle('skinClass',ResizableComboBoxSkin);
 						cmb.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
 						cmb.text = cmb.id;
+						
 						event.currentTarget.addElement(cmb);
 						cmb.x = event.currentTarget.x;
 						cmb.y = event.currentTarget.y;

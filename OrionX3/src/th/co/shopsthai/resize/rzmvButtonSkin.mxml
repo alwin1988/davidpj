@@ -23,11 +23,9 @@
 <s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
              xmlns:s="library://ns.adobe.com/flex/spark" 
              xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
-			 xmlns:resize="flex.utils.spark.resize.*"
              minWidth="21" minHeight="21" 
-             alpha.disabled="0.5"
-			 creationComplete="init(event)" 
-			 >
+			 creationComplete="created(event)"
+             alpha.disabled="0.5" xmlns:resize="flex.utils.spark.resize.*">
      
     <fx:Metadata>
         <![CDATA[ 
@@ -37,6 +35,14 @@
         [HostComponent("spark.components.Button")]
         ]]>
     </fx:Metadata>
+    
+    <!-- states -->
+    <s:states>
+        <s:State name="up" />
+        <s:State name="over" />
+        <s:State name="down" />
+        <s:State name="disabled" />
+    </s:states>
 	<fx:Script>
 		<![CDATA[
 			import flex.utils.spark.resize.MoveManager;
@@ -50,9 +56,7 @@
 			[Bindable]
 			public var moveManager:MoveManager;
 			
-			
-			protected function init(event:FlexEvent):void
-			{
+			private function created(event:FlexEvent):void {
 				if (hostComponent.minWidth == 0) {
 					hostComponent.minWidth = minWidth;
 				}
@@ -61,20 +65,9 @@
 				}
 				resizeManager = new ResizeManager(hostComponent, resizeHandle);
 				moveManager = new MoveManager(hostComponent, moveArea);
-				
 			}
-			
 		]]>
 	</fx:Script>
-    
-    <!-- states -->
-    <s:states>
-        <s:State name="up" />
-        <s:State name="over" />
-        <s:State name="down" />
-        <s:State name="disabled" />
-    </s:states>
-    
     <!-- layer 1: shadow -->
     <!--- @private -->
     <s:Rect id="shadow" left="-1" right="-1" top="-1" bottom="-1" radiusX="2">
@@ -200,7 +193,11 @@
              horizontalCenter="0" verticalCenter="1" verticalAlign="middle"
              left="10" right="10" top="2" bottom="2">
     </s:Label>
-	<!--- @copy spark.components.TitleWindow#moveArea -->
+	<resize:ResizeHandleLines id="resizeHandle"
+							  enabled="{resizeManager.enabled}"
+							  bottom="1"
+							  right="1"
+							  visible="{resizeManager.enabled}"/>
 	<s:Group id="moveArea"
 			 bottom="0"
 			 left="0"
@@ -211,9 +208,12 @@
 						   dotColor="#8B8B8B"
 						   fillAlpha="0"/>
 	</s:Group>
-	<resize:ResizeHandleLines id="resizeHandle"
-							  enabled="{resizeManager.enabled}"
-							  bottom="1"
-							  right="1"
-							  visible="{resizeManager.enabled}"/>    
+	
+<!--	<s:Group id="resizeHandle1" right="1" bottom="1" width="15" height="15">
+		<s:Path data="M 4 13 L 13 4 L 13 13 L 4 13">
+			<s:fill>
+				<s:SolidColor color="0x000000" />
+			</s:fill>
+		</s:Path>
+	</s:Group>-->
 </s:SparkButtonSkin>

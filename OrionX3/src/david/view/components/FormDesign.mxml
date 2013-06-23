@@ -7,7 +7,7 @@
 		 xmlns:view="view.*" 
 		 width="100%" height="100%" 
 		 creationComplete="init()" 
-		 xmlns:ascomponent="th.co.shopsthai.ascomponent.*" 
+		 xmlns:ascomponent="th.co.shopsthai.ascomponent.*" xmlns:resize="flex.utils.spark.resize.*" 
 		 >
 	<fx:Declarations>
 		<fx:Component className="VGuideLine">
@@ -38,9 +38,40 @@
 				</s:stroke>
 			</s:Line>
 		</fx:Component>    
+		<s:ArrayList id="testArray">
+			<fx:String>This is a very long string that goes on and on to show horizontal scrollbars</fx:String>
+			<fx:String>Test1</fx:String>
+			<fx:String>Test2</fx:String>
+			<fx:String>Test3</fx:String>
+			<fx:String>Test4</fx:String>
+			<fx:String>Test5</fx:String>
+			<fx:String>Test6</fx:String>
+			<fx:String>Test7</fx:String>
+			<fx:String>Test8</fx:String>
+			<fx:String>Test9</fx:String>
+			<fx:String>Test10</fx:String>
+			<fx:String>Test11</fx:String>
+			<fx:String>Test12</fx:String>
+			<fx:String>Test13</fx:String>
+			<fx:String>Test14</fx:String>
+			<fx:String>Test15</fx:String>
+			<fx:String>Test16</fx:String>
+			<fx:String>Test17</fx:String>
+			<fx:String>Test18</fx:String>
+			<fx:String>Test19</fx:String>
+			<fx:String>Test20</fx:String>
+		</s:ArrayList>
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.spark.resize.ResizeMoveDatechooser;
+			import flex.utils.spark.resize.ResizeMovePopUpButton;
+			import flex.utils.spark.resize.ResizeMoveNumberStepperSkin;
+			import flex.utils.spark.resize.ResizableTextAreaSkin;
+			import spark.components.TextArea;
+			import spark.components.TextInput;
+			import flex.utils.spark.resize.TextInputResize;
+			import flex.utils.spark.resize.ResizableCmbSkin;
 			import flex.utils.ui.resize.ResizableButton;
 			import spark.components.VSlider;
 			import spark.components.HSlider;
@@ -49,7 +80,7 @@
 			import spark.components.NumericStepper;
 			import mx.controls.DateChooser;
 			import spark.components.CheckBox;
-			import mx.controls.TextInput;
+//			import mx.controls.TextInput;
 			import mx.core.IUIComponent;
 			import spark.components.Button;
 			import th.co.shopsthai.resize.rzmvPanelDataGrid;
@@ -1022,7 +1053,8 @@
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzCOMBO' ) {
 						var cmb:ComboBox = new ComboBox();
-						cmb.setStyle('skinClass',ResizableComboBoxSkin);
+						cmb.setStyle('skinClass',flex.utils.spark.resize.ResizableCmbSkin);
+//						cmb.dataProvider = testArray;
 						cmb.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
 						cmb.text = cmb.id;
 						
@@ -1032,7 +1064,7 @@
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DropDownList' ) {
 						var ddl:DropDownList = new DropDownList();
-						ddl.setStyle('skinClass',ResizableComboBoxSkin);
+						ddl.setStyle('skinClass',flex.utils.spark.resize.ResizableDropDownListSkin);
 						ddl.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
 						event.currentTarget.addElement(ddl);
 						ddl.x = event.currentTarget.x;
@@ -1040,6 +1072,8 @@
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextInput' ) {
 						var txt:TextInput = new TextInput();
+//						<s:TextInput x="357" y="43" skinClass="TextInputResize"/>
+						txt.setStyle('skinClass',TextInputResize);
 						txt.id = 'TextInput' + FlexGlobals.topLevelApplication.getIdx;
 						txt.text = txt.id;
 						event.currentTarget.addElement(txt);
@@ -1061,8 +1095,9 @@
 						event.currentTarget.addElement(tg);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextArea' ) {
-						var ta:TextInput = new TextInput();
+						var ta:TextArea = new TextArea();
 						ta.id = 'TextArea' + FlexGlobals.topLevelApplication.getIdx;
+						ta.setStyle('skinClass',ResizableTextAreaSkin);
 						ta.text = ta.id;
 						ta.height = 100;
 						event.currentTarget.addElement(ta);
@@ -1086,10 +1121,11 @@
 						rdo.y = event.currentTarget.y;
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DateChooser' ) {
-						var dc:DateChooser = new DateChooser();
+//						var dc:DateChooser = new DateChooser();
+						var dc:ResizeMoveDatechooser = new ResizeMoveDatechooser();
 						dc.id = 'DateChooser' + FlexGlobals.topLevelApplication.getIdx;
-						dc.showToday = true;
-						dc.yearNavigationEnabled = true;
+						dc.dateC.showToday = true;
+						dc.dateC.yearNavigationEnabled = true;
 						event.currentTarget.addElement(dc);
 						dc.x = event.currentTarget.x;
 						dc.y = event.currentTarget.y;
@@ -1097,6 +1133,7 @@
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'NumericStepper' ) {
 						var nbs:NumericStepper = new NumericStepper();
 						nbs.id = 'NumericStepper' + FlexGlobals.topLevelApplication.getIdx;
+						nbs.setStyle('skinClass',ResizeMoveNumberStepperSkin);
 						nbs.maximum = 10;
 						nbs.minimum = 0;
 						nbs.stepSize = 1;
@@ -1104,9 +1141,10 @@
 						nbs.x = event.currentTarget.x;
 						nbs.y = event.currentTarget.y;
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PopUpButton' ) {
-						var pop:PopUpButton = new PopUpButton();
+//						<resize:ResizeMovePopUpButton />
+						var pop:ResizeMovePopUpButton = new ResizeMovePopUpButton();
 						pop.id = 'PopUpButton' + FlexGlobals.topLevelApplication.getIdx;
-						pop.label = pop.id;
+						pop.btnPop.label = pop.id;
 						event.currentTarget.addElement(pop);
 						pop.x = event.currentTarget.x;
 						pop.y = event.currentTarget.y;
@@ -1225,6 +1263,10 @@
 						<ascomponent:layout>
 							<s:VerticalLayout   paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
 						</ascomponent:layout>
+<!--						<s:DropDownList  maxHeight="60" dataProvider="{testArray}" fontSize="10" id="dd1"  
+										 skinClass="flex.utils.spark.resize.ResizableDropDownListSkin" />-->
+						
+						
 					</ascomponent:rzmvasBroderContainer>	
 
 <!--					<s:BorderContainer id="supGG" 

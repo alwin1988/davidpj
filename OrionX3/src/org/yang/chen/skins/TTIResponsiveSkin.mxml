@@ -2,7 +2,9 @@
 <s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx"
-		creationComplete.display="{gwidth = textDisplay.contentWidth+10;}"
+		creationComplete.display="{gwidth = textDisplay.contentWidth+10;}" 
+		xmlns:resize="flex.utils.spark.resize.*"
+		creationComplete="created(event)"
 		>
 	<!-- host component -->
 	<fx:Metadata>
@@ -11,9 +13,33 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.spark.resize.MoveManager;
+			import flex.utils.spark.resize.ResizeManager;
+			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 
+			
+			
+			[Bindable]
+			public var resizeManager:ResizeManager;
+			
+			[Bindable]
+			public var moveManager:MoveManager;
+			
+			private var paddingChanged:Boolean;
+			
+			private function created(event:FlexEvent):void {
+				if (hostComponent.minWidth == 0) {
+					hostComponent.minWidth = minWidth;
+				}
+				if (hostComponent.minHeight == 0) {
+					hostComponent.minHeight = minHeight;
+				}
+//				resizeManager = new ResizeManager(hostComponent, resizeHandle);
+//				moveManager = new MoveManager(hostComponent, moveArea);
+			}
+			
 			
 			public var cancelGwidth:Number;
 			private var _gwidth:Number;
@@ -131,4 +157,18 @@
 					  bottom="-1"
 					  buttonMode="true" focusSkin="{null}"
 					  skinClass="org.yang.chen.skins.TTIAddButtonSkin"/>
+	
+<!--	<s:Group id="moveArea" right="0" top="0"
+			 left.disabled="0" bottom.disabled="0"
+			 right.normal="0" top.normal="0" width.normal="13" height.normal="23">
+		<resize:DragHandle dotColor="#8B8B8B" fillAlpha="0"
+						   left.disabled="4" verticalCenter.disabled="0"
+						   x.normal="4" top.normal="0" width.normal="9"/>
+	</s:Group>
+	
+	<resize:ResizeHandleLines id="resizeHandle"
+							  enabled="{resizeManager.enabled}"
+							  bottom="1"
+							  right="1"
+							  visible="{resizeManager.enabled}"/>-->
 </s:Skin>

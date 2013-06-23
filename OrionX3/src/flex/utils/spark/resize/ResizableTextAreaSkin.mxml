@@ -8,7 +8,9 @@
 	xmlns:s="library://ns.adobe.com/flex/spark"
 	xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
 	alpha.disabled="0.5"
-	blendMode="normal">
+	blendMode="normal" xmlns:resize="flex.utils.spark.resize.*"
+	creationComplete="created(event)"
+	>
 
 	<fx:Metadata>
 		<![CDATA[ 
@@ -20,6 +22,9 @@
 	</fx:Metadata>
 
 	<fx:Script fb:purpose="styling">
+		<![CDATA[
+			
+		import mx.events.FlexEvent;
 		private var lineBreakChanged:Boolean;
 
 		private var paddingChanged:Boolean;
@@ -161,13 +166,23 @@
 				invalidateProperties();
 			}
 		}
-	</fx:Script>
+			
+		[Bindable]
+		public var resizeManager:ResizeManager;
+			
+		[Bindable]
+		public var moveManager:MoveManager;
+		private function created(event:FlexEvent):void {
+			if (hostComponent.minWidth == 0) {
+				hostComponent.minWidth = minWidth;
+			}
+			if (hostComponent.minHeight == 0) {
+				hostComponent.minHeight = minHeight;
+			}
+			resizeManager = new ResizeManager(hostComponent, resizeHandle);
+			moveManager = new MoveManager(hostComponent, moveArea);
+		}	
 
-	<fx:Script>
-		<![CDATA[
-			/**
-			 * @private
-			 */
 			private static const focusExclusions:Array = ["textDisplay"];
 
 			/**
@@ -177,12 +192,14 @@
 				return focusExclusions;
 			}
 
-			public function get resizeManager():ResizeManager {
-				if (scroller && (scroller.skin is ResizableScrollerSkin)) {
-					return (scroller.skin as ResizableScrollerSkin).resizeManager;
-				}
-				return null;
-			}
+//			public function get resizeManager():ResizeManager {
+//				if (scroller && (scroller.skin is ResizableScrollerSkin)) {
+//					return (scroller.skin as ResizableScrollerSkin).resizeManager;
+//				}
+//				return null;
+//			}
+			
+			
 		]]>
 	</fx:Script>
 
@@ -250,5 +267,19 @@
 			heightInLines="10"
 			widthInChars="15"/>
 	</s:Scroller>
-
+	<s:Group id="moveArea"
+			 bottom="0"
+			 left="0"
+			 right="0"
+			 top="0">
+		<resize:DragHandle left="4"
+						   verticalCenter="0"
+						   dotColor="#8B8B8B"
+						   fillAlpha="0"/>
+	</s:Group>
+	<resize:ResizeHandleLines id="resizeHandle"
+							  enabled="{resizeManager.enabled}"
+							  bottom="1"
+							  right="1"
+							  visible="{resizeManager.enabled}"/>
 </s:SparkSkin>

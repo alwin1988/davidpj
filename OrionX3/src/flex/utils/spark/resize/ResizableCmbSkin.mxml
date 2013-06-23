@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--- A skin class for the Spark ComboBox component that supports resizing the drop down list.
-	 The skin for the anchor button for a ComboBox component
-	 is defined by the ComboBoxButtonSkin class.  The skin for the text input
-	 is defined by the ComboBoxTextInputSkin class.
+<!---
+	 A skin class for the Spark DropDownList component that supports resizing
+	 the popup list.
 
-	 @see flex.utils.spark.resize.ResizeManager
-	 @see spark.components.ComboBox
-	 @see spark.skins.spark.ComboBoxButtonSkin
+	 <p>In a custom skin class that uses transitions, set the
+	 <code>itemDestructionPolicy</code> property to <code>none</code>
+	 for the PopUpAnchor defined by the popUp property.</p>
+
+	 @see spark.components.DropDownList
+	 @see spark.skins.spark.DropDownListButtonSkin
 -->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009"
 	xmlns:s="library://ns.adobe.com/flex/spark"
 	xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
-	alpha.disabled=".5">
+	creationComplete="created(event)"
+	alpha.disabled=".5" xmlns:resize="flex.utils.spark.resize.*">
 
 	<!-- host component -->
 	<fx:Metadata>
 		<![CDATA[ 
         /** 
-        * @copy spark.skins.spark.ApplicationSkin#hostComponent
-        */
+         * @copy spark.skins.spark.ApplicationSkin#hostComponent
+         */
         [HostComponent("spark.components.ComboBox")]
-        ]]>
+    ]]>
 	</fx:Metadata>
 
 	<fx:Script fb:purpose="styling">
 		<![CDATA[
-			private var paddingChanged:Boolean;
-
-			private var cornerRadiusChanged:Boolean;
-
-			private var cornerRadius:Number = 0;
-
 			/* Define the content fill items that should be colored by the "contentBackgroundColor" style. */
 			static private const contentFill:Array = ["bgFill"];
-
+			[Bindable]
+			public var moveManager:MoveManager;
 			/**
 			 * @private
 			 */
@@ -41,64 +39,6 @@
 				return contentFill
 			}
 			;
-
-			/**
-			 *  @private
-			 */
-			override protected function commitProperties():void {
-				super.commitProperties();
-
-				if (paddingChanged && textInput) {
-					// Push padding styles into the textDisplay
-					var padding:Number;
-
-					padding = getStyle("paddingLeft");
-					if (textInput.getStyle("paddingLeft") != padding)
-						textInput.setStyle("paddingLeft", padding);
-
-					padding = getStyle("paddingTop");
-					if (textInput.getStyle("paddingTop") != padding)
-						textInput.setStyle("paddingTop", padding);
-
-					padding = getStyle("paddingRight");
-					if (textInput.getStyle("paddingRight") != padding)
-						textInput.setStyle("paddingRight", padding);
-
-					padding = getStyle("paddingBottom");
-					if (textInput.getStyle("paddingBottom") != padding)
-						textInput.setStyle("paddingBottom", padding);
-					paddingChanged = false;
-				}
-
-				if (cornerRadiusChanged) {
-					cornerRadiusChanged = false;
-
-					/* var cr:Number = getStyle("cornerRadius");
-
-					   if (openButton)
-					   openButton.setStyle("cornerRadius", cr);
-					   if (textInput)
-					 textInput.setStyle("cornerRadius", cr); */
-				}
-			}
-
-			/**
-			 *  @private
-			 */
-			override public function styleChanged(styleProp:String):void {
-				var allStyles:Boolean = !styleProp || styleProp == "styleName";
-
-				super.styleChanged(styleProp);
-
-				if (allStyles || styleProp.indexOf("padding") == 0) {
-					paddingChanged = true;
-					invalidateProperties();
-				}
-				if (allStyles || styleProp == "cornerRadius") {
-					cornerRadiusChanged = true;
-					invalidateProperties();
-				}
-			}
 
 			/**
 			 * @private
@@ -125,13 +65,18 @@
 				if (dropShadow)
 					dropShadow.visible = getStyle("dropShadowVisible");
 
-				//openButton.setStyle("cornerRadius", getStyle("cornerRadius"));
+				openButton.setStyle("cornerRadius", getStyle("cornerRadius"));
 
 				if (borderStroke) {
 					borderStroke.color = getStyle("borderColor");
 					borderStroke.alpha = getStyle("borderAlpha");
 				}
 				super.updateDisplayList(unscaledWidth, unscaledHeight);
+			}
+			
+			private function created(event:FlexEvent):void {
+				moveManager = new MoveManager(hostComponent, moveArea);
+				moveManager.bringToFrontOnMove = false;
 			}
 		]]>
 	</fx:Script>
@@ -206,7 +151,6 @@
 			minWidth="40"
 			initialize="dropDownInit(event)">
 
-			<!-- drop shadow -->
 			<!--- @private -->
 			<s:RectangularDropShadow id="dropShadow"
 				bottom="0"
@@ -220,7 +164,6 @@
 				blurY="20"
 				distance="7"/>
 
-			<!-- border -->
 			<!--- @private -->
 			<s:Rect id="border"
 				bottom="0"
@@ -228,7 +171,7 @@
 				right="0"
 				top="0">
 				<s:stroke>
-					<!--- @private -->
+					<!--- border stroke @private -->
 					<s:SolidColorStroke id="borderStroke"
 						weight="1"/>
 				</s:stroke>
@@ -242,11 +185,6 @@
 				right="1"
 				top="1">
 				<s:fill>
-					<!---
-						 @private
-						 The color of the drop down's background fill.
-						 The default color is 0xFFFFFF.
-					-->
 					<s:SolidColor id="bgFill"
 						color="0xFFFFFF"/>
 				</s:fill>
@@ -273,23 +211,36 @@
 		</s:Group>
 	</s:PopUpAnchor>
 
-	<!---  The default skin is ComboBoxButtonSkin.
+	<!---  The default skin is DropDownListButtonSkin.
 		 @copy spark.components.supportClasses.DropDownListBase#openButton
-		 @see spark.skins.spark.ComboBoxButtonSkin -->
+		 @see spark.skins.spark.DropDownListButtonSkin -->
 	<s:Button id="openButton"
 		focusEnabled="false"
-		width="19"
-		bottom="0"
-		right="0"
-		top="0"
-		skinClass="spark.skins.spark.ComboBoxButtonSkin"/>
-	<!--- @copy spark.components.ComboBox#textInput -->
-	<s:TextInput id="textInput"
 		bottom="0"
 		left="0"
-		right="18"
+		right="0"
 		top="0"
-		skinClass="spark.skins.spark.ComboBoxTextInputSkin"/>
+		skinClass="spark.skins.spark.DropDownListButtonSkin"/>
 
+	<!--- @copy spark.components.DropDownList#labelDisplay -->
+	<s:Label id="labelDisplay"
+		width="75"
+		bottom="2"
+		left="7"
+		right="30"
+		top="2"
+		verticalAlign="middle"
+		verticalCenter="1"
+		maxDisplayedLines="1"
+		mouseChildren="false"
+		mouseEnabled="false"/>
+	<s:Group id="moveArea" top="0" bottom="0" width="10"
+			 left.disabled="0"
+			 right.normal="1" top.normal="0" bottom.normal="0"
+			 left.open="0">
+		<resize:DragHandle dotColor="#8B8B8B" fillAlpha="0" verticalCenter="0"
+						   left.disabled="4"
+						   right.normal="0" width.normal="10" verticalCenter.normal="0"
+						   left.open="4"/>
+	</s:Group>
 </s:SparkSkin>
-

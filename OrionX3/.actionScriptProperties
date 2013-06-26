@@ -25,6 +25,7 @@
     <application path="TransformToolSample16.mxml"/>
     <application path="test.mxml"/>
     <application path="testKeydown.mxml"/>
+    <application path="testTran152.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

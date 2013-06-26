@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="900" minHeight="600" creationComplete="init();" width="630" height="420">
+		<fx:Declarations>
+			<!-- Place non-visual elements (e.g., services, value objects) here -->
+		</fx:Declarations>
+		<fx:Script>
+			<![CDATA[
+				import com.ryan.geom.FreeTransformEvent;
+				import com.ryan.geom.FreeTransformManager;
+				
+				import flash.display.Sprite;
+				
+				import spark.components.Button;
+				
+				public var fts:FreeTransformManager;
+				public var mySprite:Sprite = new Sprite();
+				
+				public function init():void {
+					
+					// Set up FreeTransformManager
+					fts = new FreeTransformManager(false);
+					fts.addEventListener('ontransform',function(e:FreeTransformEvent):void  {
+						trace('ontransform');
+						trace(e.toString());
+					});
+//					mySprite.graphics.beginFill(0xEEEEEE);
+//					mySprite.graphics.drawRect(0, 0, 90, 90);
+//					mySprite.graphics.endFill();
+					
+					// Adding to canvas doesn't work as FTM doesn't know of the .rawChildren quirk.
+					//theCanvas.rawChildren.addChild(mySprite);
+					
+					// This worls
+					var btn:Button = new Button();
+					btn.width = 100;
+					btn.height = 50;
+//					theUIComponent.addChild(mySprite);
+					theUIComponent.addChild(btn);
+					
+//					fts.registerSprite(mySprite);
+					fts.registerSprite(btn);
+					
+				}
+				
+				protected function select(event:MouseEvent):void
+				{
+					theUIComponent.addChild(event.target as DisplayObject);
+					fts.registerSprite(event.target as DisplayObject);
+				}
+				
+				protected function mmove(event:MouseEvent):void
+				{
+					trace('mouse move');
+					
+				}
+				
+			]]>
+		</fx:Script>
+		
+		<mx:Box>
+			<mx:Canvas id="theCanvas" x="0" y="0" width="630" height="420" backgroundColor="#316C92">
+				<mx:UIComponent id="theUIComponent" left="0" top="0" bottom="0" right="0">
+				</mx:UIComponent>
+				<s:Button x="170" y="48" width="77" height="34" mouseDown="select(event)" mouseMove="mmove(event)"/>
+				<mx:ComboBase x="144" y="123" width="180" height="27" mouseDown="select(event)" mouseMove="mmove(event)"/>
+			</mx:Canvas>
+		</mx:Box>
+	</s:Application>

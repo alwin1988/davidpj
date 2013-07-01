@@ -6,7 +6,7 @@
 			   width="350" height="100%" minWidth="350" maxWidth="350" backgroundAlpha="0"
 			   skinClass="skins.ConsoleTitleWindowSkin"
 			   creationComplete="init()" title="{Constants.clientTitleBoxLabel}"
-			   windowMoving="titleWin_windowMovingHandler(event);">
+			   windowMoving="titleWin_windowMovingHandler(event);" xmlns:component="component.*">
 
 	<fx:Script>
 		<![CDATA[
@@ -23,6 +23,7 @@
 			import mx.managers.DragManager;
 			import mx.utils.ObjectUtil;
 			
+			import spark.events.IndexChangeEvent;
 			import spark.events.TitleWindowBoundsEvent;
 			
 			
@@ -205,6 +206,12 @@
 					return this[classType];
 				else
 					return null;
+			}
+			
+			protected function FormLayout_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				FormLayout.selectedItem;
 			}
 			
 		]]>
@@ -485,25 +492,27 @@
 					</s:Button>		
 					<s:DropDownList id="FormLayout" width="100%" height="21"
 									itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
-									dropShadowVisible="false"  labelField="@label"
-									requireSelection="true">
+									skinClass="david.view.fromSkin.CustomDropDownListSkin"
+									dropShadowVisible="false"  labelField="label"
+									requireSelection="true"
+									change="FormLayout_changeHandler(event)">
 						<s:dataProvider>
 							<s:ArrayList>
 								<s:Label text="No layout"
 										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
-								<s:BitmapImage source="@Embed('assets/basic_layout.png')" />
+								<component:customBitmapImage source="@Embed('assets/basic_layout.png')" label="No layout" />
 								<s:Spacer height="3"/>
 								<s:Label text="Vertical layout"
 										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
-								<s:BitmapImage source="@Embed('assets/vertical_layout.png')" />
+								<component:customBitmapImage source="@Embed('assets/vertical_layout.png')" label="Vertical layout"/>
 								<s:Spacer height="3"/>
 								<s:Label text="Horizontal layout"
 										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
-								<s:BitmapImage source="@Embed('assets/horizontal_layout.png')" />
+								<component:customBitmapImage source="@Embed('assets/horizontal_layout.png')" label="Horizontal layout"/>
 								<s:Spacer height="3"/>
 								<s:Label text="Tile layout"
 										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"/>
-								<s:BitmapImage source="@Embed('assets/tile_layout.png')" />
+								<component:customBitmapImage source="@Embed('assets/tile_layout.png')" label="Tile layout"/>
 							</s:ArrayList>
 						</s:dataProvider>
 					</s:DropDownList>

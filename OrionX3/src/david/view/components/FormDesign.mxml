@@ -64,6 +64,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.spark.resize.ResizeMovecheckbox;
 			import flex.utils.spark.resize.ResizeMoveDatechooser;
 			import flex.utils.spark.resize.ResizeMovePopUpButton;
 			import flex.utils.spark.resize.ResizeMoveNumberStepperSkin;
@@ -1105,9 +1106,10 @@
 						ta.y = event.currentTarget.y;
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'CheckBox' ) {
-						var chk:CheckBox = new CheckBox();
+//						var chk:CheckBox = new CheckBox();
+						var chk:ResizeMovecheckbox = new ResizeMovecheckbox();
 						chk.id = 'CheckBox' + FlexGlobals.topLevelApplication.getIdx;
-						chk.label = chk.id;
+						chk.chkbox.label = chk.id;
 						event.currentTarget.addElement(chk);
 						chk.x = event.currentTarget.x;
 						chk.y = event.currentTarget.y;

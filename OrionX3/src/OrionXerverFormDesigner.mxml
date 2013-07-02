@@ -6,7 +6,8 @@
 			   xmlns:component="component.*"
 			   xmlns:view="view.*"
 			   xmlns:components="david.view.components.*"
-			   creationComplete="init()" width="100%" height="100%">
+			   width="100%" height="100%" creationComplete="init()"
+			   viewSourceURL="srcview/index.html">
 	<fx:Declarations>
 		
 	</fx:Declarations>

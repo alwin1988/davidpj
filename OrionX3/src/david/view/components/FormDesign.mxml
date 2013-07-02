@@ -64,6 +64,10 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.spark.resize.ResizeMoveTogTextinput;
+			import flex.utils.spark.resize.ResizeMoveVslider;
+			import flex.utils.spark.resize.ResizeMoveHslider;
+			import flex.utils.spark.resize.ResizeMoveRadio;
 			import flex.utils.spark.resize.ResizeMovecheckbox;
 			import flex.utils.spark.resize.ResizeMoveDatechooser;
 			import flex.utils.spark.resize.ResizeMovePopUpButton;
@@ -1082,11 +1086,12 @@
 						txt.y = event.currentTarget.y;
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'ToggleTextInput' ) {
-						var tg:ToggleTextInput = new ToggleTextInput();
+//						var tg:ToggleTextInput = new ToggleTextInput();
+						var tg:ResizeMoveTogTextinput = new ResizeMoveTogTextinput();
 						tg.id = 'ToggleTextInput' + FlexGlobals.topLevelApplication.getIdx;
-						tg.setStyle("skinClass", Class(TTIResponsiveSkin));
-						tg.doubleClickEnabled = true;
-						tg.addButtonLabel="Add User Name";
+//						tg.setStyle("skinClass", Class(TTIResponsiveSkin));
+//						tg.doubleClickEnabled = true;
+//						tg.addButtonLabel="Add User Name";
 						tg.x = event.localX;
 						tg.y = event.localY;
 						tg.width = 120;
@@ -1115,9 +1120,10 @@
 						chk.y = event.currentTarget.y;
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'RadioButton' ) {
-						var rdo:RadioButton = new RadioButton();
+//						var rdo:RadioButton = new RadioButton();
+						var rdo:ResizeMoveRadio = new ResizeMoveRadio();
 						rdo.id = 'RadioButton' + FlexGlobals.topLevelApplication.getIdx;
-						rdo.label = rdo.id;
+						rdo.radio.label = rdo.id;
 						event.currentTarget.addElement(rdo);
 						rdo.x = event.currentTarget.x;
 						rdo.y = event.currentTarget.y;
@@ -1151,17 +1157,19 @@
 						pop.x = event.currentTarget.x;
 						pop.y = event.currentTarget.y;
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HSlider' ) {
-						var hsl:HSlider = new HSlider();
+//						var hsl:HSlider = new HSlider();
+						var hsl:ResizeMoveHslider = new ResizeMoveHslider();
 						hsl.id = 'HSlider' + FlexGlobals.topLevelApplication.getIdx;
-						hsl.minimum = 0; hsl.maximum = 10; hsl.stepSize = 1;
+						hsl.hslider.minimum = 0; hsl.hslider.maximum = 10; hsl.hslider.stepSize = 1;
 						event.currentTarget.addElement(hsl);
 						hsl.x = event.currentTarget.x;
 						hsl.y = event.currentTarget.y;
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VSlider' ) {
-						var vsl:VSlider = new VSlider();
+//						var vsl:VSlider = new VSlider();
+						var vsl:ResizeMoveVslider = new ResizeMoveVslider();
 						vsl.id = 'VSlider' + FlexGlobals.topLevelApplication.getIdx;
-						vsl.minimum = 0; vsl.maximum = 10; vsl.stepSize = 1;
+						vsl.hslider.minimum = 0; vsl.hslider.maximum = 10; vsl.hslider.stepSize = 1;
 						event.currentTarget.addElement(vsl);
 						vsl.x = event.currentTarget.x;
 						vsl.y = event.currentTarget.y;

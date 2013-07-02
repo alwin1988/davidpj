@@ -3,11 +3,13 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 xmlns:resize="flex.utils.spark.resize.*"
-		 creationComplete="init()"
+		 creationComplete="init()" xmlns:component="component.*"
 		 >
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
+			
+			import org.yang.chen.skins.TTIResponsiveSkin;
 			
 			[Bindable] public var moveManager:MoveManager;
 			[Bindable] public var resizeManager:ResizeManager;
@@ -25,7 +27,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:CheckBox label="chkbox" id="chkbox" />
+	<component:ToggleTextInput  skinClass="org.yang.chen.skins.TTIResponsiveSkin" addButtonLabel="Add User Name" />
 	<s:Group id="moveArea" right="-10" verticalCenter="0">
 		<resize:DragHandle dotColor="#8B8B8B" fillAlpha="0"/>
 	</s:Group>

@@ -80,7 +80,9 @@
 					{icon:"assets/TreeIcons/HSlider.png",list:"HSlider",obj:11},
 					{icon:"assets/TreeIcons/VSlider.png",list:"VSlider",obj:12},
 					{icon:"assets/TreeIcons/Button.png",list:"PopUpButton",obj:13},
-					{icon:"assets/TreeIcons/ComboBox.png",list:"DropDownList",obj:14}
+					{icon:"assets/TreeIcons/ComboBox.png",list:"DropDownList",obj:14},
+					{icon:"assets/TreeIcons/VRule.png",list:"VRule",obj:15},
+					{icon:"assets/TreeIcons/HRule.png",list:"HRule",obj:16}
 				]);
 				
 				compList2 = new ArrayCollection ([

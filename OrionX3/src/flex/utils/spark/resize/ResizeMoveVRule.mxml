@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:resize="flex.utils.spark.resize.*"
+		 creationComplete="init()"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			[Bindable] public var moveManager:MoveManager;
+			[Bindable] public var resizeManager:ResizeManager;
+
+			private function init():void {
+				
+				moveManager = new MoveManager(this,moveArea);
+				resizeManager = new ResizeManager(this,resizeHandle );
+				resizeManager.enabled = false;
+				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
+			}			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:VRule id="vruls" />
+	<s:Group id="moveArea" right="-10" verticalCenter="0">
+		<resize:DragHandle dotColor="#8B8B8B" fillAlpha="0"/>
+	</s:Group>
+	
+	<resize:ResizeHandleLines id="resizeHandle" 
+							  enabled="{resizeManager.enabled}"
+							  bottom="1"
+							  right="1"
+							  visible="{resizeManager.enabled}"/>
+</s:Group>

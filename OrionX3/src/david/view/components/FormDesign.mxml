@@ -64,6 +64,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.spark.resize.ResizeMoveHRule;
+			import flex.utils.spark.resize.ResizeMoveVRule;
 			import flex.utils.spark.resize.ResizeMoveTogTextinput;
 			import flex.utils.spark.resize.ResizeMoveVslider;
 			import flex.utils.spark.resize.ResizeMoveHslider;
@@ -1173,6 +1175,20 @@
 						event.currentTarget.addElement(vsl);
 						vsl.x = event.currentTarget.x;
 						vsl.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VRule' ) {
+						var vru:ResizeMoveVRule = new ResizeMoveVRule();
+						vru.id = 'VRule' + FlexGlobals.topLevelApplication.getIdx;
+						event.currentTarget.addElement(vru);
+						vru.x = event.currentTarget.x;
+						vru.y = event.currentTarget.y;
+
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HRule' ) {
+						var hru:ResizeMoveHRule = new ResizeMoveHRule();
+						hru.id = 'HRule' + FlexGlobals.topLevelApplication.getIdx;
+						event.currentTarget.addElement(hru);
+						hru.x = event.currentTarget.x;
+						hru.y = event.currentTarget.y;
 						
 					} 
 					

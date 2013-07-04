@@ -14,7 +14,6 @@
 			
 			import mx.controls.Alert;
 			import mx.controls.ComboBox;
-			import mx.controls.Image;
 			import mx.core.DragSource;
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
@@ -212,6 +211,49 @@
 			{
 				// TODO Auto-generated method stub
 				FormLayout.selectedItem;
+			}
+			
+			protected function vruleClick(event:MouseEvent):void
+			{
+				var dragInitiator:Image = Image(event.currentTarget);
+				var dragItem:*  = dragInitiator;
+				var ds:DragSource = new DragSource();
+				ds.addData('NEW','NEW');
+				ds.addData('VRule','cType');
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+			
+			protected function hruleClick(event:MouseEvent):void
+			{
+				var dragInitiator:Image = Image(event.currentTarget);
+				var dragItem:*  = dragInitiator;
+				var ds:DragSource = new DragSource();
+				ds.addData('NEW','NEW');
+				ds.addData('HRule','cType');
+				DragManager.doDrag(dragInitiator, ds, event);
+				
+			}
+			
+			protected function VSPACE_mouseDownHandler(event:MouseEvent):void
+			{
+				var dragInitiator:Group = Group(event.currentTarget);
+				var dragItem:*  = dragInitiator;
+				var ds:DragSource = new DragSource();
+				ds.addData('NEW','NEW');
+				ds.addData('VSPACE','cType');
+				DragManager.doDrag(dragInitiator, ds, event);
+				
+			}
+			
+			protected function HSPACE_mouseDownHandler(event:MouseEvent):void
+			{
+				var dragInitiator:Group = Group(event.currentTarget);
+				var dragItem:*  = dragInitiator;
+				var ds:DragSource = new DragSource();
+				ds.addData('NEW','NEW');
+				ds.addData('HSPACE','cType');
+				DragManager.doDrag(dragInitiator, ds, event);
+				
 			}
 			
 		]]>
@@ -437,18 +479,30 @@
 															  paddingRight="5" paddingTop="5" gap="5" />	
 										</s:layout>
 										<!--Single horizontal line--> 
-										<s:Image source="@Embed('assets/hrule.png')"/> 
+										<s:Image source="@Embed('assets/hrule.png')" mouseDown="hruleClick(event)"/> 
 										<!--Double horizontal line--> 
-										<s:Image source="@Embed('assets/hrule.png')"/> 
+										<s:Group width="218" height="31" id="HSPACE" mouseDown="HSPACE_mouseDownHandler(event)">
+										<s:Image left="0" right="0" top="0"
+												 source="@Embed('assets/hrule.png')"/> 
+										<s:Image left="0" right="0" bottom="0"
+												 source="@Embed('assets/hrule.png')"/> 
+										</s:Group>
 										<s:BorderContainer width="100%" height="100%" borderVisible="false">								
 											<s:layout>
 												<s:HorizontalLayout paddingBottom="0" paddingLeft="5" 
 																	paddingRight="5" paddingTop="0" gap="5"/>	
 											</s:layout>
 											<!--Single vertical line--> 
-											<s:Image source="@Embed('assets/vrule.png')"/>
+											<s:Image source="@Embed('assets/vrule.png')" mouseDown="vruleClick(event)"/>
 											<!--Double vertical line--> 
-											<s:Image source="@Embed('assets/vrule.png')"/>
+											<s:Group width="24" height="60" id="VSPACE" mouseDown="VSPACE_mouseDownHandler(event)">
+											<s:Image left="0" top="0" bottom="0"
+													 mouseDown="vruleClick(event)"
+													 source="@Embed('assets/vrule.png')"/>
+											<s:Image right="0" top="0" bottom="0"
+													 mouseDown="vruleClick(event)"
+													 source="@Embed('assets/vrule.png')"/>
+											</s:Group>
 										</s:BorderContainer>
 									</s:BorderContainer>
 								</mx:VBox>	

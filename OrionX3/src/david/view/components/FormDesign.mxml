@@ -64,6 +64,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IVisualElement;
 			import flex.utils.spark.resize.ResizeMoveVSPACE;
 			import flex.utils.spark.resize.ResizeMoveHSPACE;
 			import flex.utils.spark.resize.ResizeMoveHRule;
@@ -167,11 +168,47 @@
 			private var uiConnector:UIConnector;
 			private var uiScaleConnector:UIScaleConnector;
 			
+			
+			[Bindable] private var cm:ContextMenu;
+			[Bindable]private var myContextMenuItem:ContextMenuItem;	
+			
+			
 			public function init():void {
 				toolInit();
 				frmSetting();
 				vginit();
+				addItemToContextMenu();
 			}
+			
+			private function addItemToContextMenu():void
+			{
+				// Create new instance of contextMenuItem
+				myContextMenuItem = new ContextMenuItem("remove this Component", false, true, true);
+				// Add event listener (handles the click on the item)
+				myContextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, myContextMenuItem_menuItemSelect);
+				
+				// Get the Context Menu                
+				//			cm = FlexGlobals.topLevelApplication.contextMenu;
+				cm = new ContextMenu();
+				// Hide default context menu items                
+				cm.hideBuiltInItems();
+				// Add item                
+				cm.customItems.push(myContextMenuItem);
+				//			btn1.contextMenu = cm;
+				//			btn2.contextMenu = cm;
+				//			btn3.contextMenu = cm;
+				//			btn4.contextMenu = cm;
+			}
+			
+			// The Event Handler        
+			private function myContextMenuItem_menuItemSelect(evt:ContextMenuEvent):void {
+				// Navigate to Flex-Blog.com when the item is clicked
+				trace('event');
+				//				Object(evt.target).automationParennt.
+				var ivs:IVisualElement = IVisualElement(evt.contextMenuOwner);
+				Object(ivs).automationParent.removeElement(ivs);	
+			}  
+			
 			
 			private function frmSetting():void {
 				
@@ -864,6 +901,7 @@
 						event.currentTarget.addElement(br);
 						br.MV = true;
 						br.RR = true;
+						br.contextMenu = cm;
 						br.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -877,6 +915,8 @@
 						tw.title = tw.id;
 						tw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
 						event.currentTarget.addElement(tw);
+						tw.mouseEnabled = true;
+						tw.contextMenu = cm;
 						tw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						tw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						tw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -886,6 +926,7 @@
 						var tb:TitledBorderBox = new TitledBorderBox();
 						tb.id = 'TBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						tb.title = tb.id;
+						tb.contextMenu = cm;
 						tb.width = 100; tb.height = 50;
 						tb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(tb);
@@ -903,6 +944,7 @@
 						event.currentTarget.addElement(vbr);
 						vbr.MV = true;
 						vbr.RR = true;
+						vbr.contextMenu = cm;
 						vbr.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						vbr.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						vbr.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -913,7 +955,9 @@
 						var vtw:TitleWindow = new TitleWindow();
 						vtw.id = 'VPANEL' + FlexGlobals.topLevelApplication.getIdx;
 						vtw.title = vtw.id;
+						vtw.mouseEnabled = true;
 						vtw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
+						vtw.contextMenu = cm;
 						vtw.layout = new VerticalLayout(); 
 						event.currentTarget.addElement(vtw);
 						vtw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
@@ -929,6 +973,7 @@
 						vtb.width = 100; vtb.height = 50;
 						vtb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(vtb);
+						vtb.contextMenu = cm;
 						vtb.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						vtb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						vtb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -944,6 +989,7 @@
 						hbr.setStyle('skinClass',rzmvasBroderContainerSkin);
 						hbr.MV = true;
 						hbr.RR = true;
+						hbr.contextMenu = cm;
 						event.currentTarget.addElement(hbr);
 						hbr.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						hbr.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -956,7 +1002,9 @@
 						htw.id = 'HPANEL' + FlexGlobals.topLevelApplication.getIdx;
 						htw.title = htw.id;
 						htw.layout = new HorizontalLayout();
+						htw.mouseEnabled = true;
 						htw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
+						htw.contextMenu = cm;
 						event.currentTarget.addElement(htw);
 						htw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						htw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -967,6 +1015,7 @@
 						var htb:TitledBorderBox = new TitledBorderBox();
 						htb.id = 'HTBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						htb.title = htb.id;
+						htb.contextMenu = cm;
 						htb.width = 100; htb.height = 50;
 						htb.layout = new HorizontalLayout();
 						htb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
@@ -985,6 +1034,7 @@
 						tbr.setStyle('skinClass',rzmvasBroderContainerSkin);
 						tbr.MV = true;
 						tbr.RR = true;
+						tbr.contextMenu = cm;
 						event.currentTarget.addElement(tbr);
 						tbr.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						tbr.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -997,7 +1047,9 @@
 						ttw.id = 'TPANEL' + FlexGlobals.topLevelApplication.getIdx;
 						ttw.title = ttw.id;
 						ttw.layout = new TileLayout();
+						ttw.mouseEnabled = true;
 						ttw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
+						ttw.contextMenu = cm;
 						event.currentTarget.addElement(ttw);
 						ttw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						ttw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -1009,6 +1061,7 @@
 						ttb.id = 'TTBBOX' + FlexGlobals.topLevelApplication.getIdx;
 						ttb.title = ttb.id;
 						ttb.width = 100; ttb.height = 50;
+						ttb.contextMenu = cm;
 						ttb.layout = new TileLayout();
 						ttb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(ttb);
@@ -1024,6 +1077,7 @@
 						var dbGrid:rzmvDataGrid = new rzmvDataGrid();
 						dbGrid.id = 'DBGRID' + FlexGlobals.topLevelApplication.getIdx;
 						event.currentTarget.addElement(dbGrid);
+						dbGrid.contextMenu = cm;
 						dbGrid.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						dbGrid.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						dbGrid.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -1036,6 +1090,8 @@
 						var panelGrid:rzmvPanelDataGrid = new rzmvPanelDataGrid();
 						panelGrid.id = 'PANELGRID' + FlexGlobals.topLevelApplication.getIdx;
 						panelGrid.title = panelGrid.id;
+						panelGrid.mouseEnabled = true;
+						panelGrid.contextMenu = cm;
 						event.currentTarget.addElement(panelGrid);
 						panelGrid.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						panelGrid.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
@@ -1047,6 +1103,7 @@
 						var bt:ResizableButton = new ResizableButton();
 						bt.id = 'rzBUTTON' + FlexGlobals.topLevelApplication.getIdx;
 						bt.label = bt.id;
+						bt.contextMenu = cm;
 						bt.movable="true"; bt.resizable="true";
 						bt.addEventListener(MouseEvent.MOUSE_DOWN,function(e:MouseEvent):void {
 							var dragInitiator:UIComponent = UIComponent(event.currentTarget);
@@ -1064,6 +1121,7 @@
 						var cmb:DropDownList = new DropDownList();
 						cmb.setStyle('skinClass',flex.utils.spark.resize.ResizableDropDownListSkin);
 						cmb.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
+						cmb.contextMenu = cm;
 						event.currentTarget.addElement(cmb);
 						cmb.x = event.currentTarget.x;
 						cmb.y = event.currentTarget.y;
@@ -1072,6 +1130,7 @@
 						var ddl:DropDownList = new DropDownList();
 						ddl.setStyle('skinClass',flex.utils.spark.resize.ResizableDropDownListSkin);
 						ddl.id = 'DropDownList' + FlexGlobals.topLevelApplication.getIdx;
+						ddl.contextMenu = cm;
 						event.currentTarget.addElement(ddl);
 						ddl.x = event.currentTarget.x;
 						ddl.y = event.currentTarget.y;
@@ -1082,6 +1141,7 @@
 						txt.setStyle('skinClass',TextInputResize);
 						txt.id = 'TextInput' + FlexGlobals.topLevelApplication.getIdx;
 						txt.text = txt.id;
+						txt.contextMenu = cm;
 						event.currentTarget.addElement(txt);
 						txt.x = event.currentTarget.x;
 						txt.y = event.currentTarget.y;
@@ -1090,6 +1150,7 @@
 //						var tg:ToggleTextInput = new ToggleTextInput();
 						var tg:ResizeMoveTogTextinput = new ResizeMoveTogTextinput();
 						tg.id = 'ToggleTextInput' + FlexGlobals.topLevelApplication.getIdx;
+						tg.contextMenu = cm;
 //						tg.setStyle("skinClass", Class(TTIResponsiveSkin));
 //						tg.doubleClickEnabled = true;
 //						tg.addButtonLabel="Add User Name";
@@ -1106,6 +1167,7 @@
 						ta.id = 'TextArea' + FlexGlobals.topLevelApplication.getIdx;
 						ta.setStyle('skinClass',ResizableTextAreaSkin);
 						ta.text = ta.id;
+						ta.contextMenu = cm;
 						ta.height = 100;
 						event.currentTarget.addElement(ta);
 						ta.x = event.currentTarget.x;
@@ -1117,6 +1179,7 @@
 						chk.id = 'CheckBox' + FlexGlobals.topLevelApplication.getIdx;
 						chk.chkbox.label = chk.id;
 						event.currentTarget.addElement(chk);
+						chk.contextMenu = cm;
 						chk.x = event.currentTarget.x;
 						chk.y = event.currentTarget.y;
 
@@ -1125,6 +1188,7 @@
 						var rdo:ResizeMoveRadio = new ResizeMoveRadio();
 						rdo.id = 'RadioButton' + FlexGlobals.topLevelApplication.getIdx;
 						rdo.radio.label = rdo.id;
+						rdo.contextMenu = cm;
 						event.currentTarget.addElement(rdo);
 						rdo.x = event.currentTarget.x;
 						rdo.y = event.currentTarget.y;
@@ -1134,6 +1198,7 @@
 						var dc:ResizeMoveDatechooser = new ResizeMoveDatechooser();
 						dc.id = 'DateChooser' + FlexGlobals.topLevelApplication.getIdx;
 						dc.dateC.showToday = true;
+						dc.contextMenu = cm;
 						dc.dateC.yearNavigationEnabled = true;
 						event.currentTarget.addElement(dc);
 						dc.x = event.currentTarget.x;
@@ -1146,6 +1211,7 @@
 						nbs.maximum = 10;
 						nbs.minimum = 0;
 						nbs.stepSize = 1;
+						nbs.contextMenu = cm;
 						event.currentTarget.addElement(nbs);
 						nbs.x = event.currentTarget.x;
 						nbs.y = event.currentTarget.y;
@@ -1154,6 +1220,7 @@
 						var pop:ResizeMovePopUpButton = new ResizeMovePopUpButton();
 						pop.id = 'PopUpButton' + FlexGlobals.topLevelApplication.getIdx;
 						pop.btnPop.label = pop.id;
+						pop.contextMenu = cm;
 						event.currentTarget.addElement(pop);
 						pop.x = event.currentTarget.x;
 						pop.y = event.currentTarget.y;
@@ -1162,6 +1229,7 @@
 						var hsl:ResizeMoveHslider = new ResizeMoveHslider();
 						hsl.id = 'HSlider' + FlexGlobals.topLevelApplication.getIdx;
 						hsl.hslider.minimum = 0; hsl.hslider.maximum = 10; hsl.hslider.stepSize = 1;
+						hsl.contextMenu = cm;
 						event.currentTarget.addElement(hsl);
 						hsl.x = event.currentTarget.x;
 						hsl.y = event.currentTarget.y;
@@ -1171,6 +1239,7 @@
 						var vsl:ResizeMoveVslider = new ResizeMoveVslider();
 						vsl.id = 'VSlider' + FlexGlobals.topLevelApplication.getIdx;
 						vsl.hslider.minimum = 0; vsl.hslider.maximum = 10; vsl.hslider.stepSize = 1;
+						vsl.contextMenu = cm;
 						event.currentTarget.addElement(vsl);
 						vsl.x = event.currentTarget.x;
 						vsl.y = event.currentTarget.y;
@@ -1178,6 +1247,7 @@
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VRule' ) {
 						var vru:ResizeMoveVRule = new ResizeMoveVRule();
 						vru.id = 'VRule' + FlexGlobals.topLevelApplication.getIdx;
+						vru.contextMenu = cm;
 						event.currentTarget.addElement(vru);
 						vru.x = event.currentTarget.x;
 						vru.y = event.currentTarget.y;
@@ -1185,6 +1255,7 @@
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HRule' ) {
 						var hru:ResizeMoveHRule = new ResizeMoveHRule();
 						hru.id = 'HRule' + FlexGlobals.topLevelApplication.getIdx;
+						hru.contextMenu = cm;
 						event.currentTarget.addElement(hru);
 						hru.x = event.currentTarget.x;
 						hru.y = event.currentTarget.y;
@@ -1192,6 +1263,7 @@
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HSPACE' ) {
 						var hsp:ResizeMoveHSPACE = new ResizeMoveHSPACE();
 						hsp.id = 'HSPACE' + FlexGlobals.topLevelApplication.getIdx;
+						hsp.contextMenu = cm;
 						event.currentTarget.addElement(hsp);
 						hsp.x = event.currentTarget.x;
 						hsp.y = event.currentTarget.y;
@@ -1199,6 +1271,7 @@
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VSPACE' ) {
 						var vsp:ResizeMoveVSPACE = new ResizeMoveVSPACE();
 						vsp.id = 'VSPACE' + FlexGlobals.topLevelApplication.getIdx;
+						vsp.contextMenu = cm;
 						event.currentTarget.addElement(vsp);
 						vsp.x = event.currentTarget.x;
 						vsp.y = event.currentTarget.y;
@@ -1257,7 +1330,6 @@
 				trace('mouve over horver');
 			}
 
-			
 		]]>
 	</fx:Script>
 	

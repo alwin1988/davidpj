@@ -26,6 +26,7 @@
     <application path="test.mxml"/>
     <application path="testKeydown.mxml"/>
     <application path="testTran152.mxml"/>
+    <application path="RightClick.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

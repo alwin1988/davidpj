@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="200" minHeight="100"
+			   initialize="init()" width="534" 
+			   height="366" backgroundColor="#D5CFCF" 
+			   >
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+	// Context Menu Variables
+	[Bindable] private var cm:ContextMenu;
+	[Bindable]private var myContextMenuItem:ContextMenuItem;	
+		
+		private function init():void {
+			addItemToContextMenu();
+		}
+		
+		private function addItemToContextMenu():void
+		{
+			// Create new instance of contextMenuItem
+			myContextMenuItem = new ContextMenuItem("Let's visit Flex-Blog.com!", false, true, true);
+			// Add event listener (handles the click on the item)
+			myContextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, myContextMenuItem_menuItemSelect);
+			
+			// Get the Context Menu                
+//			cm = FlexGlobals.topLevelApplication.contextMenu;
+			cm = new ContextMenu();
+			// Hide default context menu items                
+			cm.hideBuiltInItems();
+			// Add item                
+			cm.customItems.push(myContextMenuItem);
+//			btn1.contextMenu = cm;
+//			btn2.contextMenu = cm;
+//			btn3.contextMenu = cm;
+//			btn4.contextMenu = cm;
+		}
+			
+			// The Event Handler        
+			private function myContextMenuItem_menuItemSelect(evt:ContextMenuEvent):void {
+				// Navigate to Flex-Blog.com when the item is clicked
+				trace('event');
+//				Object(evt.target).automationParennt.
+				var btn:IVisualElement = IVisualElement(evt.contextMenuOwner);
+				Object(btn).automationParent.removeElement(btn);	
+			}  
+			
+
+			protected function btn1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function addMenu(event:FlexEvent):void
+			{
+				event.target.contextMenu = cm;
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:VGroup id="gparent">
+		<s:Button label="btn1" id="btn1"   mouseEnabled="true" creationComplete="addMenu(event)"  />
+		<s:Button label="btn2" id="btn2"   mouseEnabled="true" creationComplete="addMenu(event)"   />
+		<s:Button label="btn3"  id="btn3"  mouseEnabled="true" creationComplete="addMenu(event)"  />
+		<s:Button label="btn4"  id="btn4"  mouseEnabled="true" creationComplete="addMenu(event)"  />
+	</s:VGroup>
+</s:Application>

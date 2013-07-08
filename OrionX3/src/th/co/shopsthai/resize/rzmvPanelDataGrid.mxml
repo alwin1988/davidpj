@@ -4,7 +4,9 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 xmlns:resize="flex.utils.spark.resize.*"
 		 width="400" height="300" minHeight="100" minWidth="100"
-		 creationComplete="init()" 
+		 creationComplete="init()"
+		 rollOver="img.visible = true;"
+		 rollOut="img.visible=false;"
 		 >
 	<fx:Script>
 		<![CDATA[
@@ -12,6 +14,7 @@
 			import flex.utils.spark.resize.ResizeManager;
 			
 			import mx.collections.ArrayCollection;
+			import mx.core.IVisualElement;
 			
 			[Bindable] public var moveManager:MoveManager;
 			[Bindable] public var resizeManager:ResizeManager;
@@ -23,6 +26,12 @@
 				moveManager.constrainToParentBounds = true;
 				
 			}
+			protected function img_clickHandler(event:MouseEvent):void
+			{
+				var ivs:IVisualElement = IVisualElement(event.currentTarget.automationOwner);
+				Object(ivs).automationParent.removeElement(ivs);	
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -41,5 +50,7 @@
 							  bottom="1"
 							  right="1"
 							  visible="{resizeManager.enabled}"/>
-	
+	<s:Image id="img" visible="false" right="-27" top="0" click="img_clickHandler(event)"
+			 source="./assets/closebutton.png"
+			 />
 </s:Panel>

@@ -14,7 +14,10 @@
 	alpha.disabled="0.5"
 	alpha.disabledWithControlBar="0.5"
 	blendMode="normal"
-	mouseEnabled="false">
+	mouseEnabled="false"
+	rollOver="img.visible = true;"
+	rollOut="img.visible=false;"
+	>
 
 	<fx:Metadata>
 		<![CDATA[ 
@@ -91,6 +94,7 @@
 	</fx:Script>
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 
 			[Bindable]
@@ -110,6 +114,13 @@
 				resizeManager = new ResizeManager(hostComponent, resizeHandle);
 				moveManager = new MoveManager(hostComponent, moveArea);
 			}
+			
+			protected function img_clickHandler(event:MouseEvent):void
+			{
+				var ivs:IVisualElement = IVisualElement(this.hostComponent);
+				Object(ivs).automationParent.removeElement(ivs);	
+			}
+			
 		]]>
 	</fx:Script>
 
@@ -405,5 +416,7 @@
 		bottom="1"
 		right="1"
 		visible="{resizeManager.enabled}"/>
-
+	<s:Image id="img" visible="false" right="-27" top="0" click="img_clickHandler(event)"
+			 source="./assets/closebutton.png"
+			 right.normal="-15" top.normal="0"/>
 </s:SparkSkin>

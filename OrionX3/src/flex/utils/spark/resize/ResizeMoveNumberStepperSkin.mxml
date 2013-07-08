@@ -27,6 +27,8 @@ component is defined by the NumericStepperTextInputSkin class.
       alpha.disabled="0.5" 
 	  xmlns:resize="flex.utils.spark.resize.*"
 	  creationComplete="created(event)"
+	  rollOver="img.visible = true;"
+	  rollOut="img.visible=false;"
 	  >
 
     <fx:Metadata>
@@ -40,6 +42,7 @@ component is defined by the NumericStepperTextInputSkin class.
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 			
 			[Bindable]
@@ -60,7 +63,11 @@ component is defined by the NumericStepperTextInputSkin class.
 				resizeManager = new ResizeManager(hostComponent, resizeHandle);
 				moveManager = new MoveManager(hostComponent, moveArea);
 			}	
-			
+			protected function img_clickHandler(event:MouseEvent):void
+			{
+				var ivs:IVisualElement = IVisualElement(this.hostComponent);
+				Object(ivs).automationParent.removeElement(ivs);	
+			}
 		]]>
 	</fx:Script>
     
@@ -105,5 +112,8 @@ component is defined by the NumericStepperTextInputSkin class.
 							  bottom="1"
 							  right="1"
 							  visible="{resizeManager.enabled}"/>
+	<s:Image id="img" visible="false" right="-27" top="0" click="img_clickHandler(event)"
+			 source="./assets/closebutton.png"
+			 right.normal="-15" top.normal="0"/>
         
 </s:SparkSkin>

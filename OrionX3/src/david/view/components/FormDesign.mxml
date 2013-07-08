@@ -64,6 +64,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import flex.utils.spark.resize.ResizableButton1;
+			import flex.utils.spark.resize.ResizeMoveButtonSkin;
 			import mx.core.IVisualElement;
 			import flex.utils.spark.resize.ResizeMoveVSPACE;
 			import flex.utils.spark.resize.ResizeMoveHSPACE;
@@ -1101,6 +1103,7 @@
 						panelGrid.y = event.currentTarget.y;
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzBUTTON' ) {
 						var bt:ResizableButton = new ResizableButton();
+						bt.setStyle('skinClass',ResizeMoveButtonSkin);
 						bt.id = 'rzBUTTON' + FlexGlobals.topLevelApplication.getIdx;
 						bt.label = bt.id;
 						bt.contextMenu = cm;

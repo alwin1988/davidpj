@@ -4,9 +4,12 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 xmlns:resize="flex.utils.spark.resize.*"
 		 creationComplete="init()"
+		 rollOver="img.visible = true;"
+		 rollOut="img.visible=false;"
 		 >
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 			
 			[Bindable] public var moveManager:MoveManager;
@@ -19,7 +22,13 @@
 				resizeManager.enabled = false;
 				resizeManager.constrainToParentBounds = true;
 				moveManager.constrainToParentBounds = true;
-			}			
+			}		
+			protected function img_clickHandler(event:MouseEvent):void
+			{
+				var ivs:IVisualElement = IVisualElement(event.currentTarget.automationParent);
+				Object(ivs).automationParent.removeElement(ivs);	
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -35,4 +44,6 @@
 							  bottom="1"
 							  right="1"
 							  visible="{resizeManager.enabled}"/>
+	<s:Image right="-27" top="0" source="./assets/closebutton.png" visible="false" id="img" click="img_clickHandler(event)"/>
+
 </s:Group>

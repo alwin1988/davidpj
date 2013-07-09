@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:resize="flex.utils.spark.resize.*"
+		 creationComplete="init()"
+		 rollOver="img.visible = true;"
+		 rollOut="img.visible=false;"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.core.IVisualElement;
+			import mx.events.FlexEvent;
+			
+			[Bindable] public var moveManager:MoveManager;
+			[Bindable] public var resizeManager:ResizeManager;
+			
+			private function init():void {
+				
+				moveManager = new MoveManager(this,moveArea);
+				resizeManager = new ResizeManager(this,resizeHandle );
+				resizeManager.enabled = true;
+				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
+			}			
+			
+			protected function img_clickHandler(event:MouseEvent):void
+			{
+				var ivs:IVisualElement = IVisualElement(event.currentTarget.automationParent);
+				Object(ivs).automationParent.removeElement(ivs);	
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Image right="-27" top="0" source="./assets/closebutton.png" visible="false" id="img" click="img_clickHandler(event)"/>
+	<s:Button id="btn" label="Button" top="0" right="0" left="0" bottom="0"/>
+	<s:Group id="moveArea" right="-10" verticalCenter="0">
+		<resize:DragHandle dotColor="#8B8B8B" fillAlpha="0"/>
+	</s:Group>
+	
+	<resize:ResizeHandleLines id="resizeHandle" 
+							  enabled="{resizeManager.enabled}"
+							  bottom="1"
+							  right="1"
+							  visible="{resizeManager.enabled}"/>
+</s:Group>

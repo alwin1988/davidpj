@@ -64,6 +64,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import th.co.shopsthai.Utils.TlenMoveEvent;
+			import th.co.shopsthai.Utils.TlenUtils;
 			import flex.utils.spark.resize.rzmveButton;
 			import flex.utils.spark.resize.ResizableButton1;
 			import flex.utils.spark.resize.ResizeMoveButtonSkin;
@@ -187,34 +189,40 @@
 			private function addlistenEvent(o:Object):void {
 				trace('listening');
 				o.addEventListener("dragStart",function(e:Event):void {
-						trace('dragStart');
+//						trace('dragStart');
 					},true);
 				o.addEventListener("dragging",function(e:Event):void {
-						trace('dragging',e.currentTarget.id);
-						if(e.currentTarget.id == 'BOXid1'){
-							trace('BOXid1');
-						}
-						if(e.currentTarget.id == 'BOXid2'){
-							trace('BOXid2');
-						}
-						if(e.currentTarget.id == 'BOXid3'){
-							trace('BOXid3');
-						}
+//						trace('dragging',e.currentTarget.id);
+//						if(e.currentTarget.id == 'BOXid1'){
+//							trace('BOXid1');
+//						}
+//						if(e.currentTarget.id == 'BOXid2'){
+//							trace('BOXid2');
+//						}
+//						if(e.currentTarget.id == 'BOXid3'){
+//							trace('BOXid3');
+//						}
 					},true);
-				o.addEventListener("dragEnd",function(e:Event):void {
-						trace('dragEnd');
-						if(e.eventPhase > 1 ){
-						trace('dragEnd2');
-						}
-
-					},true);
+//				o.addEventListener("dragEnd",function(e:Event):void {
+//					trace(ObjectUtil.toString(e));
+//					TlenUtils.getObjectbyPix(e);	
+//					},true);
 //				o.addEventListener(MouseEvent.ROLL_OVER,function(e:MouseEvent):void  {
 //						trace('RollOVER');
 //				},true);
+//				
+//				o.addEventListener(MouseEvent.MOUSE_OVER,function(e:MouseEvent):void {
+//						trace('mouse over');
+//				});
 				
-				o.addEventListener(MouseEvent.MOUSE_OVER,function(e:MouseEvent):void {
-						trace('mouse over');
-				});
+				o.addEventListener(TlenMoveEvent.DRAG_END,function(e:TlenMoveEvent):void {
+					if(e.currentTarget.id != e.target.id ){
+						trace(e.x,e.y,e.eventPhase,'tlenevent current/target/targerObject',e.currentTarget.id,e.target.id,Object(e.targetObject).id);
+						e.stopImmediatePropagation();
+					}
+//					e.stopPropagation();
+				},false);
+				
 			}
 			
 			private function addItemToContextMenu():void
@@ -1368,17 +1376,17 @@
 
 			protected function mouseClickselect(event:MouseEvent):void
 			{
-				trace('mouse click');
+//				trace('mouse click');
 			}
 			
 			protected function keyupHandeler(event:KeyboardEvent):void
 			{
-				trace('key up ');
+//				trace('key up ');
 			}
 			
 			protected function mouseRollOverHander(event:MouseEvent):void
 			{
-				trace('mouve over horver');
+//				trace('mouve over horver');
 			}
 
 		]]>

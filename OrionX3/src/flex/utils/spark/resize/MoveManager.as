@@ -14,6 +14,8 @@ package flex.utils.spark.resize {
 	import mx.managers.CursorManager;
 	
 	import spark.components.Group;
+	
+	import th.co.shopsthai.Utils.TlenMoveEvent;
 
 	/**
 	 * Similar to the ResizeManager, this class adds support for moving a component by dragging it
@@ -195,12 +197,14 @@ package flex.utils.spark.resize {
 //			moveComponent.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER));
 		}
 
-		private function dragComponentMouseUp(event:Event):void {
+		private function dragComponentMouseUp(event:MouseEvent):void {
 			moveComponent.stopDrag();
 			removeMoveCursor();
 			if (dragging) {
 				dragging = false;
-				moveComponent.dispatchEvent(new Event(DRAG_END));
+//				moveComponent.dispatchEvent(new Event(DRAG_END));
+				
+				moveComponent.dispatchEvent(new TlenMoveEvent(TlenMoveEvent.DRAG_END,moveComponent, event.stageX,event.stageY,0,0,true));
 			}
 			moveComponent.systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, dragComponentMove);
 			moveComponent.systemManager.removeEventListener(MouseEvent.MOUSE_UP, dragComponentMouseUp);

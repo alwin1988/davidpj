@@ -192,6 +192,7 @@ package flex.utils.spark.resize {
 				moveComponent.dispatchEvent(new Event(DRAG_START));
 			}
 			moveComponent.dispatchEvent(new Event(DRAGGING));
+//			moveComponent.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER));
 		}
 
 		private function dragComponentMouseUp(event:Event):void {

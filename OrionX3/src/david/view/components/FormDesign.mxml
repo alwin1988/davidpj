@@ -181,6 +181,40 @@
 				frmSetting();
 				vginit();
 				addItemToContextMenu();
+				addlistenEvent(mainParent);
+			}
+			
+			private function addlistenEvent(o:Object):void {
+				trace('listening');
+				o.addEventListener("dragStart",function(e:Event):void {
+						trace('dragStart');
+					},true);
+				o.addEventListener("dragging",function(e:Event):void {
+						trace('dragging',e.currentTarget.id);
+						if(e.currentTarget.id == 'BOXid1'){
+							trace('BOXid1');
+						}
+						if(e.currentTarget.id == 'BOXid2'){
+							trace('BOXid2');
+						}
+						if(e.currentTarget.id == 'BOXid3'){
+							trace('BOXid3');
+						}
+					},true);
+				o.addEventListener("dragEnd",function(e:Event):void {
+						trace('dragEnd');
+						if(e.eventPhase > 1 ){
+						trace('dragEnd2');
+						}
+
+					},true);
+//				o.addEventListener(MouseEvent.ROLL_OVER,function(e:MouseEvent):void  {
+//						trace('RollOVER');
+//				},true);
+				
+				o.addEventListener(MouseEvent.MOUSE_OVER,function(e:MouseEvent):void {
+						trace('mouse over');
+				});
 			}
 			
 			private function addItemToContextMenu():void
@@ -909,6 +943,7 @@
 						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
+						addlistenEvent(br);
 						br.x = event.currentTarget.x;
 						br.y = event.currentTarget.y;
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PANEL'		){
@@ -920,6 +955,7 @@
 						event.currentTarget.addElement(tw);
 						tw.mouseEnabled = true;
 						tw.contextMenu = cm;
+						addlistenEvent(tw);
 						tw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						tw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						tw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -933,6 +969,7 @@
 						tb.width = 100; tb.height = 50;
 						tb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(tb);
+						addlistenEvent(tb);
 						tb.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						tb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						tb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -948,6 +985,7 @@
 						vbr.MV = true;
 						vbr.RR = true;
 						vbr.contextMenu = cm;
+						addlistenEvent(vbr);
 						vbr.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						vbr.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						vbr.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -963,6 +1001,7 @@
 						vtw.contextMenu = cm;
 						vtw.layout = new VerticalLayout(); 
 						event.currentTarget.addElement(vtw);
+						addlistenEvent(vtw);
 						vtw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						vtw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						vtw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -977,6 +1016,7 @@
 						vtb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(vtb);
 						vtb.contextMenu = cm;
+						addlistenEvent(vtb);
 						vtb.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						vtb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						vtb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -994,6 +1034,7 @@
 						hbr.RR = true;
 						hbr.contextMenu = cm;
 						event.currentTarget.addElement(hbr);
+						addlistenEvent(hbr);
 						hbr.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						hbr.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						hbr.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
@@ -1009,6 +1050,7 @@
 						htw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
 						htw.contextMenu = cm;
 						event.currentTarget.addElement(htw);
+						addlistenEvent(htw);
 						htw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						htw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						htw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -1023,6 +1065,7 @@
 						htb.layout = new HorizontalLayout();
 						htb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(htb);
+						addlistenEvent(htb);
 						htb.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						htb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						htb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
@@ -1039,6 +1082,7 @@
 						tbr.RR = true;
 						tbr.contextMenu = cm;
 						event.currentTarget.addElement(tbr);
+						addlistenEvent(tbr);
 						tbr.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						tbr.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						tbr.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
@@ -1054,6 +1098,7 @@
 						ttw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
 						ttw.contextMenu = cm;
 						event.currentTarget.addElement(ttw);
+						addlistenEvent(ttw);
 						ttw.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						ttw.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						ttw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
@@ -1068,6 +1113,7 @@
 						ttb.layout = new TileLayout();
 						ttb.setStyle('skinClass',ResizableTitledBorderBoxSkin);
 						event.currentTarget.addElement(ttb);
+						addlistenEvent(ttb);
 						ttb.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						ttb.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						ttb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);

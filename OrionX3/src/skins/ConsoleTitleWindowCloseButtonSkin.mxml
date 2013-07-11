@@ -44,10 +44,10 @@
 	
 	<!--- Defines the appearance of the x in the close button. -->
 	<s:Group top="1" left="1" id="xSymbol">
-		<s:BitmapImage source="@Embed('assets/closebutton.png')"
-					   source.over="@Embed('assets/closebutton.png')"
-					   source.down="@Embed('assets/closebutton.png')"
-					   source.disabled="@Embed('assets/closebutton.png')" />
+		<s:BitmapImage source="'assets/closebutton.png'"
+					   source.over="'assets/closebutton.png'"
+					   source.down="'assets/closebutton.png'"
+					   source.disabled="'assets/closebutton.png'" />
 	</s:Group>
     
 </s:SparkButtonSkin>

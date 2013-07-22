@@ -9,7 +9,7 @@
 			override public function prepare(hasBeenRecycled:Boolean):void {
 				lblData.text = data[column.dataField]
 				btn1.label = lblData.text;
-				
+					
 			}
 		]]>
 	</fx:Script>

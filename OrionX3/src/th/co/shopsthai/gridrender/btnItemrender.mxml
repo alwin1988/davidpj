@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:GridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					xmlns:s="library://ns.adobe.com/flex/spark" 
-					xmlns:mx="library://ns.adobe.com/flex/mx" 
-					clipAndEnableScrolling="true">
+					xmlns:mx="library://ns.adobe.com/flex/mx" clipAndEnableScrolling="true">
 	
 	<fx:Script>
 		<![CDATA[
 			override public function prepare(hasBeenRecycled:Boolean):void {
-				lblData.text = data[column.dataField]
-				btn1.label = lblData.text;
-				
+				if(data){
+					lblData.text = data[column.dataField]
+					btn1.label = data[column.dataField]
+					trace('ok');
+				} else {
+					trace('xxxxx');
+					lblData.text = 'xxxxxxxxxxxx';
+					btn1.label = 'xxxx';
+				}
 			}
 		]]>
 	</fx:Script>
 	
 	<s:Label id="lblData" top="9" left="7" visible="false"/>
-	<s:Button id="btn1" top="0" left="0" bottom="0" right="0" />
+	<s:Button label="{lblData.text}" id="btn1"/>
 </s:GridItemRenderer>

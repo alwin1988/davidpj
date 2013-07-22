@@ -64,6 +64,14 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import th.co.shopsthai.gridrender.radioItemrender;
+			import th.co.shopsthai.gridrender.dateFileItemrender;
+			import th.co.shopsthai.gridrender.numberSetpItemrender;
+			import th.co.shopsthai.gridrender.chkItemrender;
+			import th.co.shopsthai.gridrender.textinputItemrender;
+			import th.co.shopsthai.gridrender.cmbItemrender;
+			import th.co.shopsthai.gridrender.btnItemrender;
+			import spark.components.DataGrid;
 			import th.co.shopsthai.Utils.TlenMoveEvent;
 			import th.co.shopsthai.Utils.TlenUtils;
 			import flex.utils.spark.resize.rzmveButton;
@@ -176,15 +184,113 @@
 			
 			[Bindable] private var cm:ContextMenu;
 			[Bindable]private var myContextMenuItem:ContextMenuItem;	
+			[Bindable] public var Ac:ArrayCollection = new ArrayCollection();
 			
 			
 			public function init():void {
 				toolInit();
 				frmSetting();
 				vginit();
+				genSampleDataGridData();
 				addItemToContextMenu();
 				addlistenEvent(mainParent);
+				
 			}
+			
+			
+			private function genSampleDataGridData():void {
+				var o:Object;
+				for (var i:int = 1; i < 30; i++) 
+				{
+					o = new Object();
+					o.datax = i;
+					Ac.addItem(o);						
+				}
+			}
+			
+			private function grid_ArrayList():mx.collections.ArrayList
+			{	
+				var cols : mx.collections.ArrayList = new mx.collections.ArrayList();
+				cols.source = [ gridGridColumn('datax','column 1',null),
+					gridGridColumn('datax','column 2','myButton'),
+					gridGridColumn('datax','column 3','myComboBox'),
+					gridGridColumn('datax','column 3','myTextInput'),
+					gridGridColumn('datax','column 3','myCheckBox'),
+					gridGridColumn('datax','column 3','myRadioButton'),
+					gridGridColumn('datax','column 3','nsp'),
+					gridGridColumn('datax','column 3','myDateChooser')
+				];
+				return cols;
+			}
+			
+			private function gridAssignCol(g:DataGrid,cs:ArrayCollection):void  {
+				var cols:mx.collections.ArrayList;
+				if(g.columns != null ){
+					cols = g.columns as ArrayList;
+				} else {
+					cols = new mx.collections.ArrayList;
+				}
+				for (var i:int = 0; i < cs.length; i++) 
+				{	
+					cols.addItem( 
+						gridGridColumn('datax',cs[i].label,cs[i].icon)
+					);
+				}
+				g.columns = cols;
+				
+				
+			}
+			
+			private function gridClassFactory(ty:String):mx.core.ClassFactory
+			{
+				var cf:mx.core.ClassFactory = new mx.core.ClassFactory();
+
+				if(ty == 'myButton'){
+					cf.generator = btnItemrender;
+					return cf;
+				}else if(ty == 'myComboBox'){					
+					cf.generator = cmbItemrender;
+					return cf;
+				}else if(ty == 'myTextInput'){					
+					cf.generator = textinputItemrender;
+					return cf;
+				}else if(ty == 'myCheckBox'){					
+					cf.generator = chkItemrender;
+					return cf;
+				}else if(ty == 'nsp'){					
+					cf.generator = numberSetpItemrender;
+					return cf;
+				}else if(ty == 'myDateChooser'){					
+					cf.generator = dateFileItemrender;
+					return cf;
+				}else if(ty == 'myRadioButton'){					
+					cf.generator = radioItemrender;
+					return cf;
+				} else {
+					return null;
+				}
+			}
+			
+			private function gridGridColumn(df:String,headertext:String,ty:String):spark.components.gridClasses.GridColumn
+			{
+				var gc : spark.components.gridClasses.GridColumn = new spark.components.gridClasses.GridColumn();
+				gc.dataField = df;
+				gc.headerText = headertext;
+				if(ty != null ){
+					gc.itemRenderer = gridClassFactory(ty);
+				}
+				return gc;
+			}
+			
+//			private function genSampleDataGridData():void {
+//				var o:Object;
+//				for (var i:int = 1; i < 30; i++) 
+//				{
+//					o = new Object();
+//					o.data = i;
+//					Ac.addItem(o);						
+//				}
+//			}
 			
 			private function addlistenEvent(o:Object):void {
 				trace('listening');
@@ -935,8 +1041,16 @@
 			}
 			
 			private function dragDropHandler(event:DragEvent):void {
-				
-				if(event.dragSource.hasFormat('NEW')){
+				if(event.currentTarget.className == "rzmvDataGrid"){
+					if(event.dragSource.hasFormat('NEW') && event.dragSource.hasFormat('GridR')){
+						var rzmvg:rzmvDataGrid= event.currentTarget as rzmvDataGrid;
+//						rzmvg.itemGrid.columns = grid_ArrayList();
+						
+						gridAssignCol(rzmvg.itemGrid, event.dragSource.dataForFormat('GridR') as ArrayCollection );
+						rzmvg.aC = Ac;
+						rzmvg.aC.refresh();
+					}
+				} else if(event.dragSource.hasFormat('NEW')){
 					
 					if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'BOX'		){
 						// BorderContainer
@@ -1134,6 +1248,7 @@
 						var dbGrid:rzmvDataGrid = new rzmvDataGrid();
 						dbGrid.id = 'DBGRID' + FlexGlobals.topLevelApplication.getIdx;
 						event.currentTarget.addElement(dbGrid);
+//						dbGrid.aC = Ac;
 						dbGrid.contextMenu = cm;
 						dbGrid.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						dbGrid.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
@@ -1334,6 +1449,10 @@
 						event.currentTarget.addElement(vsp);
 						vsp.x = event.currentTarget.x;
 						vsp.y = event.currentTarget.y;
+					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'ren' ) {
+
+						
+						
 						
 					} 
 					

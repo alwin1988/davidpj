@@ -37,7 +37,21 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:DataGrid top="0" left="0" bottom="0" right="0" dataProvider="{aC}" id="itemGrid">
-		
+<!--		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="data" headerText="Column 1"
+							  itemRenderer="SampleDataGridItemrender"
+							  >
+				</s:GridColumn>
+				<s:GridColumn dataField="data" headerText="Column 2"></s:GridColumn>
+				<s:GridColumn dataField="data" headerText="Column 3"></s:GridColumn>
+				<s:GridColumn dataField="data" headerText="Column 4"></s:GridColumn>
+				<s:GridColumn dataField="data" headerText="Column 5"></s:GridColumn>
+				<s:GridColumn dataField="data" headerText="Column 6"></s:GridColumn>
+				<s:GridColumn dataField="data" headerText="Column 7"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>-->
+
 	</s:DataGrid>
 	<s:Group id="movearea" right="0" top="0" width="20" height="20">
 		<resize:DragHandle right="2" top="1"

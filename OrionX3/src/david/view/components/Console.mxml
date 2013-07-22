@@ -12,12 +12,14 @@
 		<![CDATA[
 			import david.view.configs.Constants;
 			
+			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.controls.ComboBox;
 			import mx.core.DragSource;
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.events.CloseEvent;
+			import mx.events.DragEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.DragManager;
 			import mx.utils.ObjectUtil;
@@ -256,6 +258,39 @@
 				
 			}
 			
+			protected function myTree_mouseDownHandler(event:MouseEvent):void
+			{	
+				var ac:ArrayCollection = new ArrayCollection();
+				var o:Object;
+				var x:XML = event.target.owner.data as XML;
+				var levelRows:XMLList = x.children();
+				if(levelRows.length()>0 ){
+					trace(levelRows.length());
+					for (var i:int = 0; i < levelRows.length(); i++) 
+					{
+					   trace(x.children()[i]);
+					   o = new Object();
+					   o.label = x.children()[i].@label;
+					   o.icon = x.children()[i].@icon;
+					   ac.addItem(o);							
+					}
+				}else {
+					trace(levelRows.length());
+					o = new Object();
+					o.label = x.@label;
+					o.icon = x.@icon;
+					ac.addItem(o);
+				}
+				if(ac.length > 0 ){
+					var dragInitiator:UIComponent = UIComponent(event.currentTarget);
+					var dragItem:*  = dragInitiator;
+					var ds:DragSource = new DragSource();
+					ds.addData('NEW','NEW');
+					ds.addData(ac,'GridR');
+					DragManager.doDrag(dragInitiator, ds, event);
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -337,9 +372,10 @@
 											<mx:Tree id="myTree" width="334" height="100%" rowHeight="18" borderVisible="false"
 													 fontFamily="Franklin Gothic Medium" fontSize="11"
 													 fontWeight="normal" iconField="@icon"
+													 mouseDown="myTree_mouseDownHandler(event)"
 													 labelField="@label" showRoot="false" iconFunction="setIcons">
 												<fx:XMLList>
-													<node label="Fieldset1" icon="myDataGroup">
+											 		<node label="Fieldset1" icon="myDataGroup">
 														<node label="DetailField1" icon="myButton"/>
 														<node label="DetailField2" icon="myComboBox"/>
 														<node label="DetailField3" icon="myTextInput"/>

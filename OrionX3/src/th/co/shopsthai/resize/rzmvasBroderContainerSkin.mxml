@@ -44,7 +44,11 @@
 			protected function img_clickHandler(event:MouseEvent):void
 			{
 				var ivs:IVisualElement = IVisualElement(this.hostComponent);
-				Object(ivs).automationParent.removeElement(ivs);	
+				if(Object(ivs).id == 'mainParent'){
+					Object(ivs).removeAllElements();
+				} else {
+					Object(ivs).automationParent.removeElement(ivs);	
+				}
 			}
 		]]>
 	</fx:Script>

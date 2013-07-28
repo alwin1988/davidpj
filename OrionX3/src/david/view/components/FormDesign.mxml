@@ -1060,6 +1060,8 @@
 						event.currentTarget.addElement(br);
 						br.MV = true;
 						br.RR = true;
+						br.width = 50;
+						br.height = 60;
 						br.contextMenu = cm;
 						br.addEventListener(MouseEvent.CLICK,mouseClickselect);
 						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
@@ -1547,7 +1549,8 @@
 													   dragOver="mainParent_dragOverHandler(event)"
 													   skinClass="th.co.shopsthai.resize.rzmvasBroderContainerSkin"
 													   borderColor="YELLOW" borderWeight="2"  
-													   bc="0xFFFF00" stockweg="2"
+													   bc="0xFFFF00" stockweg="2" autoLayout="false" minHeight="0" minWidth="0" 
+													   
 													   >
 						<ascomponent:layout>
 							<s:VerticalLayout   paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>

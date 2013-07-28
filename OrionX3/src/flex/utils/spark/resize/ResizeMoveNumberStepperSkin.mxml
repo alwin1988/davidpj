@@ -62,6 +62,9 @@ component is defined by the NumericStepperTextInputSkin class.
 				}
 				resizeManager = new ResizeManager(hostComponent, resizeHandle);
 				moveManager = new MoveManager(hostComponent, moveArea);
+				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
+
 			}	
 			protected function img_clickHandler(event:MouseEvent):void
 			{

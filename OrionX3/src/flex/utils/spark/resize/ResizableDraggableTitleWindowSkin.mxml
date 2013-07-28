@@ -111,8 +111,11 @@
 				if (hostComponent.minHeight == 0) {
 					hostComponent.minHeight = minHeight;
 				}
+
 				resizeManager = new ResizeManager(hostComponent, resizeHandle);
 				moveManager = new MoveManager(hostComponent, moveArea);
+				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
 			}
 			
 			protected function img_clickHandler(event:MouseEvent):void

@@ -1510,6 +1510,12 @@
 //				trace('mouve over horver');
 			}
 
+			protected function updateBound():void
+			{
+				FlexGlobals.topLevelApplication.boundHeight = mainParent.height;
+				FlexGlobals.topLevelApplication.boundwidth = mainParent.width;
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -1549,8 +1555,8 @@
 													   dragOver="mainParent_dragOverHandler(event)"
 													   skinClass="th.co.shopsthai.resize.rzmvasBroderContainerSkin"
 													   borderColor="YELLOW" borderWeight="2"  
-													   bc="0xFFFF00" stockweg="2" autoLayout="false" minHeight="0" minWidth="0" 
-													   
+													   bc="0xFFFF00" stockweg="2" 
+													   resize="updateBound()" creationComplete="updateBound()"
 													   >
 						<ascomponent:layout>
 							<s:VerticalLayout   paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>

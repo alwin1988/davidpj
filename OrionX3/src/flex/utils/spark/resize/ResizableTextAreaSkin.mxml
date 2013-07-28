@@ -184,6 +184,9 @@
 			}
 			resizeManager = new ResizeManager(hostComponent, resizeHandle);
 			moveManager = new MoveManager(hostComponent, moveArea);
+			resizeManager.constrainToParentBounds = true;
+			moveManager.constrainToParentBounds = true;
+
 		}	
 
 			private static const focusExclusions:Array = ["textDisplay"];

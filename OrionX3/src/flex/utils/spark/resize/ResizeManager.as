@@ -5,12 +5,12 @@ package flex.utils.spark.resize {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
-
+	
 	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
 	import mx.managers.CursorManager;
-
+	
 	import spark.primitives.Rect;
 
 	/**
@@ -253,8 +253,8 @@ package flex.utils.spark.resize {
 
 			// constrain the size to keep the resize component inside the parent bounds
 			if (constrainToParentBounds && resizeComponent.parent) {
-				var parentWidth:Number = resizeComponent.parent.width;
-				var parentHeight:Number = resizeComponent.parent.height;
+				var parentWidth:Number = FlexGlobals.topLevelApplication.boundwidth;
+				var parentHeight:Number = FlexGlobals.topLevelApplication.boundHeight;
 				if ((resizeComponent.x + newWidth) > parentWidth) {
 					newWidth = parentWidth - resizeComponent.x;
 				}

@@ -37,6 +37,7 @@
 				resizeManagerL = new ResizeManager(hostComponent,resizeControlL,'horizontal');
 				resizeManagerL.constrainToParentBounds = true;
 				resizeManagerR.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
 				resizeControlL.visible = hostComponent.LR;
 				resizeControlR.visible = hostComponent.RR;
 				moveControl.visible = hostComponent.MV;

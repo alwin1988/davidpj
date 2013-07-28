@@ -25,6 +25,7 @@
 				resizeManager.enabled = false;
 				resizeManager.constrainToParentBounds = true;
 				moveManager.constrainToParentBounds = true;
+				
 			}
 			
 			protected function img_clickHandler(event:MouseEvent):void

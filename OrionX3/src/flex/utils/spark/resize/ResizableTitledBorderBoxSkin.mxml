@@ -31,7 +31,8 @@
 
 			[Bindable]
 			public var resizeManager:ResizeManager;
-
+			[Bindable]
+			public var moveManager:MoveManager;
 			private function created(event:FlexEvent):void {
 				if (hostComponent.minWidth == 0) {
 					hostComponent.minWidth = minWidth;
@@ -40,6 +41,9 @@
 					hostComponent.minHeight = minHeight;
 				}
 				resizeManager = new ResizeManager(hostComponent, resizeHandle);
+				moveManager = new MoveManager(hostComponent, moveArea);
+				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
 			}
 
 			override protected function measure():void {
@@ -255,7 +259,17 @@
 			<s:BasicLayout/>
 		</s:layout>
 	</s:Group>
-
+	<s:Group id="moveArea"
+			 bottom="0"
+			 left="0"
+			 right="0"
+			 top="0">
+		<resize:DragHandle left="4"
+						   verticalCenter="0"
+						   dotColor="#8B8B8B"
+						   fillAlpha="0"/>
+	</s:Group>
+	
 	<resize:ResizeHandleLines id="resizeHandle"
 		enabled="{resizeManager.enabled}"
 		bottom="1"

@@ -82,6 +82,9 @@
 			private function created(event:FlexEvent):void {
 				moveManager = new MoveManager(hostComponent, moveArea);
 				moveManager.bringToFrontOnMove = false;
+//				resizeManager.constrainToParentBounds = true;
+				moveManager.constrainToParentBounds = true;
+
 			}
 			
 			protected function img_clickHandler(event:MouseEvent):void

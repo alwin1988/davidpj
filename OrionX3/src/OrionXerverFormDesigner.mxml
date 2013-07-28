@@ -43,6 +43,9 @@
 			[Bindable]	public var updateComplete:Boolean = false;
 			[Bindable]	public var vdConsole:Console;
 			
+			[Bindable] public var boundwidth:Number;
+			[Bindable] public var boundHeight:Number;
+			
 			public  var selected:String="";
 			
 			private var _idx:int= 0;

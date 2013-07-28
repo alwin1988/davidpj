@@ -8,6 +8,7 @@ package flex.utils.spark.resize {
 	import mx.controls.Button;
 	import mx.core.Container;
 	import mx.core.EdgeMetrics;
+	import mx.core.FlexGlobals;
 	import mx.core.IVisualElement;
 	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
@@ -172,7 +173,7 @@ package flex.utils.spark.resize {
 			if (constrainToBounds != null) {
 				bounds = constrainToBounds;
 			} else if (constrainToParentBounds && moveComponent.automationOwner) {
-				bounds = new Rectangle(0, 0, moveComponent.automationOwner.width, moveComponent.automationOwner.height);
+				bounds = new Rectangle(0, 0, FlexGlobals.topLevelApplication.boundwidth, FlexGlobals.topLevelApplication.boundHeight);
 				// need to reduce the size by the component's width/height
 				bounds.width = Math.max(0, bounds.width - moveComponent.width);
 				bounds.height = Math.max(0, bounds.height - moveComponent.height);

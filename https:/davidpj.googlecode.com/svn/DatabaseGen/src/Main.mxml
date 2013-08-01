@@ -2346,8 +2346,14 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
 			
 			protected function genMasterDetail(event:MouseEvent):void
 			{
+				
 				if(acKey.length != 0 ) {
-               
+				var msdt:MasterDetailCodegen = new MasterDetailCodegen();
+				taQryPHPSP.text = msdt.Msdt(txtMaster.text,txtDetail.text,acMaster,acDetail,acKey,acDetailKey);
+				taQrySP.text = msdt.MsdtSP('tbMs','tbDt',acMaster,acDetail,acKey,acDetailKey);
+//				taQrySP.text = msdt.MsdtSP(txtMaster.text,txtDetail.text,acMaster,acDetail,acKey,acDetailKey);
+				
+				
                var functionname:String = 'getMasterDetail';
                var parametor:String = "";
                var pojoMaster:String = txtMaster.text.charAt(0).toUpperCase() + txtMaster.text.slice(1);
@@ -2392,7 +2398,7 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                	paraDetail += " and " + acKey[i].label + "= ? ";
                }
                
-               MsDtSvName = pojoMaster+pojoDetail+'Service.php';
+               MsDtSvName = pojoMaster+pojoDetail+'Service';
                //-------------------------------
                var php:String = "<?php \n" +
                	"require_once 'Pdoconfig.php';\n\n\n" +
@@ -2404,6 +2410,13 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                	" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
                	" *  @copyright 2010 TH/BKK \n" +
                	"**/  \n\n" +
+				"/*n"+
+				"//--- TEST -----\n"+
+				"$tms = new "+ pojoMaster+pojoDetail + "Service();\n"+
+				"$res = $tms->getLastMasterDetail();\n"+
+				"//var_dump($res);\n"+
+				"echo json_encode($res);\n"+
+				"*/\n"+
                	"class "+ pojoMaster+pojoDetail +"Service {   \n\n" +  
                	"		private $connection = null;\n" +
                	"\n\n" +
@@ -2490,10 +2503,12 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                  "        	} \n" + 
                  "            return $rows; \n" + 
                  "        } \n\n";
+			 
 //               
 //               // update -------------------------
 //               update master set x=x ,y=y ,z=z where id = ?
 			 		var parakey:String = '';
+					var masterkey:String = '';
                var paraField:String ='';
                var binparaField:String = '';
                var binparaKey:String = '';
@@ -2509,6 +2524,7 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                }
 
                for(i=0;i<acKey.length;i++){
+				if(masterkey.length == 0 ){ masterkey = acKey[i].label;  }   
                	parakey += ' and ' + acKey[i].label+ " = :" + acKey[i].label ;
                 	binparaKey  += "            $stmt->bindParam('" + acKey[i].label +"',$item->"+ acKey[i].label +"); \n" ;
                }
@@ -2576,6 +2592,7 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                }
                
                //------------ Delete  Function --------------------
+			    php += "//Delete Master \n "; 
                	php += "public function delete" + pojoMaster + "(" + deletepara +") { \n" +
                		"$stmt = $this->connection->prepare(\"delete from "+ pojoMaster + "  where 1=1 " + deletekey+ "\");\n" + bindeletepara + "\n";
                	php += "if($stmt->execute()) {\n" +
@@ -2587,7 +2604,31 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                	"// return $row; \n" +
                	"}\n\n";	 
                
-
+				// Del Master & Detail[]    
+				php +="//Delet Master & Detail \n" +  
+				"public function delMasterDetail(" + deletepara +") { \n" +
+				"	try {\n" +
+				"		$stmt->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n" +
+				"		$stmt->beginTransaction();\n" +
+				"		// Delete Detail\n" +
+				"		$stmt = $this->connection->prepare(\"delete from "+ pojoDetail +"  where 1=1 "+ deletekey +" \");\n" +
+						bindeletepara +
+				"		$stmt->execute();\n" +
+				"		// Delete Master\n" +
+				"		$stmt = $this->connection->prepare(\"delete from "+ pojoMaster +"  where 1=1  "+ deletekey +"\");\n" +
+						bindeletepara +
+				"		$stmt->execute();\n" +
+				"		$stmt->commit();\n" +
+				"		return 1;      \n" +              
+				"	} catch (Exception $e) {\n" +
+				"		$stmt->rollBack();\n" +
+				"	$errorInfo = $e->errorInfo(); \n" + 
+				"	$this->echoError($errorInfo);  \n" +
+				"	}\n" +
+				"}\n\n";
+				
+				
+				
 //               // delete --------------------------
                	var deleteparadetail:String = '';
                	var deletekeydetail:String = '';
@@ -2602,6 +2643,7 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                	}
                	
                	//------------ Delete  Function --------------------
+			    php += "//Delete Detail \n "; 
                	php += "public function delete" + pojoDetail + "(" + deleteparadetail +") { \n" +
                		"$stmt = $this->connection->prepare(\"delete from "+ pojoDetail + "  where 1=1 " + deletekeydetail+ "\");\n" + bindeleteparadetail + "\n";
                	php += "if($stmt->execute()) {\n" +
@@ -2613,10 +2655,21 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                		"// return $row; \n" +
                		"}\n\n";	 
                               	
-               
-               
-               
-               
+				php +=	"			 // get Detail Item \n" +
+					"			 // @result Detail \n" +
+					"			 public function get"+ pojoDetail +"Item("+ deleteparadetail +") \n" +
+					"			 { \n" +
+					"				 $stmt = $this->connection->prepare(\"select * from "+ pojoDetail +" where 1=1 "+ deletekeydetail +" \"); \n" +
+					bindeleteparadetail +
+					"				 if ($stmt->execute()) { \n" +
+					"					 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+					"					 $rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ pojoDetail +"')); \n" +
+					"				 } else { \n" +
+					"  	$errorInfo = $stmt->errorInfo();\n" +
+					"	$this->echoError($errorInfo); \n" +
+					"				 } \n" +
+					"				 return $rows; \n" +
+					"			 }\n";
                
 //               delete Detail
 //               
@@ -2639,7 +2692,7 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                }
                php +=	"	//Insert Master \n" + 
                	"	public function insert" + pojoMaster +"($item) { \n" +  
-               	"	$stmt = $this->connection->prepare( ' Insert Into " +  pojoMaster + ' ( '+ parainsert +' ) values ( ' + paravalueinsert + ' )); ' +  
+               	"	$stmt = $this->connection->prepare(' Insert Into " +  pojoMaster + ' ( '+ parainsert +' ) values ( ' + paravalueinsert + ')\'); ' +  
                	"   \n" + binparainsert + "\n" +
                	"	if($stmt->execute()) {\n" +  
                	"		$autoid = $this->connection->lastInsertId();\n" +
@@ -2667,7 +2720,7 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                }
                php +=	"	//Insert Detail \n" + 
                	"	public function insert" + pojoDetail +"($item) { \n" +  
-               	"	$stmt = $this->connection->prepare( ' Insert Into " + pojoDetail + ' ( '+ parainsertDetail +' ) values ( ' + paravalueinsertDetail + ' )); ' +  
+               	"	$stmt = $this->connection->prepare(' Insert Into " + pojoDetail + '('+ parainsertDetail +') values (' + paravalueinsertDetail + ')\'); ' +  
                	"   \n" + binparainsertDetail + "\n" +
                	"	if($stmt->execute()) {\n" +  
                	"		$autoid = $this->connection->lastInsertId();\n" +
@@ -2678,8 +2731,79 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
                	"	return $autoid;\n"+ 
                	"}\n\n\n";	
                
+			   php += "// getLastMasterDetail \n" +
+				"   public  function getLastMasterDetail() {\n"+
+				"	   $stmt = $this->connection->prepare(\"select * from "+ pojoMaster +" ORDER BY "+ masterkey +" DESC limit 1 \");\n"+
+				"	   if($stmt->execute()) {\n"+
+				"		   $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n"+ 
+				"		   $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoMaster +"'));\n"+ 
+				"	   } else {\n"+
+				"		   $errorInfo = $stmt->errorInfo();\n"+
+				"		   $this->echoError($errorInfo); \n"+
+				"	   }\n"+
+				"	   $ms = new "+ pojoMasterDetail +"();\n"+
+				"	   if($rows != null ) {\n"+
+				"		   $masterid = $rows[0]->"+ masterkey +";\n"+ 
+				"		   $ms->master = $rows[0];\n"+
+				"		   $stmt =$this->connection->prepare(\"select * from "+ pojoDetail +" where 1=1 and "+ masterkey +"= $masterid \");\n"+ 
+				"		   if($stmt->execute() ) { \n"+
+				"			   $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n"+ 
+				"			   $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoDetail +"'));\n"+
+				"			   $ms->detail = $rows; \n"+
+				"		   } else { \n"+
+				"		$errorInfo = $stmt->errorInfo();\n"+ 
+				"		$this->echoError($errorInfo);\n" +
+				"		   }\n"+
+				"	   } else {\n"+
+				"		   //--         $ms->master = new Tbmaster();\n"+
+				"		   //--         $ms->detail = array();\n"+
+				"	   } \n"+
+				"	   return $ms;\n"+           
+				"  }\n"; 
+			   
                
-               
+				php += "   //Not Modyfy \n"+
+				"   public function chkSuperAuth($userid, $supUser, $supPasswd, $mod, $func)\n"+
+				"   {\n"+
+				"   if( $mod == '' ) { $mod = '"+ pojoMaster +"'; } \n"+ 
+				"   $stmt = $this->connection->prepare(\"call spSuperAuth(:userid,:supUser,:supPass,:module,:function)\"); \n"+
+				"   $stmt->bindParam('userid', $userid); \n"+
+				"   $stmt->bindParam('supUser', $supUser); \n"+
+				"   $stmt->bindParam('supPass', $supPasswd); \n"+
+				"   $stmt->bindParam('module', $mod); \n"+
+				"   $stmt->bindParam('function', $func); \n"+
+				"   if ($stmt->execute()) { \n"+
+				"	   $row = $stmt->fetch(); \n"+
+				"   } else { \n"+
+				"	   $errorInfo = $stmt->errorInfo(); \n"+
+				"	   $this->echoError($errorInfo); \n"+
+				"   } \n"+
+				"   return (int)$row[0]; \n"+
+				"   } \n"+
+				"    \n"+
+				"   //Not Modyfy \n"+
+				"   public function chkAuth($userid, $mod, $func) \n"+
+				"   { \n"+
+				"   if( $mod == '' ) { $mod = '"+ pojoMaster +"'; } \n"+ 
+				"   $stmt = $this->connection->prepare(\"call spChkAuth(:userid,:module,:function);\"); \n"+
+				"   $stmt->bindParam('userid', $userid); \n"+
+				"   $stmt->bindParam('module', $mod); \n"+
+				"   $stmt->bindParam('function', $func); \n"+
+				"   if ($stmt->execute()) { \n"+
+				"	   $row = $stmt->fetch(); \n"+
+				"   } else { \n"+
+				"	   $errorInfo = $stmt->errorInfo(); \n"+
+				"	   $this->echoError($errorInfo); \n"+
+				"   } \n"+
+				"   return (int)$row[0]; \n"+
+				"   } \n";
+
+			   //---- echo Error----------
+			   php +="//Echo Error message \n" + 
+				   "private function echoError($errorInfo) { \n" +
+				   " 	throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
+				   "} \n\n";
+
                //------------ __destruct function -----------------
                php +=  "		public function  __destruct(){\n" +
                	"				$this->connection = null; \n" +
@@ -3069,14 +3193,20 @@ sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid
 			<s:VGroup width="100%" height="100%" paddingBottom="20" paddingLeft="20"
 					  paddingRight="20" paddingTop="20">
 				<mx:HDividedBox width="100%" height="100%">
-               <s:Panel width="100%" height="100%" doubleClick="savefile(MsDtSvName,taQry)"
-						doubleClickEnabled="true" title="PHP {MsDtSvName}">
+               <s:Panel width="100%" height="100%" doubleClick="savefile( MsDtSvName + '.php' , taQry )"
+						doubleClickEnabled="true" title="PHP {MsDtSvName}.php">
                	<s:TextArea id="taQry" width="100%" height="100%"/>
                </s:Panel>
-               <s:Panel width="100%" height="100%" title="PHP WITH StoredProcedure">
+               <s:Panel width="100%" height="100%" title="PHP WITH StoredProcedure: {MsDtSvName}.php"
+						doubleClick="savefile(MsDtSvName+'.php',taQryPHPSP)"
+						doubleClickEnabled="true"
+						>
                	<s:TextArea id="taQryPHPSP" width="100%" height="100%"/>
                </s:Panel>
-               <s:Panel width="100%" height="100%" title="Stored Procedure ">
+               <s:Panel width="100%" height="100%" title="Stored Procedure: {MsDtSvName}.sql"
+						doubleClick="savefile(MsDtSvName+'.sql',taQrySP)"
+						doubleClickEnabled="true"
+						>
                	<s:TextArea id="taQrySP" width="100%" height="100%"/>
                </s:Panel>
 				</mx:HDividedBox>

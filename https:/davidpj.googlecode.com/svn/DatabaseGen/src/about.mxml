@@ -29,9 +29,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Image left="2" top="2" height="304"
+<!--	<s:Image left="2" top="2" height="304"
 			 source="@Embed('file:///C:/Users/tomato/Downloads/thongchai.jpg')" click="image1_clickHandler(event)"/>
 	<s:TextArea left="114" right="9" top="9" bottom="9"
 				text="@author Thongchai Lim  *  林生海'&#xd; &#xd;Tel:0816477729  0866018771 &#xd;Email/MSN:limweb@hotmail.com,&#xd;                   thongchai@servit.co.th&#xd;GoogleTalk:lim.thongchai@gmail.com &#xd;Social Network Name: “limweb” &#xd;Skype/HI5/Twitter/Facebook&#xd;@copyright 2013 TH/BK"
-				textAlign="center" verticalAlign="middle"/>
+				textAlign="center" verticalAlign="middle"/>-->
 </s:TitleWindow>

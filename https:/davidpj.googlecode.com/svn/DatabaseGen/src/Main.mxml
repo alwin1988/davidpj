@@ -3,18 +3,16 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   xmlns:mxml="com.maclema.mysql.mxml.*"
-					   currentState="sConnect" creationPolicy="all"
-					   minHeight="600" minWidth="1000"
-					   creationComplete="appInit(event)"
-					   >
-	<s:states >
-		<s:State name="sSelectDb" id="ss"/>
-		<s:State name="sConnect" id="sc"/>
-		<s:State name="sStoredProcedure" id="sp"/>
-		<s:State name="sphpSample" id="sphp"/>
-		<s:State name="sphpSP" id="ssP"/>
-		<s:State name="Query" id="sQ"/>
-		<s:State name="MasterDetail" id="sMD"/>
+					   minWidth="1000" minHeight="600" creationComplete="appInit(event)"
+					   creationPolicy="all" currentState="sConnect">
+	<s:states>
+		<s:State id="ss" name="sSelectDb"/>
+		<s:State id="sc" name="sConnect"/>
+		<s:State id="sp" name="sStoredProcedure"/>
+		<s:State id="sphp" name="sphpSample"/>
+		<s:State id="ssP" name="sphpSP"/>
+		<s:State id="sQ" name="Query"/>
+		<s:State id="sMD" name="MasterDetail"/>
 	</s:states>
 
 	<fx:Style>
@@ -57,6 +55,7 @@
 			
 			import flashx.textLayout.elements.TCYElement;
 			
+			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.core.UIComponent;
@@ -172,14 +171,14 @@
 			protected function grid_changeHandler(event:ListEvent):void
 			{
 				if(database == gDb.selectedItem.Database ){
-					ev.ShowTable(gDb.selectedItem.Database,this);
-					database = gDb.selectedItem.Database;
+               ev.ShowTable(gDb.selectedItem.Database,this);
+               database = gDb.selectedItem.Database;
 				} else {
-					myservice.disconnect();
-					myservice.database = gDb.selectedItem.Database;
-					database = gDb.selectedItem.Database;
-					myservice.connect();
-					myservice.addEventListener(Event.CONNECT,connectdb);
+               myservice.disconnect();
+               myservice.database = gDb.selectedItem.Database;
+               database = gDb.selectedItem.Database;
+               myservice.connect();
+               myservice.addEventListener(Event.CONNECT,connectdb);
 				}
 				 
 			}
@@ -222,9 +221,9 @@
 			}
 			
 			private function selectdb(e:Event):void {
-					init();
-					currentState = 'sSelectDb';
-					myservice.removeEventListener(Event.CONNECT,selectdb);
+               init();
+               currentState = 'sSelectDb';
+               myservice.removeEventListener(Event.CONNECT,selectdb);
 			}
 			
 			protected function appInit(event:FlexEvent):void
@@ -247,10 +246,10 @@
 			protected function GenStoredProcedure(event:MouseEvent):void
 			{
 				if(aCcolumn.length > 0 ){
-					currentState = sp.name;
-					spGen(null);
+               currentState = sp.name;
+               spGen(null);
 				} else {
-					Alert.show('Please Select Table');	
+               Alert.show('Please Select Table');	
 				}
 			}
 			
@@ -264,7 +263,7 @@
 				currentState = sc.name;
 				clearData();
 				if(myservice.connected){
-					myservice.disconnect();
+               myservice.disconnect();
 				}
 			}
 			
@@ -299,200 +298,200 @@
 				
 				for (var i:int = 0; i < aCcolumn.length; i++) 
 				{
-					if(aCcolumn[i].Key == 'PRI' ){
-						pk.push(aCcolumn[i]);
-						if(aCcolumn[i].Extra != 'auto_increment') {
-							ppk += "`_" +  aCcolumn[i].Field + '`  ' + aCcolumn[i].Type;
-							f += "`"+ aCcolumn[i].Field+"`";
-							v += "`_" +  aCcolumn[i].Field + '`  ';
-							ppsp += ":"+ aCcolumn[i].Field +'';
-							pp += "$"+aCcolumn[i].Field +'';
-							dpp+= "$"+aCcolumn[i].Field +'';
-							ppbp += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
-							ppbpall += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
-							
-							if( i != aCcolumn.length-1) {
-								ppk += ",\n";
-								f += ",";
-								v += ",";
-								pp += ",";
-								dpp += ",";
-								ppsp += ",";
-							}
-						} else if(aCcolumn[i].Extra == 'auto_increment'){
-							ppauto = "$"+aCcolumn[i].Field +'';
-							ppbpall += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
-						}
-						
-					} else {
-						p += "`_" +  aCcolumn[i].Field + '`  ' + aCcolumn[i].Type;
-						f += "`"+aCcolumn[i].Field+"`";
-						v += "`_" +  aCcolumn[i].Field + '`  ';
-						pp += "$"+aCcolumn[i].Field +'';
-						ppsp += ":"+aCcolumn[i].Field +'';
-						ppbp += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
-						ppbpall += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
-						up   += "`"+aCcolumn[i].Field+"` = " + "`_" +  aCcolumn[i].Field + '`  '; 
-						if( i != aCcolumn.length-1) {
-							v += ",";
-							f += ",";
-							p += ",\n";
-							pp+= ",";
-							ppsp += ",";
-							up += ", ";
-						}
-						
-					}
-					
+               if(aCcolumn[i].Key == 'PRI' ){
+               	pk.push(aCcolumn[i]);
+               	if(aCcolumn[i].Extra != 'auto_increment') {
+               		ppk += "`_" +  aCcolumn[i].Field + '`  ' + aCcolumn[i].Type;
+               		f += "`"+ aCcolumn[i].Field+"`";
+               		v += "`_" +  aCcolumn[i].Field + '`  ';
+               		ppsp += ":"+ aCcolumn[i].Field +'';
+               		pp += "$"+aCcolumn[i].Field +'';
+               		dpp+= "$"+aCcolumn[i].Field +'';
+               		ppbp += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
+               		ppbpall += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
+               		
+               		if( i != aCcolumn.length-1) {
+               			ppk += ",\n";
+               			f += ",";
+               			v += ",";
+               			pp += ",";
+               			dpp += ",";
+               			ppsp += ",";
+               		}
+               	} else if(aCcolumn[i].Extra == 'auto_increment'){
+               		ppauto = "$"+aCcolumn[i].Field +'';
+               		ppbpall += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
+               	}
+               	
+               } else {
+               	p += "`_" +  aCcolumn[i].Field + '`  ' + aCcolumn[i].Type;
+               	f += "`"+aCcolumn[i].Field+"`";
+               	v += "`_" +  aCcolumn[i].Field + '`  ';
+               	pp += "$"+aCcolumn[i].Field +'';
+               	ppsp += ":"+aCcolumn[i].Field +'';
+               	ppbp += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
+               	ppbpall += "	$stmt->bindParam('"+ String(aCcolumn[i].Field).toLowerCase() +"',$"+ String(aCcolumn[i].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"; 
+               	up   += "`"+aCcolumn[i].Field+"` = " + "`_" +  aCcolumn[i].Field + '`  '; 
+               	if( i != aCcolumn.length-1) {
+               		v += ",";
+               		f += ",";
+               		p += ",\n";
+               		pp+= ",";
+               		ppsp += ",";
+               		up += ", ";
+               	}
+               	
+               }
+               
 				}
 				upppbp = ppbp;
 				for (var j:int = 0; j < pk.length; j++) 
 				{
-					dpk += "`_" +  pk[j].Field + '`  ' + pk[j].Type;
-					dparam += ':'+pk[j].Field;
-					uppk += "  and  `"+pk[j].Field+"` = `_"+ String(pk[j].Field).toLocaleLowerCase()+'`'; 
-					puppkkaut += '$'+pk[j].Field;
-					fpuppkkaut += '$'+pk[j].Field;
-					uppkauto += "`_" +  pk[j].Field + '`  ' + pk[j].Type;
-					dupppbp += "	$stmt->bindParam('"+ String(pk[j].Field).toLowerCase() +"',$"+ String(pk[j].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n";
-					upppbp =  "	$stmt->bindParam('"+ String(pk[j].Field).toLowerCase() +"',$"+ String(pk[j].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"  +  upppbp;
+               dpk += "`_" +  pk[j].Field + '`  ' + pk[j].Type;
+               dparam += ':'+pk[j].Field;
+               uppk += "  and  `"+pk[j].Field+"` = `_"+ String(pk[j].Field).toLocaleLowerCase()+'`'; 
+               puppkkaut += '$'+pk[j].Field;
+               fpuppkkaut += '$'+pk[j].Field;
+               uppkauto += "`_" +  pk[j].Field + '`  ' + pk[j].Type;
+               dupppbp += "	$stmt->bindParam('"+ String(pk[j].Field).toLowerCase() +"',$"+ String(pk[j].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n";
+               upppbp =  "	$stmt->bindParam('"+ String(pk[j].Field).toLowerCase() +"',$"+ String(pk[j].Field).toLowerCase() +",PDO::PARAM_INPUT_OUTPUT); \n"  +  upppbp;
 				
-					if(pk[j].Extra == 'auto_increment'){
-						se = 'LAST_INSERT_ID() as ' + "`" + pk[j].Field+"`";
-						spuppk += ':'+pk[j].Field;
-						if( j != pk.length-1 ){
-							dpk +=",";
-							dparam +=",";
-							se +=",";
-							uppk += ",";
-//							spuppk += ",";
-							puppkkaut += ",";
-							fpuppkkaut += ",";
-						}
-					} else {
-						se += "`_" + pk[j].Field + '`  as  ' + "`" + pk[j].Field+"`";
-						if( j != pk.length-1 ){
-							dpk +=",";
-							dparam +=",";
-							se +=",";
-							//uppk += ",";
-							puppkkaut += ",";
-							fpuppkkaut += ",";
-						}
-					}
-					seup += "`_" + pk[j].Field + '`  as  ' + "`" + pk[j].Field+"`";
-					
+               if(pk[j].Extra == 'auto_increment'){
+               	se = 'LAST_INSERT_ID() as ' + "`" + pk[j].Field+"`";
+               	spuppk += ':'+pk[j].Field;
+               	if( j != pk.length-1 ){
+               		dpk +=",";
+               		dparam +=",";
+               		se +=",";
+               		uppk += ",";
+//               		spuppk += ",";
+               		puppkkaut += ",";
+               		fpuppkkaut += ",";
+               	}
+               } else {
+               	se += "`_" + pk[j].Field + '`  as  ' + "`" + pk[j].Field+"`";
+               	if( j != pk.length-1 ){
+               		dpk +=",";
+               		dparam +=",";
+               		se +=",";
+               		//uppk += ",";
+               		puppkkaut += ",";
+               		fpuppkkaut += ",";
+               	}
+               }
+               seup += "`_" + pk[j].Field + '`  as  ' + "`" + pk[j].Field+"`";
+               
 				} // if pk
 				if(puppkkaut != ''){
-					puppkkaut = ","  + puppkkaut;
+               puppkkaut = ","  + puppkkaut;
 				}
 				
 				if(spuppk != '' && p != ''){
-					seup += ",";
-					spuppk += ",";
-					uppkauto += ",\n";
+               seup += ",";
+               spuppk += ",";
+               uppkauto += ",\n";
 				}
 				
 				//sp_CREATE_	
 				taCreate.text = '';
 				taCreate.text += "DROP PROCEDURE IF EXISTS "+ sp_name +" ; \n" +
-					"CREATE PROCEDURE "+ sp_name +" \n ( \n" + ppk.toLocaleLowerCase() + p.toLowerCase() +
-					"\n)\nBEGIN\n" +
-					"/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
-					"BEGIN\n" +
-					"	ROLLBACK;\n" +
-					"	call getErrMsg(2300);\n" +
-					"END;*/\n" +
-					"START TRANSACTION;\n"+
-					""+
-					"	INSERT INTO "+ tbName+" (" + f +
-					") \n	VALUES ( " + v.toLowerCase() +
-					");\n" +
-					"COMMIT;\n" +
-					"SELECT  "+ se.toLowerCase() + "; \nEND;\n";
+               "CREATE PROCEDURE "+ sp_name +" \n ( \n" + ppk.toLocaleLowerCase() + p.toLowerCase() +
+               "\n)\nBEGIN\n" +
+               "/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
+               "BEGIN\n" +
+               "	ROLLBACK;\n" +
+               "	call getErrMsg(2300);\n" +
+               "END;*/\n" +
+               "START TRANSACTION;\n"+
+               ""+
+               "	INSERT INTO "+ tbName+" (" + f +
+               ") \n	VALUES ( " + v.toLowerCase() +
+               ");\n" +
+               "COMMIT;\n" +
+               "SELECT  "+ se.toLowerCase() + "; \nEND;\n";
 				
 				taCreatePHP.text = '';
 				taCreatePHP.text +=
-					"public function "+ sp_name +"(" + pp.toLowerCase() + ") { \n" + 
-					"\n" + 
-					"	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ ppsp.toLowerCase()  +")'); \n" +
-					ppbp.toLowerCase() +
-					"\n" + 
-					"	if ($stmt->execute()) { \n" + 
-					"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-					"	} else { \n" + 
-					"		$errorInfo = $stmt->errorInfo(); \n" +
-					"		$this->echoError($errorInfo);" + 
-					"	} \n" + 
-					"	return $rows; \n" + 
-					"} \n\n";
+               "public function "+ sp_name +"(" + pp.toLowerCase() + ") { \n" + 
+               "\n" + 
+               "	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ ppsp.toLowerCase()  +")'); \n" +
+               ppbp.toLowerCase() +
+               "\n" + 
+               "	if ($stmt->execute()) { \n" + 
+               "		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               "	} else { \n" + 
+               "		$errorInfo = $stmt->errorInfo(); \n" +
+               "		$this->echoError($errorInfo);" + 
+               "	} \n" + 
+               "	return $rows; \n" + 
+               "} \n\n";
 				
 				
 				//sp_Update_
 				sp_name = "sp_Update_"+tbName.toLowerCase();
 				taUpdate.text = '';
 				taUpdate.text += "DROP PROCEDURE IF EXISTS "+ sp_name +" ; \n" +
-					"CREATE PROCEDURE "+ sp_name +" \n ( \n"  + dpk.toLowerCase() + "," + p.toLowerCase() +
-					"\n)\nBEGIN\n" +
-					"/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
-					"BEGIN\n" +
-					"	ROLLBACK;\n" +
-					"	call getErrMsg(2300);\n" +
-					"END;*/\n" +
-					"START TRANSACTION;\n"+
-					""+
-					"UPDATE " + tbName + " SET "+ up.toLowerCase() +" WHERE 1=1  "+ uppk.toLowerCase()  +";\n"+ 
-					"COMMIT;\n" +
-					"SELECT  1 ; \nEND;\n";
+               "CREATE PROCEDURE "+ sp_name +" \n ( \n"  + dpk.toLowerCase() + "," + p.toLowerCase() +
+               "\n)\nBEGIN\n" +
+               "/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
+               "BEGIN\n" +
+               "	ROLLBACK;\n" +
+               "	call getErrMsg(2300);\n" +
+               "END;*/\n" +
+               "START TRANSACTION;\n"+
+               ""+
+               "UPDATE " + tbName + " SET "+ up.toLowerCase() +" WHERE 1=1  "+ uppk.toLowerCase()  +";\n"+ 
+               "COMMIT;\n" +
+               "SELECT  1 ; \nEND;\n";
 
 				taUpdatePHP.text = '';
 				taUpdatePHP.text +=
-					"public function "+ sp_name +"(" +ppauto.toLowerCase() +','+ pp.toLowerCase() +") { \n" + 
-					"\n" + 
-					"	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ spuppk.toLowerCase() + ppsp.toLowerCase()  +")'); \n" +
-					ppbpall.toLowerCase() +
-					"\n" + 
-					"	if ($stmt->execute()) { \n" + 
-					"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-					"	} else { \n" + 
-					"		$errorInfo = $stmt->errorInfo(); \n" + 
-					"		$this->echoError($errorInfo);" + 
-					"	} \n" + 
-					"	return $rows; \n" + 
-					"} \n\n";
+               "public function "+ sp_name +"(" +ppauto.toLowerCase() +','+ pp.toLowerCase() +") { \n" + 
+               "\n" + 
+               "	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ spuppk.toLowerCase() + ppsp.toLowerCase()  +")'); \n" +
+               ppbpall.toLowerCase() +
+               "\n" + 
+               "	if ($stmt->execute()) { \n" + 
+               "		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               "	} else { \n" + 
+               "		$errorInfo = $stmt->errorInfo(); \n" + 
+               "		$this->echoError($errorInfo);" + 
+               "	} \n" + 
+               "	return $rows; \n" + 
+               "} \n\n";
 				
 				
 				//sp_Delete_
 				sp_name = "sp_Delete_"+tbName.toLowerCase();				
 				taDelete.text = '';
 				taDelete.text += "DROP PROCEDURE IF EXISTS "+ sp_name +" ; \n" +
-					"CREATE PROCEDURE "+ sp_name +" \n ( \n"  +  dpk.toLowerCase() +
-					"\n)\nBEGIN\n" +
-					"/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
-					"BEGIN\n" +
-					"	ROLLBACK;\n" +
-					"	call getErrMsg(2300);\n" +
-					"END;*/\n" +
-					"START TRANSACTION;\n\n" +		
-					"DELETE FROM " + tbName + " WHERE 1=1 " + uppk + ";\n" +
-					"COMMIT;\n" +
-					"select 1 ;\nEND;\n";
+               "CREATE PROCEDURE "+ sp_name +" \n ( \n"  +  dpk.toLowerCase() +
+               "\n)\nBEGIN\n" +
+               "/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
+               "BEGIN\n" +
+               "	ROLLBACK;\n" +
+               "	call getErrMsg(2300);\n" +
+               "END;*/\n" +
+               "START TRANSACTION;\n\n" +		
+               "DELETE FROM " + tbName + " WHERE 1=1 " + uppk + ";\n" +
+               "COMMIT;\n" +
+               "select 1 ;\nEND;\n";
 
 				taDeletePHP.text = '';
 				taDeletePHP.text +=
-					"public function "+ sp_name +"(" + fpuppkkaut.toLocaleLowerCase()  +") { \n" + 
-					"\n" + 
-					"	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ dparam.toLocaleLowerCase() + ")'); \n" +
-					dupppbp +
-					"\n" + 
-					"	if ($stmt->execute()) { \n" + 
-					"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-					"	} else { \n" + 
-					"		$errorInfo = $stmt->errorInfo(); \n" + 
-					"		$this->echoError($errorInfo);" + 
-					"	} \n" + 
-					"	return $rows; \n" + 
-					"} \n\n";
+               "public function "+ sp_name +"(" + fpuppkkaut.toLocaleLowerCase()  +") { \n" + 
+               "\n" + 
+               "	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ dparam.toLocaleLowerCase() + ")'); \n" +
+               dupppbp +
+               "\n" + 
+               "	if ($stmt->execute()) { \n" + 
+               "		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               "	} else { \n" + 
+               "		$errorInfo = $stmt->errorInfo(); \n" + 
+               "		$this->echoError($errorInfo);" + 
+               "	} \n" + 
+               "	return $rows; \n" + 
+               "} \n\n";
 				
 				
 				
@@ -500,60 +499,60 @@
 				sp_name = "sp_Read_"+tbName.toLowerCase();				
 				taRead.text = '';
 				taRead.text += "DROP PROCEDURE IF EXISTS "+ sp_name +" ; \n" +
-					"CREATE PROCEDURE "+ sp_name +" \n ( \n"  +
-					"\n)\nBEGIN\n" +
-					"/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
-					"BEGIN\n" +
-					"	ROLLBACK;\n" +
-					"	call getErrMsg(2300);\n" +
-					"END;*/\n" +
-					"SELECT * FROM " + tbName + ";\n" + "\nEND;\n";
-					
+               "CREATE PROCEDURE "+ sp_name +" \n ( \n"  +
+               "\n)\nBEGIN\n" +
+               "/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
+               "BEGIN\n" +
+               "	ROLLBACK;\n" +
+               "	call getErrMsg(2300);\n" +
+               "END;*/\n" +
+               "SELECT * FROM " + tbName + ";\n" + "\nEND;\n";
+               
 				taReadPHP.text = '';
 				taReadPHP.text +=
-					"public function "+ sp_name +"() { \n" + 
-					"\n" + 
-					"	$stmt = $this->connection->prepare( 'call "+ sp_name +"()'); \n" +
-					"\n" + 
-					"	if ($stmt->execute()) { \n" + 
-					"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-					"	} else { \n" + 
-					"		$errorInfo = $stmt->errorInfo(); \n" + 
-					"		$this->echoError($errorInfo);" + 
-					"	} \n" + 
-					"	return $rows; \n" + 
-					"} \n\n";
+               "public function "+ sp_name +"() { \n" + 
+               "\n" + 
+               "	$stmt = $this->connection->prepare( 'call "+ sp_name +"()'); \n" +
+               "\n" + 
+               "	if ($stmt->execute()) { \n" + 
+               "		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               "	} else { \n" + 
+               "		$errorInfo = $stmt->errorInfo(); \n" + 
+               "		$this->echoError($errorInfo);" + 
+               "	} \n" + 
+               "	return $rows; \n" + 
+               "} \n\n";
 				
 				taReadbyID.text = '';
 				sp_name = "sp_ReadbyID_"+tbName.toLowerCase();				
 				taReadbyID.text += "DROP PROCEDURE IF EXISTS "+ sp_name +" ; \n" +
-					"CREATE PROCEDURE "+ sp_name +" \n ( \n"  +  dpk.toLowerCase() +
-					"\n)\nBEGIN\n" +
-					"/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
-					"BEGIN\n" +
-					"	ROLLBACK;\n" +
-					"	call getErrMsg(2300);\n" +
-					"END;*/\n" +
-					"#START TRANSACTION;\n\n" +		
-					"SELECT * FROM " + tbName + " WHERE 1=1 " + uppk + ";\n" +
-					"#COMMIT;\n" +
-					"\nEND;\n";
+               "CREATE PROCEDURE "+ sp_name +" \n ( \n"  +  dpk.toLowerCase() +
+               "\n)\nBEGIN\n" +
+               "/*	DECLARE EXIT HANDLER FOR SQLEXCEPTION,NOT FOUND,SQLWARNING\n" +
+               "BEGIN\n" +
+               "	ROLLBACK;\n" +
+               "	call getErrMsg(2300);\n" +
+               "END;*/\n" +
+               "#START TRANSACTION;\n\n" +		
+               "SELECT * FROM " + tbName + " WHERE 1=1 " + uppk + ";\n" +
+               "#COMMIT;\n" +
+               "\nEND;\n";
 				
 				taReadPHPbyID.text = '';
-				taReadPHPbyID.text +=					
-					"public function "+ sp_name +"(" + fpuppkkaut.toLowerCase()  +") { \n" + 
-					"\n" + 
-					"	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ dparam.toLowerCase() + ")'); \n" +
-					dupppbp.toLowerCase() +
-					"\n" + 
-					"	if ($stmt->execute()) { \n" + 
-					"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-					"	} else { \n" + 
-					"		$errorInfo = $stmt->errorInfo(); \n" + 
-					"		$this->echoError($errorInfo);" + 
-					"	} \n" + 
-					"	return $rows; \n" + 
-					"} \n\n";
+				taReadPHPbyID.text +=               
+               "public function "+ sp_name +"(" + fpuppkkaut.toLowerCase()  +") { \n" + 
+               "\n" + 
+               "	$stmt = $this->connection->prepare( 'call "+ sp_name +"("+ dparam.toLowerCase() + ")'); \n" +
+               dupppbp.toLowerCase() +
+               "\n" + 
+               "	if ($stmt->execute()) { \n" + 
+               "		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               "	} else { \n" + 
+               "		$errorInfo = $stmt->errorInfo(); \n" + 
+               "		$this->echoError($errorInfo);" + 
+               "	} \n" + 
+               "	return $rows; \n" + 
+               "} \n\n";
 			}
 			
 			private function removeHTML(htmlText:String):String {
@@ -573,107 +572,107 @@
 				serviceName = removeHTML(tbname) + "Service.php";
 				//* 	Header of PHP Class 
 				var php:String = "<?php \n" +
-					"require_once 'Pdoconfig.php';\n\n\n" +
-					"/**  \n" +
-					" * @author Thongchai Lim  *  林生海   \n" +
-					" *	Tel:0816477729  0866018771  \n" +
-					" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
-					" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
-					" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
-					" *  @copyright 2013 TH/BKK \n" +
-					"**/  \n\n" +
-					"class "+ removeHTML(tbname) +"Service {   \n\n" +  
-					"private $connection = null;\n" +
-					"var $tbname = \""+ tbName +"\";" +
-					"\n\n" +
-					"public function __construct()\n" +
-					"	{ \n" +
-					"	global $option;\n" +
-					"	$this->connection = new PDO( \n" +
-					"		\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
-					"		Pdoconfig::$username, \n" +
-					"		Pdoconfig::$password, \n" +
-					"		array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
-					"	);  \n" +
-					"}\n\n" +
-					
-					//----- GetALL --- function 
-					"public function getAll"+ tbname +"() { \n" +
-					"	$stmt = $this->connection->prepare(\"SELECT * FROM $this->tbname\");\n" +
-					"	if($stmt->execute()) {\n" +
-					"	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
-					"   $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-					"	} else {\n" +
-					"	$errorInfo = $stmt->errorInfo();\n" +
-					"	$this->echoError($errorInfo); \n" +
-					"	}\n" +
-					"	return $rows; \n" +
-					" } \n\n\n";
+               "require_once 'Pdoconfig.php';\n\n\n" +
+               "/**  \n" +
+               " * @author Thongchai Lim  *  林生海   \n" +
+               " *	Tel:0816477729  0866018771  \n" +
+               " *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
+               " *	GoogleTalk:lim.thongchai@gmail.com  \n" +
+               " *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
+               " *  @copyright 2013 TH/BKK \n" +
+               "**/  \n\n" +
+               "class "+ removeHTML(tbname) +"Service {   \n\n" +  
+               "private $connection = null;\n" +
+               "var $tbname = \""+ tbName +"\";" +
+               "\n\n" +
+               "public function __construct()\n" +
+               "	{ \n" +
+               "	global $option;\n" +
+               "	$this->connection = new PDO( \n" +
+               "		\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
+               "		Pdoconfig::$username, \n" +
+               "		Pdoconfig::$password, \n" +
+               "		array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
+               "	);  \n" +
+               "}\n\n" +
+               
+               //----- GetALL --- function 
+               "public function getAll"+ tbname +"() { \n" +
+               "	$stmt = $this->connection->prepare(\"SELECT * FROM $this->tbname\");\n" +
+               "	if($stmt->execute()) {\n" +
+               "	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+               "   $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               "	} else {\n" +
+               "	$errorInfo = $stmt->errorInfo();\n" +
+               "	$this->echoError($errorInfo); \n" +
+               "	}\n" +
+               "	return $rows; \n" +
+               " } \n\n\n";
 				//-------- GET by ID Key  function ---------
 				if(aCPK.length >1 ){
-					for(var i:int=0;i<aCPK.length;i++){	
-						if((aCPK.length - i) == 1){
-							indexpk += "$" + aCPK[i]['Column_name'].toString();	
-							paramt  += "$stmt->bindParam(" + (i+1) + ",$"+aCPK[i]['Column_name'].toString() +");\n";
-							selemt  +=  aCPK[i]['Column_name'].toString() + " = ? ";
-							upwhere +=  aCPK[i]['Column_name'].toString() + " = ? ";
-						}	else {
-							indexpk += "$"+aCPK[i]['Column_name'].toString() + ",";
-							selemt  +=  aCPK[i]['Column_name'].toString() + " = ? and  ";		  
-							paramt  += "$stmt->bindParam(" + (i+1) + ",$"+aCPK[i]['Column_name'].toString() +");\n";
-							upwhere += aCPK[i]['Column_name'].toString() + "= ? and ";	
-						}
-					}		
-					php += "public function get"+ tbname +"ByID("+ indexpk  +") {\n";
-					php += "$stmt = $this->connection->prepare(\"select * from $this->tbname where "+ selemt +"  \");\n";		
-					php += paramt;
-					php += "if($stmt->execute()) {\n" +
-						"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-						"} else {\n" +
-						"  	$errorInfo = $stmt->errorInfo();\n" +
-						"	$this->echoError($errorInfo); \n" +
-						"	}\n" +
-						"	return $rows; \n" +
-						"}\n\n";	 
+               for(var i:int=0;i<aCPK.length;i++){	
+               	if((aCPK.length - i) == 1){
+               		indexpk += "$" + aCPK[i]['Column_name'].toString();	
+               		paramt  += "$stmt->bindParam('" +  aCPK[i]['Column_name'].toString()  + "',$"+ aCPK[i]['Column_name'].toString() +");\n";
+               		selemt  +=  aCPK[i]['Column_name'].toString() + " = :" + aCPK[i]['Column_name'].toString();
+               		upwhere +=  aCPK[i]['Column_name'].toString() + " = :" +aCPK[i]['Column_name'].toString();
+               	}	else {
+               		indexpk += "$"+aCPK[i]['Column_name'].toString() + ",";
+               		selemt  +=  aCPK[i]['Column_name'].toString() + " = :"+ aCPK[i]['Column_name'].toString() +" and  ";		  
+               		paramt  += "$stmt->bindParam('" + aCPK[i]['Column_name'].toString() + "',$"+ aCPK[i]['Column_name'].toString() +");\n";
+               		upwhere += aCPK[i]['Column_name'].toString() + "= "+ aCPK[i]['Column_name'].toString() +" and ";	
+               	}
+               }		
+               php += "public function get"+ tbname +"ByID("+ indexpk  +") {\n";
+               php += "$stmt = $this->connection->prepare(\"select * from $this->tbname where "+ selemt +"  \");\n";		
+               php += paramt;
+               php += "if($stmt->execute()) {\n" +
+               	"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               	"} else {\n" +
+               	"  	$errorInfo = $stmt->errorInfo();\n" +
+               	"	$this->echoError($errorInfo); \n" +
+               	"	}\n" +
+               	"	return $rows; \n" +
+               	"}\n\n";	 
 				} else {
-					
-					upwhere += aCPK[0]['Column_name'] + "= :" + aCPK[0]['Column_name'];	 
-					php += "public function get"+ tbname +"ByID($itemID) {\n" +
-						"   $stmt = $this->connection->prepare(\"select * from $this->tbname where " +
-						aCPK[0]['Column_name'] + "= ? \");\n" +
-						"$stmt->bindParam(1,$itemID);\n" +
-						"if($stmt->execute()) {\n" +
-						"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-						"} else {\n" +
-						"  	$errorInfo = $stmt->errorInfo();\n" +
-						"	$this->echoError($errorInfo); \n" +
-						"	}\n" +
-						"	return $rows; \n" +
-						"}\n\n";	 
+               
+               upwhere += aCPK[0]['Column_name'] + "= :" + aCPK[0]['Column_name'];	 
+               php += "public function get"+ tbname +"ByID($itemID) {\n" +
+               	"   $stmt = $this->connection->prepare(\"select * from $this->tbname where " +
+               	aCPK[0]['Column_name'] + "= :ID \");\n" +
+               	"$stmt->bindParam('ID',$itemID);\n" +
+               	"if($stmt->execute()) {\n" +
+               	"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               	"} else {\n" +
+               	"  	$errorInfo = $stmt->errorInfo();\n" +
+               	"	$this->echoError($errorInfo); \n" +
+               	"	}\n" +
+               	"	return $rows; \n" +
+               	"}\n\n";	 
 				}
 				
 				//------------ Delete  Function --------------------
 				if(aCPK.length >1 ){
-					php += "public function delete" + tbname + "(" + indexpk +") { \n" +
-						"$stmt = $this->connection->prepare(\"delete from $this->tbname where " + selemt + "\");\n" + paramt ;
+               php += "public function delete" + tbname + "(" + indexpk +") { \n" +
+               	"$stmt = $this->connection->prepare(\"delete from $this->tbname where " + selemt + "\");\n" + paramt ;
 				}else{ 
-					php += "public function delete"+ tbname +"($itemID) { \n" +
-						"$stmt = $this->connection->prepare(\"delete from $this->tbname where  " +
-						aCPK[0]['Column_name'].toString() + " = ? " +
-						" \");\n" +
-						"$stmt->bindParam(1,$itemID);\n";		
+               php += "public function delete"+ tbname +"($itemID) { \n" +
+               	"$stmt = $this->connection->prepare(\"delete from $this->tbname where  " +
+               	aCPK[0]['Column_name'].toString() + " = ? " +
+               	" \");\n" +
+               	"$stmt->bindParam(1,$itemID);\n";		
 				}
 				
 				php += "if($stmt->execute()) {\n" +
-					"$row = $stmt->rowCount();\n" +
-					"} else {\n" +
-					"  	$errorInfo = $stmt->errorInfo();\n" +
-					"	$this->echoError($errorInfo); \n" +
-					"	}\n" +
-					"// return $row; \n" +
-					"}\n\n";	 
+               "$row = $stmt->rowCount();\n" +
+               "} else {\n" +
+               "  	$errorInfo = $stmt->errorInfo();\n" +
+               "	$this->echoError($errorInfo); \n" +
+               "	}\n" +
+               "// return $row; \n" +
+               "}\n\n";	 
 				
 				//------------ Create Insert Function --------------
 				indexpk = "";
@@ -681,88 +680,88 @@
 				selemt  = "";
 				
 				for(i=0;i<aCcolumn.length;i++){		 
-					if((aCcolumn.length - i) == 1){
-						indexpk +=aCcolumn[i]['Field'].toString();
-						selemt  += ":" +aCcolumn[i]['Field'].toString();
-						updatep +=aCcolumn[i]['Field'].toString() + "= :" +aCcolumn[i]['Field'].toString();
-						paramt  += "$stmt->bindParam('" +aCcolumn[i]['Field'].toString() + "',$item->" +aCcolumn[i]['Field'].toString() + ");\n";
-						//			paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" +aCcolumn[i]['Field'].toString() + ");\n";
-						//			selemt  +=  "?";		  
-						
-					}else{
-						indexpk +=aCcolumn[i]['Field'].toString() + ",";
-						selemt  += ":" +aCcolumn[i]['Field'].toString() + ", ";
-						updatep +=aCcolumn[i]['Field'].toString() + "= :"+
-							aCcolumn[i]['Field'].toString() +" , ";
-						paramt  += "$stmt->bindParam('" +aCcolumn[i]['Field'].toString() + "',$item->" +aCcolumn[i]['Field'].toString() + ");\n"; 
-						//			 paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" +aCcolumn[i]['Field'].toString() + ");\n";
-						//			 selemt  +=  "?, ";		  
-					}
+               if((aCcolumn.length - i) == 1){
+               	indexpk +=aCcolumn[i]['Field'].toString();
+               	selemt  += ":" +aCcolumn[i]['Field'].toString();
+               	updatep +=aCcolumn[i]['Field'].toString() + "= :" +aCcolumn[i]['Field'].toString();
+               	paramt  += "$stmt->bindParam('" +aCcolumn[i]['Field'].toString() + "',$item->" +aCcolumn[i]['Field'].toString() + ");\n";
+               	//			paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" +aCcolumn[i]['Field'].toString() + ");\n";
+               	//			selemt  +=  "?";		  
+               	
+               }else{
+               	indexpk +=aCcolumn[i]['Field'].toString() + ",";
+               	selemt  += ":" +aCcolumn[i]['Field'].toString() + ", ";
+               	updatep +=aCcolumn[i]['Field'].toString() + "= :"+
+               		aCcolumn[i]['Field'].toString() +" , ";
+               	paramt  += "$stmt->bindParam('" +aCcolumn[i]['Field'].toString() + "',$item->" +aCcolumn[i]['Field'].toString() + ");\n"; 
+               	//			 paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" +aCcolumn[i]['Field'].toString() + ");\n";
+               	//			 selemt  +=  "?, ";		  
+               }
 				}	 
 				php +=  "public function create"+ tbname +"($item) { \n" +  
-					"$stmt = $this->connection->prepare(\"insert into $this->tbname("+ indexpk +") values ("+ selemt + ")\"); \n" +
-					paramt + 
-					"if($stmt->execute()) { \n" +
-					"	 $autoid = $this->connection->lastInsertId(); \n" +
-					"} else { \n" +
-					"	 	$errorInfo = $stmt->errorInfo(); \n" +
-					"	 	$this->echoError($errorInfo); \n" +
-					" } \n" +
-					" return $autoid; \n " +
-					"}\n\n"; 
+               "$stmt = $this->connection->prepare(\"insert into $this->tbname("+ indexpk +") values ("+ selemt + ")\"); \n" +
+               paramt + 
+               "if($stmt->execute()) { \n" +
+               "	 $autoid = $this->connection->lastInsertId(); \n" +
+               "} else { \n" +
+               "	 	$errorInfo = $stmt->errorInfo(); \n" +
+               "	 	$this->echoError($errorInfo); \n" +
+               " } \n" +
+               " return $autoid; \n " +
+               "}\n\n"; 
 				
 				//------------ Update  Function --------------------
 				php += "public function update"+ tbname +"($item) { \n" +
-					"$stmt = $this->connection->prepare(\"UPDATE $this->tbname SET "+ updatep +" "+ upwhere + "\");\n" +
-					paramt +
-					"if($stmt->execute()) { \n" +
-					"	 $row = $stmt->rowCount(); \n" +
-					"} else { \n" +
-					"	 $errorInfo = $stmt->errorInfo(); \n" +
-					"	 $this->echoError($errorInfo); \n" +
-					" } \n" +
-					" //return $row; \n " +
-					"}\n\n"; 
+               "$stmt = $this->connection->prepare(\"UPDATE $this->tbname SET "+ updatep +" "+ upwhere + "\");\n" +
+               paramt +
+               "if($stmt->execute()) { \n" +
+               "	 $row = $stmt->rowCount(); \n" +
+               "} else { \n" +
+               "	 $errorInfo = $stmt->errorInfo(); \n" +
+               "	 $this->echoError($errorInfo); \n" +
+               " } \n" +
+               " //return $row; \n " +
+               "}\n\n"; 
 				
 				
 				//------------ Count function ----------------------
 				php += "public function count() { \n" +
-					"$stmt = $this->connection->prepare(\"select count(*) AS COUNT from $this->tbname \");\n" +
-					"if($stmt->execute()) { \n" +
-					"	 $count = $stmt->fetch();\n" +
-					"} else { \n" +
-					"	 $errorInfo = $stmt->errorInfo(); \n" +
-					"	 $this->echoError($errorInfo); \n" +
-					" } \n" +
-					" return $count['COUNT']; \n " +
-					"}\n\n"; 
+               "$stmt = $this->connection->prepare(\"select count(*) AS COUNT from $this->tbname \");\n" +
+               "if($stmt->execute()) { \n" +
+               "	 $count = $stmt->fetch();\n" +
+               "} else { \n" +
+               "	 $errorInfo = $stmt->errorInfo(); \n" +
+               "	 $this->echoError($errorInfo); \n" +
+               " } \n" +
+               " return $count['COUNT']; \n " +
+               "}\n\n"; 
 				
 				
 				//------------ Getall by Pages ---------------------
 				php += "public function get"+ tbname +"_paged($startIndex, $numItems) {\n" +
-					"$stmt = $this->connection->prepare(\"SELECT * FROM $this->tbname LIMIT ?, ?\");\n" +
-					"$stmt->bindParam(1,$startIndex,PDO::PARAM_INT);\n" +
-					"$stmt->bindParam(2,$numItems,PDO::PARAM_INT);\n" +
-					"	if($stmt->execute()) {\n" +
-					"	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
-					"	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-					"	} else {\n" +
-					"	 $errorInfo = $stmt->errorInfo();\n" +
-					"	 $this->echoError($errorInfo); \n" +
-					"	}\n" +
-					"	return $rows; \n" +
-					" } \n\n\n";
+               "$stmt = $this->connection->prepare(\"SELECT * FROM $this->tbname LIMIT ?, ?\");\n" +
+               "$stmt->bindParam(1,$startIndex,PDO::PARAM_INT);\n" +
+               "$stmt->bindParam(2,$numItems,PDO::PARAM_INT);\n" +
+               "	if($stmt->execute()) {\n" +
+               "	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+               "	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               "	} else {\n" +
+               "	 $errorInfo = $stmt->errorInfo();\n" +
+               "	 $this->echoError($errorInfo); \n" +
+               "	}\n" +
+               "	return $rows; \n" +
+               " } \n\n\n";
 				
 				//---- echo Error----------
 				php += "private function echoError($errorInfo) { \n" +
-					" 	throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
-					"} \n\n";
+               " 	throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
+               "} \n\n";
 				
 				//------------ __destruct function -----------------
 				php +=  "public function  __destruct(){\n" +
-					"$this->connection = null; \n" +
-					"	} \n" +
-					"\n\n }";
+               "$this->connection = null; \n" +
+               "	} \n" +
+               "\n\n }";
 				
 				php += genPoJoClase();
 				
@@ -775,143 +774,143 @@
 				pojo =  upperCase(pojo);
 				
 				var php:String = " \n" +
-					"class " + pojo + "{ \n" +
-					"	 \n";
+               "class " + pojo + "{ \n" +
+               "	 \n";
 				
 				for(var i:int;i<aCcolumn.length;i++) {
-					php += "	public $" + aCcolumn[i].Field + ";\n";
+               php += "	public $" + aCcolumn[i].Field + ";\n";
 				}
 				
 				php +=	"	\n"+
-					"} \n"+
-					" \n";
+               "} \n"+
+               " \n";
 				return php;
 			}
 			
 			private function gen_config():String {
 				var php:String = "<?php \n" +
-					"/**  \n\n" +
-					" * @author Thongchai Lim  *  林生海   \n" +
-					" *	Tel:0816477729  0866018771  \n" +
-					" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
-					" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
-					" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
-					" *  @copyright 2010  TH/BKK \n" +
-					"**/  \n\n" +
-					" class  Pdoconfig {\n" +
-					"	public static $username = \"" + username + "\";\n" + 
-					"	public static $password = \"" + password + "\";\n" +
-					"	public static $server = \""+ hostname + "\";\n" +
-					"	public static $port = \""+ port +"\";\n" +
-					"	public static $databasename = \""+ database +"\";\n" +
-					"	\n" +
-					"      public static  function  prepareForAMF($data, $arrTypes) { \n" + 
-					"      if (count($data) == 0) \n" + 
-					"          return $data; \n" + 
-					"       \n" + 
-					"      $ret = array(); \n" + 
-					"      $substract = false; \n" + 
-					"       \n" + 
-					"       \n" + 
-					"      if (!array_key_exists('0', $data)) { \n" + 
-					"          $data = array($data); \n" + 
-					"          $substract = true; \n" + 
-					"      } \n" + 
-					"       \n" + 
-					"      for ($i=0; $i<count($data); $i++) { \n" + 
-					"          $o = new $arrTypes[0](); \n" + 
-					"          foreach ($data[$i] as $property => $value) { \n" + 
-					"  //            $pproperty = strtolower($property); \n" + 
-					"                $pproperty = $property; \n" + 
-					"              if (!property_exists($o, $pproperty)) { \n" + 
-					"                  continue; \n" + 
-					"              } \n" + 
-					"              if (array_key_exists($property, $arrTypes)) { \n" + 
-					"                  if ($value == NULL) { \n" + 
-					"                      $o->$property = array(); \n" + 
-					"                      continue; \n" + 
-					"                  } \n" + 
-					"                  $newArr = $arrTypes; \n" + 
-					"                  $newArr[0] = $arrTypes[$property]; \n" + 
-					"                  $o->$pproperty = prepareForAMF($value, $newArr); \n" + 
-					"              } else { \n" + 
-					"                  $o->$pproperty = $value; \n" + 
-					"              } \n" + 
-					"          } \n" + 
-					"          $ret[] = $o; \n" + 
-					"      } \n" + 
-					"      if ($substract) \n" + 
-					"          $ret = $ret[0]; \n" + 
-					"      return $ret; \n" + 
-					"  } \n" +
-					"	\n" +
-//					"	//function prepareForAMF($data, $arrTypes, $arrDates=NULL) \n" +
-//					"	//{\n" +
-//					"	//	if (count($data) == 0)\n" +
-//					"	//		return $data;\n" +
-//					"	//	$ret = array();\n" +
-//					"	//	$substract = false;\n" +
-//					"	//	if (!array_key_exists('0', $data)) {\n" +
-//					"	//		$data = array($data);\n" +
-//					"	//		$substract = true;\n" +
-//					"	//	}\n" +
-//					"	//	for ($i=0; $i<count($data); $i++) {\n" +
-//					"	//		$o = new $arrTypes[0]();\n" +
-//					"	//		foreach ($data[$i] as $property => $value) {\n" +
-//					"	//			$pproperty = strtolower($property);\n" +
-//					"	//			if (!property_exists($o, $pproperty)) {\n" +
-//					"	//				continue;\n" +
-//					"	//			}\n" +
-//					"	//			if (array_key_exists($property, $arrTypes)) {\n" +
-//					"	//				if ($value == NULL) {\n" +
-//					"	//					$o->$pproperty = array();\n" +
-//					"	//					continue;\n" +
-//					"	//				}\n" +
-//					"	//				$newArr = $arrTypes;\n" +
-//					"	//				$newArr[0] = $arrTypes[$property];\n" +
-//					"	//				$o->$pproperty = prepareForAMF($value, $newArr, $arrDates);\n" +
-//					"	//			} else {\n" +
-//					"	//				if ($arrDates && array_key_exists($pproperty, $arrDates)) {\n" +
-//					"	//					$o->$pproperty = new DateTime($value);\n" +
-//					"	//				} else {\n" +
-//					"	//					$o->$pproperty = $value;\n" +
-//					"	//				}\n" +
-//					"	//			}\n" +
-//					"	//		}\n" +
-//					"	//		$ret[] = $o;\n" +
-//					"	//	}\n" +
-//					"	//	if ($substract)\n" +
-//					"	//		$ret = $ret[0];\n" +
-//					"	//	return $ret;\n" +
-//					"	//}\n" +
-					"	\n" +
-					"	\n" +
-					"	\n" +
-					"       public static function makeArrayFromObject($data, $arrDates=NULL) \n"+ 
-					"       { \n"+
-					"       	$data = (array)$data; \n"+
-					"       	foreach ($data as $k => $v) { \n"+
-					"       		if (is_array($v)) { \n"+
-					"       			$data[$k] = makeArrayFromObject($v, $arrDates); \n"+
-					"       		} else { \n"+
-					"       			if ($arrDates && array_key_exists($k, $arrDates)) { \n"+
-					"       				if ($v instanceof DateTime) { \n"+
-					"       					$data[$k] = $v->format('Y-m-d'); \n"+
-					"       				} else { \n"+
-					"       					$data[$k] = $v->toString('Y-M-d'); \n"+
-					"       				} \n"+
-					"       			} else if (is_object($v)) { \n"+
-					"       				$data[$k] = (array)$v; \n"+
-					"       			} \n"+
-					"       		} \n"+
-					"       	} \n"+
-					"       	return $data; \n"+
-					"       } \n"+
-					"	\n" +
-					" }\n" +
-					"  ?> ";	
+               "/**  \n\n" +
+               " * @author Thongchai Lim  *  林生海   \n" +
+               " *	Tel:0816477729  0866018771  \n" +
+               " *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
+               " *	GoogleTalk:lim.thongchai@gmail.com  \n" +
+               " *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
+               " *  @copyright 2010  TH/BKK \n" +
+               "**/  \n\n" +
+               " class  Pdoconfig {\n" +
+               "	public static $username = \"" + username + "\";\n" + 
+               "	public static $password = \"" + password + "\";\n" +
+               "	public static $server = \""+ hostname + "\";\n" +
+               "	public static $port = \""+ port +"\";\n" +
+               "	public static $databasename = \""+ database +"\";\n" +
+               "	\n" +
+               "      public static  function  prepareForAMF($data, $arrTypes) { \n" + 
+               "      if (count($data) == 0) \n" + 
+               "          return $data; \n" + 
+               "       \n" + 
+               "      $ret = array(); \n" + 
+               "      $substract = false; \n" + 
+               "       \n" + 
+               "       \n" + 
+               "      if (!array_key_exists('0', $data)) { \n" + 
+               "          $data = array($data); \n" + 
+               "          $substract = true; \n" + 
+               "      } \n" + 
+               "       \n" + 
+               "      for ($i=0; $i<count($data); $i++) { \n" + 
+               "          $o = new $arrTypes[0](); \n" + 
+               "          foreach ($data[$i] as $property => $value) { \n" + 
+               "  //            $pproperty = strtolower($property); \n" + 
+               "                $pproperty = $property; \n" + 
+               "              if (!property_exists($o, $pproperty)) { \n" + 
+               "                  continue; \n" + 
+               "              } \n" + 
+               "              if (array_key_exists($property, $arrTypes)) { \n" + 
+               "                  if ($value == NULL) { \n" + 
+               "                      $o->$property = array(); \n" + 
+               "                      continue; \n" + 
+               "                  } \n" + 
+               "                  $newArr = $arrTypes; \n" + 
+               "                  $newArr[0] = $arrTypes[$property]; \n" + 
+               "                  $o->$pproperty = prepareForAMF($value, $newArr); \n" + 
+               "              } else { \n" + 
+               "                  $o->$pproperty = $value; \n" + 
+               "              } \n" + 
+               "          } \n" + 
+               "          $ret[] = $o; \n" + 
+               "      } \n" + 
+               "      if ($substract) \n" + 
+               "          $ret = $ret[0]; \n" + 
+               "      return $ret; \n" + 
+               "  } \n" +
+               "	\n" +
+//               "	//function prepareForAMF($data, $arrTypes, $arrDates=NULL) \n" +
+//               "	//{\n" +
+//               "	//	if (count($data) == 0)\n" +
+//               "	//		return $data;\n" +
+//               "	//	$ret = array();\n" +
+//               "	//	$substract = false;\n" +
+//               "	//	if (!array_key_exists('0', $data)) {\n" +
+//               "	//		$data = array($data);\n" +
+//               "	//		$substract = true;\n" +
+//               "	//	}\n" +
+//               "	//	for ($i=0; $i<count($data); $i++) {\n" +
+//               "	//		$o = new $arrTypes[0]();\n" +
+//               "	//		foreach ($data[$i] as $property => $value) {\n" +
+//               "	//			$pproperty = strtolower($property);\n" +
+//               "	//			if (!property_exists($o, $pproperty)) {\n" +
+//               "	//				continue;\n" +
+//               "	//			}\n" +
+//               "	//			if (array_key_exists($property, $arrTypes)) {\n" +
+//               "	//				if ($value == NULL) {\n" +
+//               "	//               $o->$pproperty = array();\n" +
+//               "	//               continue;\n" +
+//               "	//				}\n" +
+//               "	//				$newArr = $arrTypes;\n" +
+//               "	//				$newArr[0] = $arrTypes[$property];\n" +
+//               "	//				$o->$pproperty = prepareForAMF($value, $newArr, $arrDates);\n" +
+//               "	//			} else {\n" +
+//               "	//				if ($arrDates && array_key_exists($pproperty, $arrDates)) {\n" +
+//               "	//               $o->$pproperty = new DateTime($value);\n" +
+//               "	//				} else {\n" +
+//               "	//               $o->$pproperty = $value;\n" +
+//               "	//				}\n" +
+//               "	//			}\n" +
+//               "	//		}\n" +
+//               "	//		$ret[] = $o;\n" +
+//               "	//	}\n" +
+//               "	//	if ($substract)\n" +
+//               "	//		$ret = $ret[0];\n" +
+//               "	//	return $ret;\n" +
+//               "	//}\n" +
+               "	\n" +
+               "	\n" +
+               "	\n" +
+               "       public static function makeArrayFromObject($data, $arrDates=NULL) \n"+ 
+               "       { \n"+
+               "       	$data = (array)$data; \n"+
+               "       	foreach ($data as $k => $v) { \n"+
+               "       		if (is_array($v)) { \n"+
+               "       			$data[$k] = makeArrayFromObject($v, $arrDates); \n"+
+               "       		} else { \n"+
+               "       			if ($arrDates && array_key_exists($k, $arrDates)) { \n"+
+               "       				if ($v instanceof DateTime) { \n"+
+               "                      $data[$k] = $v->format('Y-m-d'); \n"+
+               "       				} else { \n"+
+               "                      $data[$k] = $v->toString('Y-M-d'); \n"+
+               "       				} \n"+
+               "       			} else if (is_object($v)) { \n"+
+               "       				$data[$k] = (array)$v; \n"+
+               "       			} \n"+
+               "       		} \n"+
+               "       	} \n"+
+               "       	return $data; \n"+
+               "       } \n"+
+               "	\n" +
+               " }\n" +
+               "  ?> ";	
 				
-				return php;					
+				return php;               
 			}
 			
 			private function upperCase(str:String) : String {
@@ -925,12 +924,12 @@
 			protected function genPHPSample(event:MouseEvent):void
 			{
 				if(aCcolumn.length > 0 && aCPK.length > 0 ){
-					currentState = sphp.name;
-					txta_config.text = gen_config();
-					txta_code.text = gen_crud();
-					txta_pojo.text =  genPoJoClase();
+               currentState = sphp.name;
+               txta_config.text = gen_config();
+               txta_code.text = gen_crud();
+               txta_pojo.text =  genPoJoClase();
 				} else {
-					Alert.show('Please Select Database Table before Gen');
+               Alert.show('Please Select Database Table before Gen');
 				}
 			}
 
@@ -955,34 +954,286 @@
 			{
 				
 				if(aCcolumn.length > 0 && aCPK.length > 0 ){
-					currentState = ssP.name;				
-					txta_config1.text = gen_config();
-					txta_codephp.text = gen_crudSP();
-					txta_pojosp.text =  genPoJoClase();
-					txta_StoreProcedure.text = gen_sp();
-					
-					file = File.applicationDirectory;
-					file = file.resolvePath("assets/sampleSql.txt");
-					trace("Preferences file location: " + file.nativePath);
-					if (file.exists) {
-						var stream:FileStream = new FileStream();
-						stream.open(file, FileMode.READ);
-						txta_SQL.text = stream.readUTFBytes(stream.bytesAvailable);
-						stream.close();
-						
-					}
-					
+               currentState = ssP.name;				
+               txta_config1.text = gen_config();
+//               txta_codephp.text = gen_crudSP();
+               txta_codephp.text = gen_crudSpNew();
+               txta_pojosp.text =  genPoJoClase();
+//               txta_StoreProcedure.text = gen_sp();
+               txta_StoreProcedure.text = gen_spNew();
+               
+               file = File.applicationDirectory;
+               file = file.resolvePath("assets/sampleSql.txt");
+               trace("Preferences file location: " + file.nativePath);
+               if (file.exists) {
+               	var stream:FileStream = new FileStream();
+               	stream.open(file, FileMode.READ);
+               	txta_SQL.text = stream.readUTFBytes(stream.bytesAvailable);
+               	stream.close();
+               	
+               }
+               
 				} else {
-					Alert.show('Please Select Database Table before Gen');
+               Alert.show('Please Select Database Table before Gen');
 				}
 			}
 			
 			protected function image1_clickHandler(event:MouseEvent):void
 			{
-					var ab:about = new about();
-					ab = about(PopUpManager.createPopUp(this,about,true));
+               var ab:about = new about();
+               ab = about(PopUpManager.createPopUp(this,about,true));
 			}
 			
+			private function gen_crudSpNew():String {
+				var tbname:String = tbName.charAt(0).toUpperCase() + tbName.slice(1);
+				serviceName = removeHTML(tbname) + "Service.php";
+
+				var bindItem:String = "";
+				var paraspUpdate:String = ""; // allfield
+				for (var i:int = 0; i < aCcolumn.length; i++) 
+				{
+					paraspUpdate += ":"+aCcolumn[i].Field;
+					bindItem += "	$stmt->bindParam('"+ aCcolumn[i].Field +"', $item->"+ aCcolumn[i].Field +");\n"; 						
+					if(i<aCcolumn.length-1){
+						 paraspUpdate += ",";	
+					}
+				}
+				var parabyid:String = '';
+				var parabyidsp:String = ""; 
+				var bindpara:String = ""; 
+				for (var j:int = 0; j < aCPK.length; j++) 
+				{
+					parabyid += "$"+aCPK[j].Column_name;
+					parabyidsp += ":"+aCPK[j].Column_name;
+					bindpara += "		$stmt->bindParam('"+ aCPK[j].Column_name +"', $"+ aCPK[j].Column_name +");\n";
+					if(j < aCPK.length-1){
+						parabyid += ",";
+						parabyidsp += ",";
+					}
+					
+				}
+				
+				
+			    var php:String = "<?php\n" + 
+"//require_once 'Pdoconfig.php';\n" + 
+"\n" + 
+"//------ TEST --------------\n" + 
+"/*\n" + 
+"$s = new "+ tbname  +"Service();\n" + 
+"$res = $s->getAll();\n" + 
+"var_dump($res);\n" + 
+"*/\n" + 
+"\n" + 
+"class "+ tbname + "Service\n" + 
+"	{\n" + 
+"	\n" + 
+"	private $connection = null;\n" + 
+"	private $tbName = '"+ tbname +"';\n" + 
+"	\n" + 
+"	//Not Modyfy\n" + 
+"	public function __construct()\n" + 
+"	{\n" + 
+"	global $option;\n" + 
+"	$this->connection = new PDO(\"mysql:host=\" . Pdoconfig::$server . \"; port=\" .\n" + 
+"	Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, Pdoconfig::$username,\n" + 
+"	Pdoconfig::$password, array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\"));\n" + 
+"	}\n" + 
+"	\n" + 
+"	//Modify\n" + 
+"	public function getByID($userid,"+ parabyid +")\n" + 
+"	{\n" + 
+"	$stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid,"+ parabyidsp +");\");\n" +
+"				$stmt->bindParam('userid', $userid);\n" +
+		bindpara +
+"	if ($stmt->execute()) {\n" + 
+"	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" + 
+"	$rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ tbname +"'));\n" + 
+"	} else {\n" + 
+"		$errorInfo = $stmt->errorInfo();\n" + 
+"		$this->echoError($errorInfo);\n" + 
+"	}\n" + 
+"		return $rows;\n" + 
+"		}\n" + 
+"		\n" + 
+"		//Modify\n" + 
+"		public function getByIDforUpdate($userid,"+ parabyid +")\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call sp"+tbname +"byIDforupdate(:userid,"+ parabyidsp +");\");\n" +
+"					$stmt->bindParam('userid', $userid);\n" +
+			bindpara +
+"		if ($stmt->execute()) {\n" + 
+"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" + 
+"		$rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ tbname +"'));\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return $rows;\n" + 
+"		}\n" + 
+"		\n" + 
+"		\n" + 
+"		//Modify\n" + 
+"		public function delByID($userid, "+ parabyid +")\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call sp"+ tbname +"Delete(:userid,"+ parabyidsp +");\");\n" +
+"				$stmt->bindParam('userid', $userid);\n" +
+			bindpara +
+"		\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$row = $stmt->fetch();\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return (int)$row[0];\n" + 
+"		}\n" + 
+"		\n" + 
+"		//Modify\n" + 
+"		public function createItem($userid, $item)\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call sp"+ tbname +"Insert(:userid,"+ paraspUpdate +");\");\n" +
+"				$stmt->bindParam('userid', $userid);\n" + 
+			bindItem +
+"		if ($stmt->execute()) {\n" + 
+"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" + 
+"		$rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ tbname +"'));\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return $rows;\n" + 
+"		}\n" + 
+"		\n" + 
+"		//Modify\n" + 
+"		public function updateItem($userid,$item)\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call sp"+ tbname +"Update(:userid,"+ paraspUpdate +");\");\n" +
+"				$stmt->bindParam('userid', $userid);\n" + 
+			bindItem +	
+"		if ($stmt->execute()) {\n" + 
+"		$row = $stmt->fetch();\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return (int)$row[0];\n" + 
+"		}\n" + 
+"		\n" + 
+"		\n" + 
+"		//Not Modyfy if modify if you want change criteria\n" + 
+"		public function searchByCriteria($criteria)\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call sp"+ tbname +"SearchbyCritiria(:criteria);\");\n" + 
+"			$stmt->bindParam('criteria', $criteria);\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" + 
+"		$rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ tbname +"'));\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return $rows;\n" + 
+"		}\n" + 
+"		\n" + 
+"		\n" + 
+"		//Not Modyfy\n" + 
+"		public function getAll($userid)\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call spSystemGetAllfromtb('$this->tbname');\");\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" + 
+"		$rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ tbname +"'));\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return $rows;\n" + 
+"		}\n" + 
+"		\n" + 
+"		//Not Modyfy\n" + 
+"		public function getAllpaged($startIndex, $numItems)\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\"call spSystemGetAllfromtbPaging('$this->tbname',:start,:end);\");\n" + 
+"			$stmt->bindParam('start', $startIndex, PDO::PARAM_INT);\n" + 
+"			$stmt->bindParam('end', $numItems, PDO::PARAM_INT);\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" + 
+"		$rows = Pdoconfig::prepareForAMF($rows, array(0 => '"+ tbname +"'));\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return $rows;\n" + 
+"		}\n" + 
+"		\n" + 
+"		//Not Modyfy\n" + 
+"		public function count()\n" + 
+"		{\n" + 
+"		$stmt = $this->connection->prepare(\" call spSystemSingleCount('$this->tbname')\");\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$count = $stmt->fetch();\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"			$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return (int)$count['Count'];\n" + 
+"		}\n" + 
+"		\n" + 
+"		\n" + 
+"		//Not Modyfy\n" + 
+"		public function chkSuperAuth($userid, $supUser, $supPasswd, $mod, $func)\n" + 
+"		{\n" + 
+"			$stmt = $this->connection->prepare(\"call spSuperAuth(:userid,:supUser,:supPass,:module,:function)\");\n" + 
+"			$stmt->bindParam('userid', $userid);\n" + 
+"			$stmt->bindParam('supUser', $supUser);\n" + 
+"			$stmt->bindParam('supPass', $supPasswd);\n" + 
+"			$stmt->bindParam('module', $mod);\n" + 
+"			$stmt->bindParam('function', $func);\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$row = $stmt->fetch();\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" +  
+"		$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return (int)$row[0];\n" + 
+"		}\n" + 
+"		\n" + 
+"		//Not Modyfy\n" + 
+"		public function chkAuth($userid, $mod, $func)\n" + 
+"		{\n" + 
+"		if( $mod == '' ) { $mod = '"+ tbname +"'; } \n" + 
+"			$stmt = $this->connection->prepare(\"call spChkAuth(:userid,:module,:function);\");\n" + 
+"			$stmt->bindParam('userid', $userid);\n" + 
+"			$stmt->bindParam('module', $mod);\n" + 
+"			$stmt->bindParam('function', $func);\n" + 
+"		if ($stmt->execute()) {\n" + 
+"		$row = $stmt->fetch();\n" + 
+"		} else {\n" + 
+"			$errorInfo = $stmt->errorInfo();\n" + 
+"		$this->echoError($errorInfo);\n" + 
+"		}\n" + 
+"		return (int)$row[0];\n" + 
+"		}\n" + 
+"		//Not Modyfy\n" + 
+"		private function echoError($errorInfo)\n" + 
+"		{\n" + 
+"		throw new Exception('MySQL Error' . $errorInfo[2], $errorInfo[1]);\n" + 
+"		}\n" + 
+"		\n" + 
+"		\n" + 
+"		//Not Modyfy    \n" + 
+"		public function __destruct()\n" + 
+"		{\n" + 
+"		$this->connection = null;\n" + 
+"		}\n" + 
+"		\n" + 
+"		\n" + 
+"		}\n" + 
+genPoJoClase() + "\n"; 			
+
+			return php;
+		}
+		
 			
 			private function gen_crudSP():String {
 				var tbname:String = tbName.charAt(0).toUpperCase() + tbName.slice(1);
@@ -994,160 +1245,160 @@
 				serviceName = removeHTML(tbname) + "Service.php";
 				//* 	Header of PHP Class 
 				var php:String = "<?php \n" +
-					"require_once 'Pdoconfig.php';\n\n\n" +
-					"/**  \n" +
-					" * @author Thongchai Lim  *  林生海   \n" +
-					" *	Tel:0816477729  0866018771  \n" +
-					" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
-					" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
-					" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
-					" *  @copyright 2010 TH/BKK \n" +
-					"**/  \n\n" +
-					"class "+ removeHTML(tbname) +"Service {   \n\n" +  
-					"private $connection = null;\n" +
-					"var $tbname = \""+ tbName +"\";" +
-					"\n\n" +
-					"public function __construct()\n" +
-					"	{ \n" +
-					"	global $option;\n" +
-					"	$this->connection = new PDO( \n" +
-					"		\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
-					"		Pdoconfig::$username, \n" +
-					"		Pdoconfig::$password, \n" +
-					"		array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
-					"	);  \n" +
-					"}\n\n" +
-					
-					//----- GetALL --- function 
-					"public function getAll"+ tbname +"() { \n" +
-					"   $stmt = $this->connection->prepare(\"call spSystemGetAllfromtb(:tbname);\");\n" +
-					"   $stmt->bindParam('tbname',$this->tbname);\n" +
-					"	if($stmt->execute()) {\n" +
-					"	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
-					"   $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-					"	} else {\n" +
-					"	 	$errorInfo = $stmt->errorInfo();\n" +
-					"		$this->echoError($errorInfo);\n" +
-					"	}\n" +
-					"	return $rows; \n" +
-					" } \n\n\n";
+               "require_once 'Pdoconfig.php';\n\n\n" +
+               "/**  \n" +
+               " * @author Thongchai Lim  *  林生海   \n" +
+               " *	Tel:0816477729  0866018771  \n" +
+               " *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
+               " *	GoogleTalk:lim.thongchai@gmail.com  \n" +
+               " *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
+               " *  @copyright 2010 TH/BKK \n" +
+               "**/  \n\n" +
+               "class "+ removeHTML(tbname) +"Service {   \n\n" +  
+               "private $connection = null;\n" +
+               "var $tbname = \""+ tbName +"\";" +
+               "\n\n" +
+               "public function __construct()\n" +
+               "	{ \n" +
+               "	global $option;\n" +
+               "	$this->connection = new PDO( \n" +
+               "		\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
+               "		Pdoconfig::$username, \n" +
+               "		Pdoconfig::$password, \n" +
+               "		array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
+               "	);  \n" +
+               "}\n\n" +
+               
+               //----- GetALL --- function 
+               "public function getAll"+ tbname +"() { \n" +
+               "   $stmt = $this->connection->prepare(\"call spSystemGetAllfromtb(:tbname);\");\n" +
+               "   $stmt->bindParam('tbname',$this->tbname);\n" +
+               "	if($stmt->execute()) {\n" +
+               "	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+               "   $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               "	} else {\n" +
+               "	 	$errorInfo = $stmt->errorInfo();\n" +
+               "		$this->echoError($errorInfo);\n" +
+               "	}\n" +
+               "	return $rows; \n" +
+               " } \n\n\n";
 				
 				
 				
 				//-------- GET by ID Key  function ---------
 				if(aCPK.length >1 ){
-					for(var i:int=0;i<aCPK.length;i++){	
-						if((aCPK.length - i) == 1){
-							indexpk += "$" + aCPK[i]['Column_name'].toString();	
-							paramt  += "$stmt->bindParam('" + aCPK[i]['Column_name'].toString() + "',$"+aCPK[i]['Column_name'].toString() +");\n";
-							selemt  +=  ":"+ aCPK[i]['Column_name'].toString() + " ";
-							upwhere +=  ":" + aCPK[i]['Column_name'].toString() + " ";
-						}	else {
-							indexpk += "$"+aCPK[i]['Column_name'].toString() + ",";
-							selemt  +=  ":" + aCPK[i]['Column_name'].toString() +",";		  
-							paramt  += "$stmt->bindParam('" + aCPK[i]['Column_name'].toString() + "',$"+aCPK[i]['Column_name'].toString() +");\n";
-							upwhere += ":" + aCPK[i]['Column_name'].toString() +",";	
-						}
-					}		
-					
-					//    public function getTbsingleByID($userid, $itemID)
-					//    $stmt = $this->connection->prepare("call spTbSinglebyID(:userid,:item);");
-					
-					php += "public function get"+ tbname +'ByID($userid,'+ indexpk  +") {\n";
-					php += "$stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)+"byID(:userid,"+ selemt +"  \");\n";
-					php += "$stmt->bindParam('userid',$userid);\n";
-					php += paramt;
-					php += "if($stmt->execute()) {\n" +
-						"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-						"} else {\n" +
-						"  $errorInfo = $stmt->errorInfo();\n" +
-						"		$this->echoError($errorInfo);\n" +
-						"	}\n" +
-						"	return $rows; \n" +
-						"}\n\n";	
-					
-					
-					//					public function getTbsingleByIDforUpdate($userid, $itemID)
-					//					$stmt = $this->connection->prepare("call spTbSinglebyIDforupdate(:userid,:item);");
-					
-					php += "public function get"+ tbname +'ByIDforupdate($userid,'+ indexpk  +") {\n";
-					php += "$stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)+"byIDforupdate(:userid,"+ selemt +"  \");\n";
-					php += "$stmt->bindParam('userid',$userid);\n";
-					php += paramt;
-					php += "if($stmt->execute()) {\n" +
-						"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-						"} else {\n" +
-						"  $errorInfo = $stmt->errorInfo();\n" +
-						"		$this->echoError($errorInfo);\n" +
-						"	}\n" +
-						"	return $rows; \n" +
-						"}\n\n";	
-					
-					
+               for(var i:int=0;i<aCPK.length;i++){	
+               	if((aCPK.length - i) == 1){
+               		indexpk += "$" + aCPK[i]['Column_name'].toString();	
+               		paramt  += "$stmt->bindParam('" + aCPK[i]['Column_name'].toString() + "',$"+aCPK[i]['Column_name'].toString() +");\n";
+               		selemt  +=  ":"+ aCPK[i]['Column_name'].toString() + " ";
+               		upwhere +=  ":" + aCPK[i]['Column_name'].toString() + " ";
+               	}	else {
+               		indexpk += "$"+aCPK[i]['Column_name'].toString() + ",";
+               		selemt  +=  ":" + aCPK[i]['Column_name'].toString() +",";		  
+               		paramt  += "$stmt->bindParam('" + aCPK[i]['Column_name'].toString() + "',$"+aCPK[i]['Column_name'].toString() +");\n";
+               		upwhere += ":" + aCPK[i]['Column_name'].toString() +",";	
+               	}
+               }		
+               
+               //    public function getTbsingleByID($userid, $itemID)
+               //    $stmt = $this->connection->prepare("call spTbSinglebyID(:userid,:item);");
+               
+               php += "public function get"+ tbname +'ByID($userid,'+ indexpk  +") {\n";
+               php += "$stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)+"byID(:userid,"+ selemt +"  \");\n";
+               php += "$stmt->bindParam('userid',$userid);\n";
+               php += paramt;
+               php += "if($stmt->execute()) {\n" +
+               	"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               	"} else {\n" +
+               	"  $errorInfo = $stmt->errorInfo();\n" +
+               	"		$this->echoError($errorInfo);\n" +
+               	"	}\n" +
+               	"	return $rows; \n" +
+               	"}\n\n";	
+               
+               
+               //               public function getTbsingleByIDforUpdate($userid, $itemID)
+               //               $stmt = $this->connection->prepare("call spTbSinglebyIDforupdate(:userid,:item);");
+               
+               php += "public function get"+ tbname +'ByIDforupdate($userid,'+ indexpk  +") {\n";
+               php += "$stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)+"byIDforupdate(:userid,"+ selemt +"  \");\n";
+               php += "$stmt->bindParam('userid',$userid);\n";
+               php += paramt;
+               php += "if($stmt->execute()) {\n" +
+               	"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               	"} else {\n" +
+               	"  $errorInfo = $stmt->errorInfo();\n" +
+               	"		$this->echoError($errorInfo);\n" +
+               	"	}\n" +
+               	"	return $rows; \n" +
+               	"}\n\n";	
+               
+               
 				} else {
-					
-					upwhere += aCPK[0]['Column_name'] + "= :" + aCPK[0]['Column_name'];
-					
-					php += "public function get"+ tbname +"ByID($userid,$itemID) {\n" +
-						"   $stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)  +"byID(:userid,:item)\");\n " +
-						"$stmt->bindParam('userid',$userid);\n" +
-						"$stmt->bindParam('item',$itemID);\n" +
-						"if($stmt->execute()) {\n" +
-						"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-						"} else {\n" +
-						"  $errorInfo = $stmt->errorInfo();\n" +
-						"		$this->echoError($errorInfo);\n" +
-						"	}\n" +
-						"	return $rows; \n" +
-						"}\n\n";	 
-					
-					php += "public function get"+ tbname +"ByIDforupdate($userid,$itemID) {\n" +
-						"   $stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)  +"byIDforupdate(:userid,:item)\");\n " +
-						"$stmt->bindParam('userid',$userid);\n" +
-						"$stmt->bindParam('item',$itemID);\n" +
-						"if($stmt->execute()) {\n" +
-						"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-						"} else {\n" +
-						"  $errorInfo = $stmt->errorInfo();\n" +
-						"		$this->echoError($errorInfo);\n" +
-						"	}\n" +
-						"	return $rows; \n" +
-						"}\n\n";	 
-					
-					
+               
+               upwhere += aCPK[0]['Column_name'] + "= :" + aCPK[0]['Column_name'];
+               
+               php += "public function get"+ tbname +"ByID($userid,$itemID) {\n" +
+               	"   $stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)  +"byID(:userid,:item)\");\n " +
+               	"$stmt->bindParam('userid',$userid);\n" +
+               	"$stmt->bindParam('item',$itemID);\n" +
+               	"if($stmt->execute()) {\n" +
+               	"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               	"} else {\n" +
+               	"  $errorInfo = $stmt->errorInfo();\n" +
+               	"		$this->echoError($errorInfo);\n" +
+               	"	}\n" +
+               	"	return $rows; \n" +
+               	"}\n\n";	 
+               
+               php += "public function get"+ tbname +"ByIDforupdate($userid,$itemID) {\n" +
+               	"   $stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname)  +"byIDforupdate(:userid,:item)\");\n " +
+               	"$stmt->bindParam('userid',$userid);\n" +
+               	"$stmt->bindParam('item',$itemID);\n" +
+               	"if($stmt->execute()) {\n" +
+               	"$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               	"} else {\n" +
+               	"  $errorInfo = $stmt->errorInfo();\n" +
+               	"		$this->echoError($errorInfo);\n" +
+               	"	}\n" +
+               	"	return $rows; \n" +
+               	"}\n\n";	 
+               
+               
 				}
 				
 				//				public function deleteTbsingle($userid, $itemID)
 				//------------ Delete  Function --------------------
 				if(aCPK.length >1 ){
-					php += "public function delete" + tbname + "($userid," + indexpk +") { \n" +
-						//				"$stmt = $this->connection->prepare(\"delete from $this->tbname where " + selemt + "\");\n" + paramt ;
-						//				$stmt = $this->connection->prepare("call spTbSingledelete(:userid,:item);");
-						"$stmt = $this->connection->prepare(\"call sp" + removeHTML(tbname) + "delete(:userid," + selemt + ");\n" + 
-						"$stmt->bindParam('userid',$userid);\n" + paramt;
-					
-					
-					
-					
+               php += "public function delete" + tbname + "($userid," + indexpk +") { \n" +
+               	//				"$stmt = $this->connection->prepare(\"delete from $this->tbname where " + selemt + "\");\n" + paramt ;
+               	//				$stmt = $this->connection->prepare("call spTbSingledelete(:userid,:item);");
+               	"$stmt = $this->connection->prepare(\"call sp" + removeHTML(tbname) + "delete(:userid," + selemt + ");\n" + 
+               	"$stmt->bindParam('userid',$userid);\n" + paramt;
+               
+               
+               
+               
 				}else{ 
-					php += "public function delete"+ tbname +"($userid,$itemID) { \n" +
-						"$stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname) + "delete(:userid,:item)\");\n" +
-						"$stmt->bindParam('userid',$userid);\n" +
-						"$stmt->bindParam('item',$itemID);\n";		
+               php += "public function delete"+ tbname +"($userid,$itemID) { \n" +
+               	"$stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname) + "delete(:userid,:item)\");\n" +
+               	"$stmt->bindParam('userid',$userid);\n" +
+               	"$stmt->bindParam('item',$itemID);\n";		
 				}
 				
 				php += "if($stmt->execute()) {\n" +
-					"$row = $stmt->fetch();\n" +
-					"} else {\n" +
-					"  $errorInfo = $stmt->errorInfo();\n" +
-					"		$this->echoError($errorInfo);\n" +
-					"	}\n" +
-					"return (int)$row[0]; \n" +
-					"}\n\n";	 
+               "$row = $stmt->fetch();\n" +
+               "} else {\n" +
+               "  $errorInfo = $stmt->errorInfo();\n" +
+               "		$this->echoError($errorInfo);\n" +
+               "	}\n" +
+               "return (int)$row[0]; \n" +
+               "}\n\n";	 
 				
 				
 				//------------ Create Insert Function --------------
@@ -1156,74 +1407,74 @@
 				selemt  = "";
 				
 				for(i=0;i<aCcolumn.length;i++){		 
-					if((aCcolumn.length - i) == 1){
-						indexpk += aCcolumn[i]['Field'].toString();
-						selemt  += ":" + aCcolumn[i]['Field'].toString();
-						updatep += aCcolumn[i]['Field'].toString() + "= :" + aCcolumn[i]['Field'].toString();
-						paramt  += "$stmt->bindParam('" + aCcolumn[i]['Field'].toString() + "',$item->" + aCcolumn[i]['Field'].toString() + ");\n";
-						//			paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" + aCcolumn[i]['Field'].toString() + ");\n";
-						//			selemt  +=  "?";		  
-						
-					}else{
-						indexpk += aCcolumn[i]['Field'].toString() + ",";
-						selemt  += ":" + aCcolumn[i]['Field'].toString() + ", ";
-						updatep += aCcolumn[i]['Field'].toString() + "= :"+
-							aCcolumn[i]['Field'].toString() +" , ";
-						paramt  += "$stmt->bindParam('" + aCcolumn[i]['Field'].toString() + "',$item->" + aCcolumn[i]['Field'].toString() + ");\n"; 
-						//			 paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" + aCcolumn[i]['Field'].toString() + ");\n";
-						//			 selemt  +=  "?, ";		  
-					}
+               if((aCcolumn.length - i) == 1){
+               	indexpk += aCcolumn[i]['Field'].toString();
+               	selemt  += ":" + aCcolumn[i]['Field'].toString();
+               	updatep += aCcolumn[i]['Field'].toString() + "= :" + aCcolumn[i]['Field'].toString();
+               	paramt  += "$stmt->bindParam('" + aCcolumn[i]['Field'].toString() + "',$item->" + aCcolumn[i]['Field'].toString() + ");\n";
+               	//			paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" + aCcolumn[i]['Field'].toString() + ");\n";
+               	//			selemt  +=  "?";		  
+               	
+               }else{
+               	indexpk += aCcolumn[i]['Field'].toString() + ",";
+               	selemt  += ":" + aCcolumn[i]['Field'].toString() + ", ";
+               	updatep += aCcolumn[i]['Field'].toString() + "= :"+
+               		aCcolumn[i]['Field'].toString() +" , ";
+               	paramt  += "$stmt->bindParam('" + aCcolumn[i]['Field'].toString() + "',$item->" + aCcolumn[i]['Field'].toString() + ");\n"; 
+               	//			 paramt  += "$stmt->bindParam("+ (i+1) + ",$itme->" + aCcolumn[i]['Field'].toString() + ");\n";
+               	//			 selemt  +=  "?, ";		  
+               }
 				}	 
 				
 				//				public function createTbsingle($userid, $item)
 				//				$stmt = $this->connection->prepare("call sptbSingleinsert(:userid,:item);");
 				php +=  "public function create"+ tbname +"($userid,$item) { \n" +  
-					//"$stmt = $this->connection->prepare(\"insert into $this->tbname("+ indexpk +") values ("+ selemt + ")\"); \n" +
-					"$stmt = $this->connection->prepare(\"call sp" + removeHTML(tbname) +"insert(:userid,"+ selemt  +")\");\n" +
-					"$stmt->bindParam('userid',$userid);\n" + paramt + 
-					"if($stmt->execute()) { \n" +
-					"	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
-					"	$rows = Pdoconfig::prepareForAMF($rows,array(0 => 'Tbsingle')); \n" +
-					"} else { \n" +
-					"	 $errorInfo = $stmt->errorInfo(); \n" +
-					"		$this->echoError($errorInfo);\n" +
-					" } \n" +
-					" return  $rows[0]; \n " +
-					"}\n\n"; 
+               //"$stmt = $this->connection->prepare(\"insert into $this->tbname("+ indexpk +") values ("+ selemt + ")\"); \n" +
+               "$stmt = $this->connection->prepare(\"call sp" + removeHTML(tbname) +"insert(:userid,"+ selemt  +")\");\n" +
+               "$stmt->bindParam('userid',$userid);\n" + paramt + 
+               "if($stmt->execute()) { \n" +
+               "	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+               "	$rows = Pdoconfig::prepareForAMF($rows,array(0 => 'Tbsingle')); \n" +
+               "} else { \n" +
+               "	 $errorInfo = $stmt->errorInfo(); \n" +
+               "		$this->echoError($errorInfo);\n" +
+               " } \n" +
+               " return  $rows[0]; \n " +
+               "}\n\n"; 
 				
 				//				public function updateTbsingle($userid, $idx, $desc)
 				//				$stmt = $this->connection->prepare("call spTbSingleupdate(:userid,:idx,:desc);");
 				
 				//------------ Update  Function --------------------
 				php += "public function update"+ tbname +"($userid,$item) { \n" +
-					//					"$stmt = $this->connection->prepare(\"UPDATE $this->tbname SET "+ updatep +" "+ upwhere + "\");\n" +
-					"$stmt = $this->connection->prepare(\"call sp" + removeHTML(tbname) + "update(:userid," + selemt+ ")\");\n" +
-					"$stmt->bindParam('userid',$userid);\n" + paramt +
-					"if($stmt->execute()) { \n" +
-					"	$row = $stmt->fetch(); \n" +
-					"} else { \n" +
-					"	 $errorInfo = $stmt->errorInfo(); \n" +
-					"		$this->echoError($errorInfo);\n" +
-					" } \n" +
-					" return (int)$row[0]; \n " +
-					"}\n\n"; 
+               //               "$stmt = $this->connection->prepare(\"UPDATE $this->tbname SET "+ updatep +" "+ upwhere + "\");\n" +
+               "$stmt = $this->connection->prepare(\"call sp" + removeHTML(tbname) + "update(:userid," + selemt+ ")\");\n" +
+               "$stmt->bindParam('userid',$userid);\n" + paramt +
+               "if($stmt->execute()) { \n" +
+               "	$row = $stmt->fetch(); \n" +
+               "} else { \n" +
+               "	 $errorInfo = $stmt->errorInfo(); \n" +
+               "		$this->echoError($errorInfo);\n" +
+               " } \n" +
+               " return (int)$row[0]; \n " +
+               "}\n\n"; 
 				
 				
 				//				public function getTbsingle_search($criteria)
 				//				$stmt = $this->connection->prepare("call spTbSingleSearchbyCritiria(:criteria);");
 				
 				php += "public function get" + tbname + "_search($criteria) { \n" +
-					" $stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname) + "SearchbyCritiria(:criteria);\");\n" +
-					" $stmt->bindParam('criteria', $criteria); \n" +
-					" if ($stmt->execute()) { \n" +
-					" $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
-					" $rows = Pdoconfig::prepareForAMF($rows, array(0 => '" + removeHTML(tbname)  + "')); \n" +
-					" } else { \n" +
-					" 	$errorInfo = $stmt->errorInfo(); \n" +
-					" 	$this->echoError($errorInfo); \n" +
-					" 	} \n" +
-					"	return $rows; \n" +
-					"	} \n\n";
+               " $stmt = $this->connection->prepare(\"call sp"+ removeHTML(tbname) + "SearchbyCritiria(:criteria);\");\n" +
+               " $stmt->bindParam('criteria', $criteria); \n" +
+               " if ($stmt->execute()) { \n" +
+               " $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+               " $rows = Pdoconfig::prepareForAMF($rows, array(0 => '" + removeHTML(tbname)  + "')); \n" +
+               " } else { \n" +
+               " 	$errorInfo = $stmt->errorInfo(); \n" +
+               " 	$this->echoError($errorInfo); \n" +
+               " 	} \n" +
+               "	return $rows; \n" +
+               "	} \n\n";
 				
 				
 				
@@ -1231,82 +1482,415 @@
 				
 				//------------ Count function ----------------------
 				php += "public function count() { \n" +
-					"$stmt = $this->connection->prepare(\"call spSystemSingleCount(:tbname)\");\n" +
-					"$stmt->bindParam('tbname',$this->tbname);\n"+
-					"if($stmt->execute()) { \n" +
-					"	 $count = $stmt->fetch();\n" +
-					"} else { \n" +
-					"	 $errorInfo = $stmt->errorInfo(); \n" +
-					"	 $this->echoError($errorInfo); \n" +
-					" } \n" +
-					" return (int) $count[0]; \n " +
-					"}\n\n"; 
+               "$stmt = $this->connection->prepare(\"call spSystemSingleCount(:tbname)\");\n" +
+               "$stmt->bindParam('tbname',$this->tbname);\n"+
+               "if($stmt->execute()) { \n" +
+               "	 $count = $stmt->fetch();\n" +
+               "} else { \n" +
+               "	 $errorInfo = $stmt->errorInfo(); \n" +
+               "	 $this->echoError($errorInfo); \n" +
+               " } \n" +
+               " return (int) $count[0]; \n " +
+               "}\n\n"; 
 				
 				
 				//------------ Getall by Pages ---------------------
 				php += "public function get"+ tbname +"_paged($startIndex, $numItems) {\n" +
-					"$stmt = $this->connection->prepare(\"call spSystemGetAllfromtbPaging(:tbname,:start,:end);\");\n" +
-					"$stmt->bindParam('tbname', $this->tbname);\n" +
-					"$stmt->bindParam('start', $startIndex, PDO::PARAM_INT);\n"+
-					"$stmt->bindParam('end', $numItems, PDO::PARAM_INT);\n"+
-					"	if($stmt->execute()) {\n" +
-					"	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
-					"	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
-					"	} else {\n" +
-					"	 	$errorInfo = $stmt->errorInfo();\n" +
-					"		$this->echoError($errorInfo);\n" +
-					"	}\n" +
-					"	return $rows; \n" +
-					" } \n\n\n";
+               "$stmt = $this->connection->prepare(\"call spSystemGetAllfromtbPaging(:tbname,:start,:end);\");\n" +
+               "$stmt->bindParam('tbname', $this->tbname);\n" +
+               "$stmt->bindParam('start', $startIndex, PDO::PARAM_INT);\n"+
+               "$stmt->bindParam('end', $numItems, PDO::PARAM_INT);\n"+
+               "	if($stmt->execute()) {\n" +
+               "	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" +
+               "	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ removeHTML(tbname)  +"'));\n" +
+               "	} else {\n" +
+               "	 	$errorInfo = $stmt->errorInfo();\n" +
+               "		$this->echoError($errorInfo);\n" +
+               "	}\n" +
+               "	return $rows; \n" +
+               " } \n\n\n";
 				
 				//---------- Chk Authorize
 				php += "public function chkAuth($userid, $mod, $func) 	{ \n" +
-					"$stmt = $this->connection->prepare(\"CALL SPCHKAUTH(:userid,:module,:function);\"); \n" +
-					"$stmt->bindParam('userid', $userid); \n" +
-					"$stmt->bindParam('module', $mod); \n" +
-					"$stmt->bindParam('function', $func); \n" +
-					"if ($stmt->execute()) { \n" +
-					"	$row = $stmt->fetch(); \n" +
-					"} else { \n" +
-					"	$errorInfo = $stmt->errorInfo(); \n" +
-					"	$this->echoError($errorInfo); \n" +
-					"} \n" +
-					"return (int)$row[0]; \n" +
-					"} \n\n\n";
+               "$stmt = $this->connection->prepare(\"CALL SPCHKAUTH(:userid,:module,:function);\"); \n" +
+               "$stmt->bindParam('userid', $userid); \n" +
+               "$stmt->bindParam('module', $mod); \n" +
+               "$stmt->bindParam('function', $func); \n" +
+               "if ($stmt->execute()) { \n" +
+               "	$row = $stmt->fetch(); \n" +
+               "} else { \n" +
+               "	$errorInfo = $stmt->errorInfo(); \n" +
+               "	$this->echoError($errorInfo); \n" +
+               "} \n" +
+               "return (int)$row[0]; \n" +
+               "} \n\n\n";
 				
 				// ------------ chk super authorize
 				php += "public function chkSuperAuth($userid, $password, $mod, $func) { \n" +
-					"$stmt = $this->connection->prepare(\"call spSuperauth(:userid,:pass,:module,:function)\"); \n" +
-					"$stmt->bindParam('userid', $userid); \n" +
-					"$stmt->bindParam('pass', $password); \n" +
-					"$stmt->bindParam('module', $mod); \n" +
-					"$stmt->bindParam('function', $func); \n" +
-					"if ($stmt->execute()) { \n" +
-					"	 $row = $stmt->fetch(); \n" +
-					" } else { \n" +
-					"	 $errorInfo = $stmt->errorInfo(); \n" +
-					"	 $this->echoError($errorInfo); \n" +
-					"} \n" +
-					" return (int)$row[0]; \n" +
-					"} \n\n";
+               "$stmt = $this->connection->prepare(\"call spSuperauth(:userid,:pass,:module,:function)\"); \n" +
+               "$stmt->bindParam('userid', $userid); \n" +
+               "$stmt->bindParam('pass', $password); \n" +
+               "$stmt->bindParam('module', $mod); \n" +
+               "$stmt->bindParam('function', $func); \n" +
+               "if ($stmt->execute()) { \n" +
+               "	 $row = $stmt->fetch(); \n" +
+               " } else { \n" +
+               "	 $errorInfo = $stmt->errorInfo(); \n" +
+               "	 $this->echoError($errorInfo); \n" +
+               "} \n" +
+               " return (int)$row[0]; \n" +
+               "} \n\n";
 				
 				//---- echo Error----------
 				php += "private function echoError($errorInfo) { \n" +
-					" 	throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
-					"} \n\n";
+               " 	throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
+               "} \n\n";
 				
 				//------------ __destruct function -----------------
 				php +=  "public function  __destruct(){\n" +
-					"$this->connection = null; \n" +
-					"	} \n" +
-					"\n\n }";
+               "$this->connection = null; \n" +
+               "	} \n" +
+               "\n\n }";
 				
 				php += genPoJoClase();
 				
 				return php;			
 			}
 			
-			
+			private function gen_spNew():String {
+				var tbname:String = tbName.charAt(0).toUpperCase() + tbName.slice(1);
+				//byid byidupdate delete
+				var parasp:String = '';
+				var paraspall:String = '';
+				//--- insert------
+				var paraspInsert:String = '';
+				var paraspValue:String = ''; // insert into table(xx,yy,zzz) value( '','','');
+				//----update------
+				var paraspSetUpdate:String = '';
+				var paraspWhereUpdate:String = '';
+				//----criteria 
+				var paralike:String = '';
+				
+				var parawhere:String = '';
+				var paraconcatpk:String = '';
+				var valikay:String = '';
+				
+				var paraidx:String = '';
+				
+				for (var i:int = 0; i < aCcolumn.length; i++) 
+				{
+					// Field/Key/Type/Extra='auto_increment
+					if(aCcolumn[i].Key == 'PRI'){
+						if(paraidx.length == 0 ){
+							paraidx = "`_"+ aCcolumn[i].Field +"`";							
+						}
+						parasp += "`_"+ aCcolumn[i].Field +"` "+ aCcolumn[i].Type;
+						parawhere += "and `"+ aCcolumn[i].Field +"` = `_"+ aCcolumn[i].Field +"` ";
+
+						if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
+								paraconcatpk += " and `"+aCcolumn[i]['Field'] +"` = \",`_"+ aCcolumn[i]['Field'] +"`";	
+								paraspWhereUpdate += "and `"+ aCcolumn[i].Field +"` = \",`_"+ aCcolumn[i].Field +"`,\" ";
+								//String text	
+							} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
+								paraconcatpk += " and `"+aCcolumn[i]['Field'] +"` = \",`_"+ aCcolumn[i].Field +"` "; ;	
+								paraspWhereUpdate += "and `"+ aCcolumn[i].Field +"` = \",QUOTE(`_"+ aCcolumn[i].Field +"`),\" ";
+								//timestampe	
+							} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
+								paraconcatpk += " OR (DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d %H:%i:%s\")) = '0000-00-00 00:00:00' OR ISNULL(DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d %H:%i:%s\"))) "; 	
+								paraspWhereUpdate += "and `"+ aCcolumn[i].Field +"` = \",QUOTE(DATE_FORMAT(`_"+ aCcolumn[i].Field +"`,\"%Y-%m-%d %H:%i:%s\")),\" ";
+
+							} else if(String(aCcolumn[i]['Type']).indexOf('time')  != -1  ){
+								paraconcatpk += " OR (TIME_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%H:%i:%s\")) = '00:00:00' OR ISNULL(TIME_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%H:%i:%s\"))) "; 	
+								paraspWhereUpdate += "and `"+ aCcolumn[i].Field +"` = \",QUOTE(TIME_FORMAT(`_"+ aCcolumn[i].Field +"`,\"%H:%i:%s\")),\" ";
+								//date	
+							} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
+								paraconcatpk += " OR (DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d\") = '00:00:00' OR ISNULL(DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d\") )) "; 	
+								paraspWhereUpdate += "and `"+ aCcolumn[i].Field +"` = \",QUOTE(DATE_FORMAT(`_"+ aCcolumn[i].Field +"`,\"%Y-%m-%d\")),\" ";
+								
+								//double
+							} else if(String(aCcolumn[i]['Type']).indexOf('double')  != -1 ){
+								paraconcatpk += " OR `_"+aCcolumn[i]['Field']+"` = 0 ";	
+								paraspWhereUpdate += "and `"+ aCcolumn[i].Field +"` = \",`_"+ aCcolumn[i].Field +"`,\" ";
+							}
+							
+							if(i < aCPK.length-1){
+								paraconcatpk += ",\"";	
+							}
+						}
+
+					if(aCcolumn[i].Null == 'NO'){
+
+						if(valikay.length > 0 ){
+	
+							if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
+								valikay += " OR `_"+aCcolumn[i]['Field']+"` = 0 ";	
+								//String text	
+							} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
+								valikay += " OR (`_"+aCcolumn[i]['Field']+"` = '' OR  ISNULL(`_"+aCcolumn[i]['Field']+"`))";	
+								//timestampe	
+							} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
+								valikay += " OR (DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d %H:%i:%s\")) = '0000-00-00 00:00:00' OR ISNULL(DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d %H:%i:%s\"))) "; 	
+
+							} else if(String(aCcolumn[i]['Type']).indexOf('time')  != -1  ){
+								valikay += " OR (TIME_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%H:%i:%s\")) = '00:00:00' OR ISNULL(TIME_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%H.%i.%s\"))) "; 	
+								//date	
+							} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
+								valikay += " OR (DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d\") = '0000-00-00' OR ISNULL(DATE_FORMAT(`_"+ aCcolumn[i]['Field'] +"`,\"%Y-%m-%d\") )) "; 	
+								
+								//double
+							} else if(String(aCcolumn[i]['Type']).indexOf('double')  != -1 ){
+								valikay += " OR `_"+aCcolumn[i]['Field']+"` = 0 ";	
+							}
+
+							
+						} else {
+							
+							if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
+								valikay += " `_"+aCcolumn[i]['Field']+"` = 0 ";	
+								//String text	
+							} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
+								valikay += "(`_"+aCcolumn[i]['Field']+"` = '' OR ISNULL(`_"+ aCcolumn[i]['Field'] +"`)) ";	
+								
+								//timestampe	
+							} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
+								valikay += " (DATE_FORMAT(`_"+ aCcolumn[i]['Field']+"`,\"%Y-%m-%d %H:%i:%s\") = '0000-00-00 00:00:00' OR ISNULL(`_" + aCcolumn[i]['Field'] +"`)) "; 	
+
+							} else if(String(aCcolumn[i]['Type']).indexOf('time')  != -1  ){
+								valikay += " (TIME_FORMAT(`_"+ aCcolumn[i]['Field']+"`,\"%H:%i:%s\") = '00:00:00' OR ISNULL(`_" + aCcolumn[i]['Field'] +"`)) "; 	
+								//date	
+							} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
+								valikay += " (DATE_FORMAT(`_"+ aCcolumn[i]['Field']+"`,\"%Y-%m-%d\") = '0000-00-00' OR ISNULL(`_" + aCcolumn[i]['Field']+"`)) "; 	
+								
+								//double
+							} else if(String(aCcolumn[i]['Type']).indexOf('double')  != -1 ){
+								valikay += " (`_"+ aCcolumn[i]['Field'] +"` = '' OR ISNULL(`_"+ aCcolumn[i]['Field'] +")) ";	
+							}
+							
+						}
+						
+					}
+						paraspall += "`_"+ aCcolumn[i].Field +"` "+ aCcolumn[i].Type;
+						paraspInsert += "`"+ aCcolumn[i].Field +"`";
+						paralike += " and `"+ aCcolumn[i].Field +"` link %\",`_" + aCcolumn[i].Field  + "`,\"% ";
+						// update table set x=x,y-y,z=z where id = 'xx'
+						
+						if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
+							paraspValue += "`_"+ aCcolumn[i].Field+"`";
+							paraspSetUpdate += "`"+ aCcolumn[i].Field+"` = \",`_"+ aCcolumn[i].Field+"`";
+							//String text	
+						} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
+							paraspValue += "QUOTE(`_"+ aCcolumn[i].Field+"`)";
+							paraspSetUpdate += "`"+ aCcolumn[i].Field+"` = \", QUOTE(`_"+ aCcolumn[i].Field+"`)";
+							//timestampe	
+						} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
+							//	TIME_FORMAT('01:40','%H:%i:%s')
+							paraspValue += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i].Field+"`,\"%Y-%m-%d %H:%i:%s\"))";
+							paraspSetUpdate += "`"+ aCcolumn[i].Field +"` = \", QUOTE(DATE_FORMAT(`_"+ aCcolumn[i].Field + "`,\"%Y-%m-%d %H:%i:%s\"))";
+						} else if(String(aCcolumn[i]['Type']).indexOf('time')  != -1  ){
+							paraspValue += "QUOTE(TIME_FORMAT(`_"+ aCcolumn[i].Field+"`,\"%H:%i:%s\"))";
+							paraspSetUpdate += "`"+ aCcolumn[i].Field +"` = \", QUOTE(TIME_FORMAT(`_"+ aCcolumn[i].Field + "`,\"%H:%i:%s\"))";
+							//date	
+						} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
+							paraspValue += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i].Field+"`,\"%Y-%m-%d \"))";
+							paraspSetUpdate += "`"+ aCcolumn[i].Field+"` = \", QUOTE(DATE_FORMAT(`_"+ aCcolumn[i].Field + "`,\"%Y-%m-%d\"))";
+							//double
+						} else if(String(aCcolumn[i]['Type']).indexOf('double')  != -1 ){
+							paraspValue += "`_"+ aCcolumn[i].Field+"`";
+							paraspSetUpdate += "`"+ aCcolumn[i].Field +"` = \",`_" + aCcolumn[i].Field +"`";
+						}
+					if(i < aCPK.length-1){
+						parasp += ",";
+					}
+					if(i < aCcolumn.length -1 ){
+						paraspSetUpdate += ",\",";
+						paraspall += ",";
+						paraspInsert += ",";
+						paraspValue += ",\",\",";
+					} 
+				}
+				
+				for (var j:int = 0; j < aCPK.length; j++ )
+				{
+					//Column_name
+					
+				}
+				
+				
+				
+				var sp:String = '';
+sp += "--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byID(:userid,:Id,:Firstname,:Lastname);\");\n" +
+"DROP PROCEDURE IF EXISTS `sp"+ tbname +"byID`;\n" +	
+"DELIMITER ;;\n"+
+"CREATE  PROCEDURE `sp"+ tbname +"byID`(_userid varchar(30),"+ parasp +")\n" + 
+" BEGIN\n" + 
+" IF "+ valikay +" THEN\n" + 
+" call  getErrMsg(60007);	--  stcode is not null\n" + 
+" ELSE\n" + 
+" select * from "+ tbname +" WHERE 1 = 1 "+ parawhere +" ;\n" + 
+" END IF;\n" + 
+" END\n" +
+";;\n"+
+"DELIMITER ;\n"+
+" \n" + 
+" \n" + 
+"--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"byIDforupdate(:userid,:Id,:Firstname,:Lastname);\");\n" + 
+"DROP PROCEDURE IF EXISTS `sp"+ tbname +"byIDforUpdate`;\n" +
+"DELIMITER ;;\n"+
+"CREATE  PROCEDURE `sp"+ tbname +"byIDforUpdate`(_userid varchar(30),"+ parasp +")\n" + 
+" BEGIN\n" + 
+" IF "+ valikay +" THEN\n" + 
+" call  getErrMsg(60007);	--   stcode is not null\n" + 
+" ELSE\n" + 
+" --  	SET @auth = spAuthroize_usrid_module_func(_userid,'"+ tbname +"','EDIT');\n" + 	
+" --  		IF @auth = 1 THEN\n" + 
+" SET @TF = fcCtrlUpdateTableSingle(_userid,"+paraidx+",'"+ tbname +"');\n" + 
+" IF @TF > 0 THEN\n" + 
+" select * from "+ tbname +" WHERE 1 = 1 "+ parawhere +" ; \n" + 
+" ELSE	\n" + 
+" call getErrMsg(60001); -- 	Can't Update/Delete anather one user it. \n" + 
+" 	END IF; --  check session\n" + 
+" 	--  	  ELSE\n" + 
+" 	--  				SIGNAL SQLSTATE  'ERR0R' SET  MESSAGE_TEXT = 'You Not Authoriz',   MYSQL_ERRNO = '40001';\n" + 
+"	--  		END IF;\n" + 
+"	END IF;\n" + 
+"	END       \n" + 
+";;\n"+
+"DELIMITER ;\n"+
+"	\n" + 
+"-- 	$stmt = $this->connection->prepare(\"call sp"+ tbname +"Delete(:userid,:Id,:Firstname,:Lastname);\");\n" + 
+"DROP PROCEDURE IF EXISTS `sp"+ tbname +"Delete`;\n" +
+"DELIMITER ;;\n"+
+"CREATE  PROCEDURE `sp"+ tbname +"Delete`(_userid varchar(30),"+ parasp +")\n" + 
+"	BEGIN\n" + 
+"	IF "+ valikay +" THEN\n" + 
+"	call getErrMsg(60007); -- 	stcode is not null\n" + 
+"	ELSE \n" + 
+"	SET @auth = spAuthroize_usrid_module_func(_userid,'"+ tbname +"','DEL');\n" + 	
+"	IF @auth = 1 THEN\n" + 
+"	--  check SESSION\n" + 
+"	SET @TF = fcCtrlUpdateTableSingle(_userid,"+paraidx+",'"+ tbname +"');\n" + 
+"	IF @TF = 1 THEN \n" + 
+"	--  check @rownum\n" + 
+"	select count(*) INTO @rownum from "+ tbname +" WHERE 1 = 1 "+ parawhere +" ;\n" + 
+"	IF @rownum > 0 THEN\n" + 
+"	START TRANSACTION;\n" + 
+"	--  delete TABLE\n" + 
+"	set @sql = CONCAT(\"delete from "+ tbname +" where 1 = 1 "+ paraconcatpk +");\n" + 
+"	prepare query from @sql;\n" + 
+"	execute query;\n" + 
+"	deallocate prepare query;\n" + 
+"	call sp_InsertLog('DEL',_userid,@sql,@rownum,'"+ tbname +"');\n" + 
+" 	COMMIT;\n" + 
+" 	SET @CP = fcCompleteUpdateTable(_userid);\n" + 
+" 	select "+ paraidx +" as id;\n" + 
+" 	ELSE\n" + 
+" 	call getErrMsg(60006); -- 	No Row for Delete\n" + 
+" 	END IF; --  end check @rownum\n" + 
+" 	ELSE\n" + 
+" 	call getErrMsg(60001); -- 	Can't Update/Delete anather one user it.\n" + 
+" 		END IF; --  end check session\n" + 
+" 			ELSE\n" + 
+" 			SIGNAL SQLSTATE  'ERR0R' SET  MESSAGE_TEXT = 'You Not Authoriz',   MYSQL_ERRNO = '40001';\n" + 
+" END IF;\n" + 
+" END IF; --  end validate\n" + 
+" 	END    \n" + 
+";;\n"+
+"DELIMITER ;\n"+
+" 	\n" + 
+"--  $stmt = $this->connection->prepare(\"call sp"+ tbname +"Insert(:userid,:Id,:Firstname,:Lastname,:Sex,:Age,:note);\");\n" + 
+"DROP PROCEDURE IF EXISTS `sp"+ tbname +"Insert`;\n" +
+"DELIMITER ;;\n"+
+"CREATE  PROCEDURE `sp"+ tbname +"Insert`(_userid varchar(30),"+ paraspall +")\n" + 
+" BEGIN\n" + 
+" DECLARE idx INT DEFAULT -1;\n" + 
+" --  validate\n" + 
+" 	IF "+ valikay +"  THEN\n" + 
+" call getErrMsg(60005);\n" + 
+" ELSE\n" + 
+" SET @auth = spAuthroize_usrid_module_func(_userid,'"+ tbname +"','NEW');\n" + 	
+" IF @auth = 1 THEN\n" + 
+" --  	select @auth;\n" + 
+" START TRANSACTION;\n" + 
+" SET @sql = CONCAT(\"insert into "+ tbname +"("+ paraspInsert +") VALUES(\","+ paraspValue +",\");\");\n" + 
+" prepare query from @sql;\n" + 
+" execute query;\n" + 
+" deallocate prepare query;\n" + 
+" select LAST_INSERT_ID() into idx;\n" + 
+" SET @TF = fcCtrlUpdateTableSingle(_userid,"+ paraidx +",'"+ tbname +"');\n" + 
+"--  SET @TF = fcCtrlUpdateTableSingle(_userid,idx,'"+ tbname +"');\n" + 
+" --  Insert Loggin \n" + 
+" 	call sp_InsertLog('NEW',_userid,@sql,"+ paraidx +",'"+ tbname +"');\n" + 
+"--  	call sp_InsertLog('NEW',_userid,@sql,idx,'"+ tbname +"');\n" + 
+" COMMIT; \n" + 
+" call sp"+ tbname +"byID(_userid,"+ paraidx +");\n" + 
+"--  call sp"+ tbname +"byID(_userid,idx);\n" + 
+" --  select idx as id;	\n" + 
+" ELSE\n" + 
+" SIGNAL SQLSTATE  'ERR0R' SET  MESSAGE_TEXT = 'You Not Authoriz1',   MYSQL_ERRNO = '40001';\n" + 
+" END IF;\n" + 
+" END IF; --  validate\n" + 
+" 	END\n" + 
+";;\n"+
+"DELIMITER ;\n"+
+" 	\n" + 
+"--   $stmt = $this->connection->prepare(\"call sp"+ tbname +"Update(:userid,:Id,:Firstname,:Lastname,:Sex,:Age,:note);\");\n" + 
+"DROP PROCEDURE IF EXISTS `sp"+ tbname +"Update`;\n" +
+"DELIMITER ;;\n"+
+"CREATE  PROCEDURE `sp"+ tbname +"Update`(_userid varchar(30),"+ paraspall +")\n" + 
+" MODIFIES SQL DATA\n" + 
+" BEGIN\n" + 
+" IF"+ valikay +" THEN\n" +  
+" call getErrMsg(60003);  -- 60003	Want Parametor \"userid\"\n" + 
+" 	ELSE\n" + 
+" 	SET @auth = spAuthroize_usrid_module_func(_userid,'"+ tbname +"','EDIT');\n" + 	
+" IF @auth = 1 THEN\n" + 
+" SET @TF = fcCtrlUpdateTableSingle(_userid,"+paraidx +",'"+ tbname +"');\n" + 
+" IF @TF > 0 THEN\n" + 
+" --  check @rownum\n" + 
+" select count(*) INTO @rownum from "+ tbname +" WHERE  1 = 1 "+ parawhere +" ;\n" + 
+" IF @rownum > 0 THEN\n" + 
+" START TRANSACTION;\n" + 
+" set @sql = CONCAT(\"update "+tbname+" set "+ paraspSetUpdate + ",\" WHERE 1 = 1 " + paraspWhereUpdate + "\");\n" + 
+" --  SELECT @sql;\n" + 
+" prepare query from @sql;\n" + 
+" execute query;\n" + 
+" deallocate prepare query;\n" + 
+" COMMIT;\n" + 
+" SET @success = fcCompleteUpdateTable(_userid);\n" + 
+" SELECT  @rownum;\n" + 
+" --   Insert Loggin \n" + 
+" 	call sp_InsertLog('EDIT',_userid,@sql,@rownum,'"+ tbname +"');\n" + 
+" ELSE \n" + 
+" call getErrMsg(60005);  -- 60005	No Row for Update\n" + 
+" END IF; --  chk @rownum \n" + 
+" 	ELSE	\n" + 
+" 	call getErrMsg(60001); --  	Can't Update/Delete anather one user it.\n" + 
+" END IF; --  check session\n" + 
+" ELSE\n" + 
+" SIGNAL SQLSTATE  'ERR0R' SET  MESSAGE_TEXT = 'You Not Authoriz',   MYSQL_ERRNO = '40001';\n" + 
+" END IF;\n" + 
+" END IF; --  validate\n" + 
+" END\n" + 
+";;\n"+
+"DELIMITER ;\n"+
+" \n" + 
+"-- 	$stmt = $this->connection->prepare(\"call sp"+ tbname +"SearchbyCritiria(:criteria);\");\n" + 
+"DROP PROCEDURE IF EXISTS `sp"+ tbname +"SearchbyCritiria`;\n" +
+"DELIMITER ;;\n"+
+"CREATE  PROCEDURE sp"+ tbname +"SearchbyCritiria(`_criteria` varchar(80))\n" + 
+" BEGIN\n" + 
+" SET @sql = CONCAT(\"select * from "+tbname+" WHERE 1=1  "+ paralike +" \");\n" + 
+" 	prepare query from @sql;\n" + 
+" 	execute query;\n" + 
+" 	deallocate prepare query;\n" + 
+"\n" + 
+"END\n" + 
+";;\n"+
+"DELIMITER ;\n"+
+" \n"; 
+			return sp;		
+				
+			}
 			private function gen_sp():String {
 				var tbname:String = tbName.charAt(0).toUpperCase() + tbName.slice(1);
 				var php:String = '';
@@ -1317,111 +1901,111 @@
 				var ac:ArrayCollection = new ArrayCollection();
 				
 				if( aCPRA.length > 0 ){
-					for(i=0;i<aCPRA.length;i++){
-						
-						//						paramt += "_" + aCcolumn[i]['Field'].toString() + " " +  aCcolumn[i]['Type'].toString();
-						//						fieldlist += "`"+aCcolumn[i]['Field'].toString() + "` ";
-						//						//integer
-						//						if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
-						//							valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-						//							//String text	
-						//						} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
-						//							valuess += "QUOTE(`_"+aCcolumn[i]['Field'].toString()+"`)";	
-						//							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-						//							
-						//							//timestampe	
-						//						} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
-						//							valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d %H.%i.%s\"))"; 	
-						//							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-						//							//date	
-						//						} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
-						//							valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d\"))"; 	
-						//							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-						//							
-						//							//time	
-						//							//						} else if(String(aCcolumn[i]['Type']).indexOf('time')  != -1 ){
-						//							//							valuess += "QUOTE(`_"+aCcolumn[i]['Field'].toString()+"`)";	
-						//							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-						//						}
-						//						
-						//						
-						//						if(i <	aCcolumn.length -1 ){
-						//							paramt += ",";
-						//							fieldlist += ",";
-						//							//						valuess += ",\",\"";
-						//							valuess += ',\",\",';
-						//						}
-						
-					}
+               for(i=0;i<aCPRA.length;i++){
+               	
+               	//               	paramt += "_" + aCcolumn[i]['Field'].toString() + " " +  aCcolumn[i]['Type'].toString();
+               	//               	fieldlist += "`"+aCcolumn[i]['Field'].toString() + "` ";
+               	//               	//integer
+               	//               	if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
+               	//               		valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               	//               		//String text	
+               	//               	} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
+               	//               		valuess += "QUOTE(`_"+aCcolumn[i]['Field'].toString()+"`)";	
+               	//               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               	//               		
+               	//               		//timestampe	
+               	//               	} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
+               	//               		valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d %H:%i:%s\"))"; 	
+               	//               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               	//               		//date	
+               	//               	} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
+               	//               		valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d\"))"; 	
+               	//               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               	//               		
+               	//               		//time	
+               	//               		//               	} else if(String(aCcolumn[i]['Type']).indexOf('time')  != -1 ){
+               	//               		//               		valuess += "QUOTE(`_"+aCcolumn[i]['Field'].toString()+"`)";	
+               	//               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               	//               	}
+               	//               	
+               	//               	
+               	//               	if(i <	aCcolumn.length -1 ){
+               	//               		paramt += ",";
+               	//               		fieldlist += ",";
+               	//               		//               	valuess += ",\",\"";
+               	//               		valuess += ',\",\",';
+               	//               	}
+               	
+               }
 				} else {
-					for(i=0;i<aCcolumn.length;i++){
-						paramt += "_" + aCcolumn[i]['Field'].toString() + " " +  aCcolumn[i]['Type'].toString();
-						fieldlist += "`"+aCcolumn[i]['Field'].toString() + "` ";
-						//integer
-						if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
-							valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-							//String text	
-						} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
-							valuess += "QUOTE(`_"+aCcolumn[i]['Field'].toString()+"`)";	
-							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-							
-							//timestampe	
-						} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
-							valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d %H.%i.%s\"))"; 	
-							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-							//date	
-						} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
-							valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d\"))"; 	
-							//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-							
-						 //double
-						} else if(String(aCcolumn[i]['Type']).indexOf('double')  != -1 ){
-							valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
-						}
-						
-						
-						if(i <	aCcolumn.length -1 ){
-							paramt += ",";
-							fieldlist += ",";
-							//						valuess += ",\",\"";
-							valuess += ',\",\",';
-						}
-					}
-					
+               for(i=0;i<aCcolumn.length;i++){
+               	paramt += "_" + aCcolumn[i]['Field'].toString() + " " +  aCcolumn[i]['Type'].toString();
+               	fieldlist += "`"+aCcolumn[i]['Field'].toString() + "` ";
+               	//integer
+               	if( String(aCcolumn[i]['Type']).indexOf('int') != -1 ){
+               		valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               		//String text	
+               	} else if(String(aCcolumn[i]['Type']).indexOf('char')   != -1 || String(aCcolumn[i]['Type']).indexOf('text')  != -1   ){
+               		valuess += "QUOTE(`_"+aCcolumn[i]['Field'].toString()+"`)";	
+               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               		
+               		//timestampe	
+               	} else if(String(aCcolumn[i]['Type']).indexOf('times')  != -1  ){
+               		valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d %H:%i:%s\"))"; 	
+               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               		//date	
+               	} else if(String(aCcolumn[i]['Type']).indexOf('date')   != -1 ){
+               		valuess += "QUOTE(DATE_FORMAT(`_"+ aCcolumn[i]['Field'].toString() +"`,\"%Y-%m-%d\"))"; 	
+               		//valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               		
+               	 //double
+               	} else if(String(aCcolumn[i]['Type']).indexOf('double')  != -1 ){
+               		valuess += "`_"+aCcolumn[i]['Field'].toString()+"`";	
+               	}
+               	
+               	
+               	if(i <	aCcolumn.length -1 ){
+               		paramt += ",";
+               		fieldlist += ",";
+               		//               	valuess += ",\",\"";
+               		valuess += ',\",\",';
+               	}
+               }
+               
 				}
 				//				INSERT INTO persons (Firstname,Lastname,Sex,Age) VALUES ( _Firstname, _Lastname, _Sex, _Age);
 				
 				
 			//sp_new Insert	
 			php +=  "	DROP PROCEDURE IF EXISTS `sp"+ removeHTML(tbname) + "insert`;\n" +	
-					" 	CREATE PROCEDURE `sp"+ removeHTML(tbname) +"insert`("+ paramt +") \n" + 
-					"	 	BEGIN \n" + 
-					"	 	DECLARE idx INT DEFAULT -1; \n" + 
-					"	 	-- validate \n" + 
-					"		IF _useridx = '' or ISNULL(_useridx)  THEN  \n" + 
-					" 		call getErrMsg(60005); \n" + 
-					" 		ELSE \n" + 
-					" 		SET @auth = spAuthroize_usrid_module_func(_useridx,"+ txtModule.text +",'NEW'); \n" + 	
-					" 		IF @auth = 1 THEN \n" + 
-					" 		-- 	select @auth; \n" + 
-					" 		START TRANSACTION; \n" + 
-					" 			SET @sql = CONCAT(\"insert into "+ tbname + "("+ fieldlist +") VALUES(\","+ valuess+",\")\"); \n" + 
-					" 			prepare query from @sql; \n" + 
-					" 			execute query; \n" + 
-					"		 	deallocate prepare query; \n" + 
-					" 			select LAST_INSERT_ID() into idx; \n" + 
-					" 			SET @TF = fcCtrlUpdateTableSingle(_userid,idx,'tbSingle'); \n" + 
-					" 			-- Insert Loggin \n" +  
-					" 			call sp_InsertLog('NEW',_userid,@sql,idx,'"+ txtModule.text +"'); \n" + 
-					" 		COMMIT; \n" +  
-					" 		call sp"+ removeHTML(tbname) +"byID(_userid,idx); \n" + 
-					" 		-- select idx as id; \n" + 	
-					" 		ELSE \n" + 
-					" 		SIGNAL SQLSTATE  'ERR0R' SET  MESSAGE_TEXT = 'You Not Authoriz1',   MYSQL_ERRNO = '40001'; \n" + 
-					" 		END IF; \n" + 
-					" 		END IF;\n" +
-					" 		-- validate \n" + 
-					" 	END; \n\n\n"; 				
+               " 	CREATE PROCEDURE `sp"+ removeHTML(tbname) +"insert`("+ paramt +") \n" + 
+               "	 	BEGIN \n" + 
+               "	 	DECLARE idx INT DEFAULT -1; \n" + 
+               "	 	-- validate \n" + 
+               "		IF _useridx = '' or ISNULL(_useridx)  THEN  \n" + 
+               " 		call getErrMsg(60005); \n" + 
+               " 		ELSE \n" + 
+               " 		SET @auth = spAuthroize_usrid_module_func(_useridx,"+ txtModule.text +",'NEW'); \n" + 	
+               " 		IF @auth = 1 THEN \n" + 
+               " 		-- 	select @auth; \n" + 
+               " 		START TRANSACTION; \n" + 
+               " 			SET @sql = CONCAT(\"insert into "+ tbname + "("+ fieldlist +") VALUES(\","+ valuess+",\")\"); \n" + 
+               " 			prepare query from @sql; \n" + 
+               " 			execute query; \n" + 
+               "		 	deallocate prepare query; \n" + 
+               " 			select LAST_INSERT_ID() into idx; \n" + 
+               " 			SET @TF = fcCtrlUpdateTableSingle(_userid,idx,'tbSingle'); \n" + 
+               " 			-- Insert Loggin \n" +  
+               " 			call sp_InsertLog('NEW',_userid,@sql,idx,'"+ txtModule.text +"'); \n" + 
+               " 		COMMIT; \n" +  
+               " 		call sp"+ removeHTML(tbname) +"byID(_userid,idx); \n" + 
+               " 		-- select idx as id; \n" + 	
+               " 		ELSE \n" + 
+               " 		SIGNAL SQLSTATE  'ERR0R' SET  MESSAGE_TEXT = 'You Not Authoriz1',   MYSQL_ERRNO = '40001'; \n" + 
+               " 		END IF; \n" + 
+               " 		END IF;\n" +
+               " 		-- validate \n" + 
+               " 	END; \n\n\n"; 				
 				
 			 //spUpdate
 			php +=  "	DROP PROCEDURE IF EXISTS `sp"+ removeHTML(tbname) + "update`;\n" +	
@@ -1466,39 +2050,39 @@
 			
 		 	private function savefile(filename:String,p:*):void {
 				Alert.show('Want Save ' + filename + ' ?','Info',Alert.YES|Alert.NO,this,function(e:CloseEvent):void {
-					if(e.detail == Alert.YES){
-						var myPattern:RegExp = / /g;
-						var newFileName:String = filename;
-						if(newFileName.length > 1){
-							var file:File = File.desktopDirectory.resolvePath("Files/" + newFileName);
-							var stream:FileStream = new FileStream()
-							stream.open(file, FileMode.WRITE);
-							var str:String = p.text;
-							str = str.replace(/\r/g, File.lineEnding);
-							stream.writeUTFBytes(str);
-							stream.close();
-						}
-						Alert.show('Save Success','info');
-					}
+               if(e.detail == Alert.YES){
+               	var myPattern:RegExp = / /g;
+               	var newFileName:String = filename;
+               	if(newFileName.length > 1){
+               		var file:File = File.desktopDirectory.resolvePath("Files/" + newFileName);
+               		var stream:FileStream = new FileStream()
+               		stream.open(file, FileMode.WRITE);
+               		var str:String = p.text;
+               		str = str.replace(/\r/g, File.lineEnding);
+               		stream.writeUTFBytes(str);
+               		stream.close();
+               	}
+               	Alert.show('Save Success','info');
+               }
 				});
 				
 			}
 		 	private function savefile1(filename:String,s:String):void {
 				Alert.show('Want Save ' + filename + ' ?','Info',Alert.YES|Alert.NO,this,function(e:CloseEvent):void {
-					if(e.detail == Alert.YES){
-						var myPattern:RegExp = / /g;
-						var newFileName:String = filename;
-						if(newFileName.length > 1){
-							var file:File = File.desktopDirectory.resolvePath("Files/" + newFileName);
-							var stream:FileStream = new FileStream()
-							stream.open(file, FileMode.WRITE);
-							var str:String = s;
-							str = str.replace(/\r/g, File.lineEnding);
-							stream.writeUTFBytes(str);
-							stream.close();
-						}
-						Alert.show('Save Success','info');
-					}
+               if(e.detail == Alert.YES){
+               	var myPattern:RegExp = / /g;
+               	var newFileName:String = filename;
+               	if(newFileName.length > 1){
+               		var file:File = File.desktopDirectory.resolvePath("Files/" + newFileName);
+               		var stream:FileStream = new FileStream()
+               		stream.open(file, FileMode.WRITE);
+               		var str:String = s;
+               		str = str.replace(/\r/g, File.lineEnding);
+               		stream.writeUTFBytes(str);
+               		stream.close();
+               	}
+               	Alert.show('Save Success','info');
+               }
 				});
 				
 			}
@@ -1509,9 +2093,9 @@
 				myservice.database = database;
 				myservice.connect();
 				if(myservice.connected){
-					currentState = sQ.name;
+               currentState = sQ.name;
 				} else {
-					myservice.addEventListener(Event.CONNECT,goQuery);
+               myservice.addEventListener(Event.CONNECT,goQuery);
 				}
 			}
 			
@@ -1525,9 +2109,9 @@
 				myservice.database = database;
 				myservice.connect();
 				if(myservice.connected){
-					currentState = sMD.name;
+               currentState = sMD.name;
 				} else {
-					myservice.addEventListener(Event.CONNECT,goMaster);
+               myservice.addEventListener(Event.CONNECT,goMaster);
 				}
 			}
 			
@@ -1546,14 +2130,14 @@
 			protected function button_clickHandler(event:MouseEvent):void
 			{
 				if(StringUtil.trim(taQu.text).length > 10 ){
-					ev.ExecuteQuery(taQu.text,this);
-					
-//					dgQuery.dataProvider = [];
-//					dgQCollist.dataProvider = new ArrayCollection();
-//					taQuGen.text = '';
-//					Acqu.removeAll();
-//					dgQParametor.dataProvider = [];
-//					executequery(taQu.text);
+               ev.ExecuteQuery(taQu.text,this);
+               
+//               dgQuery.dataProvider = [];
+//               dgQCollist.dataProvider = new ArrayCollection();
+//               taQuGen.text = '';
+//               Acqu.removeAll();
+//               dgQParametor.dataProvider = [];
+//               executequery(taQu.text);
 				}
 				
 			}
@@ -1564,12 +2148,12 @@
 				o.label = dgQCollist.selectedItem;
 				var count:int = 0;
 				for(var i:int=0;i<dgQParametor.dataProvider.length;i++) {
-					if(dgQParametor.dataProvider[i].label == o.label ){
-						count = 1;
-					}
+               if(dgQParametor.dataProvider[i].label == o.label ){
+               	count = 1;
+               }
 				}
 				if(count == 0 ) {
-					dgQParametor.dataProvider.addItem(o);
+               dgQParametor.dataProvider.addItem(o);
 				}
 			}
 			
@@ -1582,84 +2166,84 @@
 			{
 				
 				if( txtQPojo.text == 'Q_' ) {
-					Alert.show('name and pojo  ต้องไม่เหมือนกัน');					
+               Alert.show('name and pojo  ต้องไม่เหมือนกัน');               
 				} else {
-					
-					
-					var qrytext:String = taQu.text.replace(/\n/g, ' ') + " where 1=1 ";
-					var qryPara:String = '';
-					var qrySetPara:String = '';
-					var pojo:String = txtQPojo.text.charAt(0).toUpperCase() + txtQPojo.text.slice(1);
-					var qrServ:String = txtQService.text.charAt(0).toUpperCase() + txtQService.text.slice(1);
-					var phptext:String = '';
-					
-					for(var i:int = 0; i < dgQParametor.dataProvider.length;i++ ) {
-						qrytext += "and " +  dgQParametor.dataProvider[i].label + " = ?  " ;
-						qryPara += "$"+ dgQParametor.dataProvider[i].label;
-						if(i != dgQParametor.dataProvider.length-1 ) {
-							qryPara += ",";
-						}
-						
-						qrySetPara += " 	$stmt->bindParam("+ (i+1).toString() +",$" + dgQParametor.dataProvider[i].label + ");\n";
-					}
-					
-					phptext +="<?php \n" +
-						"require_once 'Pdoconfig.php';\n\n\n" +
-						"/**  \n" +
-						" * @author Thongchai Lim  *  林生海   \n" +
-						" *	Tel:0816477729  0866018771  \n" +
-						" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
-						" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
-						" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
-						" *  @copyright 2010 TH/BKK \n" +
-						"**/  \n\n" +
-						"class "+ qrServ +"Service {   \n\n" +  
-						"private $connection = null;\n" +
-						"\n\n" +
-						"public function __construct()\n" +
-						"	{ \n" +
-						"	global $option;\n" +
-						"	$this->connection = new PDO( \n" +
-						"		\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
-						"		Pdoconfig::$username, \n" +
-						"		Pdoconfig::$password, \n" +
-						"		array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
-						"	);  \n" +
-						"}\n\n" +
-						
-						" public function  " +  txtQNmae.text  + "("+ qryPara + ") { \n" +
-						" 	$stmt = $this->connection->prepare(\"" + qrytext + "\"); \n" +
-						qrySetPara +
-						" if($stmt->execute()) {\n" +
-						" 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
-						"	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojo  +"'));\n" +
-						" } else {\n" +
-						" 	$errorInfo = $stmt->errorInfo();\n" +
-						"	 $this->echoError($errorInfo); \n" +
-						" //	 throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
-						" }\n" +
-						"  	if(count($rows) > 1 ) { \n" + 
-						"  	     return $rows; \n" + 
-						"  	} else if(count($rows) == 1 ) { \n" + 
-						"      	return $rows[0]; \n" + 
-						"  	} else { \n" + 
-						"  	      return null; \n" + 
-						"  	} \n" + 						
-						" }\n\n" +
-						"	private function echoError($errorInfo) { \n" +
-						" 		throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
-						"	} \n\n";
-						"	public function  __destruct(){\n" +
-						"		$this->connection = null; \n" +
-						"	}\n" +
-						"\n}\n\n\n" +
-						" class " + pojo +"{ \n";
-					for(var j:int=0;j<dgQCollist.dataProvider.length;j++) {
-						phptext += " 		public $"+dgQCollist.dataProvider[j] +";\n";
-					}
-					phptext += "} \n";
-					
-					taQuGen.text = phptext;
+               
+               
+               var qrytext:String = taQu.text.replace(/\n/g, ' ') + " where 1=1 ";
+               var qryPara:String = '';
+               var qrySetPara:String = '';
+               var pojo:String = txtQPojo.text.charAt(0).toUpperCase() + txtQPojo.text.slice(1);
+               var qrServ:String = txtQService.text.charAt(0).toUpperCase() + txtQService.text.slice(1);
+               var phptext:String = '';
+               
+               for(var i:int = 0; i < dgQParametor.dataProvider.length;i++ ) {
+               	qrytext += "and " +  dgQParametor.dataProvider[i].label + " = :" + dgQParametor.dataProvider[i].label + " " ;
+               	qryPara += "$"+ dgQParametor.dataProvider[i].label;
+               	if(i != dgQParametor.dataProvider.length-1 ) {
+               		qryPara += ",";
+               	}
+               	
+               	qrySetPara += " 	$stmt->bindParam('"+ dgQParametor.dataProvider[i].label +"',$" + dgQParametor.dataProvider[i].label + ");\n";
+               }
+               
+               phptext +="<?php \n" +
+               	"require_once 'Pdoconfig.php';\n\n\n" +
+               	"/**  \n" +
+               	" * @author Thongchai Lim  *  林生海   \n" +
+               	" *	Tel:0816477729  0866018771  \n" +
+               	" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
+               	" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
+               	" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
+               	" *  @copyright 2010 TH/BKK \n" +
+               	"**/  \n\n" +
+               	"class "+ qrServ +"Service {   \n\n" +  
+               	"private $connection = null;\n" +
+               	"\n\n" +
+               	"public function __construct()\n" +
+               	"	{ \n" +
+               	"	global $option;\n" +
+               	"	$this->connection = new PDO( \n" +
+               	"		\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
+               	"		Pdoconfig::$username, \n" +
+               	"		Pdoconfig::$password, \n" +
+               	"		array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
+               	"	);  \n" +
+               	"}\n\n" +
+               	
+               	" public function  " +  txtQNmae.text  + "("+ qryPara + ") { \n" +
+               	" 	$stmt = $this->connection->prepare(\"" + qrytext + "\"); \n" +
+               	qrySetPara +
+               	" if($stmt->execute()) {\n" +
+               	" 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);\n" +
+               	"	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojo  +"'));\n" +
+               	" } else {\n" +
+               	" 	$errorInfo = $stmt->errorInfo();\n" +
+               	"	 $this->echoError($errorInfo); \n" +
+               	" //	 throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
+               	" }\n" +
+               	"  	if(count($rows) > 1 ) { \n" + 
+               	"  	     return $rows; \n" + 
+               	"  	} else if(count($rows) == 1 ) { \n" + 
+               	"      	return $rows[0]; \n" + 
+               	"  	} else { \n" + 
+               	"  	      return null; \n" + 
+               	"  	} \n" +                	
+               	" }\n\n" +
+               	"	private function echoError($errorInfo) { \n" +
+               	" 		throw new Exception('MySQL Error ' . $errorInfo[2], $errorInfo[1]); \n" +
+               	"	} \n\n";
+               	"	public function  __destruct(){\n" +
+               	"		$this->connection = null; \n" +
+               	"	}\n" +
+               	"\n}\n\n\n" +
+               	" class " + pojo +"{ \n";
+               for(var j:int=0;j<dgQCollist.dataProvider.length;j++) {
+               	phptext += " 		public $"+dgQCollist.dataProvider[j] +";\n";
+               }
+               phptext += "} \n";
+               
+               taQuGen.text = phptext;
 				}
 			}
 			
@@ -1679,14 +2263,14 @@
 			protected function showtables():void
 			{
 				if(database == dataGrid.selectedItem.Database){
-					ev.ShowTable(dataGrid.selectedItem.Database,this);
-					database = dataGrid.selectedItem.Database;
+               ev.ShowTable(dataGrid.selectedItem.Database,this);
+               database = dataGrid.selectedItem.Database;
 				} else {
-					myservice.disconnect();
-					myservice.database = dataGrid.selectedItem.Database;
-					database = dataGrid.selectedItem.Database;
-					myservice.connect();
-					myservice.addEventListener(Event.CONNECT,connectMDdb);
+               myservice.disconnect();
+               myservice.database = dataGrid.selectedItem.Database;
+               database = dataGrid.selectedItem.Database;
+               myservice.connect();
+               myservice.addEventListener(Event.CONNECT,connectMDdb);
 				}
 			}
 			
@@ -1704,19 +2288,19 @@
 			protected function dragdrop(event:DragEvent):void
 			{
 				if(txtMaster.text == dataGrid2.selectedItem[dataGrid2.columns[0].dataField] || txtDetail.text == dataGrid2.selectedItem[dataGrid2.columns[0].dataField] ) {
-					
+               
 				} else {
-					if(event.target.id == 'gMaster'){
-						txtMaster.text = dataGrid2.selectedItem[dataGrid2.columns[0].dataField]
-						chktable = 0;
-						ev.ShowColum(txtMaster.text,chktable);
-					} else if(event.target.id == 'gDatail'){
-						txtDetail.text = dataGrid2.selectedItem[dataGrid2.columns[0].dataField]
-						chktable = 1;
-						ev.ShowColum(txtDetail.text,chktable);
-					} else {
-						chktable = -1 ;
-					}
+               if(event.target.id == 'gMaster'){
+               	txtMaster.text = dataGrid2.selectedItem[dataGrid2.columns[0].dataField]
+               	chktable = 0;
+               	ev.ShowColum(txtMaster.text,chktable);
+               } else if(event.target.id == 'gDatail'){
+               	txtDetail.text = dataGrid2.selectedItem[dataGrid2.columns[0].dataField]
+               	chktable = 1;
+               	ev.ShowColum(txtDetail.text,chktable);
+               } else {
+               	chktable = -1 ;
+               }
 				}
 				
 			}
@@ -1731,382 +2315,382 @@
 				var i:int = 0;
 				var chk:Boolean = false;
 				if(event.target.id == 'dataGrid4' ){
-					for(i=0;i<acMaster.length;i++){
-						if(acMaster[i].Field == event.target.selectedItem.Field ){
-							chk = true;
-							break;
-						}
-					}
+               for(i=0;i<acMaster.length;i++){
+               	if(acMaster[i].Field == event.target.selectedItem.Field ){
+               		chk = true;
+               		break;
+               	}
+               }
 				} else if(event.target.id == 'dataGrid3') {
-					for(i=0;i<acDetail.length;i++){
-						if(	acDetail[i].Field == event.target.selectedItem.Field) {
-							chk = true;
-							break;
-						}
-					}
+               for(i=0;i<acDetail.length;i++){
+               	if(	acDetail[i].Field == event.target.selectedItem.Field) {
+               		chk = true;
+               		break;
+               	}
+               }
 				}
 				
 				for(i=0;i<acKey.length;i++) {
-					if(acKey[i].label == event.target.selectedItem.Field){
-						chk = false;
-						break;
-					}
+               if(acKey[i].label == event.target.selectedItem.Field){
+               	chk = false;
+               	break;
+               }
 				}
 				
 				if(chk){
-					var o:Object = new Object();
-					o.label = event.target.selectedItem.Field;
-					acKey.addItem(o);
+               var o:Object = new Object();
+               o.label = event.target.selectedItem.Field;
+               acKey.addItem(o);
 				}
 			}
 			
 			protected function genMasterDetail(event:MouseEvent):void
 			{
 				if(acKey.length != 0 ) {
-					
-					var functionname:String = 'getMasterDetail';
-					var parametor:String = "";
-					var pojoMaster:String = txtMaster.text.charAt(0).toUpperCase() + txtMaster.text.slice(1);
-					var pojoDetail:String = txtDetail.text.charAt(0).toUpperCase() + txtDetail.text.slice(1);
-					var pojoMasterDetail:String = "MasDetail"+pojoMaster+pojoDetail;
-					var pojo:String = '';
-					var paraMaster:String = "select * from "+ txtMaster.text +" where 1=1";
-					var paraMasterAll:String = "select * from "+ txtMaster.text +" where 1=1";
-					var paraDetail:String = "select * from "+ txtDetail.text +" where 1=1";
-					var bindpara:String = '';
-					var i:int = 0;
-					pojo = "class " + pojoMaster + "{ \n";
-					for(i=0;i<acMaster.length;i++){
-						pojo += "     public  $"+acMaster[i].Field + ";\n";
-					}
-					
-					pojo += "} \n\n " +
-						"class " + pojoDetail + "{  \n";
-					
-					for(i=0;i<acDetail.length;i++){
-						pojo += "     public  $"+acDetail[i].Field + ";\n";
-					}
-					pojo += "\n} \n";
-					
-					pojo += "class " + pojoMasterDetail + "{\n" +
-						"		public $master;\n" +
-						"		public $detail;\n" +
-						"  } \n";
-					
-					
-					
-					
-					for(i=0;i<acKey.length;i++){
-						paraMaster += " and " + acKey[i].label + "= ? ";
-						bindpara += "$stmt->bindParam(" + (i+1) + ",$"+acKey[i].label +");\n";
-						parametor += "$"+acKey[i].label;
-						if(i != acKey.length-1 ) {
-							parametor += ",";
-						}
-					}
-					for(i=0;i<acKey.length;i++){
-						paraDetail += " and " + acKey[i].label + "= ? ";
-					}
-					
-					MsDtSvName = pojoMaster+pojoDetail+'Service.php';
-					//-------------------------------
-					var php:String = "<?php \n" +
-						"require_once 'Pdoconfig.php';\n\n\n" +
-						"/**  \n" +
-						" * @author Thongchai Lim  *  林生海   \n" +
-						" *	Tel:0816477729  0866018771  \n" +
-						" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
-						" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
-						" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
-						" *  @copyright 2010 TH/BKK \n" +
-						"**/  \n\n" +
-						"class "+ pojoMaster+pojoDetail +"Service {   \n\n" +  
-						"		private $connection = null;\n" +
-						"\n\n" +
-						"		public function __construct()\n" +
-						"			{ \n" +
-						"			global $option;\n" +
-						"			$this->connection = new PDO( \n" +
-						"				\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
-						"				Pdoconfig::$username, \n" +
-						"				Pdoconfig::$password, \n" +
-						"				array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
-						"			);  \n" +
-						"		}\n\n" +
-						"        // get by ID  \n" + 
-						"        // @result  Master & Detail[] \n" +  
-						"        public function "+ functionname +"("+ parametor +") { \n" + 
-						"            $stmt = $this->connection->prepare(\""+ paraMaster +"\"); \n";
-					for(i=0;i<acKey.length;i++){
-						php += "            $stmt->bindParam(" + (i+1).toString() +",$"+acKey[i].label +"); \n";  
-					}
-					
-					php +="             \n" + 
-						"            if($stmt->execute()) { \n" + 
-						"                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-						"            } else { \n" + 
-						"                $errorInfo = $stmt->errorInfo(); \n" + 
-						"        	    throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
-						"        	} \n" + 
-						" \n" +             
-						"            $result = new "+ pojoMasterDetail + "(); \n" + 
-						"            $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoMaster  +"')); \n" + 
-						"            $result->master = $rows[0]; \n" +  	  
-						" \n" + 
-						"            $stmt =$this->connection->prepare('"+ paraDetail +"'); \n" ;
-					for(i=0;i<acKey.length;i++){
-						php += "            $stmt->bindParam(" + (i+1).toString() +",$"+acKey[i].label +"); \n" ; 
-					}
-					php +=	"            if($stmt->execute() ) { \n" + 
-						"                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-						"                $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoDetail +"')); \n" + 
-						"            } else { \n" + 
-						"		$errorInfo = $stmt->errorInfo(); \n" + 
-						"		throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
-						"        	} \n" + 
-						"                $result->detail = $rows; \n" +
-						" \n" +             
-						"            return $result; \n" + 
-						"        } \n\n";
-					
-					// Read ---------------------------
-					// Read Master --------------------
-					
+               
+               var functionname:String = 'getMasterDetail';
+               var parametor:String = "";
+               var pojoMaster:String = txtMaster.text.charAt(0).toUpperCase() + txtMaster.text.slice(1);
+               var pojoDetail:String = txtDetail.text.charAt(0).toUpperCase() + txtDetail.text.slice(1);
+               var pojoMasterDetail:String = "MasDetail"+pojoMaster+pojoDetail;
+               var pojo:String = '';
+               var paraMaster:String = "select * from "+ txtMaster.text +" where 1=1";
+               var paraMasterAll:String = "select * from "+ txtMaster.text +" where 1=1";
+               var paraDetail:String = "select * from "+ txtDetail.text +" where 1=1";
+               var bindpara:String = '';
+               var i:int = 0;
+               pojo = "class " + pojoMaster + "{ \n";
+               for(i=0;i<acMaster.length;i++){
+               	pojo += "     public  $"+acMaster[i].Field + ";\n";
+               }
+               
+               pojo += "} \n\n " +
+               	"class " + pojoDetail + "{  \n";
+               
+               for(i=0;i<acDetail.length;i++){
+               	pojo += "     public  $"+acDetail[i].Field + ";\n";
+               }
+               pojo += "\n} \n";
+               
+               pojo += "class " + pojoMasterDetail + "{\n" +
+               	"		public $master;\n" +
+               	"		public $detail;\n" +
+               	"  } \n";
+               
+               
+               
+               
+               for(i=0;i<acKey.length;i++){
+               	paraMaster += " and " + acKey[i].label + "= ? ";
+               	bindpara += "$stmt->bindParam(" + (i+1) + ",$"+acKey[i].label +");\n";
+               	parametor += "$"+acKey[i].label;
+               	if(i != acKey.length-1 ) {
+               		parametor += ",";
+               	}
+               }
+               for(i=0;i<acKey.length;i++){
+               	paraDetail += " and " + acKey[i].label + "= ? ";
+               }
+               
+               MsDtSvName = pojoMaster+pojoDetail+'Service.php';
+               //-------------------------------
+               var php:String = "<?php \n" +
+               	"require_once 'Pdoconfig.php';\n\n\n" +
+               	"/**  \n" +
+               	" * @author Thongchai Lim  *  林生海   \n" +
+               	" *	Tel:0816477729  0866018771  \n" +
+               	" *	Email/MSN:limweb@hotmail.com,thongchai@servit.co.th  \n" +
+               	" *	GoogleTalk:lim.thongchai@gmail.com  \n" +
+               	" *	Social Network Name: “limweb” Skype/HI5/Twitter/Facebook  \n" +
+               	" *  @copyright 2010 TH/BKK \n" +
+               	"**/  \n\n" +
+               	"class "+ pojoMaster+pojoDetail +"Service {   \n\n" +  
+               	"		private $connection = null;\n" +
+               	"\n\n" +
+               	"		public function __construct()\n" +
+               	"			{ \n" +
+               	"			global $option;\n" +
+               	"			$this->connection = new PDO( \n" +
+               	"				\"mysql:host=\" . Pdoconfig::$server . \"; port=\" . Pdoconfig::$port . \"; dbname=\" . Pdoconfig::$databasename, \n" +
+               	"				Pdoconfig::$username, \n" +
+               	"				Pdoconfig::$password, \n" +
+               	"				array(PDO::MYSQL_ATTR_INIT_COMMAND => \"SET NAMES utf8\") \n" +
+               	"			);  \n" +
+               	"		}\n\n" +
+               	"        // get by ID  \n" + 
+               	"        // @result  Master & Detail[] \n" +  
+               	"        public function "+ functionname +"("+ parametor +") { \n" + 
+               	"            $stmt = $this->connection->prepare(\""+ paraMaster +"\"); \n";
+               for(i=0;i<acKey.length;i++){
+               	php += "            $stmt->bindParam(" + (i+1).toString() +",$"+acKey[i].label +"); \n";  
+               }
+               
+               php +="             \n" + 
+               	"            if($stmt->execute()) { \n" + 
+               	"                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               	"            } else { \n" + 
+               	"                $errorInfo = $stmt->errorInfo(); \n" + 
+               	"        	    throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
+               	"        	} \n" + 
+               	" \n" +             
+               	"            $result = new "+ pojoMasterDetail + "(); \n" + 
+               	"            $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoMaster  +"')); \n" + 
+               	"            $result->master = $rows[0]; \n" +  	  
+               	" \n" + 
+               	"            $stmt =$this->connection->prepare('"+ paraDetail +"'); \n" ;
+               for(i=0;i<acKey.length;i++){
+               	php += "            $stmt->bindParam(" + (i+1).toString() +",$"+acKey[i].label +"); \n" ; 
+               }
+               php +=	"            if($stmt->execute() ) { \n" + 
+               	"                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               	"                $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoDetail +"')); \n" + 
+               	"            } else { \n" + 
+               	"		$errorInfo = $stmt->errorInfo(); \n" + 
+               	"		throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
+               	"        	} \n" + 
+               	"                $result->detail = $rows; \n" +
+               	" \n" +             
+               	"            return $result; \n" + 
+               	"        } \n\n";
+               
+               // Read ---------------------------
+               // Read Master --------------------
+               
 				php +=	"        // get Master All  \n" + 
-						"        // @result  Master \n" +  
-						"        public function getAll"+  pojoMaster+"() { \n" + 
-						"            $stmt = $this->connection->prepare(\""+ paraMasterAll +"\"); \n";
+               	"        // @result  Master \n" +  
+               	"        public function getAll"+  pojoMaster+"() { \n" + 
+               	"            $stmt = $this->connection->prepare(\""+ paraMasterAll +"\"); \n";
 				  php +="             \n" + 
-						"            if($stmt->execute()) { \n" + 
-						"                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-						"            	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoMaster  +"')); \n" + 
-						"            } else { \n" + 
-						"                $errorInfo = $stmt->errorInfo(); \n" + 
-						"        	    throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
-						"        	} \n" + 
-						" \n" +             
-						"            return $rows; \n" + 
-						"        } \n\n";
-					
-//					// Read Detail by Masterid & Detail ID
-//					select * from Detail where masterid = ? and detailid = ?
+               	"            if($stmt->execute()) { \n" + 
+               	"                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+               	"            	$rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoMaster  +"')); \n" + 
+               	"            } else { \n" + 
+               	"                $errorInfo = $stmt->errorInfo(); \n" + 
+               	"        	    throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
+               	"        	} \n" + 
+               	" \n" +             
+               	"            return $rows; \n" + 
+               	"        } \n\n";
+               
+//               // Read Detail by Masterid & Detail ID
+//               select * from Detail where masterid = ? and detailid = ?
 				php +=  "        // get Detail by ID  \n" + 
-					  "        // @result  Detail[] \n" +  
-					  "        public function get"+ pojoDetail +"byId("+ parametor +") { \n" + 
-					  "            $stmt = $this->connection->prepare(\""+ paraDetail +"\"); \n";
+                 "        // @result  Detail[] \n" +  
+                 "        public function get"+ pojoDetail +"byId("+ parametor +") { \n" + 
+                 "            $stmt = $this->connection->prepare(\""+ paraDetail +"\"); \n";
 				  for(i=0;i<acKey.length;i++){
-					  php += "            $stmt->bindParam(" + (i+1).toString() +",$"+acKey[i].label +"); \n";  
+                 php += "            $stmt->bindParam(" + (i+1).toString() +",$"+acKey[i].label +"); \n";  
 				  }
 		     php +=	"            if($stmt->execute() ) { \n" + 
-					  "                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
-					  "                $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoDetail +"')); \n" + 
-					  "            } else { \n" + 
-					  "		$errorInfo = $stmt->errorInfo(); \n" + 
-					  "		throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
-					  "        	} \n" + 
-					  "            return $rows; \n" + 
-					  "        } \n\n";
-//					
-//					// update -------------------------
-//					update master set x=x ,y=y ,z=z where id = ?
+                 "                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); \n" + 
+                 "                $rows = Pdoconfig::prepareForAMF($rows,array(0 => '"+ pojoDetail +"')); \n" + 
+                 "            } else { \n" + 
+                 "		$errorInfo = $stmt->errorInfo(); \n" + 
+                 "		throw new Exception('PDO Error:', $errorInfo[1], $errorInfo[2]); \n" + 
+                 "        	} \n" + 
+                 "            return $rows; \n" + 
+                 "        } \n\n";
+//               
+//               // update -------------------------
+//               update master set x=x ,y=y ,z=z where id = ?
 			 		var parakey:String = '';
-					var paraField:String ='';
-					var binparaField:String = '';
-					var binparaKey:String = '';
-					
+               var paraField:String ='';
+               var binparaField:String = '';
+               var binparaKey:String = '';
+               
 			 		for(i=0;i<acMaster.length;i++){
-						if(acMaster[i].Key != "PRI"){
-							 paraField += acMaster[i].Field + "= :" + acMaster[i].Field;
-							 binparaField  += "            $stmt->bindParam('" + acMaster[i].Field +"',$item->"+ acMaster[i].Field + "); \n" ;
-							if(i< acMaster.length-1){
-								paraField += ', ';	
-							}
-						}
-					}
+               	if(acMaster[i].Key != "PRI"){
+               		 paraField += acMaster[i].Field + "= :" + acMaster[i].Field;
+               		 binparaField  += "            $stmt->bindParam('" + acMaster[i].Field +"',$item->"+ acMaster[i].Field + "); \n" ;
+               		if(i< acMaster.length-1){
+               			paraField += ', ';	
+               		}
+               	}
+               }
 
-					for(i=0;i<acKey.length;i++){
-						parakey += ' and ' + acKey[i].label+ " = :" + acKey[i].label ;
-					 	binparaKey  += "            $stmt->bindParam('" + acKey[i].label +"',$item->"+ acKey[i].label +"); \n" ;
-					}
+               for(i=0;i<acKey.length;i++){
+               	parakey += ' and ' + acKey[i].label+ " = :" + acKey[i].label ;
+                	binparaKey  += "            $stmt->bindParam('" + acKey[i].label +"',$item->"+ acKey[i].label +"); \n" ;
+               }
 
-					
+               
 				php +=	"	//update Master \n" + 
-						"	public function update" + pojoMaster +"($item) { \n" +  
-					   	"	$stmt = $this->connection->prepare( ' UPDATE " + pojoMaster + " SET "+ paraField + " where 1= 1 " + parakey + " '); " +
-						"   \n" + binparaField + binparaKey +
-					 	"	if($stmt->execute()) {\n" +  
-						"	$row = $stmt->rowCount(); \n" + 
-						"	} else { \n " + 
-						"		$errorInfo = $stmt->errorInfo();\n" +  
-						"		$this->echoError($errorInfo); \n" + 
-						"		} \n" + 
-						"	//return $row;  \n" +  
-						"		}\n\n" ;
-//					update Detail
+               	"	public function update" + pojoMaster +"($item) { \n" +  
+                  	"	$stmt = $this->connection->prepare( ' UPDATE " + pojoMaster + " SET "+ paraField + " where 1= 1 " + parakey + " '); " +
+               	"   \n" + binparaField + binparaKey +
+                	"	if($stmt->execute()) {\n" +  
+               	"	$row = $stmt->rowCount(); \n" + 
+               	"	} else { \n " + 
+               	"		$errorInfo = $stmt->errorInfo();\n" +  
+               	"		$this->echoError($errorInfo); \n" + 
+               	"		} \n" + 
+               	"	//return $row;  \n" +  
+               	"		}\n\n" ;
+//               update Detail
 				var paradetailField:String = '';
 				var paradetailKey:String = '';
 				var binparadetailField:String = '';
 				var binparadetailKey:String = '';
-					for(i=0;i<acDetail.length;i++){
-						if(acDetail[i].Key != "PRI"){
-							paradetailField += acDetail[i].Field + "= :" + acDetail[i].Field;
-							binparadetailField  += "            $stmt->bindParam('" + acDetail[i].Field +"',$item->"+ acDetail[i].Field + "); \n" ;
-							if(i< acDetail.length-1){
-								paradetailField += ', ';	
-							}
-						}	
-					}
+               for(i=0;i<acDetail.length;i++){
+               	if(acDetail[i].Key != "PRI"){
+               		paradetailField += acDetail[i].Field + "= :" + acDetail[i].Field;
+               		binparadetailField  += "            $stmt->bindParam('" + acDetail[i].Field +"',$item->"+ acDetail[i].Field + "); \n" ;
+               		if(i< acDetail.length-1){
+               			paradetailField += ', ';	
+               		}
+               	}	
+               }
 				
-					for(i=0;i<acDetailKey.length;i++){
-						paradetailKey += ' and ' + acDetailKey[i].Field + " = :" + acDetailKey[i].Field ;
-						binparadetailKey  += "            $stmt->bindParam('" + acDetailKey[i].Field +"',$item->"+ acDetailKey[i].Field +"); \n" ;
-					}
-					
-					
-					php +=	"	//update Detail \n" + 
-						"	public function update" + pojoDetail +"($item) { \n" +  
-						"	$stmt = $this->connection->prepare( ' UPDATE " + pojoDetail + " SET "+ paradetailField + " where 1= 1 " + paradetailKey + " '); " +
-						"   \n" + binparadetailField + binparadetailKey +
-						"	if($stmt->execute()) {\n" +  
-						"	$row = $stmt->rowCount(); \n" + 
-						"	} else { \n " + 
-						"		$errorInfo = $stmt->errorInfo();\n" +  
-						"		$this->echoError($errorInfo); \n" + 
-						"		} \n" + 
-						"	//return $row;  \n" +  
-						"		}\n\n" ;
-					
+               for(i=0;i<acDetailKey.length;i++){
+               	paradetailKey += ' and ' + acDetailKey[i].Field + " = :" + acDetailKey[i].Field ;
+               	binparadetailKey  += "            $stmt->bindParam('" + acDetailKey[i].Field +"',$item->"+ acDetailKey[i].Field +"); \n" ;
+               }
+               
+               
+               php +=	"	//update Detail \n" + 
+               	"	public function update" + pojoDetail +"($item) { \n" +  
+               	"	$stmt = $this->connection->prepare( ' UPDATE " + pojoDetail + " SET "+ paradetailField + " where 1= 1 " + paradetailKey + " '); " +
+               	"   \n" + binparadetailField + binparadetailKey +
+               	"	if($stmt->execute()) {\n" +  
+               	"	$row = $stmt->rowCount(); \n" + 
+               	"	} else { \n " + 
+               	"		$errorInfo = $stmt->errorInfo();\n" +  
+               	"		$this->echoError($errorInfo); \n" + 
+               	"		} \n" + 
+               	"	//return $row;  \n" +  
+               	"		}\n\n" ;
+               
 				
-//					
-//					// delete --------------------------
-					var deletepara:String = '';
-					var deletekey:String = '';
-					var bindeletepara:String = '';
-					for(i=0; i<acKey.length; i++){
-						deletepara += "$"+ acKey[i].label;
-						deletekey += ' and ' + acKey[i].label + " = :" + acKey[i].label ;
-						bindeletepara  += "            $stmt->bindParam('" + acKey[i].label +"',$"+ acKey[i].label +"); \n" ;
-						if(i<acKey.length-1){
-							deletepara += ", ";
-						}
-					}
-					
-					//------------ Delete  Function --------------------
-						php += "public function delete" + pojoMaster + "(" + deletepara +") { \n" +
-							"$stmt = $this->connection->prepare(\"delete from "+ pojoMaster + "  where 1=1 " + deletekey+ "\");\n" + bindeletepara + "\n";
-						php += "if($stmt->execute()) {\n" +
-						"$row = $stmt->rowCount();\n" +
-						"} else {\n" +
-						"  	$errorInfo = $stmt->errorInfo();\n" +
-						"	$this->echoError($errorInfo); \n" +
-						"	}\n" +
-						"// return $row; \n" +
-						"}\n\n";	 
-					
+//               
+//               // delete --------------------------
+               var deletepara:String = '';
+               var deletekey:String = '';
+               var bindeletepara:String = '';
+               for(i=0; i<acKey.length; i++){
+               	deletepara += "$"+ acKey[i].label;
+               	deletekey += ' and ' + acKey[i].label + " = :" + acKey[i].label ;
+               	bindeletepara  += "            $stmt->bindParam('" + acKey[i].label +"',$"+ acKey[i].label +"); \n" ;
+               	if(i<acKey.length-1){
+               		deletepara += ", ";
+               	}
+               }
+               
+               //------------ Delete  Function --------------------
+               	php += "public function delete" + pojoMaster + "(" + deletepara +") { \n" +
+               		"$stmt = $this->connection->prepare(\"delete from "+ pojoMaster + "  where 1=1 " + deletekey+ "\");\n" + bindeletepara + "\n";
+               	php += "if($stmt->execute()) {\n" +
+               	"$row = $stmt->rowCount();\n" +
+               	"} else {\n" +
+               	"  	$errorInfo = $stmt->errorInfo();\n" +
+               	"	$this->echoError($errorInfo); \n" +
+               	"	}\n" +
+               	"// return $row; \n" +
+               	"}\n\n";	 
+               
 
-//					// delete --------------------------
-						var deleteparadetail:String = '';
-						var deletekeydetail:String = '';
-						var bindeleteparadetail:String = '';
-						for(i=0; i<acDetailKey.length; i++){
-							deleteparadetail += "$"+ acDetailKey[i].Field;
-							deletekeydetail += ' and ' + acDetailKey[i].Field + " = :" + acDetailKey[i].Field ;
-							bindeleteparadetail  += "            $stmt->bindParam('" + acDetailKey[i].Field +"',$"+ acDetailKey[i].Field +"); \n" ;
-							if(i  < acDetailKey.length-1 ){
-								deleteparadetail += ", ";
-							}
-						}
-						
-						//------------ Delete  Function --------------------
-						php += "public function delete" + pojoDetail + "(" + deleteparadetail +") { \n" +
-							"$stmt = $this->connection->prepare(\"delete from "+ pojoDetail + "  where 1=1 " + deletekeydetail+ "\");\n" + bindeleteparadetail + "\n";
-						php += "if($stmt->execute()) {\n" +
-							"$row = $stmt->rowCount();\n" +
-							"} else {\n" +
-							"  	$errorInfo = $stmt->errorInfo();\n" +
-							"	$this->echoError($errorInfo); \n" +
-							"	}\n" +
-							"// return $row; \n" +
-							"}\n\n";	 
-											
-					
-					
-					
-					
-					
-//					delete Detail
-//					
-//					
-//					// insert -------------------------
-//					Insert Master
-					//insert into master(x,y,z) values(:x,:y,:z)
-					var parainsert:String = '';
-					var paravalueinsert:String = '';
-					var binparainsert:String = '';
-					for(i=0;i<acMaster.length;i++) {
-						parainsert +=  acMaster[i].Field;
-						paravalueinsert += ':'+acMaster[i].Field;
-						binparainsert  += "            $stmt->bindParam('" + acMaster[i].Field +"',$item->"+ acMaster[i].Field +"); \n" ;
+//               // delete --------------------------
+               	var deleteparadetail:String = '';
+               	var deletekeydetail:String = '';
+               	var bindeleteparadetail:String = '';
+               	for(i=0; i<acDetailKey.length; i++){
+               		deleteparadetail += "$"+ acDetailKey[i].Field;
+               		deletekeydetail += ' and ' + acDetailKey[i].Field + " = :" + acDetailKey[i].Field ;
+               		bindeleteparadetail  += "            $stmt->bindParam('" + acDetailKey[i].Field +"',$"+ acDetailKey[i].Field +"); \n" ;
+               		if(i  < acDetailKey.length-1 ){
+               			deleteparadetail += ", ";
+               		}
+               	}
+               	
+               	//------------ Delete  Function --------------------
+               	php += "public function delete" + pojoDetail + "(" + deleteparadetail +") { \n" +
+               		"$stmt = $this->connection->prepare(\"delete from "+ pojoDetail + "  where 1=1 " + deletekeydetail+ "\");\n" + bindeleteparadetail + "\n";
+               	php += "if($stmt->execute()) {\n" +
+               		"$row = $stmt->rowCount();\n" +
+               		"} else {\n" +
+               		"  	$errorInfo = $stmt->errorInfo();\n" +
+               		"	$this->echoError($errorInfo); \n" +
+               		"	}\n" +
+               		"// return $row; \n" +
+               		"}\n\n";	 
+                              	
+               
+               
+               
+               
+               
+//               delete Detail
+//               
+//               
+//               // insert -------------------------
+//               Insert Master
+               //insert into master(x,y,z) values(:x,:y,:z)
+               var parainsert:String = '';
+               var paravalueinsert:String = '';
+               var binparainsert:String = '';
+               for(i=0;i<acMaster.length;i++) {
+               	parainsert +=  acMaster[i].Field;
+               	paravalueinsert += ':'+acMaster[i].Field;
+               	binparainsert  += "            $stmt->bindParam('" + acMaster[i].Field +"',$item->"+ acMaster[i].Field +"); \n" ;
 
-						if(i < acMaster.length-1 ){
-							parainsert  += ", ";
-							paravalueinsert  += ", ";
-						}
-					}
-					php +=	"	//Insert Master \n" + 
-						"	public function insert" + pojoMaster +"($item) { \n" +  
-						"	$stmt = $this->connection->prepare( ' Insert Into " +  pojoMaster + ' ( '+ parainsert +' ) values ( ' + paravalueinsert + ' )); ' +  
-						"   \n" + binparainsert + "\n" +
-						"	if($stmt->execute()) {\n" +  
-						"		$autoid = $this->connection->lastInsertId();\n" +
-						"	} else { \n"+
-						"		$errorInfo = $stmt->errorInfo();\n"+ 
-						"		$this->echoError($errorInfo);\n" +
-						"	} \n"+
-						"	return $autoid;\n"+ 
-						"}\n\n\n";
-					
-					
-//					Insert Detail
-					var parainsertDetail:String = '';
-					var paravalueinsertDetail:String = '';
-					var binparainsertDetail:String = '';
-					for(i=0;i<acDetail.length;i++) {
-						parainsertDetail +=  acDetail[i].Field;
-						paravalueinsertDetail += ':'+acDetail[i].Field;
-						binparainsertDetail  += "            $stmt->bindParam('" + acDetail[i].Field +"',$item->"+ acDetail[i].Field +"); \n" ;
-						
-						if(i < acDetail.length-1 ){
-							parainsertDetail  += ", ";
-							paravalueinsertDetail  += ", ";
-						}
-					}
-					php +=	"	//Insert Detail \n" + 
-						"	public function insert" + pojoDetail +"($item) { \n" +  
-						"	$stmt = $this->connection->prepare( ' Insert Into " + pojoDetail + ' ( '+ parainsertDetail +' ) values ( ' + paravalueinsertDetail + ' )); ' +  
-						"   \n" + binparainsertDetail + "\n" +
-						"	if($stmt->execute()) {\n" +  
-						"		$autoid = $this->connection->lastInsertId();\n" +
-						"	} else { \n"+
-						"		$errorInfo = $stmt->errorInfo();\n"+ 
-						"		$this->echoError($errorInfo);\n" +
-						"	} \n"+
-						"	return $autoid;\n"+ 
-						"}\n\n\n";	
-					
-					
-					
-					//------------ __destruct function -----------------
-					php +=  "		public function  __destruct(){\n" +
-						"				$this->connection = null; \n" +
-						"		} \n" +
-						"\n\n }\n\n";
-					
-					php += pojo;
-					//-------------------------------
-					taQry.text = php;
+               	if(i < acMaster.length-1 ){
+               		parainsert  += ", ";
+               		paravalueinsert  += ", ";
+               	}
+               }
+               php +=	"	//Insert Master \n" + 
+               	"	public function insert" + pojoMaster +"($item) { \n" +  
+               	"	$stmt = $this->connection->prepare( ' Insert Into " +  pojoMaster + ' ( '+ parainsert +' ) values ( ' + paravalueinsert + ' )); ' +  
+               	"   \n" + binparainsert + "\n" +
+               	"	if($stmt->execute()) {\n" +  
+               	"		$autoid = $this->connection->lastInsertId();\n" +
+               	"	} else { \n"+
+               	"		$errorInfo = $stmt->errorInfo();\n"+ 
+               	"		$this->echoError($errorInfo);\n" +
+               	"	} \n"+
+               	"	return $autoid;\n"+ 
+               	"}\n\n\n";
+               
+               
+//               Insert Detail
+               var parainsertDetail:String = '';
+               var paravalueinsertDetail:String = '';
+               var binparainsertDetail:String = '';
+               for(i=0;i<acDetail.length;i++) {
+               	parainsertDetail +=  acDetail[i].Field;
+               	paravalueinsertDetail += ':'+acDetail[i].Field;
+               	binparainsertDetail  += "            $stmt->bindParam('" + acDetail[i].Field +"',$item->"+ acDetail[i].Field +"); \n" ;
+               	
+               	if(i < acDetail.length-1 ){
+               		parainsertDetail  += ", ";
+               		paravalueinsertDetail  += ", ";
+               	}
+               }
+               php +=	"	//Insert Detail \n" + 
+               	"	public function insert" + pojoDetail +"($item) { \n" +  
+               	"	$stmt = $this->connection->prepare( ' Insert Into " + pojoDetail + ' ( '+ parainsertDetail +' ) values ( ' + paravalueinsertDetail + ' )); ' +  
+               	"   \n" + binparainsertDetail + "\n" +
+               	"	if($stmt->execute()) {\n" +  
+               	"		$autoid = $this->connection->lastInsertId();\n" +
+               	"	} else { \n"+
+               	"		$errorInfo = $stmt->errorInfo();\n"+ 
+               	"		$this->echoError($errorInfo);\n" +
+               	"	} \n"+
+               	"	return $autoid;\n"+ 
+               	"}\n\n\n";	
+               
+               
+               
+               //------------ __destruct function -----------------
+               php +=  "		public function  __destruct(){\n" +
+               	"				$this->connection = null; \n" +
+               	"		} \n" +
+               	"\n\n }\n\n";
+               
+               php += pojo;
+               //-------------------------------
+               taQry.text = php;
 				} else {
-					Alert.show('select key or parametor');
+               Alert.show('select key or parametor');
 				}
 			}
 			
@@ -2133,36 +2717,66 @@
 				
 			}
 			
+			protected function gPara_dragEnterHandler(event:DragEvent):void
+			{
+				DragManager.acceptDragDrop(event.target as UIComponent);
+			}
+			
+			
+			
+			protected function gPara_dragDropHandler(event:DragEvent):void
+			{
+				var count:int = 0;
+				for (var j:int = 0; j < gField.selectedItems.length; j++) 
+				{
+               count = 0;
+               for(var i:int=0;i<gPara.dataProvider.length;i++ ){
+               	if(gPara.dataProvider[i].Field == gField.selectedItems[j].Field ){
+               		count += 1;
+               	}
+               }
+               
+               if(count == 0 ){
+               	gPara.dataProvider.addItem(gField.selectedItems[j]);
+               } 
+               
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<mxml:MySqlService id="myservice" 
-						   autoConnect.sSelectDb="false"
-						   sqlError="handleError(event)"
-						   />	
+		<mxml:MySqlService id="myservice" sqlError="handleError(event)"
+						   autoConnect.sSelectDb="false"/>	
 	</fx:Declarations>
 	<s:Panel includeIn="sSelectDb" width="100%" height="100%" title="{database} : {tbName} ">
-	<s:VGroup width="100%" height="100%" includeIn="sSelectDb">
-		<s:Spacer height="10" />
-	<s:HGroup width="100%"  paddingLeft="10" paddingRight="10" verticalAlign="middle" >
-		<s:TextInput id="txtModule" text="TEST" prompt="Module" toolTip="Please Add this into table Module" />
+	<s:VGroup includeIn="sSelectDb" width="100%" height="100%">
+		<s:Spacer height="10"/>
+	<s:HGroup width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle">
+		<s:TextInput id="txtModule" prompt="Module" text="TEST"
+					 toolTip="Please Add this into table Module"/>
 		<s:Button label="StoredProcedure" click="GenStoredProcedure(event)"/>
 		<s:Button label="GenPHPSample" click="genPHPSample(event)"/>
 		<s:Button label="GenPHPStoredProcedure" click="genPHPStoredProcedure(event)"/>
 		<s:Button label="Query" click="QueryState(event)"/>
 		<s:Button label="MasterDetail" click="MasterDetail(event)"/>
-		<s:Spacer width="100%" />
+		<s:Spacer width="100%"/>
 		<s:Button label="Back" click="BackHome(event)"/>
 	</s:HGroup>
 	<mx:HDividedBox includeIn="sSelectDb" x="0" y="0" width="100%" height="100%">
 		<s:Panel width="100%" height="100%" title="Database">
-		<mx:DataGrid id="gDb" dataProvider="{aCDb}"  width="100%" height="100%" change="grid_changeHandler(event)"/>
+		<mx:DataGrid id="gDb" width="100%" height="100%" change="grid_changeHandler(event)"
+					 dataProvider="{aCDb}"/>
 		</s:Panel>
 		<s:Panel width="100%" height="100%" title="Table">
-		<mx:DataGrid id="gTable" dataProvider="{aCTb}" width="100%" height="100%" change="grid1_changeHandler(event)"/>
+		<mx:DataGrid id="gTable" width="100%" height="100%" change="grid1_changeHandler(event)"
+					 dataProvider="{aCTb}"/>
 		</s:Panel>
 		<s:Panel width="100%" height="100%" title="Fileds List">
-		<mx:DataGrid id="gField" width="100%" height="100%" variableRowHeight="true" dataProvider="{aCcolumn}">
+		<mx:DataGrid id="gField" width="100%" height="100%" allowMultipleSelection="true"
+					 dataProvider="{aCcolumn}" dragEnabled="true"
+					 dragEnter="{ event.ctrlKey = false }" dragMoveEnabled="false"
+					 dragOver="{ event.ctrlKey = false }" variableRowHeight="true">
 			<mx:columns>
 				<mx:DataGridColumn dataField="Field"/>
 				<mx:DataGridColumn dataField="Type"/>
@@ -2173,14 +2787,17 @@
 		<s:VGroup width="100%" height="100%">
 			
 		<s:Panel width="100%" height="100%" title="PrimaryKey">
-		<mx:DataGrid id="gpk" width="100%" height="100%" change="grid3_changeHandler(event)"  dataProvider="{aCPK}">
+		<mx:DataGrid id="gpk" width="100%" height="100%" change="grid3_changeHandler(event)"
+					 dataProvider="{aCPK}">
 			<mx:columns>
 				<mx:DataGridColumn dataField="Column_name"/>
 			</mx:columns>
 		</mx:DataGrid>
 		</s:Panel>
 		<s:Panel width="100%" height="100%" title="Parametor">
-		<mx:DataGrid id="gPara" width="100%" height="100%" change="grid3_changeHandler(event)"  dataProvider="{aCPRA}">
+		<mx:DataGrid id="gPara" width="100%" height="100%" change="grid3_changeHandler(event)"
+					 dataProvider="{aCPRA}" dragDrop="gPara_dragDropHandler(event)"
+					 dragEnter="gPara_dragEnterHandler(event)">
 			<mx:columns>
 				<mx:DataGridColumn dataField="Field"/>
 				<mx:DataGridColumn dataField="Type"/>
@@ -2192,7 +2809,7 @@
 	</mx:HDividedBox>
 	</s:VGroup>
 	</s:Panel>
-	<s:Form includeIn="sConnect" width="331" height="317" horizontalCenter="0" defaultButton="{btn}"
+	<s:Form includeIn="sConnect" width="331" height="317" defaultButton="{btn}" horizontalCenter="0"
 			verticalCenter="0">
 		<s:FormItem label="Hostname/IP">
 			<s:TextInput id="txtHost" text="127.0.0.1"/>
@@ -2210,45 +2827,50 @@
 			<s:TextInput id="txtDatabase" text="mysql"/>
 		</s:FormItem>
 		<s:HGroup width.sConnect="100%" horizontalAlign.sConnect="right">
-			 <s:Button label="Connect" click="Connect(event)" id="btn"/>
+			 <s:Button id="btn" label="Connect" click="Connect(event)"/>
 		</s:HGroup>
 	</s:Form>
 	<s:Panel includeIn="sStoredProcedure" width="100%" height="100%" title="{database} : {tbName} ">
-	<s:VGroup width="100%" height="100%" includeIn="sStoredProcedure">
-		<s:Spacer height="10" />
-		<s:HGroup width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle" >
-			<s:Spacer width="100%" />
-			<s:Button label='SaveSQL'  click="savefile1(database+'_'+ tbName+'.sql',taRead.text  + taReadbyID.text + taCreate.text + taUpdate.text + taDelete.text  )" />
-			<s:Button label='SavePHP'  click="savefile1(database+'_'+ tbName+'.php',taReadPHP.text + taReadPHPbyID.text + taCreatePHP.text + taUpdatePHP.text + taDeletePHP.text  )" />
-			<s:Button label='Back'  click="Back(event)" />
+	<s:VGroup includeIn="sStoredProcedure" width="100%" height="100%">
+		<s:Spacer height="10"/>
+		<s:HGroup width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle">
+			<s:Spacer width="100%"/>
+			<s:Button label="SaveSQL"
+					  click="savefile1(database+'_'+ tbName+'.sql',taRead.text  + taReadbyID.text + taCreate.text + taUpdate.text + taDelete.text  )"/>
+			<s:Button label="SavePHP"
+					  click="savefile1(database+'_'+ tbName+'.php',taReadPHP.text + taReadPHPbyID.text + taCreatePHP.text + taUpdatePHP.text + taDeletePHP.text  )"/>
+			<s:Button label="Back" click="Back(event)"/>
 		</s:HGroup>
 	<mx:TabNavigator includeIn="sStoredProcedure" width="100%" height="100%" creationPolicy="all">
-		<s:NavigatorContent width="100%" height="100%" id="navRead"
-							label="READ">
+		<s:NavigatorContent id="navRead" width="100%" height="100%" label="READ">
 			<mx:VBox width="100%" height="{navRead.height}" verticalScrollPolicy="on">
 				<s:Panel width="100%" height="500" title="Stored Procedure">
-					<s:TextArea width="100%" height="100%" id="taRead" horizontalScrollPolicy="auto" verticalScrollPolicy="auto"  />
+               <s:TextArea id="taRead" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
-				<s:Panel width="100%" height="500"  title="PHP">
-					<s:TextArea width="100%" height="100%" id="taReadPHP" horizontalScrollPolicy="auto" verticalScrollPolicy="auto"  />
+				<s:Panel width="100%" height="500" title="PHP">
+               <s:TextArea id="taReadPHP" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
 				<s:Panel width="100%" height="500" title="Stored Procedure BY ID">
-					<s:TextArea width="100%" height="100%" id="taReadbyID" horizontalScrollPolicy="auto" verticalScrollPolicy="auto"  />
+               <s:TextArea id="taReadbyID" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
-				<s:Panel width="100%" height="500"  title="PHP BY ID">
-					<s:TextArea width="100%" height="100%" id="taReadPHPbyID" horizontalScrollPolicy="auto" verticalScrollPolicy="auto"  />
+				<s:Panel width="100%" height="500" title="PHP BY ID">
+               <s:TextArea id="taReadPHPbyID" width="100%" height="100%"
+						   horizontalScrollPolicy="auto" verticalScrollPolicy="auto"/>
 				</s:Panel>
 			</mx:VBox>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="CREATE">
 			<mx:VBox width="100%" height="{navRead.height}" verticalScrollPolicy="on">
 				<s:Panel width="100%" height="500" title="Stored Procedure">
-					<s:TextArea id="taCreate" x="2" y="2" width="100%" height="100%"
-						horizontalScrollPolicy="auto" verticalScrollPolicy="auto"/>
+               <s:TextArea id="taCreate" x="2" y="2" width="100%" height="100%"
+						   horizontalScrollPolicy="auto" verticalScrollPolicy="auto"/>
 				</s:Panel>
-				<s:Panel width="100%" height="500"  title="PHP">
-					<s:TextArea id="taCreatePHP" x="2" y="2" width="100%" height="100%"
-						horizontalScrollPolicy="auto" verticalScrollPolicy="auto"/>
+				<s:Panel width="100%" height="500" title="PHP">
+               <s:TextArea id="taCreatePHP" x="2" y="2" width="100%" height="100%"
+						   horizontalScrollPolicy="auto" verticalScrollPolicy="auto"/>
 				</s:Panel>
 			</mx:VBox>
 			
@@ -2257,20 +2879,24 @@
 		<s:NavigatorContent width="100%" height="100%" label="UPDATE">
 			<mx:VBox width="100%" height="{navRead.height}" verticalScrollPolicy="on">
 				<s:Panel width="100%" height="500" title="Stored Procedure">
-					<s:TextArea width="100%" height="100%" id="taUpdate" horizontalScrollPolicy="auto" verticalScrollPolicy="auto"  />
+               <s:TextArea id="taUpdate" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
-				<s:Panel width="100%" height="500"  title="PHP">
-					<s:TextArea width="100%" height="100%" id="taUpdatePHP" horizontalScrollPolicy="auto" verticalScrollPolicy="auto"  />
+				<s:Panel width="100%" height="500" title="PHP">
+               <s:TextArea id="taUpdatePHP" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
 			</mx:VBox>
 		</s:NavigatorContent>
 		<s:NavigatorContent width="100%" height="100%" label="DELETE">
 			<mx:VBox width="100%" height="{navRead.height}" verticalScrollPolicy="on">
 				<s:Panel width="100%" height="500" title="Stored Procedure">
-					<s:TextArea width="100%" height="100%" id="taDelete" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" />
+               <s:TextArea id="taDelete" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
-				<s:Panel width="100%" height="500"  title="PHP">
-					<s:TextArea width="100%" height="100%" id="taDeletePHP" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" />
+				<s:Panel width="100%" height="500" title="PHP">
+               <s:TextArea id="taDeletePHP" width="100%" height="100%" horizontalScrollPolicy="auto"
+						   verticalScrollPolicy="auto"/>
 				</s:Panel>
 			</mx:VBox>
 		</s:NavigatorContent>
@@ -2278,27 +2904,33 @@
 	</s:VGroup>
 	</s:Panel>
 	<!--*********** php ************-->
-	<s:Panel includeIn="sphpSample" width="100%" height="100%" title="PHP Sample: {database} : {tbName} " creationPolicy="all" >
-		<s:VGroup width="100%" height="100%" >
-			<s:Spacer height="10" />
-			<mx:HBox width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle" >
-				<s:Spacer width="100%"   />
+	<s:Panel includeIn="sphpSample" width="100%" height="100%" creationPolicy="all"
+			 title="PHP Sample: {database} : {tbName} ">
+		<s:VGroup width="100%" height="100%">
+			<s:Spacer height="10"/>
+			<mx:HBox width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle">
+				<s:Spacer width="100%"/>
 				<s:Button label="Back" click="BackPHPSample(event)"/>
 			</mx:HBox>			
 			<mx:TabNavigator width="100%" height="100%" creationPolicy="all">
-			<s:NavigatorContent label="Pdoconfig.php" width="100%" height="100%" id="tb2" creationPolicy="all">
-				<s:Panel width="100%" height="100%" title="PHP Config" doubleClickEnabled="true" doubleClick="saveConfig(event)">
-					<s:TextArea right="5" left="5" top="5" bottom="5" id="txta_config" />
+			<s:NavigatorContent id="tb2" width="100%" height="100%" label="Pdoconfig.php"
+								creationPolicy="all">
+				<s:Panel width="100%" height="100%" doubleClick="saveConfig(event)"
+						 doubleClickEnabled="true" title="PHP Config">
+               <s:TextArea id="txta_config" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 			</s:NavigatorContent>
-			<s:NavigatorContent label="{serviceName}" width="100%" height="100%" creationPolicy="all">
-				<s:Panel width="100%" height="100%" title="PHP Service " doubleClickEnabled="true" doubleClick="savefile(serviceName,txta_code)">
-					<s:TextArea left="5" right="5" top="5" bottom="5" id="txta_code" />
+			<s:NavigatorContent width="100%" height="100%" label="{serviceName}" creationPolicy="all">
+				<s:Panel width="100%" height="100%" doubleClick="savefile(serviceName,txta_code)"
+						 doubleClickEnabled="true" title="PHP Service ">
+               <s:TextArea id="txta_code" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 			</s:NavigatorContent>
 				<s:NavigatorContent width="100%" height="100%" label="POJO Class">
-				<s:Panel width="100%" height="100%" title="PHP POJO" doubleClickEnabled="true" doubleClick="savefile(upperCase(tbName)+'.php',txta_pojo)">
-					<s:TextArea left="5" right="5" top="5" bottom="5" id="txta_pojo"  />
+				<s:Panel width="100%" height="100%"
+						 doubleClick="savefile(upperCase(tbName)+'.php',txta_pojo)"
+						 doubleClickEnabled="true" title="PHP POJO">
+               <s:TextArea id="txta_pojo" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 				</s:NavigatorContent>
 		</mx:TabNavigator>
@@ -2307,37 +2939,47 @@
 	<!--*********** php ************-->
 	
 	<!--*********** php with stored procedure ***********-->
-	<s:Panel includeIn="sphpSP" width="100%" height="100%" title="PHP StoredProcedure : {database} : {tbName} " creationPolicy="all"  >
-		<s:VGroup width="100%" height="100%" >
-				<s:Spacer height="10" />
-			<mx:HBox width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle" >
-				<s:Spacer width="100%" />
+	<s:Panel includeIn="sphpSP" width="100%" height="100%" creationPolicy="all"
+			 title="PHP StoredProcedure : {database} : {tbName} ">
+		<s:VGroup width="100%" height="100%">
+				<s:Spacer height="10"/>
+			<mx:HBox width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle">
+				<s:Spacer width="100%"/>
 				<s:Button label="Back" click="BackPHPSample(event)"/>
 			</mx:HBox>			
 			<mx:TabNavigator width="100%" height="100%" creationPolicy="all">
-			<s:NavigatorContent label="Pdoconfig.php" width="100%" height="100%" id="tb3" creationPolicy="all">
-				<s:Panel width="100%" height="100%" title="PHP Config"  doubleClickEnabled="true" doubleClick="savefile('Pdoconfig.php',txta_config1)" >
-					<s:TextArea right="5" left="5" top="5" bottom="5" id="txta_config1" />
+			<s:NavigatorContent id="tb3" width="100%" height="100%" label="Pdoconfig.php"
+								creationPolicy="all">
+				<s:Panel width="100%" height="100%"
+						 doubleClick="savefile('Pdoconfig.php',txta_config1)"
+						 doubleClickEnabled="true" title="PHP Config">
+               <s:TextArea id="txta_config1" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 			</s:NavigatorContent>
-			<s:NavigatorContent label="{serviceName}" width="100%" height="100%" creationPolicy="all">
-				<s:Panel width="100%" height="100%" title="PHP Service "   doubleClickEnabled="true" doubleClick="savefile(serviceName,txta_codephp)">
-					<s:TextArea left="5" right="5" top="5" bottom="5" id="txta_codephp" />
+			<s:NavigatorContent width="100%" height="100%" label="{serviceName}" creationPolicy="all">
+				<s:Panel width="100%" height="100%" doubleClick="savefile(serviceName,txta_codephp)"
+						 doubleClickEnabled="true" title="PHP Service ">
+               <s:TextArea id="txta_codephp" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 			</s:NavigatorContent>
 			<s:NavigatorContent width="100%" height="100%" label="StoredProcedure">
-				<s:Panel width="100%" height="100%" title="StoredProcedure"   doubleClickEnabled="true" doubleClick="savefile('sp_'+tbName+'.sql',txta_StoreProcedure)">
-					<s:TextArea left="5" right="5" top="5" bottom="5" id="txta_StoreProcedure" />
+				<s:Panel width="100%" height="100%"
+						 doubleClick="savefile('sp_'+tbName+'.sql',txta_StoreProcedure)"
+						 doubleClickEnabled="true" title="StoredProcedure">
+               <s:TextArea id="txta_StoreProcedure" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 			</s:NavigatorContent>
 			<s:NavigatorContent width="100%" height="100%" label="POJO Class">
-				<s:Panel width="100%" height="100%" title="PHP POJO"   doubleClickEnabled="true" doubleClick="savefile(upperCase(tbName)+'.php',txta_pojosp)">
-					<s:TextArea left="10" right="0" top="13" bottom="-3" id="txta_pojosp" />
+				<s:Panel width="100%" height="100%"
+						 doubleClick="savefile(upperCase(tbName)+'.php',txta_pojosp)"
+						 doubleClickEnabled="true" title="PHP POJO">
+               <s:TextArea id="txta_pojosp" left="10" right="0" top="13" bottom="-3"/>
 				</s:Panel>
 			</s:NavigatorContent>
 			<s:NavigatorContent width="100%" height="100%" label="SYSTEM SQL">
-				<s:Panel width="100%" height="100%" title="SQL" doubleClickEnabled="true" doubleClick="savefile('SYSTEMSQL.sql',txta_SQL)" >
-					<s:TextArea left="5" right="5" top="5" bottom="5" id="txta_SQL" />
+				<s:Panel width="100%" height="100%" doubleClick="savefile('SYSTEMSQL.sql',txta_SQL)"
+						 doubleClickEnabled="true" title="SQL">
+               <s:TextArea id="txta_SQL" left="5" right="5" top="5" bottom="5"/>
 				</s:Panel>
 			</s:NavigatorContent>
 		</mx:TabNavigator>
@@ -2349,57 +2991,63 @@
 			 source="@Embed('file:///C:/Users/tomato/Downloads/info.png')"/>
 	<!--http://dryicons.com/icon/download/info/-->
 	<!--****************** Query ***************************-->
-	<s:Panel includeIn="Query" width="100%" height="100%" title="Query : {database} : {tbName} " creationPolicy="all"  >
-		<s:VGroup width="100%" height="100%" >
-			<s:Spacer height="10" />
-			<s:VGroup width="100%" height="100%" 
-					  paddingBottom="5" paddingTop="5" paddingLeft="10" paddingRight="10">
+	<s:Panel includeIn="Query" width="100%" height="100%" creationPolicy="all"
+			 title="Query : {database} : {tbName} ">
+		<s:VGroup width="100%" height="100%">
+			<s:Spacer height="10"/>
+			<s:VGroup width="100%" height="100%" paddingBottom="5" paddingLeft="10" paddingRight="10"
+					  paddingTop="5">
 				<s:HGroup width="100%">
-					<s:VGroup  width="100%">
-						<s:HGroup width="100%" horizontalAlign="center" paddingRight="20">
-							<s:Label text="Query:" />
-							<s:TextArea id="taQu" x="17" y="10" width="100%" height="71"
-										toolTip="ใช้ได้เฉพาะ Select และ    join เท่านั้น้ ห้ามใส่ where "/>
-						</s:HGroup>
-					</s:VGroup>
-					<s:VGroup horizontalAlign="right" verticalAlign="top">
-						<s:Button width="126" label="Back" click="BackPHPSample(event)"/>
-						<s:Button id="btnExeQuery" width="126" label="Execute Query" click="button_clickHandler(event)"
-								  enabled="true"/>
-						<s:Button id="btnGenerate" width="126" label="Generate" click="button1_clickHandler(event)"
-								  enabled="false"/>
-					</s:VGroup>
+               <s:VGroup width="100%">
+               	<s:HGroup width="100%" horizontalAlign="center" paddingRight="20">
+               		<s:Label text="Query:"/>
+               		<s:TextArea id="taQu" x="17" y="10" width="100%" height="71"
+								toolTip="ใช้ได้เฉพาะ Select และ    join เท่านั้น้ ห้ามใส่ where "/>
+               	</s:HGroup>
+               </s:VGroup>
+               <s:VGroup horizontalAlign="right" verticalAlign="top">
+               	<s:Button width="126" label="Back" click="BackPHPSample(event)"/>
+               	<s:Button id="btnExeQuery" width="126" label="Execute Query"
+						  click="button_clickHandler(event)" enabled="true"/>
+               	<s:Button id="btnGenerate" width="126" label="Generate"
+						  click="button1_clickHandler(event)" enabled="false"/>
+               </s:VGroup>
 				</s:HGroup>		
 				<s:HGroup width="100%" paddingRight="20" verticalAlign="middle">
-					<s:Label text="Query Name:"/>
-					<s:TextInput id="txtQNmae" width="100%" text="getQuery" toolTip="ชื่อ function ห้ามเว้นวรรค"/>
-					<s:Label text="ServiceName:"/>
-					<s:TextInput id="txtQService" width="100%" text="getQuery" toolTip="ชื่อ function ห้ามเว้นวรรค"/>
-					<s:Label text="POJP Class Name:"/>
-					<s:TextInput id="txtQPojo" width="100%" text="Q_" toolTip="ชื่อ function ห้ามเว้นวรรค"/>
+               <s:Label text="Query Name:"/>
+               <s:TextInput id="txtQNmae" width="100%" text="getQuery"
+							toolTip="ชื่อ function ห้ามเว้นวรรค"/>
+               <s:Label text="ServiceName:"/>
+               <s:TextInput id="txtQService" width="100%" text="getQuery"
+							toolTip="ชื่อ function ห้ามเว้นวรรค"/>
+               <s:Label text="POJP Class Name:"/>
+               <s:TextInput id="txtQPojo" width="100%" text="Q_" toolTip="ชื่อ function ห้ามเว้นวรรค"/>
 				</s:HGroup>
 				<s:HGroup width="100%" paddingRight="20">
-					<mx:DataGrid id="dgQuery" width="100%" height="100%" dataProvider="{Acqu}"/>
-					
+               <mx:DataGrid id="dgQuery" width="100%" height="100%" dataProvider="{Acqu}"/>
+               
 				</s:HGroup>		
 				<s:HGroup width="100%" height="100%" paddingRight="20">
-					<mx:DataGrid id="dgQCollist" width="200" height="100%" doubleClickEnabled="true"
-								 itemDoubleClick="dgQCollist_itemDoubleClickHandler(event)" variableRowHeight="true">
-						<mx:columns>
-							<mx:DataGridColumn dataField="length" headerText="Collumn List"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid id="dgQParametor" width="200" height="100%" dataProvider="[]"
-								 doubleClickEnabled="true"
-								 itemDoubleClick="dgQParametor_itemDoubleClickHandler(event)">
-						<mx:columns>
-							<mx:DataGridColumn dataField="label" headerText="Parametor List"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<s:Panel width="100%" height="100%" doubleClick="savefile(upperCase(txtQService.text)+'Service.php',taQuGen)"
-							 doubleClickEnabled="true" title="CodeGen">
-							<s:TextArea id="taQuGen" width="100%" height="100%" text="" focusIn="taQuGen_focusInHandler(event)"/>
-					</s:Panel>
+               <mx:DataGrid id="dgQCollist" width="200" height="100%" doubleClickEnabled="true"
+							itemDoubleClick="dgQCollist_itemDoubleClickHandler(event)"
+							variableRowHeight="true">
+               	<mx:columns>
+               		<mx:DataGridColumn dataField="length" headerText="Collumn List"/>
+               	</mx:columns>
+               </mx:DataGrid>
+               <mx:DataGrid id="dgQParametor" width="200" height="100%" dataProvider="[]"
+							doubleClickEnabled="true"
+							itemDoubleClick="dgQParametor_itemDoubleClickHandler(event)">
+               	<mx:columns>
+               		<mx:DataGridColumn dataField="label" headerText="Parametor List"/>
+               	</mx:columns>
+               </mx:DataGrid>
+               <s:Panel width="100%" height="100%"
+						doubleClick="savefile(upperCase(txtQService.text)+'Service.php',taQuGen)"
+						doubleClickEnabled="true" title="CodeGen">
+               		<s:TextArea id="taQuGen" width="100%" height="100%"
+								focusIn="taQuGen_focusInHandler(event)" text=""/>
+               </s:Panel>
 				</s:HGroup>		
 			</s:VGroup>
 		</s:VGroup>
@@ -2409,84 +3057,89 @@
 	<!--********************** Master Detail **********************-->
 	<s:Panel includeIn="MasterDetail" x="10" y="5" width="100%" height="100%" creationPolicy="all"
 			 title="MasterDetail: {database} : {tbName}">
-		<s:VGroup width="100%" height="100%" >
-			<s:Spacer height="10" />
-			<mx:HBox width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle" >
-				<mx:Text text="Select Table:" />
-				<mx:Text text="" id="txTable"/>
-				<s:Spacer width="100%" />
-				<s:Button label="Gen Master Detail" click="genMasterDetail(event)" />
+		<s:VGroup width="100%" height="100%">
+			<s:Spacer height="10"/>
+			<mx:HBox width="100%" paddingLeft="10" paddingRight="10" verticalAlign="middle">
+				<mx:Text text="Select Table:"/>
+				<mx:Text id="txTable" text=""/>
+				<s:Spacer width="100%"/>
+				<s:Button label="Gen Master Detail" click="genMasterDetail(event)"/>
 				<s:Button label="Back" click="BackPHPSample(event)"/>
 			</mx:HBox>
-			<s:VGroup width="100%" height="100%" paddingBottom="20" paddingLeft="20" paddingTop="20" paddingRight="20">
+			<s:VGroup width="100%" height="100%" paddingBottom="20" paddingLeft="20"
+					  paddingRight="20" paddingTop="20">
 				<mx:HDividedBox width="100%" height="100%">
-					<s:Panel width="100%" height="100%" title="PHP {MsDtSvName}" doubleClickEnabled="true" doubleClick="savefile(MsDtSvName,taQry)" >
-						<s:TextArea width="100%" height="100%" id="taQry" />
-					</s:Panel>
-					<s:Panel width="100%" height="100%"  title="PHP WITH StoredProcedure">
-						<s:TextArea width="100%" height="100%" id="taQryPHPSP" />
-					</s:Panel>
-					<s:Panel width="100%" height="100%"  title="Stored Procedure ">
-						<s:TextArea width="100%" height="100%" id="taQrySP" />
-					</s:Panel>
+               <s:Panel width="100%" height="100%" doubleClick="savefile(MsDtSvName,taQry)"
+						doubleClickEnabled="true" title="PHP {MsDtSvName}">
+               	<s:TextArea id="taQry" width="100%" height="100%"/>
+               </s:Panel>
+               <s:Panel width="100%" height="100%" title="PHP WITH StoredProcedure">
+               	<s:TextArea id="taQryPHPSP" width="100%" height="100%"/>
+               </s:Panel>
+               <s:Panel width="100%" height="100%" title="Stored Procedure ">
+               	<s:TextArea id="taQrySP" width="100%" height="100%"/>
+               </s:Panel>
 				</mx:HDividedBox>
 				<mx:HDividedBox width="100%" height="100%">
-					<mx:DataGrid id="dataGrid" width="100%" height="100%"
-								 dataProvider="{aCDb}"  change="showtables()">
-						<mx:columns>
-							<mx:DataGridColumn headerText="1. Select Database" dataField="Database"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid id="dataGrid2" width="100%" height="100%" 
-								 dataProvider="{aCTb}" dragEnabled="true"  
-								 change="dataGrid2_changeHandler(event)">
-<!--						<mx:columns>
-							<mx:DataGridColumn headerText=".Select Tables" dataField="Name"/>
-						</mx:columns>-->
-					</mx:DataGrid>
-					<s:VGroup  width="100%" height="100%">
-						<s:HGroup width="100%" dragEnter="dropEnter(event)" id="gMaster" dragDrop="dragdrop(event)">
-							<mx:Text text="MasterTable" />
-							<s:TextInput width="100%" id="txtMaster" />
-						</s:HGroup>
-						<mx:DataGrid id="dataGrid3"  width="100%" height="100%" dataProvider="{acMaster}"
-									 doubleClickEnabled="true" itemDoubleClick="insertKey(event)" >
-							<mx:columns>
-								<mx:DataGridColumn headerText="3. MasterTable" dataField="Field"/>
-							</mx:columns>
-						</mx:DataGrid>
-					</s:VGroup>
-					<s:VGroup  width="100%" height="100%">
-						<s:HGroup width="100%" dragEnter="dropEnter(event)" id="gDatail" dragDrop="dragdrop(event)">
-							<mx:Text text="Datail Table"  />			
-							<s:TextInput  width="100%" id="txtDetail"/>
-						</s:HGroup>
-						<mx:DataGrid id="dataGrid4" width="100%" height="100%" dataProvider="{acDetail}"
-									 doubleClickEnabled="true"  itemDoubleClick="insertKey(event)"
-									 dragEnabled="true"
-									 >
-							<mx:columns>
-								<mx:DataGridColumn headerText="4. Detail Table" dataField="Field"/>
-							</mx:columns>
-						</mx:DataGrid>
-					</s:VGroup>
-					<mx:VBox width="100%" height="100%">
-					<mx:DataGrid id="dgKey" width="100%" height="100%" doubleClickEnabled="true" dataProvider="{acKey}"
-								 itemDoubleClick="dgKey_itemDoubleClickHandler(event)" variableRowHeight="true">
-						<mx:columns>
-							<mx:DataGridColumn headerText="Key Name" dataField="label"/>
-						</mx:columns>
-					</mx:DataGrid>
-					<mx:DataGrid id="dgDetailKey" width="100%" height="100%" doubleClickEnabled="true" dataProvider="{acDetailKey}"
-								 itemDoubleClick="dgDetailKey_itemDoubleClickHandler(event)" variableRowHeight="true"
-								 dragEnter="dgDetailKey_dragEnterHandler(event)"
-								 dragDrop="dgDetailKey_dragDropHandler(event)"
-								 >
-						<mx:columns>
-							<mx:DataGridColumn headerText="Key Name" dataField="Field"/>
-						</mx:columns>
-					</mx:DataGrid>
-					</mx:VBox>
+               <mx:DataGrid id="dataGrid" width="100%" height="100%" change="showtables()"
+							dataProvider="{aCDb}">
+               	<mx:columns>
+               		<mx:DataGridColumn dataField="Database" headerText="1. Select Database"/>
+               	</mx:columns>
+               </mx:DataGrid>
+               <mx:DataGrid id="dataGrid2" width="100%" height="100%"
+							change="dataGrid2_changeHandler(event)" dataProvider="{aCTb}"
+							dragEnabled="true">
+<!--               	<mx:columns>
+               		<mx:DataGridColumn headerText=".Select Tables" dataField="Name"/>
+               	</mx:columns>-->
+               </mx:DataGrid>
+               <s:VGroup width="100%" height="100%">
+               	<s:HGroup id="gMaster" width="100%" dragDrop="dragdrop(event)"
+						  dragEnter="dropEnter(event)">
+               		<mx:Text text="MasterTable"/>
+               		<s:TextInput id="txtMaster" width="100%"/>
+               	</s:HGroup>
+               	<mx:DataGrid id="dataGrid3" width="100%" height="100%" dataProvider="{acMaster}"
+							 doubleClickEnabled="true" itemDoubleClick="insertKey(event)">
+               		<mx:columns>
+               			<mx:DataGridColumn dataField="Field" headerText="3. MasterTable"/>
+               		</mx:columns>
+               	</mx:DataGrid>
+               </s:VGroup>
+               <s:VGroup width="100%" height="100%">
+               	<s:HGroup id="gDatail" width="100%" dragDrop="dragdrop(event)"
+						  dragEnter="dropEnter(event)">
+               		<mx:Text text="Datail Table"/>			
+               		<s:TextInput id="txtDetail" width="100%"/>
+               	</s:HGroup>
+               	<mx:DataGrid id="dataGrid4" width="100%" height="100%" dataProvider="{acDetail}"
+							 doubleClickEnabled="true" dragEnabled="true"
+							 itemDoubleClick="insertKey(event)">
+               		<mx:columns>
+               			<mx:DataGridColumn dataField="Field" headerText="4. Detail Table"/>
+               		</mx:columns>
+               	</mx:DataGrid>
+               </s:VGroup>
+               <mx:VBox width="100%" height="100%">
+               <mx:DataGrid id="dgKey" width="100%" height="100%" dataProvider="{acKey}"
+							doubleClickEnabled="true"
+							itemDoubleClick="dgKey_itemDoubleClickHandler(event)"
+							variableRowHeight="true">
+               	<mx:columns>
+               		<mx:DataGridColumn dataField="label" headerText="Key Name"/>
+               	</mx:columns>
+               </mx:DataGrid>
+               <mx:DataGrid id="dgDetailKey" width="100%" height="100%" dataProvider="{acDetailKey}"
+							doubleClickEnabled="true" dragDrop="dgDetailKey_dragDropHandler(event)"
+							dragEnter="dgDetailKey_dragEnterHandler(event)"
+							itemDoubleClick="dgDetailKey_itemDoubleClickHandler(event)"
+							variableRowHeight="true">
+               	<mx:columns>
+               		<mx:DataGridColumn dataField="Field" headerText="Key Name"/>
+               	</mx:columns>
+               </mx:DataGrid>
+               </mx:VBox>
 				</mx:HDividedBox>
 			</s:VGroup>
 		</s:VGroup>

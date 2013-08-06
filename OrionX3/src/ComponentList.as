@@ -2,13 +2,27 @@ package
 {
 	import component.vDataGrid;
 	
+	import mx.accessibility.AccConst;
 	import mx.collections.ArrayCollection;
+	
+	import th.co.shopsthai.Utils.ComponentData;
 
 	public  class ComponentList
 	{
 		
 		public static const Accomp:ArrayCollection = new ArrayCollection();
 		
+		
+		public static function  getcomponent(cid:String):ComponentData {
+			for (var i:int = 0; i < Accomp.length; i++) 
+			{
+			     if(Accomp[i].cid == cid ){
+					 return Accomp[i] as ComponentData;
+					 break;
+				 } 
+			}
+			return null;
+		}
 		
 		public function ComponentList()
 		{

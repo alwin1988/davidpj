@@ -2,6 +2,10 @@ package th.co.shopsthai.Utils
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.geom.Point;
+	
+	import mx.core.FlexGlobals;
+	import mx.utils.ObjectUtil;
 	
 	public class TlenMoveEvent extends Event
 	{
@@ -27,6 +31,8 @@ package th.co.shopsthai.Utils
 			this._rotation = rotation;
 			this.scale = scale;
 		}
+		
+
 		
 		public function get rotation():Number {
 			return _rotation;

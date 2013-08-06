@@ -47,6 +47,7 @@
 				var ivs:IVisualElement = IVisualElement(this.hostComponent);
 				if(Object(ivs).id == 'mainParent'){
 					Object(ivs).removeAllElements();
+					ComponentList.Accomp.removeAll();
 				} else {
 					Object(ivs).automationParent.removeElement(ivs);	
 				}

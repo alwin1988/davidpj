@@ -64,6 +64,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import th.co.shopsthai.Utils.ComponentData;
 			import th.co.shopsthai.gridrender.radioItemrender;
 			import th.co.shopsthai.gridrender.dateFileItemrender;
 			import th.co.shopsthai.gridrender.numberSetpItemrender;
@@ -185,8 +186,7 @@
 			[Bindable] private var cm:ContextMenu;
 			[Bindable]private var myContextMenuItem:ContextMenuItem;	
 			[Bindable] public var Ac:ArrayCollection = new ArrayCollection();
-			
-			
+			[Bindable] public var currComponent:ComponentData;			
 			public function init():void {
 				toolInit();
 				frmSetting();
@@ -296,6 +296,8 @@
 				trace('listening');
 				o.addEventListener("dragStart",function(e:Event):void {
 //						trace('dragStart');
+						currComponent = ComponentList.getcomponent(e.target.id);
+						trace('current cid = ',currComponent.cid);
 					},true);
 				o.addEventListener("dragging",function(e:Event):void {
 //						trace('dragging',e.currentTarget.id);
@@ -324,6 +326,7 @@
 				o.addEventListener(TlenMoveEvent.DRAG_END,function(e:TlenMoveEvent):void {
 					if(e.currentTarget.id != e.target.id ){
 						trace(e.x,e.y,e.eventPhase,'tlenevent current/target/targerObject',e.currentTarget.id,e.target.id,Object(e.targetObject).id);
+						TlenUtils.getObjectbyPix(e.x,e.y);
 						e.stopImmediatePropagation();
 					}
 //					e.stopPropagation();
@@ -1070,6 +1073,13 @@
 						addlistenEvent(br);
 						br.x = event.currentTarget.x;
 						br.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = br.x;
+						cpdata.cy = br.y;
+						cpdata.cid = br.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PANEL'		){
 						//TitleWindows 
 						var tw:TitleWindow = new TitleWindow();
@@ -1085,6 +1095,8 @@
 						tw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						tw.x = event.currentTarget.x;
 						tw.y = event.currentTarget.y;
+						ComponentList.Accomp.addItem(cpdata);
+						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TBBOX'		){
 						var tb:TitledBorderBox = new TitledBorderBox();
 						tb.id = 'TBBOX' + FlexGlobals.topLevelApplication.getIdx;
@@ -1100,6 +1112,7 @@
 						tb.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						tb.x = event.currentTarget.x;
 						tb.y = event.currentTarget.y;
+						ComponentList.Accomp.addItem(cpdata);
 					} else	if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VBOX'		){
 						var vbr:rzmvasBroderContainer = new rzmvasBroderContainer();
 						vbr.layout = new VerticalLayout(); 
@@ -1115,6 +1128,7 @@
 						vbr.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						vbr.x = event.currentTarget.x;
 						vbr.y = event.currentTarget.y;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VPANEL'		){
 						//TitleWindows + vertical  layout
 						var vtw:TitleWindow = new TitleWindow();
@@ -1131,6 +1145,13 @@
 						vtw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						vtw.x = event.currentTarget.x;
 						vtw.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = vtw.x;
+						cpdata.cy = vtw.y;
+						cpdata.cid = vtw.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VTBBOX'		){
 						var vtb:TitledBorderBox = new TitledBorderBox();
@@ -1147,6 +1168,13 @@
 						vtb.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						vtb.x = event.currentTarget.x;
 						vtb.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = vtb.x;
+						cpdata.cy = vtb.y;
+						cpdata.cid = vtb.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HBOX' ) {
 						// BorderContainer + Horizontallayout
@@ -1164,6 +1192,13 @@
 						hbr.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
 						hbr.x = event.currentTarget.x;
 						hbr.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = hbr.x;
+						cpdata.cy = hbr.y;
+						cpdata.cid = hbr.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HPANEL' ) {
 						//TitleWindows  + horizontal layout
 						var htw:TitleWindow = new TitleWindow();
@@ -1180,6 +1215,13 @@
 						htw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						htw.x = event.currentTarget.x;
 						htw.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = htw.x;
+						cpdata.cy = htw.y;
+						cpdata.cid = htw.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HTBBOX' ) {
 						var htb:TitledBorderBox = new TitledBorderBox();
 						htb.id = 'HTBBOX' + FlexGlobals.topLevelApplication.getIdx;
@@ -1195,7 +1237,14 @@
 						htb.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						htb.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						htb.x = event.currentTarget.x;
-						htb.y = event.currentTarget.y;					
+						htb.y = event.currentTarget.y;	
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = htb.x;
+						cpdata.cy = htb.y;
+						cpdata.cid = htb.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TBOX' ) {
 						// BorderContainer + Horizontallayout
 						var tbr:rzmvasBroderContainer = new rzmvasBroderContainer();
@@ -1212,6 +1261,13 @@
 						tbr.addEventListener(MouseEvent.MOUSE_OVER,mouseRollOverHander);
 						tbr.x = event.currentTarget.x;
 						tbr.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = tbr.x;
+						cpdata.cy = tbr.y;
+						cpdata.cid = tbr.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TPANEL' ) {
 						//TitleWindows  + horizontal layout
 						var ttw:TitleWindow = new TitleWindow();
@@ -1228,6 +1284,13 @@
 						ttw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						ttw.x = event.currentTarget.x;
 						ttw.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = ttw.x;
+						cpdata.cy = ttw.y;
+						cpdata.cid = ttw.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TTBBOX' ) {
 						var ttb:TitledBorderBox = new TitledBorderBox();
 						ttb.id = 'TTBBOX' + FlexGlobals.topLevelApplication.getIdx;
@@ -1244,6 +1307,13 @@
 						ttb.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						ttb.x = event.currentTarget.x;
 						ttb.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = ttb.x;
+						cpdata.cy = ttb.y;
+						cpdata.cid = ttb.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DBGRID' ) {
 						
@@ -1258,6 +1328,13 @@
 						dbGrid.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						dbGrid.x = event.currentTarget.x;
 						dbGrid.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = dbGrid.x;
+						cpdata.cy = dbGrid.y;
+						cpdata.cid = dbGrid.id;
+						cpdata.ctype = 2;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PANELGRID' ) {
 						
@@ -1273,6 +1350,13 @@
 						panelGrid.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						panelGrid.x = event.currentTarget.x;
 						panelGrid.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = panelGrid.x;
+						cpdata.cy = panelGrid.y;
+						cpdata.cid = panelGrid.id;
+						cpdata.ctype = 2;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzBUTTON' ) {
 //						var bt:ResizableButton = new ResizableButton();
 						var bt:rzmveButton = new rzmveButton();
@@ -1292,6 +1376,13 @@
 						event.currentTarget.addElement(bt);
 						bt.x = event.currentTarget.x;
 						bt.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = bt.x;
+						cpdata.cy = bt.y;
+						cpdata.cid = bt.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzCOMBO' ) {
 						var cmb:DropDownList = new DropDownList();
@@ -1301,6 +1392,13 @@
 						event.currentTarget.addElement(cmb);
 						cmb.x = event.currentTarget.x;
 						cmb.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = cmb.x;
+						cpdata.cy = cmb.y;
+						cpdata.cid = cmb.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DropDownList' ) {
 						var ddl:DropDownList = new DropDownList();
@@ -1310,6 +1408,13 @@
 						event.currentTarget.addElement(ddl);
 						ddl.x = event.currentTarget.x;
 						ddl.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = ddl.x;
+						cpdata.cy = ddl.y;
+						cpdata.cid = ddl.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextInput' ) {
 						var txt:TextInput = new TextInput();
@@ -1321,6 +1426,13 @@
 						event.currentTarget.addElement(txt);
 						txt.x = event.currentTarget.x;
 						txt.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = txt.x;
+						cpdata.cy = txt.y;
+						cpdata.cid = txt.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'ToggleTextInput' ) {
 //						var tg:ToggleTextInput = new ToggleTextInput();
@@ -1337,6 +1449,13 @@
 						tg.minWidth = 20;
 						tg.minHeight = 20;
 						event.currentTarget.addElement(tg);
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = tg.x;
+						cpdata.cy = tg.y;
+						cpdata.cid = tg.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextArea' ) {
 						var ta:TextArea = new TextArea();
@@ -1348,6 +1467,13 @@
 						event.currentTarget.addElement(ta);
 						ta.x = event.currentTarget.x;
 						ta.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = ta.x;
+						cpdata.cy = ta.y;
+						cpdata.cid = ta.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'CheckBox' ) {
 //						var chk:CheckBox = new CheckBox();
@@ -1358,6 +1484,13 @@
 						chk.contextMenu = cm;
 						chk.x = event.currentTarget.x;
 						chk.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = chk.x;
+						cpdata.cy = chk.y;
+						cpdata.cid = chk.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'RadioButton' ) {
 //						var rdo:RadioButton = new RadioButton();
@@ -1368,6 +1501,13 @@
 						event.currentTarget.addElement(rdo);
 						rdo.x = event.currentTarget.x;
 						rdo.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = rdo.x;
+						cpdata.cy = rdo.y;
+						cpdata.cid = rdo.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DateChooser' ) {
 //						var dc:DateChooser = new DateChooser();
@@ -1379,6 +1519,13 @@
 						event.currentTarget.addElement(dc);
 						dc.x = event.currentTarget.x;
 						dc.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = dc.x;
+						cpdata.cy = dc.y;
+						cpdata.cid = dc.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'NumericStepper' ) {
 						var nbs:NumericStepper = new NumericStepper();
@@ -1391,6 +1538,14 @@
 						event.currentTarget.addElement(nbs);
 						nbs.x = event.currentTarget.x;
 						nbs.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = nbs.x;
+						cpdata.cy = nbs.y;
+						cpdata.cid = nbs.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
+
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PopUpButton' ) {
 //						<resize:ResizeMovePopUpButton />
 						var pop:ResizeMovePopUpButton = new ResizeMovePopUpButton();
@@ -1400,6 +1555,14 @@
 						event.currentTarget.addElement(pop);
 						pop.x = event.currentTarget.x;
 						pop.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = pop.x;
+						cpdata.cy = pop.y;
+						cpdata.cid = pop.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
+
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HSlider' ) {
 //						var hsl:HSlider = new HSlider();
 						var hsl:ResizeMoveHslider = new ResizeMoveHslider();
@@ -1409,6 +1572,13 @@
 						event.currentTarget.addElement(hsl);
 						hsl.x = event.currentTarget.x;
 						hsl.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = hsl.x;
+						cpdata.cy = hsl.y;
+						cpdata.cid = hsl.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VSlider' ) {
 //						var vsl:VSlider = new VSlider();
@@ -1419,6 +1589,13 @@
 						event.currentTarget.addElement(vsl);
 						vsl.x = event.currentTarget.x;
 						vsl.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = pop.x;
+						cpdata.cy = pop.y;
+						cpdata.cid = pop.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VRule' ) {
 						var vru:ResizeMoveVRule = new ResizeMoveVRule();
@@ -1427,6 +1604,13 @@
 						event.currentTarget.addElement(vru);
 						vru.x = event.currentTarget.x;
 						vru.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = vru.x;
+						cpdata.cy = vru.y;
+						cpdata.cid = vru.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HRule' ) {
 						var hru:ResizeMoveHRule = new ResizeMoveHRule();
@@ -1435,6 +1619,13 @@
 						event.currentTarget.addElement(hru);
 						hru.x = event.currentTarget.x;
 						hru.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = hru.x;
+						cpdata.cy = hru.y;
+						cpdata.cid = hru.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HSPACE' ) {
 						var hsp:ResizeMoveHSPACE = new ResizeMoveHSPACE();
@@ -1443,7 +1634,14 @@
 						event.currentTarget.addElement(hsp);
 						hsp.x = event.currentTarget.x;
 						hsp.y = event.currentTarget.y;
-					
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = hsp.x;
+						cpdata.cy = hsp.y;
+						cpdata.cid = hsp.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
+	
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VSPACE' ) {
 						var vsp:ResizeMoveVSPACE = new ResizeMoveVSPACE();
 						vsp.id = 'VSPACE' + FlexGlobals.topLevelApplication.getIdx;
@@ -1451,6 +1649,14 @@
 						event.currentTarget.addElement(vsp);
 						vsp.x = event.currentTarget.x;
 						vsp.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = vsp.x;
+						cpdata.cy = vsp.y;
+						cpdata.cid = vsp.id;
+						cpdata.ctype = 0;
+						cpdata.cp = event.currentTarget;
+						ComponentList.Accomp.addItem(cpdata);
+						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'ren' ) {
 
 						

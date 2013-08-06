@@ -5,18 +5,21 @@ package th.co.shopsthai.Utils
 	
 	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
+	import mx.utils.ObjectUtil;
 
 	public class TlenUtils
 	{
 
 	
-	public static function getObjectbyPix(e:FlexEvent):Object {
-	//	var arr:Array = FlexGlobals.topLevelApplication.getObjectsUnderPoint(new Point( e.stageX,e.stageY));
+		public static function getObjectbyPix(x:Number=0, y:Number=0):Object {
+			var arr:Array = FlexGlobals.topLevelApplication.getObjectsUnderPoint(new Point( x,y));
 			var o:Object = new Object();
-			o.a = 'test';
-			trace(o);
+			for (var i:int = 0; i < arr.length; i++) 
+			{
+				trace('id&name =',arr[i].id,arr[i].name);
+			}
 			return o;		
-	}
+		}
 		
 		
 		

@@ -263,31 +263,33 @@
 				var ac:ArrayCollection = new ArrayCollection();
 				var o:Object;
 				var x:XML = event.target.owner.data as XML;
-				var levelRows:XMLList = x.children();
-				if(levelRows.length()>0 ){
-					trace(levelRows.length());
-					for (var i:int = 0; i < levelRows.length(); i++) 
-					{
-					   trace(x.children()[i]);
-					   o = new Object();
-					   o.label = x.children()[i].@label;
-					   o.icon = x.children()[i].@icon;
-					   ac.addItem(o);							
-					}
-				}else {
-					trace(levelRows.length());
-					o = new Object();
-					o.label = x.@label;
-					o.icon = x.@icon;
-					ac.addItem(o);
-				}
-				if(ac.length > 0 ){
-					var dragInitiator:UIComponent = UIComponent(event.currentTarget);
-					var dragItem:*  = dragInitiator;
-					var ds:DragSource = new DragSource();
-					ds.addData('NEW','NEW');
-					ds.addData(ac,'GridR');
-					DragManager.doDrag(dragInitiator, ds, event);
+				if(x != null ) {
+						var levelRows:XMLList = x.children();
+						if(levelRows.length()>0 ){
+							trace(levelRows.length());
+							for (var i:int = 0; i < levelRows.length(); i++) 
+							{
+							   trace(x.children()[i]);
+							   o = new Object();
+							   o.label = x.children()[i].@label;
+							   o.icon = x.children()[i].@icon;
+							   ac.addItem(o);							
+							}
+						}else {
+							trace(levelRows.length());
+							o = new Object();
+							o.label = x.@label;
+							o.icon = x.@icon;
+							ac.addItem(o);
+						}
+						if(ac.length > 0 ){
+							var dragInitiator:UIComponent = UIComponent(event.currentTarget);
+							var dragItem:*  = dragInitiator;
+							var ds:DragSource = new DragSource();
+							ds.addData('NEW','NEW');
+							ds.addData(ac,'GridR');
+							DragManager.doDrag(dragInitiator, ds, event);
+						}
 				}
 			}
 			

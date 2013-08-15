@@ -21,12 +21,14 @@
 
 	<fx:Metadata>
 		<![CDATA[ 
+		
         /** @copy spark.skins.spark.ApplicationSkin#hostComponent */
-        [HostComponent("spark.components.TitleWindow")]
+        [HostComponent("th.co.shopsthai.ascomponent.rzmvTitleWindows")]
         ]]>
 	</fx:Metadata>
 
 	<fx:Script fb:purpose="styling">
+		
 		/* Define the skin elements that should not be colorized.
 		 For panel, border and title background are skinned, but the content area and title text are not. */
 		static private const exclusions:Array = ["background", "titleDisplay", "contentGroup"];

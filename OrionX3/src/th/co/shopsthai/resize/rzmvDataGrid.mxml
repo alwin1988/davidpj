@@ -16,6 +16,7 @@
 			import mx.core.IVisualElement;
 			import mx.messaging.AbstractConsumer;
 			
+			public var rzmv:String = '1'; // 1  = contener 0 = simple component
 			[Bindable] public var moveManager:MoveManager;
 			[Bindable] public var resizeManager:ResizeManager;
 			[Bindable] public var aC:ArrayCollection = new ArrayCollection();

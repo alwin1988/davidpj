@@ -157,7 +157,7 @@ package flex.utils.spark {
 	 */
 	public class TitledBorderBox extends SkinnableContainer {
 
-
+		public var rzmv:String = '1'; // 1  = contener 0 = simple component
 		private static var classConstructed:Boolean = classConstruct();
 
 		private static function classConstruct():Boolean {

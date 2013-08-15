@@ -11,7 +11,7 @@
 		<![CDATA[
 			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
-			
+			public var rzmv:String = '0'; // 1  = contener 0 = simple component
 			[Bindable] public var moveManager:MoveManager;
 			[Bindable] public var resizeManager:ResizeManager;
 

@@ -36,7 +36,7 @@ component is defined by the NumericStepperTextInputSkin class.
         /** 
          * @copy spark.skins.spark.ApplicationSkin#hostComponent
          */
-        [HostComponent("spark.components.NumericStepper")]
+        [HostComponent("th.co.shopsthai.ascomponent.rzmvNumericStepper")]
     ]]>
     </fx:Metadata> 
 	
@@ -44,6 +44,8 @@ component is defined by the NumericStepperTextInputSkin class.
 		<![CDATA[
 			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
+			
+			
 			
 			[Bindable]
 			public var resizeManager:ResizeManager;

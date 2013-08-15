@@ -11,6 +11,7 @@ package th.co.shopsthai.ascomponent
 	public class rzmvasBroderContainer extends BorderContainer
 	{
 		
+		public var rzmv:String = '1'; // 1  = contener 0 = simple component
 		public static const DRAG_START:String = "dragStart";
 		
 		public static const DRAGGING:String = "dragging";

@@ -26,13 +26,15 @@
         /** 
          * @copy spark.skins.spark.ApplicationSkin#hostComponent
          */
-        [HostComponent("spark.components.DropDownList")]
+	    [HostComponent("th.co.shopsthai.ascomponent.rzmvDropDownList")]
     ]]>
 	</fx:Metadata>
 
 	<fx:Script fb:purpose="styling">
 		<![CDATA[
 			import mx.core.IVisualElement;
+			
+			
 			/* Define the content fill items that should be colored by the "contentBackgroundColor" style. */
 			static private const contentFill:Array = ["bgFill"];
 			[Bindable]

@@ -64,6 +64,12 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IVisualElementContainer;
+			import th.co.shopsthai.ascomponent.rzmvNumericStepper;
+			import th.co.shopsthai.ascomponent.rzmvTextArea;
+			import th.co.shopsthai.ascomponent.rzmvTextInput;
+			import th.co.shopsthai.ascomponent.rzmvDropDownList;
+			import th.co.shopsthai.ascomponent.rzmvTitleWindows;
 			import th.co.shopsthai.Utils.ComponentData;
 			import th.co.shopsthai.gridrender.radioItemrender;
 			import th.co.shopsthai.gridrender.dateFileItemrender;
@@ -297,7 +303,7 @@
 				o.addEventListener("dragStart",function(e:Event):void {
 //						trace('dragStart');
 						currComponent = ComponentList.getcomponent(e.target.id);
-						trace('current cid = ',currComponent.cid);
+					//	trace('current cid = ',currComponent.cid);
 					},true);
 				o.addEventListener("dragging",function(e:Event):void {
 //						trace('dragging',e.currentTarget.id);
@@ -324,9 +330,19 @@
 //				});
 				
 				o.addEventListener(TlenMoveEvent.DRAG_END,function(e:TlenMoveEvent):void {
+					var cid:String ='';
 					if(e.currentTarget.id != e.target.id ){
-						trace(e.x,e.y,e.eventPhase,'tlenevent current/target/targerObject',e.currentTarget.id,e.target.id,Object(e.targetObject).id);
-						TlenUtils.getObjectbyPix(e.x,e.y);
+//						trace(e.x,e.y,e.eventPhase,'tlenevent current/target/targerObject',e.currentTarget.id,e.target.id,Object(e.targetObject).id);
+//						trace(Object(e.targetObject).id);
+						trace('cid =',e.target.id);
+						cid = e.target.id;
+						var ivc:IVisualElementContainer = TlenUtils.getObjectbyPix(cid,e.x,e.y);
+						trace('ivc.id=',Object(ivc).id);
+						if(ivc != null ){
+							ivc.addElement(e.target as IVisualElement);
+							e.target.x = 0;
+							e.target.y = 0;
+						}
 						e.stopImmediatePropagation();
 					}
 //					e.stopPropagation();
@@ -1086,7 +1102,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'PANEL'		){
 						//TitleWindows 
-						var tw:TitleWindow = new TitleWindow();
+						var tw:rzmvTitleWindows = new rzmvTitleWindows();
 						tw.id = 'PANEL' + FlexGlobals.topLevelApplication.getIdx;
 						tw.title = tw.id;
 						tw.setStyle('skinClass',ResizableDraggableTitleWindowSkin);
@@ -1154,7 +1170,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VPANEL'		){
 						//TitleWindows + vertical  layout
-						var vtw:TitleWindow = new TitleWindow();
+						var vtw:rzmvTitleWindows = new rzmvTitleWindows();
 						vtw.id = 'VPANEL' + FlexGlobals.topLevelApplication.getIdx;
 						vtw.title = vtw.id;
 						vtw.mouseEnabled = true;
@@ -1224,7 +1240,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'HPANEL' ) {
 						//TitleWindows  + horizontal layout
-						var htw:TitleWindow = new TitleWindow();
+						var htw:rzmvTitleWindows = new rzmvTitleWindows();
 						htw.id = 'HPANEL' + FlexGlobals.topLevelApplication.getIdx;
 						htw.title = htw.id;
 						htw.layout = new HorizontalLayout();
@@ -1293,7 +1309,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TPANEL' ) {
 						//TitleWindows  + horizontal layout
-						var ttw:TitleWindow = new TitleWindow();
+						var ttw:rzmvTitleWindows = new rzmvTitleWindows();
 						ttw.id = 'TPANEL' + FlexGlobals.topLevelApplication.getIdx;
 						ttw.title = ttw.id;
 						ttw.layout = new TileLayout();
@@ -1409,7 +1425,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'rzCOMBO' ) {
-						var cmb:DropDownList = new DropDownList();
+						var cmb:rzmvDropDownList = new rzmvDropDownList();
 						cmb.setStyle('skinClass',flex.utils.spark.resize.ResizableDropDownListSkin);
 						cmb.id = 'rzCOMBO' + FlexGlobals.topLevelApplication.getIdx;
 						cmb.contextMenu = cm;
@@ -1425,7 +1441,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'DropDownList' ) {
-						var ddl:DropDownList = new DropDownList();
+						var ddl:rzmvDropDownList = new rzmvDropDownList();
 						ddl.setStyle('skinClass',flex.utils.spark.resize.ResizableDropDownListSkin);
 						ddl.id = 'DropDownList' + FlexGlobals.topLevelApplication.getIdx;
 						ddl.contextMenu = cm;
@@ -1441,7 +1457,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextInput' ) {
-						var txt:TextInput = new TextInput();
+						var txt:rzmvTextInput = new rzmvTextInput();
 //						<s:TextInput x="357" y="43" skinClass="TextInputResize"/>
 						txt.setStyle('skinClass',TextInputResize);
 						txt.id = 'TextInput' + FlexGlobals.topLevelApplication.getIdx;
@@ -1482,7 +1498,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TextArea' ) {
-						var ta:TextArea = new TextArea();
+						var ta:rzmvTextArea = new rzmvTextArea
 						ta.id = 'TextArea' + FlexGlobals.topLevelApplication.getIdx;
 						ta.setStyle('skinClass',ResizableTextAreaSkin);
 						ta.text = ta.id;
@@ -1552,7 +1568,7 @@
 						ComponentList.Accomp.addItem(cpdata);
 
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'NumericStepper' ) {
-						var nbs:NumericStepper = new NumericStepper();
+						var nbs:rzmvNumericStepper = new rzmvNumericStepper();
 						nbs.id = 'NumericStepper' + FlexGlobals.topLevelApplication.getIdx;
 						nbs.setStyle('skinClass',ResizeMoveNumberStepperSkin);
 						nbs.maximum = 10;

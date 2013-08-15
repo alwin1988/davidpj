@@ -15,7 +15,8 @@
 			
 			[Bindable] public var moveManager:MoveManager;
 			[Bindable] public var resizeManager:ResizeManager;
-
+			public var rzmv:String = '0'; // 1  = contener 0 = simple component
+			
 			private function init():void {
 				
 				moveManager = new MoveManager(this,moveArea);

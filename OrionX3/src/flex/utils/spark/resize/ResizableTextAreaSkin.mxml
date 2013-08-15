@@ -20,12 +20,14 @@
         /** 
          * @copy spark.skins.spark.ApplicationSkin#hostComponent
          */
-        [HostComponent("spark.components.TextArea")]
+        [HostComponent("th.co.shopsthai.ascomponent.rzmvTextArea")]
     ]]>
 	</fx:Metadata>
 
 	<fx:Script fb:purpose="styling">
 		<![CDATA[
+			
+			
 			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 		private var lineBreakChanged:Boolean;

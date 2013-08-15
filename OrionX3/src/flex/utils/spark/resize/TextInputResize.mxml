@@ -31,7 +31,8 @@
         /** 
          * @copy spark.skins.spark.ApplicationSkin#hostComponent
          */
-        [HostComponent("spark.components.TextInput")]
+		
+        [HostComponent("th.co.shopsthai.ascomponent.rzmvTextInput")]
     ]]>
     </fx:Metadata> 
     
@@ -41,13 +42,15 @@
 			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 			
+			
+			
 			[Bindable]
 			public var resizeManager:ResizeManager;
 			
 			[Bindable]
 			public var moveManager:MoveManager;
-			
-        private var paddingChanged:Boolean;
+
+			private var paddingChanged:Boolean;
         
 			private function created(event:FlexEvent):void {
 				if (hostComponent.minWidth == 0) {

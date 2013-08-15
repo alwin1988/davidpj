@@ -180,8 +180,12 @@ package flex.utils.spark.resize {
 				// need to reduce the size by the component's width/height
 				trace('bounds',ObjectUtil.toString(bounds));
 				trace('bounds', FlexGlobals.topLevelApplication.boundwidth,':', FlexGlobals.topLevelApplication.boundHeight );
-//				bounds.width = Math.max(0, bounds.width - moveComponent.width);
-//				bounds.height = Math.max(0, bounds.height - moveComponent.height);
+				bounds.width = Math.max(0, bounds.width - moveComponent.width);
+				bounds.height = Math.max(0, bounds.height - moveComponent.height);
+				if(UIComponent(moveComponent.automationOwner).id != 'mainParent') {
+					bounds.x = -moveComponent.automationOwner.x;
+					bounds.y = -moveComponent.automationOwner.y;
+				}
 			}
 			moveComponent.startDrag(false, bounds);
 			setMoveCursor();

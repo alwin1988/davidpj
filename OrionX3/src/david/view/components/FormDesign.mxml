@@ -1744,6 +1744,8 @@
 			{
 				FlexGlobals.topLevelApplication.boundHeight = mainParent.height;
 				FlexGlobals.topLevelApplication.boundwidth = mainParent.width;
+				FlexGlobals.topLevelApplication.boundx = mainParent.x;
+				FlexGlobals.topLevelApplication.boundy = mainParent.y;
 			}
 			
 		]]>

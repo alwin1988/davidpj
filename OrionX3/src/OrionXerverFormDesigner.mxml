@@ -45,6 +45,8 @@
 			
 			[Bindable] public var boundwidth:Number;
 			[Bindable] public var boundHeight:Number;
+			[Bindable] public var boundx:Number;
+			[Bindable] public var boundy:Number;
 			
 			public  var selected:String="";
 			

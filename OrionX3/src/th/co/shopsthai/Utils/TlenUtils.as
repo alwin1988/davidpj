@@ -21,12 +21,14 @@ package th.co.shopsthai.Utils
 				if(arr[i].hasOwnProperty('className')){
 						if(arr[i].className.indexOf('Skin') > -1 ){
 							trace('skin hostComponentid',arr[i].hostComponent.id);
-							if(arr[i].hostComponent.id != cid ){
-								o = arr[i].hostComponent;
-								break;
-							}	
-							if(arr[i].hostComponent.id == 'mainParent'){
-								break;
+							if(arr[i].hostComponent.hasOwnProperty('rzmv')){
+								if(arr[i].hostComponent.id != cid && arr[i].hostComponent.rzmv == 1 ){
+									o = arr[i].hostComponent;
+									break;
+								}
+								if(arr[i].hostComponent.id == 'mainParent'){
+									break;
+								}
 							}
 						} else if(arr[i].hasOwnProperty('rzmv')) {
 							trace('rzmv=',arr[i].rzmv,'id=',arr[i].id );

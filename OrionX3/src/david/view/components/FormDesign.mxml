@@ -330,6 +330,10 @@
 //				});
 				
 				o.addEventListener(TlenMoveEvent.DRAG_END,function(e:TlenMoveEvent):void {
+					trace('x,y',e.x,e.y);
+					var pt:Point = new Point(e.x, e.y);
+					pt = e.target.localToGlobal(pt);
+					trace('G x,y',pt.x,pt.y);
 					var cid:String ='';
 					if(e.currentTarget.id != e.target.id ){
 //						trace(e.x,e.y,e.eventPhase,'tlenevent current/target/targerObject',e.currentTarget.id,e.target.id,Object(e.targetObject).id);
@@ -340,8 +344,10 @@
 						trace('ivc.id=',Object(ivc).id);
 						if(ivc != null ){
 							ivc.addElement(e.target as IVisualElement);
-							e.target.x = 0;
-							e.target.y = 0;
+							pt = Object(ivc).globalToContent(pt);
+							trace('ivc x,y',pt.x,pt.y);
+							e.target.x = pt.x;
+							e.target.y = pt.y;
 						}
 						e.stopImmediatePropagation();
 					}

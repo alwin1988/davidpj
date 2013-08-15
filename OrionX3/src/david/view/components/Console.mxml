@@ -262,7 +262,8 @@
 			{	
 				var ac:ArrayCollection = new ArrayCollection();
 				var o:Object;
-				var x:XML = event.target.owner.data as XML;
+				if(event.target.hasOwnProperty('owner')){
+					var x:XML = event.target.owner.data as XML;
 				if(x != null ) {
 						var levelRows:XMLList = x.children();
 						if(levelRows.length()>0 ){
@@ -290,6 +291,7 @@
 							ds.addData(ac,'GridR');
 							DragManager.doDrag(dragInitiator, ds, event);
 						}
+  					}
 				}
 			}
 			

@@ -14,9 +14,15 @@ package th.co.shopsthai.Utils
 		public static function getObjectbyPix(x:Number=0, y:Number=0):Object {
 			var arr:Array = FlexGlobals.topLevelApplication.getObjectsUnderPoint(new Point( x,y));
 			var o:Object = new Object();
-			for (var i:int = 0; i < arr.length; i++) 
-			{
-				trace('id&name =',arr[i].id,arr[i].name);
+			for (var i:int = arr.length-1; i >= 0; i--) 
+			{  
+				if(arr[i].hasOwnProperty('className')){
+					if(arr[i].className.indexOf('Skin') > -1 ){
+						trace('skin hostComponentid',arr[i].hostComponent.id);
+						break;
+					}
+					trace('id&name =',arr[i].id,arr[i].name);
+				}
 			}
 			return o;		
 		}

@@ -13,6 +13,7 @@ package flex.utils.spark.resize {
 	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
 	import mx.managers.CursorManager;
+	import mx.utils.ObjectUtil;
 	
 	import spark.components.Group;
 	
@@ -172,11 +173,15 @@ package flex.utils.spark.resize {
 			var bounds:Rectangle = null;
 			if (constrainToBounds != null) {
 				bounds = constrainToBounds;
+				trace('bounds null ',ObjectUtil.toString(bounds));
+				
 			} else if (constrainToParentBounds && moveComponent.automationOwner) {
-				bounds = new Rectangle(0, 0, FlexGlobals.topLevelApplication.boundwidth, FlexGlobals.topLevelApplication.boundHeight);
+				bounds = new Rectangle(0,0,FlexGlobals.topLevelApplication.boundwidth, FlexGlobals.topLevelApplication.boundHeight);
 				// need to reduce the size by the component's width/height
-				bounds.width = Math.max(0, bounds.width - moveComponent.width);
-				bounds.height = Math.max(0, bounds.height - moveComponent.height);
+				trace('bounds',ObjectUtil.toString(bounds));
+				trace('bounds', FlexGlobals.topLevelApplication.boundwidth,':', FlexGlobals.topLevelApplication.boundHeight );
+//				bounds.width = Math.max(0, bounds.width - moveComponent.width);
+//				bounds.height = Math.max(0, bounds.height - moveComponent.height);
 			}
 			moveComponent.startDrag(false, bounds);
 			setMoveCursor();

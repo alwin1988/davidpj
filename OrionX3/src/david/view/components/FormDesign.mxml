@@ -1044,6 +1044,9 @@
 			}
 			
 			private function dragDropHandler(event:DragEvent):void {
+				var pt:Point = new Point(event.localX, event.localY);
+				pt = event.target.localToGlobal(pt);
+//				pt = c1.globalToContent(pt);
 				if(event.currentTarget.className == "rzmvDataGrid"){
 					if(event.dragSource.hasFormat('NEW') && event.dragSource.hasFormat('GridR')){
 						var rzmvg:rzmvDataGrid= event.currentTarget as rzmvDataGrid;
@@ -1070,9 +1073,10 @@
 						br.addEventListener(DragEvent.DRAG_ENTER,dragEnterHandler);
 						br.addEventListener(DragEvent.DRAG_DROP,dragDropHandler);
 						br.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
-						addlistenEvent(br);
-						br.x = event.currentTarget.x;
-						br.y = event.currentTarget.y;
+						addlistenEvent(br);           
+						pt = br.globalToContent(pt);
+						br.x = pt.x;
+						br.y = pt.y;
 						var cpdata:ComponentData = new ComponentData();
 						cpdata.cx = br.x;
 						cpdata.cy = br.y;
@@ -1095,6 +1099,12 @@
 						tw.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						tw.x = event.currentTarget.x;
 						tw.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = tw.x;
+						cpdata.cy = tw.y;
+						cpdata.cid = tw.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
 						ComponentList.Accomp.addItem(cpdata);
 						
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'TBBOX'		){
@@ -1112,6 +1122,12 @@
 						tb.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						tb.x = event.currentTarget.x;
 						tb.y = event.currentTarget.y;
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = tb.x;
+						cpdata.cy = tb.y;
+						cpdata.cid = tb.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
 						ComponentList.Accomp.addItem(cpdata);
 					} else	if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VBOX'		){
 						var vbr:rzmvasBroderContainer = new rzmvasBroderContainer();
@@ -1128,6 +1144,13 @@
 						vbr.addEventListener(MouseEvent.ROLL_OVER,mouseRollOverHander);
 						vbr.x = event.currentTarget.x;
 						vbr.y = event.currentTarget.y;
+						
+						var cpdata:ComponentData = new ComponentData();
+						cpdata.cx = vbr.x;
+						cpdata.cy = vbr.y;
+						cpdata.cid = vbr.id;
+						cpdata.ctype = 1;
+						cpdata.cp = event.currentTarget;
 						ComponentList.Accomp.addItem(cpdata);
 					} else if(event.dragSource.hasFormat('cType') && event.dragSource.dataForFormat('cType') == 'VPANEL'		){
 						//TitleWindows + vertical  layout
@@ -1374,8 +1397,9 @@
 							DragManager.doDrag(dragInitiator, ds, event);
 							});
 						event.currentTarget.addElement(bt);
-						bt.x = event.currentTarget.x;
-						bt.y = event.currentTarget.y;
+						pt = bt.globalToContent(pt);
+						bt.x = pt.x;
+						bt.y = pt.y;
 						var cpdata:ComponentData = new ComponentData();
 						cpdata.cx = bt.x;
 						cpdata.cy = bt.y;

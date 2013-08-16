@@ -22,7 +22,7 @@ package th.co.shopsthai.Utils
 
 		
 		
-		public function TlenMoveEvent(type:String, targetObject:DisplayObject, x:Number=0, y:Number=0, rotation:Number=0, scale:Number=0, bubbles:Boolean = false, cancelable:Boolean = false)
+		public function TlenMoveEvent(type:String, targetObject:DisplayObject,  x:Number=0, y:Number=0, rotation:Number=0, scale:Number=0, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
 			this.targetObject = targetObject;
@@ -30,6 +30,7 @@ package th.co.shopsthai.Utils
 			this.y = y;
 			this._rotation = rotation;
 			this.scale = scale;
+			trace('xy',x,y);
 		}
 		
 

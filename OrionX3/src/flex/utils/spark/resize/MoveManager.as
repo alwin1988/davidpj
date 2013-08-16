@@ -215,6 +215,7 @@ package flex.utils.spark.resize {
 //				moveComponent.dispatchEvent(new Event(DRAG_END));
 				
 				moveComponent.dispatchEvent(new TlenMoveEvent(TlenMoveEvent.DRAG_END,moveComponent, event.stageX,event.stageY,0,0,true));
+//				moveComponent.dispatchEvent(new TlenMoveEvent(TlenMoveEvent.DRAG_END,moveComponent, event.localX,event.localY,0,0,true));
 			}
 			moveComponent.systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, dragComponentMove);
 			moveComponent.systemManager.removeEventListener(MouseEvent.MOUSE_UP, dragComponentMouseUp);

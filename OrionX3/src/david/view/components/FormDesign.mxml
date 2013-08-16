@@ -332,8 +332,9 @@
 				o.addEventListener(TlenMoveEvent.DRAG_END,function(e:TlenMoveEvent):void {
 					trace('x,y',e.x,e.y);
 					var pt:Point = new Point(e.x, e.y);
-					pt = e.target.localToGlobal(pt);
-					trace('G x,y',pt.x,pt.y);
+					var lpt:Point = new Point(e.y,e.y);
+					lpt = e.target.globalToContent(pt);
+//					trace('G x,y',pt.x,pt.y);
 					var cid:String ='';
 					if(e.currentTarget.id != e.target.id ){
 //						trace(e.x,e.y,e.eventPhase,'tlenevent current/target/targerObject',e.currentTarget.id,e.target.id,Object(e.targetObject).id);
@@ -346,8 +347,8 @@
 							ivc.addElement(e.target as IVisualElement);
 							pt = Object(ivc).globalToContent(pt);
 							trace('ivc x,y',pt.x,pt.y);
-							e.target.x = pt.x;
-							e.target.y = pt.y;
+								e.target.x = pt.x -lpt.x;
+								e.target.y = pt.y -lpt.y;
 						}
 						e.stopImmediatePropagation();
 					}
@@ -1636,8 +1637,8 @@
 						vsl.x = event.currentTarget.x;
 						vsl.y = event.currentTarget.y;
 						var cpdata:ComponentData = new ComponentData();
-						cpdata.cx = pop.x;
-						cpdata.cy = pop.y;
+//						cpdata.cx = pop.x;
+//						cpdata.cy = pop.y;
 						cpdata.cid = pop.id;
 						cpdata.ctype = 0;
 						cpdata.cp = event.currentTarget;

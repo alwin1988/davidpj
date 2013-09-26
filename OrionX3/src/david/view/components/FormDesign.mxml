@@ -303,6 +303,7 @@
 				o.addEventListener("dragStart",function(e:Event):void {
 //						trace('dragStart');
 						currComponent = ComponentList.getcomponent(e.target.id);
+						fronGroup.addElement(e.target as IVisualElement);
 					//	trace('current cid = ',currComponent.cid);
 					},true);
 				o.addEventListener("dragging",function(e:Event):void {
@@ -1799,7 +1800,7 @@
 			<mx:Text text="form Title Label" id="lblfrmSubTitle" />
 			</mx:VBox-->
 			<s:Group id="GG" width="100%" height="100%">
-				<mx:Box width="100%" height="100%"
+				<mx:Box width="100%" height="100%" 
 						paddingTop="10"  paddingBottom="10" paddingLeft="10" paddingRight="10" 
 						backgroundColor="white"
 						click="box1_clickHandler(event)" dragDrop="dragDropHandler(event);"
@@ -1827,7 +1828,9 @@
 									   borderVisible="true" borderColor="yellow" borderWeight="2">
 
 					</s:BorderContainer>
--->				</mx:Box>
+-->				
+				</mx:Box>
+				<s:Group width="100%" height="100%" id="fronGroup" />
 			</s:Group>
 			<s:BorderContainer width="100%" height="24" backgroundColor="#00004F6C" borderVisible="false">
 				<s:layout>

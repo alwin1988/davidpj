@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600">
+	
+	<!--<menuitem label="MenuItem A" >
+			<menuitem label="SubMenuItem A-1" enabled="false"/>
+			<menuitem label="SubMenuItem A-2"/>
+		</menuitem>
+		<menuitem label="MenuItem B" type="check" toggled="true"/>
+		<menuitem label="MenuItem C" type="check" toggled="false"/>
+		<menuitem type="separator"/>     
+		<menuitem label="MenuItem D" >
+			<menuitem label="SubMenuItem D-1" type="radio" 
+					groupName="one"/>
+			<menuitem label="SubMenuItem D-2" type="radio" 
+					groupName="one" toggled="true"/>
+			<menuitem label="SubMenuItem D-3" type="radio" 
+					groupName="one"/>
+	</menuitem>-->
+	
+	
+	<fx:Declarations>
+		<fx:XML format="e4x" id="myMenuData">
+			<root>
+				<menuitem label="All native formats" type="radio"/>
+				<menuitem label="Only images..." type="radio">
+					<menuitem label="BMP format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+				</menuitem>
+			</root>
+		</fx:XML>
+		
+		<fx:XMLList id="menuBarXMLList">
+			<menuitem label="Home"/>
+			<menuitem label="Gallery"/>
+			<menuitem label="Stock"/>
+			<menuitem label="Blog"/>
+			<menuitem label="About">
+				<menuitem label="Photographer"/>
+				<menuitem label="Prints"/>
+				<menuitem label="Copyright"/>
+			</menuitem>
+		</fx:XMLList>
+		
+	</fx:Declarations>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Menu;
+			import mx.events.MenuEvent;
+
+			
+			// Create and display the Menu control.
+			private function createAndShow():void {
+				var myMenu:Menu = Menu.createMenu(null, myMenuData, false);
+				myMenu.labelField="@label";
+				myMenu.show(10, 10);
+			}
+			
+			
+			
+			
+			/* 
+			private function menuBarItemClickHandler(event:MenuEvent):void {
+				switch(event.label) {
+					case 'Photographer':
+						trace("menuBarItemClickHandler: Photographer clicked");
+						break;
+					
+					case 'Prints':
+						trace("menuBarItemClickHandler: Prints clicked");
+						break;
+					
+					case 'Copyright':
+						trace("menuBarItemClickHandler: Copyright clicked");
+						break;
+					
+					default:
+						trace("menuBarItemClickHandler: " + event.label + " clicked");
+						break;
+				}
+			}
+			
+			private function menuBarClickHandler(event:MouseEvent):void {
+				try {
+					
+					if(mMenuBar.selectedIndex >= 0) {
+						var lLabel:String = mMenuBar.dataProvider[mMenuBar.selectedIndex].@label;
+						
+						switch(lLabel) {
+							case "Home":
+								trace("menuBarClickHandler: Home clicked");
+								break;
+							
+							case "Gallery":
+								trace("menuBarClickHandler: Gallery clicked");
+								break;
+							
+							case "Stock":
+								trace("menuBarClickHandler: Stock clicked");
+								break;
+							
+							case "Blog":
+								trace("menuBarClickHandler: Blog clicked");
+								break;
+							
+							case "About":
+								trace("menuBarClickHandler: About clicked");
+								break;
+							
+							default:
+								trace("menuBarClickHandler: " + lLabel + " clicked");
+								break;
+						}
+						
+					} else {
+						trace("topMenu.mxml menuBarClickHandler() index out of range, mMenuBar.selectedIndex = " + mMenuBar.selectedIndex);
+					}
+				
+				} catch(err:Error) {
+					trace("topMenu.mxml menuBarClickHandler() EXCEPTION: " + err.toString());
+				}
+				
+			} */
+			
+			
+			
+			
+			
+			
+		]]>
+	</fx:Script>
+	
+	<!-- Define the menu data. -->
+	
+	
+	<mx:VBox>
+		<!-- Define a Button control to open the menu -->
+		<!--<mx:Button id="myButton" 
+				   label="Open Menu" 
+				   click="createAndShow();"/>-->
+		
+		<mx:Menu labelField="@label">
+			<fx:XMLList>
+				<menuitem label="All native formats" type="radio"/>
+				<menuitem label="Only images..." type="radio">
+					<menuitem label="BMP format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+					<menuitem label="GIF format" type="check"/>
+				</menuitem>
+			</fx:XMLList>
+		</mx:Menu>
+		
+		<!--
+		<mx:MenuBar id="mMenuBar" labelField="@label" cornerRadius="10" dataProvider="menuBarXMLList" click="menuBarClickHandler(event)" itemClick="menuBarItemClickHandler(event)">
+		</mx:MenuBar>-->
+		 
+		<mx:MenuBar id="myMenuBar" labelField="@label" x="500">
+			<fx:XMLList>
+				<menuitem label="@label">
+					<menuitem label="All native formats" type="radio"/>
+					<menuitem label="Only images.." type="radio">
+						<menuitem label="BMP format" type="check"/>
+						<menuitem label="GIF format" type="check"/>
+						<menuitem label="GIF format" type="check"/>
+						<menuitem label="GIF format" type="check"/>
+						<menuitem label="GIF format" type="check"/>
+					</menuitem>
+					<menuitem label="Only PDF.." type="radio">
+						<menuitem label="PDF" type="check"/>
+						<menuitem label="PDF/A (searchable)" type="check"/>
+						<menuitem label="PDF/IHQC (compressed)" type="check"/>
+					</menuitem>
+					<menuitem label="Only MS Office.." type="radio">
+						<menuitem label="MS Access" type="check"/>
+						<menuitem label="MS Excel" type="check"/>
+						<menuitem label="MS PowerPoint" type="check"/>
+						<menuitem label="MS Word" type="check"/>
+					</menuitem>
+				</menuitem>
+			</fx:XMLList>
+		</mx:MenuBar>
+		
+		<!--<menuitem label="MenuItem A">
+			<menuitem label="SubMenuItem A-1" enabled="false"/>
+			<menuitem label="SubMenuItem A-2"/>
+		</menuitem>
+		<menuitem label="MenuItem B"/>
+		<menuitem label="MenuItem C"/>
+		<menuitem label="MenuItem D">
+			<menuitem label="SubMenuItem D-1" 
+					  type="radio" groupName="one"/>
+			<menuitem label="SubMenuItem D-2" 
+					  type="radio" groupName="one"
+					  selected="true"/>
+			<menuitem label="SubMenuItem D-3" 
+					  type="radio" groupName="one"/>
+		</menuitem>-->
+		
+		
+		
+	</mx:VBox>
+	
+	
+	
+</s:Application>

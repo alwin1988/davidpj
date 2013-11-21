@@ -1,0 +1,148 @@
+
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="CafolderService">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">david.pages.CA.services</item>
+      <item name="Destination">cafolderService</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">david.pages.CA.valueObjects</item>
+      <item name="contextRoot">/OrionClientJava</item>
+      <item name="rootUrl">http://localhost:8080/OrionClientJava</item>
+      <item name="LINKED_FILE"></item>
+      <item name="ABSOLUTE_ENDPOINT"></item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">BlazeDS</item>
+    </annotation>
+    <function name="attachDirty" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Cafolder</item>
+      </annotation>
+      <parameter name="arg0" type="Cafolder"/>
+    </function>
+    <function name="attachClean" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Cafolder</item>
+      </annotation>
+      <parameter name="arg0" type="Cafolder"/>
+    </function>
+    <function name="persist" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Cafolder</item>
+      </annotation>
+      <parameter name="arg0" type="Cafolder"/>
+    </function>
+    <function name="getAllCafolder" return-type="Cafolder[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">Cafolder</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">isBranch,idx,description,name,state,children,label,parentid,isOpen</item>
+      </annotation>
+    </function>
+    <function name="delete_method" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Cafolder</item>
+      </annotation>
+      <annotation name="ActionScriptGeneration">
+        <item name="remoteFunction">delete</item>
+      </annotation>
+      <parameter name="arg0" type="Cafolder"/>
+    </function>
+    <function name="merge" return-type="Cafolder">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Cafolder</item>
+        <item name="returnType">Cafolder</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">isBranch,idx,description,name,state,parentid,label,isOpen</item>
+      </annotation>
+      <parameter name="arg0" type="Cafolder"/>
+    </function>
+    <function name="findById" return-type="Cafolder">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">integer</item>
+        <item name="returnType">Cafolder</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">isBranch,idx,description,name,state,parentid,label,isOpen</item>
+      </annotation>
+      <parameter name="arg0" type="integer"/>
+    </function>
+    <function name="findByExample" return-type="Cafolder[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Cafolder</item>
+        <item name="returnType">Cafolder</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">isBranch,idx,description,name,state,parentid,label,isOpen</item>
+      </annotation>
+      <parameter name="arg0" type="Cafolder"/>
+    </function>
+  </service>
+  <entity name="Cafolder">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Cafolder</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">com.shopsthai.david.hibernate.Cafolder</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">Dummy,CafolderService</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">david.pages.CA.valueObjects</item>
+    </annotation>
+    <annotation name="getAllCafolder">
+      <item name="propertySpecifier">isBranch,idx,description,name,state,children,label,parentid,isOpen</item>
+    </annotation>
+    <annotation name="merge">
+      <item name="propertySpecifier">isBranch,idx,description,name,state,parentid,label,isOpen</item>
+    </annotation>
+    <annotation name="findById">
+      <item name="propertySpecifier">isBranch,idx,description,name,state,parentid,label,isOpen</item>
+    </annotation>
+    <annotation name="findByExample">
+      <item name="propertySpecifier">isBranch,idx,description,name,state,parentid,label,isOpen</item>
+    </annotation>
+    <property name="isBranch" type="string" required="true"/>
+    <property name="idx" type="integer" required="true"/>
+    <property name="description" type="string" required="true"/>
+    <property name="name" type="string" required="true"/>
+    <property name="state" type="string" required="true"/>
+    <property name="children" type="Cafolder[]" required="true"/>
+    <property name="label" type="string" required="true"/>
+    <property name="parentid" type="integer" required="true"/>
+    <property name="isOpen" type="string" required="true"/>
+  </entity>
+</model>

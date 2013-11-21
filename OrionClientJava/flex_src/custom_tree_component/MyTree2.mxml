@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:components="components.*" 
+		 creationComplete="group1_creationCompleteHandler(event)" >
+		
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.ICollectionView;
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
+			import mx.controls.treeClasses.ITreeDataDescriptor;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			
+			[Bindable] [Embed(source="../assets/collapse.png")]
+			public var ICON_PLUS:Class;
+			
+			[Bindable] [Embed(source="../assets/expand.png")]
+			public var ICON_MINUS:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_close.png")]
+			public var ICON_FOLDER:Class;
+			
+			[Bindable] [Embed(source="../assets/file.png")]
+			public var ICON_FILE:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_collapse.png")]
+			public var ICON_FOLDER_COLLAPSE:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_expand.png")]
+			public var ICON_FOLDER_EXPAND:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_blue_checked.png")]
+			public var ICON_FOLDER_BLUE_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_blue_unchecked.png")]
+			public var ICON_FOLDER_BLUE_UNCHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_green_checked.png")]
+			public var ICON_FOLDER_GREEN_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_green_unchecked.png")]
+			public var ICON_FOLDER_GREEN_UNCHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_orange_checked.png")]
+			public var ICON_FOLDER_ORANGE_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_orange_unchecked.png")]
+			public var ICON_FOLDER_ORANGE_UNCHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_purple_checked.png")]
+			public var ICON_FOLDER_PURPLE_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_purple_unchecked.png")]
+			public var ICON_FOLDER_PURPLE_UNCHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_red_checked.png")]
+			public var ICON_FOLDER_RED_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_red_unchecked.png")]
+			public var ICON_FOLDER_RED_UNCHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_yellow_checked.png")]
+			public var ICON_FOLDER_YELLOW_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_yellow_unchecked.png")]
+			public var ICON_FOLDER_YELLOW_UNCHECKED:Class;
+			
+			
+			
+			private var chk:Boolean = false;
+			static private var STATE_SCHRODINGER:String="schrodinger";
+			static private var STATE_CHECKED:String="checked";
+			static private var STATE_UNCHECKED:String="unchecked";
+			
+			private var orgXML:XML =
+				<root>
+					<node id='0' name='Root' label="ALL FOLDERS" state="checked" p="1" >
+						<node id='1' name='Folder1' label="Folder1" state="checked" p="1">
+							<node id='2' name='Subfolder1' label="Subfolder1" state="checked" p="0"/>
+							<node id='3' name='Subfolder1' label="Subfolder2" state="checked" p="0"/>
+							<node id='4' name='Subfolder1' label="Subfolder3" state="checked" p="0"/>
+						</node>
+						<node id='5' name='Folder2' label="Folder2" state="checked" p="1">
+							<node id='6' name='Subfolder2' label="Subfolder1" state="checked" p="0"/>
+							<node id='7' name='Subfolder2' label="Subfolder2" state="checked" p="0"/>
+						</node>
+						<node id='8' name='Folder3' label="Folder3" state="checked" p="1">
+							<node id='9' name='Subfolder3' label="Subfolder1" state="checked" p="0"/>
+							<node id='10' name='Subfolder3' label="Subfolder2" state="checked" p="0"/>
+						</node>
+						<node id='11' name='Folder4' label="Folder4" state="checked" p="1">
+							<node id='12' name='Subfolder4' label="Subfolder1" state="checked" p="0"/>
+							<node id='13' name='Subfolder4' label="Subfolder2" state="checked" p="0"/>
+							<node id='14' name='Subfolder4' label="Subfolder3" state="checked" p="0"/>
+						</node>
+						<node id='15' name='Folder5' label="Folder5" state="checked" p="1">
+							<node id='16' name='Subfolder5' label="Subfolder1" state="checked" p="0"/>
+							<node id='17' name='Subfolder5' label="Subfolder2" state="checked" p="0"/>
+							<node id='18' name='Subfolder5' label="Subfolder3" state="checked" p="0"/>
+						</node>
+					</node>
+				</root>;
+			
+			[Bindable] private var xl1:XMLListCollection = new XMLListCollection();
+			[Bindable] private var chkstate:String = "checked";
+			
+			private var cpa:String ="P";
+			
+			protected function treeview (apc:String):void {
+				if ( apc == 'P' ) {
+					var tc:XMLListCollection = new XMLListCollection();
+					var dp:XML = orgXML.copy();
+
+					var xl:XMLList = dp.node;
+					
+					for each( var nodelist:XML in xl ) {
+						for (var i:int=nodelist.node.length()-1; i>=0; i--) {
+							if(nodelist.node[i].@state == "unchecked"){
+								delete nodelist.node[i];
+							}
+						}
+						if(nodelist.node.length() > 0 ){
+							tc.addItem(nodelist);
+						}
+					}
+					xl1 = tc;
+					treeid.dataProvider = xl1;
+					
+				} else if ( apc == "A" ) {
+					xl1.removeAll();
+					var dp:XML = orgXML.copy();
+					xl1 = new XMLListCollection( new XMLList( dp.node ) );	
+					treeid.dataProvider = xl1;
+				}
+				cpa = apc;
+				treeid.openItems = dp.node;
+				treeid.invalidateList();
+				treeid.invalidateDisplayList();
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void {
+				treeview('A');
+			}
+			
+			protected function treeid_itemClickHandler(event:ListEvent):void {
+				updateTree(event.target.selectedItem);
+			}
+			
+			private function updateTree(p:XML):void {
+				var ancestorID:int = 0;
+				var selectid:String = p.@id ;
+				
+				//parent
+				if(p.@p=='1'){
+					var node:XMLList = orgXML.node.(@id == selectid );
+					node.@state = p.@state;
+					
+					for each (var item in node.node) {
+						item.@state = p.@state;
+					}					
+					
+				//child
+				} else {
+					var node:XMLList = orgXML.node.node.(@id == selectid );
+					node.@state = p.@state;
+					
+					for each( var nodelist:XML in orgXML.elements("*") ) { //nodelist  get all xml
+						if ( nodelist.node.(@id == selectid).@id == selectid ) {
+							ancestorID = nodelist.@id.toString(); //ancestorID is parent id of selected child
+							var x:XMLList = orgXML.node.(@id == ancestorID); //get all child of node ancestorID
+							
+							if(p.@state){
+								if(updatechild(x,STATE_CHECKED)){
+									x.@state = STATE_CHECKED;
+								} else {
+									x.@state = STATE_UNCHECKED;
+								}
+								
+							} else {
+								x.@state = STATE_UNCHECKED;
+							}
+							break;
+						}
+					}
+				}
+			}
+			
+			private function updatechild(x:XMLList,status:String):Boolean {
+				var chk:Boolean = true;
+				for each (var item:XML in x.node) {	
+					if(	item.@state == STATE_UNCHECKED ) {
+						chk = false;
+						break;
+					}
+				}
+				return chk;
+			}
+	
+			private function expandNodes():void {
+				treeview(cpa);
+				for (var i:int = 0; i < treeid.dataProvider.length; i ++){
+					treeid.expandChildrenOf(treeid.dataProvider[i],true)
+				}
+			}
+			
+			private function tree_iconFunc(item:Object):Class {
+				var iconClass:Class;
+				var attributeCase:String = XML(item).attribute('name');
+				
+				if ( attributeCase == "Root" ) {
+					var isParent:String = XML(item).attribute('p');
+					if (isParent == "1") {
+						var state:String = XML(item).attribute('state');
+						if ( state == "checked" ) {
+							iconClass = ICON_FOLDER_BLUE_CHECKED;
+						} else {
+							iconClass = ICON_FOLDER_BLUE_UNCHECKED;
+						}
+					}
+					
+				} else if ( attributeCase == "Folder1" || attributeCase == "Subfolder1" ) {
+					var isParent:String = XML(item).attribute('p');
+					//if (isParent == "1") {
+						var state:String = XML(item).attribute('state');
+						if ( state == "checked" ) {
+							iconClass = ICON_FOLDER_GREEN_CHECKED;
+						} else {
+							iconClass = ICON_FOLDER_GREEN_UNCHECKED;
+						}
+					//}
+				
+				} else if ( attributeCase == "Folder2" || attributeCase == "Subfolder2" ) {
+					var isParent:String = XML(item).attribute('p');
+					//if (isParent == "1") {
+						var state:String = XML(item).attribute('state');
+						if ( state == "checked" ) {
+							iconClass = ICON_FOLDER_ORANGE_CHECKED;
+						} else {
+							iconClass = ICON_FOLDER_ORANGE_UNCHECKED;
+						}
+					//}
+						
+				} else if ( attributeCase == "Folder3" || attributeCase == "Subfolder3" ) {
+					var isParent:String = XML(item).attribute('p');
+					//if (isParent == "1") {
+						var state:String = XML(item).attribute('state');
+						if ( state == "checked" ) {
+							iconClass = ICON_FOLDER_PURPLE_CHECKED;
+						} else {
+							iconClass = ICON_FOLDER_PURPLE_UNCHECKED;
+						}
+					//}
+						
+				} else if ( attributeCase == "Folder4" || attributeCase == "Subfolder4" ) {
+					var isParent:String = XML(item).attribute('p');
+					//if (isParent == "1") {
+						var state:String = XML(item).attribute('state');
+						if ( state == "checked" ) {
+							iconClass = ICON_FOLDER_RED_CHECKED;
+						} else {
+							iconClass = ICON_FOLDER_RED_UNCHECKED;
+						}
+					//}
+						
+				} else if ( attributeCase == "Folder5" || attributeCase == "Subfolder5" ) {
+					var isParent:String = XML(item).attribute('p');
+					//if (isParent == "1") {
+						var state:String = XML(item).attribute('state');
+						if ( state == "checked" ) {
+							iconClass = ICON_FOLDER_YELLOW_CHECKED;
+						} else {
+							iconClass = ICON_FOLDER_YELLOW_UNCHECKED;
+						}
+					//}
+				}
+				
+				return iconClass;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="State1"/>
+		<s:State name="State2"/>
+		<s:State name="State3"/>
+	</s:states>
+	
+	<!--<s:Rect x="0" y="0" width="100%" height="100%" id="rect1" visible="true">-->
+		<!--<s:stroke>
+			<s:SolidColorStroke caps="none" color="#5C5C5C" joints="miter" miterLimit="4" weight="1"/>
+		</s:stroke>-->
+		<!--<s:fill>
+			<s:SolidColor color="0xFFFFFF" />
+		</s:fill>-->
+		<!--<s:filters>
+			<s:DropShadowFilter alpha="0.5" angle="45.0" blurX="4.0" blurY="4.0" color="#000000"
+								distance="4.0" hideObject="false" inner="false" knockout="false"
+								quality="2" strength="1"/>
+		</s:filters>-->
+	<!--</s:Rect>-->
+	
+	<s:VGroup width="100%" height="100%" gap="0">
+		<mx:Tree id="treeid" includeIn="State1,State2,State3" width="100%" height="100%"
+				 creationComplete="expandNodes()" defaultLeafIcon="{null}"
+				 folderClosedIcon="{null}"
+				 folderOpenIcon="{null}"
+				 itemClick="treeid_itemClickHandler(event)"
+				 disclosureClosedIcon="{ICON_FOLDER_COLLAPSE}" 
+				 disclosureOpenIcon="{ICON_FOLDER_EXPAND}"
+				 rowHeight="16" iconFunction="tree_iconFunc"
+				 fontFamily="Franklin Gothic Medium" fontSize="11"
+				 itemRenderer="custom_tree_component.CheckTreeRenderer_For_DE" labelField="@label"
+				 showRoot="true"> <!--itemRenderer="custom_tree_component.CheckTreeRenderer" labelField="@label"-->
+			
+		</mx:Tree>
+	</s:VGroup>
+	
+</s:Group>

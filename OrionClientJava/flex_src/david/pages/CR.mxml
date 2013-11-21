@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
+			   width="100%" height="100%">
+	<fx:Script>
+		<![CDATA[
+			
+
+			public function init():void {
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:ArrayCollection id="DocClassData">
+			<fx:Object
+				DocumentClassName="DocClass1"
+				DocumentsPercentage="50"/>
+			<fx:Object
+				DocumentClassName="DocClass2"
+				DocumentsPercentage="20"/>
+			<fx:Object
+				DocumentClassName="DocClass3"
+				DocumentsPercentage="30"/>
+		</s:ArrayCollection>
+	</fx:Declarations>
+	
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+				
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+		
+			<!--Choose category-->
+			<s:BorderContainer id="CategoryChooser" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="10"/>
+				</s:layout>
+				<s:BorderContainer id="CategoryTree" width="170" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00315B7E" backgroundColor="#00315B7E">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5"
+											  verticalAlign="middle"/>
+						</s:layout>
+						<mx:Text text="Choose category:" 
+								color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="170" height="111" borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="0"/>
+						</s:layout>
+						<mx:Tree width="99%" height="100%" labelField="@label" rowHeight="20"
+								 showRoot="true" borderSkin="{null}" 
+								 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							<mx:XMLListCollection>
+								<fx:XMLList>
+									<folder label="Documents">
+										<Pfolder label="By document class"/>>
+									</folder>
+									<folder label="Cases">
+										<Pfolder label="By workflow procedure"/>
+									</folder>
+								</fx:XMLList>
+							</mx:XMLListCollection>
+						</mx:Tree>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!--Entities-->
+				<s:BorderContainer id="Entities" width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout gap="0" horizontalAlign="right"/>
+					</s:layout>
+					
+					<!-- Tab bar for border layout -->
+					<s:BorderContainer width="100%" height="23" borderVisible="false" >
+						<s:layout>
+							<s:HorizontalLayout gap="0" horizontalAlign="right" verticalAlign="bottom"/>
+						</s:layout>
+						<s:TabBar height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							<mx:ArrayCollection>
+								<fx:String>Chart</fx:String> 
+								<fx:String>Report</fx:String> 
+							</mx:ArrayCollection>
+						</s:TabBar>
+					</s:BorderContainer>
+					
+					<component:CustomTitleWindow title="Documents by Document Class" height="100%" width="100%" dropShadowVisible="false"
+												 skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+						<!--<s:layout>
+							<s:VerticalLayout/>
+						</s:layout>-->
+						
+						<mx:VBox width="100%" height="100%" horizontalAlign="left">
+							<mx:PieChart id="myChart" 
+										 dataProvider="{DocClassData}" 
+										 showDataTips="true">
+								<mx:series>
+									<mx:PieSeries 
+										field="DocumentsPercentage" 
+										nameField="DocumentClassName"
+										labelPosition="inside"/>
+								</mx:series>
+							</mx:PieChart>
+							<mx:Legend dataProvider="{myChart}"/>
+						</mx:VBox>
+						
+					</component:CustomTitleWindow>
+				</s:BorderContainer>
+			
+			<!--End SearchFiltersAndSearchResults-->
+			</s:BorderContainer>
+			
+		<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

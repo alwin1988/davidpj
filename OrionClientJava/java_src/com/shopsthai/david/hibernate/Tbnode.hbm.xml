@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 14, 2013 10:42:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.shopsthai.david.hibernate.Tbnode" table="tbnode" catalog="david">
+        <id name="idx" type="int">
+            <column name="idx" />
+            <generator class="assigned" />
+        </id>
+        <property name="label" type="string">
+            <column name="label" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="10" />
+        </property>
+        <property name="groupName" type="string">
+            <column name="groupName" length="30" />
+        </property>
+        <property name="p" type="string">
+            <column name="p" length="1" />
+        </property>
+        <property name="parentid" type="java.lang.Integer">
+            <column name="parentid" />
+        </property>
+        <property name="toggled" type="string">
+            <column name="toggled" length="5" />
+        </property>
+        <property name="haveChild" type="string">
+            <column name="haveChild" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<design>
+	<namespaces>
+		<namespace prefix="sn" uri="library://ns.shinynet.com/flex/shinylib"/>
+	</namespaces>
+	
+	<categories>
+		<category id="controls" label="ShinyLib" defaultExpand="true"/>
+	</categories>
+
+	<components>
+	    <component id="com.shinynet.shinylib.components.CollapsiblePanel" name="CollapsiblePanel" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.DeferredContentGroup" name="DeferredContentGroup" category="containers" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.FieldSet" name="FieldSet" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.FormattedTextInput" name="FormattedTextInput" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.GroupStack" name="GroupStack" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.OpenCloseTabBar" name="OpenCloseTabBar" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.openCloseTabBarClasses.OpenCloseTabBarButton" name="OpenCloseTabBarButton" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.openCloseTabBarClasses.OpenCloseTabBarNavigatorContent" name="OpenCloseTabBarNavigatorContent" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.formatters.PercentFormatter" name="PercentFormatter" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.SchrodingerCheckBox" name="SchrodingerCheckBox" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.SkinnableViewStack" name="SkinnableViewStack" category="navigators" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.TimeStepper" name="TimeStepper" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.TitleContentPanel" name="TitleContentPanel" category="controls" namespace="sn"/>
+	    <component id="com.shinynet.shinylib.components.ViewStack" name="ViewStack" category="navigators" namespace="sn"/>
+	</components>
+</design>

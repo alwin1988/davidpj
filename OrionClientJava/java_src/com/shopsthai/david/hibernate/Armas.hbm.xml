@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 14, 2013 10:42:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.shopsthai.david.hibernate.Armas" table="armas" catalog="david">
+        <id name="cuscod" type="string">
+            <column name="CUSCOD" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="custyp" type="string">
+            <column name="CUSTYP" length="2" />
+        </property>
+        <property name="prenam" type="string">
+            <column name="PRENAM" length="15" />
+        </property>
+        <property name="cusnam" type="string">
+            <column name="CUSNAM" length="60" />
+        </property>
+        <property name="addr01" type="string">
+            <column name="ADDR01" length="50" />
+        </property>
+        <property name="addr02" type="string">
+            <column name="ADDR02" length="50" />
+        </property>
+        <property name="addr03" type="string">
+            <column name="ADDR03" length="30" />
+        </property>
+        <property name="zipcod" type="string">
+            <column name="ZIPCOD" length="5" />
+        </property>
+        <property name="telnum" type="string">
+            <column name="TELNUM" length="50" />
+        </property>
+        <property name="contact" type="string">
+            <column name="CONTACT" length="40" />
+        </property>
+        <property name="cusnam2" type="string">
+            <column name="CUSNAM2" length="40" />
+        </property>
+        <property name="taxid" type="string">
+            <column name="TAXID" length="15" />
+        </property>
+        <property name="taxtyp" type="string">
+            <column name="TAXTYP" length="25" />
+        </property>
+        <property name="taxrat" type="java.lang.Double">
+            <column name="TAXRAT" precision="22" scale="0" />
+        </property>
+        <property name="taxgrp" type="string">
+            <column name="TAXGRP" length="4" />
+        </property>
+        <property name="taxcond" type="string">
+            <column name="TAXCOND" length="1" />
+        </property>
+        <property name="shipto" type="string">
+            <column name="SHIPTO" length="10" />
+        </property>
+        <property name="slmcod" type="string">
+            <column name="SLMCOD" length="10" />
+        </property>
+        <property name="areacod" type="string">
+            <column name="AREACOD" length="4" />
+        </property>
+        <property name="paytrm" type="java.lang.Integer">
+            <column name="PAYTRM" />
+        </property>
+        <property name="paycond" type="string">
+            <column name="PAYCOND" length="25" />
+        </property>
+        <property name="payer" type="string">
+            <column name="PAYER" length="10" />
+        </property>
+        <property name="tabpr" type="string">
+            <column name="TABPR" length="1" />
+        </property>
+        <property name="disc" type="string">
+            <column name="DISC" length="10" />
+        </property>
+        <property name="balance" type="java.lang.Double">
+            <column name="BALANCE" precision="22" scale="0" />
+        </property>
+        <property name="chqrcv" type="java.lang.Double">
+            <column name="CHQRCV" precision="22" scale="0" />
+        </property>
+        <property name="crline" type="java.lang.Double">
+            <column name="CRLINE" precision="22" scale="0" />
+        </property>
+        <property name="lasivc" type="date">
+            <column name="LASIVC" length="10" />
+        </property>
+        <property name="accnum" type="string">
+            <column name="ACCNUM" length="15" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" length="50" />
+        </property>
+        <property name="dlvby" type="string">
+            <column name="DLVBY" length="2" />
+        </property>
+        <property name="tracksal" type="string">
+            <column name="TRACKSAL" length="1" />
+        </property>
+        <property name="creby" type="string">
+            <column name="CREBY" length="8" />
+        </property>
+        <property name="credat" type="date">
+            <column name="CREDAT" length="10" />
+        </property>
+        <property name="userid" type="string">
+            <column name="USERID" length="8" />
+        </property>
+        <property name="chgdat" type="date">
+            <column name="CHGDAT" length="10" />
+        </property>
+        <property name="status" type="string">
+            <column name="STATUS" length="1" />
+        </property>
+        <property name="inactdat" type="date">
+            <column name="INACTDAT" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

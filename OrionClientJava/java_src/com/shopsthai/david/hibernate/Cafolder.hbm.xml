@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 14, 2013 10:42:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.shopsthai.david.hibernate.Cafolder" table="cafolder" catalog="david">
+        <id name="idx" type="java.lang.Integer">
+            <column name="idx" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true">
+                <comment>Name of Folder</comment>
+            </column>
+        </property>
+        <property name="label" type="string">
+            <column name="label" length="100" />
+        </property>
+        <property name="description" type="string">
+            <column name="description">
+                <comment>Desctiption</comment>
+            </column>
+        </property>
+        <property name="parentid" type="java.lang.Integer">
+            <column name="parentid">
+                <comment>Ref to idx and null = 0</comment>
+            </column>
+        </property>
+        <property name="isBranch" type="string">
+            <column name="isBranch">
+                <comment>true,false</comment>
+            </column>
+        </property>
+        <property name="state" type="string">
+            <column name="state">
+                <comment>checked,unchecked,schrodinger</comment>
+            </column>
+        </property>
+        <property name="isOpen" type="string">
+            <column name="isOpen">
+                <comment>true,false</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

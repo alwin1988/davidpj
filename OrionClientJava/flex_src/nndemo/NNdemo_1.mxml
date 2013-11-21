@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600"
+			   addedToStage="initApp()">
+	
+
+	<fx:Script>
+		<![CDATA[
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.core.IFlexDisplayObject;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			[Bindable]
+			public var myPopUp:IFlexDisplayObject;		
+			[Bindable]
+			public var isKeyboardPress:Boolean = false;
+
+			private function initApp():void 
+			{
+				//focusManager.setFocus(mainH);
+				//FlexGlobals.topLevelApplication.addEventListener(KeyboardEvent.KEY_UP, application1_keyUpHandler);
+				//FlexGlobals.topLevelApplication.addEventListener(KeyboardEvent.KEY_DOWN, application1_keyDownHandler);
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, application1_keyDownHandler);
+				stage.addEventListener(KeyboardEvent.KEY_UP, application1_keyUpHandler);
+				//focusManager.setFocus(incTxt);
+			}
+			
+			protected function textinput1_focusInHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = .5;
+			}
+			
+			protected function textinput2_focusInHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn2.alpha = .5;
+			}
+			
+			protected function textinput3_focusInHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn3.alpha = .5;
+				btn4.alpha = .5;
+			}
+			
+			protected function textinput1_focusOutHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = .25;
+			}
+			
+			protected function textinput2_focusOutHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn2.alpha = .25;
+			}
+			
+			protected function textinput3_focusOutHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn3.alpha = .25;
+				btn4.alpha = .25;
+			}
+			
+			/* protected function btn1_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = .5;
+			}
+			
+			protected function btn1_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = .25;
+			} */
+
+			protected function btn1_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				btn1.alpha = .5;
+				//if (isKeyboardPress)
+				//{
+					btn1.y = 20
+					btn1.height = 15;			
+				//}
+			}
+			
+			protected function btn1_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = .25;
+				btn1.y = 30
+				btn1.height = 5;
+			}
+			
+			protected function btn1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = .1;
+				incTxt.text = btn1.toolTip;
+			}
+			
+			protected function btn2_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn2.alpha = .5;
+				//if (isKeyboardPress)
+				//{
+					btn2.y = 20
+					btn2.height = 15;			
+				//}				
+			}
+			
+			protected function btn2_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn2.alpha = .25;
+				btn2.y = 30
+				btn2.height = 5;	
+			}
+			
+			protected function btn2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn2.alpha = .1;
+				dateTxt.text = btn2.toolTip;
+			}
+			
+			protected function btn3_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn3.alpha = .5;
+				//if (isKeyboardPress)
+				//{
+					btn3.y = 35
+					btn3.height = 15;			
+				//}	
+			}
+			
+			protected function btn3_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn3.alpha = .25;
+				btn3.y = 45
+				btn3.height = 5;	
+			}
+			
+			protected function btn3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn3.alpha = .1;
+				//Doe, John A. [DOB: 15/07/39][Policy#: 20437]
+				txtFirst.text = "John";
+				txtLast.text = "Doe";
+				txtDOB.text = "15/07/39";
+				txtPolicy.text = "20437";
+				txtMid.text = "A.";
+			}
+			
+			protected function btn4_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn4.alpha = .1
+				//PopUpManager.addPopUp(new MyTitleWindow(),this);
+				myPopUp = PopUpManager.createPopUp(this,MyTitleWindow,true);
+				myPopUp.addEventListener(MyTitleWindowEvent.RD1_CLICK,rd1_clickHandler)
+				myPopUp.addEventListener(MyTitleWindowEvent.RD2_CLICK,rd2_clickHandler)
+				myPopUp.addEventListener(MyTitleWindowEvent.RD3_CLICK,rd3_clickHandler)	
+				
+			}
+			
+			protected function btn4_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn4.alpha = .1;
+				//if (isKeyboardPress)
+				//{
+					btn4.y = 35
+					btn4.height = 15;			
+				//}					
+			}
+			
+			protected function btn4_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn4.alpha = .25;
+				btn4.y = 45
+				btn4.height = 5;
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+			
+			public function rd1_clickHandler(event:MyTitleWindowEvent):void
+			{
+				txtLast2.text="Doe";
+				txtFirst2.text="Jane";
+				txtMid2.text="";
+				txtDOB2.text="40/09/40";
+				txtPolicy2.text="30943";
+			}
+			
+			public function rd2_clickHandler(event:MyTitleWindowEvent):void
+			{
+				txtLast2.text="Doe";
+				txtFirst2.text="Jane";
+				txtMid2.text="Beth";
+				txtDOB2.text="30/07/40";
+				txtPolicy2.text="20438";
+			}
+			
+			public function rd3_clickHandler(event:MyTitleWindowEvent):void
+			{
+				txtLast2.text="Doe";
+				txtFirst2.text="Jane";
+				txtMid2.text="K.";
+				txtDOB2.text="27/12/65";
+				txtPolicy2.text="90432";
+			}
+			
+			protected function word1_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word1.alpha = .5;
+			}
+			
+			protected function word1_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word1.alpha = .25;
+			}
+			
+			protected function word2_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word2.alpha = .5;
+			}
+			
+			protected function word2_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word2.alpha = .25;
+			}
+			
+			protected function word4_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word4.alpha = .5;
+			}
+			
+			protected function word4_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word4.alpha = .25;
+			}
+			
+			protected function word5_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word5.alpha = .5;	
+			}
+			
+			protected function word5_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word5.alpha = .25;
+			}
+			
+			protected function word7_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word7.alpha = .5;
+			}
+			
+			protected function word7_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word7.alpha = .25;
+			}
+			
+			protected function word8_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word8.alpha = .5;
+			}
+			
+			protected function word8_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word8.alpha = .25;
+			}
+			
+			protected function word9_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word9.alpha = .5;
+			}
+			
+			protected function word9_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word9.alpha = .25;
+			}
+			
+			protected function word11_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word11.alpha = .5;
+			}
+			
+			protected function word11_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word11.alpha = .25;
+			}
+			
+			protected function word12_rollOverHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word12.alpha = .5;
+			}
+			
+			protected function word12_rollOutHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				word12.alpha = .25;
+			}
+			
+			protected function btn1_mouseUpHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn1.alpha = 0;
+			}
+			
+			protected function btn2_mouseUpHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn2.alpha = 0;
+			}
+			
+			protected function btn3_mouseUpHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				btn3.alpha = .25;
+			}
+			
+			protected function application1_keyDownHandler(event:KeyboardEvent):void
+			{
+				// TODO Auto-generated method stub
+				//isKeyboardPress = true;
+				//trace("down");
+			}
+			
+			protected function application1_keyUpHandler(event:KeyboardEvent):void
+			{
+				// TODO Auto-generated method stub
+				//isKeyboardPress = false;
+				//trace("up");
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:HGroup id="mainH">
+		<s:VGroup paddingLeft="10" paddingTop="10">
+			<s:VGroup>
+				<s:HGroup>
+					<s:Label width="80" text="Incident"/>
+					<s:TextInput id="incTxt" focusIn="textinput1_focusInHandler(event)"
+								 focusOut="textinput1_focusOutHandler(event)"/>		
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="Date"/>
+					<s:TextInput id="dateTxt" focusIn="textinput2_focusInHandler(event)"
+								 focusOut="textinput2_focusOutHandler(event)"/>	
+				</s:HGroup>
+				<s:Label text="Policyholder 1:"/>
+				<s:HGroup>
+					<s:Label width="80" text="Last name"/>
+					<s:TextInput id="txtLast" focusIn="textinput3_focusInHandler(event)"
+								 focusOut="textinput3_focusOutHandler(event)"/>		
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="First name"/>
+					<s:TextInput id="txtFirst"/>	
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="Middle name"/>
+					<s:TextInput id="txtMid"/>	
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="DOB"/>
+					<s:TextInput id="txtDOB"/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="Policy#"/>
+					<s:TextInput id="txtPolicy"/>
+				</s:HGroup>
+				<s:Label text="Policyholder 2:"/>
+				<s:HGroup>
+					<s:Label width="80" text="Last name"/>
+					<s:TextInput id="txtLast2"/>	
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="First name"/>
+					<s:TextInput id="txtFirst2"/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="Middle name"/>
+					<s:TextInput id="txtMid2"/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="DOB"/>
+					<s:TextInput id="txtDOB2"/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Label width="80" text="Policy#"/>
+					<s:TextInput id="txtPolicy2"/>
+				</s:HGroup>
+			</s:VGroup>
+		</s:VGroup>
+		<s:BorderContainer width="100%" height="100%">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<s:Label x="10" y="20" text="Car crash on August 24, 2013"/>
+			<s:Button id="word1" x="10" y="20" width="24" height="10" alpha="0" chromeColor="yellow"
+					  depth="2" rollOut="word1_rollOutHandler(event)"
+					  rollOver="word1_rollOverHandler(event)" toolTip="car"/>
+			<s:Button id="word2" x="34" y="20" width="32" height="10" alpha="0" chromeColor="yellow"
+					  depth="2" rollOut="word2_rollOutHandler(event)"
+					  rollOver="word2_rollOverHandler(event)" toolTip="crash"/>
+			<s:Button id="btn1" x="10" y="30" width="57" height="5" alpha=".25" chromeColor="blue"
+					  click="btn1_clickHandler(event)" depth="3"
+					  mouseUp="btn1_mouseUpHandler(event)" rollOut="btn1_rollOutHandler(event)"
+					  rollOver="btn1_rollOverHandler(event)" toolTip="automobile accident"/>
+			<s:Button id="word4" x="83" y="20" width="39" height="10" alpha="0" chromeColor="yellow"
+					  rollOut="word4_rollOutHandler(event)" rollOver="word4_rollOverHandler(event)"
+					  toolTip="August"/>
+			<s:Button id="word5" x="122" y="20" width="16" height="10" alpha="0" chromeColor="yellow"
+					  rollOut="word5_rollOutHandler(event)" rollOver="word5_rollOverHandler(event)"
+					  toolTip="24"/>
+			<s:Button id="word7" x="143" y="20" width="29" height="10" alpha="0" chromeColor="yellow"
+					  rollOut="word7_rollOutHandler(event)" rollOver="word7_rollOverHandler(event)"
+					  toolTip="2013"/>
+			<s:Button id="btn2" x="82" y="30" width="90" height="5" alpha=".25" chromeColor="blue"
+					  click="btn2_clickHandler(event)" mouseUp="btn2_mouseUpHandler(event)"
+					  rollOut="btn2_rollOutHandler(event)" rollOver="btn2_rollOverHandler(event)"
+					  toolTip="24/08/13"/>
+			<s:Label x="10" y="35" text="John Doe and Jane Doe"/>
+			<s:Button id="word8" x="10" y="35" width="30" height="10" alpha="0" chromeColor="yellow"
+					  rollOut="word8_rollOutHandler(event)" rollOver="word8_rollOverHandler(event)"
+					  toolTip="John"/>
+			<s:Button id="word9" x="40" y="35" width="25" height="10" alpha="0" chromeColor="yellow"
+					  rollOut="word9_rollOutHandler(event)" rollOver="word9_rollOverHandler(event)"
+					  toolTip="Doe"/>
+			<s:Button id="btn3" x="10" y="45" width="55" height="5" alpha=".25" chromeColor="blue"
+					  click="btn3_clickHandler(event)" mouseUp="btn3_mouseUpHandler(event)"
+					  rollOut="btn3_rollOutHandler(event)" rollOver="btn3_rollOverHandler(event)"
+					  toolTip="Doe, John A. [DOB: 15/07/39][Policy#: 20437]"/>
+			<s:Button id="word11" x="90" y="35" width="28" height="10" alpha="0" chromeColor="yellow"
+					  rollOut="word11_rollOutHandler(event)"
+					  rollOver="word11_rollOverHandler(event)" toolTip="Jane"/>
+			<s:Button id="word12" x="118" y="35" width="25" height="10" alpha="0"
+					  chromeColor="yellow" rollOut="word12_rollOutHandler(event)"
+					  rollOver="word12_rollOverHandler(event)" toolTip="Doe"/>
+			<s:Button id="btn4" x="90" y="45" width="55" height="5" alpha=".25" chromeColor="red"
+					  click="btn4_clickHandler(event)" color="red"
+					  rollOut="btn4_rollOutHandler(event)" rollOver="btn4_rollOverHandler(event)"
+					  toolTip="Ambiguous policyholder"/>
+		</s:BorderContainer>
+		<s:VGroup visible="false" x="10" y="80">
+			<s:Label text="Policyholders named Jane Doe"/>
+			<s:RadioButton label="Doe, Jane [DOB: 40/09/40] [Policy#: 30943] - 100% match"/>
+			<s:RadioButton label="Doe, Jane Beth [DOB: 30/07/40] [Policy#: 20438] - 90% match"/>
+			<s:RadioButton label="Doe, Jane K. [DOB: 27/12/65] [Policy#: 90432] - 90% match"/>
+			<s:HGroup>
+				<s:Button label="OK"/>
+				<s:Button label="Cancel"/>
+			</s:HGroup>
+		</s:VGroup>
+	</s:HGroup>
+</s:Application>

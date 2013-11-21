@@ -1,0 +1,87 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace flexlib "http://code.google.com/p/flexlib/";
+
+/* Icon Style */
+.loginButton {
+	icon: 						Embed("../assets/login.png");
+}
+
+.logOffButton {
+	icon: 						Embed("../assets/logout.png");
+}
+
+.saveButton {
+	icon: 						Embed("../assets/save.png");
+}
+
+.viewButton {
+	icon: 						Embed("../assets/view.png");
+}
+
+.searchButton {
+	icon: 						Embed("../assets/search.png");
+}
+
+.printButton {
+	icon: 						Embed("../assets/print.png");
+}
+
+.faxButton {
+	icon: 						Embed("../assets/fax.png");
+}
+
+.emailButton {
+	icon: 						Embed("../assets/mail.png");
+}
+
+.fileButton {
+	icon: 						Embed("../assets/file.png");
+}
+
+.closeButton {
+	icon: 						Embed("../assets/close.png");
+}
+
+.deleteButton {
+	icon: 						Embed("../assets/delete.png");
+}
+
+.reIndexButton {
+	icon: 						Embed("../assets/re-index.png");
+}
+
+.checkOutButton {
+	icon: 						Embed("../assets/check-out.png");
+}
+
+.startButton {
+	icon: 						Embed("../assets/start.png");
+}
+
+.openButton {
+	icon: 						Embed("../assets/open.png");
+}
+
+.suspendButton {
+	icon: 						Embed("../assets/suspend.png");
+}
+
+.escalateButton {
+	icon: 						Embed("../assets/escalate.png");
+}
+
+.resumeButton {
+	icon: 						Embed("../assets/resume.png");
+}
+
+.reassignButton {
+	icon: 						Embed("../assets/reassign.png");
+}
+
+.restartButton {
+	icon: 						Embed("../assets/restart.png");
+}
+
+
+

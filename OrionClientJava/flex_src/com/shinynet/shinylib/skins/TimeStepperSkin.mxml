@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--- The default skin class for the TimeStepper component. The skins for the down and up buttons on the
+Spinner component are defined by the SpinnerDecrementButtonSkin and SpinnerIncrementButtonSkin classes, respectively.  
+
+@see com.shinynet.shinylib
+@see spark.skins.spark.SpinnerDecrementButtonSkin
+@see spark.skins.spark.SpinnerIncrementButtonSkin
+-->
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009"
+			 xmlns:s="library://ns.adobe.com/flex/spark"
+			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+			 alpha.disabledStates="0.5" minHeight="23" minWidth="12">
+	
+	<fx:Metadata>
+		[HostComponent("com.shinynet.shinylib.components.TimeStepper")]
+	</fx:Metadata>
+	
+	<fx:Script fb:purpose="styling">
+		/* Define the skin elements that should not be colorized. 
+		For spinner, the skin itself is colorized but the individual parts are not. */
+		static private const exclusions:Array =
+			["hoursDisplay", "separator", "minutesDisplay", "secondsDisplay",
+			"meridianDisplay", "decrementButton", "incrementButton"];
+		
+		/**
+		 * @private
+		 */   
+		override public function get colorizeExclusions():Array {return exclusions;}
+		
+		/**
+		 * @private
+		 */
+		override protected function initializationComplete():void
+		{
+			useChromeColor = true;
+			super.initializationComplete();
+		}
+		
+		private var cornerRadiusChanged:Boolean;
+		private var borderStylesChanged:Boolean;
+		private var backgroundStylesChanged:Boolean;
+		
+		/**
+		 *  @private
+		 */
+		override protected function commitProperties():void
+		{
+			super.commitProperties();
+			
+			if (cornerRadiusChanged)
+			{
+				var cr:Number = getStyle("cornerRadius");
+				if (incrementButton)
+					incrementButton.setStyle("cornerRadius", cr);
+				if (decrementButton)
+					decrementButton.setStyle("cornerRadius", cr);
+			}
+			
+			if (borderStylesChanged)
+			{
+				borderStroke.alpha = getStyle("borderAlpha");
+				borderStroke.color = getStyle("borderColor");
+				borderStylesChanged = false;
+				
+				
+				if (getStyle("borderVisible") == true)
+				{
+					border.visible = true;
+					shadow.visible = true;
+					background.left = background.top = background.right = background.bottom = 1;
+					displayGroup.left = displayGroup.top = displayGroup.right = displayGroup.bottom = 1;
+				}
+				else
+				{
+					border.visible = false;
+					shadow.visible = false;
+					background.left = background.top = background.right = background.bottom = 0;
+					displayGroup.left = displayGroup.top = displayGroup.right = displayGroup.bottom = 0;
+				}
+				
+			}
+			
+			if (backgroundStylesChanged)
+			{
+				bgFill.alpha = getStyle("contentBackgroundAlpha");
+				bgFill.color = getStyle("contentBackgroundColor");
+				backgroundStylesChanged = false;
+			}
+		}
+		
+		/**
+		 *  @private
+		 */
+		override public function styleChanged(styleProp:String):void
+		{
+			var allStyles:Boolean = !styleProp || styleProp == "styleName";
+			
+			super.styleChanged(styleProp);
+			
+			if (allStyles || styleProp == "cornerRadius")
+			{
+				cornerRadiusChanged = true;
+				invalidateProperties();
+			}
+			
+			if (allStyles || styleProp.indexOf("border") == 0)
+			{
+				borderStylesChanged = true;
+				invalidateProperties();
+			}
+			
+			if (allStyles || styleProp.indexOf("background") == 0)
+			{
+				backgroundStylesChanged = true;
+				invalidateProperties();
+			}
+		}
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="disabled" stateGroups="disabledStates"/>
+		<s:State name="normalAndAstronomical" stateGroups="astronomicalStates"/>
+		<s:State name="disabledAndAstronomical" stateGroups="disabledStates,astronomicalStates"/>
+		<s:State name="normalWithSeconds" stateGroups="withSeconds"/>
+		<s:State name="disabledWithSeconds" stateGroups="disabledStates,withSeconds"/>
+		<s:State name="normalAndAstronomicalWithSeconds" stateGroups="astronomicalStates,withSeconds"/>
+		<s:State name="disabledAndAstronomicalWithSeconds" stateGroups="disabledStates,astronomicalStates,withSeconds"/>
+	</s:states>
+	
+	<s:Group left="0" right="18" top="0" bottom="0">
+		<!-- border --> 
+		<!--- @private -->
+		<s:Rect left="0" right="0" top="0" bottom="0" id="border">
+			<s:stroke>   
+				<!--- @private -->
+				<s:SolidColorStroke id="borderStroke" weight="1" />
+			</s:stroke>
+		</s:Rect>
+		
+		<!-- fill -->
+		<!--- Defines the appearance of the NumericStepper component's background. -->
+		<s:Rect id="background" left="1" right="1" top="1" bottom="1">
+			<s:fill>
+				<!--- @private
+				Defines the background fill of the NumericStepper component's background. -->
+				<s:SolidColor id="bgFill" color="0xFFFFFF" />
+			</s:fill>
+		</s:Rect>
+		
+		<!-- shadow -->
+		<!--- @private -->
+		<s:Rect left="1" top="1" right="1" height="1" id="shadow">
+			<s:fill>
+				<s:SolidColor color="0x000000" alpha="0.12" />
+			</s:fill>
+		</s:Rect>
+		
+		<s:Group id="displayGroup" left="1" right="1" top="1" bottom="1">
+			<s:layout>
+				<s:HorizontalLayout gap="0" verticalAlign="justify"/>
+			</s:layout>
+			
+			<s:TextInput id="hoursDisplay"
+						 maxChars="2"
+						 restrict="0-9"
+						 typicalText="12"
+						 borderVisible="false"
+						 textAlign="right"
+						 contentBackgroundAlpha="0"/>
+			<s:Label id="separator" text=":"
+					 verticalAlign="middle"/>
+			<s:TextInput id="minutesDisplay"
+						 maxChars="2"
+						 restrict="0-9"
+						 typicalText="59"
+						 borderVisible="false"
+						 contentBackgroundAlpha="0"/>
+			<s:TextInput id="secondsDisplay"
+						 maxChars="2"
+						 restrict="0-9"
+						 typicalText="59"
+						 borderVisible="false"
+						 includeIn="withSeconds"
+						 contentBackgroundAlpha="0"/>
+			<s:TextInput id="meridianDisplay"
+						 maxChars="2"
+						 restrict="APMapm"
+						 typicalText="AM"
+						 borderVisible="false"
+						 excludeFrom="astronomicalStates"
+						 contentBackgroundAlpha="0"/>
+		</s:Group>
+	</s:Group>
+	
+	<!--- The default class is NumericStepperIncrementButtonSkin.
+	@copy spark.components.Spinner#incrementButton
+	@see spark.skins.spark.NumericStepperIncrementButtonSkin -->
+	<s:Button id="incrementButton" right="0" top="0" height="50%" tabEnabled="false" 
+			  skinClass="spark.skins.spark.NumericStepperIncrementButtonSkin" />
+	
+	<!--- The default class is NumericStepperDecrementButtonSkin.
+	@copy spark.components.Spinner#decrementButton
+	@see spark.skins.spark.NumericStepperDecrementButtonSkin -->
+	<s:Button id="decrementButton" right="0" bottom="0" height="50%" tabEnabled="false" 
+			  skinClass="spark.skins.spark.NumericStepperDecrementButtonSkin" />
+	
+</s:SparkSkin>

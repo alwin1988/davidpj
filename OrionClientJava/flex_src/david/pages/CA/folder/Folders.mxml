@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%" xmlns:folder="david.pages.CA.folder.*"
+		 >
+	<s:layout>
+		<s:VerticalLayout paddingBottom="10" paddingRight="10" paddingLeft="10" paddingTop="10"/>
+	</s:layout>
+	
+
+	
+	<fx:Script>
+		<![CDATA[
+			import david.Events.CafolderEvent;
+			import david.pages.CA.CaModule;
+			import david.pages.CA.valueObjects.Cafolder;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.HierarchicalData;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.controls.Alert;
+			import mx.events.ListEvent;
+			import mx.utils.ObjectUtil;
+			[Bindable] public var acDL:ArrayCollection;
+			
+			public var openItems:Object;
+			public var ld:Object;
+			
+			public function init():void {
+//				var datalist:DataList = new DataList();
+//				acDL = datalist.genData();
+//				dg.dataProvider = new HierarchicalData(acDL);
+				CafolderEvent.instance.selectAll(this);
+			}
+			
+			[Bindable] private var ldata:Cafolder = new Cafolder();
+			
+			protected function advanceddatagrid1_itemClickHandler(event:ListEvent):void
+			{
+				ldata = event.target.selectedItem as Cafolder;
+				ld = (event as ListEvent ).itemRenderer; //listData
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var fl:Cafolder = new Cafolder();
+				var fll:Cafolder = dg.selectedItem as Cafolder;
+				fl.idx = 19;
+				fl.name = 'name item';
+				fl.parentid = fll.idx; 
+				fll.children.addItem(fl);
+				dg.dataProvider.refresh();
+				dg.hierarchicalCollectionView.openNode(fll);
+				dg.validateNow();
+				dg.invalidateDisplayList();
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				
+				dg.dataProvider.refresh();
+				dg.validateNow();
+				dg.invalidateDisplayList();
+				var open:Object = new Object();
+				for each (var tb:Object in openItems) 
+				{
+					for (var i:int = 0; i < dg.dataProvider.source.source.length; i++) 
+					{
+						if(tb.idx == dg.dataProvider.source.source[i].idx){
+							//							trace(dg.dataProvider.source.source[i]);
+							IHierarchicalCollectionView(dg.dataProvider).openNode(dg.dataProvider.source.source[i] as Cafolder);
+						}
+					}
+				}
+				
+				IHierarchicalCollectionView(dg.dataProvider).refresh(); 
+			}
+			
+			public function selectAllFolderSuccess(ac:ArrayCollection):void {
+				
+				dg.dataProvider = new HierarchicalData(ac);
+				chkLevel(ac,1);
+			}
+			
+			
+			private function chkLevel(ac:ArrayCollection,lv:int):void {
+				var caf:Cafolder;
+				for (var i:int = 0; i < ac.length; i++) 
+				{
+					caf = ac[i] as Cafolder;
+					if (caf.children.length > 0 ){
+						if(lv == 1 ){
+							CaModule.getInstance.level1 = true;	
+						} else {
+							CaModule.getInstance.level2 = true;	
+						}
+						chkLevel(caf.children,2);
+					}
+					
+				}
+				
+				trace('lv1',CaModule.getInstance.level1,CaModule.getInstance.lv1OpenClose);
+				trace('lv2',CaModule.getInstance.level2,CaModule.getInstance.lv2OpenClose);
+			}
+			
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				openItems =  ObjectUtil.copy(IHierarchicalCollectionView(dg.dataProvider).openNodes) as Object;
+				
+			}
+			
+			
+			protected function description_lblfunc(item:Object, column:AdvancedDataGridColumn):String
+			{
+				if(item.isChange){
+					return item.description + '1';
+				} else {
+					return item.description + '2';
+				}
+			}
+			
+			
+			protected function getAllcafloder(event:MouseEvent):void
+			{
+				CafolderEvent.instance.selectAll(this);
+			}
+			
+			protected function newFoloderBelow(event:MouseEvent):void
+			{
+				var fl:Cafolder = new Cafolder();
+				var fll:Cafolder = dg.selectedItem as Cafolder;
+//				fl.idx = 19;
+				fl.name = 'name item';
+				fl.description = 'name item';
+				fl.parentid = fll.idx; 
+//				fll.children.addItem(fl);
+//				dg.dataProvider.refresh();
+//				dg.hierarchicalCollectionView.openNode(fll);
+//				dg.validateNow();
+//				dg.invalidateDisplayList();
+				CafolderEvent.instance.persist(fl,this);
+			}
+			
+			protected function newFolderAbove(event:MouseEvent):void
+			{
+				var fl:Cafolder = new Cafolder();
+				var fll:Cafolder = dg.selectedItem as Cafolder;
+				fl.name = 'name item';
+				fl.description = 'name item';
+				fl.parentid = fll.parentid; 
+//				fll.children.addItem(fl);
+//				dg.dataProvider.refresh();
+//				dg.hierarchicalCollectionView.openNode(fll);
+//				dg.validateNow();
+//				dg.invalidateDisplayList();
+				CafolderEvent.instance.persist(fl,this);
+			}
+			
+			protected function delFolders(event:MouseEvent):void
+			{	
+				var fll:Cafolder = dg.selectedItem as Cafolder;
+				if (  (fll.children != null) &&  (fll.children.length > 0) ) {
+					Alert.show("Can not delete parent");
+					
+				} else {
+					CafolderEvent.instance.delete_method(fll, this);
+				}
+				
+			}
+			
+			protected function updateFolder(event:MouseEvent):void
+			{
+				CafolderEvent.instance.editFolder(ldata,this);
+				
+			}
+			
+			
+			public function lv1Click(event:MouseEvent):void
+			{
+				CaModule.getInstance.lv1OpenClose = !CaModule.getInstance.lv1OpenClose;
+				if(CaModule.getInstance.lv1OpenClose){
+					openFolder();
+				} else {
+					closeFolder();
+				}
+			}
+			
+			private function openFolder():void  {
+				dg.dataProvider.refresh();
+				dg.validateNow();
+				dg.invalidateDisplayList();
+				var open:Object = new Object();
+					for (var i:int = 0; i < dg.dataProvider.source.source.length; i++) 
+					{
+						if(dg.dataProvider.source.source[i].children.length > 0 ){
+							//							trace(dg.dataProvider.source.source[i]);
+							IHierarchicalCollectionView(dg.dataProvider).openNode(dg.dataProvider.source.source[i] as Cafolder);
+						}
+					}
+				
+				IHierarchicalCollectionView(dg.dataProvider).refresh(); 
+			}
+			
+			private function closeFolder():void {
+				dg.dataProvider.refresh();
+				dg.validateNow();
+				dg.invalidateDisplayList();
+				var open:Object = new Object();
+				for (var i:int = 0; i < dg.dataProvider.source.source.length; i++) 
+				{
+					if(dg.dataProvider.source.source[i].children.length > 0 ){
+						//							trace(dg.dataProvider.source.source[i]);
+						IHierarchicalCollectionView(dg.dataProvider).closeNode(dg.dataProvider.source.source[i] as Cafolder);
+					}
+				}
+				
+				IHierarchicalCollectionView(dg.dataProvider).refresh(); 
+			}
+			
+			
+			
+			public function lv2click():void {
+				if(CaModule.getInstance.lv1OpenClose){
+					CaModule.getInstance.lv2OpenClose = !CaModule.getInstance.lv2OpenClose;
+					if(CaModule.getInstance.lv2OpenClose){
+//							openlv2();						
+					} else {
+//							closelv2();						
+					}
+				}
+			}
+			
+			private function openlv2():void {
+				for (var i:int = 0; i < dg.dataProvider.source.source.length; i++) 
+				{
+					if(dg.dataProvider.source.source[i].children.length > 0 ){
+						//							trace(dg.dataProvider.source.source[i]);
+						if((dg.dataProvider.source.source[i] as Cafolder).children.length > 0 ) {
+								oplv2(dg.dataProvider.source.source[i].children as ArrayCollection);			
+						}
+					}
+				}
+				
+			}
+
+			private function oplv2(ac:ArrayCollection):void {
+				for (var i:int = 0; i < ac.length; i++) 
+				{
+					if(ac[i].children.length > 0 ){
+						IHierarchicalCollectionView(dg.dataProvider).openNode(ac[i] as Cafolder );
+					}
+				}
+				IHierarchicalCollectionView(dg.dataProvider).refresh(); 
+			}
+			
+			private function closelv2():void {
+				for (var i:int = 0; i < dg.dataProvider.source.source.length; i++) 
+				{
+					if(dg.dataProvider.source.source[i].children.length > 0 ){
+						//							trace(dg.dataProvider.source.source[i]);
+						if((dg.dataProvider.source.source[i] as Cafolder).children.length > 0 ) {
+							clv2(dg.dataProvider.source.source[i].children as ArrayCollection);			
+						}
+					}
+				}
+			}
+
+			private function clv2(ac:ArrayCollection):void {
+				for (var i:int = 0; i < ac.length; i++) 
+				{
+					if(ac[i].children.length > 0 ){
+						IHierarchicalCollectionView(dg.dataProvider).closeNode(ac[i] as Cafolder );
+					}
+				}
+				IHierarchicalCollectionView(dg.dataProvider).refresh(); 
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup  paddingLeft="10" paddingRight="10">
+		<s:Button label="NEW FOLDER ABOVE" 	click="newFolderAbove(event)" />
+		<s:Button x="10" y="10" label="NEW FOLDER BELOW" click="newFoloderBelow(event)"/>
+		<s:Button x="10" y="10" label="DELETE SELECTED" click="delFolders(event)"/>
+		<s:Button label="Update" click="updateFolder(event)" />
+		<s:Button x="10" y="10" label="refresh" click="button2_clickHandler(event)"/>
+		<s:Button x="88" y="10" label="SaveStage" click="button3_clickHandler(event)"/>
+		<s:Button x="120" y="10" label="getAll" click="getAllcafloder(event)"/>
+	</s:HGroup>
+	<folder:AdgCafolder width="100%" height="100%" id="dg"
+						 sortableColumns="false"
+						 designViewDataType="tree" sortExpertMode="true"
+						 itemClick="advanceddatagrid1_itemClickHandler(event)"
+						 groupItemRenderer="david.pages.CA.folder.CheckADGRenderer"
+						 >
+		<folder:columns>
+		<mx:AdvancedDataGridColumn width="160" dataField="name"  >
+				<mx:headerRenderer>
+					<fx:Component>
+						<mx:HBox horizontalAlign="left" verticalAlign="middle" horizontalGap="2" >
+							<fx:Script>
+								<![CDATA[
+									import david.pages.CA.CaModule;
+									
+									import mx.controls.Alert;
+								]]>
+							</fx:Script>
+							<mx:CheckBox click="Alert.show('check is click')" />
+							<mx:VRule height="24" />
+							<s:Image source="@Embed('assets/iconinfo.png')" click="Alert.show('info');"/>
+							<mx:VRule height="24" />
+							<s:Image source="@Embed('assets/folderopenclose.jpg')" click="outerDocument.lv1Click(event)" 
+									 includeInLayout="{CaModule.getInstance.level1}" 
+									 visible="{CaModule.getInstance.level1}"
+									 />
+							<mx:VRule height="24" includeInLayout="{imglv2.visible}" visible="{imglv2.visible}" />
+							<s:Image source="@Embed('assets/folderopenclose.jpg')" click="outerDocument.lv2click()" id="imglv2" 
+									 includeInLayout="{CaModule.getInstance.level2}" visible="{CaModule.getInstance.lv1OpenClose}"
+									 />
+							<mx:Text text="Folder Tree" />
+						</mx:HBox> 
+					</fx:Component>
+				</mx:headerRenderer>
+			</mx:AdvancedDataGridColumn>
+			<mx:AdvancedDataGridColumn  dataField="name" headerText="Folder Name" />
+			<mx:AdvancedDataGridColumn  dataField="description" headerText="Folder Description" itemRenderer="david.pages.CA.folder.descriptionLabel" />
+			
+<!--			<mx:AdvancedDataGridColumn width="40" dataField="label"  itemRenderer="david.pages.CA.folder.descriptionLabel"/>-->
+<!--			<mx:AdvancedDataGridColumn width="40" dataField="label"/>
+			<mx:AdvancedDataGridColumn width="40" dataField="idx" />
+			<mx:AdvancedDataGridColumn width="60" dataField="parentid"  />
+			<mx:AdvancedDataGridColumn width="60" dataField="isBranch"  />
+			<mx:AdvancedDataGridColumn width="60" dataField="state"  />
+			<mx:AdvancedDataGridColumn width="60" dataField="isChange"  />-->
+		</folder:columns>
+		<!--</mx:groupedColumns>-->
+	</folder:AdgCafolder>		
+	<mx:HBox width="100%" >
+<!--		<s:Button label="Add"  click="button1_clickHandler(event)"/>-->
+	</mx:HBox>
+	<s:VGroup width="100%" height="115" >
+		<mx:HBox width="100%">
+			<mx:Text text="idx" />
+			<s:TextInput  text="{ldata.idx}" />
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:Text text="name" />
+			<s:TextInput  text="@{ldata.name}" change="ldata.isChange = true;"/>
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:Text text="desctiption" />
+			<s:TextInput  text="@{ldata.description}" change="ldata.isChange= false;" />
+		</mx:HBox>
+		<mx:HBox width="100%">
+			<mx:Text text="parentid" />
+			<s:TextInput  text="{ldata.parentid}" />
+		</mx:HBox>
+	</s:VGroup>
+</s:Group>

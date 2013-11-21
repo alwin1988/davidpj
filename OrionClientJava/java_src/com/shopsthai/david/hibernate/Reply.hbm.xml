@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 14, 2013 10:42:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.shopsthai.david.hibernate.Reply" table="reply" catalog="david">
+        <id name="replyNo" type="java.lang.Long">
+            <column name="reply_no" />
+            <generator class="identity" />
+        </id>
+        <property name="commentNo" type="long">
+            <column name="comment_no" not-null="true" />
+        </property>
+        <property name="userId" type="string">
+            <column name="user_id" length="32" not-null="true" />
+        </property>
+        <property name="replyContent" type="string">
+            <column name="reply_content" length="300" not-null="true" />
+        </property>
+        <property name="regDate" type="timestamp">
+            <column name="reg_date" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

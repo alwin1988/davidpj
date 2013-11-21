@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
+			   xmlns:customTreeComponent="custom_tree_component.*"
+			   width="100%" height="100%"
+			   creationComplete="canvas1_creationCompleteHandler()">
+	<fx:Declarations>
+		
+			<fx:XML format="e4x" id="docsFormatXML">
+				<root>
+					<node id='0' label="All native formats" type="radio" groupName="radioGroup" p="1" haveChild="n" toggled="false"/>
+					<node id='1' label="Only images" type="radio" groupName="radioGroup" p="1" haveChild="y" toggled="false">
+						<node id='2' label="BMP format" type="check" p="0" toggled="false"/>
+						<node id='3' label="JPEG format" type="check" p="0" toggled="false"/>
+						<node id='4' label="GIF format" type="check" p="0" toggled="false"/>
+						<node id='5' label="PNG format" type="check" p="0" toggled="false"/>
+					</node>
+					<node id='6' label="Only PDF" type="radio" groupName="radioGroup" p="1" haveChild="y" toggled="false">
+						<node id='7' label="PDF" type="check" p="0" toggled="false"/>
+						<node id='8' label="PDF/A (searchable)" type="check" p="0" toggled="false"/>
+						<node id='9' label="PDF/IHQC (compressed)" type="check" p="0" toggled="false"/>
+					</node>
+					<node id='10' label="Only MS Office.." type="radio" groupName="radioGroup" p="1" haveChild="y" toggled="false">
+						<node id='11' label="MS Access" type="check" p="0" toggled="false"/>
+						<node id='12' label="MS Excel" type="check" p="0" toggled="false"/>
+						<node id='13' label="MS PowerPoint" type="check" p="0" toggled="false"/>
+					</node>
+				</root>
+			</fx:XML>
+			
+			<fx:XML format="e4x" id="docsContextXML">
+				<root>
+					<node id='0' label="ALL CONTEXTS" type="radio" groupName="radioGroup" p="1" haveChild="n" toggled="false"/>
+					<node id='1' type="separator" />
+					<node id='2' label="Has revisions" type="check" p="1" haveChild="n" toggled="false"/>
+					<node id='3' type="separator" />
+					<node id='4' label="Is in active case" type="radio" groupName="radioGroup" p="1" haveChild="n" toggled="false"/>
+					<node id='5' label="Is in closed case" type="radio" groupName="radioGroup" p="1" haveChild="n" toggled="false"/>
+					
+				</root>
+			</fx:XML>
+		
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import component.ExtendsCheckbox2;
+			
+			import mx.controls.Alert;
+			import mx.collections.ArrayCollection;
+			import mx.events.MenuEvent;
+			import mx.utils.ObjectUtil;
+
+			[Bindable] private var docFormatDataProvider:ArrayCollection = new ArrayCollection();
+			
+			private var _dataProvider1List:ArrayCollection;
+			private var _dataProvider2List:ArrayCollection;
+			
+			[Bindable]
+			public function set dataProvider1List(value:Object):void {
+				_dataProvider1List = value as ArrayCollection
+			}
+			public function get dataProvider1List():Object {
+				return _dataProvider1List;
+			}
+			
+			[Bindable]
+			public function set dataProvider2List(value:Object):void {
+				_dataProvider2List = value as ArrayCollection
+			}
+			public function get dataProvider2List():Object {
+				return _dataProvider2List;
+			}
+			
+			protected function canvas1_creationCompleteHandler():void {
+				//Set dataprovider1 list
+				dataProvider1List = new ArrayCollection([
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'},
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'},
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'},
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'}]);
+				
+				//Set dataprovider2 list
+				dataProvider2List = new ArrayCollection([
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'},
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'},
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'},
+					{checked:false, IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx', IndexValue4:'xxxx', IndexValue5:'xxxx'}]);
+			}
+			
+			public function init():void {
+				main_checkBox_id.state = 1;
+				checkBoxClickHandler('M');
+				
+				//Set doc format list
+				docFormatDataProvider.removeAll();
+				docFormatDataProvider.addItem( {label:"Format A"} );
+				docFormatDataProvider.addItem( {label:"Format B"} );
+				docFormatDataProvider.addItem( {label:"Format C"} );
+			}
+			
+			protected function checkBoxClickHandler(action:String):void {
+				if ( action == 'M' ) {
+					if ( main_checkBox_id.state == 0 ) {
+						child_checkBox_id1.state = 0;
+						child_checkBox_id2.state = 0;
+						child_checkBox_id3.state = 0;
+						child_checkBox_id4.state = 0;
+						child_checkBox_id5.state = 0;
+						child_checkBox_id6.state = 0;
+						child_checkBox_id7.state = 0;
+					} else if ( main_checkBox_id.state == 1 ) {
+						child_checkBox_id1.state = 1;
+						child_checkBox_id2.state = 1;
+						child_checkBox_id3.state = 1;
+						child_checkBox_id4.state = 1;
+						child_checkBox_id5.state = 1;
+						child_checkBox_id6.state = 1;
+						child_checkBox_id7.state = 1;
+					} else {
+						main_checkBox_id.state = 1
+						child_checkBox_id1.state = 1;
+						child_checkBox_id2.state = 1;
+						child_checkBox_id3.state = 1;
+						child_checkBox_id4.state = 1;
+						child_checkBox_id5.state = 1;
+						child_checkBox_id6.state = 1;
+						child_checkBox_id7.state = 1;
+					}
+				} else {
+					main_checkBox_id.state = findUnSelectedCheckBox();
+				}
+			}
+			private function findUnSelectedCheckBox():int {
+				var status:int = 0;
+				
+				status = child_checkBox_id1.state;
+
+				if ( status == child_checkBox_id2.state ) {
+					status = child_checkBox_id2.state
+				} else {
+					status = -1;
+					return status;
+				}
+				
+				if ( status == child_checkBox_id3.state ) {
+					status = child_checkBox_id3.state
+				} else {
+					status = -1;
+					return status;
+				}
+				
+				if ( status == child_checkBox_id4.state ) {
+					status = child_checkBox_id4.state
+				} else {
+					status = -1;
+					return status;
+				}
+				
+				if ( status == child_checkBox_id5.state ) {
+					status = child_checkBox_id5.state
+				} else {
+					status = -1;
+					return status;
+				}
+				
+				if ( status == child_checkBox_id6.state ) {
+					status = child_checkBox_id6.state
+				} else {
+					status = -1;
+					return status;
+				}
+				
+				if ( status == child_checkBox_id7.state ) {
+					status = child_checkBox_id7.state
+				} else {
+					status = -1;
+					return status;
+				}
+				
+				return status;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+				
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+		
+			<!--Logo and Search box-->
+			<!--Search Filters and Search Results-->
+			<s:BorderContainer id="SearchFiltersAndSearchResults" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5"
+									  paddingLeft="5" paddingRight="5" 
+									  gap="10"/>
+				</s:layout>
+				<!--Search filters outer container-->
+				<s:BorderContainer id="SearchFilters" 
+								   width="170" height="100%" borderVisible="true">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00315B7E" backgroundColor="#00315B7E" >
+						<s:layout>
+							<s:VerticalLayout verticalAlign="middle" 
+											  paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0"/>
+						</s:layout>
+						<mx:Text text="Search Filters"
+								 color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+					</s:BorderContainer>
+					<!--Search filters inner container-->
+					<s:BorderContainer width="170" height="100%" borderVisible="true" backgroundColor="#00C1DAD6">
+						<s:layout>
+							<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="0"/>
+						</s:layout>
+						<mx:Text text="Recent searches:"
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						<!--<s:DropDownList width="160" height="18"/>-->
+						<mx:ComboBox width="160" height="18"/>
+						<!--<s:Spacer height="0"/>-->
+						<mx:Text text="Saved searches:"
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						<!--<s:DropDownList width="160" height="18"/>-->
+						<mx:ComboBox width="160" height="18"/>
+						<s:Spacer height="0"/>
+						<mx:Text text="Folders:" 
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						
+						<s:BorderContainer id="Folders" width="100%" height="100%" minHeight="50"
+										   borderVisible="false" dropShadowVisible="false" >
+										 
+							<s:layout>
+								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												  gap="0"/>
+							</s:layout>
+							<!--<s:Scroller x="{Folders.x}" width="{Folders.width-5}" height="{Folders.height-5}" top="0" bottom="0" left="0" right="0"
+										minHeight="{Folders.minHeight-5}" maxHeight="{IndexFields.maxHeight-5}">-->
+								<s:VGroup id="vgroup1" width="{Folders.width-1}" height="{Folders.height-2}" 
+										  minHeight="{Folders.minHeight-2}" maxHeight="{Folders.maxHeight-2}"
+										  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="0">
+									
+										 <customTreeComponent:MyTree2 width="{Folders.width-1}" height="{Folders.height-1}"/>
+									
+										  <!-- ################################ Old Tree ################################# -->
+										  <!--<mx:Tree id="tree1" width="{vgroup1.width}" 
+												 height="{vgroup1.height}"
+												 minHeight="{vgroup1.minHeight}" 
+												 labelField="@label" rowHeight="16"
+												 showRoot="true" borderSkin="{null}" 
+												 itemRenderer="component.TreeItemRendererClass"
+												 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal">
+												<mx:XMLListCollection>
+													<fx:XMLList>
+														<folder label="ALL FOLDERS" checked="1"/>
+														<folder label="Folder1" checked="1">
+															<Pfolder label="Subfolder1" checked="1"/>
+														</folder>
+														<folder label="Folder2" checked="1">
+															<Pfolder label="Subfolder1" checked="1"/>
+															<Pfolder label="Subfolder2" checked="1"/>
+														</folder>
+														<folder label="Folder3" checked="1">
+															<Pfolder label="Subfolder1" checked="1"/>
+															<Pfolder label="Subfolder2" checked="1"/>
+														</folder>
+														<folder label="Folder4" checked="1">
+															<Pfolder label="Subfolder1" checked="1"/>
+														</folder>
+														<folder label="Folder5" checked="1">
+															<Pfolder label="Subfolder1" checked="1"/>
+														</folder>
+														<folder label="Folder6" checked="1"/>	
+													</fx:XMLList>
+												</mx:XMLListCollection>
+										  </mx:Tree>-->
+										  <!-- ################################ Old Tree ################################# -->
+									
+								</s:VGroup>
+							<!--</s:Scroller>  -->
+						</s:BorderContainer>
+						
+						<s:Spacer height="3"/>
+						
+						<mx:Text text="Index fields:"
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						
+						<s:Spacer height="3"/>
+						
+						<s:BorderContainer id="IndexFields" width="100%" height="100%" minHeight="20"
+										   borderVisible="true" dropShadowVisible="false">
+							<s:layout>
+								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												  gap="0"/>
+							</s:layout>
+							<s:Scroller id="scroller1" x="{IndexFields.x}"
+										width="{IndexFields.width-1}" maxWidth="{IndexFields.width-1}"
+										height="{IndexFields.height-2}" minHeight="{IndexFields.minHeight-2}"
+										maxHeight="{IndexFields.maxHeight-2}"
+										top="0" bottom="0" left="0" right="0">
+								
+								<s:VGroup id="indexFieldsVGroupID" width="{scroller1.width}" height="{scroller1.height}" 
+										  minHeight="{scroller1.minHeight}" maxHeight="{scroller1.maxHeight}"
+										  paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0" 
+										  fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal">
+											
+											<component:ExtendsCheckbox2 width="100" id="main_checkBox_id" label="ALL INDEX FIELDS" isTristate="true" click="checkBoxClickHandler('M')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id1" label="IndexField1" isTristate="false" click="checkBoxClickHandler('C')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id2" label="IndexField2" isTristate="false" click="checkBoxClickHandler('C')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id3" label="IndexField3" isTristate="false" click="checkBoxClickHandler('C')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id4" label="IndexField4" isTristate="false" click="checkBoxClickHandler('C')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id5" label="IndexField5" isTristate="false" click="checkBoxClickHandler('C')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id6" label="IndexField6" isTristate="false" click="checkBoxClickHandler('C')"/>
+											<component:ExtendsCheckbox2 width="100" id="child_checkBox_id7" label="IndexField7" isTristate="false" click="checkBoxClickHandler('C')"/>
+									
+								</s:VGroup>                 
+							</s:Scroller>
+						</s:BorderContainer>
+						
+						
+						<s:CheckBox label="  Search full text" 
+									fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						<s:Spacer height="0"/>
+						
+						<mx:Text text="Document formats:" 
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						
+						<!--<s:DropDownList width="160" height="18"/>-->
+						<component:MyPopUpButton dataProviderXML="{docsFormatXML}" defaultPopupLabel="Document formats" textAlign="left" width="160" height="18"/>
+						<s:Spacer height="0"/>
+						
+						<mx:Text text="When actioned:" 
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						<mx:HBox width="160" horizontalGap="0">
+							<mx:ComboBox width="80" fontSize="9" height="18" prompt="TOUCHED">
+								<mx:ArrayCollection>
+									<fx:String>TOUCHED</fx:String>
+									<fx:String>Filed</fx:String>
+									<fx:String>Viewed</fx:String>
+									<fx:String>Output</fx:String>
+									<fx:String>Exported</fx:String>
+									<fx:String>Modified</fx:String>
+									<fx:String>Reindexed</fx:String>
+									<fx:String>Actioned</fx:String>
+								</mx:ArrayCollection>
+							</mx:ComboBox>
+							
+							<mx:ComboBox width="80" fontSize="9" height="18" prompt="ANY TIME">
+								<mx:ArrayCollection>
+									<fx:String>ANY TIME</fx:String>
+									<fx:String>Today</fx:String>
+									<fx:String>Yesterday</fx:String>
+									<fx:String>This week</fx:String>
+									<fx:String>Past week</fx:String>
+									<fx:String>Past month</fx:String>
+									<fx:String>Last month</fx:String>
+									<fx:String>This year</fx:String>
+									<fx:String>Past year</fx:String>
+									<fx:String>Before past year</fx:String>
+								</mx:ArrayCollection>
+							</mx:ComboBox>
+							
+						</mx:HBox>
+						
+						<s:Spacer height="0"/>
+						
+						<mx:Text text="Document context:" 
+								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						<!--<s:DropDownList width="160" height="18"/>-->
+						<component:MyPopUpButton dataProviderXML="{docsContextXML}" defaultPopupLabel="Document context" textAlign="left" width="160" height="18"/>
+						<s:Spacer height="6"/>
+						
+						<s:BorderContainer width="170%" height="{FilterSearchButton.height}" 
+										   borderVisible="false" backgroundColor="#00C1DAD6">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="right"/>
+							</s:layout>
+							<s:Button id="FilterSearchButton" height="21" 
+									  label="Search" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold" 
+									  buttonMode="true" styleName="searchButton"/>
+							</s:BorderContainer>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!--Results-->
+				<s:BorderContainer id="SearchResults" width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout/>
+					</s:layout>
+					<mx:VDividedBox height="100%" width="100%">
+						<component:CustomTitleWindow title="DocumentClass1" 
+									   height="100%" width="100%" skinClass="component.CustomTitleWindowSkin"
+									   dropShadowVisible="false" headerHeight="16"
+									   fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							
+							<mx:AdvancedDataGrid id="advanceDG1_ID" height="100%" width="100%" borderVisible="false" rowHeight="20"
+												 fontFamily="Franklin Gothic Medium" fontSize="11"
+												 fontWeight="normal" dataProvider="@{dataProvider1List}">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn textAlign="center" dataField="checked" 
+															   width="30" 
+															   rendererIsEditor="false"
+															   sortable="false"
+															   itemRenderer="component.CheckboxItemRenderer"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue1" headerText="IndexField1"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue2" headerText="IndexField2"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue3" headerText="IndexField3"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue4" headerText="IndexField4"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue5" headerText="IndexField5"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+							
+						</component:CustomTitleWindow>
+						<component:CustomTitleWindow title="DocumentClass2" 
+									   height="100%" width="100%" headerHeight="16" 
+									   dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
+									   fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							
+							<mx:AdvancedDataGrid height="100%" width="100%" borderVisible="false" rowHeight="20"
+										fontFamily="Franklin Gothic Medium" fontSize="11"
+										fontWeight="normal" dataProvider="@{dataProvider2List}">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn textAlign="center" dataField="checked" 
+															   width="30" 
+															   rendererIsEditor="false"
+															   sortable="false"
+															   itemRenderer="component.CheckboxItemRenderer"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue1" headerText="IndexField1"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue2" headerText="IndexField2"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue3" headerText="IndexField3"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue4" headerText="IndexField4"/>
+									<mx:AdvancedDataGridColumn dataField="IndexValue5" headerText="IndexField5"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+								</mx:groupedColumns>
+								
+							</mx:AdvancedDataGrid>
+						</component:CustomTitleWindow>
+					</mx:VDividedBox>
+
+					
+					<!--Action controls-->
+					<s:BorderContainer width="100%" height="24" borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout/>
+						</s:layout>
+						<s:BorderContainer height="24" borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="left"/>
+							</s:layout>
+							<s:Button label="View" height="21" buttonMode="true" styleName="viewButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:RadioButton groupName="rbgroup"
+									   label="In original format" selected="true" 
+									   fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+							<s:RadioButton groupName="rbgroup"
+										   label="As Image(s)" 
+										   fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+							<s:RadioButton groupName="rbgroup"
+										   label="As PDF file(s)" 
+										   fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						</s:BorderContainer>
+						<s:BorderContainer width="100%" height="24" borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="right"/>
+							</s:layout>
+							
+							<s:Button label="Print" height="21" buttonMode="true" styleName="printButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Email" height="21" buttonMode="true" styleName="emailButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Fax" height="21" buttonMode="true" styleName="faxButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Save" height="21" buttonMode="true" styleName="saveButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Check Out" height="21" buttonMode="true" styleName="checkOutButton" 	
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="File" height="21" buttonMode="true" styleName="fileButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Reindex" height="21" buttonMode="true" styleName="reIndexButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Delete" height="21" buttonMode="true" styleName="deleteButton" 
+									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+						</s:BorderContainer>
+						
+					</s:BorderContainer>
+				</s:BorderContainer>
+					
+			<!--End SearchFiltersAndSearchResults-->
+			</s:BorderContainer>
+			
+		<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

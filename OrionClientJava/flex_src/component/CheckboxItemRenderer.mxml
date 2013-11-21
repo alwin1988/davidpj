@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						  xmlns:s="library://ns.adobe.com/flex/spark" 
+						  xmlns:mx="library://ns.adobe.com/flex/mx" 
+						  autoDrawBackground="true">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.AdvancedDataGrid;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+			
+			/**
+			 * 
+			 * @Code from : http://cookbooks.adobe.com/post_3_state_checkbox_for_header_renderer_in_datagrid-18900.html
+			 * 
+			 * Handler function for <code>MouseEvent.CLICK</code> on checkbox.
+			 * 
+			 * @param event MouseEvent
+			 * 
+			 */ 
+			public function clickHandler(event:MouseEvent):void {
+				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
+				o.checked = cb.selected;
+				ArrayCollection(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider).setItemAt(o,AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedIndex);
+			}
+			
+			/**
+			 * Overides <code>data</code> parameter to set the <code>selected</code> parameter of the
+			 * checkbox.
+			 * 
+			 * @param value Object
+			 */ 
+			override public function set data(value:Object):void {
+				if ( value != null ) {
+					super.data = value; 
+					cb.selected = value.checked;
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<s:CheckBox id="cb" click="clickHandler(event)" horizontalCenter="0" verticalCenter="0"/>
+	
+</s:MXAdvancedDataGridItemRenderer>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 14, 2013 10:42:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.shopsthai.david.hibernate.EmpOrgchart" table="emp_orgchart" catalog="david">
+        <id name="emp" type="string">
+            <column name="emp" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="boss" type="string">
+            <column name="boss" length="10" />
+        </property>
+        <property name="salery" type="big_decimal">
+            <column name="salery" precision="6" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

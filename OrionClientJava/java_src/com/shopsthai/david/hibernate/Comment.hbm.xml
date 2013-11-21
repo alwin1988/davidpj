@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 14, 2013 10:42:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.shopsthai.david.hibernate.Comment" table="comment" catalog="david">
+        <id name="commentNo" type="java.lang.Long">
+            <column name="comment_no" />
+            <generator class="identity" />
+        </id>
+        <property name="userId" type="string">
+            <column name="user_id" length="32" not-null="true" />
+        </property>
+        <property name="commentContent" type="string">
+            <column name="comment_content" length="16777215" not-null="true" />
+        </property>
+        <property name="regDate" type="timestamp">
+            <column name="reg_date" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

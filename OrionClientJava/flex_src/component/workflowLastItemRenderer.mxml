@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" 
+								  xmlns:mx="library://ns.adobe.com/flex/mx" 
+								  focusEnabled="true" creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.IList;
+			import mx.controls.listClasses.AdvancedListBase;
+			
+			[Bindable] private var dgListLength:int;
+			
+			protected function init():void {
+				dgListLength = IList(AdvancedListBase(listData.owner).dataProvider).length;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<mx:HBox width="100%" id="hboxItemID" horizontalAlign="center">
+		<!--<s:Label id="lblData" top="0" left="0" right="0" bottom="0" text="{listData.label}" />-->
+		<mx:CheckBox/>
+		<mx:Button height="16" label="goes to FD" buttonMode="true" labelVerticalOffset="-3"
+				   visible="{listData.rowIndex==(dgListLength-1)?true:false}"/>
+		<mx:Button height="16" label="goes to WD" buttonMode="true" labelVerticalOffset="-3"
+				   visible="{listData.rowIndex==(dgListLength-1)?true:false}"/>
+	</mx:HBox>
+	
+</s:MXAdvancedDataGridItemRenderer>

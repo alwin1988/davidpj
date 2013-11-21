@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="160" height="18">
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<fx:Style>
+		.myCustomselectedTabTextStyleName {
+			fontWeight: normal;
+			textAlign: left;
+		}
+		.myCustomPopUpStyleName {
+			fontWeight: normal;
+			textAlign: left;
+			verticalAlign: middle;
+			selectedTabTextStyleName: myCustomselectedTabTextStyleName;
+		}
+	</fx:Style>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.events.MenuEvent;
+			
+			private var myMenu:Menu;
+			
+			private var _dataProviderXML:XML;
+			private var _defaultPopupLabel:String;
+			
+			[Bindable]
+			public function set dataProviderXML(value:Object):void {
+				_dataProviderXML = value as XML
+			}
+			public function get dataProviderXML():Object {
+				return _dataProviderXML;
+			}
+			public function set defaultPopupLabel(value:String):void {
+				_defaultPopupLabel = value
+			}
+			public function get defaultPopupLabel():String {
+				return _defaultPopupLabel;
+			}
+			
+			
+			private function initMenu():void {
+				myMenu = new Menu();
+				myMenu.labelField = "@label";
+				myMenu.dataProvider = dataProviderXML;
+				myMenu.rowHeight = 18;
+				myMenu.showRoot = false;
+				myMenu.addEventListener("itemClick", itemClickHandler);
+				myMenu.addEventListener("change", menuChange);
+				myMenu.width = myPopupBtnID.width;
+				myPopupBtnID.popUp = myMenu;
+				myPopupBtnID.label = defaultPopupLabel;
+				
+			}
+			
+			// Define the event listener for the Menu control's change event. 
+			private function menuChange(event:MenuEvent):void {
+				var menuXML:XML = XML(event.item);
+				var selectAncestorIDStr:String = menuXML.@id.toString();
+				var x:XMLList = dataProviderXML.node.(@id == menuXML.@id);
+				
+				if (menuXML.@haveChild == "n") {
+					clearToggle(null);
+					x.@toggled = true;
+					setSelectedLabel(x.@label);
+				}
+			}
+			
+			// Define the event listener for the Menu control's change event. 
+			private function itemClickHandler(event:MenuEvent):void {
+				var label:String = event.label;
+				travelInXMLList(XML(event.item));
+			}
+			
+			
+			private function travelInXMLList(p:XML):void {
+				var ancestorID:int = 0; //parent id of current selected item
+				var selectid:String = p.@id ;
+				var currentItemIsToggle:Boolean = p.@toggled;
+				
+				//find ancestorID
+				for each( var nodelist:XML in dataProviderXML.elements("*") ) { //nodelist  get all xml
+					if ( nodelist.node.(@id == selectid).@id == selectid ) {
+						ancestorID = nodelist.@id.toString(); //ancestorID is parent id of selected child
+						break;
+					}
+				}
+				
+				//find selected childs in ancestor
+				var ancestorNode:XMLList = dataProviderXML.node.(@id == ancestorID);
+				var listChecked:Boolean = false;
+				for each( var nodelist:XML in ancestorNode.elements("*") ) { //nodelist get all xml in ancestorNodeXML
+					if ( nodelist.@toggled == true ) {
+						listChecked = true;
+						break;
+					}
+				}
+				
+				//set toggle to current parent
+				var x:XMLList = dataProviderXML.node.(@id == ancestorID); //get all child of node ancestorID
+				var ancestorIDStr:String = ancestorID.toString();
+				
+				if (listChecked) {
+					//clear all
+					clearToggle(ancestorIDStr);
+					x.@toggled = true;
+					setSelectedLabel(x.@label);
+				} else {
+					//clear all
+					clearToggle(null);
+					x.@toggled = false;
+					setSelectedLabel(defaultPopupLabel);
+				}
+				
+			}
+			
+			private function setSelectedLabel(setLabel:String):void {
+				myPopupBtnID.label = setLabel;
+				myPopupBtnID.close();
+			}
+			
+			private function clearToggle(ancestorIDStr:String):void {
+				if ( ancestorIDStr != null ) {
+					for each( var nodelist:XML in dataProviderXML.elements("*") ) { //nodelist  get all xml
+						if (nodelist.@id.toString() != ancestorIDStr) {
+							if (nodelist.@haveChild == "y") {
+								//find child node
+								var ancestorNode:XMLList = dataProviderXML.node.(@id == nodelist.@id);
+								for each( var childNodelist:XML in ancestorNode.elements("*") ) { //nodelist get all xml in ancestorNodeXML
+									childNodelist.@toggled = false;
+								}
+								nodelist.@toggled = false;
+								
+							} else {
+								nodelist.@toggled = false;
+							}
+						}
+					}
+					
+				} else {
+					for each( var nodelist:XML in dataProviderXML.elements("*") ) { //nodelist  get all xml
+						if (nodelist.@haveChild == "y") {
+							//find child node
+							var ancestorNode:XMLList = dataProviderXML.node.(@id == nodelist.@id);
+							for each( var childNodelist:XML in ancestorNode.elements("*") ) { //nodelist get all xml in ancestorNodeXML
+								childNodelist.@toggled = false;
+							}
+							nodelist.@toggled = false;
+							
+						} else {
+							nodelist.@toggled = false;
+						}
+					}
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<mx:PopUpButton id="myPopupBtnID" width="160" height="18" creationComplete="initMenu();" openAlways="true" fontSize="11" popUpStyleName="myCustomPopUpStyleName"/>
+	
+</s:Group>

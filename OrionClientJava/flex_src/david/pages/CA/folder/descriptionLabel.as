@@ -12,9 +12,18 @@ package david.pages.CA.folder
 			super();
 		}
 		
+		
+		private function chkChange():Boolean {
+			if(data.isChange  && data.name == data.description ){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			setStyle("color", (data.isChange) ? REG_COLOR : BLACK_COLOR);
+			setStyle("color", (chkChange()) ? REG_COLOR : BLACK_COLOR);
 		}
 	}
 }

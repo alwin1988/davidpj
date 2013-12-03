@@ -85,3 +85,18 @@
 
 
 
+/*mx|AdvancedDataGrid {
+	verticalGridLineColor: #ffffff;
+	useRollOver: false;
+	rollOverColor: #ffffff;
+	borderColor: #ffffff;
+	selectionColor: #ffffff;
+	textSelectedColor: #000000;
+	headerStyleName: "mydataGridHeaderStyle";
+}*/
+
+.mydataGridHeaderStyle {
+	color: #000000;
+}
+
+

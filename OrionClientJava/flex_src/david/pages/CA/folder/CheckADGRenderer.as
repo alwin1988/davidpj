@@ -188,23 +188,23 @@ package david.pages.CA.folder
 		override public function set data(value:Object):void
 		{
 			super.data = value;
-			if(value != null ){
-//				setCheckState (myCheckBox, value, value.state);
-				setCheckState (myCheckBox, super.data, super.data.state);
-				if(value.children && value.children.length > 0 ){
-					value.isBranch = 'true';
-				}
-				if(AdvancedDataGridListData(this.listData).item.isBranch == 'false')
-				{      
-					var myListData:AdvancedDataGridListData = AdvancedDataGridListData(this.listData);
-//					myListData.icon = icn;
-				} else {
-					if (this.parent != null)
-					{
-						var _adg:AdvancedDataGrid = AdvancedDataGrid(this.owner);
-					}
-				}
-			}
+//			if(value != null ){
+////				setCheckState (myCheckBox, value, value.state);
+//				setCheckState (myCheckBox, super.data, super.data.state);
+//				if(value.children && value.children.length > 0 ){
+//					value.isBranch = 'true';
+//				}
+//				if(AdvancedDataGridListData(this.listData).item.isBranch == 'false')
+//				{      
+//					var myListData:AdvancedDataGridListData = AdvancedDataGridListData(this.listData);
+////					myListData.icon = icn;
+//				} else {
+//					if (this.parent != null)
+//					{
+//						var _adg:AdvancedDataGrid = AdvancedDataGrid(this.owner);
+//					}
+//				}
+//			}
 
 			
 //			if(value){
@@ -301,8 +301,10 @@ package david.pages.CA.folder
 				}
 				else
 			    {
-					super.disclosureIcon.x =  super.disclosureIcon.x + super.disclosureIcon.width + 17;
-				    myCheckBox.x = super.label.x;
+					if(super.disclosureIcon){
+						super.disclosureIcon.x =  super.disclosureIcon.x + super.disclosureIcon.width + 17;
+					}
+					myCheckBox.x = super.label.x;
 				    myCheckBox.y = (unscaledHeight - myCheckBox.height) / 2;
 				    super.label.x = myCheckBox.x + 5;
 				    super.label.setActualSize(Math.max(unscaledWidth - super.label.x, 4), unscaledHeight);

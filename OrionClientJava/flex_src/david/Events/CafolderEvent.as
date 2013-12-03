@@ -51,7 +51,7 @@ package david.Events
 			var o:Object = FlexGlobals.topLevelApplication;
 			var url:String = o.url;	
 			var serverName:String = mx.utils.URLUtil.getServerNameWithPort(url);
-			var endpoint:String	= mx.utils.URLUtil.getProtocol(url)+"://"+serverName+"/OrionClientJava/messagebroker/amf";
+			var endpoint:String	= mx.utils.URLUtil.getProtocol(url)+"://"+serverName+"/OrionClientJava_20131202v1/messagebroker/amf";
 //			Alert.show(endpoint,'Enpoint');
 			return endpoint;
 		}
@@ -77,8 +77,10 @@ package david.Events
 				Alert.show('Delete success!');
 			} else if(action == 'EDIT') {
 				Alert.show('Update Scuuess');
+			} else if(action == 'ADD') {
+				Alert.show('Insert Scuuess');
 			} else {
-				Alert.show('getall success');
+//				Alert.show('getall success');
 			}
 			action = null;
 			
@@ -115,7 +117,9 @@ package david.Events
 			if(token != null){
 //				token.persistuccessed();
 			}
-				Alert.show('Insert Success');
+//				Alert.show('Insert Success');
+			selectAll(token);
+			action = 'ADD';
 		}
 		
 		private function fault_persist(event:FaultEvent, token:Object):void {

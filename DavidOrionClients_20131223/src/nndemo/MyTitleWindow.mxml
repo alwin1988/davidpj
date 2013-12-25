@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" close="titlewindow1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function radiobutton1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var evt:MyTitleWindowEvent = new MyTitleWindowEvent(MyTitleWindowEvent.RD1_CLICK);
+				dispatchEvent(evt);
+			}
+			
+			protected function radiobutton2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var evt:MyTitleWindowEvent = new MyTitleWindowEvent(MyTitleWindowEvent.RD2_CLICK);
+				dispatchEvent(evt);				
+			}
+			
+			protected function radiobutton3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var evt:MyTitleWindowEvent = new MyTitleWindowEvent(MyTitleWindowEvent.RD3_CLICK);
+				dispatchEvent(evt);				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup x="23" y="10">
+		<s:Label text="Policyholders named Jane Doe"/>
+		<s:RadioButton label="Doe, Jane [DOB: 40/09/40] [Policy#: 30943] - 100% match" click="radiobutton1_clickHandler(event)"/>
+		<s:RadioButton label="Doe, Jane Beth [DOB: 30/07/40] [Policy#: 20438] - 90% match" click="radiobutton2_clickHandler(event)"/>
+		<s:RadioButton label="Doe, Jane K. [DOB: 27/12/65] [Policy#: 90432] - 90% match" click="radiobutton3_clickHandler(event)"/>
+		<s:HGroup>
+			<s:Button label="OK"/>
+			<s:Button label="Cancel" click="button1_clickHandler(event)"/>
+		</s:HGroup>
+	</s:VGroup>
+</s:TitleWindow>

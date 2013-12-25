@@ -1,0 +1,1042 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:model="com.vstyran.transform.model.*"
+			   xmlns:panzoom="org.rockholla.controls.panzoom.*"
+			   xmlns:component="component.*"
+			   xmlns:view="view.*"
+			   xmlns:components="david.view.components.*"
+			   creationComplete="creationCompleteHandler()"
+			   width="100%" height="100%">
+	
+	<fx:Declarations>
+		<s:BitmapImage id="PNGImage"
+					   source="@Embed('assets/NNfv2.png')"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.blogagic.util.HTMLToolTip;
+			
+			import component.CBViewStack;
+			
+			import event.NNDemoEvent;
+			
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.controls.sliderClasses.Slider;
+			import mx.core.IFlexDisplayObject;
+			import mx.events.FlexEvent;
+			import mx.events.SliderEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.ToolTipManager;
+			
+			import spark.components.BorderContainer;
+			import spark.components.Button;
+			import spark.events.IndexChangeEvent;
+			import spark.events.TextOperationEvent;
+			
+			[Bindable]
+			public var myPopUp:IFlexDisplayObject;
+			public var BBX:Number;
+			public var BBY:Number;
+
+			private function initApp():void {
+				//How long to delay before showing tooltip -- 0 means no delay
+				ToolTipManager.showDelay = 0;
+				//How long to show visible tooltip before auto-hiding -- Infinity means show until rollout
+				ToolTipManager.hideDelay = Infinity;
+			}
+			
+			protected function initVars():void 
+			{	
+				BBX = -198
+				BBY = -1355
+			}
+			
+			protected function creationCompleteHandler():void
+			{
+				//How long to delay before showing tooltip -- 0 means no delay
+				ToolTipManager.showDelay = 0;
+				//How long to show visible tooltip before auto-hiding -- Infinity means show until rollout
+				ToolTipManager.hideDelay = Infinity;
+
+				ToolTipManager.toolTipClass = HTMLToolTip;
+				
+				var tip1:String;
+				tip1 = "<font color='#076BAA' size='+4'><b>Geheel:  naam</b></font>" +
+					"<br><br>";
+				tip1 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip1 += "<textformat indent='20'><b>A.J. Ernst</b>" +
+					"<br><br>";
+				tip1 += "<textformat indent='0'><p align='left'><b>Genormaliseerd:</b><br>";
+				tip1 +=	"<textformat indent='20'>Achternaam:  <font color='#0B610B'><b>Ernst</b></font><br>";
+				tip1 += "<textformat indent='20'>Voornaam:  <font color='#0B610B'><b>Adriaan</b></font><br>";
+				tip1 += "<textformat indent='20'>Tweede naam: <font color='#0B610B'><b>Joop</b></font>" +
+					"<br><br>";
+				tip1 += "<textformat indent='0'><p align='left'><b>Verrijkt met:</b><br>";
+				tip1 += "<textformat indent='20'>DOB:  <b>15/07/39</b><br>";
+				tip1 += "<textformat indent='20'><p align='left'>Polisnummers:" +
+					"<li><b>360143266</b> (gezondheid)</li>" +
+					"<li><b>360729838</b> (begrafenis)</li>" +
+					"<li><b>363505911</b> (ongeval)</li><br>";	
+				btn1.toolTip = tip1;
+				
+				var tip4:String;
+				tip4 = "<font color='#076BAA' size='+4'><b>Geheel:  datum</b></font>" +
+					"<br><br>";
+				tip4 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip4 += "<textformat indent='20'><b>31 mei 2013</b>" +
+					"<br><br>";
+				tip4 += "<textformat indent='0'><p align='left'><b>Genormaliseerd:</b><br>";
+				tip4 +=	"<textformat indent='20'>Date:  <font color='#0B610B'><b>31/05/13</b></font><br>";
+				btn4.toolTip = tip4;
+				
+				var tip5:String;
+				tip5 = "<font color='#076baa' size='+4'><b>Unified:  formulier</b></font>" +
+					"<br><br>";
+				tip5 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip5 += "<textformat indent='20'><b>schadeformulier</b>" +
+					"<br><br>";
+				tip5 += "<textformat indent='0'><p align='left'><b>Verenigd om:</b><br>";
+				tip5 +=	"<textformat indent='20'><font color='#0B610B'><b>formulier</b></font><br>";
+				btn5.toolTip = tip5;
+				
+				var tip6:String;
+				tip6 = "<font color='#076BAA' size='+4'><b>Unified:  ongeval</b></font>" +
+					"<br><br>";
+				tip6 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip6 += "<textformat indent='20'><b>aanrijding</b>" +
+					"<br><br>";
+				tip6 += "<textformat indent='0'><p align='left'><b>Verenigd om:</b><br>";
+				tip6 +=	"<textformat indent='20'><font color='#0B610B'><b>ongeval</b></font><br>";
+				btn6.toolTip = tip6;
+			
+				var tip9:String;
+				tip9 = "<font color='#076BAA' size='+4'><b>Unified:  polisnummer</b></font>" +
+					"<br><br>";
+				tip9 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip9 += "<textformat indent='20'><b>polisnummers</b>" +
+					"<br><br>";
+				tip9 += "<textformat indent='0'><p align='left'><b>Verenigd om:</b><br>";
+				tip9 +=	"<textformat indent='20'><font color='#0B610B'><b>polisnummer</b></font><br>";
+				btn9.toolTip = tip9;
+				
+				var tip10:String;
+				tip10 = "<font color='#076BAA' size='+4'><b>Geheel:  polisnummer</b></font>" +
+					"<br><br>";	
+				tip10 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip10 += "<textformat indent='20'><b>30729838</b>" +
+					"<br><br>";
+				tip10 += "<textformat indent='0'><p align='left'><b>Gecorrigeerd:</b><br>";
+				tip10 += "<textformat indent='20'>Polisnummer:  <font color='#0B610B'><b>360729838</b></font><br>";
+				btn10.toolTip = tip10;
+				
+				var tip11:String;
+				tip11 = "<font color='#076BAA' size='+4'><b>Geheel:  polisnummer</b></font>" +
+					"<br><br>";	
+				tip11 += "<textformat indent='0'><p align='left'><b>Govenden:</b><br>";
+				tip11 += "<textformat indent='20'><b>3635o5911</b>" +
+					"<br><br>";
+				tip11 += "<textformat indent='0'><p align='left'><b>Gecorrigeerd:</b><br>";
+				tip11 += "<textformat indent='20'>Polisnummer:  <font color='#0B610B'><b>363505911</b></font><br>";
+				btn11.toolTip = tip11;
+			}
+						
+			//protected function imageLoaded(event:Event):void
+			//{
+			//	var img:Image = event.target as Image;
+			//	img.source = new Bitmap( Bitmap(img.content).bitmapData, "auto", true );
+			//	img.scaleX = img.scaleY = (20 / img.contentHeight);
+			//}
+				
+			protected function _onZoom():void
+				{		
+			//	var smoothBitmapData : BitmapData = new BitmapData(
+			//		loadedBitmap.width + (loadedBitmap.width % 2),
+			//		loadedBitmap.height + (loadedBitmap.height % 2),
+			//		true, 0x00FF0000);
+			//	smoothBitmapData.draw(loadedBitmap, null, null, null, null, true);
+			//	
+			//	smoothBitmap = new Bitmap(smoothBitmapData, PixelSnapping.NEVER, true);
+				
+					//if(ZoomSlider.value/100 != this.panzoom.scale)
+					{
+						ZoomSlider.value = this.panzoom.scale * 100;
+					}
+			}
+			
+			protected function HandleImageDoubleClick(mouseEvent):void
+			{
+				if(this.panzoom.scale == 1.8 || ZoomSlider.value == 180)
+				{
+					ZoomSlider.value = 100;
+					this.panzoom.zoomToPoint(new Point(0, 0), 1);
+					this.panzoom.scale = 1;
+				}
+				else
+			 	{
+					ZoomSlider.value = 180;
+					this.panzoom.zoomToPoint(new Point(330, 440), 1.8);
+					this.panzoom.scale = 1.8;
+			 	}
+			}
+			
+			// When our slider changes, we want the zoom level to update.  There's a public zoom method
+			// within the PanZoomComponent that accepts a scale value (1 = actual size or 100%, 0.5 = half the size or 50%, etc.)
+			protected function ZoomSliderChangeEventHandler(change):void
+			{
+			//	this.panzoom.zoom(ZoomSlider.value/100);
+				this.panzoom.scale = ZoomSlider.value/100;
+			}
+			
+			protected function HandleCBGroupTrue(event:MouseEvent):void
+			{
+				RBGroup.height = 0;
+				CBGroup.height = 200;
+				//while (RBGroup.numElements > 0) {
+				//		RBGroup.removeElementAt(0); }
+			}
+			
+			protected function HandleRBGroupTrue(event:MouseEvent):void
+			{
+				CBGroup.height = 0;
+				RBGroup.height = 200;
+				//while (CBGroup.numElements > 0) {
+				//		CBGroup.removeElementAt(0); }
+			}
+			
+			protected function HandleMultipleIndexSetsTrue(event:MouseEvent):void
+			{
+				Form0P.height = 600;
+				Form1P.height = 24;
+				Form2P.height = 24;
+				Form3P.height = 24;
+				Form4P.height = 50;
+				Spacer1.height = 5;
+				Spacer2.height = 5;
+			}
+			
+			protected function HandleMultipleIndexSetsFalse(event:MouseEvent):void
+			{	
+				Form0P.height = 600;
+				Form1P.height = 0;
+				Form2P.height = 0;
+				Form3P.height = 0;
+				Form4P.height = 0;
+				Spacer1.height = 0;
+				Spacer2.height = 0;
+			}
+			
+			protected function Date_focusInHandler(event:FocusEvent):void
+			{
+				btn4.alpha = .8;
+			}
+			
+			protected function Date_focusOutHandler(event:FocusEvent):void
+			{
+				btn4.alpha = .3;
+			}
+			
+			protected function checkLengthAndFocus(event:TextOperationEvent):void
+			{
+				focusManager.setFocus( LastName );
+			}
+			
+			protected function Name_focusInHandler(event:FocusEvent):void
+			{
+				btn1.alpha = .8;
+			}
+				
+			protected function Name_focusOutHandler(event:FocusEvent):void
+			{
+				btn1.alpha = .3;
+			}
+			
+			protected function PolicyNo_focusInHandler(event:FocusEvent):void
+			{
+				btn10.alpha = .8;
+				btn11.alpha = .8;
+			}
+			
+			protected function PolicyNo_focusOutHandler(event:FocusEvent):void
+			{
+				btn10.alpha = .3;
+				btn11.alpha = .3;
+			}
+			
+			protected function AccidentReportRef_focusInHandler(event:FocusEvent):void
+			{
+				btn8.alpha = .8;
+			}
+			
+			protected function AccidentReportRef_focusOutHandler(event:FocusEvent):void
+			{
+				btn8.alpha = .3;
+			}
+			
+			
+			protected function btn4_rollOverHandler(event:MouseEvent):void
+			{
+				btn4.alpha = .6;
+				btn4.y = 354;
+				btn4.height = 11;
+			}
+			
+			protected function btn4_rollOutHandler(event:MouseEvent):void
+			{
+				btn4.alpha = .3;
+				btn4.y = 362;
+				btn4.height = 3;
+			}
+			
+			protected function btn4_clickHandler(event:MouseEvent):void
+			{
+				btn4.alpha = .1;
+				Date.text = "31/05/13";
+			//	Date.color = "#004AA02C"
+				focusManager.setFocus(LastName);
+			}
+
+			protected function btn4_mouseUpHandler(event:MouseEvent):void
+			{
+				btn4.alpha = .3;
+			}
+			
+			protected function btn5_rollOverHandler(event:MouseEvent):void
+			{
+				btn5.alpha = .6;
+				btn5.y = 375;
+				btn5.height = 11;
+			}
+			
+			protected function btn5_rollOutHandler(event:MouseEvent):void
+			{
+				btn5.alpha = .3;
+				btn5.y = 383;
+				btn5.height = 3;
+			}
+			
+			protected function btn5_clickHandler(event:MouseEvent):void
+			{
+				btn5.alpha = .1;
+			}
+			
+			protected function btn5_mouseUpHandler(event:MouseEvent):void
+			{
+				btn5.alpha = .3;
+			}
+			
+			protected function btn6_rollOverHandler(event:MouseEvent):void
+			{
+				btn6.alpha = .6;
+				btn6.y = 375;
+				btn6.height = 11;
+			}
+			
+			protected function btn6_rollOutHandler(event:MouseEvent):void
+			{
+				btn6.alpha = .3;
+				btn6.y = 383;
+				btn6.height = 3;
+			}
+			
+			protected function btn6_clickHandler(event:MouseEvent):void
+			{
+				btn6.alpha = .1;
+			}
+			
+			protected function btn6_mouseUpHandler(event:MouseEvent):void
+			{
+				btn6.alpha = .3;
+			}
+			
+			protected function btn7_rollOverHandler(event:MouseEvent):void
+			{
+				btn7.alpha = .6;
+				btn7.y = 375;
+				btn7.height = 11;
+			}
+			
+			protected function btn7_rollOutHandler(event:MouseEvent):void
+			{
+				btn7.alpha = .3;
+				btn7.y = 383;
+				btn7.height = 3;
+			}
+			
+			protected function btn7_clickHandler(event:MouseEvent):void
+			{
+				btn7.alpha = .1;
+			}
+			
+			protected function btn7_mouseUpHandler(event:MouseEvent):void
+			{
+				btn7.alpha = .3;
+			}
+			
+			protected function btn8_rollOverHandler(event:MouseEvent):void
+			{
+				btn8.alpha = .6;
+				btn8.y = 385;
+				btn8.height = 11;
+			}
+			
+			protected function btn8_rollOutHandler(event:MouseEvent):void
+			{
+				btn8.alpha = .3;
+				btn8.y = 393;
+				btn8.height = 3;
+			}
+			
+			protected function btn8_clickHandler(event:MouseEvent):void
+			{
+				btn8.alpha = .1;
+				AccidentReportRef.text = "A12345";
+			}
+			
+			protected function btn8_mouseUpHandler(event:MouseEvent):void
+			{
+				btn8.alpha = .3;
+			}
+			
+			protected function btn9_rollOutHandler(event:MouseEvent):void
+			{
+				btn9.alpha = .3;
+				btn9.y = 414;
+				btn9.height = 3;
+			}
+			
+			protected function btn9_clickHandler(event:MouseEvent):void
+			{
+				btn9.alpha = .1;
+				//PopUpManager.addPopUp(new MyTitleWindow(),this);
+			}
+			
+			protected function btn9_mouseUpHandler(event:MouseEvent):void
+			{
+				btn9.alpha = .3;
+			}
+						
+			protected function btn10_rollOverHandler(event:MouseEvent):void
+			{
+				btn10.alpha = .6;
+				btn10.y = 406;
+				btn10.height = 11;
+			}
+			
+			protected function btn10_rollOutHandler(event:MouseEvent):void
+			{
+				btn10.alpha = .3;
+				btn10.y = 414;
+				btn10.height = 3;
+			}
+			
+			protected function btn10_clickHandler(event:MouseEvent):void
+			{
+				btn10.alpha = .1
+				PolicyNo1.text = "360729838";
+				//PopUpManager.addPopUp(new MyTitleWindow(),this);
+				//myPopUp = PopUpManager.createPopUp(this,MyTitleWindow,true);
+				//myPopUp.addEventListener(MyTitleWindowEvent.RD1_CLICK,rd1_clickHandler)
+				//myPopUp.addEventListener(MyTitleWindowEvent.RD2_CLICK,rd2_clickHandler)
+				//myPopUp.addEventListener(MyTitleWindowEvent.RD3_CLICK,rd3_clickHandler)	
+			}
+			
+			protected function btn10_mouseUpHandler(event:MouseEvent):void
+			{
+				btn10.alpha = .3;
+			}
+
+			protected function btn11_rollOverHandler(event:MouseEvent):void
+			{
+				btn11.alpha = .6;
+				btn11.y = 406;
+				btn11.height = 11;
+			}
+			
+			protected function btn11_rollOutHandler(event:MouseEvent):void
+			{
+				btn11.alpha = .3;
+				btn11.y = 414;
+				btn11.height = 3;
+			}
+			
+			protected function btn11_clickHandler(event:MouseEvent):void
+			{
+				btn11.alpha = .1;
+				PolicyNo2.text = "363505911";
+			}
+			
+			protected function btn11_mouseUpHandler(event:MouseEvent):void
+			{
+				btn11.alpha = .3;
+			}			protected function btn9_rollOverHandler(event:MouseEvent):void
+			{
+				btn9.alpha = .6;
+				btn9.y = 406;
+				btn9.height = 11;
+			}
+			
+			
+
+			protected function btn1_rollOverHandler(event:MouseEvent):void
+			{
+				btn1.alpha = .6;
+				btn1.y = 354;
+				btn1.height = 11;
+			}
+			
+			protected function btn1_rollOutHandler(event:MouseEvent):void
+			{
+				btn1.alpha = .3;
+				btn1.y = 362;
+				btn1.height = 3;
+			}
+			
+			protected function btn1_clickHandler(event:MouseEvent):void
+			{
+				btn1.alpha = .1;
+				LastName.text = "Ernst";
+				FirstName.text = "A.";
+				MiddleName.text = "J.";
+				//	LastName.backgroundColor = 0x4AA02C;
+				//	MiddleName.color = 0x4AA02C;
+				//	FirstName.color = 0x4AA02C;
+				focusManager.setFocus(PolicyNo1);
+			}
+			
+			protected function btn1_mouseUpHandler(event:MouseEvent):void
+			{
+				btn1.alpha = 0;
+			}
+			
+			protected function btn2_rollOverHandler(event:MouseEvent):void
+			{
+				btn2.alpha = .6;
+				btn2.y = 354;
+				btn2.height = 11;
+			}
+			
+			protected function btn2_rollOutHandler(event:MouseEvent):void
+			{
+				btn2.alpha = .3;
+				btn2.y = 362;
+				btn2.height = 3;
+			}
+			
+			protected function btn2_clickHandler(event:MouseEvent):void
+			{
+				btn2.alpha = .1;
+			}
+			
+			protected function btn2_mouseUpHandler(event:MouseEvent):void
+			{
+				btn2.alpha = 0;
+			}
+			
+			protected function btn3_rollOverHandler(event:MouseEvent):void
+			{
+				btn3.alpha = .6;
+				btn3.y = 354;
+				btn3.height = 11;
+			}
+			
+			protected function btn3_rollOutHandler(event:MouseEvent):void
+			{
+				btn3.alpha = .3;
+				btn3.y = 362;
+				btn3.height = 3;
+			}
+	
+			
+			
+			protected function btn3_clickHandler(event:MouseEvent):void
+			{
+				btn3.alpha = .1;
+				//Doe, John A. [DOB: 15/07/39][Policy#: 20437]
+				//txtFirst.text = "John";
+				//txtLast.text = "Doe";
+				//txtDOB.text = "15/07/39";
+				//txtPolicy.text = "20437";
+				//txtMid.text = "A.";
+			}
+			
+			protected function btn3_mouseUpHandler(event:MouseEvent):void
+			{
+				btn3.alpha = .3;
+			}
+
+			public function rd1_clickHandler(event:MyTitleWindowEvent):void
+			{
+			//	txtLast2.text="Doe";
+			//	txtFirst2.text="Jane";
+			//	txtMid2.text="";
+			//	txtDOB2.text="40/09/40";
+			//	txtPolicy2.text="30943";
+			}
+			
+			public function rd2_clickHandler(event:MyTitleWindowEvent):void
+			{
+			//	txtLast2.text="Doe";
+			//	txtFirst2.text="Jane";
+			//	txtMid2.text="Beth";
+			//	txtDOB2.text="30/07/40";
+			//	txtPolicy2.text="20438";
+			}
+			
+			public function rd3_clickHandler(event:MyTitleWindowEvent):void
+			{
+			//	txtLast2.text="Doe";
+			//	txtFirst2.text="Jane";
+			//	txtMid2.text="K.";
+			//	txtDOB2.text="27/12/65";
+			//	txtPolicy2.text="90432";
+			}
+
+
+			protected function buttonbar1_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				//var cb:CBViewStack = this.parent.parent.parent as CBViewStack;
+				//cb.selectedIndex = 2;		
+				
+				var evt:NNDemoEvent = new NNDemoEvent(NNDemoEvent.NNDEMO_CHANGE);
+				evt.nndemo_index=2;
+				dispatchEvent(evt);
+			}
+			
+		]]>
+	</fx:Script>
+
+	<mx:HDividedBox x="0" y="0" width="100%" height="100%" horizontalGap="7">
+		<s:BorderContainer width="100%" height="100%" minWidth="600" borderVisible="true">
+			<s:layout>
+				<s:VerticalLayout paddingBottom="0"/>
+			</s:layout>
+			<s:BorderContainer id="frmMainID"
+							   width="100%" minWidth="{frmMainID.minWidth}" maxWidth="{frmMainID.maxWidth}" height="100%"  
+							   borderColor="black" borderStyle="solid">
+				<s:layout>
+					<s:VerticalLayout paddingBottom="0" gap="0"/>
+				</s:layout>
+				<s:BorderContainer id="frmTitleBox" 
+								   width="100%" height="24" 
+								   backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle"
+											paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+					</s:layout>
+					<s:HGroup width="100%" horizontalAlign="left">
+						<mx:Text id="lblfrmTitle" text="Digitale Postkamer Formulier" fontFamily="Franklin Gothic Medium" fontSize="14" fontWeight="bold" color="white"/>
+					</s:HGroup>
+					<s:HGroup horizontalAlign="right">
+					</s:HGroup>
+					<s:TabBar id="tabs" left="8" x="400" y="2" selectedIndex="0" dataProvider="{vs}"/>
+				</s:BorderContainer>
+				<mx:ViewStack id="vs" width="100%" height="100%" left="8" y="23">
+					<s:NavigatorContent label="Classificeren"  width="100%" height="100%">
+						<s:VGroup>
+							<mx:Box width="100%" height="100%"
+									paddingTop="10"  paddingBottom="10" paddingLeft="10" paddingRight="10" 
+									backgroundColor="white">
+								<s:BorderContainer width="100%" height="28" backgroundColor="red">
+									<s:layout>
+										<s:HorizontalLayout verticalAlign="middle" 
+															paddingLeft="10" paddingRight="10"/>
+									</s:layout>
+									<s:HGroup width="90%" horizontalAlign="left" clipAndEnableScrolling="true">
+										<s:Label text="Zijn er in dit document meerdere document types aanwezig?" height="24" verticalAlign="middle"/>								
+									</s:HGroup>
+									<s:HGroup horizontalAlign="right">
+										<s:Button label="Ja" chromeColor="white" click="HandleCBGroupTrue(event)"/>
+										<s:Button label="Geen" chromeColor="white" click="HandleRBGroupTrue(event)"/>						
+									</s:HGroup>
+								</s:BorderContainer>
+							</mx:Box>
+							<s:VGroup id="CBGroup" 
+									  height="0" paddingLeft="20" 
+									  clipAndEnableScrolling="true">
+								<s:CheckBox label="Begrafenisverzekering Afkopen (80%)"/>
+								<s:CheckBox label="Aanrijding Schadeformulier (80%)"/>
+								<s:CheckBox label="Documenttype C (80%)"/>
+								<s:DropDownList width="200" dropShadowVisible="false" prompt="Ander documenttypes">
+									<mx:ArrayCollection>
+										<fx:String>Documenttype D (20%)</fx:String>
+										<fx:String>Documenttype E (20%)</fx:String>
+										<fx:String>Documenttype F (20%)</fx:String>
+										<fx:String>Documenttype G (20%)</fx:String>
+										<fx:String>Documenttype I (20%)</fx:String>
+										<fx:String>Documenttype J (20%)</fx:String>
+										<fx:String>Documenttype K (20%)</fx:String>
+										<fx:String>Documenttype L (20%)</fx:String>
+										<fx:String>Documenttype M (20%)</fx:String>
+									</mx:ArrayCollection>
+								</s:DropDownList>
+								<s:Spacer height="20"/>
+								<s:Button label="OK" click="tabs.selectedIndex=1"/>
+							</s:VGroup>	
+							<s:VGroup id="RBGroup" 
+									  height="0" paddingLeft="20" 
+									  clipAndEnableScrolling="true">
+								<s:RadioButton label="Begrafenisverzekering Afkopen (80%)"/>
+								<s:RadioButton label="Aanrijding Schadeformulier (80%)"/>
+								<s:RadioButton label="Documenttype C (10%)"/>
+								<s:DropDownList width="200" dropShadowVisible="false" prompt="Ander documenttypes">
+									<mx:ArrayCollection>
+										<fx:String>Documenttype D (20%)</fx:String>
+										<fx:String>Documenttype E (20%)</fx:String>
+										<fx:String>Documenttype F (20%)</fx:String>
+										<fx:String>Documenttype G (20%)</fx:String>
+										<fx:String>Documenttype I (20%)</fx:String>
+										<fx:String>Documenttype J (20%)</fx:String>
+										<fx:String>Documenttype K (20%)</fx:String>
+										<fx:String>Documenttype L (20%)</fx:String>
+										<fx:String>Documenttype M (20%)</fx:String>
+									</mx:ArrayCollection>
+								</s:DropDownList>
+								<s:Spacer height="20"/>
+								<s:Button label="OK" click="tabs.selectedIndex=1"/>
+							</s:VGroup>
+						</s:VGroup>
+					</s:NavigatorContent>
+					
+					<s:NavigatorContent label="Index"  width="100%" height="100%">
+						<s:Group id="GG" width="100%" height="100%">
+							<mx:Box width="100%" height="100%" borderVisible="false"
+									paddingTop="10"  paddingBottom="10" paddingLeft="10" paddingRight="10" 
+									backgroundColor="white">
+								<s:BorderContainer width="100%" height="28"
+												   backgroundColor="red">
+									<s:layout>
+										<s:HorizontalLayout verticalAlign="middle" 
+															paddingLeft="5" paddingRight="10"
+															clipAndEnableScrolling="true"/>
+									</s:layout>
+									<s:HGroup width="90%" height="28" horizontalAlign="left" clipAndEnableScrolling="true">
+										<s:Label text="Betekent dit dat er in document meerdere index sets aanwezig zijn?" height="24" verticalCenter="0" verticalAlign="middle"/>						
+									</s:HGroup>
+									<s:HGroup horizontalAlign="right">
+										<s:Button id="MultipleIndexSetsTrue" label="Ja" chromeColor="white" click="HandleMultipleIndexSetsTrue(event)"/>
+										<s:Button id="MultipleIndexSetsFalse" label="Geen" chromeColor="white" click="HandleMultipleIndexSetsFalse(event)"/>						
+									</s:HGroup>
+								</s:BorderContainer>
+								<s:BorderContainer id="Form0P"
+												   width="100%" height="100%"
+												   borderVisible="false">
+									<s:layout>
+										<s:VerticalLayout paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"
+														  clipAndEnableScrolling="true"/>
+									</s:layout>
+									<mx:Box id="Form1P"
+											width="90%" height="0" verticalCenter="0" verticalAlign="middle"
+											paddingLeft="5" paddingRight="5"
+											backgroundColor="blue" borderVisible="false">
+										<s:HGroup width="90%" horizontalAlign="left">
+											<s:Label text="Gemeenschappelijke indexvelden" height="18" verticalCenter="0" verticalAlign="middle" color="white"/>	
+										</s:HGroup>
+									</mx:Box>
+									<s:HGroup>
+										<s:Label text="Datum" width="150"/>
+										<s:TextInput id="Date" width="100" maxChars="100"
+													 focusIn="Date_focusInHandler(event)"
+													 focusOut="Date_focusOutHandler(event)"/>
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label text="Achternaam" width="150"/>
+										<s:TextInput id="LastName" width="200"
+													 focusIn="Name_focusInHandler(event)"
+													 focusOut="Name_focusOutHandler(event)"/>		
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label text="Voor naam" width="150"/>
+										<s:TextInput id="FirstName" width="200" 
+													 focusIn="Name_focusInHandler(event)"
+													 focusOut="Name_focusOutHandler(event)"/>		
+									</s:HGroup>
+									<s:HGroup>
+										<s:Label text="Tweede naam" width="150"/>
+										<s:TextInput id="MiddleName" width="200"
+													 focusIn="Name_focusInHandler(event)"
+													 focusOut="Name_focusOutHandler(event)"/>	
+									</s:HGroup>
+									<s:Spacer id="Spacer1" height="0"/>
+									<mx:Box id="Form2P"
+											height="0" width="90%" verticalCenter="0" verticalAlign="middle"
+											paddingLeft="5" paddingRight="5"
+											backgroundColor="blue" borderVisible="false">
+										<s:HGroup width="90%" verticalCenter="0" verticalAlign="middle" horizontalAlign="left">
+											<s:Label text="Indexen voor documenttype Begrafenisverzekering Afkopen" height="18" verticalCenter="0" verticalAlign="middle" color="white"/>								
+										</s:HGroup>
+									</mx:Box>
+									<s:HGroup>
+										<s:Label text="Polisnummer" width="150"/>
+										<s:TextInput id="PolicyNo1" width="100"
+													 focusIn="PolicyNo_focusInHandler(event)"
+													 focusOut="PolicyNo_focusOutHandler(event)"/>		
+									</s:HGroup>
+									<s:Spacer id="Spacer2" height="0"/>
+									<mx:Box id="Form3P"
+											width="90%" height="0" verticalCenter="0" verticalAlign="middle"
+											paddingLeft="5" paddingRight="5"
+											backgroundColor="blue" borderVisible="false">
+										<s:HGroup width="90%" verticalCenter="0" verticalAlign="middle" horizontalAlign="left">
+											<s:Label text="Indexen voor documenttype Aanrijding Schadeformulier" height="18" verticalCenter="0" verticalAlign="middle" color="white"/>								
+										</s:HGroup>
+									</mx:Box>
+									<mx:Box id="Form4P"
+											height="0" width="90%">
+										<s:HGroup>
+											<s:Label text="Polisnummer" width="150"/>
+											<s:TextInput id="PolicyNo2" width="100" 
+														 focusIn="PolicyNo_focusInHandler(event)"
+														 focusOut="PolicyNo_focusOutHandler(event)"/>
+										</s:HGroup>
+										<s:HGroup>
+											<s:Label text="Schadeformulier referentie" width="150"/>
+											<s:TextInput id="AccidentReportRef" width="80" 
+														 focusIn="AccidentReportRef_focusInHandler(event)"
+														 focusOut="AccidentReportRef_focusOutHandler(event)"/>		
+										</s:HGroup>
+									</mx:Box>
+								</s:BorderContainer>
+							</mx:Box>
+							<s:Button visible="false" click="tabs.selectedIndex=2"/>
+						</s:Group>
+					</s:NavigatorContent>
+						<!-- Todo -->
+					<s:NavigatorContent label="Controleren" width="100%" height="100%">
+
+					</s:NavigatorContent>
+				</mx:ViewStack>
+				<s:BorderContainer width="100%" height="24" backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle"/>
+					</s:layout>
+					<s:Spacer width="100%"/>
+					<s:ButtonBar height="21"
+								 fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold" change="buttonbar1_changeHandler(event)">
+						<s:layout>
+							<s:ButtonBarHorizontalLayout gap="5" />
+						</s:layout>
+						<s:dataProvider>
+							<s:ArrayList source="[Sturen,Annuleren]" />
+						</s:dataProvider>
+					</s:ButtonBar>
+					<s:Spacer width="10"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="frmControlID" width="30" height="100%" minWidth="{frmControlID.width}"
+						   maxWidth="{frmControlID.width}" backgroundAlpha=".3"
+						   backgroundColor="0x807F7A" borderVisible="false" 
+						   doubleClickEnabled="true" doubleClick="HandleImageDoubleClick(event)">
+			<s:layout>
+				<s:VerticalLayout horizontalAlign="center"/>
+			</s:layout>
+			<s:Spacer height="150"/>
+			<s:VSlider x="10" y="330" height="120"
+					   id="ZoomSlider"
+					   showDataTip="false"
+					   minimum="100" maximum="600" stepSize="100"
+					   value="100"
+					   snapInterval="1" 
+					   liveDragging="true"
+					   change="ZoomSliderChangeEventHandler(event)"/>
+			<!--mx:Text text="{ZoomSlider.value}" color="red"/>
+			<s:Spacer height="5"/>
+			<mx:Text text="{panzoom.scale}" color="red"/-->
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="vBoxImgBased" width="680" minWidth="500" maxWidth="1200" height="100%"
+						   borderVisible="false" borderStyle="solid">
+				<s:layout>
+					<s:BasicLayout/>
+				</s:layout>
+
+			<panzoom:PanZoomComponent id="panzoom" backgroundColor="0x807F7A" borderVisible="true" borderStyle="solid" borderColor="black"							  
+									  width="680" height="680" 
+									  scaleMin="1" scaleMax="600" 
+									  childPreventsPan="false"
+									  zoomToCursor="false"
+									  zoomSpeed="1"
+									  horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+									  panScrollBarsVisible="true"
+									  loadCenterPoint="{new Point(330, 440)}"
+									  initialZoomLevel="1.8"
+									  zoom="this._onZoom()">
+				<panzoom:PanZoomContent width="{panzoom.width}" minWidth="210" height="{panzoom.height}" minHeight="297" backgroundColor="0x000000" borderVisible="true">
+					<s:Image id="DocImage" source="{PNGImage.source}" 
+							 width="100%" height="100%" minWidth="210" minHeight="297" depth="1" 
+							 doubleClickEnabled="true" doubleClick="HandleImageDoubleClick(event)"
+							 smooth="true"/>
+							<!--smooth="true" smoothingQuality="high"-->
+							 <!--doubleClick="{this.panzoom.scale=1}"/-->
+
+					<s:Button id="word3" toolTip="begrafenisverzekering"
+							  x="255" y="354" width="86" height="9" 
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word3.alpha=.6" 
+							  rollOut="word3.alpha=0"/>
+					<s:Button id="btn2"
+							  x="170.5" y="349" width="86" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn2_rollOverHandler(event)"
+							  rollOut="btn2_rollOutHandler(event)" 
+							  click="btn2_clickHandler(event)"
+							  mouseUp="btn2_mouseUpHandler(event)"/>
+					<s:Button id="word4" toolTip="afkopen"
+							  x="342" y="354" width="32" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word4.alpha=.6"
+							  rollOut="word4.alpha=0"/>
+					<s:Button id="btn3" toolTip=""
+							  x="342" y="362" width="32" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn3_rollOverHandler(event)"
+							  rollOut="btn3_rollOutHandler(event)" 
+							  click="btn3_clickHandler(event)"
+							  mouseUp="btn3_mouseUpHandler(event)"/>
+					<s:Button id="word5" toolTip="31"
+							  x="388" y="354" width="12" height="9" 
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word5.alpha=.6"
+							  rollOut="word5.alpha=0"/>
+					<s:Button id="word6" toolTip="mei"
+							  x="401" y="354" width="16" height="9" 
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word6.alpha=.6"
+							  rollOut="word6.alpha=0"/>
+					<s:Button id="word7" toolTip="2013"
+							  x="417" y="354" width="21" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word7.alpha=.6" 
+							  rollOut="word7.alpha=0"/>
+					<s:Button id="btn4" toolTip=""
+							  x="388" y="362" width="50" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn4_rollOverHandler(event)"
+							  rollOut="btn4_rollOutHandler(event)"
+							  click="btn4_clickHandler(event)"/>
+					<!--mouseUp="btn4_mouseUpHandler(event)"-->					
+					<s:Button id="word8" toolTip="schadeformulier"
+							  x="293" y="375" width="63" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word8.alpha=.6"
+							  rollOut="word8.alpha=0"/>
+					<s:Button id="btn5" toolTip=""
+							  x="293" y="383" width="63" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn5_rollOverHandler(event)"
+							  rollOut="btn5_rollOutHandler(event)"
+							  click="btn5_clickHandler(event)"/>
+					<s:Button id="word9" toolTip="aanrijding"
+							  x="383" y="375" width="40" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word9.alpha=.6"
+							  rollOut="word9.alpha=0"/>
+					<s:Button id="btn6" toolTip=""
+							  x="384" y="383" width="40" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn6_rollOverHandler(event)"
+							  rollOut="btn6_rollOutHandler(event)"
+							  click="btn6_clickHandler(event)"/>
+					<s:Button id="word10" toolTip="vorige"
+							  x="438.5" y="375" width="26" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word10.alpha=.6"
+							  rollOut="word10.alpha=0"/>
+					<s:Button id="word11" toolTip="week"
+							  x="465.5" y="375" width="23" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word11.alpha=.6"
+							  rollOut="word11.alpha=0"/>
+					<s:Button id="btn7" toolTip=""
+							  x="438.5" y="383" width="50" height="3"
+							  depth="4" chromeColor="yellow" alpha=".7"
+							  rollOver="btn7_rollOverHandler(event)"
+							  rollOut="btn7_rollOutHandler(event)"
+							  click="btn7_clickHandler(event)"/>
+					<s:Button id="word12" toolTip="A12345"
+							  x="265" y="385" width="32" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word12.alpha=.6"
+							  rollOut="word12.alpha=0"/>
+					<s:Button id="btn8" toolTip=""
+							  x="265" y="393" width="32" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn8_rollOverHandler(event)"
+							  rollOut="btn8_rollOutHandler(event)"
+							  click="btn8_clickHandler(event)"/>
+		
+					<s:Button id="word13" toolTip="polisnummers"
+							  x="198" y="399" width="56" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word13.alpha=.6"
+							  rollOut="word13.alpha=0"/>
+					<s:Button id="btn9" toolTip=""
+							  x="170" y="357" width="56" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn9_rollOverHandler(event)"
+							  rollOut="btn9_rollOutHandler(event)"
+							  click="btn9_clickHandler(event)"/>
+					<s:Button id="word14" toolTip="30729838"
+							  x="257" y="406" width="41" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word14.alpha=.6"
+							  rollOut="word14.alpha=0"/>
+					<s:Button id="btn10" toolTip=""
+							  x="257" y="414" width="41" height="3"
+							  depth="4" chromeColor="yellow" alpha=".7"
+							  rollOver="btn10_rollOverHandler(event)"
+							  rollOut="btn10_rollOutHandler(event)"
+							  click="btn10_clickHandler(event)"/>
+					<s:Button id="word15" toolTip="3635o5911"
+							  x="309" y="406" width="46" height="9"
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word15.alpha=.6"
+							  rollOut="word15.alpha=0"/>
+					<s:Button id="btn11" toolTip=""
+							  x="309" y="414" width="46" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn11_rollOverHandler(event)"
+							  rollOut="btn11_rollOutHandler(event)"
+							  click="btn11_clickHandler(event)"/>
+
+					
+					<s:Button id="word1" toolTip="A.J."
+							  x="188" y="354" width="14" height="9" 
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word1.alpha=.6"
+							  rollOut="word1.alpha=0"/>
+					<s:Button id="word2" toolTip="Ernst"
+							  x="203" y="354" width="23" height="9" 
+							  depth="3" chromeColor="white" alpha="0"
+							  rollOver="word2.alpha=.6"
+							  rollOut="word2.alpha=0"/>
+					<s:Button id="btn1" toolTip=""
+							  x="204.5" y="378" width="38" height="3"
+							  depth="4" chromeColor="green" alpha=".3"
+							  rollOver="btn1_rollOverHandler(event)" 
+							  rollOut="btn1_rollOutHandler(event)"
+							  click="btn1_clickHandler(event)"
+							  mouseUp="btn1_mouseUpHandler(event)"/>
+
+				</panzoom:PanZoomContent>
+			</panzoom:PanZoomComponent>	
+		</s:BorderContainer>
+	</mx:HDividedBox>
+	<!-- Todo ... -->
+	<s:VGroup x="10" y="80" clipAndEnableScrolling="true" visible="false">
+		<s:Label text="Policyholders named Jane Doe"/>
+		<s:RadioButton label="Doe, Jane [DOB: 40/09/40] [Policy#: 30943] - 100% match"/>
+		<s:RadioButton label="Doe, Jane Beth [DOB: 30/07/40] [Policy#: 20438] - 90% match"/>
+		<s:RadioButton label="Doe, Jane K. [DOB: 27/12/65] [Policy#: 90432] - 90% match"/>
+		<s:HGroup>
+			<s:Button label="OK"/>
+			<s:Button label="Cancel"/>
+		</s:HGroup>
+	</s:VGroup>
+</s:HGroup>

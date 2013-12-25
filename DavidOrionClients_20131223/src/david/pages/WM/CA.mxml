@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
+			   width="100%" height="100%" xmlns:user="david.pages.CA.user.*"
+			   >
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+
+			public function init():void {
+				MainCA.removeAllElements();
+				MainCA.addElement(CaModule.getInstance.user);
+				CaModule.getInstance.user.init();
+				lslCa.selectedIndex = 1;
+			}
+			
+			
+			protected function lslCa_changeHandler(event:IndexChangeEvent):void
+			{
+				MainCA.removeAllElements();
+//					<fx:String>System</fx:String> 0 
+//					<fx:String>Users, Groups, Roles</fx:String> 1 
+//					<fx:String>Folders</fx:String>  2
+//					<fx:String>Document Classes</fx:String> 3 
+//					<fx:String>Workflow Procedures</fx:String> 4 
+//					<fx:String>Jobs</fx:String>  5
+				if (lslCa.selectedIndex == 0 ){
+					
+				} else if(lslCa.selectedIndex == 1){
+					MainCA.addElement(CaModule.getInstance.user);
+					CaModule.getInstance.user.init();
+				} else if(lslCa.selectedIndex == 2){
+					MainCA.addElement(CaModule.getInstance.folder);
+					CaModule.getInstance.folder.init();
+				} else if(lslCa.selectedIndex == 3){
+				
+				} else if(lslCa.selectedIndex == 4){
+				
+				} else if(lslCa.selectedIndex == 5){
+				
+					
+				}
+			}
+			
+		]]>
+	</fx:Script>
+			
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+			
+			<!--Entity chooser-->
+			<s:BorderContainer id="EntityChooser" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="10"/>
+				</s:layout>
+				<s:BorderContainer id="EntityList" width="170" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00004F6C" backgroundColor="#00004F6C">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0"/>
+						</s:layout>
+						<mx:Text text="Choose entity:" 
+								 color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="170" height="136" borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0"/>
+						</s:layout>
+						<s:List width="159" height="134" borderVisible="false" id="lslCa"
+								change="lslCa_changeHandler(event)"
+								fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								rollOverColor="#00C0C0C0"> <!--itemRenderer="ListItemRenderer"-->
+							<mx:ArrayCollection>
+								<fx:String>System</fx:String> 
+								<fx:String>Users, Groups, Roles</fx:String> 
+								<fx:String>Folders</fx:String> 
+								<fx:String>Document Classes</fx:String> 
+								<fx:String>Workflow Procedures</fx:String> 
+								<fx:String>Jobs</fx:String> 
+							</mx:ArrayCollection>
+						</s:List>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				<s:BorderContainer width="100%" height="100%" id="MainCA">
+				</s:BorderContainer>
+				<!--End SearchFiltersAndSearchResults-->
+			</s:BorderContainer>
+			
+			<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

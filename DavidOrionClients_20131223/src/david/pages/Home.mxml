@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%">
+	
+	<fx:Script>
+		<![CDATA[
+			import component.ResetPassPopup;
+			
+			import david.configs.Constants;
+			
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.utils.StringUtil;
+			
+			private var resetPassPopup:ResetPassPopup;
+			
+			protected function login_clickHandler():void {
+				var user:String = StringUtil.trim(inputUserID.text);
+				var pass:String = StringUtil.trim(inputPassword.text);
+				FlexGlobals.topLevelApplication.login(user,pass);
+			}
+			
+			protected function loginKeyUp(event:KeyboardEvent):void {
+				if ( event.keyCode == 13 ) {
+					login_clickHandler();
+				}
+			}
+			
+			protected function text1_clickHandler(event:MouseEvent):void {
+				resetPassPopup = ResetPassPopup(PopUpManager.createPopUp( UIComponent(this.parentApplication), ResetPassPopup, true) );
+				resetPassPopup.okBtnID.addEventListener(MouseEvent.CLICK, okBtnPopup);
+				resetPassPopup.addEventListener( CloseEvent.CLOSE, resetPassPopupClose );
+			}
+			private function okBtnPopup( event:MouseEvent ):void {
+				PopUpManager.removePopUp( resetPassPopup );
+			}
+			private function resetPassPopupClose( event:CloseEvent ):void {
+				PopUpManager.removePopUp( resetPassPopup );
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<!--<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>-->
+		
+		<!--App launch buttons-->
+		<s:BorderContainer width="100%" height="100%" borderVisible="false" >
+			<s:layout>
+				<s:HorizontalLayout paddingTop="5" paddingBottom="15" paddingLeft="185" paddingRight="50" 
+									gap="5"/>
+			</s:layout>
+			
+			<!--Login-->
+			<s:BorderContainer id="LoginWindow" width="175" height="100%" borderVisible="true" > <!--borderColor="#00E3784E"-->
+				<s:layout>
+					<s:VerticalLayout paddingTop="5" paddingLeft="5" verticalAlign="middle" gap="0"/>
+				</s:layout>
+				
+				<!--Login Status-->
+				<s:Label text="Logging in" color="green"
+						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"
+						 visible="{FlexGlobals.topLevelApplication.isLogin}"
+						 includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"/>
+						 
+				<s:Label text="Log off" color="gray" 
+						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"
+						 visible="{!FlexGlobals.topLevelApplication.isLogin}"
+						 includeInLayout="{!FlexGlobals.topLevelApplication.isLogin}"/>
+				
+				<s:Spacer height="12"/>
+				<s:Label text="User ID"
+						 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+				<s:Spacer height="2"/>
+				<s:TextInput id="inputUserID" height="22" keyUp="loginKeyUp(event)"/>
+				<s:Spacer height="12"/>
+				<s:Label text="Password"
+						 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+				<s:Spacer height="2"/>
+				<s:TextInput displayAsPassword="true" id="inputPassword" height="22" keyUp="loginKeyUp(event)"/>
+				<mx:Label text="Forgot password?" horizontalCenter="0" buttonMode="true"
+						  click="text1_clickHandler(event)" useHandCursor="true" mouseChildren="false"
+						  fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+				<s:Spacer height="15"/>
+				<s:Button id="Login" label="Login"
+						  height="21" 
+						  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"
+						  click="login_clickHandler()" buttonMode="true" styleName="loginButton"/>
+			</s:BorderContainer>
+			
+			<!--Document Explorer launch button-->
+			<s:BorderContainer width="100%" height="100%" borderVisible="true" >
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
+				</s:layout>
+				<s:Label text=" Document Explorer" 
+						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+				<s:BorderContainer width="100%" height="100%" borderVisible="false"  >
+					<s:Image width="100%" height="100%" scaleMode="stretch"
+						     source="@Embed('../assets/DElogoBW.jpg')" fillMode="scale"
+						     visible="{!FlexGlobals.topLevelApplication.isLogin}"
+						     includeInLayout="{!FlexGlobals.topLevelApplication.isLogin}"/>
+					<s:Image width="100%" height="100%" scaleMode="stretch"
+						      source="@Embed('../assets/DElogo.jpg')" fillMode="scale"
+						      visible="{FlexGlobals.topLevelApplication.isLogin}"
+						      includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"
+						      click="FlexGlobals.topLevelApplication.userLoginSelectPage('DE')"
+							  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<!--Case Manager launch button-->
+			<s:BorderContainer width="100%" height="100%" borderVisible="true" >
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
+				</s:layout>
+				<s:Label text=" Case Manager"  
+						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+				<s:BorderContainer width="100%" height="100%" borderVisible="false"  >
+					<s:Image width="100%" height="100%" 
+							 scaleMode="stretch" fillMode="scale" 
+							 source="@Embed('../assets/CMlogoBW.jpg')"
+							 visible="{!FlexGlobals.topLevelApplication.isLogin}"
+							 includeInLayout="{!FlexGlobals.topLevelApplication.isLogin}"/>
+					<s:Image width="100%" height="100%" 
+							 scaleMode="stretch" fillMode="scale" 
+							 source="@Embed('../assets/CMlogo.jpg')"
+							 visible="{FlexGlobals.topLevelApplication.isLogin}"
+							 includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"
+							 click="FlexGlobals.topLevelApplication.userLoginSelectPage('CM')"
+							 buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<!--Charts and Reports launch button-->
+			<s:BorderContainer width="100%" height="100%" borderVisible="true"  >
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
+				</s:layout>
+				<s:Label text=" Charts &amp; Reports" 
+						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+				<s:BorderContainer width="100%" height="100%" borderVisible="false" >
+					<s:Image width="100%" height="100%" 
+								   scaleMode="stretch" fillMode="scale" 
+								   source="@Embed('../assets/CRlogoBW.jpg')"
+								   visible="{!FlexGlobals.topLevelApplication.isLogin}"
+								   includeInLayout="{!FlexGlobals.topLevelApplication.isLogin}"/>
+					<s:Image width="100%" height="100%" 
+								   scaleMode="stretch" fillMode="scale" 
+								   source="@Embed('../assets/CRlogo.jpg')"
+								   visible="{FlexGlobals.topLevelApplication.isLogin}"
+								   includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"
+								   click="FlexGlobals.topLevelApplication.userLoginSelectPage('CR')"
+								   buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+
+			<!--Configuration/Administration launch button-->
+			<s:BorderContainer width="100%" height="100%" borderVisible="true" >
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
+				</s:layout>
+				<s:Label text=" Configuration/Administration" 
+						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+				<s:BorderContainer width="100%" height="100%" borderVisible="false" >
+					<s:Image width="100%" height="100%" 
+							 scaleMode="stretch" fillMode="scale" 
+							 source="@Embed('../assets/CAlogoBW.jpg')"
+							 visible="{!FlexGlobals.topLevelApplication.isLogin || (FlexGlobals.topLevelApplication.userModel.userRole != Constants.ADMIN_ROLE)}"
+							 includeInLayout="{!FlexGlobals.topLevelApplication.isLogin || (FlexGlobals.topLevelApplication.userModel.userRole == Constants.ADMIN_ROLE)}"/>
+					<s:Image width="100%" height="100%" 
+							 scaleMode="stretch" fillMode="scale" 
+							 source="@Embed('../assets/CAlogo.jpg')"
+							 click="FlexGlobals.topLevelApplication.userLoginSelectPage('CA')"
+							 buttonMode="true" useHandCursor="true" mouseChildren="false"
+							 visible="{FlexGlobals.topLevelApplication.isLogin &amp;&amp; (FlexGlobals.topLevelApplication.userModel.userRole == Constants.ADMIN_ROLE) }"
+							 includeInLayout="{FlexGlobals.topLevelApplication.isLogin &amp;&amp; (FlexGlobals.topLevelApplication.userModel.userRole == Constants.ADMIN_ROLE) }"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+
+		</s:BorderContainer>
+		
+		
+	<!--</s:BorderContainer>-->
+</mx:Canvas>

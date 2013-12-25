@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:component="component.*"
+		   xmlns:components="com.shinynet.shinylib.components.*"
+		   width="100%" height="100%" creationComplete="canvas1_creationCompleteHandler()">
+	
+	<fx:Script>
+		<![CDATA[
+			import component.PopUpCustomTitleWindow;
+			
+			import event.NNDemoEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.events.CloseEvent;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
+			
+			private var _dataProvider1List:ArrayCollection;
+			//private var _dataProvider2List:ArrayCollection; //dummy
+			//private var _dataProvider3List:ArrayCollection;
+			//private var _dataProvider4List:ArrayCollection;
+			
+			[Bindable]
+			public function set dataProvider1List(value:Object):void {
+				_dataProvider1List = value as ArrayCollection
+			}
+			public function get dataProvider1List():Object {
+				return _dataProvider1List;
+			}
+			
+			//dummy
+			//public function set dataProvider2List(value:Object):void {
+			//	_dataProvider2List = value as ArrayCollection
+			//}
+			//public function get dataProvider2List():Object {
+			//	return _dataProvider2List;
+			//}
+			
+			
+			//Cee comment 07/12/2013
+			/* [Bindable]
+			public function set dataProvider2List(value:Object):void {
+				_dataProvider2List = value as ArrayCollection
+			}
+			public function get dataProvider2List():Object {
+				return _dataProvider2List;
+			}
+			
+			[Bindable]
+			public function set dataProvider3List(value:Object):void {
+				_dataProvider3List = value as ArrayCollection
+			}
+			public function get dataProvider3List():Object {
+				return _dataProvider3List;
+			}
+			
+			[Bindable]
+			public function set dataProvider4List(value:Object):void {
+				_dataProvider4List = value as ArrayCollection
+			}
+			public function get dataProvider4List():Object {
+				return _dataProvider4List;
+			}*/
+						
+			public function init():void {
+				//folderCollection1=new XMLListCollection(folderList1);
+				//checkTree1.dataProvider=folderCollection1;
+				
+				
+				//folderCollection2=new XMLListCollection(folderList2);
+				//checkTree2.dataProvider=folderCollection2;
+				
+				
+				/* public var folderList2:XMLList=
+					<>
+						<folder state="unchecked" label="Batch Type" isBranch="true" >
+							<folder state="unchecked" isBranch="false" label="ALL BATCH TYPES" />
+							<folder state="unchecked" isBranch="false" label="BatchTypeA" />
+							<folder state="unchecked" isBranch="false" label="..." />
+							<folder state="unchecked" isBranch="false" label="BatchTypeZ" />
+						</folder>
+						<folder state="unchecked" label="Document Type" isBranch="true" >
+							<folder state="unchecked" isBranch="false" label="ALL DOC TYPES" />
+							<folder state="unchecked" isBranch="false" label="DocTypeA" />
+							<folder state="unchecked" isBranch="false" label="..." />
+							<folder state="unchecked" isBranch="false" label="DocTypeZ" />
+						</folder>
+					</>; */
+				
+				folderArrayCollection2 = new ArrayCollection([
+					{state:"unchecked", label:"Batch Type", isBranch:true, children: [
+						{state:"unchecked", label:"ALL BATCH CLASSES", isBranch:false},
+						{state:"checked", label:"BatchTypeA", isBranch:false},
+						{state:"unchecked", label:"...", isBranch:false},
+						{state:"unchecked", label:"DocTypeZ", isBranch:false}
+					]},
+					{state:"unchecked", label:"Document Type", isBranch:true, children: [
+						{state:"unchecked", label:"ALL DOC TYPES", isBranch:false},
+						{state:"unchecked", label:"DocTypeA", isBranch:false},
+						{state:"unchecked", label:"...", isBranch:false},
+						{state:"unchecked", label:"DocTypeZ", isBranch:false}
+					]},
+
+				]);
+				
+				checkTree2.dataProvider = folderArrayCollection2;
+				
+				
+				//dummy 10/12/2013
+				folderArrayCollectionNew = new ArrayCollection([
+					{state:"unchecked", label:"Batch Type", isBranch:true, children: [
+						{state:"checked", label:"ALL BATCH CLASSES", isBranch:false},
+						{state:"checked", label:"BatchTypeA", isBranch:false},
+						{state:"checked", label:"...", isBranch:false},
+						{state:"unchecked", label:"DocTypeZ", isBranch:false}
+					]},
+					{state:"checked", label:"Document Type", isBranch:true, children: [
+						{state:"checked", label:"ALL DOC TYPES", isBranch:false},
+						{state:"checked", label:"DocTypeA", isBranch:false},
+						{state:"checked", label:"...", isBranch:false},
+						{state:"checked", label:"DocTypeZ", isBranch:false}
+					]},
+					
+				]);
+				
+				
+				//folderCollection3=new XMLListCollection(folderList3);
+				//checkTree3.dataProvider=folderCollection3;
+				//folderCollection4=new XMLListCollection(folderList4);
+				//checkTree4.dataProvider=folderCollection4;
+				//folderCollection5=new XMLListCollection(folderList5);
+				//checkTree5.dataProvider=folderCollection5;	
+			}
+			
+			protected function canvas1_creationCompleteHandler():void {
+				//Set dataprovider1 list
+				dataProvider1List = new ArrayCollection([
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'}]);
+				
+				//Cee comment 07/12/2013
+				//Set dataprovider2 list
+				/*dataProvider2List = new ArrayCollection([
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'}]);
+				
+				//Set dataprovider3 list
+				dataProvider3List = new ArrayCollection([
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'}]);
+				
+				//Set dataprovider4 list
+				dataProvider4List = new ArrayCollection([
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'},
+					{checked:false, dataField1:'xxxx', dataField2:'xxxx', dataField3:'xxxx', dataField4:'xxxx', dataField5:'xxxx'}]);*/
+			}
+			
+			import mx.collections.XMLListCollection;
+			/* [Bindable]
+			public var folderList1:XMLList=
+				<>
+					<folder state="unchecked" label="Users" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL USERS" />
+						<folder state="unchecked" isBranch="false" label="UserA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="UserZ" />
+					</folder>
+					<folder state="unchecked" label="Groups" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL GROUPS" />
+						<folder state="unchecked" isBranch="false" label="GroupA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="GroupZ" />
+					</folder>
+					<folder state="unchecked" label="Roles" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL ROLES" />
+						<folder state="unchecked" isBranch="false" label="RoleA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="RoleZ" />
+					</folder>										
+				</>; */
+			[Bindable]
+			public var folderList2:XMLList=
+				<>
+					<folder state="unchecked" label="Batch Type" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL BATCH TYPES" />
+						<folder state="unchecked" isBranch="false" label="BatchTypeA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="BatchTypeZ" />
+					</folder>
+					<folder state="unchecked" label="Document Type" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL DOC TYPES" />
+						<folder state="unchecked" isBranch="false" label="DocTypeA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="DocTypeZ" />
+					</folder>
+				</>;
+			
+			/* [Bindable]
+			public var folderList3:XMLList=
+				<>
+					<folder state="unchecked" isBranch="false" label="All PROCEDURES" />
+					<folder state="unchecked" isBranch="false" label="ProcedureA" />
+					<folder state="unchecked" isBranch="false" label="..." />
+					<folder state="unchecked" isBranch="false" label="ProcedureZ" />
+				</>;
+			[Bindable]
+			public var folderList4:XMLList=
+				<>
+					<folder state="unchecked" isBranch="false" label="All PROCEDURES" />
+					<folder state="unchecked" isBranch="false" label="ProcedureA" />
+					<folder state="unchecked" isBranch="false" label="..." />
+					<folder state="unchecked" isBranch="false" label="ProcedureZ" />
+				</>;
+			[Bindable]
+			public var folderList5:XMLList=
+				<>
+					<folder state="unchecked" isBranch="false" label="All TASK CLASSES" />
+					<folder state="unchecked" isBranch="false" label="TaskClassA" />
+					<folder state="unchecked" isBranch="false" label="..." />
+					<folder state="unchecked" isBranch="false" label="TaskClassZ" />
+				</>; */
+			
+			//[Bindable]
+			//public var folderCollection1:XMLListCollection;
+			[Bindable]
+			public var folderCollection2:XMLListCollection;
+			
+			[Bindable]
+			public var folderArrayCollection2:ArrayCollection;
+			
+			//dummy 10/12/2013
+			[Bindable]
+			public var folderArrayCollectionNew:ArrayCollection;
+			
+			[Bindable]
+			public var tempFlag:String = "A";
+			
+			/* [Bindable]
+			public var folderCollection3:XMLListCollection;
+			[Bindable]
+			public var folderCollection4:XMLListCollection;
+			[Bindable]
+			public var folderCollection5:XMLListCollection; */
+			
+			[Bindable]
+			public var pop:PopUpCustomTitleWindow;
+						
+			protected function advanceddatagrid1_itemDoubleClickHandler(evt:ListEvent):void
+			{
+				// TODO Auto-generated method stub
+				//var customTitleWindow:CustomTitleWindow = new CustomTitleWindow();
+				if (evt.rowIndex==0)
+				{
+					pop = new PopUpCustomTitleWindow();
+					pop.height=FlexGlobals.topLevelApplication.height;
+					pop.width=FlexGlobals.topLevelApplication.width;
+					pop.addEventListener(NNDemoEvent.NNDEMO_CLOSE,closePopUp);
+					PopUpManager.addPopUp(pop,this);	
+				}
+				else if (evt.rowIndex==4)
+				{
+					pop = new PopUpCustomTitleWindow();
+					pop.height=FlexGlobals.topLevelApplication.height;
+					pop.width=FlexGlobals.topLevelApplication.width;
+					pop.addEventListener(NNDemoEvent.NNDEMO_CLOSE_2,closePopUp);
+					pop.myindex = 3;
+					PopUpManager.addPopUp(pop,this);						
+				}
+			}
+			
+			public function changeVS(event:NNDemoEvent):void
+			{
+				Alert.show("changeVS");
+			}
+			
+			public function closePopUp(event:NNDemoEvent):void
+			{
+				pop.removeEventListener(NNDemoEvent.NNDEMO_CLOSE,closePopUp);
+				PopUpManager.removePopUp(pop);
+				
+				//(dataProvider2List as ArrayCollection).removeItemAt(0);
+				//(dataProvider2List as ArrayCollection).removeItemAt(0);
+				//(dataProvider2List as ArrayCollection).removeItemAt(0);
+			}
+			
+			public function closePopUp2(event:NNDemoEvent):void
+			{
+				pop.removeEventListener(NNDemoEvent.NNDEMO_CLOSE_2,closePopUp2);
+				PopUpManager.removePopUp(pop);
+				
+				//(dataProvider2List as ArrayCollection).removeItemAt(0);
+			}
+			
+			/* ############ dummy 10/12/2013 ############ */
+			protected function button1_clickHandler():void
+			{
+				if ( tempFlag == "A" ) {
+					checkTree2.dataProvider = folderArrayCollection2;
+					tempFlag = "B";
+					
+				} else {
+					checkTree2.dataProvider = folderArrayCollectionNew;
+					tempFlag = "A";
+				}
+				
+				Alert.show("tempFlag : " + tempFlag);
+			}
+			
+			public function updateTreeList():void {
+				
+				
+				
+				
+				folderArrayCollectionNew.length
+					
+					
+					
+				Alert.show("updateTreeList method");
+				
+			}
+			/* ############ dummy 10/12/2013 ############ */
+			
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+							  paddingTop="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+								  paddingTop="0"/>
+			</s:layout>
+		
+			<!--Boxes and Results-->
+			<s:BorderContainer id="BoxesAndResults" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"
+										gap="10"/>
+				</s:layout>
+				
+				<!--Boxes accordion-->
+				<s:BorderContainer width="170" height="200" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="0"/>
+					</s:layout>
+					
+					<s:VGroup y="0" width="170" gap="0" verticalCenter="0"> <!-- height="100%" -->
+						<!--<components:CollapsiblePanel id="Section1"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 title="Users, Groups &amp; Roles">
+							<s:VGroup width="100%" height="65" gap="0">
+								<mx:Tree id="checkTree1" verticalCenter="0"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 labelField="@label"
+										 width="100%" height="100%"
+										 rowHeight="15"
+										 folderClosedIcon="{null}"
+										 folderOpenIcon="{null}"
+										 defaultLeafIcon="{null}"
+										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11"> //contentBackgroundColor="#00FCD59C"
+								</mx:Tree>
+							</s:VGroup>
+						</components:CollapsiblePanel>-->
+						<components:CollapsiblePanel id="Section2"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 title="Batches &amp; Documents">
+							<s:VGroup width="100%" height="150" gap="0">
+								<mx:Tree id="checkTree2"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer_bk1112013"
+										 labelField="label"
+										 width="100%" height="100%"
+										 rowHeight="15"
+										 folderClosedIcon="{null}"
+										 folderOpenIcon="{null}"
+										 defaultLeafIcon="{null}"
+										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11">
+								</mx:Tree>
+							</s:VGroup>
+						</components:CollapsiblePanel>
+						<!--<components:CollapsiblePanel id="Section3"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 title="Transactions">
+							<s:VGroup width="100%" height="65" gap="0">
+								<mx:Tree id="checkTree3"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 labelField="@label"
+										 width="100%" height="100%"
+										 rowHeight="15"
+										 folderClosedIcon="{null}"
+										 folderOpenIcon="{null}"
+										 defaultLeafIcon="{null}"
+										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11">
+								</mx:Tree>
+							</s:VGroup>
+						</components:CollapsiblePanel> -->
+						<!--<components:CollapsiblePanel id="Section4"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 title="Cases">
+							<s:VGroup width="100%" height="65" gap="0">
+								<mx:Tree id="checkTree4"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 labelField="@label"
+										 width="100%" height="100%"
+										 rowHeight="15"
+										 folderClosedIcon="{null}"
+										 folderOpenIcon="{null}"
+										 defaultLeafIcon="{null}"
+										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11">
+								</mx:Tree>
+							</s:VGroup>
+						</components:CollapsiblePanel>-->
+						<!--<components:CollapsiblePanel id="Section5"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 title="Tasks">
+							<s:VGroup width="100%" height="65" gap="0">
+								<mx:Tree id="checkTree5"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 labelField="@label"
+										 width="100%" height="100%"
+										 rowHeight="15"
+										 folderClosedIcon="{null}"
+										 folderOpenIcon="{null}"
+										 defaultLeafIcon="{null}"
+										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11">
+								</mx:Tree>
+							</s:VGroup>
+						</components:CollapsiblePanel>-->
+					</s:VGroup>
+					
+					<!--############################### Comment ##############################-->
+					<!--<mx:Accordion width="170" height="100%" headerHeight="20"
+								  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold">
+						<mx:VBox label="WorkBoxes"/>
+						<mx:VBox label="Cases"/>
+						<mx:VBox label="Steps"/>
+						<mx:VBox label="Documents"/>
+					</mx:Accordion>-->
+					<!--############################### Comment ##############################-->
+					
+					<s:BorderContainer width="170" height="40" borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout gap="0"/>
+						</s:layout>
+						<!--s:CheckBox width="170" label="Include document processing"
+									fontFamily="Franklin Gothic Medium" fontSize="11"
+									fontWeight="normal" selected="true"/>
+						<mx:Text fontFamily="Franklin Gothic Medium" fontSize="11"
+								 fontWeight="normal" text="     steps"/>
+						<s:Spacer height="2"/-->
+						<s:CheckBox width="170" label="Include closed cases"
+									fontFamily="Franklin Gothic Medium" fontSize="11"
+									fontWeight="normal"/>
+						
+						<!-- ### dummy 10/12/2013 ### -->
+						<s:Button width="100" label="Test" click="button1_clickHandler()"/>
+						
+						
+						
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!--Results-->
+				<s:BorderContainer id="Results" width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout/>
+					</s:layout>
+					<mx:VDividedBox width="100%" height="100%">
+						
+						<component:CustomTitleWindow width="100%" height="100%"
+													 dropShadowVisible="false" headerHeight="16"
+													 skinClass="component.CustomTitleWindowSkin"
+													 title="{Section2.title}">
+							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
+												 borderVisible="false"
+												 dataProvider="@{dataProvider1List}"
+												 fontFamily="Franklin Gothic Medium" fontSize="11"
+												 fontWeight="normal" rowHeight="20">
+								<mx:groupedColumns>
+									
+									<mx:AdvancedDataGridColumn width="30" dataField="checked"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.CheckboxItemRenderer"
+															   rendererIsEditor="false"
+															   sortable="false" textAlign="center"/>
+									<mx:AdvancedDataGridColumn width="20" headerText="Icon"/>
+									<mx:AdvancedDataGridColumn width="20" headerText="Pri"/>
+									<mx:AdvancedDataGridColumn dataField="dataField1"
+															   headerText="ID"/>
+									<mx:AdvancedDataGridColumn dataField="dataField2"
+															   headerText="Type"/>
+									<mx:AdvancedDataGridColumn dataField="dataField3"
+															   headerText="Pages"/>
+									<mx:AdvancedDataGridColumn dataField="dataField4"
+															   headerText="Docs"/>
+									<mx:AdvancedDataGridColumn dataField="dataField5"
+															   headerText="Status"/>
+									<mx:AdvancedDataGridColumn headerText="Started"/>
+									<mx:AdvancedDataGridColumn headerText="Complete"/>
+									<mx:AdvancedDataGridColumn headerText="Estimated Completion"/>
+									<mx:AdvancedDataGridColumn headerText="Completion Deadline"/>
+									
+									<mx:AdvancedDataGridColumn width="20"/>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</component:CustomTitleWindow>
+						
+						<!--<component:CustomTitleWindow width="100%" height="100%"
+													 dropShadowVisible="false" headerHeight="16"
+													 skinClass="component.CustomTitleWindowSkin"
+													 title="{Section3.title}">
+							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
+												 borderVisible="false"
+												 dataProvider="@{dataProvider2List}"
+												 fontFamily="Franklin Gothic Medium" fontSize="11"
+												 fontWeight="normal" rowHeight="20" doubleClickEnabled="true" itemDoubleClick="advanceddatagrid1_itemDoubleClickHandler(event)">
+								
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn width="30" dataField="checked"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.CheckboxItemRenderer"
+															   rendererIsEditor="false"
+															   sortable="false" textAlign="center"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn dataField="dataField1"
+															   headerText="Column 1"/>
+									<mx:AdvancedDataGridColumn dataField="dataField2"
+															   headerText="Column 2"/>
+									<mx:AdvancedDataGridColumn dataField="dataField3"
+															   headerText="Column 3"/>
+									<mx:AdvancedDataGridColumn dataField="dataField4"
+															   headerText="Column 4"/>
+									<mx:AdvancedDataGridColumn dataField="dataField5"
+															   headerText="Column 5"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+								</mx:groupedColumns>
+								
+							</mx:AdvancedDataGrid>
+						</component:CustomTitleWindow>-->
+						
+						
+						<!--<component:CustomTitleWindow width="100%" height="100%"
+													 dropShadowVisible="false" headerHeight="16"
+													 skinClass="component.CustomTitleWindowSkin"
+													 title="{Section4.title}">
+							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
+												 borderVisible="false"
+												 dataProvider="@{dataProvider3List}"
+												 fontFamily="Franklin Gothic Medium" fontSize="11"
+												 fontWeight="normal" rowHeight="20">
+								
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn width="30" dataField="checked"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.CheckboxItemRenderer"
+															   rendererIsEditor="false"
+															   sortable="false" textAlign="center"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn dataField="dataField1"
+															   headerText="Column 1"/>
+									<mx:AdvancedDataGridColumn dataField="dataField2"
+															   headerText="Column 2"/>
+									<mx:AdvancedDataGridColumn dataField="dataField3"
+															   headerText="Column 3"/>
+									<mx:AdvancedDataGridColumn dataField="dataField4"
+															   headerText="Column 4"/>
+									<mx:AdvancedDataGridColumn dataField="dataField5"
+															   headerText="Column 5"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</component:CustomTitleWindow>-->
+						
+						<!--<component:CustomTitleWindow width="100%" height="100%"
+													 dropShadowVisible="false" headerHeight="16"
+													 skinClass="component.CustomTitleWindowSkin"
+													 title="{Section5.title}">
+							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
+												 borderVisible="false"
+												 dataProvider="@{dataProvider4List}"
+												 fontFamily="Franklin Gothic Medium" fontSize="11"
+												 fontWeight="normal" rowHeight="20">
+								
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn width="30" dataField="checked"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.CheckboxItemRenderer"
+															   rendererIsEditor="false"
+															   sortable="false" textAlign="center"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+									<mx:AdvancedDataGridColumn dataField="dataField1"
+															   headerText="Priority"/>
+									<mx:AdvancedDataGridColumn dataField="dataField2"
+															   headerText="DocumentID"/>
+									<mx:AdvancedDataGridColumn dataField="dataField3"
+															   headerText="Folder"/>
+									<mx:AdvancedDataGridColumn dataField="dataField4"
+															   headerText="Batch#"/>
+									<mx:AdvancedDataGridColumn dataField="dataField5"
+															   headerText="Column 5"/>
+									<mx:AdvancedDataGridColumn width="20"/>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</component:CustomTitleWindow>-->
+					</mx:VDividedBox>
+					
+					<!--Action controls-->
+					<s:BorderContainer width="100%" height="24" borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout horizontalAlign="right" verticalAlign="middle"/>
+						</s:layout>
+						
+						<s:Button height="21" label="Start" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="startButton"/>
+						<s:Button height="21" label="Open" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="openButton"/>
+						<s:Button height="21" label="Close" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="closeButton"/>
+						<s:Button height="21" label="Suspend" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="suspendButton"/>
+						<s:Button height="21" label="Resume" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="resumeButton"/>
+						<s:Button height="21" label="Escalate" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="escalateButton"/>
+						<s:Button height="21" label="Reassign" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="reassignButton"/>
+						<s:Button height="21" label="Restart" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="restartButton"/>
+						<s:Button height="21" label="Delete" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="deleteButton"/>
+					</s:BorderContainer>
+
+			</s:BorderContainer>
+			
+			<!--End BoxesAndResults-->
+			</s:BorderContainer>
+			
+		<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

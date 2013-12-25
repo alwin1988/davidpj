@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:pages="david.pages.*"
+			   width="100%" height="100%" creationComplete="creationCompleteHandler(event)">
+	
+	<fx:Style source="Styles.css"/>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>	
+	
+	<fx:Script>
+		<![CDATA[
+			import david.configs.Constants;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.controls.LinkButton;
+			import mx.core.FlexGlobals;
+			import mx.effects.Move;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.effects.Resize;
+			
+			[Bindable] public var isLogin:Boolean = false;
+			[Bindable] public var userModel:UserModel = new UserModel();
+			[Bindable] public var linkBarDataProvider:ArrayCollection = new ArrayCollection();
+			[Bindable] public var titleText:String = null;
+			[Bindable] public var searchBoxDataProvider:ArrayCollection = new ArrayCollection();
+			
+			[Bindable] [Embed(source="../assets/logout.png")]
+			public var ICON_TEST:Class;
+			
+			[Bindable] [Embed(source="../assets/documents.png")]
+			public var ICON_DOC:Class;
+			
+			[Bindable] [Embed(source="../assets/manage.png")]
+			public var ICON_MANAGE:Class;
+			
+			[Bindable] [Embed(source="../assets/report.png")]
+			public var ICON_REPORT:Class;
+			
+			[Bindable] [Embed(source="../assets/config.png")]
+			public var ICON_CONFIG:Class;
+			
+			[Bindable] [Embed(source="assets/folderopen.jpg")]
+			public var FLODER_OPEN:Class;
+			
+			[Bindable] [Embed(source="assets/folderclose.jpg")]
+			public var FLODER_CLOSE:Class;
+			
+			[Bindable] [Embed(source="assets/folderopen.jpg")]
+			public var FLODER_OPEN2:Class;
+			
+			[Bindable] [Embed(source="assets/folderclose.jpg")]
+			public var FLODER_CLOSE2:Class;
+			
+			[Bindable] [Embed(source="assets/folderopen.jpg")]
+			public var FLODER_OPEN3:Class;
+			
+			[Bindable] [Embed(source="assets/folderclose.jpg")]
+			public var FLODER_CLOSE3:Class;
+			
+			
+			//-- Createion Complete
+			protected function creationCompleteHandler(event:FlexEvent):void {
+				mainStackID.selectedChild = homeID;
+				titleText = Constants.HOME;
+				setNotificationBtnColour('I');
+			}
+			
+			private function setNotificationBtnColour(action:String):void {
+				if ( action == 'A' ) {
+					nofBtn1ID.setStyle("chromeColor", "#00ff0000");
+					nofBtn2ID.setStyle("chromeColor", "#00ff8000");
+					nofBtn3ID.setStyle("chromeColor", "#00ffff00");
+					nofBtn4ID.setStyle("chromeColor", "#0000bfff");
+					nofBtn5ID.setStyle("chromeColor", "#000000ff");
+				
+				} else { //action == I
+					nofBtn1ID.setStyle("chromeColor", "#A4A4A4");
+					nofBtn2ID.setStyle("chromeColor", "#A4A4A4");
+					nofBtn3ID.setStyle("chromeColor", "#A4A4A4");
+					nofBtn4ID.setStyle("chromeColor", "#A4A4A4");
+					nofBtn5ID.setStyle("chromeColor", "#A4A4A4");
+				}
+			}
+			
+			//-- Log-in
+			public function login(user:String, pass:String):void {
+				if (user != null && user.length > 0) {
+					if ( user == "admin" ) { //Admin
+						linkBarDataProvider.removeAll();
+						linkBarDataProvider.addItem( { label:Constants.DOC_EXP_LABEL, data:Constants.DOC_EXP_LABEL, icon:ICON_DOC } );
+						linkBarDataProvider.addItem( { label:Constants.CASE_MANAGER_LABEL, data:Constants.CASE_MANAGER_LABEL, icon:ICON_MANAGE } );
+						//linkBarDataProvider.addItem( { label:"CM_backup", data:"CM_Backup", icon:ICON_MANAGE } ); //Test
+						linkBarDataProvider.addItem( { label:Constants.CHART_REPORT_LABEL, data:Constants.CHART_REPORT_LABEL, icon:ICON_REPORT } );
+						linkBarDataProvider.addItem( { label:Constants.CONFIG_ADMIN_LABEL, data:Constants.CONFIG_ADMIN_LABEL, icon:ICON_CONFIG } );
+						userModel.userName = user;
+						userModel.userRole = Constants.ADMIN_ROLE;
+						isLogin = true;
+						setNotificationBtnColour('A');
+						topNotificationBtn.enabled=true;
+						downNotificationBtn.enabled=true;
+						
+					} else if ( user == "user" ) { //User
+						linkBarDataProvider.removeAll();
+						linkBarDataProvider.addItem( { label:Constants.DOC_EXP_LABEL, data:Constants.DOC_EXP_LABEL, icon:ICON_DOC } );
+						linkBarDataProvider.addItem( { label:Constants.CASE_MANAGER_LABEL, data:Constants.CASE_MANAGER_LABEL, icon:ICON_MANAGE } );
+						linkBarDataProvider.addItem( { label:Constants.CHART_REPORT_LABEL, data:Constants.CHART_REPORT_LABEL, icon:ICON_REPORT } );
+						isLogin = true;
+						userModel.userName = user;
+						userModel.userRole = Constants.USER_ROLE;
+						setNotificationBtnColour('A');
+						topNotificationBtn.enabled=true;
+						downNotificationBtn.enabled=true;
+						
+					} else {
+						Alert.show("Not Correct UserName!! \n\n Username >> 'admin' or 'user'");
+					}
+					
+				} else {
+					Alert.show("Please Input UserName! \n\n Username >> 'admin' or 'user' ");
+				}
+			}
+			
+			//-- Log-out
+			public function logout():void {
+				userModel.userName = null;
+				userModel.userRole = null;
+				isLogin = false;
+				linkBarDataProvider.removeAll();
+				mainStackID.selectedChild = homeID;
+				titleText = Constants.HOME;
+				searchBoxDataProvider.removeAll();
+				setNotificationBtnColour('I');
+			}
+			
+			
+			//-- Link-bar selected
+			public function linkBarChangePage(event:ItemClickEvent):void {
+				event.currentTarget.enabled = false;
+				event.currentTarget.enabled = true;
+				LinkButton(event.relatedObject).enabled = false;
+				
+				var linkBarSelected:String = event.item.data;
+				
+				if (linkBarSelected == Constants.DOC_EXP_LABEL) { //DE
+					mainStackID.selectedChild = documentExplorerID;
+					documentExplorerID.init();
+					setSearchBoxDataProvider(Constants.DOC_EXP_LABEL);
+					titleText = Constants.DOC_EXP_LABEL;
+				
+				} else if (linkBarSelected == Constants.CASE_MANAGER_LABEL) { //CM
+					mainStackID.selectedChild = caseManagerID;
+					caseManagerID.init();
+					setSearchBoxDataProvider(Constants.CASE_MANAGER_LABEL);
+					titleText = Constants.CASE_MANAGER_LABEL;
+				
+				} else if (linkBarSelected == Constants.CHART_REPORT_LABEL) { //CR
+					mainStackID.selectedChild = chartReportID;
+					chartReportID.init();
+					setSearchBoxDataProvider(Constants.CHART_REPORT_LABEL);
+					titleText = Constants.CHART_REPORT_LABEL;
+				
+				} else if (linkBarSelected == Constants.CONFIG_ADMIN_LABEL) { //CA
+					mainStackID.selectedChild = configAdminID;
+					configAdminID.init();
+					setSearchBoxDataProvider(Constants.CONFIG_ADMIN_LABEL);
+					titleText = Constants.CONFIG_ADMIN_LABEL;
+				
+				} /* else if (linkBarSelected == "CM_Backup") { //Test
+					mainStackID.selectedChild = caseManager_bk_ID;
+					caseManager_bk_ID.init();
+					setSearchBoxDataProvider(Constants.CONFIG_ADMIN_LABEL);
+					titleText = Constants.CONFIG_ADMIN_LABEL;
+				} */
+			}
+			
+			//User login click
+			public function userLoginSelectPage(selectPage:String):void {
+				if ( selectPage == "DE" ) { //DE
+					appLaunchBarID.selectedIndex = 0;
+					mainStackID.selectedChild = documentExplorerID;
+					documentExplorerID.init();
+					setSearchBoxDataProvider(Constants.DOC_EXP_LABEL);
+					titleText = Constants.DOC_EXP_LABEL;
+				
+				} else if ( selectPage == "CM" ) { //CM
+					appLaunchBarID.selectedIndex = 1;
+					mainStackID.selectedChild = caseManagerID;
+					caseManagerID.init();
+					setSearchBoxDataProvider(Constants.CASE_MANAGER_LABEL);
+					titleText = Constants.CASE_MANAGER_LABEL;
+					
+				} else if ( selectPage == "CR" ) { //CR
+					appLaunchBarID.selectedIndex = 2;
+					mainStackID.selectedChild = chartReportID;
+					chartReportID.init();
+					setSearchBoxDataProvider(Constants.CHART_REPORT_LABEL);
+					titleText = Constants.CHART_REPORT_LABEL;
+					
+				} else { //CA
+					appLaunchBarID.selectedIndex = 3;
+					mainStackID.selectedChild = configAdminID;
+					configAdminID.init();
+					setSearchBoxDataProvider(Constants.CONFIG_ADMIN_LABEL);
+					titleText = Constants.CONFIG_ADMIN_LABEL;
+				}
+			}
+			
+			//Set search box data provider
+			private function setSearchBoxDataProvider(page:String):void {
+				if (page == Constants.DOC_EXP_LABEL) {
+					searchBoxDataProvider.removeAll();
+					searchBoxDataProvider.addItem( {label:"All the words"} );
+					searchBoxDataProvider.addItem( {label:"Any of the words"} );
+					searchBoxDataProvider.addItem( {label:"The phrase"} );
+				
+				} else if (page == Constants.CASE_MANAGER_LABEL) {
+					searchBoxDataProvider.removeAll();
+					searchBoxDataProvider.addItem( {label:"Cases"} );
+					searchBoxDataProvider.addItem( {label:"Documents"} );
+					
+				} else if (page == Constants.CHART_REPORT_LABEL) {
+					searchBoxDataProvider.removeAll();
+					searchBoxDataProvider.addItem( {label:"Charts"} );
+					searchBoxDataProvider.addItem( {label:"Reports"} );
+					searchBoxDataProvider.addItem( {label:"Audit Trails"} );
+					
+				} else if (page == Constants.CONFIG_ADMIN_LABEL) {
+					searchBoxDataProvider.removeAll();
+					searchBoxDataProvider.addItem( {label:"System"} );
+					searchBoxDataProvider.addItem( {label:"Users"} );
+					searchBoxDataProvider.addItem( {label:"Groups"} );
+					searchBoxDataProvider.addItem( {label:"Roles"} );
+					searchBoxDataProvider.addItem( {label:"Folders"} );
+					searchBoxDataProvider.addItem( {label:"Document Classes"} );
+					searchBoxDataProvider.addItem( {label:"Workflow Procedures"} );
+				}
+			}
+			
+			public function closePopup(e:CloseEvent):void
+			{
+				PopUpManager.removePopUp(e.currentTarget as TitleWindow);
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var ttw:TitleWindow = new TitleWindow();
+				ttw.addEventListener(CloseEvent.CLOSE,closePopup);
+				ttw.showCloseButton=true;
+				ttw.width=700;
+				ttw.height=0;
+				ttw.addElement(new Button);
+				ttw.addElement(new TextInput);
+
+				ttw.x = 0;
+				ttw.y = 37;
+				PopUpManager.addPopUp(ttw,this,false);
+				
+				var resize:Resize = new Resize();
+				resize.target = ttw;
+				resize.heightBy = 100;
+				resize.end();
+				resize.play();				
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var ttw:TitleWindow = new TitleWindow();
+				ttw.addEventListener(CloseEvent.CLOSE,closePopup);
+				ttw.showCloseButton=true;
+				ttw.width=200;
+				ttw.height=0;
+				ttw.x = this.width - 200;
+				ttw.y = this.height - 20;
+				PopUpManager.addPopUp(ttw,this,false);
+				
+				var move1:Move = new Move();
+				move1.target = ttw;
+				move1.yBy = -100;
+				move1.duration = 200;
+				move1.end();
+				move1.play();
+				
+				var resize:Resize = new Resize();
+				resize.target = ttw;
+				resize.heightBy = 100;
+				resize.duration = 210;
+				resize.end();
+				resize.play();		
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<mx:Canvas width="100%" height="100%">
+		<s:BorderContainer width="100%" height="100%">
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+								  paddingTop="0"/>
+			</s:layout>
+			
+			<!--##### Common header #####-->
+			<s:BorderContainer id="CommonHeader" width="100%" height="36" backgroundColor="#00004F6C"
+							   borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingBottom="0" paddingLeft="5" paddingRight="5"
+										paddingTop="0" verticalAlign="middle"/>
+				</s:layout>
+				<s:BorderContainer width="55%" height="{CommonHeader.height}"
+								   backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout gap="5" paddingBottom="0" paddingTop="0"
+											verticalAlign="middle"/>
+					</s:layout>
+					<s:Label color="white" fontFamily="Arial Black" fontSize="24" fontWeight="normal"
+							 text="{titleText}" verticalAlign="top"/>
+				</s:BorderContainer>
+				<s:BorderContainer width="370" height="{CommonHeader.height}"
+								   backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout gap="5" paddingBottom="0" paddingTop="0"
+											verticalAlign="middle"/>
+					</s:layout>
+					<mx:Text color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="Alerts &amp; Notifications"/>
+					<mx:Canvas width="120" height="21">
+						<s:Button id="topNotificationBtn" x="0" y="0" width="120" height="21" buttonMode="true"
+								  click="button1_clickHandler(event)" enabled="{isLogin}"/>
+						
+						<s:Image x="5" width="12" height="12" enabled="{isLogin}"
+								 click="button1_clickHandler(event)" source="@Embed('../assets/alarm.png')" verticalCenter="0"/>
+						<s:Image x="20" width="12" height="12" enabled="{isLogin}"
+								 click="button1_clickHandler(event)" source="@Embed('../assets/mail.png')" verticalCenter="0"/>
+						
+						<s:Button id="nofBtn1ID" x="40" width="13" height="13" label="1"
+								  buttonMode="true" color="white" emphasized="true" fontSize="8"
+								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
+								  click="button1_clickHandler(event)"  enabled="{isLogin}" />
+						<s:Button id="nofBtn2ID" x="55" width="13" height="13" label="2"
+								  buttonMode="true" color="white" emphasized="true" fontSize="8"
+								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
+								  click="button1_clickHandler(event)" enabled="{isLogin}" />
+						<s:Button id="nofBtn3ID" x="70" width="13" height="13" label="3"
+								  buttonMode="true" color="white" emphasized="true" fontSize="8"
+								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
+								  click="button1_clickHandler(event)" enabled="{isLogin}" />
+						<s:Button id="nofBtn4ID" x="85" width="13" height="13" label="4"
+								  buttonMode="true" color="white" emphasized="true" fontSize="8"
+								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
+								  click="button1_clickHandler(event)" enabled="{isLogin}" />
+						<s:Button id="nofBtn5ID" x="100" width="13" height="13" label="5"
+								  buttonMode="true" color="white" emphasized="true" fontSize="8"
+								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
+								  click="button1_clickHandler(event)" enabled="{isLogin}" />
+					</mx:Canvas>
+					<s:Spacer width="10"/>
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="Help"/>
+				</s:BorderContainer>
+				
+				<s:BorderContainer width="45%" height="{CommonHeader.height}"
+								   backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout gap="5" horizontalAlign="right" paddingBottom="0"
+											paddingTop="0" verticalAlign="middle"/>
+					</s:layout>
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="Theme"/>
+					<s:DropDownList/>
+					<s:Spacer width="5"/>
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="Language"/>
+					<s:DropDownList width="50"/>
+					<s:Spacer width="5"/>
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="username"/>
+					<s:Button height="21" label="Log off" buttonMode="true"
+							  click="FlexGlobals.topLevelApplication.logout()"
+							  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"
+							  styleName="logOffButton"/>
+					<s:BitmapImage width="20" height="20" fillMode="scale" scaleMode="stretch"
+								   source="@Embed('../assets/settingsicon.jpg')"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			<mx:HRule width="100%" strokeColor="black" strokeWidth="1"/>
+			<!--##### End Common Header #####-->
+			
+			<mx:Spacer height="3"/>
+			
+			<!--##### App launch bar #####-->
+			<s:BorderContainer width="100%" height="26" borderVisible="false">
+				<s:layout>
+					<s:BasicLayout/>
+				</s:layout>
+				<mx:LinkBar id="appLaunchBarID"
+							visible="{(mainStackID.selectedChild != homeID)?true:false}" x="185"
+							width="100%" height="24" dataProvider="{linkBarDataProvider}"
+							fontFamily="Arial Black" fontSize="12" fontWeight="normal"
+							horizontalAlign="center" horizontalGap="10" iconField="icon"
+							includeInLayout="{(mainStackID.selectedChild != homeID)?true:false}"
+							itemClick="linkBarChangePage(event)" separatorColor="#00C1DAD6"
+							separatorWidth="1">
+				</mx:LinkBar>
+			</s:BorderContainer>
+			<!--##### End App launch bar #####-->
+			
+			<s:Spacer height="5"/>
+			
+			<!--##### Stage #####-->
+			<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+									  paddingTop="0"/>
+				</s:layout>
+				
+				<!--Logo and Search box-->
+				<s:BorderContainer id="LogoAndSearchBox" width="100%" height="40"
+								   borderVisible="false">
+					<s:layout>
+						<s:BasicLayout/>
+					</s:layout>
+					<!--Logo-->
+					<s:BorderContainer x="5" y="-30" width="175" height="70" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						<s:BitmapImage width="97%" height="100%" fillMode="scale" scaleMode="stretch"
+									   source="@Embed('../assets/orionlogo.jpg')"/>
+						<s:BitmapImage x="3" y="3" width="70" height="25" fillMode="scale"
+									   scaleMode="stretch" source="@Embed('../assets/MagSoftlogo.jpg')"/>
+					</s:BorderContainer>
+					<!--SearchBox container-->
+					<s:BorderContainer visible="{(mainStackID.selectedChild != homeID)?true:false}"
+									   x="190" width="90%" height="40" backgroundColor="#00C1DAD6"
+									   borderColor="#00E3784E" borderVisible="true"
+									   includeInLayout="{(mainStackID.selectedChild != homeID)?true:false}">
+						<s:layout>
+							<s:HorizontalLayout paddingBottom="5" paddingLeft="5" paddingRight="5"
+												paddingTop="5" verticalAlign="middle"/>
+						</s:layout>
+						<mx:Text height="21" fontFamily="Franklin Gothic Medium" fontSize="13"
+								 fontWeight="bold" text="Search for"/>
+						<s:DropDownList id="searchBoxID" width="150" height="21"
+										dataProvider="{searchBoxDataProvider}"
+										fontFamily="Franklin Gothic Medium" fontSize="11"
+										fontWeight="normal" rollOverColor="#00C0C0C0">
+						</s:DropDownList>
+						<s:TextInput width="100%"/>
+						<s:Button height="21" label="Search" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="searchButton"/>
+					</s:BorderContainer>
+					<s:Spacer width="5"/>
+				</s:BorderContainer>
+				
+				<!--Entity chooser-->
+				<s:BorderContainer id="EntityChooser" width="100%" height="100%"
+								   borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout gap="10" paddingBottom="5" paddingLeft="5"
+											paddingRight="5" paddingTop="5"/>
+					</s:layout>
+					
+					<!-- View Stack of (DE,CM,CR,CA) -->
+					<mx:ViewStack id="mainStackID" width="100%" height="100%" creationPolicy="all">
+						<pages:Home id="homeID"/>
+						<pages:CA id="configAdminID"/>
+						<pages:WMplay id="caseManagerID"/>
+						<!--<pages:CM_bk id="caseManager_bk_ID"/>--> <!--Test-->
+						<pages:CR id="chartReportID"/>
+						<pages:DE id="documentExplorerID"/>
+					</mx:ViewStack>
+					<!-- View Stack of (DE,CM,CR,CA) -->
+					
+				</s:BorderContainer>
+				
+			</s:BorderContainer>
+			<!--##### End stage #####-->
+			
+			<s:Spacer height="5"/>
+			
+			<!--##### Common footer #####-->
+			<s:BorderContainer width="100%" height="18" backgroundColor="#00004F6C"
+							   borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingLeft="5" paddingRight="5" verticalAlign="middle"/>
+				</s:layout>
+				<s:HGroup width="100%" horizontalAlign="left">
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal"
+							 text="This copy of Orion Xerver is licensed to: CustomerName"/>			
+				</s:HGroup>
+				<s:HGroup width="100%" horizontalAlign="center">
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="Copyright 2013 Magsoft"/>
+				</s:HGroup>
+				<!--s:HGroup width="100%" horizontalAlign="center">
+				<s:Label text="Credits" 
+				fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal" color="#00C1DAD6"/>				
+				</s:HGroup-->
+				<s:HGroup width="100%" horizontalAlign="right">
+					<s:Button id="downNotificationBtn" height="11" label="DASHBOARD" click="button2_clickHandler(event)"
+							  color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							  fontWeight="normal" enabled="false"/>
+					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
+							 fontWeight="normal" text="DASHBOARD"/>	
+				</s:HGroup>
+			</s:BorderContainer>
+			<!--##### End common footer #####-->
+			
+		</s:BorderContainer>
+	</mx:Canvas>
+	
+</s:Application>

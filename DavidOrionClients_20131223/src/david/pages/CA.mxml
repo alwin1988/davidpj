@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
+			   width="100%" height="100%"
+			   creationComplete="canvas1_creationCompleteHandler()">
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+
+			private var _dataProvider1List:ArrayCollection;
+			
+			[Bindable]
+			public function set dataProvider1List(value:Object):void {
+				_dataProvider1List = value as ArrayCollection
+			}
+			public function get dataProvider1List():Object {
+				return _dataProvider1List;
+			}
+			
+			protected function canvas1_creationCompleteHandler():void {
+				//Set dataprovider1 list
+				dataProvider1List = new ArrayCollection([
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'}
+				]);
+			}
+			
+			public function init():void {
+				setDefaultTab();
+				setAllFalse();
+				
+				//tabAuthority.selected = true;
+				isEnabledAuthority(true);
+			}
+			
+			protected function toggleButtonChange_handle(evt:Event):void {
+				var thisToggle:Object = evt.target as Object;
+				var toggleItem:String = new String(thisToggle.label.toString());
+				setDefaultTab();
+				setAllFalse();
+				thisToggle.selected = true;
+				//mainDtg.visible = true;
+				if (toggleItem == "Authority") {
+					isEnabledAuthority(true);
+				}
+				else if (toggleItem == "Contact") {
+					isEnabledContact(true);
+				} 
+				else if (toggleItem == "Explorer") {
+					isEnabledAppExplorer(true);
+				} 
+				else if (toggleItem == "Windows") {
+					isEnabledAppWindows(true);
+				}
+				else if (toggleItem == "Workflow") {
+					isEnabledAppWorkflow(true);
+				}
+				else if (toggleItem == "Other") {
+					isEnabledAppOther(true);
+				}
+			}
+			
+			private function setDefaultTab():void {
+				tabbar_id.selectedItem = tabAuthority;
+			}
+			
+			public function setAllFalse():void {
+				isEnabledAuthority(false);
+				isEnabledContact(false);
+				isEnabledAppExplorer(false);
+				isEnabledAppWindows(false);
+				isEnabledAppWorkflow(false);
+				isEnabledAppOther(false);
+			}
+			
+			public function isEnabledAuthority(state:Boolean):void {
+				//grpPrivilledge.visible=state;
+				//grpAuthentication.visible=state;
+				//grpLanguage.visible=state;
+			}
+			
+			public function isEnabledContact(state:Boolean):void {
+				//grpLocation.visible=state;
+				//grpContact.visible=state;
+			}
+			
+			public function isEnabledAppExplorer(state:Boolean):void {
+				//grpAppExplorer.visible=state;
+			}
+			
+			public function isEnabledAppWindows(state:Boolean):void {
+				//grpAppWindows.visible=state;
+			}
+			
+			public function isEnabledAppWorkflow(state:Boolean):void {
+				//grpAppWorkflow.visible=state;
+			}
+			
+			public function isEnabledAppOther(state:Boolean):void {
+				//grpAppOther.visible=state;
+			}
+			
+			protected function tabbarChangeHandler(event:IndexChangeEvent):void {
+				var toggleItem:String =  String(event.target.selectedItem.label);
+				setAllFalse();
+				
+				if (toggleItem == "Authority") {
+					isEnabledAuthority(true);
+				}
+				else if (toggleItem == "Contact") {
+					isEnabledContact(true);
+				} 
+				else if (toggleItem == "Explorer") {
+					isEnabledAppExplorer(true);
+				} 
+				else if (toggleItem == "Windows") {
+					isEnabledAppWindows(true);
+				}
+				else if (toggleItem == "Workflow") {
+					isEnabledAppWorkflow(true);
+				}
+				else if (toggleItem == "Other") {
+					isEnabledAppOther(true);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+			
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+			
+			<!--Entity chooser-->
+			<s:BorderContainer id="EntityChooser" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="10"/>
+				</s:layout>
+				<s:BorderContainer id="EntityList" width="170" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00004F6C" backgroundColor="#00004F6C">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0"/>
+						</s:layout>
+						<mx:Text text="Choose entity:" 
+								 color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="170" height="136" borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0"/>
+						</s:layout>
+						<s:List width="159" height="134" borderVisible="false"
+								fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								rollOverColor="#00C0C0C0"> <!--itemRenderer="ListItemRenderer"-->
+							<mx:ArrayCollection>
+								<fx:String>System</fx:String> 
+								<fx:String>Accounts</fx:String> 
+								<fx:String>Folders</fx:String> 
+								<fx:String>Document Classes</fx:String> 
+								<fx:String>Workflow Procedures</fx:String> 
+								<fx:String>Jobs</fx:String> 
+							</mx:ArrayCollection>
+						</s:List>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!--Entities-->
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout gap="0" horizontalAlign="right"/>
+					</s:layout>
+					
+					<!-- Tab bar for border layout -->
+					<s:BorderContainer width="100%" height="23" borderVisible="false" >
+						<s:layout>
+							<s:HorizontalLayout gap="0" horizontalAlign="left" verticalAlign="bottom"/>
+						</s:layout>
+						<mx:HBox width="460"/>
+						<s:TabBar width="100%" id="tabbar_id" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								  change="tabbarChangeHandler(event)">
+							<mx:ArrayCollection>
+								<!--<fx:String>Contact Information</fx:String> 
+								<fx:String>Access Controls</fx:String> -->
+								
+								<fx:Object id="tabAuthority" label="Authority"></fx:Object>
+								<fx:Object id="tabContact" label="Contact"></fx:Object>
+								<fx:Object id="tabExplorer" label="Explorer"></fx:Object>
+								<fx:Object id="tabWindows" label="Windows"></fx:Object>
+								<fx:Object id="tabWorkflow" label="Workflow"></fx:Object>
+								<fx:Object id="tabOther" label="Other"></fx:Object>
+								
+							</mx:ArrayCollection>
+						</s:TabBar>
+					</s:BorderContainer>
+					
+					<component:CustomTitleWindow title="Users" height="100%" width="100%" dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
+								   				 fontSize="11" fontWeight="normal" skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+						
+						<mx:AdvancedDataGrid id="advanceDG1_ID" height="100%" width="100%" borderVisible="false" rowHeight="20"
+											 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+											 horizontalScrollPolicy="auto" lockedColumnCount="6" dataProvider="@{dataProvider1List}">							
+						</mx:AdvancedDataGrid>
+						
+					</component:CustomTitleWindow>
+				</s:BorderContainer>
+				
+				<!--End SearchFiltersAndSearchResults-->
+			</s:BorderContainer>
+			
+			<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

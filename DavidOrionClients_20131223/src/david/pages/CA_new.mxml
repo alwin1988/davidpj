@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
+			   width="100%" height="100%"
+			   creationComplete="canvas1_creationCompleteHandler()">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.ListEvent;
+			import mx.utils.ObjectUtil;
+			
+			import spark.events.IndexChangeEvent;
+
+			private var _dataProvider1List:ArrayCollection;
+			
+			[Bindable]
+			public function set dataProvider1List(value:Object):void {
+				_dataProvider1List = value as ArrayCollection
+			}
+			public function get dataProvider1List():Object {
+				return _dataProvider1List;
+			}
+			
+			protected function canvas1_creationCompleteHandler():void {
+				//Set dataprovider1 list
+				dataProvider1List = new ArrayCollection([
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'}
+				]);
+			}
+			
+			public function init():void {
+				setDefaultTab();
+				setAllFalse();
+				
+				//tabAuthority.selected = true;
+				isEnabledAuthority(true);
+			}
+			
+			protected function toggleButtonChange_handle(evt:Event):void {
+				var thisToggle:Object = evt.target as Object;
+				var toggleItem:String = new String(thisToggle.label.toString());
+				setDefaultTab();
+				setAllFalse();
+				thisToggle.selected = true;
+				//mainDtg.visible = true;
+				if (toggleItem == "Authority") {
+					isEnabledAuthority(true);
+				}
+				else if (toggleItem == "Contact") {
+					isEnabledContact(true);
+				} 
+				else if (toggleItem == "Explorer") {
+					isEnabledAppExplorer(true);
+				} 
+				else if (toggleItem == "Windows") {
+					isEnabledAppWindows(true);
+				}
+				else if (toggleItem == "Workflow") {
+					isEnabledAppWorkflow(true);
+				}
+				else if (toggleItem == "Other") {
+					isEnabledAppOther(true);
+				}
+			}
+			
+			private function setDefaultTab():void {
+				//tabbar_id.selectedItem = tabAuthority;
+				setEntityWorkSpace("D");//Cee Add 20131216
+			}
+			
+			public function setAllFalse():void {
+				isEnabledAuthority(false);
+				isEnabledContact(false);
+				isEnabledAppExplorer(false);
+				isEnabledAppWindows(false);
+				isEnabledAppWorkflow(false);
+				isEnabledAppOther(false);
+			}
+			
+			public function isEnabledAuthority(state:Boolean):void {
+				//Cee comment 20131216
+				/* grpPrivilledge.visible=state;
+				grpAuthentication.visible=state;
+				grpLanguage.visible=state; */
+			}
+			
+			public function isEnabledContact(state:Boolean):void {
+				//Cee comment 20131216
+				/* grpLocation.visible=state;
+				grpContact.visible=state; */
+			}
+			
+			public function isEnabledAppExplorer(state:Boolean):void {
+				//Cee comment 20131216
+				//grpAppExplorer.visible=state;
+			}
+			
+			public function isEnabledAppWindows(state:Boolean):void {
+				//Cee comment 20131216
+				//grpAppWindows.visible=state;
+			}
+			
+			public function isEnabledAppWorkflow(state:Boolean):void {
+				//Cee comment 20131216
+				//grpAppWorkflow.visible=state;
+			}
+			
+			public function isEnabledAppOther(state:Boolean):void {
+				//Cee comment 20131216
+				//grpAppOther.visible=state;
+			}
+			
+			protected function tabbarChangeHandler(event:IndexChangeEvent):void {
+				var toggleItem:String =  String(event.target.selectedItem.label);
+				setAllFalse();
+				
+				if (toggleItem == "Authority") {
+					isEnabledAuthority(true);
+				}
+				else if (toggleItem == "Contact") {
+					isEnabledContact(true);
+				} 
+				else if (toggleItem == "Explorer") {
+					isEnabledAppExplorer(true);
+				} 
+				else if (toggleItem == "Windows") {
+					isEnabledAppWindows(true);
+				}
+				else if (toggleItem == "Workflow") {
+					isEnabledAppWorkflow(true);
+				}
+				else if (toggleItem == "Other") {
+					isEnabledAppOther(true);
+				}
+			}
+			
+			//########################################## Cee Add 20131216 ##############################################//
+			[Bindable]
+			private var DT_master_AC:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"DocType", ObjId:"1", Name:"DocType1Name", Description:"DocType1Description", 
+						Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"},
+					{EntityType:"DocType", ObjId:"2", Name:"DocType2Name", Description:"DocType2Description",
+						Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"},
+					{EntityType:"DocType", ObjId:"3", Name:"DocType3Name", Description:"DocType3Description",
+						Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"}
+				]);
+			
+			[Bindable]
+			
+			[Bindable]	
+			private var WF_master_AC:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
+						Prop1:"Value", children: [
+							{EntityType:"S", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", 
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+									{EntityType:"T", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", 
+										Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+										Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+											{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+											{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+											{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+										]},
+									{EntityType:"T", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", 
+										Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+										Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+											{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action1Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+											{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action2Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+											{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action3Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+										]},
+									{EntityType:"T", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", 
+										Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+										Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+											{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+											{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action2Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+											{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action3Type",
+												Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+												Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+												Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+										]}
+								]},
+							{EntityType:"S", Name:"Step2Name", Description:"Step1Description", Type:"Step1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+									{EntityType:"T", Name:"Task4Name", Description:"Task4Description", Type:"Task1Type", children: [
+										{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+										{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+										{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+									]},
+									{EntityType:"T", Name:"Task5Name", Description:"Task5Description", Type:"Task2Type", children: [
+										{EntityType:"A", Name:"Action1Name", Description:"Action4Description", Type:"Action1Type"}, 
+										{EntityType:"A", Name:"Action2Name", Description:"Action5Description", Type:"Action2Type"},
+										{EntityType:"A", Name:"Action3Name", Description:"Action6Description", Type:"Action3Type"}
+									]},
+									{EntityType:"T", Name:"Task6Name", Description:"Task6Description", Type:"Task3Type", children: [
+										{EntityType:"A", Name:"Action1Name", Description:"Action7Description", Type:"Action1Type"}, 
+										{EntityType:"A", Name:"Action2Name", Description:"Action8Description", Type:"Action2Type"},
+										{EntityType:"A", Name:"Action3Name", Description:"Action9Description", Type:"Action3Type"}
+									]}
+								]},
+							{EntityType:"S", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", 
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+									{EntityType:"T", Name:"Task7Name", Description:"Task7Description", Type:"Task1Type", children: [
+										{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+										{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+										{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+									]},
+									{EntityType:"T", Name:"Task8Name", Description:"Task8Description", Type:"Task2Type", children: [
+										{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action4Type"}, 
+										{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action5Type"},
+										{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action6Type"}
+									]},
+									{EntityType:"T", Name:"Task9Name", Description:"Task9Description", Type:"Task3Type", children: [
+										{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type"}, 
+										{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action8Type"},
+										{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action9Type"}
+									]}
+								]}
+						]}
+				]);
+			
+			[Bindable]
+			private var P1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var DT_TB:ArrayCollection = new ArrayCollection([
+				{label:"Props1", data:"DT_Props1"},
+				{label:"Props2", data:"DT_Props2"},
+				{label:"Props3", data:"DT_Props3"},
+				{label:"Props4", data:"DT_Props4"},
+				{label:"FF", data:"FF"}
+			]);
+			
+			[Bindable]	
+			private var FF_master_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Header fieldsets", children: [
+						{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", children: [
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"5", Name:"Fieldset2Name", children: [
+							{EntityType:"Field", ObjId:"6", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"FIeld", ObjId:"7", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"8", Sequence:"3", Name:"Field3Name"}
+						]}
+					]},
+					{Name:"Detail fieldsets", children: [
+						{EntityType:"Fieldset", ObjId:"9", Name:"Fieldset3Name", children: [
+							{EntityType:"Field", ObjId:"10", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"11", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"12", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"13", Name:"Fieldset4Name", children: [
+							{EntityType:"Field", ObjId:"14", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"15", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"16", Sequence:"3", Name:"Field3Name"}
+						]}
+					]}
+				]);
+			
+			[Bindable]
+			private var FF_dummy_AC:ArrayCollection = new ArrayCollection([
+				{Property:"", Value:""}
+			]);	
+			
+			private function row_click(event:ListEvent):void {
+			}
+			
+			protected function menuListID_changeHandler(event:IndexChangeEvent):void {
+				var selectListObj:String = event.target.selectedItem as String;
+				
+				if ( selectListObj == "Document Classes" ) {
+					setEntityWorkSpace("D");
+					
+				} else if ( selectListObj == "Workflow Procedures" ) {
+					setEntityWorkSpace("W");
+				}
+			}
+
+			private function setEntityWorkSpace(type:String) {
+				if ( type == "D" ) {
+					entityWorkSpaceID.title = "Document Class";
+					master_VS.selectedChild = DT_master_view;
+					detail_VS.selectedChild = DT_detail_view;
+					tabBarID.selectedIndex = 0;
+					
+				} else if ( type == "W" ) {
+					entityWorkSpaceID.title = "Workflow Procedures";
+					master_VS.selectedChild = WF_master_view;
+					detail_VS.selectedChild = WF_detail_view;
+					tabBarID.selectedIndex = 0;
+				}
+			}
+			
+			protected function tabBarID_changeHandler(event:IndexChangeEvent):void {
+				var TB_object:Object = event.target.selectedItem as Object;
+				
+				if ( master_VS.selectedChild == DT_master_view ) {
+					if (TB_object.data == "DT_Props1") {
+						detail_VS.selectedChild = DT_detail_view;
+						DT_detail_CG1.visible = true;
+						DT_detail_CG2.visible = false;
+						DT_detail_CG3.visible = false;
+						DT_detail_CG4.visible = false;
+					
+					} else if (TB_object.data == "DT_Props2") {
+						detail_VS.selectedChild=DT_detail_view;
+						DT_detail_CG1.visible = false;
+						DT_detail_CG2.visible = true;
+						DT_detail_CG3.visible = false;
+						DT_detail_CG4.visible = false;
+					
+					} else if (TB_object.data == "DT_Props3") {
+						detail_VS.selectedChild = DT_detail_view;
+						DT_detail_CG1.visible = false;
+						DT_detail_CG2.visible = false;
+						DT_detail_CG3.visible = true;
+						DT_detail_CG4.visible = false;
+					
+					} else if (TB_object.data == "DT_Props4") {
+						detail_VS.selectedChild = DT_detail_view;
+						DT_detail_CG1.visible = false;
+						DT_detail_CG2.visible = false;
+						DT_detail_CG3.visible = false;
+						DT_detail_CG4.visible = true;
+					
+					} else if (TB_object.data == "FF") {
+						detail_VS.selectedChild = FF_view;
+					}
+					
+				} else if ( master_VS.selectedChild == WF_master_view ) {
+					if (TB_object.data == "FF") {
+						detail_VS.selectedChild = FF_view;
+					} else {
+						detail_VS.selectedChild = WF_detail_view;
+					}
+				}
+				
+			}
+			//######################################### Cee Add 20131216 #############################################//
+			
+			
+			
+		]]>
+	</fx:Script>
+			
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+			
+			<!--Entity chooser-->
+			<s:BorderContainer id="EntityChooser" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="10"/>
+				</s:layout>
+				<s:BorderContainer id="EntityList" width="170" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00004F6C" backgroundColor="#00004F6C">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0"/>
+						</s:layout>
+						<mx:Text text="Choose entity:" 
+								 color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="170" height="136" borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0"/>
+						</s:layout>
+						<s:List id="menuListID" width="159" height="134" borderVisible="false"
+								fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								change="menuListID_changeHandler(event)"
+								rollOverColor="#00C0C0C0" buttonMode="true"> <!--itemRenderer="ListItemRenderer"-->
+							<mx:ArrayCollection>
+								<fx:String>System</fx:String> 
+								<fx:String>Users, Groups, Roles</fx:String> 
+								<fx:String>Folders</fx:String> 
+								<fx:String>Document Classes</fx:String> 
+								<fx:String>Workflow Procedures</fx:String> 
+								<fx:String>Jobs</fx:String> 
+							</mx:ArrayCollection>
+						</s:List>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!--Entities-->
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout gap="0" horizontalAlign="right"/>
+					</s:layout>
+					
+					<!-- Tab bar for border layout -->
+					<s:BorderContainer width="100%" height="23" borderVisible="false" >
+						<s:layout>
+							<s:HorizontalLayout gap="0" horizontalAlign="left" verticalAlign="bottom"/>
+						</s:layout>
+						<mx:HBox width="600" horizontalGap="2">
+							<mx:Button label="btn1" width="50" height="20" buttonMode="true"/>
+							<mx:Button label="btn2" width="50" height="20" buttonMode="true"/>
+							<mx:Button label="btn3" width="50" height="20" buttonMode="true"/>
+						</mx:HBox>
+						
+						<s:TabBar id="tabBarID" width="100%" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								  dataProvider="{DT_TB}" buttonMode="true" change="tabBarID_changeHandler(event)"/>
+						
+						<!--<s:TabBar width="100%" id="tabbar_id" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								  change="tabbarChangeHandler(event)">
+							<mx:ArrayCollection>
+								<fx:Object id="tabAuthority" label="Authority"></fx:Object>
+								<fx:Object id="tabContact" label="Contact"></fx:Object>
+								<fx:Object id="tabExplorer" label="Explorer"></fx:Object>
+								<fx:Object id="tabWindows" label="Windows"></fx:Object>
+								<fx:Object id="tabWorkflow" label="Workflow"></fx:Object>
+								<fx:Object id="tabOther" label="Other"></fx:Object>
+							</mx:ArrayCollection>
+						</s:TabBar>-->
+						
+					</s:BorderContainer>
+					
+					<!-- ###################################### Cee Modify 20131216 ###################################### -->
+					<component:CustomTitleWindow id="entityWorkSpaceID" height="100%" width="100%" dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
+								   fontSize="11" fontWeight="normal" skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+							<component:layout>
+								<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="-1"/>
+							</component:layout>
+						
+							<mx:ViewStack id="master_VS" width="100%" height="100%" creationPolicy="all">
+									<!-- Document Class -->
+									<mx:Box id="DT_master_view" width="575" height="100%">
+										<mx:AdvancedDataGrid id="DT_master_DG" width="575" height="100%" rowHeight="20"
+															 sortExpertMode="true" editable="false"
+															 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+															 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+															 itemClick="row_click(event)" dataProvider="{DT_master_AC}">
+											<mx:groupedColumns>
+												<mx:AdvancedDataGridColumn dataField="checked"
+																		   width="20" textAlign="center"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn headerText="" width="20"/>							
+												<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Document Types">
+													<mx:AdvancedDataGridColumn id="DocType" width="235" headerText="Name" dataField="Name"/>
+													<mx:AdvancedDataGridColumn width="300" headerText="Description" dataField="Description"/>
+												</mx:AdvancedDataGridColumnGroup>
+											</mx:groupedColumns>
+										</mx:AdvancedDataGrid>
+									</mx:Box>
+								
+									<!-- Workflow Procedures -->
+									<mx:Box id="WF_master_view" width="575" height="100%">
+										<mx:AdvancedDataGrid id="WF_master_DG" 
+															 width="575" height="100%"	rowHeight="20"
+															 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+															 treeColumn="{master_proc}" sortExpertMode="true" editable="false"
+															 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+															 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+															 displayItemsExpanded="false"
+															 itemClick="row_click(event)">
+											<mx:dataProvider>
+												<mx:HierarchicalData source="{WF_master_AC}"/>
+											</mx:dataProvider>
+											<mx:groupedColumns>
+												<mx:AdvancedDataGridColumn dataField="checked"
+																		   width="20" textAlign="center"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn headerText="" width="20"/>							
+												<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="Procedures / Steps / Tasks / Actions">
+													<mx:AdvancedDataGridColumn id="master_proc" width="235" headerText="Name" dataField="Name"/>
+													<mx:AdvancedDataGridColumn width="150" headerText="Description" dataField="Description"/>
+													<mx:AdvancedDataGridColumn width="150" headerText="Type" dataField="Type"/>
+												</mx:AdvancedDataGridColumnGroup>
+												<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="Properties">
+													<mx:AdvancedDataGridColumn id="master_qualifier" width="575" headerText="Execution Qualifier" dataField="Qualifier"/>
+												</mx:AdvancedDataGridColumnGroup>
+											</mx:groupedColumns>
+										</mx:AdvancedDataGrid>
+									</mx:Box>
+								
+							</mx:ViewStack>
+									
+							<mx:ViewStack id="detail_VS" width="50%" height="100%" creationPolicy="all">
+									<!-- Document Class -->
+									<mx:Box id="DT_detail_view" width="100%" height="100%">					
+										<mx:AdvancedDataGrid id="DT_detail_DG" 
+															 width="575" height="100%"	rowHeight="20"
+															 sortExpertMode="true" editable="true"
+															 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+															 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+															 dataProvider="{DT_master_AC}">
+											<mx:groupedColumns>
+												<mx:AdvancedDataGridColumnGroup id="DT_detail_CG1" visible="true" textAlign="center" headerText="Properties1">
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop1Name" dataField="Prop1Value"/>
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop2Name" dataField="Prop2Value"/>
+													<mx:AdvancedDataGridColumn width="191" headerText="Prop3Name" dataField="Prop3Value"/>
+												</mx:AdvancedDataGridColumnGroup>
+												<mx:AdvancedDataGridColumnGroup id="DT_detail_CG2" visible="false" textAlign="center" headerText="Properties2">
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop4Name" dataField="Prop4Value"/>
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop5Name" dataField="Prop5Value"/>
+													<mx:AdvancedDataGridColumn width="191" headerText="Prop6Name" dataField="Prop6Value"/>
+												</mx:AdvancedDataGridColumnGroup>
+												<mx:AdvancedDataGridColumnGroup id="DT_detail_CG3" visible="false" textAlign="center" headerText="Properties3">
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop7Name" dataField="Prop7Value"/>
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop8Name" dataField="Prop8Value"/>
+													<mx:AdvancedDataGridColumn width="191" headerText="Prop9Name" dataField="Prop9Value"/>
+												</mx:AdvancedDataGridColumnGroup>
+												<mx:AdvancedDataGridColumnGroup id="DT_detail_CG4" visible="false" textAlign="center" headerText="Properties4">
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop10Name" dataField="Prop10Value"/>
+													<mx:AdvancedDataGridColumn width="192" headerText="Prop11Name" dataField="Prop11Value"/>
+													<mx:AdvancedDataGridColumn width="191" headerText="Prop12Name" dataField="Prop12Value"/>
+												</mx:AdvancedDataGridColumnGroup>
+											</mx:groupedColumns>
+										</mx:AdvancedDataGrid>					
+									</mx:Box>
+									
+									<!-- Workflow Procedures -->
+									<mx:Box id="WF_detail_view" width="100%" height="100%">					
+										<mx:AdvancedDataGrid id="WF_detail_DG" 
+															 width="575" height="100%"	rowHeight="20"
+															 sortExpertMode="true" editable="false"
+															 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+															 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+															 dataProvider="{P1_AC}">
+											<mx:groupedColumns>
+												<mx:AdvancedDataGridColumnGroup id="step_props_CG" textAlign="center" headerText="Properties">
+													<mx:AdvancedDataGridColumn headerText="Name" dataField="Property" editable="false"/>
+													<mx:AdvancedDataGridColumn headerText="Value" dataField="Value" editable="true"/>
+												</mx:AdvancedDataGridColumnGroup>
+											</mx:groupedColumns>
+										</mx:AdvancedDataGrid>					
+									</mx:Box>
+								
+									<!-- FF -->
+									<mx:Box id="FF_view" width="100%" height="100%">					
+										<s:BorderContainer height="80%" width="100%" borderVisible="false">
+											<s:layout>
+												<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="-1"/>
+											</s:layout>
+											
+											<mx:AdvancedDataGrid id="FF_master_DG" 
+																 width="260" height="100%" rowHeight="20"
+																 verticalScrollPolicy="auto" horizontalScrollPolicy="off"
+																 treeColumn="{FF_master_proc}" sortExpertMode="true" editable="false"
+																 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+																 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+																 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+																 displayItemsExpanded="true"
+																 itemClick="row_click(event)">
+												<mx:dataProvider>
+													<mx:HierarchicalData source="{FF_master_AC}"/>
+												</mx:dataProvider>
+												<mx:groupedColumns>
+													<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Fieldsets/Fields">
+														<mx:AdvancedDataGridColumn dataField="checked"
+																				   width="20" textAlign="center"
+																				   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																				   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+														<mx:AdvancedDataGridColumn headerText="" width="20"/>
+														<mx:AdvancedDataGridColumn id="FF_master_proc" width="220" headerText="Name" dataField="Name"/>
+													</mx:AdvancedDataGridColumnGroup>
+												</mx:groupedColumns>
+											</mx:AdvancedDataGrid>
+											
+											<mx:AdvancedDataGrid id="FF_detail_DG" 
+																 width="315" height="100%"	rowHeight="20"
+																 sortExpertMode="true" editable="false"
+																 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+																 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+																 dataProvider="{FF_dummy_AC}">
+												<mx:groupedColumns>
+													<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Properties">
+														<mx:AdvancedDataGridColumn width="115" headerText="Name" dataField="Property" editable="false"/>
+														<mx:AdvancedDataGridColumn width="200" headerText="Value" dataField="Value" editable="true"/>
+													</mx:AdvancedDataGridColumnGroup>
+												</mx:groupedColumns>
+											</mx:AdvancedDataGrid>
+											
+										</s:BorderContainer>
+									</mx:Box>
+							</mx:ViewStack>
+							
+					</component:CustomTitleWindow>
+						
+					<!-- ###################################### Cee Modify 20131216 ###################################### -->
+					
+				</s:BorderContainer>
+				
+				<!--End SearchFiltersAndSearchResults-->
+			</s:BorderContainer>
+			
+			<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

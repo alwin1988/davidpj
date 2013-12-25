@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  xmlns:component="component.*"
+		 width="100%" height="100%" 
+		 creationComplete="canvas1_creationCompleteHandler()"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+			
+			private var _dataProvider1List:ArrayCollection;
+			
+			[Bindable]
+			public function set dataProvider1List(value:Object):void {
+				_dataProvider1List = value as ArrayCollection
+			}
+			public function get dataProvider1List():Object {
+				return _dataProvider1List;
+			}
+			
+			protected function canvas1_creationCompleteHandler():void {
+				//Set dataprovider1 list
+				dataProvider1List = new ArrayCollection([
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'},
+					{checked:false, Value1:'xxxx', Value2:'xxxx', Value3:'xxxx'}
+				]);
+			}
+			
+			public function init():void {
+				setDefaultTab();
+				setAllFalse();
+				
+				//tabAuthority.selected = true;
+				isEnabledAuthority(true);
+			}
+			
+			protected function toggleButtonChange_handle(evt:Event):void {
+				var thisToggle:Object = evt.target as Object;
+				var toggleItem:String = new String(thisToggle.label.toString());
+				setDefaultTab();
+				setAllFalse();
+				thisToggle.selected = true;
+				//mainDtg.visible = true;
+				if (toggleItem == "Authority") {
+					isEnabledAuthority(true);
+				}
+				else if (toggleItem == "Contact") {
+					isEnabledContact(true);
+				} 
+				else if (toggleItem == "Explorer") {
+					isEnabledAppExplorer(true);
+				} 
+				else if (toggleItem == "Windows") {
+					isEnabledAppWindows(true);
+				}
+				else if (toggleItem == "Workflow") {
+					isEnabledAppWorkflow(true);
+				}
+				else if (toggleItem == "Other") {
+					isEnabledAppOther(true);
+				}
+			}
+			
+			private function setDefaultTab():void {
+				tabbar_id.selectedItem = tabAuthority;
+			}
+			
+			public function setAllFalse():void {
+				isEnabledAuthority(false);
+				isEnabledContact(false);
+				isEnabledAppExplorer(false);
+				isEnabledAppWindows(false);
+				isEnabledAppWorkflow(false);
+				isEnabledAppOther(false);
+			}
+			
+			public function isEnabledAuthority(state:Boolean):void {
+				grpPrivilledge.visible=state;
+				grpAuthentication.visible=state;
+				grpLanguage.visible=state;
+			}
+			
+			public function isEnabledContact(state:Boolean):void {
+				grpLocation.visible=state;
+				grpContact.visible=state;
+			}
+			
+			public function isEnabledAppExplorer(state:Boolean):void {
+				grpAppExplorer.visible=state;
+			}
+			
+			public function isEnabledAppWindows(state:Boolean):void {
+				grpAppWindows.visible=state;
+			}
+			
+			public function isEnabledAppWorkflow(state:Boolean):void {
+				grpAppWorkflow.visible=state;
+			}
+			
+			public function isEnabledAppOther(state:Boolean):void {
+				grpAppOther.visible=state;
+			}
+			
+			protected function tabbarChangeHandler(event:IndexChangeEvent):void {
+				var toggleItem:String =  String(event.target.selectedItem.label);
+				setAllFalse();
+				
+				if (toggleItem == "Authority") {
+					isEnabledAuthority(true);
+				}
+				else if (toggleItem == "Contact") {
+					isEnabledContact(true);
+				} 
+				else if (toggleItem == "Explorer") {
+					isEnabledAppExplorer(true);
+				} 
+				else if (toggleItem == "Windows") {
+					isEnabledAppWindows(true);
+				}
+				else if (toggleItem == "Workflow") {
+					isEnabledAppWorkflow(true);
+				}
+				else if (toggleItem == "Other") {
+					isEnabledAppOther(true);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+			<!--Entities-->
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout gap="0" horizontalAlign="right"/>
+					</s:layout>
+					
+					<!-- Tab bar for border layout -->
+					<s:BorderContainer width="100%" height="23" borderVisible="false" >
+						<s:layout>
+							<s:HorizontalLayout gap="0" horizontalAlign="left" verticalAlign="bottom"/>
+						</s:layout>
+						<mx:HBox width="460"/>
+						<s:TabBar width="100%" id="tabbar_id" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+								  change="tabbarChangeHandler(event)">
+							<mx:ArrayCollection>
+								<!--<fx:String>Contact Information</fx:String> 
+								<fx:String>Access Controls</fx:String> -->
+								
+								<fx:Object id="tabAuthority" label="Authority"></fx:Object>
+								<fx:Object id="tabContact" label="Contact"></fx:Object>
+								<fx:Object id="tabExplorer" label="Explorer"></fx:Object>
+								<fx:Object id="tabWindows" label="Windows"></fx:Object>
+								<fx:Object id="tabWorkflow" label="Workflow"></fx:Object>
+								<fx:Object id="tabOther" label="Other"></fx:Object>
+								
+							</mx:ArrayCollection>
+						</s:TabBar>
+					</s:BorderContainer>
+					
+					<component:CustomTitleWindow title="Users" height="100%" width="100%" dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
+								   				 fontSize="11" fontWeight="normal" skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+						
+						<mx:AdvancedDataGrid id="advanceDG1_ID" height="100%" width="100%" borderVisible="false" rowHeight="20"
+											 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+											 horizontalScrollPolicy="auto" lockedColumnCount="6" dataProvider="@{dataProvider1List}">
+							
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn textAlign="center" dataField="checked" width="30"
+														   rendererIsEditor="false" resizable="false" draggable="false"
+														   sortable="false"	itemRenderer="component.CheckboxItemRenderer"
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+								<mx:AdvancedDataGridColumn width="20" resizable="false" draggable="false"/>
+								<mx:AdvancedDataGridColumn width="20" resizable="false" draggable="false"/>
+								<mx:AdvancedDataGridColumn width="130" dataField="Value1" headerText="IndexField1" resizable="false" draggable="false"/>
+								<mx:AdvancedDataGridColumn width="130" dataField="Value2" headerText="IndexField2" resizable="false" draggable="false"/>
+								<mx:AdvancedDataGridColumn width="130" dataField="Value3" headerText="IndexField3" resizable="false" draggable="false"/>
+								
+								<!--<Authority___________________________________________________>-->
+								<mx:AdvancedDataGridColumnGroup id="grpPrivilledge" headerText="Privilege">
+									<mx:AdvancedDataGridColumn width="120" dataField="userType" headerText="User Type" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:ComboBox>
+													<mx:ArrayList>
+														<fx:String>User</fx:String>
+														<fx:String>Manager</fx:String>
+														<fx:String>Operator</fx:String>
+														<fx:String>Administrator</fx:String>
+													</mx:ArrayList>
+												</mx:ComboBox>
+											</fx:Component>
+										</mx:itemRenderer>
+									</mx:AdvancedDataGridColumn>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="grpAuthentication" headerText="Authentication">
+									<mx:AdvancedDataGridColumn width="160" headerText="Authenticate via LDAP"
+															   textAlign="center" dataField="authenticateLDAP">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:CheckBox/>
+											</fx:Component>
+										</mx:itemRenderer>	
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn id="passwordAuth" width="140" headerText="Password" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:TextInput displayAsPassword="true" editable="false" text="password"/>
+											</fx:Component>
+										</mx:itemRenderer>
+									</mx:AdvancedDataGridColumn>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="grpLanguage" headerText="Language for Orion UI">
+									<mx:AdvancedDataGridColumn width="150" dataField="languagePri"
+															   headerText="Primary" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:ComboBox>
+													<mx:ArrayList>
+														<fx:String>English</fx:String>
+														<fx:String>Dutch</fx:String>
+													</mx:ArrayList>
+												</mx:ComboBox>
+											</fx:Component>
+										</mx:itemRenderer>
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn width="150" dataField="languageSec"
+															   headerText="Secondary" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:ComboBox>
+													<mx:ArrayList>
+														<fx:String>English</fx:String>
+														<fx:String>Dutch</fx:String>
+													</mx:ArrayList>
+												</mx:ComboBox>
+											</fx:Component>
+										</mx:itemRenderer>
+									</mx:AdvancedDataGridColumn>
+								</mx:AdvancedDataGridColumnGroup>
+								<!--< END : Authority___________________________________________________>-->
+								
+								<!--<Contact_______________________________________________________>-->
+								<mx:AdvancedDataGridColumnGroup id="grpLocation" headerText="Location">
+									<mx:AdvancedDataGridColumn width="200" dataField="city"
+															   headerText="Department or Place" textAlign="center"/>
+									<mx:AdvancedDataGridColumn width="200" dataField="country" headerText="Country"
+															   textAlign="center"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="grpContact" headerText="Contact">
+									<mx:AdvancedDataGridColumn width="300" dataField="email" headerText="Email Address"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<!--<END : Contact____________________________________________________________>-->
+								
+								<!--<App security Explorer_______________________________________________________>-->
+								<mx:AdvancedDataGridColumnGroup id="grpAppExplorer"
+																headerText="Application Security for Orion Explorer and Windows integration (1 of 2)">
+									<mx:AdvancedDataGridColumnGroup headerText="Full text search">
+										<mx:AdvancedDataGridColumn width="90" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="90" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									
+									<mx:AdvancedDataGridColumnGroup headerText="Create public search profiles">
+										<mx:AdvancedDataGridColumn width="200" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Delete public search profiles">
+										<mx:AdvancedDataGridColumn width="200" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Check-in/check-out">
+										<mx:AdvancedDataGridColumn width="90" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="90" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Archive new documents">
+										<mx:AdvancedDataGridColumn width="90" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="90" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:AdvancedDataGridColumnGroup>
+								<!--<END : App security Explorer_______________________________________________________>-->
+								
+								<!--<App security Explorer 2_______________________________________________________>-->
+								<mx:AdvancedDataGridColumnGroup id="grpAppWindows"
+																headerText="Application Security for Orion Explorer and Windows integration (2 of 2)">
+									<mx:AdvancedDataGridColumnGroup headerText="Reindex archived documents">
+										<mx:AdvancedDataGridColumn width="110" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="110" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Save archived docs to disk">
+										<mx:AdvancedDataGridColumn width="95" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="95" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Email archived documents">
+										<mx:AdvancedDataGridColumn width="95" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="95" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Print archived documents">
+										<mx:AdvancedDataGridColumn width="95" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="95" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Delete archived documents">
+										<mx:AdvancedDataGridColumn width="95" headerText="Explorer" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+										<mx:AdvancedDataGridColumn width="95" headerText="Windows" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:AdvancedDataGridColumnGroup>
+								<!--<END : App security Explorer 2_______________________________________________________>-->
+								
+								<!--<App security workflow_______________________________________________________>-->
+								<mx:AdvancedDataGridColumnGroup id="grpAppWorkflow"
+																headerText="Application security for workflow">
+									<mx:AdvancedDataGridColumn width="200" headerText="Enabled personal workbox"
+															   headerWordWrap="true" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:CheckBox/>
+											</fx:Component>
+										</mx:itemRenderer>	
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn width="180"
+															   headerText="Start new workflow cases for socuments"
+															   headerWordWrap="true" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:CheckBox/>
+											</fx:Component>
+										</mx:itemRenderer>	
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn width="180"
+															   headerText="Attach documents to existing workflow cases"
+															   headerWordWrap="true" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:CheckBox/>
+											</fx:Component>
+										</mx:itemRenderer>	
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn width="180"
+															   headerText="Interact with document processing steps"
+															   headerWordWrap="true" textAlign="center">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:CheckBox/>
+											</fx:Component>
+										</mx:itemRenderer>	
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn width="180"
+															   headerText="Interact with business processing steps"
+															   headerWordWrap="true" textAlign="center" itemRenderer="component.workflowLastItemRenderer">
+									</mx:AdvancedDataGridColumn>
+								</mx:AdvancedDataGridColumnGroup>
+								<!--<END : App security workflow_______________________________________________________>-->
+								
+								<!--<App security other_______________________________________________________>-->
+								<mx:AdvancedDataGridColumnGroup id="grpAppOther"
+																headerText="Application security for other">
+									<mx:AdvancedDataGridColumnGroup headerText="DejaVu">
+										<mx:AdvancedDataGridColumn width="350"
+																   headerText="Enable advanced DejaVu configuration"
+																   headerWordWrap="true" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup headerText="Windows">
+										<mx:AdvancedDataGridColumn width="350" headerText="Allow use of Wizards"
+																   headerWordWrap="true" textAlign="center">
+											<mx:itemRenderer>
+												<fx:Component>
+													<mx:CheckBox/>
+												</fx:Component>
+											</mx:itemRenderer>	
+										</mx:AdvancedDataGridColumn>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:AdvancedDataGridColumnGroup>
+								<!--<END : App security other_______________________________________________________>-->
+								
+							</mx:groupedColumns>
+							
+						</mx:AdvancedDataGrid>
+					</component:CustomTitleWindow>
+				</s:BorderContainer>
+</s:Group>

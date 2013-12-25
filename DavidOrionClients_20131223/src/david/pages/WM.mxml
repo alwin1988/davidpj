@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:component="component.*"
+		   xmlns:components="com.shinynet.shinylib.components.*"
+		   width="100%" height="100%" creationComplete="creationComplete()">
+	
+	<fx:Script>
+		<![CDATA[
+			import component.PopUpCustomTitleWindow;
+			
+			import event.NNDemoEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.events.CloseEvent;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
+			import mx.collections.XMLListCollection;
+			
+			
+			//############################### Variable #################################//
+			//Left Tree Data Provider
+			[Bindable]
+			public var batchsAndDocsTreeCollection:XMLListCollection;
+			
+			[Bindable]
+			public var batchsAndDocsTreeList:XMLList =
+				<>
+					<folder state="unchecked" label="Batch Type" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL BATCH TYPES" />
+						<folder state="unchecked" isBranch="false" label="BatchTypeA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="BatchTypeZ" />
+					</folder>
+					<folder state="unchecked" label="Document Type" isBranch="true" >
+						<folder state="unchecked" isBranch="false" label="ALL DOC TYPES" />
+						<folder state="unchecked" isBranch="false" label="DocTypeA" />
+						<folder state="unchecked" isBranch="false" label="..." />
+						<folder state="unchecked" isBranch="false" label="DocTypeZ" />
+					</folder>
+				</>;
+			
+			//MiniGrid Data Provider
+			[Bindable]
+			private var AC0:ArrayCollection = new ArrayCollection(
+				[
+					{Checked:"false"}
+				]);
+			
+			[Bindable]
+			private var AC:ArrayCollection = new ArrayCollection(
+				[
+					{Priority:"1", ID:"test"},
+				{EntityType:"B", Priority:"1", ID:"Batch1ID", Type:"Batch1Type", 
+						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+						Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+						checked:"false", children: [
+						{EntityType:"S", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+							Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+							checked:"false", children: [
+							{EntityType:"O", Priority:"1", ID:"Obj1ID", Type:"Doc1Type", 
+								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+								Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+								checked:"false"},
+							{EntityType:"O", Priority:"1", ID:"Obj2ID", Type:"Doc2Type", 
+								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+								Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+								checked:"false"}
+						]},
+					{EntityType:"B", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
+						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+						Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+						checked:"false", children: [
+						{EntityType:"O", Priority:"1", ID:"Obj3ID", Type:"Doc1Type", 
+							Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+							Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+							checked:"false"},
+						{EntityType: "O", Priority:"1", ID:"Obj4ID", Type:"Doc2Type", 
+							Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+							Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+							checked:"false"}
+						]},
+					]},
+				]);
+			//############################### Variable #################################//
+			
+			//############################### Set & Initial Method #####################################//
+			protected function creationComplete():void {
+			}
+			public function init():void {
+				batchsAndDocsTreeCollection = new XMLListCollection(batchsAndDocsTreeList);
+				batchsAndDocsTreeID.dataProvider = batchsAndDocsTreeCollection;
+			}
+			//############################### Set & Initial Method #####################################//
+			
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer width="100%" height="100%">
+		<s:layout>
+			<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"/>
+			</s:layout>
+		
+			<!--Boxes and Results-->
+			<s:BorderContainer id="BoxesAndResults" width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout gap="10" paddingBottom="5" paddingLeft="5" paddingRight="5"	paddingTop="5"/>
+				</s:layout>
+				
+				<!--Boxes accordion-->
+				<s:BorderContainer width="170" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"/>
+					</s:layout>
+					
+					<s:VGroup y="0" width="170" gap="0" verticalCenter="0"> <!-- height="100%" -->
+						<components:CollapsiblePanel id="Section2" width="100%"
+													 dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 title="Batches &amp; Documents">
+							<s:VGroup width="100%" height="200" gap="0">
+								<mx:Tree id="batchsAndDocsTreeID"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 labelField="@label"
+										 width="100%" height="100%"
+										 rowHeight="15"
+										 folderClosedIcon="{null}"
+										 folderOpenIcon="{null}"
+										 defaultLeafIcon="{null}"
+										 fontFamily="Franklin Gothic Medium" fontWeight="normal" fontSize="11">
+								</mx:Tree>
+								
+								
+							</s:VGroup>
+						</components:CollapsiblePanel>
+					</s:VGroup>
+					
+					<s:BorderContainer width="170" height="40" borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout gap="0"/>
+						</s:layout>
+						<s:CheckBox width="170" label="Include closed cases"
+									fontFamily="Franklin Gothic Medium" fontSize="11"
+									fontWeight="normal"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!--Results-->
+				<s:BorderContainer id="Results" width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout/>
+					</s:layout>
+					
+					<!--Start of datagrids-->
+					<mx:VDividedBox width="100%" height="100%">
+						
+						<component:CustomTitleWindow id="TW" x="1" y="-3" width="100%" height="100%" borderVisible="true"
+													 dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
+													 fontSize="11" fontWeight="normal" headerHeight="16"
+													 skinClass="component.CustomTitleWindowSkin"
+													 title="Batches &amp; Documents">
+							
+							<mx:Canvas id="C" x="0" y="{TW.y}" width="100%" height="100%" borderVisible="false"
+									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
+								<s:VGroup id="VG" width="100%" height="100%"
+										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0"
+										  clipAndEnableScrolling="true">
+									
+									<!--folder:AdgCafolder width="100%" height="100%" id="dg"
+														itemEditEnd="dg_itemEditEndHandler(event)"
+														itemOpen="dg_itemOpenHandler(event)"
+														itemClose="dg_itemCloseHandler(event)"
+														sortableColumns="false"  
+														draggableColumns="false"
+														selectable="true" 
+														editable="true"
+														styleFunction="styleFunction"
+														headerRelease="dg_headerReleaseHandler(event)"
+														designViewDataType="tree" sortExpertMode="true"
+														itemClick="advanceddatagrid1_itemClickHandler(event)"
+														groupItemRenderer="david.pages.CA.folder.CheckADGRenderer"
+														dragEnabled="true" dropEnabled="true" dragMoveEnabled="true"-->									
+									<mx:AdvancedDataGrid id="DG"
+														 width="{TW.width}" minColumnWidth="200" height="100%" verticalAlign="middle"
+														 headerHeight="20" rowHeight="20" rowCount="100"
+														 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+														 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+														 fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="bold">
+										<mx:dataProvider>
+											<mx:HierarchicalData source="{AC}"/>
+										</mx:dataProvider>										
+										<!--folder:columns-->
+										<mx:columns>	
+											<!--mx:AdvancedDataGridColumn width="350" dataField="name" editable="false"  >
+												<mx:headerRenderer>
+													<fx:Component>
+														<mx:HBox horizontalAlign="left" verticalAlign="middle" horizontalGap="2" >
+															<fx:Script>
+																<![CDATA[
+																	import david.pages.CA.CaModule;
+																	
+																	import mx.controls.Alert;
+																]]>
+															</fx:Script>
+															<mx:CheckBox  click="Alert.show('Checkbox Click');" />
+															<mx:VRule height="24" />
+															<s:Image source="@Embed('assets/iconinfo.png')" click="Alert.show('info');"/>
+															<mx:VRule height="24"  includeInLayout="{imglv1.visible}" visible="{imglv1.visible}"/>
+															<s:Image source="@Embed('assets/folderopenclose.jpg')" click="outerDocument.lv1Click(event)" 
+																	 id="imglv1" 
+																	 visible="{CaModule.getInstance.level1}"
+																	 />
+															<mx:VRule height="24"   visible="{imglv2.visible}" />
+															<s:Image source="@Embed('assets/folderopenclose.jpg')" click="outerDocument.lv2click()" id="imglv2"
+																	 visible="{CaModule.getInstance.lv1OpenClose}"
+																	 />
+															<mx:VRule height="24"   visible="{imglv3.visible}" />
+															<s:Image source="@Embed('assets/folderopenclose.jpg')" click="outerDocument.lv3click()" id="imglv3" 
+																	 visible="{CaModule.getInstance.lv2OpenClose}"
+																	 />
+															<mx:VRule height="24"   visible="{imglv3.visible}" />
+															<mx:Text text="Folder Tree" />
+														</mx:HBox> 
+													</fx:Component>
+												</mx:headerRenderer>
+											</mx:AdvancedDataGridColumn-->
+											<!--mx:AdvancedDataGridColumn dataField="checked"
+																	   width="20" textAlign="center" resizable="true" draggable="false" sortable="false"													   
+																	   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+											<mx:AdvancedDataGridColumn headerText="" 
+																	   width="20" resizable="false" draggable="false" sortable="false"/>
+											<mx:AdvancedDataGridColumn dataField="Priority" headerText=""
+																	   width="20" resizable="false" draggable="false" sortable="false"/-->
+											<mx:AdvancedDataGridColumn dataField="ID" headerText="Batch/Object/Doc ID" 
+																	   width="80" resizable="false" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Type" headerText="Batch/Object/Doc Type" 
+																	   width="120" resizable="false" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Pages" headerText="Pages"
+																	   width="80" resizable="true" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Docs" headerText="Docs"
+																	   width="80" resizable="true" draggable="false" sortable="false" 
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Source" headerText="Source"
+																	   width="80" resizable="true" draggable="false" sortable="false" 
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Filename" headerText="Filename"
+																	   width="80" resizable="true" draggable="false" sortable="false" 
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Status" headerText="Status" 
+																	   resizable="true" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Started" headerText="When Started" 
+																	   width="100" resizable="false" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Completed" headerText="% Completed" 
+																	   width="100" resizable="false" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Estimate" headerText="Est. Completion" 
+																	   width="100" resizable="false" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+											<mx:AdvancedDataGridColumn dataField="Deadline" headerText="Deadline" 
+																	   width="100" resizable="false" draggable="false" sortable="false"
+																	   fontFamily="Franklin Gothic Medium" fontSize="10" fontWeight="normal"/>
+										</mx:columns>
+										<!--/folder:columns-->
+									</mx:AdvancedDataGrid>
+									<!--/folder:AdgCafolder-->
+								</s:VGroup>
+							</mx:Canvas>
+						</component:CustomTitleWindow>
+						
+					<!--End of datagrids-->
+					</mx:VDividedBox>
+					
+					<!--Control buttons-->
+					<s:BorderContainer width="100%" height="24" borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout horizontalAlign="right" verticalAlign="middle"/>
+						</s:layout>
+						
+						<s:Button height="21" label="Start" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="startButton"/>
+						<s:Button height="21" label="Open" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="openButton"/>
+						<s:Button height="21" label="Close" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="closeButton"/>
+						<s:Button height="21" label="Suspend" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="suspendButton"/>
+						<s:Button height="21" label="Resume" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="resumeButton"/>
+						<s:Button height="21" label="Escalate" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="escalateButton"/>
+						<s:Button height="21" label="Reassign" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="reassignButton"/>
+						<s:Button height="21" label="Restart" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="restartButton"/>
+						<s:Button height="21" label="Delete" buttonMode="true"
+								  fontFamily="Franklin Gothic Medium" fontSize="12"
+								  fontWeight="bold" styleName="deleteButton"/>
+					</s:BorderContainer>
+
+			</s:BorderContainer>
+			
+			<!--End BoxesAndResults-->
+			</s:BorderContainer>
+			
+		<!--End stage-->
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+</mx:Canvas>

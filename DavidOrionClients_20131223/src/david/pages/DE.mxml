@@ -401,7 +401,7 @@
 					</s:layout>
 					<mx:VDividedBox height="100%" width="100%">
 						<component:CustomTitleWindow title="DocumentClass1" 
-									   height="100%" width="100%" skinClass="component.CustomTitleWindowSkin"
+									   height="100%" width="100%" skinClass="skin.CustomTitleWindowSkin"
 									   dropShadowVisible="false" headerHeight="16"
 									   fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
@@ -429,7 +429,7 @@
 						</component:CustomTitleWindow>
 						<component:CustomTitleWindow title="DocumentClass2" 
 									   height="100%" width="100%" headerHeight="16" 
-									   dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
+									   dropShadowVisible="false" skinClass="skin.CustomTitleWindowSkin" 
 									   fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
 							<mx:AdvancedDataGrid height="100%" width="100%" borderVisible="false" rowHeight="20"

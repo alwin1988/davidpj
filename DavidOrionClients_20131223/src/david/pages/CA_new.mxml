@@ -478,7 +478,7 @@
 					
 					<!-- ###################################### Cee Modify 20131216 ###################################### -->
 					<component:CustomTitleWindow id="entityWorkSpaceID" height="100%" width="100%" dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
-								   fontSize="11" fontWeight="normal" skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+								   fontSize="11" fontWeight="normal" skinClass="skin.CustomTitleWindowSkin" headerHeight="16">
 							<component:layout>
 								<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="-1"/>
 							</component:layout>

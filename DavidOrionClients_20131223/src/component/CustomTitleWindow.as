@@ -6,6 +6,10 @@ package component
 	{
 		[Bindable]
 		public var headerHeight:Number;	
+		
+		[Embed("assets/closeWindowIcon.jpg")]
+		public const closeWindowIcon:Class;
+		
 		public function CustomTitleWindow()
 		{
 			super();

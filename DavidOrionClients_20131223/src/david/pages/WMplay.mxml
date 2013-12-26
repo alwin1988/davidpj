@@ -261,7 +261,7 @@
 		<component:CustomTitleWindow id="TW" width="100%" height="100%" borderVisible="true"
 									 dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
 									 fontSize="11" fontWeight="normal" headerHeight="16"
-									 skinClass="component.CustomTitleWindowSkin"
+									 skinClass="skin.CustomTitleWindowSkin"
 									 title="Batches &amp; Documents">
 	
 	<mx:Canvas id="C2" x="0" y="0" width="100%" height="100%" borderVisible="false"

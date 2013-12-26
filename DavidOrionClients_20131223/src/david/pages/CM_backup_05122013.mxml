@@ -376,7 +376,7 @@
 					<mx:VDividedBox width="100%" height="100%">
 						<component:CustomTitleWindow width="100%" height="100%"
 													 dropShadowVisible="false" headerHeight="16"
-													 skinClass="component.CustomTitleWindowSkin"
+													 skinClass="skin.CustomTitleWindowSkin"
 													 title="{Section2.title}">
 							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
 												 borderVisible="false"
@@ -409,7 +409,7 @@
 						
 						<component:CustomTitleWindow width="100%" height="100%"
 													 dropShadowVisible="false" headerHeight="16"
-													 skinClass="component.CustomTitleWindowSkin"
+													 skinClass="skin.CustomTitleWindowSkin"
 													 title="{Section3.title}">
 							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
 												 borderVisible="false"
@@ -444,7 +444,7 @@
 						
 						<component:CustomTitleWindow width="100%" height="100%"
 													 dropShadowVisible="false" headerHeight="16"
-													 skinClass="component.CustomTitleWindowSkin"
+													 skinClass="skin.CustomTitleWindowSkin"
 													 title="{Section4.title}">
 							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
 												 borderVisible="false"
@@ -477,7 +477,7 @@
 						
 						<component:CustomTitleWindow width="100%" height="100%"
 													 dropShadowVisible="false" headerHeight="16"
-													 skinClass="component.CustomTitleWindowSkin"
+													 skinClass="skin.CustomTitleWindowSkin"
 													 title="{Section5.title}">
 							<mx:AdvancedDataGrid width="100%" height="100%" minHeight="20"
 												 borderVisible="false"

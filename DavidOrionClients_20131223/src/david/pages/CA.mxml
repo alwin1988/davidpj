@@ -207,7 +207,7 @@
 					</s:BorderContainer>
 					
 					<component:CustomTitleWindow title="Users" height="100%" width="100%" dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
-								   				 fontSize="11" fontWeight="normal" skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+								   				 fontSize="11" fontWeight="normal" skinClass="skin.CustomTitleWindowSkin" headerHeight="16">
 						
 						<mx:AdvancedDataGrid id="advanceDG1_ID" height="100%" width="100%" borderVisible="false" rowHeight="20"
 											 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"

@@ -97,7 +97,7 @@
 					</s:BorderContainer>
 					
 					<component:CustomTitleWindow title="Documents by Document Class" height="100%" width="100%" dropShadowVisible="false"
-												 skinClass="component.CustomTitleWindowSkin" headerHeight="16">
+												 skinClass="skin.CustomTitleWindowSkin" headerHeight="16">
 						<!--<s:layout>
 							<s:VerticalLayout/>
 						</s:layout>-->

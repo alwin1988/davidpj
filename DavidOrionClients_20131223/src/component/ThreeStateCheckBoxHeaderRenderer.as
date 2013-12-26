@@ -2,6 +2,9 @@ package component {
 	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.HierarchicalCollectionView;
+	import mx.collections.HierarchicalData;
+	import mx.collections.IViewCursor;
 	import mx.controls.AdvancedDataGrid;
 	import mx.controls.Alert;
 	import mx.controls.Image;
@@ -172,6 +175,23 @@ package component {
 		 */
 		private function selectAll():void{
 			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			/*var ac:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;*/
+			
+			/*var iv:IViewCursor = ac.createCursor();
+			iv.current;
+			iv.
+			iv.moveNext();
+			iv.current;
+			iv.moveNext();
+			iv.current;
+			iv.moveNext();
+			iv.current;
+			iv.moveNext();
+			iv.current;
+			iv.moveNext();
+			iv.current;
+			iv.moveNext();
+			iv.current;*/
 			for each (var o:Object in ac){
 				o.checked = myCheckBox.selected;
 			}

@@ -14,7 +14,6 @@
 			import mx.collections.HierarchicalCollectionView;
 			import mx.collections.IHierarchicalCollectionViewCursor;
 			import mx.collections.XMLListCollection;
-			import mx.events.AdvancedDataGridEvent;
 			import mx.utils.ObjectUtil;
 						
 			//############################### Variable #################################//
@@ -71,28 +70,24 @@
 //				]);
 			private var AC2:ArrayCollection = new ArrayCollection(
 				[
-						{EntityType:"S", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+						{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
 							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 							Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
 							checked:"false", children: [
-								
-							{EntityType:"O", Priority:"1", ID:"Obj1ID", Type:"Doc1Type", 
+							{EntityType:"O2", Priority:"1", ID:"Obj1ID", Type:"Doc1Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 								Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
 								checked:"false"},
-						 	{EntityType:"O", Priority:"1", ID:"Obj2ID", Type:"Doc2Type", 
+						 	{EntityType:"O3", Priority:"1", ID:"Obj2ID", Type:"Doc2Type", 
 									Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 									Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
-									checked:"false", children:[{EntityType:"B", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
-										Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
-										checked:"false"}]}
+									checked:"false"}
 						]},
-						{EntityType:"B", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
+						{EntityType:"B4", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
 							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 							Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
 							checked:"false", children: [
-								{EntityType:"O", Priority:"1", ID:"Obj3ID", Type:"Doc1Type", 
+								{EntityType:"O5", Priority:"1", ID:"Obj3ID", Type:"Doc1Type", 
 									Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 									Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
 									checked:"false"},
@@ -131,21 +126,13 @@
 			
 			
 			public function lv1Click(e:MouseEvent):void {
-				var chk:Boolean = false;
 				WmModule.getInstance.lv1OpenClose = !WmModule.getInstance.lv1OpenClose;
 				if(WmModule.getInstance.lv1OpenClose){
-					chk = setOpenNodes(2);
+					setOpenNodes(2);
 				} else {
 					closeFolder();
+					WmModule.getInstance.lv2OpenClose = false;
 				}
-				WmModule.getInstance.lv1OpenClose = chk;
-				if(!WmModule.getInstance.lv1OpenClose){
-					WmModule.getInstance.lv2OpenClose = chk;
-				}
-				
-				trace('l1c',WmModule.getInstance.lv1OpenClose);
-				trace('l2c',WmModule.getInstance.lv2OpenClose);
-				trace('l3c',WmModule.getInstance.lv3OpenClose);
 			}
 			
 			
@@ -156,26 +143,19 @@
 			
 			//must be in every project that use CustomADG
 			public function lv2click():void {
-				var chk:Boolean = false;
 				if(WmModule.getInstance.lv1OpenClose){
 					WmModule.getInstance.lv2OpenClose = !WmModule.getInstance.lv2OpenClose;
 					if(WmModule.getInstance.lv2OpenClose){
-						chk = setOpenNodes(3);
-						WmModule.getInstance.lv2OpenClose = chk;
+						setOpenNodes(3);
 					} else {
-						chk = setOpenNodes(2);
+						setOpenNodes(2);
+						WmModule.getInstance.lv3OpenClose = false;
 					}
 				}
-//						WmModule.getInstance.lv3OpenClose = chk;
-						
-						trace('l1c',WmModule.getInstance.lv1OpenClose);
-						trace('l2c',WmModule.getInstance.lv2OpenClose);
-						trace('l3c',WmModule.getInstance.lv3OpenClose);		
 			}
 			
-			public function setOpenNodes(numLevels:int = 1):Boolean
+			public function setOpenNodes(numLevels:int = 1):void
 			{
-				var chk:Boolean = false;
 				var hcv:HierarchicalCollectionView = DG.dataProvider as HierarchicalCollectionView;
 				var dataCursor:IHierarchicalCollectionViewCursor = DG.dataProvider.createCursor();
 				dataCursor.seek(CursorBookmark.FIRST);
@@ -183,12 +163,7 @@
 				while (!dataCursor.afterLast)
 				{
 					if (dataCursor.currentDepth < numLevels) {
-						trace('lv=',dataCursor.currentDepth);
 						if(dataCursor.current.children != null &&  dataCursor.current.children.length > 0 ){
-							if(dataCursor.currentDepth == (numLevels -1) ){
-								trace('true');
-								chk = true;
-							}
 							hcv.openNode(dataCursor.current);
 						}
 					} else {
@@ -199,67 +174,22 @@
 				
 				dataCursor.seek(CursorBookmark.FIRST, verticalScrollPosition);
 				hcv.refresh();
-				trace('chk',chk);
-				return chk;
 			}
 			
 			//must be in every project that use CustomADG
 			public function lv3click():void {
-			var chk:Boolean = false;
 				if(WmModule.getInstance.lv2OpenClose){
 					WmModule.getInstance.lv3OpenClose = !WmModule.getInstance.lv3OpenClose;
 					if(WmModule.getInstance.lv3OpenClose){
-						chk= setOpenNodes(4);
+						setOpenNodes(4);
 					} else {
 						setOpenNodes(3);
 					}
 				}
-				WmModule.getInstance.lv3OpenClose = chk;
-				trace('l1c',WmModule.getInstance.lv1OpenClose);
-				trace('l2c',WmModule.getInstance.lv2OpenClose);
-				trace('l3c',WmModule.getInstance.lv3OpenClose);	
 			}
 			
 				
 				
-			protected function dg_itemOpenHandler(event:AdvancedDataGridEvent):void
-			{
-				var i:int =	DG.getCurrentDepth(event.item);	
-				//					trace('open',chkOpenAll(i));
-				WmModule.getInstance.setCurrDeptOpen(i,true);
-			}
-			
-			protected function dg_itemCloseHandler(event:AdvancedDataGridEvent):void
-			{
-				var i:int = DG.getCurrentDepth(event.item);	
-				//					trace('dapth is = ',i);
-				//					trace('close',chkOpenAll(i));
-				WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));
-				
-			}
-			
-			private function chkOpenAll(depth:int):Boolean {
-				var hcv:HierarchicalCollectionView = DG.dataProvider as HierarchicalCollectionView;
-				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-				var i:int = 0;			
-				dataCursor.seek(CursorBookmark.FIRST);
-				while (!dataCursor.afterLast)
-				{
-					//					trace('isopen',dg.isItemOpen(dataCursor.current));
-					if (dataCursor.currentDepth >= depth) {
-						if(DG.isItemOpen(dataCursor.current)){
-							i++;
-						}
-					} 
-					dataCursor.moveNext();
-				}
-				
-				dataCursor.seek(CursorBookmark.FIRST, verticalScrollPosition);
-				hcv.refresh();	
-				
-				return i>0;
-			}
-			
 		]]>
 	</fx:Script>
 	<s:BorderContainer width="100%" height="100%">
@@ -344,70 +274,80 @@
 							 folderOpenIcon="{null}" fontFamily="Franklin Gothic Medium"
 							 fontSize="10" fontWeight="bold" headerHeight="20"
 							 horizontalScrollPolicy="off" indentation="17" minColumnWidth="0"
-							 rowHeight="20" treeColumn="{ID_column}" verticalAlign="middle"
-							 verticalScrollPolicy="off"
-							 itemOpen="dg_itemOpenHandler(event)"
-							 itemClose="dg_itemCloseHandler(event)"
-							 >
+							 rowHeight="20" sortExpertMode="true" treeColumn="{ID_column}"
+							 verticalAlign="middle" verticalScrollPolicy="off">
 				<pages:dataProvider>
 					<mx:HierarchicalData source="{AC2}"/>
 				</pages:dataProvider>
 				<pages:columns>
 					<mx:AdvancedDataGridColumn width="20" dataField="checked" draggable="false"
 											   itemRenderer="component.CheckboxItemRenderer"
+											   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 											   rendererIsEditor="false" resizable="true"
 											   sortable="false" textAlign="center"/>
-										<mx:AdvancedDataGridColumn width="20" dataField="Priority"
-																   draggable="false" headerText=""
-																   resizable="false"
-																   sortable="false">
-					<mx:itemRenderer>
-					<fx:Component>
-					<mx:HBox width="30" horizontalAlign="center" verticalAlign="middle">
-					
-					<fx:Script>
-						<![CDATA[
-							import component.CustomTitleWindow;
-							
-							import mx.containers.TitleWindow;
-							import mx.core.FlexGlobals;
-							import mx.events.CloseEvent;
-							import mx.managers.PopUpManager;
-							//											private var ttw:WmTitleWindows = new WmTitleWindows();	
-							private var ttw:WmTitleWindows = new WmTitleWindows();	
-							protected function image1_clickHandler(event:MouseEvent):void
-							{
-								ttw.addEventListener(CloseEvent.CLOSE,closePopup);
-								ttw.ld = data;
-								PopUpManager.addPopUp(ttw,FlexGlobals.topLevelApplication as DisplayObject,true);
-								PopUpManager.centerPopUp(ttw);
-								ttw.setData();
-							
-							}
-							
-							protected function closePopup(event:Event):void
-							{
-								PopUpManager.removePopUp(ttw);										
-							}
-						
-						]]>
-					</fx:Script>
-					
-					<s:Image click="image1_clickHandler(event)"
-							 source="@Embed('assets/iconinfo.png')">
-					<fx:Script>
-						<![CDATA[
-							import mx.controls.Alert;
-						]]>
-					</fx:Script>
-					</s:Image>
-					</mx:HBox>
-					
-					</fx:Component>
-					</mx:itemRenderer>
-					</mx:AdvancedDataGridColumn>
 					<mx:AdvancedDataGridColumn width="20" dataField="Priority" draggable="false"
-											   headerText="" resizable="false" sortable="false"/>
+											   headerText="" resizable="false" sortable="false">
+						<mx:headerRenderer>
+							<fx:Component>
+								<mx:HBox width="30" horizontalAlign="center" verticalAlign="middle">																
+									<s:Image 
+											 source="@Embed('assets/iconinfo.png')">
+										<fx:Script>
+											<![CDATA[
+												import mx.controls.Alert;
+											]]>
+										</fx:Script>
+									</s:Image>
+								</mx:HBox>						
+							</fx:Component>							
+						</mx:headerRenderer>
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:HBox width="30" horizontalAlign="center" verticalAlign="middle">							
+								<fx:Script>
+									<![CDATA[
+										import component.CustomTitleWindow;
+										
+										import mx.containers.TitleWindow;
+										import mx.core.FlexGlobals;
+										import mx.events.CloseEvent;
+										import mx.managers.PopUpManager;
+										//											private var ttw:WmTitleWindows = new WmTitleWindows();	
+										private var ttw:WmTitleWindows = new WmTitleWindows();	
+										protected function image1_clickHandler(event:MouseEvent):void
+										{
+											ttw.addEventListener(CloseEvent.CLOSE,closePopup);
+											ttw.ld = data;
+											PopUpManager.addPopUp(ttw,FlexGlobals.topLevelApplication as DisplayObject,true);
+											PopUpManager.centerPopUp(ttw);
+											ttw.setData();
+										
+										}
+										
+										protected function closePopup(event:Event):void
+										{
+											PopUpManager.removePopUp(ttw);										
+										}
+									
+									]]>
+								</fx:Script>
+								
+								<s:Image click="image1_clickHandler(event)"
+										 source="@Embed('assets/iconinfo.png')">
+								<fx:Script>
+									<![CDATA[
+										import mx.controls.Alert;
+									]]>
+								</fx:Script>
+								</s:Image>
+								</mx:HBox>						
+							</fx:Component>
+						</mx:itemRenderer>
+					</mx:AdvancedDataGridColumn>
+					<mx:AdvancedDataGridColumn width="40" dataField="Priority" draggable="false"
+											   headerText=""
+											   itemRenderer="component.PriorityItemRenderer"
+											   resizable="false" sortable="false"/>
 					<mx:AdvancedDataGridColumn id="ID_column" width="200" dataField="ID"
 											   draggable="false" fontFamily="Franklin Gothic Medium"
 											   fontSize="10" fontWeight="normal" resizable="false"

@@ -120,7 +120,7 @@ package david.pages
 				level3 = chk;
 			}
 			
-			if(value == 1 && chk ){
+			if(value == 1 ){
 				lv1OpenClose = true;
 				level1 = true;
 				level2 = chk;

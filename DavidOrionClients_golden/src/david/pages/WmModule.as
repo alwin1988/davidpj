@@ -68,13 +68,26 @@ package david.pages
 					lv2OpenClose = false;
 					lv3OpenClose = false;
 					lv4OpenClose = false;
+					level1 = true;
+					level2 = true;
+					level3 = false;
+					level4 = false;
 				}
 			} else if(value == 1  ){
-				if(!chk){
+				if(chk){
+//					level1 = true;
+//					level2 = true;
+//					level3 = false;
+//					level4 = false;
+				} else {
 					lv1OpenClose = false;
 					lv2OpenClose = false;
 					lv3OpenClose = false;
 					lv4OpenClose = false;
+					level1 = true;
+					level2 = false;
+					level3 = false;
+					level4 = false;
 				}
 			} 			
 		}
@@ -90,20 +103,28 @@ package david.pages
 			
 			if(value == 4 && chk ){
 				lv3OpenClose = true;				
+				level3 = chk;
 			}
 			
 			
 			if(value == 3 && chk ){
 				lv3OpenClose = true;				
+				level3 = chk;
+				level4 = chk;
 			}
 			
 			
 			if(value == 2 && chk ){
 				lv2OpenClose = true;				
+				level2 = chk;
+				level3 = chk;
 			}
 			
 			if(value == 1 && chk ){
-				lv1OpenClose = true;				
+				lv1OpenClose = true;
+				level1 = true;
+				level2 = chk;
+				
 			}
 		}	
 			

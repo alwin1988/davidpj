@@ -14,6 +14,7 @@
 			import mx.collections.HierarchicalCollectionView;
 			import mx.collections.IHierarchicalCollectionViewCursor;
 			import mx.collections.XMLListCollection;
+			import mx.events.AdvancedDataGridEvent;
 			import mx.utils.ObjectUtil;
 						
 			//############################### Variable #################################//
@@ -68,6 +69,18 @@
 //									checked:"false"}
 //						]}
 //				]);
+			
+/* 			, children:[
+				{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+					Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+					Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+					checked:"false",children:[
+						{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+							Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+							checked:"false" }
+					]}
+			] */
 			private var AC2:ArrayCollection = new ArrayCollection(
 				[
 						{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
@@ -81,7 +94,17 @@
 						 	{EntityType:"O3", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
 									Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 									Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
-									checked:"false"}
+									checked:"false" , children:[
+										{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+											Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+											Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+											checked:"false",children:[
+												{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+													Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+													Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+													checked:"false" }
+											]}
+									]}
 						]},
 						{EntityType:"B4", Priority:"4", ID:"Batch2ID", Type:"Batch2Type", 
 							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
@@ -126,15 +149,29 @@
 			
 			
 			public function lv1Click(e:MouseEvent):void {
+				var chk:Boolean = false;
 				WmModule.getInstance.lv1OpenClose = !WmModule.getInstance.lv1OpenClose;
 				if(WmModule.getInstance.lv1OpenClose){
-					setOpenNodes(2);
+					chk = setOpenNodes(2);
 				} else {
 					closeFolder();
-					WmModule.getInstance.lv2OpenClose = false;
 				}
+				
+				WmModule.getInstance.level2 = chk;
+				if(!chk){
+					WmModule.getInstance.level3 = chk;
+					WmModule.getInstance.level4 = chk;
+				}
+				
+				if(!WmModule.getInstance.level2){
+					WmModule.getInstance.lv2OpenClose = chk;
+				} 
+				
+				trace('l1c',WmModule.getInstance.lv1OpenClose);
+				trace('l2c',WmModule.getInstance.lv2OpenClose);
+				trace('l3c',WmModule.getInstance.lv3OpenClose);
 			}
-			
+	
 			
 			
 			public function selectAllWmSuccess(ac:ArrayCollection):void {
@@ -143,52 +180,183 @@
 			
 			//must be in every project that use CustomADG
 			public function lv2click():void {
-				if(WmModule.getInstance.lv1OpenClose){
+				var chk:Boolean = false;
+				if(WmModule.getInstance.level1){
 					WmModule.getInstance.lv2OpenClose = !WmModule.getInstance.lv2OpenClose;
 					if(WmModule.getInstance.lv2OpenClose){
-						setOpenNodes(3);
-					} else {
-						setOpenNodes(2);
+						chk = setOpenNodes(3);
+						WmModule.getInstance.level3 = chk;
 						WmModule.getInstance.lv3OpenClose = false;
+						WmModule.getInstance.lv4OpenClose = false;
+						if(!chk){
+						WmModule.getInstance.level4 = chk;
+						}
+					} else {
+						chk = setOpenNodes(2);
+						WmModule.getInstance.level2 = chk;
+						if(!chk){
+							WmModule.getInstance.level3 = chk;
+							WmModule.getInstance.level4 = chk;
+						} else {
+							WmModule.getInstance.level3 = !chk;
+							
+						}
 					}
 				}
+						
+						trace('l1c',WmModule.getInstance.lv1OpenClose);
+						trace('l2c',WmModule.getInstance.lv2OpenClose);
+						trace('l3c',WmModule.getInstance.lv3OpenClose);		
 			}
 			
-			public function setOpenNodes(numLevels:int = 1):void
+			public function setOpenNodes(numLevels:int = 1):Boolean
 			{
+				var chk:Boolean = false;
 				var hcv:HierarchicalCollectionView = DG.dataProvider as HierarchicalCollectionView;
 				var dataCursor:IHierarchicalCollectionViewCursor = DG.dataProvider.createCursor();
 				dataCursor.seek(CursorBookmark.FIRST);
-				
 				while (!dataCursor.afterLast)
 				{
 					if (dataCursor.currentDepth < numLevels) {
+						trace('lv=',dataCursor.currentDepth);
 						if(dataCursor.current.children != null &&  dataCursor.current.children.length > 0 ){
+//							if(dataCursor.currentDepth == (numLevels -1) ){
+//								trace('true');
+//								chk = true;
+//							}
 							hcv.openNode(dataCursor.current);
 						}
 					} else {
+						
+						if(dataCursor.currentDepth == numLevels ){
+							if(dataCursor.current.children != null &&  dataCursor.current.children.length > 0 ){
+								trace('true');
+								chk = true;
+							}
+						}	
 						hcv.closeNode(dataCursor.current);
+						
 					}
 					dataCursor.moveNext();
 				}
 				
 				dataCursor.seek(CursorBookmark.FIRST, verticalScrollPosition);
 				hcv.refresh();
+				trace('chk',chk);
+				return chk;
+			}
+			
+			public function setOpenCurrNodes(numLevels:int = 1):Boolean
+			{
+				var chk:Boolean = false;
+				var dataCursor:IHierarchicalCollectionViewCursor = DG.dataProvider.createCursor();
+				dataCursor.seek(CursorBookmark.FIRST);
+				while (!dataCursor.afterLast)
+				{
+						if(dataCursor.currentDepth == numLevels+1 ){
+							if(dataCursor.current.children != null &&  dataCursor.current.children.length > 0 ){
+								trace('true');
+								chk = true;
+							}
+						}	
+					dataCursor.moveNext();
+				}
+				
+				dataCursor.seek(CursorBookmark.FIRST, verticalScrollPosition);
+				trace('chk',chk);
+				return chk;
 			}
 			
 			//must be in every project that use CustomADG
 			public function lv3click():void {
-				if(WmModule.getInstance.lv2OpenClose){
+//			var chk:Boolean = false;
+//			trace(WmModule.getInstance.level2);
+//				if(WmModule.getInstance.level2){
+//					trace(WmModule.getInstance.lv3OpenClose);
+//					WmModule.getInstance.lv3OpenClose = !WmModule.getInstance.lv3OpenClose;
+//					trace(WmModule.getInstance.lv3OpenClose);
+//					if(WmModule.getInstance.lv3OpenClose){
+//						chk= setOpenNodes(4);
+//						WmModule.getInstance.level4 = chk;
+//					} else {
+//						chk = setOpenNodes(3);
+//						WmModule.getInstance.level3 = chk;
+//						if(!chk){
+//							WmModule.getInstance.lv4OpenClose = chk;
+//						}
+//						
+//					}
+//				}
+//				trace('l1c',WmModule.getInstance.lv1OpenClose);
+//				trace('l2c',WmModule.getInstance.lv2OpenClose);
+//				trace('l3c',WmModule.getInstance.lv3OpenClose);
+				
+				
+				var chk:Boolean = false;
+				trace(WmModule.getInstance.level2);
+				trace(WmModule.getInstance.level3);
+				trace(WmModule.getInstance.lv3OpenClose);
+				if(WmModule.getInstance.level2){
 					WmModule.getInstance.lv3OpenClose = !WmModule.getInstance.lv3OpenClose;
 					if(WmModule.getInstance.lv3OpenClose){
-						setOpenNodes(4);
+						chk = setOpenNodes(4);
+						WmModule.getInstance.level4 = chk;
+						WmModule.getInstance.lv4OpenClose = false;
+						trace(WmModule.getInstance.level2);
+						trace(WmModule.getInstance.level3);
+						trace(WmModule.getInstance.lv3OpenClose);
+
 					} else {
-						setOpenNodes(3);
+						chk = setOpenNodes(3);
+						WmModule.getInstance.level3 = chk;
+						if(!chk){
+							WmModule.getInstance.level4 = chk;
+						}
+						trace(WmModule.getInstance.level2);
+						trace(WmModule.getInstance.level3);
+						trace(WmModule.getInstance.lv3OpenClose);
+
 					}
 				}
+				
+			}
+			protected function dg_itemOpenHandler(event:AdvancedDataGridEvent):void
+			{
+				var i:int =	DG.getCurrentDepth(event.item);	
+				var chk:Boolean = setOpenCurrNodes(i);
+				WmModule.getInstance.setCurrDeptOpen(i,chk);  // 1,true
 			}
 			
+			protected function dg_itemCloseHandler(event:AdvancedDataGridEvent):void
+			{
+				var i:int = DG.getCurrentDepth(event.item);	
+				var chk:Boolean = setOpenCurrNodes(i);
 				
+				WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));
+				
+			}
+			
+			private function chkOpenAll(depth:int):Boolean {
+				var hcv:HierarchicalCollectionView = DG.dataProvider as HierarchicalCollectionView;
+				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+				var i:int = 0;			
+				dataCursor.seek(CursorBookmark.FIRST);
+				while (!dataCursor.afterLast)
+				{
+					//					trace('isopen',dg.isItemOpen(dataCursor.current));
+					if (dataCursor.currentDepth >= depth) {
+						if(DG.isItemOpen(dataCursor.current)){
+							i++;
+						}
+					} 
+					dataCursor.moveNext();
+				}
+				
+				dataCursor.seek(CursorBookmark.FIRST, verticalScrollPosition);
+				hcv.refresh();	
+				
+				return i>0;
+			}
 				
 		]]>
 	</fx:Script>
@@ -262,7 +430,7 @@
 									 dropShadowVisible="false" fontFamily="Franklin Gothic Medium"
 									 fontSize="11" fontWeight="normal" headerHeight="16"
 									 skinClass="skin.CustomTitleWindowSkin"
-									 title="Batches &amp; Documents">
+									 title="Batches &amp; Documents1">
 	
 	<mx:Canvas id="C2" x="0" y="0" width="100%" height="100%" borderVisible="false"
 			   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
@@ -275,7 +443,10 @@
 							 fontSize="10" fontWeight="bold" headerHeight="20"
 							 horizontalScrollPolicy="off" indentation="17" minColumnWidth="0"
 							 rowHeight="20" sortExpertMode="true" treeColumn="{ID_column}"
-							 verticalAlign="middle" verticalScrollPolicy="off">
+							 verticalAlign="middle" verticalScrollPolicy="off"
+							 itemOpen="dg_itemOpenHandler(event)"
+							 itemClose="dg_itemCloseHandler(event)"
+							 >
 				<pages:dataProvider>
 					<mx:HierarchicalData source="{AC2}"/>
 				</pages:dataProvider>
@@ -369,12 +540,12 @@
 																	 source="{ WmModule.getInstance.lv1OpenClose ? FlexGlobals.topLevelApplication.FLODER_OPEN : FlexGlobals.topLevelApplication.FLODER_CLOSE}"/>
 															<s:Spacer width="{ outerDocument.DG.getStyle('indentation')-12 }"/>
 															<s:Image id="imglv2"
-																	 visible="{WmModule.getInstance.lv1OpenClose}"
+																	 visible="{WmModule.getInstance.level2}"
 																	 click="outerDocument.lv2click()"
 																	 source="{WmModule.getInstance.lv2OpenClose ? FlexGlobals.topLevelApplication.FLODER_OPEN2 : FlexGlobals.topLevelApplication.FLODER_CLOSE2}"/>
 															<s:Spacer width="{ outerDocument.DG.getStyle('indentation')-12 }"/>
 															<s:Image id="imglv3"
-																	 visible="{WmModule.getInstance.lv2OpenClose}"
+																	 visible="{WmModule.getInstance.level3}"
 																	 click="outerDocument.lv3click()"
 																	 source="{ WmModule.getInstance.lv3OpenClose ? FlexGlobals.topLevelApplication.FLODER_OPEN3 : FlexGlobals.topLevelApplication.FLODER_CLOSE3 }"/>
 															<s:Spacer width="5"/>

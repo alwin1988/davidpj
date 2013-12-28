@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" 
+								  xmlns:mx="library://ns.adobe.com/flex/mx" 
+								  focusEnabled="true" xmlns:component="component.*">
+	<!--<s:Label id="lblData" top="0" left="0" right="0" bottom="0" text="{listData.label}" />-->
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.events.MenuEvent;
+			
+			[Bindable]
+			public var menuData:Array = 
+				[
+					{label:"Set to priority 1", icon:"pri1button", data:"1"},
+					{label:"Set to priority 2", icon:"pri2button", data:"2"},
+					{label:"Set to priority 3", icon:"pri3button", data:"3"},
+					{label:"Set to priority 4", icon:"pri4button", data:"4"},
+					{label:"Set to priority 5", icon:"pri5button", data:"5"}
+				];
+			
+			[Embed("assets/pri1button.png")]
+			public const pri1button:Class;
+			
+			[Embed("assets/pri2button.png")]
+			public const pri2button:Class;
+			
+			[Embed("assets/pri3button.png")]
+			public const pri3button:Class;
+			
+			[Embed("assets/pri4button.png")]
+			public const pri4button:Class;
+			
+			[Embed("assets/pri5button.png")]
+			public const pri5button:Class;		
+		]]>
+	</fx:Script>
+	
+	<mx:PopUpMenuButton width="35" height="17" verticalCenter="0" verticalGap="2"
+						label="" 
+						dataProvider="{menuData}"/>
+</s:MXAdvancedDataGridItemRenderer>

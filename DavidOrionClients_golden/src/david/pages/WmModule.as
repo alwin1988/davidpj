@@ -114,9 +114,9 @@ package david.pages
 			}
 			
 			
-			if(value == 2 && chk ){
+			if(value == 2){
 				lv2OpenClose = true;				
-				level2 = chk;
+				level2 = true;
 				level3 = chk;
 			}
 			

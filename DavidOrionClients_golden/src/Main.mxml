@@ -477,8 +477,7 @@
 					<mx:ViewStack id="mainStackID" width="100%" height="100%" creationPolicy="all">
 						<pages:Home id="homeID"/>
 						<pages:CA id="configAdminID"/>
-						<pages:WMplay id="caseManagerID"/>
-						<!--<pages:CM_bk id="caseManager_bk_ID"/>--> <!--Test-->
+						<pages:WM id="caseManagerID"/>
 						<pages:CR id="chartReportID"/>
 						<pages:DE id="documentExplorerID"/>
 					</mx:ViewStack>

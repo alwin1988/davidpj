@@ -120,69 +120,59 @@
 			
 			protected function canvas1_creationCompleteHandler():void {
 				//Set dataprovider1 list
-				dataProvider1List = new ArrayCollection(
-					[
-						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
-						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
-						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
-						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
-					]);
+				dataProvider1List = new ArrayCollection([
+					{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+					{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+					{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+					{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}]);
 				
 				//Set dataprovider2 list
-				dataProvider2List = new ArrayCollection(
-					[
-						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
-						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
-						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false},
-						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false}
-					]);
+				dataProvider2List = new ArrayCollection([
+					{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+					{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+					{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false},
+					{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false}]);
 				
 				//Set dataprovider3 list
-				dataProvider3List = new ArrayCollection(
-					[
-						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
-						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
-						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
-						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
-					]);
+				dataProvider3List = new ArrayCollection([
+					{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+					{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+					{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+					{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}]);
 				
 				//Set dataprovider4 list
-				dataProvider4List = new ArrayCollection(
-					[
-						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
-						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
-						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
-						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
-					]);
+				dataProvider4List = new ArrayCollection([
+					{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+					{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+					{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+					{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}]);
 				
 				//Set dataprovider5 list
-				dataProvider5List = new ArrayCollection(
-					[
-						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
-						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
-						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
-						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
-					]);				
+				dataProvider5List = new ArrayCollection([
+					{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+					{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+					{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+					{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
+						IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}]);				
 			}
 
 			public function init():void {

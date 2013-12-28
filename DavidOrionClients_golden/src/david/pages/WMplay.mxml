@@ -617,7 +617,7 @@
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Pri" dataField="Priority" 
 																	   width="40" minWidth="40" textAlign="left"
 																	   draggable="false" resizable="false" sortable="true"
-																	   itemRenderer="component.PriorityItemRenderer"/>
+																	   itemRenderer="component.PopUpButtonItemRenderer"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID" headerText="ID" dataField="ID"
 																	   width="{WM_Batches_DG_ID.width}" minWidth="200" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true">

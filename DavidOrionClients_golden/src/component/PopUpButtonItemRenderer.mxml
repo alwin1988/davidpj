@@ -6,7 +6,8 @@
 	<!--<s:Label id="lblData" top="0" left="0" right="0" bottom="0" text="{listData.label}" />-->
 	<fx:Script>
 		<![CDATA[
-			
+			import mx.controls.Menu;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
 			import mx.events.MenuEvent;
 			
 			[Bindable]
@@ -32,11 +33,49 @@
 			public const pri4button:Class;
 			
 			[Embed("assets/pri5button.png")]
-			public const pri5button:Class;		
+			public const pri5button:Class;	
+			
+			override public function set data(value:Object):void
+			{	
+				super.data = value;	
+
+				
+				//after execute invalidateProperties() call commitProperties()
+				invalidateProperties();
+			}
+			
+			override protected function commitProperties():void 
+			{ 
+				super.commitProperties();
+				
+				//get dataField that use with ItemRenderer
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(data[adgld.dataField]);
+				
+				if (pmb.popUp)
+				{
+					if (data[adgld.dataField] == "1"){
+						//pmb.selectedIndex = 0;
+						Menu(pmb.popUp).selectedIndex = 0;
+					}else if (data[adgld.dataField] == "2"){
+						//pmb.selectedIndex = 1;
+						Menu(pmb.popUp).selectedIndex = 1;
+					}else if (data[adgld.dataField] == "3"){
+						//pmb.selectedIndex = 2;
+						Menu(pmb.popUp).selectedIndex = 2;
+					}else if (data[adgld.dataField] == "4"){
+						//pmb.selectedIndex = 3;	
+						Menu(pmb.popUp).selectedIndex = 3;
+					}else if (data[adgld.dataField] == "5"){
+						//pmb.selectedIndex = 4;	
+						Menu(pmb.popUp).selectedIndex = 4;
+					}	
+				}
+			}		
 		]]>
 	</fx:Script>
 	
-	<mx:PopUpMenuButton width="35" height="17" verticalCenter="0" verticalGap="2"
+	<mx:PopUpMenuButton id="pmb" width="35" height="17" verticalCenter="0" verticalGap="2"
 						label="" 
 						dataProvider="{menuData}"/>
 </s:MXAdvancedDataGridItemRenderer>

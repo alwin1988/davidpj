@@ -4,12 +4,12 @@
 							 xmlns:mx="library://ns.adobe.com/flex/mx"
 							 xmlns:component="component.*"
 							 xmlns:local="*"
-							 xmlns:nndemo="nndemo.*"
+							 xmlns:docviewer="docviewer.*"
 							 creationComplete="customtitlewindow1_creationCompleteHandler(event)"
 							 >
 	<fx:Script>
 		<![CDATA[
-			import event.NNDemoEvent;
+			import event.DocViewerEvent;
 			
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
@@ -26,23 +26,23 @@
 			protected function customtitlewindow1_creationCompleteHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
-				this.addEventListener(NNDemoEvent.NNDEMO_CHANGE, changeVS);
-				cb.selectedIndex = myindex;
+// DM			this.addEventListener(DocViewerEvent.DocViewer_CHANGE, changeVS);
+// DM			cb.selectedIndex = myindex;
 			}
 			
-			public function changeVS(evt:NNDemoEvent):void
+			public function changeVS(evt:DocViewerEvent):void
 			{
-				cb.selectedIndex = evt.nndemo_index;
+// DM			cb.selectedIndex = evt.docviewer_index;
 			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<component:CBViewStack id="cb" width="100%" height="100%">
+	<!--component:CBViewStack id="cb" width="100%" height="100%">
 		<nndemo:NNDemo1 width="100%" height="100%"/>
 		<nndemo:NNDemo2 width="100%" height="100%"/>
 		<nndemo:NNDemo3 width="100%" height="100%"/>
 		<nndemo:NNDemo4 width="100%" height="100%"/>
-	</component:CBViewStack>
+	</component:CBViewStack-->
 </s:Group>

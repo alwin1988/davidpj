@@ -54,7 +54,6 @@
 			import mx.collections.HierarchicalCollectionView;
 			import mx.collections.IHierarchicalCollectionViewCursor;
 			import mx.collections.XMLListCollection;
-			import mx.core.FlexGlobals
 			import mx.events.AdvancedDataGridEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
@@ -89,58 +88,100 @@
 				</>;
 			
 			[Bindable]
+			//			private var AC2:ArrayCollection = new ArrayCollection(
+			//				[
+			//						{EntityType:"S", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+			//							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			//							Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			//							checked:"false", children: [
+			//							{EntityType:"O", Priority:"1", ID:"Obj1ID", Type:"Doc1Type", 
+			//								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			//								Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			//								checked:"false"},
+			//							{EntityType:"O", Priority:"1", ID:"Obj2ID", Type:"Doc2Type", 
+			//								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			//								Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			//								checked:"false"}
+			//						]},
+			//						{EntityType:"B", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
+			//							Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			//							Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			//							checked:"false", children: [
+			//								{EntityType:"O", Priority:"1", ID:"Obj3ID", Type:"Doc1Type", 
+			//									Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			//									Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			//									checked:"false"},
+			//								{EntityType: "O", Priority:"1", ID:"Obj4ID", Type:"Doc2Type", 
+			//									Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			//									Started:"dd/mm/yyyy hh:mm", Completed:"nnn", Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			//									checked:"false"}
+			//						]}
+			//				]);
+			
+			/* 			, children:[
+			{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+			Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			checked:"false",children:[
+			{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+			Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+			Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+			checked:"false" }
+			]}
+			] */
 			private var AC2:ArrayCollection = new ArrayCollection(
 				[
-					{EntityType:"Batch", Priority:"1", ID:"Batch1ID", Type:"Batch1Type", 
+					{EntityType:"S1", Priority:"1", ID:"Batch1ID", Type:"Batch1Type", 
 						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 						Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
 						checked:"false", children: [
-							{EntityType:"SubBatch", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+							{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
 								Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"2",
+								Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
 								checked:"false", children: [
-									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+									{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
 										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"},
-									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+										checked:"false", children: [
+											{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+												Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+												Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+												checked:"false"},
+											{EntityType:"O3", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
+												Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+												Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+												checked:"false" }
+										]},
+									{EntityType:"O3", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
 										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"},
-									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"},
-									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"}
-								]}
+										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+										checked:"false" }
+								]},
 						]},
-					{EntityType:"Batch", Priority:"4", ID:"Batch2ID", Type:"Batch2Type", 
+					{EntityType:"B4", Priority:"4", ID:"Batch2ID", Type:"Batch2Type", 
 						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 						Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
 						checked:"false", children: [
-							{EntityType:"Object", Priority:"5", ID:"Obj3ID", Type:"Doc1Type", 
+							{EntityType:"O5", Priority:"5", ID:"Obj3ID", Type:"Doc1Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"},
-							{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+								Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+								checked:"false", children: [
+									{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+										checked:"false"},
+									{EntityType:"O3", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
+										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+										checked:"false" }
+								]},
+							{EntityType: "O", Priority:"6", ID:"Obj4ID", Type:"Doc2Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"},
-							{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"},
-							{EntityType: "Object", Priority:"6", ID:"Obj4ID", Type:"Doc2Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:34, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+								Started:"dd/mm/yyyy hh:mm", Completed:34, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
 								checked:"false"}
 						]}
 				]);
-
-
+			
 			/*private var WM_Batches_AC:ArrayCollection = new ArrayCollection(
 				[
 					{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
@@ -393,7 +434,7 @@
 			
 			protected function dg_itemCloseHandler(event:AdvancedDataGridEvent):void
 			{
-				var i:int = WM_Batches_DG.getCurrentDepth(event.item);
+				var i:int = WM_Batches_DG.getCurrentDepth(event.item);	
 				var chk:Boolean = setOpenCurrNodes(i);
 				
 				WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));

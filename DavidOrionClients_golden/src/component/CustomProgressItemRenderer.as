@@ -72,6 +72,8 @@ package component
 		{ 
 			super.commitProperties();
 			
+			uic.graphics.clear();
+			
 			//get dataField that use with ItemRenderer
 			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 			progressBarPercent = data[adgld.dataField];
@@ -81,8 +83,10 @@ package component
 			var adg:AdvancedDataGrid =listData.owner as AdvancedDataGrid;
 			var adgc:AdvancedDataGridColumn = adg.columns[index] as AdvancedDataGridColumn;
 			
-			trace(adgc.width*progressBarPercent/100);
-			trace(Math.round(adgc.width*progressBarPercent/100));
+			trace("before round : ",adgc.width*progressBarPercent/100);
+			trace("after round : ",Math.round(adgc.width*progressBarPercent/100));
+			trace("percent : ",progressBarPercent.toString() + "%");
+			//trace(adgc.width*progressBarPercent/100);
 			
 			uic.graphics.beginFill(progressBarColor);
 			//hide border line

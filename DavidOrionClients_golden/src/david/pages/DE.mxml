@@ -46,24 +46,16 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.collections.ArrayCollection;
-			import mx.collections.CursorBookmark
-			import mx.collections.HierarchicalCollectionView;
-			import mx.collections.IHierarchicalCollectionViewCursor;
-			import mx.collections.XMLListCollection;
-			import mx.controls.Alert;
-			import mx.core.FlexGlobals;
-			import mx.events.AdvancedDataGridEvent;
-			import mx.events.CloseEvent;
-			import mx.events.ListEvent;
-			import mx.events.MenuEvent;
-			import mx.managers.PopUpManager;
-			import mx.utils.ObjectUtil;
 			
 			import component.ExtendsCheckbox2;
 			import component.PopUpCustomTitleWindow;
 			
 			import event.DocViewerEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
 			
 			//[Bindable] private var docFormatDataProvider:ArrayCollection = new ArrayCollection(); Comment on 20131217
 			
@@ -309,49 +301,113 @@
 			
 			//Add 20131220
 			public function openDataGridWindow(dgName:String):void {
-				if ( dgName == '1' ) {
-					DE_DG1_TW.visible = true;
-					DE_DG1_TW.includeInLayout = true;
+				switch (dgName) {
+					case "Folder1" :
+						DE_DG1_TW.visible = true;
+						DE_DG1_TW.includeInLayout = true;
+						break;
 					
-				} else if ( dgName == '2' ) {
-					DE_DG2_TW.visible = true;
-					DE_DG2_TW.includeInLayout = true;
+					case "Subfolder11" :
+						DE_DG1_SUB1_TW.visible = true;
+						DE_DG1_SUB1_TW.includeInLayout = true;
+						break;
 					
-				} else if ( dgName == '3' ) {
-					DE_DG3_TW.visible = true;
-					DE_DG3_TW.includeInLayout = true;
+					case "Subfolder12" :
+						DE_DG1_SUB2_TW.visible = true;
+						DE_DG1_SUB2_TW.includeInLayout = true;
+						break;
 					
-				} else if ( dgName == '4' ) {
-					DE_DG4_TW.visible = true;
-					DE_DG4_TW.includeInLayout = true;
+					case "Subfolder13" :
+						DE_DG1_SUB3_TW.visible = true;
+						DE_DG1_SUB3_TW.includeInLayout = true;
+						break;
 					
-				} else if ( dgName == '5' ) {
-					DE_DG5_TW.visible = true;
-					DE_DG5_TW.includeInLayout = true;
+					case "Folder2" :
+						DE_DG2_TW.visible = true;
+						DE_DG2_TW.includeInLayout = true;
+						break;
+					
+					case "Subfolder21" :
+						DE_DG2_SUB1_TW.visible = true;
+						DE_DG2_SUB1_TW.includeInLayout = true;
+						break;
+					
+					case "Folder3" :
+						DE_DG3_TW.visible = true;
+						DE_DG3_TW.includeInLayout = true;
+						break;
+					
+					case "Subfolder31" :
+						DE_DG3_SUB1_TW.visible = true;
+						DE_DG3_SUB1_TW.includeInLayout = true;
+						break;
+					
+					case "Subfolder32" :
+						DE_DG3_SUB2_TW.visible = true;
+						DE_DG3_SUB2_TW.includeInLayout = true;
+						break;
 				}
+				
 			}
 			
 			public function closeDataGridWindow(dgName:String):void {
-				if ( dgName == '1' ) {
-					DE_DG1_TW.visible = false;
-					DE_DG1_TW.includeInLayout = false;
+				switch (dgName) {
+					case "Folder1" :
+						DE_DG1_TW.visible = false;
+						DE_DG1_TW.includeInLayout = false;
+						DE_DG1_SUB1_TW.visible = false;
+						DE_DG1_SUB1_TW.includeInLayout = false;
+						DE_DG1_SUB2_TW.visible = false;
+						DE_DG1_SUB2_TW.includeInLayout = false;
+						DE_DG1_SUB3_TW.visible = false;
+						DE_DG1_SUB3_TW.includeInLayout = false;
+						break;
 					
-				} else if ( dgName == '2' ) {
-					DE_DG2_TW.visible = false;
-					DE_DG2_TW.includeInLayout = false;
+					case "Subfolder11" :
+						DE_DG1_SUB1_TW.visible = false;
+						DE_DG1_SUB1_TW.includeInLayout = false;
+						break;
 					
-				} else if ( dgName == '3' ) {
-					DE_DG3_TW.visible = false;
-					DE_DG3_TW.includeInLayout = false;
+					case "Subfolder12" :
+						DE_DG1_SUB2_TW.visible = false;
+						DE_DG1_SUB2_TW.includeInLayout = false;
+						break;
 					
-				} else if ( dgName == '4' ) {
-					DE_DG4_TW.visible = false;
-					DE_DG4_TW.includeInLayout = false;
+					case "Subfolder13" :
+						DE_DG1_SUB3_TW.visible = false;
+						DE_DG1_SUB3_TW.includeInLayout = false;
+						break;
 					
-				} else if ( dgName == '5' ) {
-					mytreeID
-					DE_DG5_TW.visible = false;
-					DE_DG5_TW.includeInLayout = false;
+					case "Folder2" :
+						DE_DG2_TW.visible = false;
+						DE_DG2_TW.includeInLayout = false;
+						DE_DG2_SUB1_TW.visible = false;
+						DE_DG2_SUB1_TW.includeInLayout = false;
+						break;
+					
+					case "Subfolder21" :
+						DE_DG2_SUB1_TW.visible = false;
+						DE_DG2_SUB1_TW.includeInLayout = false;
+						break;
+					
+					case "Folder3" :
+						DE_DG3_TW.visible = false;
+						DE_DG3_TW.includeInLayout = false;
+						DE_DG3_SUB1_TW.visible = false;
+						DE_DG3_SUB1_TW.includeInLayout = false;
+						DE_DG3_SUB2_TW.visible = false;
+						DE_DG3_SUB2_TW.includeInLayout = false;
+						break;
+					
+					case "Subfolder31" :
+						DE_DG3_SUB1_TW.visible = false;
+						DE_DG3_SUB1_TW.includeInLayout = false;
+						break;
+					
+					case "Subfolder32" :
+						DE_DG3_SUB2_TW.visible = false;
+						DE_DG3_SUB2_TW.includeInLayout = false;
+						break;
 				}
 			}
 			
@@ -597,12 +653,12 @@
 					</mx:VBox>
 					
 					<mx:VDividedBox id="mainDetailBoxID" width="100%" height="100%">
-						<!-- DG1 -->
-						<component:CustomTitleWindow id="DE_DG1_TW" title="DocumentClass1" 
+						<!-- ########################### DG1 ########################### -->
+						<component:CustomTitleWindow id="DE_DG1_TW" title="Folder1" 
 													 width="100%" height="100%"
 													 skinClass="component.CustomTitleWindowSkin"
 													 dropShadowVisible="false" headerHeight="16"
-													 close="mytreeID.updateTreeFromCloseEvent('1')"
+													 close="mytreeID.updateTreeFromCloseEvent('Folder1')"
 													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
@@ -628,7 +684,7 @@
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
@@ -637,7 +693,7 @@
 																	   draggable="false" resizable="false" sortable="false"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--itemRenderer="component.FileTypeIconRenderer"/-->
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
@@ -648,11 +704,164 @@
 							</mx:Canvas>
 						</component:CustomTitleWindow>
 						
-						<!-- DG2 -->
-						<component:CustomTitleWindow id="DE_DG2_TW" title="DocumentClass2" 
+						<!-- ########################### DG1 Sub1 ########################### -->
+						<component:CustomTitleWindow id="DE_DG1_SUB1_TW" title="Subfolder11" 
+													 width="100%" height="100%"
+													 skinClass="component.CustomTitleWindowSkin"
+													 dropShadowVisible="false" headerHeight="16"
+													 close="mytreeID.updateTreeFromCloseEvent('Subfolder11')"
+													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							
+							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
+									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
+								<s:VGroup height="100%" clipAndEnableScrolling="true"
+										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
+									
+									<mx:AdvancedDataGrid id="DE_DG1_SUB1"
+														 width="{DE_DG1_SUB1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 borderVisible="false" sortExpertMode="true"
+														 headerHeight="20" rowHeight="20"
+														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 dataProvider="@{dataProvider1List}"
+														 doubleClickEnabled="true" lockedColumnCount="4"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
+										<mx:groupedColumns>
+											<mx:AdvancedDataGridColumn dataField="checked" 
+																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}"
+																	   textAlign="center" 
+																	   draggable="false" resizable="false" sortable="false" 
+																	   rendererIsEditor="false"
+																	   itemRenderer="component.CheckboxItemRenderer"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}" editable="false" 
+																	   draggable="false" resizable="false" sortable="false"/>
+											<!--David commented out"/-->
+											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
+											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}" editable="false"
+																	   draggable="false" resizable="false" sortable="false" />
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+40}"
+																	   draggable="false" resizable="false" sortable="false"/> 
+											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
+											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
+											<!--David commented out"/-->
+											<!--itemRenderer="component.FileTypeIconRenderer"/-->
+											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue3" headerText="IndexField3"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue5" headerText="IndexField5"/>
+										</mx:groupedColumns>
+									</mx:AdvancedDataGrid>
+								</s:VGroup>
+							</mx:Canvas>
+						</component:CustomTitleWindow>
+						
+						<!-- ########################### DG1 Sub2 ########################### -->
+						<component:CustomTitleWindow id="DE_DG1_SUB2_TW" title="Subfolder12" 
+													 width="100%" height="100%"
+													 skinClass="component.CustomTitleWindowSkin"
+													 dropShadowVisible="false" headerHeight="16"
+													 close="mytreeID.updateTreeFromCloseEvent('Subfolder12')"
+													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							
+							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
+									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
+								<s:VGroup height="100%" clipAndEnableScrolling="true"
+										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
+									
+									<mx:AdvancedDataGrid id="DE_DG1_SUB2"
+														 width="{DE_DG1_SUB2_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 borderVisible="false" sortExpertMode="true"
+														 headerHeight="20" rowHeight="20"
+														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 dataProvider="@{dataProvider1List}"
+														 doubleClickEnabled="true" lockedColumnCount="4"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
+										<mx:groupedColumns>
+											<mx:AdvancedDataGridColumn dataField="checked" 
+																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}"
+																	   textAlign="center" 
+																	   draggable="false" resizable="false" sortable="false" 
+																	   rendererIsEditor="false"
+																	   itemRenderer="component.CheckboxItemRenderer"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}" editable="false" 
+																	   draggable="false" resizable="false" sortable="false"/>
+											<!--David commented out"/-->
+											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
+											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}" editable="false"
+																	   draggable="false" resizable="false" sortable="false" />
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+40}"
+																	   draggable="false" resizable="false" sortable="false"/> 
+											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
+											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
+											<!--David commented out"/-->
+											<!--itemRenderer="component.FileTypeIconRenderer"/-->
+											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue3" headerText="IndexField3"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue5" headerText="IndexField5"/>
+										</mx:groupedColumns>
+									</mx:AdvancedDataGrid>
+								</s:VGroup>
+							</mx:Canvas>
+						</component:CustomTitleWindow>
+						
+						<!-- ########################### DG1 Sub3 ########################### -->
+						<component:CustomTitleWindow id="DE_DG1_SUB3_TW" title="Subfolder13" 
+													 width="100%" height="100%"
+													 skinClass="component.CustomTitleWindowSkin"
+													 dropShadowVisible="false" headerHeight="16"
+													 close="mytreeID.updateTreeFromCloseEvent('Subfolder13')"
+													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							
+							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
+									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
+								<s:VGroup height="100%" clipAndEnableScrolling="true"
+										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
+									
+									<mx:AdvancedDataGrid id="DE_DG1_SUB3"
+														 width="{DE_DG1_SUB3_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 borderVisible="false" sortExpertMode="true"
+														 headerHeight="20" rowHeight="20"
+														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 dataProvider="@{dataProvider1List}"
+														 doubleClickEnabled="true" lockedColumnCount="4"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
+										<mx:groupedColumns>
+											<mx:AdvancedDataGridColumn dataField="checked" 
+																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}"
+																	   textAlign="center" 
+																	   draggable="false" resizable="false" sortable="false" 
+																	   rendererIsEditor="false"
+																	   itemRenderer="component.CheckboxItemRenderer"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}" editable="false" 
+																	   draggable="false" resizable="false" sortable="false"/>
+											<!--David commented out"/-->
+											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
+											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}" editable="false"
+																	   draggable="false" resizable="false" sortable="false" />
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+40}"
+																	   draggable="false" resizable="false" sortable="false"/> 
+											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
+											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
+											<!--David commented out"/-->
+											<!--itemRenderer="component.FileTypeIconRenderer"/-->
+											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue3" headerText="IndexField3"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue5" headerText="IndexField5"/>
+										</mx:groupedColumns>
+									</mx:AdvancedDataGrid>
+								</s:VGroup>
+							</mx:Canvas>
+						</component:CustomTitleWindow>
+						
+						<!-- ########################### DG2 ########################### -->
+						<component:CustomTitleWindow id="DE_DG2_TW" title="Folder2" 
 													 width="100%" height="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin"
-													 close="mytreeID.updateTreeFromCloseEvent('2')"
+													 close="mytreeID.updateTreeFromCloseEvent('Folder2')"
 													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
@@ -678,7 +887,7 @@
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
@@ -695,11 +904,58 @@
 							</mx:Canvas>
 						</component:CustomTitleWindow>
 						
-						<!-- DG3 -->
-						<component:CustomTitleWindow id="DE_DG3_TW" title="DocumentClass3" 
+						<!-- ########################### DG2 SUB1 ########################### -->
+						<component:CustomTitleWindow id="DE_DG2_SUB1_TW" title="Subfolder21" 
+													 width="100%" height="100%" headerHeight="16" 
+													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin"
+													 close="mytreeID.updateTreeFromCloseEvent('Subfolder21')"
+													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+							
+							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
+									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
+								<s:VGroup height="100%" clipAndEnableScrolling="true"
+										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
+									
+									<mx:AdvancedDataGrid id="DE_DG2_SUB1"
+														 width="{DE_DG2_SUB1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 borderVisible="false" sortExpertMode="true"
+														 headerHeight="20" rowHeight="20"
+														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 dataProvider="@{dataProvider1List}"
+														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+														 doubleClickEnabled="true" lockedColumnCount="4"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
+										<mx:groupedColumns>
+											<mx:AdvancedDataGridColumn dataField="checked" 
+																	   width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+20}" textAlign="center" 
+																	   draggable="false" resizable="false" sortable="false" 
+																	   rendererIsEditor="false"
+																	   itemRenderer="component.CheckboxItemRenderer"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
+											<mx:AdvancedDataGridColumn width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+20}" editable="false" 
+																	   draggable="false" resizable="false" sortable="false"/>
+											<!--David commented out"/-->
+											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
+											<mx:AdvancedDataGridColumn width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+20}" editable="false"
+																	   draggable="false" resizable="false" sortable="false" />
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+																	   width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+40}"
+																	   draggable="false" resizable="false" sortable="false"/>
+											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue3" headerText="IndexField3"/>
+											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
+											<mx:AdvancedDataGridColumn width="80" dataField="IndexValue5" headerText="IndexField5"/>
+										</mx:groupedColumns>
+										
+									</mx:AdvancedDataGrid>
+								</s:VGroup>
+							</mx:Canvas>
+						</component:CustomTitleWindow>
+						
+						<!-- ########################### DG3 ########################### -->
+						<component:CustomTitleWindow id="DE_DG3_TW" title="Folder3" 
 													 height="100%" width="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
-													 close="mytreeID.updateTreeFromCloseEvent('3')"
+													 close="mytreeID.updateTreeFromCloseEvent('Folder3')"
 													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
@@ -724,15 +980,16 @@
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
 																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+40}"
-																	   draggable="false" resizable="false" sortable="false"/> 										<mx:AdvancedDataGridColumn width="300" dataField="IndexValue1" headerText="IndexField1"/>
+																	   draggable="false" resizable="false" sortable="false"/> 										
+											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
-<!--David commented out"/-->											
+																	   <!--David commented out"/-->											
 																	   <!--itemRenderer="component.FileTypeIconRenderer"/-->
 											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue4" headerText="IndexField4"/>
@@ -742,11 +999,11 @@
 							</mx:Canvas>
 						</component:CustomTitleWindow>
 						
-						<!-- DG4 -->
-						<component:CustomTitleWindow id="DE_DG4_TW" title="DocumentClass4" 
+						<!-- ########################### DG3 SUB1 ########################### -->
+						<component:CustomTitleWindow id="DE_DG3_SUB1_TW" title="Subfolder31" 
 													 width="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
-													 close="mytreeID.updateTreeFromCloseEvent('4')"
+													 close="mytreeID.updateTreeFromCloseEvent('Subfolder31')"
 													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
@@ -754,8 +1011,8 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="DE_DG4"
-														 width="{DE_DG4_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG3_SUB1"
+														 width="{DE_DG3_SUB1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
@@ -764,24 +1021,24 @@
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG4_TW.width-DE_DG4_TW.width+20}" textAlign="center" 
+																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn width="{DE_DG4_TW.width-DE_DG4_TW.width+20}" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn width="{DE_DG4_TW.width-DE_DG4_TW.width+20}" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG4_TW.width-DE_DG4_TW.width+40}"
+																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+40}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="200" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 																	   <!--itemRenderer="component.FileTypeIconRenderer"/-->
-<!--David commented out"/-->											
+																	   <!--David commented out"/-->											
 											<mx:AdvancedDataGridColumn width="200" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="700" dataField="IndexValue4" headerText="IndexField4"/>
 											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue5" headerText="IndexField5"/>
@@ -793,11 +1050,11 @@
 							</mx:Canvas>
 						</component:CustomTitleWindow>
 						
-						<!-- DG5 -->
-						<component:CustomTitleWindow id="DE_DG5_TW" title="DocumentClass5" 
+						<!-- ########################### DG3 SUB2 ########################### -->
+						<component:CustomTitleWindow id="DE_DG3_SUB2_TW" title="Subfolder32" 
 													 height="100%" width="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
-													 close="mytreeID.updateTreeFromCloseEvent('5')"
+													 close="mytreeID.updateTreeFromCloseEvent('Subfolder32')"
 													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
@@ -805,8 +1062,8 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="DE_DG5"
-														 width="{DE_DG5_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG3_SUB2"
+														 width="{DE_DG3_SUB2_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
@@ -815,22 +1072,23 @@
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked"
-																	   width="{DE_DG5_TW.width-DE_DG5_TW.width+20}" textAlign="center" 
+																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn width="{DE_DG5_TW.width-DE_DG5_TW.width+20}" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"-->
-											<mx:AdvancedDataGridColumn width="{DE_DG5_TW.width-DE_DG5_TW.width+20}" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG5_TW.width-DE_DG5_TW.width+40}"
-																	   draggable="false" resizable="false" sortable="false"/> 										<mx:AdvancedDataGridColumn width="100" dataField="IndexValue1" headerText="IndexField1"/>
+																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+40}"
+																	   draggable="false" resizable="false" sortable="false"/>
+											<mx:AdvancedDataGridColumn width="100" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
-<!--David commented out"/-->
+																	   <!--David commented out"/-->
 																	   <!--itemRenderer="component.FileTypeIconRenderer"/-->
 											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="200" dataField="IndexValue4" headerText="IndexField4"/>

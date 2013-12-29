@@ -11,10 +11,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import mx.collections.ICollectionView;
 			import mx.collections.XMLListCollection;
-			import mx.controls.Alert;
-			import mx.controls.treeClasses.ITreeDataDescriptor;
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
@@ -37,7 +34,7 @@
 			[Bindable] [Embed(source="../assets/folder_expand.png")]
 			public var ICON_FOLDER_EXPAND:Class;
 			
-			[Bindable] [Embed(source="../assets/folder_blue_checked.png")]
+			/* [Bindable] [Embed(source="../assets/folder_blue_checked.png")]
 			public var ICON_FOLDER_BLUE_CHECKED:Class;
 			
 			[Bindable] [Embed(source="../assets/folder_blue_unchecked.png")]
@@ -71,8 +68,14 @@
 			public var ICON_FOLDER_YELLOW_CHECKED:Class;
 			
 			[Bindable] [Embed(source="../assets/folder_yellow_unchecked.png")]
-			public var ICON_FOLDER_YELLOW_UNCHECKED:Class;
+			public var ICON_FOLDER_YELLOW_UNCHECKED:Class; */
 			
+			
+			[Bindable] [Embed(source="../assets/folder_yellow_checked.png")]
+			public var ICON_FOLDER_CHECKED:Class;
+			
+			[Bindable] [Embed(source="../assets/folder_yellow_unchecked.png")]
+			public var ICON_FOLDER_UNCHECKED:Class;
 			
 			
 			private var chk:Boolean = false;
@@ -83,31 +86,19 @@
 			private var orgXML:XML =
 				<root>
 						<node id='1' name='Folder1' label='Folder1' state='checked' open='yes' p='1'>
-							<node id='2' name='Subfolder1' label='Subfolder1' state='checked' open='yes' p='0'/>
-							<node id='3' name='Subfolder1' label='Subfolder2' state='checked' open='yes' p='0'/>
-							<node id='4' name='Subfolder1' label='Subfolder3' state='checked' open='yes' p='0'/>
+							<node id='2' name='Subfolder11' label='Subfolder11' state='checked' open='yes' p='0'/>
+							<node id='3' name='Subfolder12' label='Subfolder12' state='checked' open='yes' p='0'/>
+							<node id='4' name='Subfolder13' label='Subfolder13' state='checked' open='yes' p='0'/>
 						</node>
 						<node id='5' name='Folder2' label='Folder2' state='checked' open='yes' p='1'>
-							<node id='6' name='Subfolder2' label='Subfolder1' state='checked' open='yes' p='0'/>
-							<node id='7' name='Subfolder2' label='Subfolder2' state='checked' open='yes' p='0'/>
+							<node id='6' name='Subfolder21' label='Subfolder21' state='checked' open='yes' p='0'/>
 						</node>
-						<node id='8' name='Folder3' label='Folder3' state='checked' open='yes' p='1'>
-							<node id='9' name='Subfolder3' label='Subfolder1' state='checked' open='yes' p='0'/>
-							<node id='10' name='Subfolder3' label='Subfolder2' state='checked' open='yes' p='0'/>
-						</node>
-						<node id='11' name='Folder4' label='Folder4' state='checked' open='yes' p='1'>
-							<node id='12' name='Subfolder4' label='Subfolder1' state='checked' open='yes' p='0'/>
-							<node id='13' name='Subfolder4' label='Subfolder2' state='checked' open='yes' p='0'/>
-							<node id='14' name='Subfolder4' label='Subfolder3' state='checked' open='yes' p='0'/>
-						</node>
-						<node id='15' name='Folder5' label='Folder5' state='checked' open='yes' p='1'>
-							<node id='16' name='Subfolder5' label='Subfolder1' state='checked' open='yes' p='0'/>
-							<node id='17' name='Subfolder5' label='Subfolder2' state='checked' open='yes' p='0'/>
-							<node id='18' name='Subfolder5' label='Subfolder3' state='checked' open='yes' p='0'/>
+						<node id='7' name='Folder3' label='Folder3' state='checked' open='yes' p='1'>
+							<node id='8' name='Subfolder31' label='Subfolder31' state='checked' open='yes' p='0'/>
+							<node id='9' name='Subfolder32' label='Subfolder31' state='checked' open='yes' p='0'/>
 						</node>
 				</root>;
-			
-			
+				
 			[Bindable] private var xl1:XMLListCollection = new XMLListCollection();
 			[Bindable] private var chkstate:String = "checked";
 			[Bindable] public var isClickFromChkBoxchkBox:Boolean = false;
@@ -118,7 +109,6 @@
 				if ( apc == 'P' ) {
 					var tc:XMLListCollection = new XMLListCollection();
 					var dp:XML = orgXML.copy();
-
 					var xl:XMLList = dp.node;
 					
 					for each( var nodelist:XML in xl ) {
@@ -144,325 +134,121 @@
 				treeid.openItems = dp.node;
 				treeid.invalidateList();
 				treeid.invalidateDisplayList();
+				
 			}
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void {
 				treeview('A');
 			}
 			
-			protected function treeid_itemClickHandler(event:ListEvent):void {
+			protected function treeid_itemDoubleClickHandler(event:ListEvent):void {
 				if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
 					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
-				}
 				
-				var p:XML = event.target.selectedItem as XML;
-				var selectid:String = p.@id ;
-				var attributeCase:String = p.@name;
-				var state:String = p.@state;
-				
-				if (p.@p=='1' && !isClickFromChkBoxchkBox ) {
-					updateTree(p);
 				} else {
+					var p:XML = event.target.selectedItem as XML;
 					isClickFromChkBoxchkBox = false;
+					updateTree(p);
 				}
 			}
 			
 			private function updateTree(p:XML):void {
 				if ( p.@open=='yes' ) { //Close
-					if ( p.@name == "Folder1" || p.@name == "Subfolder1" ) {
-						//p.@open='no'
-						updateTreeOpenCloseState("close", "1");
-						FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("1");								
-						
-					} else if ( p.@name == "Folder2" || p.@name == "Subfolder2" ) {
-						updateTreeOpenCloseState("close", "2");
-						FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("2");
-						
-					} else if ( p.@name == "Folder3" || p.@name == "Subfolder3" ) {
-						updateTreeOpenCloseState("close", "3");
-						FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("3");
-						
-					} else if ( p.@name == "Folder4" || p.@name == "Subfolder4" ) {
-						updateTreeOpenCloseState("close", "4");
-						FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("4");
-						
-					} else if ( p.@name == "Folder5" || p.@name == "Subfolder5" ) {
-						updateTreeOpenCloseState("close", "5");
-						FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("5");
-					}
+					renderTree(updateTreeOpenCloseState("close", p.@name));
+					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow(p.@name);								
 					
 				} else { //Open
-					if ( p.@name == "Folder1" || p.@name == "Subfolder1" ) {
-						//p.@open='yes'
-						updateTreeOpenCloseState("open", "1");
-						FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow("1");								
-						
-					} else if ( p.@name == "Folder2" || p.@name == "Subfolder2" ) {
-						updateTreeOpenCloseState("open", "2");
-						FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow("2");
-						
-					} else if ( p.@name == "Folder3" || p.@name == "Subfolder3" ) {
-						updateTreeOpenCloseState("open", "3");
-						FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow("3");
-						
-					} else if ( p.@name == "Folder4" || p.@name == "Subfolder4" ) {
-						updateTreeOpenCloseState("open", "4");
-						FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow("4");
-						
-					} else if ( p.@name == "Folder5" || p.@name == "Subfolder5" ) {
-						updateTreeOpenCloseState("open", "5");
-						FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow("5");
-					}
+					renderTree(updateTreeOpenCloseState("open", p.@name));
+					FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow(p.@name);								
 				}
 			}
 			
 			//20131222 give method in DE.mxmal call to change folder state
-			public function updateTreeFromCloseEvent(closeBoxNumber:String):void {
+			public function updateTreeFromCloseEvent(closeBoxName:String):void {
 				isClickFromChkBoxchkBox = false;
-				if ( closeBoxNumber == "1" ) {
-					updateTreeOpenCloseState("close", closeBoxNumber);
-					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("1");
-					
-				} else if ( closeBoxNumber == "2" ) {
-					updateTreeOpenCloseState("close", closeBoxNumber);
-					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("2");
-				
-				} else if ( closeBoxNumber == "3" ) {
-					updateTreeOpenCloseState("close", closeBoxNumber);
-					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("3");
-				
-				} else if ( closeBoxNumber == "4" ) {
-					updateTreeOpenCloseState("close", closeBoxNumber);
-					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("4");
-				
-				} else if ( closeBoxNumber == "5" ) {
-					updateTreeOpenCloseState("close", closeBoxNumber);
-					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow("5");
-				}
+				renderTree(updateTreeOpenCloseState("close", closeBoxName));
+				FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow(closeBoxName);
 			}
 			
-			private function updateTreeOpenCloseState(state:String, chkNumber:String):void {
+			private function updateTreeOpenCloseState(state:String, chkName:String):ArrayCollection {
+				var arrayReturn:ArrayCollection = new ArrayCollection();
 				var tc:XMLListCollection = new XMLListCollection();
 				var treeidDPTemp:XMLListCollection = treeid.dataProvider as XMLListCollection; 
 				var xl:XMLList = new XMLList(treeidDPTemp.toXMLString());
-				//var isBreak:Boolean;
 				
-				if ( chkNumber == "1" ) {
-					for each( var nodelist:XML in xl ) {
-						for (var i:int=nodelist.length()-1; i>=0; i--) {
-							if(nodelist[i].@name == "Folder1"){
-								if ( state == "open" ) {
-									nodelist[i].@open = 'yes';
-								} else {
-									nodelist[i].@open = 'no';
-								}
-								
-								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-								}
-								//isBreak = true;
-								break;
-							}
-						}
-						if(nodelist.node.length() > 0 ){
-							tc.addItem(nodelist);
-						}
-					}
-					
-					xl1 = tc;
-					treeid.dataProvider = xl1;
-					//if ( state == "open" ) {
-						treeid.openItems = xl;
-					//}
-					treeid.invalidateList();
-					treeid.invalidateDisplayList();
-					
-				} else if ( chkNumber == "2" ) {
-					for each( var nodelist:XML in xl ) {
-						for (var i:int=nodelist.length()-1; i>=0; i--) {
-							if(nodelist[i].@name == "Folder2"){
-								if ( state == "open" ) {
-									nodelist[i].@open = 'yes';
-								} else {
-									nodelist[i].@open = 'no';
-								}
-								
-								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-								}
-								break;
-							}
-						}
-						if(nodelist.node.length() > 0 ){
-							tc.addItem(nodelist);
-						}
-					}
-					
-					xl1 = tc;
-					treeid.dataProvider = xl1;
-					treeid.openItems = xl;
-					treeid.invalidateList();
-					treeid.invalidateDisplayList();
-				
-				} else if ( chkNumber == "3" ) {
-					for each( var nodelist:XML in xl ) {
-						for (var i:int=nodelist.length()-1; i>=0; i--) {
-							if(nodelist[i].@name == "Folder3"){
-								if ( state == "open" ) {
-									nodelist[i].@open = 'yes';
-								} else {
-									nodelist[i].@open = 'no';
-								}
-								
-								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-								}
-								//isBreak = true;
-								break;
-							}
-						}
-						if(nodelist.node.length() > 0 ){
-							tc.addItem(nodelist);
-						}
-					}
-					
-					xl1 = tc;
-					treeid.dataProvider = xl1;
-					treeid.openItems = xl;
-					treeid.invalidateList();
-					treeid.invalidateDisplayList();
-					
-				} else if ( chkNumber == "4" ) {
-					for each( var nodelist:XML in xl ) {
-						for (var i:int=nodelist.length()-1; i>=0; i--) {
-							if(nodelist[i].@name == "Folder4"){
-								if ( state == "open" ) {
-									nodelist[i].@open = 'yes';
-								} else {
-									nodelist[i].@open = 'no';
-								}
-								
-								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-								}
-								//isBreak = true;
-								break;
-							}
-						}
-						if(nodelist.node.length() > 0 ){
-							tc.addItem(nodelist);
-						}
-					}
-					
-					xl1 = tc;
-					treeid.dataProvider = xl1;
-					treeid.openItems = xl;
-					treeid.invalidateList();
-					treeid.invalidateDisplayList();
-					
-				} else if ( chkNumber == "5" ) {
-					for each( var nodelist:XML in xl ) {
-						for (var i:int=nodelist.length()-1; i>=0; i--) {
-							if(nodelist[i].@name == "Folder5"){
-								if ( state == "open" ) {
-									nodelist[i].@open = 'yes';
-								} else {
-									nodelist[i].@open = 'no';
-								}
-								
-								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-								}
-								//isBreak = true;
-								break;
-							}
-						}
-						if(nodelist.node.length() > 0 ){
-							tc.addItem(nodelist);
-						}
-					}
-					
-					xl1 = tc;
-					treeid.dataProvider = xl1;
-					treeid.openItems = xl;
-					treeid.invalidateList();
-					treeid.invalidateDisplayList();
-				}
-			}
-			
-	
-			
-			//private function expandNodes():void {
-			//	treeview(cpa);
-			//	for (var i:int = 0; i < treeid.dataProvider.length; i ++){
-			//		treeid.expandChildrenOf(treeid.dataProvider[i],true)
-			//	}
-			//}
-			
-			/* private function updateTree(p:XML):void {
-				var ancestorID:int = 0;
-				var selectid:String = p.@id ;
-				
-				var textAlert:String = "";
-				
-				textAlert += "p.@id : " + p.@p;
-				
-				//parent
-				if(p.@p=='1'){
-					var node:XMLList = orgXML.node.(@id == selectid );
-					node.@state = p.@state;
-					
-					for each (var item in node.node) {
-						item.@state = p.@state;
-					}					
-					
-				//child
-				} else {
-					var node:XMLList = orgXML.node.node.(@id == selectid );
-					node.@state = p.@state;
-					
-					for each( var nodelist:XML in orgXML.elements("*") ) { //nodelist  get all xml
-						if ( nodelist.node.(@id == selectid).@id == selectid ) {
-							ancestorID = nodelist.@id.toString(); //ancestorID is parent id of selected child
-							var x:XMLList = orgXML.node.(@id == ancestorID); //get all child of node ancestorID
-							
-							if(p.@state){
-								if(updatechild(x,STATE_CHECKED)){
-									x.@state = STATE_CHECKED;
-								} else {
-									x.@state = STATE_UNCHECKED;
-								}
-								
+				//Loop for change data
+				for each( var nodelist:XML in xl ) {
+					for (var i:int=nodelist.length()-1; i>=0; i--) {
+						if(nodelist[i].@name == chkName){
+							if ( state == "open" ) {
+								nodelist[i].@open = 'yes';
 							} else {
-								x.@state = STATE_UNCHECKED;
+								nodelist[i].@open = 'no';
+								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
+									nodelist.node[j].@open = 'no';
+								}
 							}
+							break;
+							
+						} else {
+							for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
+								if(nodelist.node[j].@name == chkName) {
+									if ( state == "open" ) {
+										nodelist.node[j].@open = 'yes';
+									} else {
+										nodelist.node[j].@open = 'no';
+									}
+									break;
+								}
+							}
+						}
+					}
+					if(nodelist.node.length() > 0 ){
+						tc.addItem(nodelist);
+					}
+				}
+				
+				xl1 = tc;
+				treeid.dataProvider = xl1;
+				treeid.invalidateList();
+				treeid.invalidateDisplayList();
+				treeid.validateNow();
+				
+				//Loop for update expands index
+				var temp:XMLListCollection = treeid.dataProvider as XMLListCollection; 
+				var xlz:XMLList = new XMLList(temp.toXMLString());
+				var a:int=0;
+				for each( var nodelist:XML in xlz ) {
+					if ( nodelist.@open == 'yes' ) {
+						arrayReturn.addItem(a);
+					} else {
+						for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
+							if(nodelist.node[j].@open == 'yes') {
+								arrayReturn.addItem(a);
+								break;
+							}
+						}
+					}
+					a++;
+				}
+				
+				return arrayReturn;
+      		}
+				
+			//Re render tree after change node open state
+			public function renderTree(listExpands:ArrayCollection):void {
+				for (var i:int=0; i < treeid.dataProvider.length; i++) {
+					treeid.expandChildrenOf(treeid.dataProvider[i],false);
+				}
+				for each ( var index:int in listExpands ) {
+					for (var i:int = 0; i < treeid.dataProvider.length; i ++) {
+						if ( index == i ) {
+							treeid.expandChildrenOf(treeid.dataProvider[i],true);
 							break;
 						}
 					}
 				}
-				
-				Alert.show(textAlert);
-			} */
+			}
 			
 			private function updatechild(x:XMLList,status:String):Boolean {
 				var chk:Boolean = true;
@@ -484,57 +270,61 @@
 			
 			private function tree_iconFunc(item:Object):Class {
 				var iconClass:Class;
-				var attributeCase:String = XML(item).attribute('name');
+				var opened:String = XML(item).attribute('open');
 				
-				if ( attributeCase == "Folder1" || attributeCase == "Subfolder1" ) {
-					//var isParent:String = XML(item).attribute('p');
-						var opened:String = XML(item).attribute('open');
-						iconClass = ICON_FOLDER_GREEN_UNCHECKED;
-						if ( opened == "yes" ) {
-							iconClass = ICON_FOLDER_GREEN_CHECKED;
-						} else {
-							iconClass = ICON_FOLDER_GREEN_UNCHECKED;
-						}
-				
-				} else if ( attributeCase == "Folder2" || attributeCase == "Subfolder2" ) {
-						var opened:String = XML(item).attribute('open');
-						iconClass = ICON_FOLDER_ORANGE_UNCHECKED;
-						if ( opened == "yes" ) {
-							iconClass = ICON_FOLDER_ORANGE_CHECKED;
-						} else {
-							iconClass = ICON_FOLDER_ORANGE_UNCHECKED;
-						}
-						
-				} else if ( attributeCase == "Folder3" || attributeCase == "Subfolder3" ) {
-						var opened:String = XML(item).attribute('open');
-						iconClass = ICON_FOLDER_PURPLE_UNCHECKED;
-						if ( opened == "yes" ) {
-							iconClass = ICON_FOLDER_PURPLE_CHECKED;
-						} else {
-							iconClass = ICON_FOLDER_PURPLE_UNCHECKED;
-						}
-						
-				} else if ( attributeCase == "Folder4" || attributeCase == "Subfolder4" ) {
-						var opened:String = XML(item).attribute('open');
-						iconClass = ICON_FOLDER_RED_UNCHECKED;
-						if ( opened == "yes" ) {
-							iconClass = ICON_FOLDER_RED_CHECKED;
-						} else {
-							iconClass = ICON_FOLDER_RED_UNCHECKED;
-						}
-						
-				} else if ( attributeCase == "Folder5" || attributeCase == "Subfolder5" ) {
-						var opened:String = XML(item).attribute('open');
-						iconClass = ICON_FOLDER_YELLOW_UNCHECKED;
-						if ( opened == "yes" ) {
-							iconClass = ICON_FOLDER_YELLOW_CHECKED;
-						} else {
-							iconClass = ICON_FOLDER_YELLOW_UNCHECKED;
-						}
+				if ( opened == "yes" ) {
+					iconClass = ICON_FOLDER_CHECKED;
+				} else {
+					iconClass = ICON_FOLDER_UNCHECKED;
 				}
 				
 				return iconClass;
 			}
+			
+			/* private function updateTree(p:XML):void {
+			var ancestorID:int = 0;
+			var selectid:String = p.@id ;
+			
+			var textAlert:String = "";
+			
+			textAlert += "p.@id : " + p.@p;
+			
+			//parent
+			if(p.@p=='1'){
+			var node:XMLList = orgXML.node.(@id == selectid );
+			node.@state = p.@state;
+			
+			for each (var item in node.node) {
+			item.@state = p.@state;
+			}					
+			
+			//child
+			} else {
+			var node:XMLList = orgXML.node.node.(@id == selectid );
+			node.@state = p.@state;
+			
+			for each( var nodelist:XML in orgXML.elements("*") ) { //nodelist  get all xml
+			if ( nodelist.node.(@id == selectid).@id == selectid ) {
+			ancestorID = nodelist.@id.toString(); //ancestorID is parent id of selected child
+			var x:XMLList = orgXML.node.(@id == ancestorID); //get all child of node ancestorID
+			
+			if(p.@state){
+			if(updatechild(x,STATE_CHECKED)){
+			x.@state = STATE_CHECKED;
+			} else {
+			x.@state = STATE_UNCHECKED;
+			}
+			
+			} else {
+			x.@state = STATE_UNCHECKED;
+			}
+			break;
+			}
+			}
+			}
+			
+			Alert.show(textAlert);
+			} */
 			
 		]]>
 	</fx:Script>
@@ -559,18 +349,22 @@
 		</s:filters>-->
 	<!--</s:Rect>-->
 	
+	<!-- itemClick="treeid_itemClickHandler(event)" -->
+	
 	<s:VGroup width="100%" height="100%" gap="0">
 		<mx:Tree id="treeid" includeIn="State1,State2,State3" width="100%" height="100%"
 				 creationComplete="expandNodes()" defaultLeafIcon="{null}"
 				 folderClosedIcon="{null}"
 				 folderOpenIcon="{null}"
-				 itemClick="treeid_itemClickHandler(event)"
-				 disclosureClosedIcon="{ICON_FOLDER_COLLAPSE}"
-				 disclosureOpenIcon="{ICON_FOLDER_EXPAND}"
+				 itemDoubleClick="treeid_itemDoubleClickHandler(event)"
+				 disclosureClosedIcon="{ICON_FOLDER_EXPAND}"
+				 disclosureOpenIcon="{ICON_FOLDER_COLLAPSE}"
 				 rowHeight="16" iconFunction="tree_iconFunc"
 				 fontFamily="Franklin Gothic Medium" fontSize="11"
 				 itemRenderer="custom_tree_component.CheckTreeRenderer_For_DE" labelField="@label"
-				 showRoot="true"> <!--itemRenderer="custom_tree_component.CheckTreeRenderer" labelField="@label"-->
+				 showRoot="true"
+				 doubleClickEnabled="true">
+				<!--itemRenderer="custom_tree_component.CheckTreeRenderer" labelField="@label"-->
 			
 		</mx:Tree>
 	</s:VGroup>

@@ -310,48 +310,48 @@
 			//Add 20131220
 			public function openDataGridWindow(dgName:String):void {
 				if ( dgName == '1' ) {
-					datagridWindow1ID.visible = true;
-					datagridWindow1ID.includeInLayout = true;
+					DE_DG1_TW.visible = true;
+					DE_DG1_TW.includeInLayout = true;
 					
 				} else if ( dgName == '2' ) {
-					datagridWindow2ID.visible = true;
-					datagridWindow2ID.includeInLayout = true;
+					DE_DG2_TW.visible = true;
+					DE_DG2_TW.includeInLayout = true;
 					
 				} else if ( dgName == '3' ) {
-					datagridWindow3ID.visible = true;
-					datagridWindow3ID.includeInLayout = true;
+					DE_DG3_TW.visible = true;
+					DE_DG3_TW.includeInLayout = true;
 					
 				} else if ( dgName == '4' ) {
-					datagridWindow4ID.visible = true;
-					datagridWindow4ID.includeInLayout = true;
+					DE_DG4_TW.visible = true;
+					DE_DG4_TW.includeInLayout = true;
 					
 				} else if ( dgName == '5' ) {
-					datagridWindow5ID.visible = true;
-					datagridWindow5ID.includeInLayout = true;
+					DE_DG5_TW.visible = true;
+					DE_DG5_TW.includeInLayout = true;
 				}
 			}
 			
 			public function closeDataGridWindow(dgName:String):void {
 				if ( dgName == '1' ) {
-					datagridWindow1ID.visible = false;
-					datagridWindow1ID.includeInLayout = false;
+					DE_DG1_TW.visible = false;
+					DE_DG1_TW.includeInLayout = false;
 					
 				} else if ( dgName == '2' ) {
-					datagridWindow2ID.visible = false;
-					datagridWindow2ID.includeInLayout = false;
+					DE_DG2_TW.visible = false;
+					DE_DG2_TW.includeInLayout = false;
 					
 				} else if ( dgName == '3' ) {
-					datagridWindow3ID.visible = false;
-					datagridWindow3ID.includeInLayout = false;
+					DE_DG3_TW.visible = false;
+					DE_DG3_TW.includeInLayout = false;
 					
 				} else if ( dgName == '4' ) {
-					datagridWindow4ID.visible = false;
-					datagridWindow4ID.includeInLayout = false;
+					DE_DG4_TW.visible = false;
+					DE_DG4_TW.includeInLayout = false;
 					
 				} else if ( dgName == '5' ) {
 					mytreeID
-					datagridWindow5ID.visible = false;
-					datagridWindow5ID.includeInLayout = false;
+					DE_DG5_TW.visible = false;
+					DE_DG5_TW.includeInLayout = false;
 				}
 			}
 			
@@ -598,7 +598,7 @@
 					
 					<mx:VDividedBox id="mainDetailBoxID" width="100%" height="100%">
 						<!-- DG1 -->
-						<component:CustomTitleWindow id="datagridWindow1ID" title="DocumentClass1" 
+						<component:CustomTitleWindow id="DE_DG1_TW" title="DocumentClass1" 
 													 width="100%" height="100%"
 													 skinClass="component.CustomTitleWindowSkin"
 													 dropShadowVisible="false" headerHeight="16"
@@ -610,29 +610,30 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="advanceDG1_ID"
-														 height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG1"
+														 width="{DE_DG1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
 														 dataProvider="@{dataProvider1List}"
-														 doubleClickEnabled="true" 
+														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   minWidth="20" width="20" textAlign="center" 
+																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+20}"
+																	   textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   minWidth="40" width="40"
+																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+40}"
 																	   draggable="false" resizable="false" sortable="false"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -648,7 +649,7 @@
 						</component:CustomTitleWindow>
 						
 						<!-- DG2 -->
-						<component:CustomTitleWindow id="datagridWindow2ID" title="DocumentClass2" 
+						<component:CustomTitleWindow id="DE_DG2_TW" title="DocumentClass2" 
 													 width="100%" height="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin"
 													 close="mytreeID.updateTreeFromCloseEvent('2')"
@@ -659,29 +660,30 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="advanceDG2_ID"
-														 height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG2"
+														 width="{DE_DG2_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
 														 dataProvider="@{dataProvider1List}"
-														 doubleClickEnabled="true" 
+														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   minWidth="20" width="20" textAlign="center" 
+																	   width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   minWidth="40" width="40"
+																	   width="{DE_DG2_TW.width-DE_DG2_TW.width+40}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
@@ -694,7 +696,7 @@
 						</component:CustomTitleWindow>
 						
 						<!-- DG3 -->
-						<component:CustomTitleWindow id="datagridWindow3ID" title="DocumentClass3" 
+						<component:CustomTitleWindow id="DE_DG3_TW" title="DocumentClass3" 
 													 height="100%" width="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
 													 close="mytreeID.updateTreeFromCloseEvent('3')"
@@ -705,29 +707,29 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="advanceDG3_ID"
-														 height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG3"
+														 width="{DE_DG3_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
 														 dataProvider="@{dataProvider2List}"
-														 doubleClickEnabled="true" 
+														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">														 
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   minWidth="20" width="20" textAlign="center" 
+																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   minWidth="40" width="40"
+																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+40}"
 																	   draggable="false" resizable="false" sortable="false"/> 										<mx:AdvancedDataGridColumn width="300" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 <!--David commented out"/-->											
@@ -741,8 +743,8 @@
 						</component:CustomTitleWindow>
 						
 						<!-- DG4 -->
-						<component:CustomTitleWindow id="datagridWindow4ID" title="DocumentClass4" 
-													 height="100%" width="100%" headerHeight="16" 
+						<component:CustomTitleWindow id="DE_DG4_TW" title="DocumentClass4" 
+													 width="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
 													 close="mytreeID.updateTreeFromCloseEvent('4')"
 													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
@@ -752,29 +754,29 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="advanceDG4_ID"
-														 height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG4"
+														 width="{DE_DG4_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
 														 dataProvider="@{dataProvider2List}"
-														 doubleClickEnabled="true" 
+														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   minWidth="20" width="20" textAlign="center" 
+																	   width="{DE_DG4_TW.width-DE_DG4_TW.width+20}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG4_TW.width-DE_DG4_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG4_TW.width-DE_DG4_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   minWidth="40" width="40"
+																	   width="{DE_DG4_TW.width-DE_DG4_TW.width+40}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="200" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -792,7 +794,7 @@
 						</component:CustomTitleWindow>
 						
 						<!-- DG5 -->
-						<component:CustomTitleWindow id="datagridWindow5ID" title="DocumentClass5" 
+						<component:CustomTitleWindow id="DE_DG5_TW" title="DocumentClass5" 
 													 height="100%" width="100%" headerHeight="16" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
 													 close="mytreeID.updateTreeFromCloseEvent('5')"
@@ -803,29 +805,29 @@
 								<s:VGroup height="100%" clipAndEnableScrolling="true"
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
-									<mx:AdvancedDataGrid id="advanceDG5_ID"
-														 height="100%" minColumnWidth="0" verticalAlign="middle"
+									<mx:AdvancedDataGrid id="DE_DG5"
+														 width="{DE_DG5_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
 														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
 														 dataProvider="@{dataProvider2List}"														 
-														 doubleClickEnabled="true" 
+														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked"
-																	   minWidth="20" width="20" textAlign="center" 
+																	   width="{DE_DG5_TW.width-DE_DG5_TW.width+20}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
 																	   itemRenderer="component.CheckboxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false" 
+											<mx:AdvancedDataGridColumn width="{DE_DG5_TW.width-DE_DG5_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"-->
-											<mx:AdvancedDataGridColumn minWidth="20" width="20" editable="false"
+											<mx:AdvancedDataGridColumn width="{DE_DG5_TW.width-DE_DG5_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   minWidth="40" width="40"
+																	   width="{DE_DG5_TW.width-DE_DG5_TW.width+40}"
 																	   draggable="false" resizable="false" sortable="false"/> 										<mx:AdvancedDataGridColumn width="100" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 <!--David commented out"/-->

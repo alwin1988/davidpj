@@ -65,6 +65,7 @@
 			
 			//############################### Variable #################################//
 			//Left Tree Data Provider
+			public var tmpWidth:int;
 			[Bindable]
 			public var batchsAndDocsTreeCollection:XMLListCollection;
 			
@@ -443,6 +444,18 @@
 				PopUpManager.removePopUp(pop);
 			}
 			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				tmpWidth = WM_Batches_DG.width;	
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				WM_Batches_DG.width = tmpWidth;
+			}
+			
 		]]>
 	</fx:Script>
 	<s:BorderContainer width="100%" height="100%">
@@ -499,11 +512,9 @@
 									fontFamily="Franklin Gothic Medium" fontSize="11"
 									fontWeight="normal"/>
 						<s:Button label="Shrink to fit" 
-								  click="
-								  WM_Batches_DG.width=1156;
-								  WM_Batches_DG.width=null;
-								  "/>
-						<s:Button label="Expand" click="WM_Batches_DG.width=null;"/>						
+								  click="button1_clickHandler(event);
+								  WM_Batches_DG.width=1164;"/>
+						<s:Button label="Expand" click="button2_clickHandler(event)"/>						
 					</s:BorderContainer>
 				</s:BorderContainer>
 				
@@ -655,7 +666,7 @@
 																	   draggable="true" resizable="true" sortable="true"
 																	   color="red"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages" headerText="Pages" dataField="Pages"
-																	   width="60" minWidth="60" textAlign="left"
+																	   width="200" minWidth="60" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Docs" headerText="Docs" dataField="Docs"
 																	   width="60" minWidth="60" textAlign="left"

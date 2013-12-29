@@ -384,13 +384,15 @@
 				}
 				
 			}
+/* David commented out
 			protected function dg_itemOpenHandler(event:AdvancedDataGridEvent):void
 			{
 				var i:int =	WM_Batches_DG.getCurrentDepth(event.item);	
 				var chk:Boolean = setOpenCurrNodes(i);
 				WmModule.getInstance.setCurrDeptOpen(i,chk);  // 1,true
-			}
+			}*/
 			
+/* David commented out
 			protected function dg_itemCloseHandler(event:AdvancedDataGridEvent):void
 			{
 				var i:int = WM_Batches_DG.getCurrentDepth(event.item);
@@ -398,7 +400,7 @@
 				
 				WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));
 				
-			}
+			}*/
 			
 			private function chkOpenAll(depth:int):Boolean {
 				var hcv:HierarchicalCollectionView = WM_Batches_DG.dataProvider as HierarchicalCollectionView;
@@ -534,10 +536,11 @@
 													 treeColumn="{WM_Batches_DG_ID}" indentation="17" 
 													 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
 													 styleName="DataGridText" headerStyleName="DataGridHeaderText"
-													 itemOpen="dg_itemOpenHandler(event)"
-													 itemClose="dg_itemCloseHandler(event)"
 													 doubleClickEnabled="true" 
 													 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
+<!--David commented out-->
+													 <!--itemOpen="dg_itemOpenHandler(event)"
+													 itemClose="dg_itemCloseHandler(event)"-->
 										<pages:dataProvider>
 											<mx:HierarchicalData source="{AC2}"/>
 										</pages:dataProvider>

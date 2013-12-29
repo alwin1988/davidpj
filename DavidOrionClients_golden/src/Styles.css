@@ -2,6 +2,73 @@
 @namespace mx "library://ns.adobe.com/flex/mx";
 @namespace flexlib "http://code.google.com/p/flexlib/";
 
+.Gutter {
+	backgroundColor: #004F6C;
+	backgroundAlpha: .08;
+}
+
+.GutterOverlay {
+	backgroundColor: #004F6C;
+	backgroundAlpha: .16;
+}
+
+.MenuText {
+	fontFamily: 'Arial Black';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+	rollOverColor: haloOrange;
+}
+
+.TabText {
+	fontFamily: 'Arial Black';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.ControlButtonText {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.TitleWindowTitleText {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.DataGridHeaderText {
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+	color: black;
+	kerning: true;
+}
+
+.DataGridText {
+	fontFamily: Arial;
+	fontSize: 10.5;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.ControlButtonLabels {
+	fontFamily: Arial;
+	fontSize: 10;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
 /* Icon Style */
 .loginButton {
 	icon: 						Embed("../assets/login.png");

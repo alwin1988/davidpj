@@ -122,11 +122,11 @@
 						downNotificationBtn.enabled=true;
 						
 					} else {
-						Alert.show("Not Correct UserName!! \n\n Username >> 'admin' or 'user'");
+						Alert.show("Invalid user account name \n\n Username >> 'admin' or 'user'");
 					}
 					
 				} else {
-					Alert.show("Please Input UserName! \n\n Username >> 'admin' or 'user' ");
+					Alert.show("Enter user account name \n\n Username >> 'admin' or 'user' ");
 				}
 			}
 			
@@ -426,13 +426,12 @@
 				</s:layout>
 				
 				<!--Logo and Search box-->
-				<s:BorderContainer id="LogoAndSearchBox" width="100%" height="40"
-								   borderVisible="false">
+				<s:BorderContainer id="LogoAndSearchBox" width="100%" height="40" borderVisible="false">
 					<s:layout>
 						<s:BasicLayout/>
 					</s:layout>
 					<!--Logo-->
-					<s:BorderContainer x="5" y="-30" width="175" height="70" borderVisible="false">
+					<s:BorderContainer x="5" y="-33" width="175" height="70" borderVisible="false">
 						<s:layout>
 							<s:BasicLayout/>
 						</s:layout>
@@ -443,16 +442,16 @@
 					</s:BorderContainer>
 					<!--SearchBox container-->
 					<s:BorderContainer visible="{(mainStackID.selectedChild != homeID)?true:false}"
-									   x="190" width="90%" height="40" backgroundColor="#00C1DAD6"
+									   x="190" width="100%" height="35" backgroundColor="#00C1DAD6"
 									   borderColor="#00E3784E" borderVisible="true"
 									   includeInLayout="{(mainStackID.selectedChild != homeID)?true:false}">
 						<s:layout>
 							<s:HorizontalLayout paddingBottom="5" paddingLeft="5" paddingRight="5"
-												paddingTop="5" verticalAlign="middle"/>
+												paddingTop="5" gap="5" verticalAlign="middle"/>
 						</s:layout>
 						<mx:Text height="21" fontFamily="Franklin Gothic Medium" fontSize="13"
 								 fontWeight="bold" text="Search for"/>
-						<s:DropDownList id="searchBoxID" width="150" height="21"
+						<s:DropDownList id="searchBoxID" width="145" height="21"
 										dataProvider="{searchBoxDataProvider}"
 										fontFamily="Franklin Gothic Medium" fontSize="11"
 										fontWeight="normal" rollOverColor="#00C0C0C0">
@@ -470,7 +469,7 @@
 								   borderVisible="false">
 					<s:layout>
 						<s:HorizontalLayout gap="10" paddingBottom="5" paddingLeft="5"
-											paddingRight="5" paddingTop="5"/>
+											paddingRight="5" paddingTop="0"/>
 					</s:layout>
 					
 					<!-- View Stack of (DE,CM,CR,CA) -->

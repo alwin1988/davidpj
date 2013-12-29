@@ -49,19 +49,19 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import component.PopUpCustomTitleWindow;
+			
+			import event.DocViewerEvent;
+			
 			import mx.collections.ArrayCollection;
 			import mx.collections.CursorBookmark;
 			import mx.collections.HierarchicalCollectionView;
 			import mx.collections.IHierarchicalCollectionViewCursor;
 			import mx.collections.XMLListCollection;
-			import mx.core.FlexGlobals
+			import mx.core.FlexGlobals;
 			import mx.events.AdvancedDataGridEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
-			
-			import component.PopUpCustomTitleWindow;
-			
-			import event.DocViewerEvent;
 			
 			//############################### Variable #################################//
 			//Left Tree Data Provider
@@ -444,7 +444,27 @@
 				PopUpManager.removePopUp(pop);
 			}
 			
-			protected function button1_clickHandler(event:MouseEvent):void
+			protected function dg_itemOpenHandler(e:AdvancedDataGridEvent):void
+			{
+								var i:int =	WM_Batches_DG.getCurrentDepth(e.item as Object);	
+								var chk:Boolean = setOpenCurrNodes(i);
+								WmModule.getInstance.setCurrDeptOpen(i,chk);  // 1,true
+			}
+			protected function dg_itemCloseHandler(e:AdvancedDataGridEvent):void
+			{
+								var i:int = WM_Batches_DG.getCurrentDepth(e.item as Object);
+								var chk:Boolean = setOpenCurrNodes(i);
+								
+								WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));
+			}
+			
+			protected function WM_Batches_DG_headerReleaseHandler(e:AdvancedDataGridEvent):void
+			{
+				if(e.dataField == 'ID'){
+					e.preventDefault();
+				}
+			}
+						protected function button1_clickHandler(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				tmpWidth = WM_Batches_DG.width;	
@@ -455,7 +475,6 @@
 				// TODO Auto-generated method stub
 				WM_Batches_DG.width = tmpWidth;
 			}
-			
 		]]>
 	</fx:Script>
 	<s:BorderContainer width="100%" height="100%">
@@ -548,10 +567,11 @@
 													 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
 													 styleName="DataGridText" headerStyleName="DataGridHeaderText"
 													 doubleClickEnabled="true" 
-													 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
-<!--David commented out-->
-													 <!--itemOpen="dg_itemOpenHandler(event)"
-													 itemClose="dg_itemCloseHandler(event)"-->
+													 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
+													 itemOpen="dg_itemOpenHandler(event)"
+													 itemClose="dg_itemCloseHandler(event)"
+													 headerRelease="WM_Batches_DG_headerReleaseHandler(event)"
+													 >
 										<pages:dataProvider>
 											<mx:HierarchicalData source="{AC2}"/>
 										</pages:dataProvider>
@@ -666,7 +686,7 @@
 																	   draggable="true" resizable="true" sortable="true"
 																	   color="red"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages" headerText="Pages" dataField="Pages"
-																	   width="200" minWidth="60" textAlign="left"
+																	   width="60" minWidth="60" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Docs" headerText="Docs" dataField="Docs"
 																	   width="60" minWidth="60" textAlign="left"

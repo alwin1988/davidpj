@@ -95,7 +95,7 @@
 						</node>
 						<node id='7' name='Folder3' label='Folder3' state='checked' open='no' p='1'>
 							<node id='8' name='Subfolder31' label='Subfolder31' state='checked' open='no' p='0'/>
-							<node id='9' name='Subfolder32' label='Subfolder31' state='checked' open='no' p='0'/>
+							<node id='9' name='Subfolder32' label='Subfolder32' state='checked' open='no' p='0'/>
 						</node>
 				</root>;
 				
@@ -202,9 +202,9 @@
 								nodelist[i].@open = 'yes';
 							} else {
 								nodelist[i].@open = 'no';
-								for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
+								/* for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
 									nodelist.node[j].@open = 'no';
-								}
+								} */
 							}
 							break;
 							

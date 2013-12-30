@@ -85,17 +85,17 @@
 			
 			private var orgXML:XML =
 				<root>
-						<node id='1' name='Folder1' label='Folder1' state='checked' open='yes' p='1'>
-							<node id='2' name='Subfolder11' label='Subfolder11' state='checked' open='yes' p='0'/>
-							<node id='3' name='Subfolder12' label='Subfolder12' state='checked' open='yes' p='0'/>
-							<node id='4' name='Subfolder13' label='Subfolder13' state='checked' open='yes' p='0'/>
+						<node id='1' name='Folder1' label='Folder1' state='checked' open='no' p='1'>
+							<node id='2' name='Subfolder11' label='Subfolder11' state='checked' open='no' p='0'/>
+							<node id='3' name='Subfolder12' label='Subfolder12' state='checked' open='no' p='0'/>
+							<node id='4' name='Subfolder13' label='Subfolder13' state='checked' open='no' p='0'/>
 						</node>
-						<node id='5' name='Folder2' label='Folder2' state='checked' open='yes' p='1'>
-							<node id='6' name='Subfolder21' label='Subfolder21' state='checked' open='yes' p='0'/>
+						<node id='5' name='Folder2' label='Folder2' state='checked' open='no' p='1'>
+							<node id='6' name='Subfolder21' label='Subfolder21' state='checked' open='no' p='0'/>
 						</node>
-						<node id='7' name='Folder3' label='Folder3' state='checked' open='yes' p='1'>
-							<node id='8' name='Subfolder31' label='Subfolder31' state='checked' open='yes' p='0'/>
-							<node id='9' name='Subfolder32' label='Subfolder31' state='checked' open='yes' p='0'/>
+						<node id='7' name='Folder3' label='Folder3' state='checked' open='no' p='1'>
+							<node id='8' name='Subfolder31' label='Subfolder31' state='checked' open='no' p='0'/>
+							<node id='9' name='Subfolder32' label='Subfolder31' state='checked' open='no' p='0'/>
 						</node>
 				</root>;
 				
@@ -131,7 +131,7 @@
 					treeid.dataProvider = xl1;
 				}
 				cpa = apc;
-				treeid.openItems = dp.node;
+				//treeid.openItems = dp.node;
 				treeid.invalidateList();
 				treeid.invalidateDisplayList();
 				
@@ -140,29 +140,34 @@
 			protected function group1_creationCompleteHandler(event:FlexEvent):void {
 				treeview('A');
 				//Add click event for tree
-				treeid.addEventListener(ListEvent.ITEM_CLICK, treeidItemClickHandler );
+				//treeid.addEventListener(ListEvent.ITEM_CLICK, treeidItemClickHandler );
 			}
 			
-			public function swapTreeClickToDBClickHandler():void {
+			/* public function swapTreeClickToDBClickHandler():void {
 				treeid.removeEventListener(ListEvent.ITEM_CLICK, treeidItemClickHandler);
 				treeid.addEventListener(ListEvent.ITEM_DOUBLE_CLICK, treeid_itemDoubleClickHandler);
-			}
+			} */
 			
-			private function treeidItemClickHandler(event:ListEvent):void {
+			/* private function treeidItemClickHandler(event:ListEvent):void {
 				if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
 					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
 				}
-			}
+			} */
 			
 			protected function treeid_itemDoubleClickHandler(event:ListEvent):void {
-				//if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
-				//	FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
+				var p:XML = event.target.selectedItem as XML;
 				
-				//} else {
-					var p:XML = event.target.selectedItem as XML;
+				if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
+					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
+					
 					isClickFromChkBoxchkBox = false;
 					updateTree(p);
-				//}
+				
+				} else {
+					//var p:XML = event.target.selectedItem as XML;
+					isClickFromChkBoxchkBox = false;
+					updateTree(p);
+				}
 			}
 			
 			private function updateTree(p:XML):void {
@@ -260,6 +265,11 @@
 							break;
 						}
 					}
+				}
+				
+				//if not have expand node in tree switch to landing page
+				if ( listExpands.length == 0 ) {
+					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("I");
 				}
 			}
 			
@@ -372,6 +382,7 @@
 				 folderOpenIcon="{null}"
 				 disclosureClosedIcon="{ICON_FOLDER_EXPAND}"
 				 disclosureOpenIcon="{ICON_FOLDER_COLLAPSE}"
+				 itemDoubleClick="treeid_itemDoubleClickHandler(event)"
 				 rowHeight="16" iconFunction="tree_iconFunc"
 				 fontFamily="Franklin Gothic Medium" fontSize="11"
 				 itemRenderer="custom_tree_component.CheckTreeRenderer_For_DE" labelField="@label"

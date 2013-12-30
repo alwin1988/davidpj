@@ -183,7 +183,7 @@
 				
 				//Add 20131217
 				setVisibleMainDetailBox("I");
-				
+				hideAllDataGridWindow();
 				//Set doc format list
 				//Comment on 20131217
 				/*docFormatDataProvider.removeAll();
@@ -209,7 +209,7 @@
 					maskDetailBoxID.visible = false;
 					maskDetailBoxID.includeInLayout = false;
 					mainDetailBoxFlag = "S";
-					mytreeID.swapTreeClickToDBClickHandler();
+					//mytreeID.swapTreeClickToDBClickHandler();
 				}
 			}
 			
@@ -410,6 +410,27 @@
 						DE_DG3_SUB2_TW.includeInLayout = false;
 						break;
 				}
+			}
+			
+			public function hideAllDataGridWindow():void {
+				DE_DG1_TW.visible = false;
+				DE_DG1_TW.includeInLayout = false;
+				DE_DG1_SUB1_TW.visible = false;
+				DE_DG1_SUB1_TW.includeInLayout = false;
+				DE_DG1_SUB2_TW.visible = false;
+				DE_DG1_SUB2_TW.includeInLayout = false;
+				DE_DG1_SUB3_TW.visible = false;
+				DE_DG1_SUB3_TW.includeInLayout = false;
+				DE_DG2_TW.visible = false;
+				DE_DG2_TW.includeInLayout = false;
+				DE_DG2_SUB1_TW.visible = false;
+				DE_DG2_SUB1_TW.includeInLayout = false;
+				DE_DG3_TW.visible = false;
+				DE_DG3_TW.includeInLayout = false;
+				DE_DG3_SUB1_TW.visible = false;
+				DE_DG3_SUB1_TW.includeInLayout = false;
+				DE_DG3_SUB2_TW.visible = false;
+				DE_DG3_SUB2_TW.includeInLayout = false;
 			}
 			
 			protected function advanceddatagrid_itemDoubleClickHandler(evt:ListEvent):void

@@ -139,17 +139,30 @@
 			
 			protected function group1_creationCompleteHandler(event:FlexEvent):void {
 				treeview('A');
+				//Add click event for tree
+				treeid.addEventListener(ListEvent.ITEM_CLICK, treeidItemClickHandler );
+			}
+			
+			public function swapTreeClickToDBClickHandler():void {
+				treeid.removeEventListener(ListEvent.ITEM_CLICK, treeidItemClickHandler);
+				treeid.addEventListener(ListEvent.ITEM_DOUBLE_CLICK, treeid_itemDoubleClickHandler);
+			}
+			
+			private function treeidItemClickHandler(event:ListEvent):void {
+				if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
+					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
+				}
 			}
 			
 			protected function treeid_itemDoubleClickHandler(event:ListEvent):void {
-				if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
-					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
+				//if ( FlexGlobals.topLevelApplication.documentExplorerID.mainDetailBoxFlag == "I" ) {
+				//	FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("S");
 				
-				} else {
+				//} else {
 					var p:XML = event.target.selectedItem as XML;
 					isClickFromChkBoxchkBox = false;
 					updateTree(p);
-				}
+				//}
 			}
 			
 			private function updateTree(p:XML):void {
@@ -350,13 +363,13 @@
 	<!--</s:Rect>-->
 	
 	<!-- itemClick="treeid_itemClickHandler(event)" -->
+	<!-- itemDoubleClick="treeid_itemDoubleClickHandler(event)" -->
 	
 	<s:VGroup width="100%" height="100%" gap="0">
 		<mx:Tree id="treeid" includeIn="State1,State2,State3" width="100%" height="100%"
 				 creationComplete="expandNodes()" defaultLeafIcon="{null}"
 				 folderClosedIcon="{null}"
 				 folderOpenIcon="{null}"
-				 itemDoubleClick="treeid_itemDoubleClickHandler(event)"
 				 disclosureClosedIcon="{ICON_FOLDER_EXPAND}"
 				 disclosureOpenIcon="{ICON_FOLDER_COLLAPSE}"
 				 rowHeight="16" iconFunction="tree_iconFunc"

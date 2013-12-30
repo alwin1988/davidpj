@@ -356,12 +356,12 @@
 					case "Folder1" :
 						DE_DG1_TW.visible = false;
 						DE_DG1_TW.includeInLayout = false;
-						DE_DG1_SUB1_TW.visible = false;
+						/* DE_DG1_SUB1_TW.visible = false;
 						DE_DG1_SUB1_TW.includeInLayout = false;
 						DE_DG1_SUB2_TW.visible = false;
 						DE_DG1_SUB2_TW.includeInLayout = false;
 						DE_DG1_SUB3_TW.visible = false;
-						DE_DG1_SUB3_TW.includeInLayout = false;
+						DE_DG1_SUB3_TW.includeInLayout = false; */
 						break;
 					
 					case "Subfolder11" :
@@ -382,8 +382,8 @@
 					case "Folder2" :
 						DE_DG2_TW.visible = false;
 						DE_DG2_TW.includeInLayout = false;
-						DE_DG2_SUB1_TW.visible = false;
-						DE_DG2_SUB1_TW.includeInLayout = false;
+						/* DE_DG2_SUB1_TW.visible = false;
+						DE_DG2_SUB1_TW.includeInLayout = false; */
 						break;
 					
 					case "Subfolder21" :
@@ -394,10 +394,10 @@
 					case "Folder3" :
 						DE_DG3_TW.visible = false;
 						DE_DG3_TW.includeInLayout = false;
-						DE_DG3_SUB1_TW.visible = false;
+						/* DE_DG3_SUB1_TW.visible = false;
 						DE_DG3_SUB1_TW.includeInLayout = false;
 						DE_DG3_SUB2_TW.visible = false;
-						DE_DG3_SUB2_TW.includeInLayout = false;
+						DE_DG3_SUB2_TW.includeInLayout = false; */
 						break;
 					
 					case "Subfolder31" :

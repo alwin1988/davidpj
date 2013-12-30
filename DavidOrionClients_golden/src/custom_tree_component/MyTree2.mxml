@@ -102,6 +102,7 @@
 			[Bindable] private var xl1:XMLListCollection = new XMLListCollection();
 			[Bindable] private var chkstate:String = "checked";
 			[Bindable] public var isClickFromChkBoxchkBox:Boolean = false;
+			[Bindable] private var tempTreeVerticalScrollPosition:Number = 0;
 			
 			private var cpa:String ="P";
 			
@@ -173,10 +174,12 @@
 			private function updateTree(p:XML):void {
 				if ( p.@open=='yes' ) { //Close
 					renderTree(updateTreeOpenCloseState("close", p.@name));
+					setTimeout(setTreeVerticalScrollPosition,100);
 					FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow(p.@name);								
 					
 				} else { //Open
 					renderTree(updateTreeOpenCloseState("open", p.@name));
+					setTimeout(setTreeVerticalScrollPosition,100);
 					FlexGlobals.topLevelApplication.documentExplorerID.openDataGridWindow(p.@name);								
 				}
 			}
@@ -185,6 +188,7 @@
 			public function updateTreeFromCloseEvent(closeBoxName:String):void {
 				isClickFromChkBoxchkBox = false;
 				renderTree(updateTreeOpenCloseState("close", closeBoxName));
+				setTimeout(setTreeVerticalScrollPosition,100);
 				FlexGlobals.topLevelApplication.documentExplorerID.closeDataGridWindow(closeBoxName);
 			}
 			
@@ -226,11 +230,14 @@
 					}
 				}
 				
+				//Set verticalScrollPosition to global variable (before change)
+				tempTreeVerticalScrollPosition = treeid.verticalScrollPosition;
+				
 				xl1 = tc;
 				treeid.dataProvider = xl1;
 				treeid.invalidateList();
 				treeid.invalidateDisplayList();
-				treeid.validateNow();
+				//treeid.validateNow();
 				
 				//Loop for update expands index
 				var temp:XMLListCollection = treeid.dataProvider as XMLListCollection; 
@@ -255,9 +262,12 @@
 				
 			//Re render tree after change node open state
 			public function renderTree(listExpands:ArrayCollection):void {
-				for (var i:int=0; i < treeid.dataProvider.length; i++) {
-					treeid.expandChildrenOf(treeid.dataProvider[i],false);
-				}
+				//for (var i:int=0; i < treeid.dataProvider.length; i++) {
+				//	treeid.expandChildrenOf(treeid.dataProvider[i],false);
+				//}
+				
+				treeid.openItems = [];
+				
 				for each ( var index:int in listExpands ) {
 					for (var i:int = 0; i < treeid.dataProvider.length; i ++) {
 						if ( index == i ) {
@@ -271,6 +281,11 @@
 				if ( listExpands.length == 0 ) {
 					FlexGlobals.topLevelApplication.documentExplorerID.setVisibleMainDetailBox("I");
 				}
+			}
+			
+			private function setTreeVerticalScrollPosition():void {
+				treeid.verticalScrollPosition = tempTreeVerticalScrollPosition;
+				tempTreeVerticalScrollPosition = 0;
 			}
 			
 			private function updatechild(x:XMLList,status:String):Boolean {

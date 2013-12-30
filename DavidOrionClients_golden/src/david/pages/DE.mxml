@@ -209,6 +209,7 @@
 					maskDetailBoxID.visible = false;
 					maskDetailBoxID.includeInLayout = false;
 					mainDetailBoxFlag = "S";
+					mytreeID.swapTreeClickToDBClickHandler();
 				}
 			}
 			

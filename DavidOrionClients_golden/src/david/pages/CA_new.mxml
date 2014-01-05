@@ -495,7 +495,7 @@
 												<mx:AdvancedDataGridColumn dataField="checked"
 																		   width="20" textAlign="center"
 																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
-																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+																		   itemRenderer="component.CheckBoxItemRenderer" rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn headerText="" width="20"/>							
 												<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Document Types">
 													<mx:AdvancedDataGridColumn id="DocType" width="235" headerText="Name" dataField="Name"/>
@@ -522,7 +522,7 @@
 												<mx:AdvancedDataGridColumn dataField="checked"
 																		   width="20" textAlign="center"
 																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
-																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+																		   itemRenderer="component.CheckBoxItemRenderer" rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn headerText="" width="20"/>							
 												<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="Procedures / Steps / Tasks / Actions">
 													<mx:AdvancedDataGridColumn id="master_proc" width="235" headerText="Name" dataField="Name"/>
@@ -613,7 +613,7 @@
 														<mx:AdvancedDataGridColumn dataField="checked"
 																				   width="20" textAlign="center"
 																				   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
-																				   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+																				   itemRenderer="component.CheckBoxItemRenderer" rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn headerText="" width="20"/>
 														<mx:AdvancedDataGridColumn id="FF_master_proc" width="220" headerText="Name" dataField="Name"/>
 													</mx:AdvancedDataGridColumnGroup>

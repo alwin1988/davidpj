@@ -337,7 +337,7 @@
 								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
 						
 						<!--<s:DropDownList width="160" height="18"/>-->
-						<component:MyPopUpButton dataProviderXML="{docsFormatXML}" defaultPopupLabel="Document formats" textAlign="left" width="160" height="18"/>
+						<component:CustomPopUpButton dataProviderXML="{docsFormatXML}" defaultPopupLabel="Document formats" textAlign="left" width="160" height="18"/>
 						<s:Spacer height="0"/>
 						
 						<mx:Text text="When actioned:" 
@@ -378,7 +378,7 @@
 						<mx:Text text="Document context:" 
 								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
 						<!--<s:DropDownList width="160" height="18"/>-->
-						<component:MyPopUpButton dataProviderXML="{docsContextXML}" defaultPopupLabel="Document context" textAlign="left" width="160" height="18"/>
+						<component:CustomPopUpButton dataProviderXML="{docsContextXML}" defaultPopupLabel="Document context" textAlign="left" width="160" height="18"/>
 						<s:Spacer height="6"/>
 						
 						<s:BorderContainer width="170%" height="{FilterSearchButton.height}" 
@@ -413,7 +413,7 @@
 															   width="30" 
 															   rendererIsEditor="false"
 															   sortable="false"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 									<mx:AdvancedDataGridColumn width="20"/>
 									<mx:AdvancedDataGridColumn width="20"/>
@@ -440,7 +440,7 @@
 															   width="30" 
 															   rendererIsEditor="false"
 															   sortable="false"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 									<mx:AdvancedDataGridColumn width="20"/>
 									<mx:AdvancedDataGridColumn width="20"/>

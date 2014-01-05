@@ -7,7 +7,6 @@
 	<fx:Script>
 		<![CDATA[
 			
-
 			public function init():void {
 			}
 			
@@ -48,13 +47,13 @@
 					<s:layout>
 						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
 					</s:layout>
-					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00315B7E" backgroundColor="#00315B7E">
+					<s:BorderContainer width="170" height="20" borderVisible="true" styleName="MenuHeader">
 						<s:layout>
 							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5"
 											  verticalAlign="middle"/>
 						</s:layout>
-						<mx:Text text="Choose category:" 
-								color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+						<s:Label text="Choose category:" 
+								styleName="MenuHeader"/>
 					</s:BorderContainer>
 					<s:BorderContainer width="170" height="111" borderVisible="true">
 						<s:layout>
@@ -62,7 +61,7 @@
 						</s:layout>
 						<mx:Tree width="99%" height="100%" labelField="@label" rowHeight="20"
 								 showRoot="true" borderSkin="{null}" 
-								 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+								 styleName="MenuBody">
 							<mx:XMLListCollection>
 								<fx:XMLList>
 									<folder label="Documents">
@@ -88,7 +87,7 @@
 						<s:layout>
 							<s:HorizontalLayout gap="0" horizontalAlign="right" verticalAlign="bottom"/>
 						</s:layout>
-						<s:TabBar height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+						<s:TabBar height="20" styleName="TabText">
 							<mx:ArrayCollection>
 								<fx:String>Chart</fx:String> 
 								<fx:String>Report</fx:String> 
@@ -102,7 +101,7 @@
 							<s:VerticalLayout/>
 						</s:layout>-->
 						
-						<mx:VBox width="100%" height="100%" horizontalAlign="left">
+						<s:VGroup width="100%" height="100%" horizontalAlign="left">
 							<mx:PieChart id="myChart" 
 										 dataProvider="{DocClassData}" 
 										 showDataTips="true">
@@ -114,7 +113,7 @@
 								</mx:series>
 							</mx:PieChart>
 							<mx:Legend dataProvider="{myChart}"/>
-						</mx:VBox>
+						</s:VGroup>
 						
 					</component:CustomTitleWindow>
 				</s:BorderContainer>

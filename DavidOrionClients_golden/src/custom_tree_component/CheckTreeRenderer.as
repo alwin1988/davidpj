@@ -140,7 +140,11 @@ package custom_tree_component
 		{
 			super.createChildren();
 			myCheckBox=new CheckBox();
+			myCheckBox.setStyle("horizontalCenter", "0");
+			myCheckBox.setStyle("horizontalAlign", "center");
+			myCheckBox.setStyle("verticalCenter", "0");
 			myCheckBox.setStyle("verticalAlign", "middle");
+			myCheckBox.setStyle("chromeColor", "white");
 			myCheckBox.addEventListener(MouseEvent.CLICK, checkBoxToggleHandler);
 			addChild(myCheckBox);
 			//myImage=new Image();

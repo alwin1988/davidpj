@@ -281,7 +281,7 @@
 				</pages:dataProvider>
 				<pages:columns>
 					<mx:AdvancedDataGridColumn width="20" dataField="checked" draggable="false"
-											   itemRenderer="component.CheckboxItemRenderer"
+											   itemRenderer="component.CheckBoxItemRenderer"
 											   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 											   rendererIsEditor="false" resizable="true"
 											   sortable="false" textAlign="center"/>
@@ -419,7 +419,7 @@
 					<mx:AdvancedDataGridColumn width="100" dataField="Completed" draggable="false"
 											   fontFamily="Franklin Gothic Medium" fontSize="10"
 											   fontWeight="normal" headerText="% Completed"
-											   itemRenderer="component.CustomProgressItemRenderer"
+											   itemRenderer="component.CompletionBarItemRenderer"
 											   resizable="false" sortable="false"/>
 					<mx:AdvancedDataGridColumn width="100" dataField="Estimate" draggable="false"
 											   fontFamily="Franklin Gothic Medium" fontSize="10"

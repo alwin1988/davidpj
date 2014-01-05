@@ -70,7 +70,6 @@
 			[Bindable] [Embed(source="../assets/folder_yellow_unchecked.png")]
 			public var ICON_FOLDER_YELLOW_UNCHECKED:Class; */
 			
-			
 			[Bindable] [Embed(source="../assets/folder_yellow_checked.png")]
 			public var ICON_FOLDER_CHECKED:Class;
 			
@@ -399,12 +398,11 @@
 				 disclosureOpenIcon="{ICON_FOLDER_COLLAPSE}"
 				 itemDoubleClick="treeid_itemDoubleClickHandler(event)"
 				 rowHeight="16" iconFunction="tree_iconFunc"
-				 fontFamily="Franklin Gothic Medium" fontSize="11"
+				 fontFamily="Arial" fontSize="11" fontWeight="normal"
 				 itemRenderer="custom_tree_component.CheckTreeRenderer_For_DE" labelField="@label"
 				 showRoot="true"
 				 doubleClickEnabled="true">
 				<!--itemRenderer="custom_tree_component.CheckTreeRenderer" labelField="@label"-->
-			
 		</mx:Tree>
 	</s:VGroup>
 	

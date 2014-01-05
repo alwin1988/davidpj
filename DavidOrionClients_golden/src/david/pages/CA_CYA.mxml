@@ -349,7 +349,7 @@
 															   dataField="checked" textAlign="center"
 															   width="20"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   rendererIsEditor="false"/>
 									<mx:AdvancedDataGridColumn id="A_m_DG_Information"
 															   width="20"/>

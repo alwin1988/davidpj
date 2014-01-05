@@ -59,6 +59,9 @@
 			
 			//[Bindable] private var docFormatDataProvider:ArrayCollection = new ArrayCollection(); Comment on 20131217
 			
+			[Bindable] 
+			private var DGwidth:Number = 1162;
+			
 			private var _dataProvider1List:ArrayCollection;
 			private var _dataProvider2List:ArrayCollection;
 			private var _dataProvider3List:ArrayCollection;
@@ -174,7 +177,7 @@
 							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
 						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
 							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
-					]);				
+					]);
 			}
 
 			public function init():void {
@@ -197,17 +200,17 @@
 				if ( state == "I" ) { //Initial page
 					mainDetailBoxID.visible = false;
 					mainDetailBoxID.includeInLayout = false;
-					maskDetailBoxID.percentHeight = 100;
-					maskDetailBoxID.visible = true;
-					maskDetailBoxID.includeInLayout = true;
+					mainDetailBoxID.percentHeight = 100;
+					mainDetailBoxID.visible = true;
+					mainDetailBoxID.includeInLayout = true;
 					mainDetailBoxFlag = "I";
 					
 				} else if ( state == "S" ) { //When click search button
 					mainDetailBoxID.visible = true;
 					mainDetailBoxID.includeInLayout = true;
-					maskDetailBoxID.percentHeight = 0;
-					maskDetailBoxID.visible = false;
-					maskDetailBoxID.includeInLayout = false;
+					mainDetailBoxID.percentHeight = 0;
+					mainDetailBoxID.visible = false;
+					mainDetailBoxID.includeInLayout = false;
 					mainDetailBoxFlag = "S";
 					//mytreeID.swapTreeClickToDBClickHandler();
 				}
@@ -296,7 +299,7 @@
 			}
 			
 			//Add 20131217
-			protected function filterSearchButtonID_clickHandler():void	{
+			protected function FilterSearchButton_clickHandler():void	{
 				setVisibleMainDetailBox("S");
 			}
 			
@@ -348,7 +351,6 @@
 						DE_DG3_SUB2_TW.includeInLayout = true;
 						break;
 				}
-				
 			}
 			
 			public function closeDataGridWindow(dgName:String):void {
@@ -469,9 +471,7 @@
 			<!--Search Filters and Search Results-->
 			<s:BorderContainer id="SearchFiltersAndSearchResults" width="100%" height="100%" borderVisible="false">
 				<s:layout>
-					<s:HorizontalLayout paddingTop="5" paddingBottom="5"
-										paddingLeft="5" paddingRight="5" 
-										gap="10"/>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="10"/>
 				</s:layout>
 				<!--Search filters outer container-->
 				<s:BorderContainer id="SearchFilters" 
@@ -479,98 +479,55 @@
 					<s:layout>
 						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
 					</s:layout>
-					<s:BorderContainer width="170" height="20" borderVisible="true" borderColor="#00315B7E" backgroundColor="#00315B7E" >
+					<s:BorderContainer width="100%" height="20" borderVisible="true" styleName="MenuHeader">
 						<s:layout>
-							<s:VerticalLayout verticalAlign="middle" 
-											  paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0"/>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0" verticalAlign="middle"/>
 						</s:layout>
-						<mx:Text text="Search Filters"
-								 color="white" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"/>
+						<s:Label text="Search Filters"
+								 styleName="MenuHeader"/>
 					</s:BorderContainer>
 					<!--Search filters inner container-->
-					<s:BorderContainer width="170" height="100%" borderVisible="true" backgroundColor="#00C1DAD6">
+					<s:BorderContainer width="100%" height="100%" borderVisible="true" styleName="MenuBody">
 						<s:layout>
 							<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="0"/>
 						</s:layout>
-						<mx:Text text="Recent searches:"
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						<!--<s:DropDownList width="160" height="18"/>-->
-						<mx:ComboBox width="160" height="18"/>
-						<!--<s:Spacer height="0"/>-->
-						<mx:Text text="Saved searches:"
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						<!--<s:DropDownList width="160" height="18"/>-->
-						<mx:ComboBox width="160" height="18"/>
-						<s:Spacer height="0"/>
-						<mx:Text text="Folders:" 
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
 						
-						<s:BorderContainer id="Folders" width="100%" height="100%" minHeight="50"
-										   borderVisible="false" dropShadowVisible="false" >
-							
+						<s:Label text="Recent searches:"
+								 styleName="MenuBodyHeading"/>
+						<component:CustomDropDownList width="100%" height="18"
+													  styleName="DropDownListText" dropShadowVisible="false"/>
+						
+						<s:Spacer height="5"/>
+						
+						<s:Label text="Saved searches:"
+								 styleName="MenuBodyHeading"/>
+						<component:CustomDropDownList width="100%" height="18"
+													  styleName="DropDownListText" dropShadowVisible="false"/>
+						
+						<s:Spacer height="5"/>
+
+						<s:Label text="Folders:"
+								 styleName="MenuBodyHeading"/>
+						<s:BorderContainer id="Folders"
+										   width="100%" height="100%" minHeight="50" borderVisible="false" dropShadowVisible="false">					
 							<s:layout>
-								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-												  gap="0"/>
+								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
 							</s:layout>
-							<!--<s:Scroller x="{Folders.x}" width="{Folders.width-5}" height="{Folders.height-5}" top="0" bottom="0" left="0" right="0"
-							minHeight="{Folders.minHeight-5}" maxHeight="{IndexFields.maxHeight-5}">-->
-							<s:VGroup id="vgroup1" width="{Folders.width-1}" height="{Folders.height-2}" 
-									  minHeight="{Folders.minHeight-2}" maxHeight="{Folders.maxHeight-2}"
-									  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-									  gap="0">
-								
+							<s:VGroup id="FolderTreeVG" 
+									  width="{Folders.width-1}" height="{Folders.height-2}" minHeight="{Folders.minHeight-2}" maxHeight="{Folders.maxHeight-2}" 
+									  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0">					
 								<customTreeComponent:MyTree2 id="mytreeID" width="{Folders.width-1}" height="{Folders.height-1}"/>
-								
-								<!-- ################################ Old Tree ################################# -->
-								<!--<mx:Tree id="tree1" width="{vgroup1.width}" 
-								height="{vgroup1.height}"
-								minHeight="{vgroup1.minHeight}" 
-								labelField="@label" rowHeight="16"
-								showRoot="true" borderSkin="{null}" 
-								itemRenderer="component.TreeItemRendererClass"
-								fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal">
-								<mx:XMLListCollection>
-								<fx:XMLList>
-								<folder label="ALL FOLDERS" checked="1"/>
-								<folder label="Folder1" checked="1">
-								<Pfolder label="Subfolder1" checked="1"/>
-								</folder>
-								<folder label="Folder2" checked="1">
-								<Pfolder label="Subfolder1" checked="1"/>
-								<Pfolder label="Subfolder2" checked="1"/>
-								</folder>
-								<folder label="Folder3" checked="1">
-								<Pfolder label="Subfolder1" checked="1"/>
-								<Pfolder label="Subfolder2" checked="1"/>
-								</folder>
-								<folder label="Folder4" checked="1">
-								<Pfolder label="Subfolder1" checked="1"/>
-								</folder>
-								<folder label="Folder5" checked="1">
-								<Pfolder label="Subfolder1" checked="1"/>
-								</folder>
-								<folder label="Folder6" checked="1"/>	
-								</fx:XMLList>
-								</mx:XMLListCollection>
-								</mx:Tree>-->
-								<!-- ################################ Old Tree ################################# -->
-								
 							</s:VGroup>
-							<!--</s:Scroller>  -->
 						</s:BorderContainer>
 						
-						<s:Spacer height="3"/>
+						<s:Spacer height="5"/>
 						
-						<mx:Text text="Index fields:"
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						
-						<s:Spacer height="3"/>
-						
-						<s:BorderContainer id="IndexFields" width="100%" height="100%" minHeight="20"
-										   borderVisible="true" dropShadowVisible="false">
+						<s:Label text="Index fields:"
+								 styleName="MenuBodyHeading"/>
+						<s:BorderContainer id="IndexFields" 
+										   width="100%" height="100%" minHeight="20" borderVisible="true" dropShadowVisible="false">
 							<s:layout>
-								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-												  gap="0"/>
+								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
 							</s:layout>
 							<s:Scroller id="scroller1" x="{IndexFields.x}"
 										width="{IndexFields.width-1}" maxWidth="{IndexFields.width-1}"
@@ -580,8 +537,8 @@
 								
 								<s:VGroup id="indexFieldsVGroupID" width="{scroller1.width}" height="{scroller1.height}" 
 										  minHeight="{scroller1.minHeight}" maxHeight="{scroller1.maxHeight}"
-										  paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0" 
-										  fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal">
+										  paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0" 
+										  styleName="MenuBodyHeading">
 									
 									<component:ExtendsCheckbox2 width="100" id="main_checkBox_id" label="ALL INDEX FIELDS" isTristate="true" click="checkBoxClickHandler('M')"/>
 									<component:ExtendsCheckbox2 width="100" id="child_checkBox_id1" label="IndexField1" isTristate="false" click="checkBoxClickHandler('C')"/>
@@ -594,70 +551,80 @@
 									
 								</s:VGroup>                 
 							</s:Scroller>
-						</s:BorderContainer>
+						</s:BorderContainer>	
+						<s:CheckBox label="Search full text" 
+									styleName="MenuBodyHeading"/>
 						
-						
-						<s:CheckBox label="  Search full text" 
-									fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						<s:Spacer height="0"/>
-						
-						<mx:Text text="Document formats:" 
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						
-						<!--<s:DropDownList width="160" height="18"/>-->
-						<component:MyPopUpButton dataProviderXML="{docsFormatXML}" defaultPopupLabel="Document formats" textAlign="left" width="160" height="18"/>
-						<s:Spacer height="0"/>
-						
-						<mx:Text text="When actioned:" 
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						<mx:HBox width="160" horizontalGap="0">
-							<mx:ComboBox width="80" fontSize="9" height="18" prompt="TOUCHED">
-								<mx:ArrayCollection>
-									<fx:String>TOUCHED</fx:String>
-									<fx:String>Filed</fx:String>
-									<fx:String>Viewed</fx:String>
-									<fx:String>Output</fx:String>
-									<fx:String>Exported</fx:String>
-									<fx:String>Modified</fx:String>
-									<fx:String>Reindexed</fx:String>
-									<fx:String>Actioned</fx:String>
-								</mx:ArrayCollection>
-							</mx:ComboBox>
-							
-							<mx:ComboBox width="80" fontSize="9" height="18" prompt="ANY TIME">
-								<mx:ArrayCollection>
-									<fx:String>ANY TIME</fx:String>
-									<fx:String>Today</fx:String>
-									<fx:String>Yesterday</fx:String>
-									<fx:String>This week</fx:String>
-									<fx:String>Past week</fx:String>
-									<fx:String>Past month</fx:String>
-									<fx:String>Last month</fx:String>
-									<fx:String>This year</fx:String>
-									<fx:String>Past year</fx:String>
-									<fx:String>Before past year</fx:String>
-								</mx:ArrayCollection>
-							</mx:ComboBox>
-							
-						</mx:HBox>
-						
-						<s:Spacer height="0"/>
-						
-						<mx:Text text="Document context:" 
-								 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
-						<!--<s:DropDownList width="160" height="18"/>-->
-						<component:MyPopUpButton dataProviderXML="{docsContextXML}" defaultPopupLabel="Document context" textAlign="left" width="160" height="18"/>
 						<s:Spacer height="6"/>
 						
-						<s:BorderContainer width="170%" height="{filterSearchButtonID.height}" 
-										   borderVisible="false" backgroundColor="#00C1DAD6">
+						<s:Label text="Document formats:"
+								 styleName="MenuBodyHeading"/>
+						<component:CustomPopUpButton defaultPopupLabel="Document formats"
+													 width="100%" height="18" textAlign="left" verticalCenter="0"
+													 styleName="DropDownListText"
+													 dataProviderXML="{docsFormatXML}"/>
+						<s:Spacer height="5"/>
+						
+						<fx:Script>
+							<![CDATA[
+								[Bindable]
+								private var HowActioned_AC:ArrayCollection = new ArrayCollection(
+									[
+										{Label:'Touched', Data:'Touched'},
+										{Label:'Filed', Data:'Filed'},
+										{Label:'Viewed', Data:'Viewed'},
+										{Label:'Output', Data:'Output'},
+										{Label:'Exported', Data:'Exported'},
+										{Label:'Modified', Data:'Modified'},
+										{Label:'Reindexed', Data:'Reindexed'},
+										{Label:'Actioned', Data:'Actioned'}
+									]);
+								
+								[Bindable]
+								private var WhenActioned_AC:ArrayCollection = new ArrayCollection(
+									[
+										{Label:'Any time', Data:'Any time'},
+										{Label:'Yesterday', Data:'Yesterday'},
+										{Label:'This week', Data:'This week'},
+										{Label:'Past week', Data:'Past week'},
+										{Label:'Past month', Data:'Past month'},
+										{Label:'Last month', Data:'Last month'},
+										{Label:'This year', Data:'This year'},
+										{Label:'Past year', Data:'Past year'},
+										{Label:'Before past year', Data:'Before past year'}
+									]);
+							]]>
+						</fx:Script>
+						<s:Label text="When actioned:" 
+								 styleName="MenuBodyHeading"/>
+						<s:HGroup width="100%" gap="2">
+							<component:CustomDropDownList id="HowActioned" prompt="Touched"
+											width="50%" height="18"
+											styleName="DropDownListText"
+											dataProvider="{HowActioned_AC}" labelField="Label"/>	
+							<component:CustomDropDownList id="WhenActioned" prompt="All formats"
+											width="50%" height="18"
+											styleName="DropDownListText" dropShadowVisible="false"
+											dataProvider="{WhenActioned_AC}" labelField="Label"/>		
+						</s:HGroup>
+						
+						<s:Spacer height="5"/>
+						
+						<s:Label text="Document context:" 
+								 styleName="MenuBodyHeading"/>
+						<component:CustomPopUpButton defaultPopupLabel="Document context" 
+													 width="100%" height="18" textAlign="left" verticalCenter="0" 
+													 styleName="DropDownListText"
+													 dataProviderXML="{docsContextXML}"/>
+						<s:Spacer height="8"/>
+						
+						<s:BorderContainer width="100%" height="{FilterSearchButton.height}" borderVisible="false"
+										   styleName="MenuBody">
 							<s:layout>
-								<s:HorizontalLayout horizontalAlign="right"/>
+								<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" horizontalAlign="right"/>
 							</s:layout>
-							<s:Button id="filterSearchButtonID" height="21" 
-									  label="Search" click="filterSearchButtonID_clickHandler()"
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold" 
-									  buttonMode="true" styleName="searchButton"/>
+							<s:Button id="FilterSearchButton" label="Search" height="21" buttonMode="true" styleName="searchButton"
+									  click="FilterSearchButton_clickHandler()"/>
 						</s:BorderContainer>
 					</s:BorderContainer>
 				</s:BorderContainer>
@@ -667,8 +634,9 @@
 					<s:layout>
 						<s:VerticalLayout/>
 					</s:layout>
-					
+
 					<!-- Add 20131217 -->
+					<!--Commented out by David-->
 					<mx:VBox id="maskDetailBoxID" height="0" width="100%" verticalAlign="middle" horizontalAlign="center">
 						<mx:Text text="No folder selected.." width="100%" height="100" textAlign="center" fontSize="35" color="gray"/>
 						<mx:Text text="Please click search button or select treefolders in search filter section" width="100%" height="100" textAlign="center" fontSize="35" color="gray"/>
@@ -679,9 +647,9 @@
 						<component:CustomTitleWindow id="DE_DG1_TW" title="Folder1" 
 													 width="100%" height="100%"
 													 skinClass="component.CustomTitleWindowSkin"
-													 dropShadowVisible="false" headerHeight="16"
+													 dropShadowVisible="false" headerHeight="18"
 													 close="mytreeID.updateTreeFromCloseEvent('Folder1')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -689,20 +657,20 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG1"
-														 width="{DE_DG1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+20}"
+																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+18}"
 																	   textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -711,7 +679,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+40}"
+																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -730,9 +698,9 @@
 						<component:CustomTitleWindow id="DE_DG1_SUB1_TW" title="Subfolder11" 
 													 width="100%" height="100%"
 													 skinClass="component.CustomTitleWindowSkin"
-													 dropShadowVisible="false" headerHeight="16"
+													 dropShadowVisible="false" headerHeight="18"
 													 close="mytreeID.updateTreeFromCloseEvent('Subfolder11')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -740,20 +708,20 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG1_SUB1"
-														 width="{DE_DG1_SUB1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}"
+																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+18}"
 																	   textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -762,7 +730,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+40}"
+																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -781,9 +749,9 @@
 						<component:CustomTitleWindow id="DE_DG1_SUB2_TW" title="Subfolder12" 
 													 width="100%" height="100%"
 													 skinClass="component.CustomTitleWindowSkin"
-													 dropShadowVisible="false" headerHeight="16"
+													 dropShadowVisible="false" headerHeight="18"
 													 close="mytreeID.updateTreeFromCloseEvent('Subfolder12')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -791,20 +759,20 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG1_SUB2"
-														 width="{DE_DG1_SUB2_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}"
+																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+18}"
 																	   textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -813,7 +781,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+40}"
+																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -832,9 +800,9 @@
 						<component:CustomTitleWindow id="DE_DG1_SUB3_TW" title="Subfolder13" 
 													 width="100%" height="100%"
 													 skinClass="component.CustomTitleWindowSkin"
-													 dropShadowVisible="false" headerHeight="16"
+													 dropShadowVisible="false" headerHeight="18"
 													 close="mytreeID.updateTreeFromCloseEvent('Subfolder13')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -842,20 +810,20 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG1_SUB3"
-														 width="{DE_DG1_SUB3_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}"
+																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+18}"
 																	   textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -864,7 +832,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+40}"
+																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -881,10 +849,10 @@
 						
 						<!-- ########################### DG2 ########################### -->
 						<component:CustomTitleWindow id="DE_DG2_TW" title="Folder2" 
-													 width="100%" height="100%" headerHeight="16" 
+													 width="100%" height="100%" headerHeight="18" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin"
 													 close="mytreeID.updateTreeFromCloseEvent('Folder2')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -892,29 +860,29 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG2"
-														 width="{DE_DG2_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" textAlign="center" 
+																	   width="{(DE_DG2_TW.width-DE_DG2_TW.width)+16}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" editable="false" 
+											<mx:AdvancedDataGridColumn width="{(DE_DG2_TW.width-DE_DG2_TW.width)+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 																	   <!--David commented out"/-->
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn width="{DE_DG2_TW.width-DE_DG2_TW.width+20}" editable="false"
+											<mx:AdvancedDataGridColumn width="{(DE_DG2_TW.width-DE_DG2_TW.width)+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG2_TW.width-DE_DG2_TW.width+40}"
+																	   width="{(DE_DG2_TW.width-DE_DG2_TW.width)+40}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
@@ -928,10 +896,10 @@
 						
 						<!-- ########################### DG2 SUB1 ########################### -->
 						<component:CustomTitleWindow id="DE_DG2_SUB1_TW" title="Subfolder21" 
-													 width="100%" height="100%" headerHeight="16" 
+													 width="100%" height="100%" headerHeight="18" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin"
 													 close="mytreeID.updateTreeFromCloseEvent('Subfolder21')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -939,29 +907,29 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG2_SUB1"
-														 width="{DE_DG2_SUB1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+20}" textAlign="center" 
+																	   width="{(DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width)+16}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
-											<mx:AdvancedDataGridColumn width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+20}" editable="false" 
+											<mx:AdvancedDataGridColumn width="{(DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width)+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
 											<!--David commented out"/-->
 											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
-											<mx:AdvancedDataGridColumn width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+20}" editable="false"
+											<mx:AdvancedDataGridColumn width="{(DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width)+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width+40}"
+																	   width="{(DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width)+40}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
@@ -975,10 +943,10 @@
 						
 						<!-- ########################### DG3 ########################### -->
 						<component:CustomTitleWindow id="DE_DG3_TW" title="Folder3" 
-													 height="100%" width="100%" headerHeight="16" 
+													 width="100%" height="100%" headerHeight="18" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
 													 close="mytreeID.updateTreeFromCloseEvent('Folder3')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -986,19 +954,19 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG3"
-														 width="{DE_DG3_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider2List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">														 
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" textAlign="center" 
+																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+18}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -1007,7 +975,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+40}"
+																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/> 										
 											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -1023,10 +991,10 @@
 						
 						<!-- ########################### DG3 SUB1 ########################### -->
 						<component:CustomTitleWindow id="DE_DG3_SUB1_TW" title="Subfolder31" 
-													 width="100%" headerHeight="16" 
+													 width="100%" headerHeight="18" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
 													 close="mytreeID.updateTreeFromCloseEvent('Subfolder31')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -1034,19 +1002,19 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG3_SUB1"
-														 width="{DE_DG3_SUB1_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider2List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
-																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" textAlign="center" 
+																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+18}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -1055,7 +1023,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+40}"
+																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="200" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -1074,10 +1042,10 @@
 						
 						<!-- ########################### DG3 SUB2 ########################### -->
 						<component:CustomTitleWindow id="DE_DG3_SUB2_TW" title="Subfolder32" 
-													 height="100%" width="100%" headerHeight="16" 
+													 width="100%" height="100%" headerHeight="18" 
 													 dropShadowVisible="false" skinClass="component.CustomTitleWindowSkin" 
 													 close="mytreeID.updateTreeFromCloseEvent('Subfolder32')"
-													 fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold">
+													 styleName="TitleWindowTitleText">
 							
 							<mx:Canvas x="0" y="0" width="100%" height="100%" borderVisible="false"
 									   horizontalScrollPolicy="auto" verticalScrollPolicy="auto" clipContent="true">
@@ -1085,19 +1053,19 @@
 										  paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0" gap="0">
 									
 									<mx:AdvancedDataGrid id="DE_DG3_SUB2"
-														 width="{DE_DG3_SUB2_TW.width}" height="100%" minColumnWidth="0" verticalAlign="middle"
+														 width="{DGwidth}" height="100%" minColumnWidth="0" verticalAlign="middle"
 														 borderVisible="false" sortExpertMode="true"
 														 headerHeight="20" rowHeight="20"
-														 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider2List}"														 
 														 doubleClickEnabled="true" lockedColumnCount="4"
 														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked"
-																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" textAlign="center" 
+																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+18}" textAlign="center" 
 																	   draggable="false" resizable="false" sortable="false" 
 																	   rendererIsEditor="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" editable="false" 
 																	   draggable="false" resizable="false" sortable="false"/>
@@ -1106,7 +1074,7 @@
 											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
-																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+40}"
+																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+50}"
 																	   draggable="false" resizable="false" sortable="false"/>
 											<mx:AdvancedDataGridColumn width="100" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
@@ -1135,39 +1103,30 @@
 							<s:layout>
 								<s:HorizontalLayout horizontalAlign="left"/>
 							</s:layout>
-							<s:Button label="View" height="21" buttonMode="true" styleName="viewButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="View" height="21" buttonMode="true" styleName="viewButton"/>
 							<s:RadioButton groupName="rbgroup"
 										   label="In original format" selected="true" 
-										   fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+										   styleName="MenuBodyHeading"/>
 							<s:RadioButton groupName="rbgroup"
 										   label="As Image(s)" 
-										   fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+										   styleName="MenuBodyHeading"/>
 							<s:RadioButton groupName="rbgroup"
-										   label="As PDF file(s)" 
-										   fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+										   label="As PDF file(s)"
+										   styleName="MenuBodyHeading"/>
 						</s:BorderContainer>
 						<s:BorderContainer width="100%" height="24" borderVisible="false">
 							<s:layout>
 								<s:HorizontalLayout horizontalAlign="right"/>
 							</s:layout>
 							
-							<s:Button label="Print" height="21" buttonMode="true" styleName="printButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="Email" height="21" buttonMode="true" styleName="emailButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="Fax" height="21" buttonMode="true" styleName="faxButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="Save" height="21" buttonMode="true" styleName="saveButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="Check Out" height="21" buttonMode="true" styleName="checkOutButton" 	
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="File" height="21" buttonMode="true" styleName="fileButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="Reindex" height="21" buttonMode="true" styleName="reIndexButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
-							<s:Button label="Delete" height="21" buttonMode="true" styleName="deleteButton" 
-									  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"/>
+							<s:Button label="Print" height="21" buttonMode="true" styleName="printButton"/>
+							<s:Button label="Email" height="21" buttonMode="true" styleName="emailButton"/>
+							<s:Button label="Fax" height="21" buttonMode="true" styleName="faxButton"/>
+							<s:Button label="Save" height="21" buttonMode="true" styleName="saveButton"/>
+							<s:Button label="Check Out" height="21" buttonMode="true" styleName="checkOutButton"/>
+							<s:Button label="File" height="21" buttonMode="true" styleName="fileButton"/>
+							<s:Button label="Reindex" height="21" buttonMode="true" styleName="reIndexButton"/>
+							<s:Button label="Delete" height="21" buttonMode="true" styleName="deleteButton"/>
 						</s:BorderContainer>
 						
 					</s:BorderContainer>

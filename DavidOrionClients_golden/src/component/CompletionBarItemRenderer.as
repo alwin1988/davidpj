@@ -17,30 +17,31 @@ package component
 	import mx.core.UIComponent;
 	import mx.utils.ColorUtil;
 	
-	public class CustomProgressItemRenderer extends MXAdvancedDataGridItemRenderer
+	public class CompletionBarItemRenderer extends MXAdvancedDataGridItemRenderer
 	{
 
 		private var uic:UIComponent;
 		private var lb:Label;
 		
 		// Range between 0 - 100, if more than 100 set to 100
-		private var _progressBarPercent:Number = 0;
-		private var _progressBarColor:Number = 0x33FF00;
+		private var _completionBarPercent:Number = 0;
+		private var _completionBarColor:Number = 0x000000;
 		private var _rowPadding:Number = 4;
-		private var _labelFontColor:Number;
+		private var _labelFontColor:String = '0xffffff';
+		private var _labelStyleName:String = 'CompletionBarLabel';
 		
-		//need to set value to progressBarPercent property
+		//need to set value to completionBarPercent property
 		override public function set data(value:Object):void
 		{	
 			super.data = value;	
-			//progressBarPercent = value.progressBarPercent;
-			//progressBarColor = value.progressBarColor;
+			//completionBarPercent = value.completionBarPercent;
+			//completionBarColor = value.completionBarColor;
 			
 			//after execute invalidateProperties() call commitProperties()
 			invalidateProperties();
 		}
 		
-		public function CustomProgressItemRenderer()
+		public function CompletionBarItemRenderer()
 		{
 			super();
 		}
@@ -53,7 +54,9 @@ package component
 			this.addElement(uic);
 			
 			lb = new Label();
-			lb.text = progressBarPercent.toString() + "%";
+			lb.setStyle("color", _labelFontColor);
+			lb.styleName = _labelStyleName;
+			lb.text = completionBarPercent.toString() + "%";
 			this.addElement(lb);			
 		}
 		
@@ -76,49 +79,49 @@ package component
 			
 			//get dataField that use with ItemRenderer
 			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
-			progressBarPercent = data[adgld.dataField];
+			completionBarPercent = data[adgld.dataField];
 			
 			//get column width
 			var index:int = listData.columnIndex;
 			var adg:AdvancedDataGrid =listData.owner as AdvancedDataGrid;
 			var adgc:AdvancedDataGridColumn = adg.columns[index] as AdvancedDataGridColumn;
 			
-			trace("before round : ",adgc.width*progressBarPercent/100);
-			trace("after round : ",Math.round(adgc.width*progressBarPercent/100));
-			trace("percent : ",progressBarPercent.toString() + "%");
-			//trace(adgc.width*progressBarPercent/100);
+			trace("before round : ",adgc.width*completionBarPercent/100);
+			trace("after round : ",Math.round(adgc.width*completionBarPercent/100));
+			trace("percent : ",completionBarPercent.toString() + "%");
+			//trace(adgc.width*completionBarPercent/100);
 			
-			uic.graphics.beginFill(progressBarColor);
+			uic.graphics.beginFill(completionBarColor);
 			//hide border line
 			//uic.graphics.lineStyle(1,0x000000);
-			uic.graphics.drawRect(0,0,Math.round(adgc.width*progressBarPercent/100), adg.rowHeight - rowPadding);
+			uic.graphics.drawRect(0,0,Math.round(adgc.width*completionBarPercent/100), adg.rowHeight - rowPadding);
 			
-			lb.text = progressBarPercent.toString() + "%";
+			lb.text = completionBarPercent.toString() + "%";
 		}		
 
 		[Bindable]
-		public function get progressBarPercent():Number
+		public function get completionBarPercent():Number
 		{
-			return _progressBarPercent;
+			return _completionBarPercent;
 		}
 
-		public function set progressBarPercent(value:Number):void
+		public function set completionBarPercent(value:Number):void
 		{
 			if (value <= 100)
-				_progressBarPercent = value;
+				_completionBarPercent = value;
 			else
-				_progressBarPercent = 100;
+				_completionBarPercent = 100;
 		}
 
 		[Bindable]
-		public function get progressBarColor():Number
+		public function get completionBarColor():Number
 		{
-			return _progressBarColor;
+			return _completionBarColor;
 		}
 
-		public function set progressBarColor(value:Number):void
+		public function set completionBarColor(value:Number):void
 		{
-			_progressBarColor = value;
+			_completionBarColor = value;
 		}
 
 		[Bindable]
@@ -133,12 +136,12 @@ package component
 		}
 
 		[Bindable]
-		public function get labelFontColor():Number
+		public function get labelFontColor():String
 		{
 			return _labelFontColor;
 		}
 
-		public function set labelFontColor(value:Number):void
+		public function set labelFontColor(value:String):void
 		{
 			_labelFontColor = value;
 		}

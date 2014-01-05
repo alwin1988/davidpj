@@ -33,8 +33,8 @@ package component {
 	public class ThreeStateCheckBoxHeaderRenderer extends MXAdvancedDataGridItemRenderer {
 		protected var myCheckBox:CheckBox;
 		protected var myImage:Image;
-		private var imageWidth:Number = 9.5;
-		private var imageHeight:Number = 9.5;
+		private var imageWidth:Number = 7;
+		private var imageHeight:Number = 7;
 		//private var inner:String = "@Embed('../assets/inner.png')";
 		
 		[Bindable] [Embed(source="../assets/inner.png")]
@@ -62,8 +62,13 @@ package component {
 			super.createChildren();
 			
 			myCheckBox = new CheckBox();
-			myCheckBox.setStyle("horizontalCenter", "0");
+			myCheckBox.height = 8;
+			myCheckBox.width = 8;
+			myCheckBox.setStyle("horizontalCenter", "-2");
+			myCheckBox.setStyle("horizontalAlign", "center");
 			myCheckBox.setStyle("verticalCenter", "0");
+			myCheckBox.setStyle("verticalAlign", "middle");
+			myCheckBox.setStyle("chromeColor", "white");
 			myCheckBox.addEventListener( MouseEvent.CLICK, checkBoxClickHandler );
 			addElement(myCheckBox);
 			myImage = new Image();
@@ -250,4 +255,3 @@ package component {
 		}
 	}
 }
-

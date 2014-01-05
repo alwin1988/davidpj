@@ -172,7 +172,7 @@
 							<mx:groupedColumns>
 								<mx:AdvancedDataGridColumn textAlign="center" dataField="checked" width="30"
 														   rendererIsEditor="false" resizable="false" draggable="false"
-														   sortable="false"	itemRenderer="component.CheckboxItemRenderer"
+														   sortable="false"	itemRenderer="component.CheckBoxItemRenderer"
 														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"/>
 								<mx:AdvancedDataGridColumn width="20" resizable="false" draggable="false"/>
 								<mx:AdvancedDataGridColumn width="20" resizable="false" draggable="false"/>

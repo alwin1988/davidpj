@@ -387,7 +387,7 @@
 									
 									<mx:AdvancedDataGridColumn width="30" dataField="checked"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   rendererIsEditor="false"
 															   sortable="false" textAlign="center"/>
 									<mx:AdvancedDataGridColumn width="20"/>
@@ -420,7 +420,7 @@
 								<mx:groupedColumns>
 									<mx:AdvancedDataGridColumn width="30" dataField="checked"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   rendererIsEditor="false"
 															   sortable="false" textAlign="center"/>
 									<mx:AdvancedDataGridColumn width="20"/>
@@ -455,7 +455,7 @@
 								<mx:groupedColumns>
 									<mx:AdvancedDataGridColumn width="30" dataField="checked"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   rendererIsEditor="false"
 															   sortable="false" textAlign="center"/>
 									<mx:AdvancedDataGridColumn width="20"/>
@@ -488,7 +488,7 @@
 								<mx:groupedColumns>
 									<mx:AdvancedDataGridColumn width="30" dataField="checked"
 															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
-															   itemRenderer="component.CheckboxItemRenderer"
+															   itemRenderer="component.CheckBoxItemRenderer"
 															   rendererIsEditor="false"
 															   sortable="false" textAlign="center"/>
 									<mx:AdvancedDataGridColumn width="20"/>

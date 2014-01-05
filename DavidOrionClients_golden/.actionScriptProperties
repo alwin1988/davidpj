@@ -14,10 +14,13 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="david/pages/WM.mxml"/>
+    <application path="david/viewers/WorkViewer.mxml"/>
     <application path="david/pages/WMplay.mxml"/>
-    <application path="nndemo/NNdemoform.mxml"/>
     <application path="Main.mxml"/>
+    <application path="david/pages/CA.mxml"/>
+    <application path="david/viewers/FormViewer.mxml"/>
+    <application path="david/pages/WM.mxml"/>
+    <application path="nndemo/NNdemoform.mxml"/>
     <application path="david/pages/menuControl.mxml"/>
   </applications>
   <modules/>

@@ -41,7 +41,12 @@
 		]]>
 	</fx:Script>
 	
-	<s:CheckBox id="cb" click="clickHandler(event)" horizontalCenter="0" verticalCenter="0"/>
+	<mx:Box paddingTop="0" paddingBottom="0" paddingLeft="2" paddingRight="0" horizontalAlign="center" verticalAlign="middle">
+		<s:CheckBox id="cb"
+					height="8" width="8"
+					horizontalCenter="0" verticalCenter="0" 
+					chromeColor="white"
+					click="clickHandler(event)"/>
+	</mx:Box>
 	
 </s:MXAdvancedDataGridItemRenderer>
-

@@ -65,43 +65,44 @@
 				</s:layout>
 				
 				<!--Login Status-->
-				<s:Label text="Logging in" color="green"
-						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"
+				<s:Label text="Logged in"
+						 styleName="LoginStatus" color="green"
 						 visible="{FlexGlobals.topLevelApplication.isLogin}"
-						 includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"/>
-						 
-				<s:Label text="Log off" color="gray" 
-						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"
+						 includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"/>		 
+				<s:Label text="Not logged in"
+						 styleName="LoginStatus" color="red"
 						 visible="{!FlexGlobals.topLevelApplication.isLogin}"
 						 includeInLayout="{!FlexGlobals.topLevelApplication.isLogin}"/>
 				
-				<s:Spacer height="12"/>
+				<s:Spacer height="100%"/>
 				<s:Label text="User ID"
-						 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						 styleName="ClientLabelDark"/>
 				<s:Spacer height="2"/>
 				<s:TextInput id="inputUserID" height="22" keyUp="loginKeyUp(event)"/>
 				<s:Spacer height="12"/>
 				<s:Label text="Password"
-						 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+						 styleName="ClientLabelDark"/>
 				<s:Spacer height="2"/>
 				<s:TextInput displayAsPassword="true" id="inputPassword" height="22" keyUp="loginKeyUp(event)"/>
-				<mx:Label text="Forgot password?" horizontalCenter="0" buttonMode="true"
-						  click="text1_clickHandler(event)" useHandCursor="true" mouseChildren="false"
-						  fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal"/>
+				<mx:Label text="Forgot password?" 
+						  horizontalCenter="0" 
+						  buttonMode="true" styleName="ClientLabelDark"
+						  click="text1_clickHandler(event)" useHandCursor="true" mouseChildren="false"/>
 				<s:Spacer height="15"/>
-				<s:Button id="Login" label="Login"
-						  height="21" 
-						  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"
-						  click="login_clickHandler()" buttonMode="true" styleName="loginButton"/>
+				<s:Button id="Login" label="Login" height="21" buttonMode="true" styleName="loginButton"
+						  click="login_clickHandler()"/>
+				<s:Spacer height="100%"/>
 			</s:BorderContainer>
 			
 			<!--Document Explorer launch button-->
-			<s:BorderContainer width="100%" height="100%" borderVisible="true" >
+			<s:BorderContainer width="100%" height="100%" borderVisible="true"
+							   buttonMode="true"
+							   click="FlexGlobals.topLevelApplication.userLoginSelectPage('DE')">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
 				</s:layout>
 				<s:Label text=" Document Explorer" 
-						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+						 styleName="LaunchButton"/>
 				<s:BorderContainer width="100%" height="100%" borderVisible="false"  >
 					<s:Image width="100%" height="100%" scaleMode="stretch"
 						     source="@Embed('../assets/DElogoBW.jpg')" fillMode="scale"
@@ -111,41 +112,47 @@
 						      source="@Embed('../assets/DElogo.jpg')" fillMode="scale"
 						      visible="{FlexGlobals.topLevelApplication.isLogin}"
 						      includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"
-						      click="FlexGlobals.topLevelApplication.userLoginSelectPage('DE')"
 							  buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 				</s:BorderContainer>
 			</s:BorderContainer>
 			
-			<!--Case Manager launch button-->
-			<s:BorderContainer width="100%" height="100%" borderVisible="true" >
+			<!--Work Manager launch button-->
+			<s:BorderContainer width="100%" height="100%" borderVisible="true"
+							   buttonMode="true" 
+							   click="FlexGlobals.topLevelApplication.userLoginSelectPage('WM')">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
 				</s:layout>
 				<s:Label text=" Work Manager"  
-						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
-				<s:BorderContainer width="100%" height="100%" borderVisible="false"  >
-					<s:Image width="100%" height="100%" 
+						 styleName="LaunchButton"/>
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:TextArea text="See:  please fix this.  Flex cannot find the pics.  Also single-click and double-click on folder in 
+								DE do not work properly (seems like I broke it)" 
+								fontSize="18" color="red" fontStyle="italic" width="200"/>
+					<!--s:Image width="100%" height="100%" 
 							 scaleMode="stretch" fillMode="scale" 
-							 source="@Embed('../assets/CMlogoBW.jpg')"
+							 source="@Embed('../assets/WMlogoBW.jpg')"
 							 visible="{!FlexGlobals.topLevelApplication.isLogin}"
 							 includeInLayout="{!FlexGlobals.topLevelApplication.isLogin}"/>
-					<s:Image width="100%" height="100%" 
-							 scaleMode="stretch" fillMode="scale" 
-							 source="@Embed('../assets/CMlogo.jpg')"
-							 visible="{FlexGlobals.topLevelApplication.isLogin}"
+					<s:Image visible="{FlexGlobals.topLevelApplication.isLogin}" width="100%"
+							 height="100%" buttonMode="true"
+							 click="FlexGlobals.topLevelApplication.userLoginSelectPage('WM')"
+							 fillMode="scale"
 							 includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"
-							 click="FlexGlobals.topLevelApplication.userLoginSelectPage('CM')"
-							 buttonMode="true" useHandCursor="true" mouseChildren="false"/>
+							 mouseChildren="false" scaleMode="stretch" source="@Embed('../assets/WMlogo.jpg')"
+							 useHandCursor="true"/-->
 				</s:BorderContainer>
 			</s:BorderContainer>
 			
 			<!--Charts and Reports launch button-->
-			<s:BorderContainer width="100%" height="100%" borderVisible="true"  >
+			<s:BorderContainer width="100%" height="100%" borderVisible="true" 
+							   buttonMode="true"
+							   click="FlexGlobals.topLevelApplication.userLoginSelectPage('CR')">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
 				</s:layout>
 				<s:Label text=" Charts &amp; Reports" 
-						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+						 styleName="LaunchButton"/>
 				<s:BorderContainer width="100%" height="100%" borderVisible="false" >
 					<s:Image width="100%" height="100%" 
 								   scaleMode="stretch" fillMode="scale" 
@@ -157,18 +164,19 @@
 								   source="@Embed('../assets/CRlogo.jpg')"
 								   visible="{FlexGlobals.topLevelApplication.isLogin}"
 								   includeInLayout="{FlexGlobals.topLevelApplication.isLogin}"
-								   click="FlexGlobals.topLevelApplication.userLoginSelectPage('CR')"
 								   buttonMode="true" useHandCursor="true" mouseChildren="false"/>
 				</s:BorderContainer>
 			</s:BorderContainer>
 
 			<!--Configuration/Administration launch button-->
-			<s:BorderContainer width="100%" height="100%" borderVisible="true" >
+			<s:BorderContainer width="100%" height="100%" borderVisible="true" 
+							   buttonMode="true"
+							   click="FlexGlobals.topLevelApplication.userLoginSelectPage('CA')">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" paddingTop="5"/>
 				</s:layout>
 				<s:Label text=" Configuration/Administration" 
-						 fontFamily="Arial Black" fontSize="12" fontWeight="normal"/>
+						 styleName="LaunchButton"/>
 				<s:BorderContainer width="100%" height="100%" borderVisible="false" >
 					<s:Image width="100%" height="100%" 
 							 scaleMode="stretch" fillMode="scale" 
@@ -178,7 +186,6 @@
 					<s:Image width="100%" height="100%" 
 							 scaleMode="stretch" fillMode="scale" 
 							 source="@Embed('../assets/CAlogo.jpg')"
-							 click="FlexGlobals.topLevelApplication.userLoginSelectPage('CA')"
 							 buttonMode="true" useHandCursor="true" mouseChildren="false"
 							 visible="{FlexGlobals.topLevelApplication.isLogin &amp;&amp; (FlexGlobals.topLevelApplication.userModel.userRole == Constants.ADMIN_ROLE) }"
 							 includeInLayout="{FlexGlobals.topLevelApplication.isLogin &amp;&amp; (FlexGlobals.topLevelApplication.userModel.userRole == Constants.ADMIN_ROLE) }"/>

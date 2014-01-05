@@ -7,7 +7,7 @@ package david.configs {
 		//Page label
 		public static const HOME:String = "Welcome";
 		public static const DOC_EXP_LABEL:String = "DOCUMENT EXPLORER";
-		public static const CASE_MANAGER_LABEL:String = "CASE MANAGER";
+		public static const WORK_MANAGER_LABEL:String = "WORK MANAGER";
 		public static const CHART_REPORT_LABEL:String = "CHARTS & REPORTS";
 		public static const CONFIG_ADMIN_LABEL:String = "CONFIGURATION/ADMINISTRATION";
 	}

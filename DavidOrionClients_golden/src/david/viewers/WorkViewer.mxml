@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:model="com.vstyran.transform.model.*"
+			   xmlns:panzoom="org.rockholla.controls.panzoom.*"
+			   xmlns:component="component.*"
+			   xmlns:view="view.*"
+			   xmlns:components="david.view.components.*"
+			   width="100%" height="100%">
+
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		s|TabBar s|TabBarTab:upAndSelected,
+		s|TabBar s|TabBarTab:overAndSelected,
+		s|TabBar s|TabBarTab:downAndSelected,
+		s|Tabbar s|TabBarTab:disabledAndSelected {
+			chromeColor: #95B9C7;
+			color: #000000;
+		}
+		s|TabBar { 
+			chromeColor: #95B9C7;
+			color: #000000;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<!-- Image is set here -->
+		<s:BitmapImage id="PNGImage"
+					   source="@Embed('assets/11.png')"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import event.NNDemoEvent;
+			import component.CBViewStack;
+			
+			import com.blogagic.util.HTMLToolTip;
+			
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.controls.sliderClasses.Slider;
+			import mx.core.IFlexDisplayObject;
+			import mx.events.FlexEvent;
+			import mx.events.SliderEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.ToolTipManager;
+			
+			import spark.components.BorderContainer;
+			import spark.components.Button;
+			import spark.events.IndexChangeEvent;
+			import spark.events.TextOperationEvent;
+			
+			[Bindable]
+			public var myPopUp:IFlexDisplayObject;
+			public var BBX:Number;
+			public var BBY:Number;
+			
+			// Hide doc viewer
+			
+			
+			
+			protected function creationCompleteHandler():void
+			{
+				//How long to delay before showing tooltip -- 0 means no delay
+				ToolTipManager.showDelay = 0;
+				//How long to show visible tooltip before auto-hiding -- Infinity means show until rollout
+				ToolTipManager.hideDelay = Infinity;
+				
+				ToolTipManager.toolTipClass = HTMLToolTip;
+			}
+
+			private function initApp():void {
+				//How long to delay before showing tooltip -- 0 means no delay
+				ToolTipManager.showDelay = 0;
+				//How long to show visible tooltip before auto-hiding -- Infinity means show until rollout
+				ToolTipManager.hideDelay = Infinity;
+			}
+			
+			protected function initVars():void 
+			{	
+				BBX = -198
+				BBY = -1355
+			}
+						
+			//protected function imageLoaded(event:Event):void
+			//{
+			//	var img:Image = event.target as Image;
+			//	img.source = new Bitmap( Bitmap(img.content).bitmapData, "auto", true );
+			//	img.scaleX = img.scaleY = (20 / img.contentHeight);
+			//}
+				
+			protected function _onZoom():void
+				{		
+			//	var smoothBitmapData : BitmapData = new BitmapData(
+			//		loadedBitmap.width + (loadedBitmap.width % 2),
+			//		loadedBitmap.height + (loadedBitmap.height % 2),
+			//		true, 0x00FF0000);
+			//	smoothBitmapData.draw(loadedBitmap, null, null, null, null, true);
+			//	
+			//	smoothBitmap = new Bitmap(smoothBitmapData, PixelSnapping.NEVER, true);
+				
+					//if(ZoomSlider.value/100 != this.panzoom.scale)
+					{
+						ZoomSlider.value = this.panzoom.scale * 100;
+					}
+			}
+			
+			protected function HandleImageDoubleClick(mouseEvent):void
+			{
+				if(this.panzoom.scale == 1.8 || ZoomSlider.value == 180)
+				{
+					ZoomSlider.value = 100;
+					this.panzoom.zoomToPoint(new Point(0, 0), 1);
+					this.panzoom.scale = 1;
+				}
+				else
+			 	{
+					ZoomSlider.value = 180;
+					this.panzoom.zoomToPoint(new Point(325, 400), 1.8);
+					this.panzoom.scale = 1.8;
+			 	}
+			}
+			
+			// When our slider changes, we want the zoom level to update.  There's a public zoom method
+			// within the PanZoomComponent that accepts a scale value (1 = actual size or 100%, 0.5 = half the size or 50%, etc.)
+			protected function ZoomSliderChangeEventHandler(change):void
+			{
+			//	this.panzoom.zoom(ZoomSlider.value/100);
+				this.panzoom.scale = ZoomSlider.value/100;
+			}
+		]]>
+	</fx:Script>
+
+	<mx:HDividedBox x="0" y="0" width="{FormWindow.width+frmControlID.width+ImageWindow.width}" height="100%" horizontalGap="7">
+		<s:BorderContainer id="FormWindow"
+						   width="400" height="100%" minWidth="600" borderVisible="true">
+			<s:layout>
+				<s:VerticalLayout paddingBottom="0"/>
+			</s:layout>
+			<s:BorderContainer id="frmMainID"
+							   width="100%" minWidth="{frmMainID.minWidth}" maxWidth="{frmMainID.maxWidth}" height="100%"  
+							   borderColor="black" borderStyle="solid">
+				<s:layout>
+					<s:VerticalLayout paddingBottom="0" gap="0"/>
+				</s:layout>
+				
+				<!-- Form title here -->
+				<s:BorderContainer id="frmTitleBox" 
+								   width="100%" height="24" 
+								   backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle"
+											paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+					</s:layout>
+					<s:HGroup width="100%" horizontalAlign="left">
+						<mx:Text id="lblfrmTitle" text="Form title" fontFamily="Franklin Gothic Medium" fontSize="14" fontWeight="bold" color="white"/>
+					</s:HGroup>
+					<s:HGroup horizontalAlign="right">
+					</s:HGroup>
+					<!--s:TabBar id="tabs" left="8" x="400" y="2" selectedIndex="0" dataProvider="{vs}"/-->
+				</s:BorderContainer>
+				
+				<!-- Form body here -->
+
+
+				<!--s:BorderContainer width="100%" height="24" backgroundColor="#00004F6C" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle"/>
+					</s:layout>
+					<s:Spacer width="100%"/>
+					<s:ButtonBar height="21"
+								 fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"
+								 change="buttonbar1_changeHandler(event)">
+						<s:layout>
+							<s:ButtonBarHorizontalLayout gap="5" />
+						</s:layout>
+						<s:dataProvider>
+							<s:ArrayList source="[Sturen,Annuleren]" />
+						</s:dataProvider>
+					</s:ButtonBar>
+					<s:Spacer width="10"/>
+				</s:BorderContainer-->
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="frmControlID" width="30" height="100%" minWidth="{frmControlID.width}"
+						   maxWidth="{frmControlID.width}" backgroundAlpha=".3"
+						   backgroundColor="0x807F7A" borderVisible="false" 
+						   doubleClickEnabled="true" doubleClick="HandleImageDoubleClick(event)">
+			<s:layout>
+				<s:VerticalLayout horizontalAlign="center"/>
+			</s:layout>
+			<s:Button width="15" label="X" click="
+					  ImageWindow.width=0;ImageWindow.visible=false;
+					  frmControlID.width=0;frmControlID.visible=false;
+					  panzoom.width=0;panzoom.visible=false;
+					  DocImage.width=0;DocImage.visible=false;
+					  "/>
+			<s:Spacer height="150"/>
+			<s:VSlider x="10" y="330" height="120"
+					   id="ZoomSlider"
+					   showDataTip="false"
+					   minimum="100" maximum="600" stepSize="100"
+					   value="100"
+					   snapInterval="1" 
+					   liveDragging="true"
+					   change="ZoomSliderChangeEventHandler(event)"/>
+			<!--mx:Text text="{ZoomSlider.value}" color="red"/>
+			<s:Spacer height="5"/>
+			<mx:Text text="{panzoom.scale}" color="red"/-->
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="ImageWindow" width="500" minWidth="500" maxWidth="500" height="100%"
+						   borderVisible="false" borderStyle="solid">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+
+			<panzoom:PanZoomComponent id="panzoom" 
+									  backgroundColor="0x807F7A" borderVisible="true" borderStyle="solid" borderColor="black"							  
+									  width="500" height="680" 
+									  scaleMin="1" scaleMax="600" 
+									  childPreventsPan="false"
+									  zoomToCursor="false"
+									  zoomSpeed="1"
+									  horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+									  panScrollBarsVisible="true"
+									  loadCenterPoint="{new Point(325, 400)}"
+									  initialZoomLevel="1.8"
+									  zoom="this._onZoom()">
+				<panzoom:PanZoomContent width="{panzoom.width}" minWidth="210" height="{panzoom.height}" minHeight="297" backgroundColor="0x000000" borderVisible="true">
+					<s:Image id="DocImage" source="{PNGImage.source}" 
+							 width="500" height="500" depth="1" 
+							 doubleClickEnabled="true" doubleClick="HandleImageDoubleClick(event)"
+							 smooth="false"/>
+							<!--smooth="true" smoothingQuality="high"-->
+							 <!--doubleClick="{this.panzoom.scale=1}"/-->
+				</panzoom:PanZoomContent>
+			</panzoom:PanZoomComponent>	
+		</s:BorderContainer>
+	</mx:HDividedBox>
+
+</s:Application>

@@ -551,7 +551,7 @@
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Checkbox" headerText="" dataField="checked" 
 																	   width="16" minWidth="16" textAlign="center"										   
 																	   draggable="false" resizable="false" sortable="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																	   rendererIsEditor="false"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" headerText="" dataField="Information" 
@@ -617,7 +617,7 @@
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Pri" dataField="Priority" 
 																	   width="40" minWidth="40" textAlign="left"
 																	   draggable="false" resizable="false" sortable="true"
-																	   itemRenderer="component.PopUpButtonItemRenderer"/>
+																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID" headerText="ID" dataField="ID"
 																	   width="{WM_Batches_DG_ID.width}" minWidth="200" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true">
@@ -677,7 +677,7 @@
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Completed" headerText="% Completed" dataField="Completed"
 																	   width="100" minWidth="100" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"
-																	   itemRenderer="component.CustomProgressItemRenderer"/>
+																	   itemRenderer="component.CompletionBarItemRenderer"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
 																	   width="100" minWidth="100" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"/>

@@ -15,11 +15,11 @@
 			[Bindable]
 			public var menuData:Array = 
 				[
-					{label:"Set to priority 1", icon:"pri1button", data:"1"},
-					{label:"Set to priority 2", icon:"pri2button", data:"2"},
-					{label:"Set to priority 3", icon:"pri3button", data:"3"},
-					{label:"Set to priority 4", icon:"pri4button", data:"4"},
-					{label:"Set to priority 5", icon:"pri5button", data:"5"}
+					{label:"Priority 1", icon:"pri1button", data:"1"},
+					{label:"Priority 2", icon:"pri2button", data:"2"},
+					{label:"Priority 3", icon:"pri3button", data:"3"},
+					{label:"Priority 4", icon:"pri4button", data:"4"},
+					{label:"Priority 5", icon:"pri5button", data:"5"}
 				];
 			
 			[Embed("assets/pri1button.png")]
@@ -144,7 +144,11 @@
 		]]>
 	</fx:Script>
 	
-	<mx:PopUpMenuButton id="pmb" width="35" height="17" label=""
-						creationComplete="pmb_creationCompleteHandler(event)"
-						dataProvider="{menuData}" verticalCenter="0" verticalGap="2"/>
+	<mx:Box paddingTop="0" paddingBottom="0" paddingLeft="2.5" paddingRight="0" horizontalAlign="center" verticalAlign="middle">
+		<mx:PopUpMenuButton id="pmb" width="35" height="18" label="" leading="0"
+							creationComplete="pmb_creationCompleteHandler(event)"
+							dataProvider="{menuData}" verticalCenter="0" verticalGap="0"/>
+		
+	</mx:Box>
+	
 </s:MXAdvancedDataGridItemRenderer>

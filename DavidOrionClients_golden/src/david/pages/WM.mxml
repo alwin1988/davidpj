@@ -5,48 +5,8 @@
 		   xmlns:component="component.*"
 		   xmlns:components="com.shinynet.shinylib.components.*"
 		   xmlns:pages="david.pages.*"
-		   width="100%" height="100%" creationComplete="creationComplete()">
-	
-	<fx:Style>
-		@namespace s "library://ns.adobe.com/flex/spark";
-		@namespace mx "library://ns.adobe.com/flex/mx";
-		@namespace component "component.*";
-		@namespace components "com.shinynet.shinylib.components.*";
-		@namespace pages "david.pages.*";
-		
-		.TitleWindowTitleText {
-			fontFamily: Arial;
-			fontSize: 12;
-			fontWeight: bold;
-			color: black;
-			kerning: true;
-		}
-		
-		.DataGridHeaderText {
-			fontFamily: Arial;
-			fontSize: 11;
-			fontWeight: bold;
-			color: black;
-			kerning: true;
-		}
-		
-		.DataGridText {
-			fontFamily: Arial;
-			fontSize: 10;
-			fontWeight: normal;
-			color: black;
-			kerning: true;
-		}
-		
-		.ControlButtonLabels {
-			fontFamily: Arial;
-			fontSize: 10;
-			fontWeight: normal;
-			color: black;
-			kerning: true;
-		}
-	</fx:Style>
-	
+		   width="100%" height="100%">
+
 	<fx:Script>
 		<![CDATA[
 			import component.PopUpCustomTitleWindow;
@@ -64,28 +24,40 @@
 			import mx.managers.PopUpManager;
 			
 			//############################### Variable #################################//
+			
+			[Bindable]
+			private var DGwidth:Number = 1162;
+			
 			//Left Tree Data Provider
 			public var tmpWidth:int;
+			
 			[Bindable]
-			public var batchsAndDocsTreeCollection:XMLListCollection;
+			public var BatchesTree_XC:XMLListCollection;
+			
+			[Bindable]
+			public var DocumentsTree_XC:XMLListCollection;
 			
 			[Bindable]
 			public var pop:PopUpCustomTitleWindow;
 			
 			[Bindable]
-			public var batchsAndDocsTreeList:XMLList =
+			public var BatchesTreeList:XMLList = 
 				<>
-					<folder state="unchecked" label="Batch Type" isBranch="true" >
-						<folder state="unchecked" isBranch="false" label="ALL BATCH TYPES" />
-						<folder state="unchecked" isBranch="false" label="BatchTypeA" />
-						<folder state="unchecked" isBranch="false" label="..." />
-						<folder state="unchecked" isBranch="false" label="BatchTypeZ" />
+					<folder label="Batch Type" isBranch="true" open="true" state="checked">
+						<folder label="ALL BATCH TYPES" isBranch="false" open="true" state="unchecked"/>
+						<folder label="BatchType1" isBranch="true" open="true" state="unchecked">
+							<folder label="SubBatchType1" isBranch="false" open="true" state="unchecked"/>
+						</folder>
+						<folder label="BatchType2" isBranch="false" open="true" state="unchecked"/>
 					</folder>
-					<folder state="unchecked" label="Document Type" isBranch="true" >
-						<folder state="unchecked" isBranch="false" label="ALL DOC TYPES" />
-						<folder state="unchecked" isBranch="false" label="DocTypeA" />
-						<folder state="unchecked" isBranch="false" label="..." />
-						<folder state="unchecked" isBranch="false" label="DocTypeZ" />
+				</>;
+			
+			[Bindable]
+			public var DocumentsTreeList:XMLList =
+				<>
+					<folder label="ALL DOCUMENT FOLDERS" isBranch="true" open="true" state="checked">
+						<folder label="Folder1" isBranch="false" open="true" state="unchecked"/>
+						<folder label="Folder2" isBranch="false" open="true" state="unchecked"/>
 					</folder>
 				</>;
 			
@@ -103,19 +75,19 @@
 									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
 										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"},
+										checked:false},
 									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
 										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"},
+										checked:false},
 									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
 										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"},
+										checked:false},
 									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
 										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:"false"}
+										checked:false}
 								]}
 						]},
 					{EntityType:"Batch", Priority:"4", ID:"Batch2ID", Type:"Batch2Type", 
@@ -125,72 +97,43 @@
 							{EntityType:"Object", Priority:"5", ID:"Obj3ID", Type:"Doc1Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 								Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"},
+								checked:false},
 							{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 								Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"},
+								checked:false},
 							{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 								Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"},
+								checked:false},
 							{EntityType: "Object", Priority:"6", ID:"Obj4ID", Type:"Doc2Type", 
 								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
 								Started:"dd/mm/yyyy hh:mm", Completed:34, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:"false"}
+								checked:false}
 						]}
 				]);
 
-
-			/*private var WM_Batches_AC:ArrayCollection = new ArrayCollection(
-				[
-					{EntityType:"S1", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
-						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-						Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy hh:mm", 
-						checked:"false", children: [
-							{EntityType:"O2", Priority:"1", ID:"Obj1ID", Type:"Doc1Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy hh:mm", 
-								checked:"false", children: [
-									{EntityType:"O2", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
-										checked:"false"},
-									{EntityType:"O3", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
-										checked:"false" }
-								]},
-							{EntityType:"O3", Priority:"1", ID:"Obj2ID", Type:"Doc2Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy hh:mm", 
-								checked:"false"}
-						]},
-					{EntityType:"B4", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
-						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-						Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy hh:mm", 
-						checked:"false", children: [
-							{EntityType:"O5", Priority:"1", ID:"Obj3ID", Type:"Doc1Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy hh:mm", 
-								checked:"false"},
-							{EntityType: "O", Priority:"1", ID:"Obj4ID", Type:"Doc2Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:34, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy hh:mm", 
-								checked:"false"}
-						]}
-				]);*/
 			//############################### Variable #################################//
 			
 			//############################### Set & Initial Method #####################################//
-			protected function creationComplete():void {
-			}
+			
 			public function init():void {
-				batchsAndDocsTreeCollection = new XMLListCollection(batchsAndDocsTreeList);
-				batchsAndDocsTreeID.dataProvider = batchsAndDocsTreeCollection;
+				BatchesTree_XC = new XMLListCollection(BatchesTreeList);
+				DocumentsTree_XC = new XMLListCollection(DocumentsTreeList);
+			}
+	
+//This does not work: fix it [David]
+			private function OpenBatchesTreeNodes():void {
+				var xList:XMLList = BatchesTreeList..folder.(hasOwnProperty("@open") && @open == "true");
+				BatchesTree.openItems = xList;
+			}
+			
+//This does not work -- fix it [David]
+			private function OpenDocumentsTreeNodes():void {
+				var xList:XMLList = DocumentsTreeList..folder.(hasOwnProperty("@open") && @open == "true");
+				DocumentsTree.openItems = xList;
 			}
 			//############################### Set & Initial Method #####################################//
-			
 			
 			private function closeFolder():void {
 				var hcv:HierarchicalCollectionView = WM_Batches_DG.dataProvider as HierarchicalCollectionView;
@@ -231,8 +174,6 @@
 				trace('l2c',WmModule.getInstance.lv2OpenClose);
 				trace('l3c',WmModule.getInstance.lv3OpenClose);
 			}
-			
-			
 			
 			public function selectAllWmSuccess(ac:ArrayCollection):void {
 				WM_Batches_DG.dataProvider = new HierarchicalData(ac);
@@ -383,8 +324,8 @@
 						
 					}
 				}
-				
 			}
+			
 /* David commented out
 			protected function dg_itemOpenHandler(event:AdvancedDataGridEvent):void
 			{
@@ -498,27 +439,45 @@
 				</s:layout>
 				
 				<!--Boxes accordion-->
-				<s:BorderContainer width="170" borderVisible="false">
-					<s:layout>
-						<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-										  paddingTop="0"/>
-					</s:layout>
+				<s:VGroup width="170">
 					
-					<s:VGroup y="0" width="170" gap="0" verticalCenter="0"> <!-- height="100%" -->
-						<components:CollapsiblePanel id="Section2" width="100%"
-													 dropShadowVisible="false"
+					<s:VGroup y="0" width="170" gap="0" verticalCenter="0" verticalAlign="middle">
+						<components:CollapsiblePanel id="Section1" title="Batch Processing"
+													 width="100%" dropShadowVisible="false"
 													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
-													 title="Batches &amp; Documents">
-							<s:VGroup width="100%" height="200" gap="0">
-								<mx:Tree id="batchsAndDocsTreeID" width="100%" height="100%"
-										 defaultLeafIcon="{null}" folderClosedIcon="{null}"
-										 folderOpenIcon="{null}" fontFamily="Franklin Gothic Medium"
-										 fontSize="11" fontWeight="normal"
+													 styleName="WM_PanelHeader">
+							<s:VGroup width="100%" paddingTop="2.5" paddingBottom="2.5" gap="0">
+								<mx:Tree id="BatchesTree" 
+										 width="100%" borderVisible="false"
+										 labelField="@label" rowHeight="15"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
+										 styleName="WM_PanelBody"
 										 itemRenderer="custom_tree_component.CheckTreeRenderer"
-										 labelField="@label" rowHeight="15">
+										 dataProvider="{BatchesTree_XC}" 
+										 creationComplete="OpenBatchesTreeNodes()">
 								</mx:Tree>
-								
-								
+							</s:VGroup>
+						</components:CollapsiblePanel>
+					</s:VGroup>
+	
+					<s:VGroup y="0" width="170" gap="0" verticalCenter="0" verticalAlign="middle">
+						<components:CollapsiblePanel id="Section2" title="Document Processing"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 styleName="WM_PanelHeader">
+							<s:VGroup width="100%" paddingTop="2.5" paddingBottom="2.5" gap="0">
+								<mx:Tree id="DocumentsTree" 
+										 width="100%" borderVisible="false"
+										 labelField="@label" rowHeight="15"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 styleName="WM_PanelBody"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 dataProvider="{DocumentsTree_XC}"
+										 creationComplete="OpenDocumentsTreeNodes()">
+									<!--folderClosedIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
+									folderOpenIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
+									defaultLeafIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"-->
+								</mx:Tree>
 							</s:VGroup>
 						</components:CollapsiblePanel>
 					</s:VGroup>
@@ -528,14 +487,9 @@
 							<s:VerticalLayout gap="0"/>
 						</s:layout>
 						<s:CheckBox width="170" label="Include closed cases"
-									fontFamily="Franklin Gothic Medium" fontSize="11"
-									fontWeight="normal"/>
-						<s:Button label="Shrink to fit" 
-								  click="button1_clickHandler(event);
-								  WM_Batches_DG.width=1164;"/>
-						<s:Button label="Expand" click="button2_clickHandler(event)"/>						
+									styleName="ClientLabelDark"/>					
 					</s:BorderContainer>
-				</s:BorderContainer>
+				</s:VGroup>
 				
 				<!--Results-->
 				<s:BorderContainer id="Results" width="100%" height="100%" borderVisible="false">
@@ -545,27 +499,36 @@
 					
 					<!--Start of datagrids-->
 					<mx:VDividedBox width="100%" height="100%">
-						
-						<component:CustomTitleWindow id="WM_TW" title="Batches &amp; Documents"
-													 width="100%" height="100%" headerHeight="16" dropShadowVisible="false" borderVisible="true"									
-													 styleName="TitleWindowTitleText"
+
+						<component:CustomTitleWindow id="WM_TW" title="Batches &amp; Objects"
+													 width="100%" height="100%" headerHeight="18" dropShadowVisible="false" borderVisible="true"
 													 skinClass="skin.CustomTitleWindowSkin">
-							
-							<mx:Canvas id="C2" x="0" y="0" width="100%" height="100%" borderVisible="false"
+							<!--Integrate this group into CustomTitleWindow component [David]>
+							<s:Group height="{WM_TW.headerHeight}" width="{WM_TW.width}">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="right" verticalAlign="baseline"/>
+								</s:layout>
+								<s:Button label="Shrink to fit" 
+										  click="button1_clickHandler(event);
+										  WM_Batches_DG.width=DGwidth;"/>
+								<s:Button label="Expand" click="button2_clickHandler(event)"/>
+							</s:Group-->
+
+							<mx:Canvas id="C2" x="0" width="100%" height="100%" borderVisible="false"
 									   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
 								<s:VGroup id="VG" height="{C2.height-15}"
 										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
 										  paddingRight="0" paddingTop="0">
 									
 									<pages:CustomADG id="WM_Batches_DG"
-													 height="100%" verticalAlign="middle" borderVisible="false" 
+													 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
 													 headerHeight="20" rowHeight="20" minColumnWidth="0"
 													 horizontalScrollPolicy="off" verticalScrollPolicy="off"
 													 draggableColumns="true" resizableColumns="true" sortableColumns="true"
 													 sortExpertMode="true"
 													 treeColumn="{WM_Batches_DG_ID}" indentation="17" 
 													 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
-													 styleName="DataGridText" headerStyleName="DataGridHeaderText"
+													 styleName="DataGridBody" headerStyleName="DataGridHeader"
 													 doubleClickEnabled="true" 
 													 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
 													 itemOpen="dg_itemOpenHandler(event)"
@@ -577,19 +540,19 @@
 										</pages:dataProvider>
 										<pages:columns>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Checkbox" headerText="" dataField="checked" 
-																	   width="16" minWidth="16" textAlign="center"										   
+																	   width="{(WM_TW.width-WM_TW.width)+18}" textAlign="center"										   
 																	   draggable="false" resizable="false" sortable="false"
-																	   itemRenderer="component.CheckboxItemRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																	   rendererIsEditor="false"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" headerText="" dataField="Information" 
-																	   width="20" minWidth="20" textAlign="center"
+											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" dataField="Information" 
+																	   width="{(WM_TW.width-WM_TW.width)+18}" textAlign="center"
 																	   draggable="false" resizable="false" sortable="false">
 												<mx:headerRenderer>
 													<fx:Component>
 														<mx:HBox width="{outerDocument.WM_Batches_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">																
 															<s:Image 
-																source="@Embed('assets/iconinfo.png')">
+																source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
 																<fx:Script>
 																	<![CDATA[
 																		import mx.controls.Alert;
@@ -610,7 +573,7 @@
 																	import mx.core.FlexGlobals;
 																	import mx.events.CloseEvent;
 																	import mx.managers.PopUpManager;
-																	//											private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	//private var ttw:WmTitleWindows = new WmTitleWindows();	
 																	private var ttw:WmTitleWindows = new WmTitleWindows();	
 																	protected function image1_clickHandler(event:MouseEvent):void
 																	{
@@ -631,7 +594,7 @@
 															</fx:Script>
 															
 															<s:Image click="image1_clickHandler(event)"
-																	 source="@Embed('assets/iconinfo.png')">
+																	 source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
 																<fx:Script>
 																	<![CDATA[
 																		import mx.controls.Alert;
@@ -643,12 +606,12 @@
 												</mx:itemRenderer>
 											</mx:AdvancedDataGridColumn>
 											<!--itemRenderer="component.PriorityItemRenderer"-->
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Pri" dataField="Priority" 
-																	   width="40" minWidth="40" textAlign="left"
+											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Priority" dataField="Priority" 
+																	   width="{(WM_TW.width-WM_TW.width)+39}" minWidth="39" textAlign="left"
 																	   draggable="false" resizable="false" sortable="true"
-																	   itemRenderer="component.PopUpButtonItemRenderer"/>
+																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID" headerText="ID" dataField="ID"
-																	   width="{WM_Batches_DG_ID.width}" minWidth="200" textAlign="left"
+																	   width="198" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true">
 												<mx:headerRenderer>
 													<fx:Component>
@@ -682,7 +645,7 @@
 												</mx:headerRenderer>
 											</mx:AdvancedDataGridColumn>		
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Type" headerText="Type" dataField="Type"
-																	   width="120" minWidth="120" textAlign="left"
+																	   width="118" minWidth="120" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"
 																	   color="red"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages" headerText="Pages" dataField="Pages"
@@ -706,7 +669,7 @@
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Completed" headerText="% Completed" dataField="Completed"
 																	   width="100" minWidth="100" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"
-																	   itemRenderer="component.CustomProgressItemRenderer"/>
+																	   itemRenderer="component.CompletionBarItemRenderer"/>
 											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
 																	   width="100" minWidth="100" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"/>
@@ -730,33 +693,15 @@
 							<s:HorizontalLayout horizontalAlign="right" verticalAlign="middle"/>
 						</s:layout>
 						
-						<s:Button height="21" label="Start" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="startButton"/>
-						<s:Button height="21" label="Open" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="openButton"/>
-						<s:Button height="21" label="Close" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="closeButton"/>
-						<s:Button height="21" label="Suspend" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="suspendButton"/>
-						<s:Button height="21" label="Resume" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="resumeButton"/>
-						<s:Button height="21" label="Escalate" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="escalateButton"/>
-						<s:Button height="21" label="Reassign" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="reassignButton"/>
-						<s:Button height="21" label="Restart" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="restartButton"/>
-						<s:Button height="21" label="Delete" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="deleteButton"/>
+						<s:Button height="21" label="Start" buttonMode="true" styleName="startButton"/>
+						<s:Button height="21" label="Open" buttonMode="true" styleName="openButton"/>
+						<s:Button height="21" label="Close" buttonMode="true" styleName="closeButton"/>
+						<s:Button height="21" label="Suspend" buttonMode="true" styleName="suspendButton"/>
+						<s:Button height="21" label="Resume" buttonMode="true" styleName="resumeButton"/>
+						<s:Button height="21" label="Escalate" buttonMode="true" styleName="escalateButton"/>
+						<s:Button height="21" label="Reassign" buttonMode="true" styleName="reassignButton"/>
+						<s:Button height="21" label="Restart" buttonMode="true" styleName="restartButton"/>
+						<s:Button height="21" label="Delete" buttonMode="true" styleName="deleteButton"/>
 					</s:BorderContainer>
 					
 				</s:BorderContainer>

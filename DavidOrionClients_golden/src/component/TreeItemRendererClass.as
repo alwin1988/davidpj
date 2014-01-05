@@ -41,6 +41,7 @@ package component {
 			chk.addEventListener(MouseEvent.CLICK, handleChkClick);
 			addChild(chk);
 		}
+
 		private function handleChkClick(evt:MouseEvent):void {
 			var i:int=0;
 			if ( this.itemXml.childIndex() == -1 ) { //Root 
@@ -110,7 +111,6 @@ package component {
 			
 		}
 		
-		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			if(super.data){
@@ -121,6 +121,6 @@ package component {
 				this.chk.y = super.label.y+9;
 			}
 		}
-
+		
 	}
 }

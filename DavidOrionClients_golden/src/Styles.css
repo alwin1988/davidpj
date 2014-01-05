@@ -1,6 +1,93 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace mx "library://ns.adobe.com/flex/mx";
-@namespace flexlib "http://code.google.com/p/flexlib/";
+@namespace component "component.*";
+@namespace components "com.shinynet.shinylib.components.*";
+@namespace pages "david.pages.*";
+
+.MagSoftBlue {
+	color: '0xC1DAD6';
+}
+
+.MagSoftOrange {
+	color: '0x315B7E';
+}
+
+.BackgroundBlue {
+	backgroundColor: '0x004F6C';
+}
+
+.ClientTitleText {
+	fontFamily: 'Arial Black';
+	fontSize: 24;
+	fontWeight: normal;
+	color: white; 
+}
+
+.ClientLabelLight {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: '0xC1DAD6';
+	kerning: true;
+}
+
+.ClientLabelDark {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.LoginSatus {
+	fontFamily: 'Arial Black';
+	fontSize: 11.5;
+	fontWeight: normal;
+	alpha: .9;
+}
+
+.LaunchButton {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+}
+.AlertNotifyMiniButton {
+	fontFamily: 'Arial';
+	fontSize: 8;
+	fontWeight: normal;
+	color: white;
+	emphasized: true;
+}
+
+.DashBoardButton {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 10;
+	fontWeight: normal;
+	color: black;
+	chromeColor: white;
+	kerning: true;
+}
+
+.SearchBox {
+	borderColor: '0xE3784E';
+	backgroundColor: 'C1DAD6';
+}
+
+.SearchBoxLabel {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 13;
+	fontWeight: normal;
+	kerning: true;
+}
+
+.DropDownListText {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11.5;
+	fontWeight: normal;
+	kerning: true;
+	rollOverColor: '0xC0C0C0';
+}
 
 .Gutter {
 	backgroundColor: #004F6C;
@@ -12,13 +99,49 @@
 	backgroundAlpha: .16;
 }
 
-.MenuText {
+.MenuHeader {
+	borderColor: '0x004F6C';
+	backgroundColor: '0x004F6C';
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 13;
+	fontWeight: bold;
+	color: white;
+	kerning: true;
+}
+
+.MenuBody {
+	borderColor: '0x004F6C';
+	backgroundColor: '0xC1DAD6';
 	fontFamily: 'Arial Black';
 	fontSize: 11;
 	fontWeight: normal;
 	color: black;
 	kerning: true;
-	rollOverColor: haloOrange;
+	rollOverColor: '0xE3784E';
+}
+
+.MenuBodyHeading {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.WM_PanelHeader {
+	backgroundColor: '0xC1DAD6';
+	chromeColor: '0x004F6C';
+	color: white;
+}
+
+.WM_PanelBody {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+	contentBackgroundColor: '0xC1DAD6';
+	chromeColor: '0x004F6C';
 }
 
 .TabText {
@@ -38,117 +161,280 @@
 }
 
 .TitleWindowTitleText {
-	fontFamily: 'Arial Black';
+	fontFamily: 'Arial';
 	fontSize: 12;
-	fontWeight: normal;
-	color: black;
-	kerning: true;
-}
-
-.DataGridHeaderText {
-	fontFamily: Arial;
-	fontSize: 11;
 	fontWeight: bold;
 	color: black;
 	kerning: true;
 }
 
-.DataGridText {
+.DataGridHeader {
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+	color: black;
+	horizontalGridLinesColor: '0xA9A9A9';
+	vertialGridLinesColor: '0x767676';
+}
+
+.DataGridBody {
 	fontFamily: Arial;
 	fontSize: 10.5;
 	fontWeight: normal;
 	color: black;
-	kerning: true;
+	horizontalGridLinesColor: '0xA9A9A9';
+	vertialGridLinesColor: '0x767676';
 }
 
-.ControlButtonLabels {
+.InsertButton {
 	fontFamily: Arial;
-	fontSize: 10;
+	fontSize: 12;
 	fontWeight: normal;
-	color: black;
-	kerning: true;
+	color: white;
+	chromeColor: '0x0033CC';
+}
+
+.DeleteButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: '0xFF3300';
+}
+
+.SaveButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: '0x339933'
+}
+
+.CompletionBarLabel {
+	fontFamily: Arial;
+	fontSize: 9;
+	fontWeight: normal;
+	color: white;
 }
 
 /* Icon Style */
 .loginButton {
-	icon: 						Embed("../assets/login.png");
+	icon: Embed("../assets/login.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .logOffButton {
-	icon: 						Embed("../assets/logout.png");
+	icon: Embed("../assets/logout.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
+}
+
+.AppLaunchBar {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	separatorColor: '0xC1DAD6';
+	separatorWidth: 1;
+}
+
+.FilterSearchButton {
+	icon: Embed("../assets/escalate.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
+	borderColor: '0x339933';
 }
 
 .saveButton {
-	icon: 						Embed("../assets/save.png");
+	icon: Embed("../assets/save.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .viewButton {
-	icon: 						Embed("../assets/view.png");
+	icon: Embed("../assets/view.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .searchButton {
-	icon: 						Embed("../assets/search.png");
+	icon: Embed("../assets/search.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
+	borderColor: '0x339933';
 }
 
 .printButton {
-	icon: 						Embed("../assets/print.png");
+	icon: Embed("../assets/print.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .faxButton {
-	icon: 						Embed("../assets/fax.png");
+	icon: Embed("../assets/fax.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .emailButton {
-	icon: 						Embed("../assets/mail.png");
+	icon: Embed("../assets/mail.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .fileButton {
-	icon: 						Embed("../assets/file.png");
+	icon: Embed("../assets/file.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .closeButton {
-	icon: 						Embed("../assets/close.png");
+	icon: Embed("../assets/close.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .deleteButton {
-	icon: 						Embed("../assets/delete.png");
+	icon: Embed("../assets/delete.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
 }
 
 .reIndexButton {
-	icon: 						Embed("../assets/re-index.png");
+	icon: Embed("../assets/re-index.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .checkOutButton {
-	icon: 						Embed("../assets/check-out.png");
+	icon: Embed("../assets/check-out.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .startButton {
-	icon: 						Embed("../assets/start.png");
+	icon: Embed("../assets/start.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .openButton {
-	icon: 						Embed("../assets/open.png");
+	icon: Embed("../assets/open.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .suspendButton {
-	icon: 						Embed("../assets/suspend.png");
+	icon: Embed("../assets/suspend.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .escalateButton {
-	icon: 						Embed("../assets/escalate.png");
+	icon: Embed("../assets/escalate.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .resumeButton {
-	icon: 						Embed("../assets/resume.png");
+	icon: Embed("../assets/resume.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
+	borderColor: blue;
 }
 
 .reassignButton {
-	icon: 						Embed("../assets/reassign.png");
+	icon: Embed("../assets/reassign.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
 
 .restartButton {
-	icon: 						Embed("../assets/restart.png");
+	icon: Embed("../assets/restart.png");
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 12;
+	fontWeight: normal;
+	kerning: true;
+	color: '0x000061';
+	chromeColor: white;
 }
-
-
-

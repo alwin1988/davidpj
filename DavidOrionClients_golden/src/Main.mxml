@@ -2,6 +2,7 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
 			   xmlns:pages="david.pages.*"
 			   width="100%" height="100%" creationComplete="creationCompleteHandler(event)">
 	
@@ -41,7 +42,7 @@
 			public var ICON_DOC:Class;
 			
 			[Bindable] [Embed(source="../assets/manage.png")]
-			public var ICON_MANAGE:Class;
+			public var ICON_WORK:Class;
 			
 			[Bindable] [Embed(source="../assets/report.png")]
 			public var ICON_REPORT:Class;
@@ -98,28 +99,28 @@
 					if ( user == "admin" ) { //Admin
 						linkBarDataProvider.removeAll();
 						linkBarDataProvider.addItem( { label:Constants.DOC_EXP_LABEL, data:Constants.DOC_EXP_LABEL, icon:ICON_DOC } );
-						linkBarDataProvider.addItem( { label:Constants.CASE_MANAGER_LABEL, data:Constants.CASE_MANAGER_LABEL, icon:ICON_MANAGE } );
-						//linkBarDataProvider.addItem( { label:"CM_backup", data:"CM_Backup", icon:ICON_MANAGE } ); //Test
+						linkBarDataProvider.addItem( { label:Constants.WORK_MANAGER_LABEL, data:Constants.WORK_MANAGER_LABEL, icon:ICON_WORK } );
+						//linkBarDataProvider.addItem( { label:"WM_backup", data:"WM_Backup", icon:ICON_WORK } ); //Test
 						linkBarDataProvider.addItem( { label:Constants.CHART_REPORT_LABEL, data:Constants.CHART_REPORT_LABEL, icon:ICON_REPORT } );
 						linkBarDataProvider.addItem( { label:Constants.CONFIG_ADMIN_LABEL, data:Constants.CONFIG_ADMIN_LABEL, icon:ICON_CONFIG } );
 						userModel.userName = user;
 						userModel.userRole = Constants.ADMIN_ROLE;
 						isLogin = true;
 						setNotificationBtnColour('A');
-						topNotificationBtn.enabled=true;
-						downNotificationBtn.enabled=true;
+						AlertNotifyButton.enabled=true;
+						DashboardButton.enabled=true;
 						
 					} else if ( user == "user" ) { //User
 						linkBarDataProvider.removeAll();
 						linkBarDataProvider.addItem( { label:Constants.DOC_EXP_LABEL, data:Constants.DOC_EXP_LABEL, icon:ICON_DOC } );
-						linkBarDataProvider.addItem( { label:Constants.CASE_MANAGER_LABEL, data:Constants.CASE_MANAGER_LABEL, icon:ICON_MANAGE } );
+						linkBarDataProvider.addItem( { label:Constants.WORK_MANAGER_LABEL, data:Constants.WORK_MANAGER_LABEL, icon:ICON_WORK } );
 						linkBarDataProvider.addItem( { label:Constants.CHART_REPORT_LABEL, data:Constants.CHART_REPORT_LABEL, icon:ICON_REPORT } );
 						isLogin = true;
 						userModel.userName = user;
 						userModel.userRole = Constants.USER_ROLE;
 						setNotificationBtnColour('A');
-						topNotificationBtn.enabled=true;
-						downNotificationBtn.enabled=true;
+						AlertNotifyButton.enabled=true;
+						DashboardButton.enabled=true;
 						
 					} else {
 						Alert.show("Invalid user account name \n\n Username >> 'admin' or 'user'");
@@ -142,7 +143,6 @@
 				setNotificationBtnColour('I');
 			}
 			
-			
 			//-- Link-bar selected
 			public function linkBarChangePage(event:ItemClickEvent):void {
 				event.currentTarget.enabled = false;
@@ -157,11 +157,11 @@
 					setSearchBoxDataProvider(Constants.DOC_EXP_LABEL);
 					titleText = Constants.DOC_EXP_LABEL;
 				
-				} else if (linkBarSelected == Constants.CASE_MANAGER_LABEL) { //CM
-					mainStackID.selectedChild = caseManagerID;
-					caseManagerID.init();
-					setSearchBoxDataProvider(Constants.CASE_MANAGER_LABEL);
-					titleText = Constants.CASE_MANAGER_LABEL;
+				} else if (linkBarSelected == Constants.WORK_MANAGER_LABEL) { //WM
+					mainStackID.selectedChild = workManagerID;
+					workManagerID.init();
+					setSearchBoxDataProvider(Constants.WORK_MANAGER_LABEL);
+					titleText = Constants.WORK_MANAGER_LABEL;
 				
 				} else if (linkBarSelected == Constants.CHART_REPORT_LABEL) { //CR
 					mainStackID.selectedChild = chartReportID;
@@ -175,9 +175,9 @@
 					setSearchBoxDataProvider(Constants.CONFIG_ADMIN_LABEL);
 					titleText = Constants.CONFIG_ADMIN_LABEL;
 				
-				} /* else if (linkBarSelected == "CM_Backup") { //Test
-					mainStackID.selectedChild = caseManager_bk_ID;
-					caseManager_bk_ID.init();
+				} /* else if (linkBarSelected == "WM_Backup") { //Test
+					mainStackID.selectedChild = workManager_bk_ID;
+					workManager_bk_ID.init();
 					setSearchBoxDataProvider(Constants.CONFIG_ADMIN_LABEL);
 					titleText = Constants.CONFIG_ADMIN_LABEL;
 				} */
@@ -186,28 +186,28 @@
 			//User login click
 			public function userLoginSelectPage(selectPage:String):void {
 				if ( selectPage == "DE" ) { //DE
-					appLaunchBarID.selectedIndex = 0;
+					AppLaunchBar.selectedIndex = 0;
 					mainStackID.selectedChild = documentExplorerID;
 					documentExplorerID.init();
 					setSearchBoxDataProvider(Constants.DOC_EXP_LABEL);
 					titleText = Constants.DOC_EXP_LABEL;
 				
-				} else if ( selectPage == "CM" ) { //CM
-					appLaunchBarID.selectedIndex = 1;
-					mainStackID.selectedChild = caseManagerID;
-					caseManagerID.init();
-					setSearchBoxDataProvider(Constants.CASE_MANAGER_LABEL);
-					titleText = Constants.CASE_MANAGER_LABEL;
+				} else if ( selectPage == "WM" ) { //WM
+					AppLaunchBar.selectedIndex = 1;
+					mainStackID.selectedChild = workManagerID;
+					workManagerID.init();
+					setSearchBoxDataProvider(Constants.WORK_MANAGER_LABEL);
+					titleText = Constants.WORK_MANAGER_LABEL;
 					
 				} else if ( selectPage == "CR" ) { //CR
-					appLaunchBarID.selectedIndex = 2;
+					AppLaunchBar.selectedIndex = 2;
 					mainStackID.selectedChild = chartReportID;
 					chartReportID.init();
 					setSearchBoxDataProvider(Constants.CHART_REPORT_LABEL);
 					titleText = Constants.CHART_REPORT_LABEL;
 					
 				} else { //CA
-					appLaunchBarID.selectedIndex = 3;
+					AppLaunchBar.selectedIndex = 3;
 					mainStackID.selectedChild = configAdminID;
 					configAdminID.init();
 					setSearchBoxDataProvider(Constants.CONFIG_ADMIN_LABEL);
@@ -223,7 +223,7 @@
 					searchBoxDataProvider.addItem( {label:"Any of the words"} );
 					searchBoxDataProvider.addItem( {label:"The phrase"} );
 				
-				} else if (page == Constants.CASE_MANAGER_LABEL) {
+				} else if (page == Constants.WORK_MANAGER_LABEL) {
 					searchBoxDataProvider.removeAll();
 					searchBoxDataProvider.addItem( {label:"Cases"} );
 					searchBoxDataProvider.addItem( {label:"Documents"} );
@@ -273,7 +273,7 @@
 				resize.play();				
 			}
 			
-			protected function button2_clickHandler(event:MouseEvent):void
+			protected function ToggleDashboardOpenClose(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				var ttw:TitleWindow = new TitleWindow();
@@ -303,93 +303,93 @@
 		]]>
 	</fx:Script>
 	
-	
 	<mx:Canvas width="100%" height="100%">
 		<s:BorderContainer width="100%" height="100%">
 			<s:layout>
-				<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-								  paddingTop="0"/>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
 			</s:layout>
 			
 			<!--##### Common header #####-->
-			<s:BorderContainer id="CommonHeader" width="100%" height="36" backgroundColor="#00004F6C"
-							   borderVisible="false">
+			<s:BorderContainer id="CommonHeader"
+							   width="100%" height="36" borderVisible="false" styleName="BackgroundBlue">
 				<s:layout>
 					<s:HorizontalLayout paddingBottom="0" paddingLeft="5" paddingRight="5"
 										paddingTop="0" verticalAlign="middle"/>
 				</s:layout>
-				<s:BorderContainer width="55%" height="{CommonHeader.height}"
-								   backgroundColor="#00004F6C" borderVisible="false">
+				<s:BorderContainer width="55%" height="{CommonHeader.height}" borderVisible="false" styleName="BackgroundBlue" >
 					<s:layout>
-						<s:HorizontalLayout gap="5" paddingBottom="0" paddingTop="0"
-											verticalAlign="middle"/>
+						<s:HorizontalLayout paddingBottom="0" paddingTop="0" gap="5" verticalAlign="middle"/>
 					</s:layout>
-					<s:Label color="white" fontFamily="Arial Black" fontSize="24" fontWeight="normal"
-							 text="{titleText}" verticalAlign="top"/>
+					<s:Label text="{titleText}" 
+							 verticalAlign="top" styleName="ClientTitleText"/>
 				</s:BorderContainer>
-				<s:BorderContainer width="370" height="{CommonHeader.height}"
-								   backgroundColor="#00004F6C" borderVisible="false">
+				<s:BorderContainer width="370" height="{CommonHeader.height}" borderVisible="false" styleName="BackgroundBlue">
 					<s:layout>
-						<s:HorizontalLayout gap="5" paddingBottom="0" paddingTop="0"
-											verticalAlign="middle"/>
+						<s:HorizontalLayout paddingBottom="0" paddingTop="0" gap="5" verticalAlign="middle"/>
 					</s:layout>
-					<mx:Text color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="Alerts &amp; Notifications"/>
+					<s:Label text="Alerts &amp; Notifications"
+							 styleName="ClientLabelLight"/>
 					<mx:Canvas width="120" height="21">
-						<s:Button id="topNotificationBtn" x="0" y="0" width="120" height="21" buttonMode="true"
+						<s:Button id="AlertNotifyButton" 
+								  x="0" y="0" width="120" height="21" buttonMode="true"
 								  click="button1_clickHandler(event)" enabled="{isLogin}"/>
 						
-						<s:Image x="5" width="12" height="12" enabled="{isLogin}"
-								 click="button1_clickHandler(event)" source="@Embed('../assets/alarm.png')" verticalCenter="0"/>
-						<s:Image x="20" width="12" height="12" enabled="{isLogin}"
-								 click="button1_clickHandler(event)" source="@Embed('../assets/mail.png')" verticalCenter="0"/>
+						<s:Image x="5" width="12" height="12" verticalCenter="0" enabled="{isLogin}"
+								 source="@Embed('../assets/alarm.png')" 
+								 click="button1_clickHandler(event)"/>
+						<s:Image x="20" width="12" height="12" verticalCenter="0" enabled="{isLogin}"
+								 source="@Embed('../assets/mail.png')"
+								 click="button1_clickHandler(event)"/>
 						
-						<s:Button id="nofBtn1ID" x="40" width="13" height="13" label="1"
-								  buttonMode="true" color="white" emphasized="true" fontSize="8"
-								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
-								  click="button1_clickHandler(event)"  enabled="{isLogin}" />
-						<s:Button id="nofBtn2ID" x="55" width="13" height="13" label="2"
-								  buttonMode="true" color="white" emphasized="true" fontSize="8"
-								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
-								  click="button1_clickHandler(event)" enabled="{isLogin}" />
-						<s:Button id="nofBtn3ID" x="70" width="13" height="13" label="3"
-								  buttonMode="true" color="white" emphasized="true" fontSize="8"
-								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
-								  click="button1_clickHandler(event)" enabled="{isLogin}" />
-						<s:Button id="nofBtn4ID" x="85" width="13" height="13" label="4"
-								  buttonMode="true" color="white" emphasized="true" fontSize="8"
-								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
-								  click="button1_clickHandler(event)" enabled="{isLogin}" />
-						<s:Button id="nofBtn5ID" x="100" width="13" height="13" label="5"
-								  buttonMode="true" color="white" emphasized="true" fontSize="8"
-								  fontWeight="normal" skinClass="myButtonSkin" verticalCenter="0"
-								  click="button1_clickHandler(event)" enabled="{isLogin}" />
+						<s:Button id="nofBtn1ID" label="1"
+								  x="40" width="13" height="13" verticalCenter="0" buttonMode="true" enabled="{isLogin}"
+								  styleName="AlertNotifyMiniButton"
+								  skinClass="skin.myButtonSkin"
+								  click="button1_clickHandler(event)"/>
+						<s:Button id="nofBtn2ID" label="2"
+								  x="55" width="13" height="13" verticalCenter="0" buttonMode="true" enabled="{isLogin}"
+								  styleName="AlertNotifyMiniButton"
+								  skinClass="skin.myButtonSkin"
+								  click="button1_clickHandler(event)"/>
+						<s:Button id="nofBtn3ID" label="3"
+								  x="70" width="13" height="13" verticalCenter="0" buttonMode="true" enabled="{isLogin}"
+								  styleName="AlertNotifyMiniButton"
+								  skinClass="skin.myButtonSkin"
+								  click="button1_clickHandler(event)"/>
+						<s:Button id="nofBtn4ID" label="4"
+								  x="85" width="13" height="13" verticalCenter="0" buttonMode="true" enabled="{isLogin}"
+								  styleName="AlertNotifyMiniButton"
+								  skinClass="skin.myButtonSkin"
+								  click="button1_clickHandler(event)"/>
+						<s:Button id="nofBtn5ID" label="5"
+								  x="100" width="13" height="13" verticalCenter="0" buttonMode="true" enabled="{isLogin}"
+								  styleName="AlertNotifyMiniButton"
+								  skinClass="skin.myButtonSkin"
+								  click="button1_clickHandler(event)"/>
 					</mx:Canvas>
 					<s:Spacer width="10"/>
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="Help"/>
+					<s:Label text="Help"
+							 styleName="ClientLabelLight"/>
 				</s:BorderContainer>
 				
-				<s:BorderContainer width="45%" height="{CommonHeader.height}"
-								   backgroundColor="#00004F6C" borderVisible="false">
+				<s:BorderContainer width="45%" height="{CommonHeader.height}" borderVisible="false" styleName="BackgroundBlue">
 					<s:layout>
-						<s:HorizontalLayout gap="5" horizontalAlign="right" paddingBottom="0"
-											paddingTop="0" verticalAlign="middle"/>
+						<s:HorizontalLayout paddingTop="0" paddingBottom="0" gap="5" horizontalAlign="right" verticalAlign="middle"/>
 					</s:layout>
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="Theme"/>
-					<s:DropDownList/>
+					<s:Label text="Theme"
+							 styleName="ClientLabelLight"/>
+					<component:CustomDropDownList width="50"/>
 					<s:Spacer width="5"/>
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="Language"/>
-					<s:DropDownList width="50"/>
+					<s:Label text="Language"
+							 styleName="ClientLabelLight"/>
+					<component:CustomDropDownList width="50"/>
 					<s:Spacer width="5"/>
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="username"/>
-					<s:Button height="21" label="Log off" buttonMode="true"
-							  click="FlexGlobals.topLevelApplication.logout()"
-							  fontFamily="Franklin Gothic Medium" fontSize="12" fontWeight="bold"
-							  styleName="logOffButton"/>
+					<s:Label text="username"
+							 styleName="ClientLabelLight"/>
+					<s:Button label="Log off" 
+							  height="21" buttonMode="true"
+							  styleName="logOffButton"
+							  click="FlexGlobals.topLevelApplication.logout()"/>
 					<s:BitmapImage width="20" height="20" fillMode="scale" scaleMode="stretch"
 								   source="@Embed('../assets/settingsicon.jpg')"/>
 				</s:BorderContainer>
@@ -397,22 +397,20 @@
 			<mx:HRule width="100%" strokeColor="black" strokeWidth="1"/>
 			<!--##### End Common Header #####-->
 			
-			<mx:Spacer height="3"/>
+			<s:Spacer height="3"/>
 			
 			<!--##### App launch bar #####-->
 			<s:BorderContainer width="100%" height="26" borderVisible="false">
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
-				<mx:LinkBar id="appLaunchBarID"
-							visible="{(mainStackID.selectedChild != homeID)?true:false}" x="185"
-							width="100%" height="24" dataProvider="{linkBarDataProvider}"
-							fontFamily="Arial Black" fontSize="12" fontWeight="normal"
-							horizontalAlign="center" horizontalGap="10" iconField="icon"
+				<mx:LinkBar id="AppLaunchBar"
+							x="191" width="1010" height="24" horizontalAlign="center" horizontalGap="10"
+							visible="{(mainStackID.selectedChild != homeID)?true:false}"
 							includeInLayout="{(mainStackID.selectedChild != homeID)?true:false}"
-							itemClick="linkBarChangePage(event)" separatorColor="#00C1DAD6"
-							separatorWidth="1">
-				</mx:LinkBar>
+							styleName="AppLaunchBar" iconField="icon"						
+							dataProvider="{linkBarDataProvider}"
+							itemClick="linkBarChangePage(event)"/>
 			</s:BorderContainer>
 			<!--##### End App launch bar #####-->
 			
@@ -421,8 +419,7 @@
 			<!--##### Stage #####-->
 			<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false">
 				<s:layout>
-					<s:VerticalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-									  paddingTop="0"/>
+					<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
 				</s:layout>
 				
 				<!--Logo and Search box-->
@@ -431,56 +428,57 @@
 						<s:BasicLayout/>
 					</s:layout>
 					<!--Logo-->
-					<s:BorderContainer x="5" y="-33" width="175" height="70" borderVisible="false">
+					<s:BorderContainer id="ClientLogos"
+									   x="5" y="-33" width="175" height="70" borderVisible="false">
 						<s:layout>
 							<s:BasicLayout/>
 						</s:layout>
-						<s:BitmapImage width="97%" height="100%" fillMode="scale" scaleMode="stretch"
-									   source="@Embed('../assets/orionlogo.jpg')"/>
-						<s:BitmapImage x="3" y="3" width="70" height="25" fillMode="scale"
-									   scaleMode="stretch" source="@Embed('../assets/MagSoftlogo.jpg')"/>
+						<s:BitmapImage width="97%" height="100%"
+									   source="@Embed('../assets/orionlogo.jpg')" scaleMode="stretch" fillMode="scale"/>
+						<s:BitmapImage x="3" y="3" width="70" height="25"
+									   source="@Embed('../assets/MagSoftlogo.jpg')" scaleMode="stretch" fillMode="scale"/>
 					</s:BorderContainer>
+					
 					<!--SearchBox container-->
-					<s:BorderContainer visible="{(mainStackID.selectedChild != homeID)?true:false}"
-									   x="190" width="100%" height="35" backgroundColor="#00C1DAD6"
-									   borderColor="#00E3784E" borderVisible="true"
-									   includeInLayout="{(mainStackID.selectedChild != homeID)?true:false}">
-						<s:layout>
-							<s:HorizontalLayout paddingBottom="5" paddingLeft="5" paddingRight="5"
-												paddingTop="5" gap="5" verticalAlign="middle"/>
-						</s:layout>
-						<mx:Text height="21" fontFamily="Franklin Gothic Medium" fontSize="13"
-								 fontWeight="bold" text="Search for"/>
-						<s:DropDownList id="searchBoxID" width="145" height="21"
-										dataProvider="{searchBoxDataProvider}"
-										fontFamily="Franklin Gothic Medium" fontSize="11"
-										fontWeight="normal" rollOverColor="#00C0C0C0">
-						</s:DropDownList>
-						<s:TextInput width="100%"/>
-						<s:Button height="21" label="Search" buttonMode="true"
-								  fontFamily="Franklin Gothic Medium" fontSize="12"
-								  fontWeight="bold" styleName="searchButton"/>
-					</s:BorderContainer>
-					<s:Spacer width="5"/>
+					<s:HGroup x="190" width="100%">
+						<s:BorderContainer width="100%" height="35" borderVisible="true"
+										   visible="{(mainStackID.selectedChild != homeID)?true:false}"
+										   includeInLayout="{(mainStackID.selectedChild != homeID)?true:false}"
+										   styleName="SearchBox">
+							<s:layout>
+								<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="5" verticalAlign="middle"/>
+							</s:layout>
+							<s:Label text="Search for"
+									 height="21" verticalAlign="middle"
+									 styleName="SearchBoxLabel"/>
+							<component:CustomDropDownList id="searchBoxID" 
+											width="145" height="21"
+											styleName="DropDownListText" dropShadowVisible="false"
+											dataProvider="{searchBoxDataProvider}"/>
+							<s:TextInput width="100%"/>
+							<s:Button height="21" label="Search" buttonMode="true"
+									  styleName="searchButton"/>
+						</s:BorderContainer>
+						<s:Spacer width="0"/>
+					</s:HGroup>
 				</s:BorderContainer>
 				
 				<!--Entity chooser-->
-				<s:BorderContainer id="EntityChooser" width="100%" height="100%"
-								   borderVisible="false">
+				<s:BorderContainer id="EntityChooser" 
+								   width="100%" height="100%" borderVisible="false">
 					<s:layout>
-						<s:HorizontalLayout gap="10" paddingBottom="5" paddingLeft="5"
-											paddingRight="5" paddingTop="0"/>
+						<s:HorizontalLayout paddingTop="0" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="10"/>
 					</s:layout>
 					
-					<!-- View Stack of (DE,CM,CR,CA) -->
+					<!-- View Stack of (DE,WM,CR,CA) -->
 					<mx:ViewStack id="mainStackID" width="100%" height="100%" creationPolicy="all">
 						<pages:Home id="homeID"/>
 						<pages:CA id="configAdminID"/>
-						<pages:WM id="caseManagerID"/>
+						<pages:WM id="workManagerID"/>
 						<pages:CR id="chartReportID"/>
 						<pages:DE id="documentExplorerID"/>
 					</mx:ViewStack>
-					<!-- View Stack of (DE,CM,CR,CA) -->
+					<!-- View Stack of (DE,WM,CR,CA) -->
 					
 				</s:BorderContainer>
 				
@@ -490,30 +488,28 @@
 			<s:Spacer height="5"/>
 			
 			<!--##### Common footer #####-->
-			<s:BorderContainer width="100%" height="18" backgroundColor="#00004F6C"
-							   borderVisible="false">
+			<s:BorderContainer width="100%" height="18" borderVisible="false" styleName="BackgroundBlue" >
 				<s:layout>
 					<s:HorizontalLayout paddingLeft="5" paddingRight="5" verticalAlign="middle"/>
 				</s:layout>
 				<s:HGroup width="100%" horizontalAlign="left">
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal"
-							 text="This copy of Orion Xerver is licensed to: CustomerName"/>			
+					<s:Label text="This copy of Orion Xerver is licensed to: CustomerName"
+							 styleName="ClientLabelLight"/>			
 				</s:HGroup>
 				<s:HGroup width="100%" horizontalAlign="center">
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="Copyright 2013 Magsoft"/>
+					<!--Commented out by David
+					<s:Label text="Copyright 2014 Magsoft"
+							 styleName="ClientLabelLight"/-->
 				</s:HGroup>
 				<!--s:HGroup width="100%" horizontalAlign="center">
 				<s:Label text="Credits" 
-				fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal" color="#00C1DAD6"/>				
+				         styleName="ClientLabelLight"/				
 				</s:HGroup-->
-				<s:HGroup width="100%" horizontalAlign="right">
-					<s:Button id="downNotificationBtn" height="11" label="DASHBOARD" click="button2_clickHandler(event)"
-							  color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							  fontWeight="normal" enabled="false"/>
-					<s:Label color="#00C1DAD6" fontFamily="Franklin Gothic Medium" fontSize="11"
-							 fontWeight="normal" text="DASHBOARD"/>	
+				<s:HGroup width="100%" horizontalAlign="right" verticalAlign="middle">
+					<s:Button id="DashboardButton" label="DASHBOARD" enabled="false"
+							  height="13"
+							  styleName="DashBoardButton"
+							  click="ToggleDashboardOpenClose(event)"/>	
 				</s:HGroup>
 			</s:BorderContainer>
 			<!--##### End common footer #####-->

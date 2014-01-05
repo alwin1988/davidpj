@@ -200,17 +200,17 @@
 				if ( state == "I" ) { //Initial page
 					mainDetailBoxID.visible = false;
 					mainDetailBoxID.includeInLayout = false;
-					mainDetailBoxID.percentHeight = 100;
-					mainDetailBoxID.visible = true;
-					mainDetailBoxID.includeInLayout = true;
+					maskDetailBoxID.percentHeight = 100;
+					maskDetailBoxID.visible = true;
+					maskDetailBoxID.includeInLayout = true;
 					mainDetailBoxFlag = "I";
 					
-				} else if ( state == "S" ) { //When click search button
+				} else if ( state == "S" ) { //When click search button or double click folder tree
 					mainDetailBoxID.visible = true;
 					mainDetailBoxID.includeInLayout = true;
-					mainDetailBoxID.percentHeight = 0;
-					mainDetailBoxID.visible = false;
-					mainDetailBoxID.includeInLayout = false;
+					maskDetailBoxID.percentHeight = 0;
+					maskDetailBoxID.visible = false;
+					maskDetailBoxID.includeInLayout = false;
 					mainDetailBoxFlag = "S";
 					//mytreeID.swapTreeClickToDBClickHandler();
 				}

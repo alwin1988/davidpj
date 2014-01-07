@@ -663,7 +663,7 @@
 														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 dataProvider="@{dataProvider1List}"
 														 doubleClickEnabled="true" lockedColumnCount="4"
-														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)">
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)" sortableColumns="true">
 										<mx:groupedColumns>
 											<mx:AdvancedDataGridColumn dataField="checked" 
 																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+18}"
@@ -678,9 +678,9 @@
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG1_TW.width-DE_DG1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat" 
 																	   width="{DE_DG1_TW.width-DE_DG1_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/> 
+																	   draggable="false" resizable="false" sortable="true"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 																	   <!--David commented out"/-->
@@ -729,9 +729,9 @@
 											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{DE_DG1_SUB1_TW.width-DE_DG1_SUB1_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/> 
+																	   draggable="false" resizable="false" sortable="true"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 											<!--David commented out"/-->
@@ -780,9 +780,9 @@
 											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{DE_DG1_SUB2_TW.width-DE_DG1_SUB2_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/> 
+																	   draggable="false" resizable="false" sortable="true"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 											<!--David commented out"/-->
@@ -831,9 +831,9 @@
 											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{DE_DG1_SUB3_TW.width-DE_DG1_SUB3_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/> 
+																	   draggable="false" resizable="false" sortable="true"/> 
 											<mx:AdvancedDataGridColumn width="210" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 											<!--David commented out"/-->
@@ -881,9 +881,9 @@
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{(DE_DG2_TW.width-DE_DG2_TW.width)+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{(DE_DG2_TW.width-DE_DG2_TW.width)+40}"
-																	   draggable="false" resizable="false" sortable="false"/>
+																	   draggable="false" resizable="false" sortable="true"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
 											<mx:AdvancedDataGridColumn width="80" dataField="IndexValue5" headerText="IndexField5"/>
@@ -928,9 +928,9 @@
 											<!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{(DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width)+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{(DE_DG2_SUB1_TW.width-DE_DG2_SUB1_TW.width)+40}"
-																	   draggable="false" resizable="false" sortable="false"/>
+																	   draggable="false" resizable="false" sortable="true"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue3" headerText="IndexField3"/>
 											<mx:AdvancedDataGridColumn width="220" dataField="IndexValue4" headerText="IndexField4"/>
 											<mx:AdvancedDataGridColumn width="80" dataField="IndexValue5" headerText="IndexField5"/>
@@ -974,9 +974,9 @@
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG3_TW.width-DE_DG3_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{DE_DG3_TW.width-DE_DG3_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/> 										
+																	   draggable="false" resizable="false" sortable="true"/> 										
 											<mx:AdvancedDataGridColumn width="300" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 																	   <!--David commented out"/-->											
@@ -1022,9 +1022,9 @@
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"/-->
 											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false" />
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{DE_DG3_SUB1_TW.width-DE_DG3_SUB1_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/>
+																	   draggable="false" resizable="false" sortable="true"/>
 											<mx:AdvancedDataGridColumn width="200" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 																	   <!--itemRenderer="component.FileTypeIconRenderer"/-->
@@ -1073,9 +1073,9 @@
 																	   <!--headerRenderer="component.DEIconHeaderRenderer"-->
 											<mx:AdvancedDataGridColumn width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+20}" editable="false"
 																	   draggable="false" resizable="false" sortable="false"/>
-											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat"
+											<mx:AdvancedDataGridColumn headerText="DocFmt" dataField="DocFormat" itemRenderer="component.PopUpButtonItemRenderer_FileFormat"
 																	   width="{DE_DG3_SUB2_TW.width-DE_DG3_SUB2_TW.width+50}"
-																	   draggable="false" resizable="false" sortable="false"/>
+																	   draggable="false" resizable="false" sortable="true"/>
 											<mx:AdvancedDataGridColumn width="100" dataField="IndexValue1" headerText="IndexField1"/>
 											<mx:AdvancedDataGridColumn width="150" dataField="IndexValue2" headerText="IndexField2"/>
 																	   <!--David commented out"/-->

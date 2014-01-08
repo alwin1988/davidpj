@@ -46,9 +46,10 @@
 	
 	<fx:Script>
 		<![CDATA[
-			
 			import component.ExtendsCheckbox2;
 			import component.PopUpCustomTitleWindow;
+			
+			import david.viewers.DocViewerTitleWindow;
 			
 			import event.DocViewerEvent;
 			
@@ -440,6 +441,7 @@
 			protected function advanceddatagrid_itemDoubleClickHandler(evt:ListEvent):void
 			{
 				// TODO Auto-generated method stub
+				/*
 				var customTitleWindow:CustomTitleWindow = new CustomTitleWindow();
 				{
 					pop = new PopUpCustomTitleWindow();
@@ -448,6 +450,13 @@
 					pop.addEventListener(DocViewerEvent.DocViewer_CLOSE,closePopUp);
 					PopUpManager.addPopUp(pop,this);	
 				}
+				*/
+				//evt;
+				var obj:Object = (evt.currentTarget as AdvancedDataGrid).selectedItem;
+				var docViewTTW:DocViewerTitleWindow = new DocViewerTitleWindow();
+				docViewTTW.Image = obj.Image;
+				PopUpManager.addPopUp(docViewTTW,this,false);
+				PopUpManager.centerPopUp(docViewTTW);
 			}
 
 			public function closePopUp(event:DocViewerEvent):void

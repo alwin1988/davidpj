@@ -15,7 +15,9 @@
 		<![CDATA[
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
+			[Bindable] public var Image:String;
 			
+			[Bindable] public var testImage:Object = "@Embed('assets/1.png')";
 			[Bindable] public var DocumentID:String;	
 			[Bindable] public var LeftArrow:String = "<";
 			[Bindable] public var RightArrow:String = ">";
@@ -53,7 +55,7 @@
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Image is set here -->
-		<s:BitmapImage id="PNGImage" source="@Embed('assets/1.png')"/>
+		<s:BitmapImage id="PNGImage" source="{testImage}"/>
 	</fx:Declarations>
 	<s:VGroup width="100%" height="100%" gap="0">
 		

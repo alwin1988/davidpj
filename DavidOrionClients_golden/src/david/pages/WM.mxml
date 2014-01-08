@@ -491,30 +491,6 @@
 								<s:VGroup id="VG1" height="{C1.height-15}"
 										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
 										  paddingRight="0" paddingTop="0">
-									<!--Integrate this group into CustomTitleWindow component [David]-->
-									<!--s:HGroup height="{DG_TW1.headerHeight}" width="{DG_TW1.width}"
-											  horizontalAlign="right" verticalAlign="baseline">
-										<fx:Script>
-											<![CDATA[
-												private var Batches_DG_tempwidth:Number;
-												
-												private function ShrinkExpandBatches_DG(event:Event):void
-												{
-													if (event.target.selected)
-													{
-														TB1.label = 'Expand';
-														Batches_DG.width = Batches_DG_tempwidth;
-
-													} else {
-														TB1.label = 'Shrink';
-														Batches_DG_tempwidth = Batches_DG.width;
-													}
-												}
-											]]>
-										</fx:Script>
-										<s:ToggleButton id="TB1" label="Shrink" horizontalCenter="0" 
-														click="ShrinkExpandBatches_DG(event)"/>
-									</s:HGroup-->
 									<fx:Script>
 										<![CDATA[
 											[Bindable]
@@ -578,6 +554,33 @@
 												]);
 										]]>
 									</fx:Script>
+									
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<s:HGroup height="{DG_TW1.headerHeight}" width="{DG_TW1.width}"
+											  horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												private var Batches_DG_tempwidth:Number;
+												
+												private function ShrinkExpandBatches_DG(event:Event):void
+												{
+													//if (event.target.selected)
+													if (TB1.selected)
+													{
+														TB1.label = 'Expand';
+														Batches_DG.width = Batches_DG_tempwidth;
+												
+													} else {
+														TB1.label = 'Shrink';
+														Batches_DG_tempwidth = Batches_DG.width;
+													}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB1" label="Shrink" horizontalCenter="0" 
+										click="ShrinkExpandBatches_DG(event)"/>
+									</s:HGroup>
+									
 									<pages:CustomADG id="Batches_DG"
 													 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
 													 headerHeight="20" rowHeight="20" minColumnWidth="0"
@@ -749,30 +752,6 @@
 								<s:VGroup id="VG2" height="{C2.height-15}"
 										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
 										  paddingRight="0" paddingTop="0">
-									<!--Integrate this group into CustomTitleWindow component [David]-->
-									<!--s:HGroup height="{DG_TW2.headerHeight}" width="{DG_TW2.width}"
-											  horizontalAlign="right" verticalAlign="baseline">
-										<fx:Script>
-											<![CDATA[
-												private var Documents_DG_tempwidth:Number;
-												
-												private function ShrinkExpandDocuments_DG(event:MouseEvent):void
-												{
-													if (event.target.selected)
-													{
-														TB2.label = 'Expand';
-														Documents_DG.width = Documents_DG_tempwidth;
-														
-													} else {
-														TB2.label = 'Shrink';
-														Documents_DG_tempwidth = Documents_DG.width;
-													}
-												}
-											]]>
-										</fx:Script>
-										<s:ToggleButton id="TB2" label="Shrink" horizontalCenter="0" 
-														click="ShrinkExpandDocuments_DG(event);"/>
-									</s:HGroup-->
 									<fx:Script>
 										<![CDATA[
 											[Bindable]
@@ -801,6 +780,33 @@
 												]);
 										]]>
 									</fx:Script>
+									
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<s:HGroup height="{DG_TW2.headerHeight}" width="{DG_TW2.width}"
+											  horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												private var Documents_DG_tempwidth:Number;
+												
+												private function ShrinkExpandDocuments_DG(event:MouseEvent):void
+												{
+													//if (event.target.selected)
+													if (TB2.selected)
+													{
+														TB2.label = 'Expand';
+														Documents_DG.width = Documents_DG_tempwidth;
+														
+													} else {
+														TB2.label = 'Shrink';
+														Documents_DG_tempwidth = Documents_DG.width;
+													}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB2" label="Shrink" horizontalCenter="0" 
+														click="ShrinkExpandDocuments_DG(event);"/>
+									</s:HGroup>
+									
 									<mx:AdvancedDataGrid id="Documents_DG"
 														 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
 														 headerHeight="20" rowHeight="20" minColumnWidth="0"
@@ -939,31 +945,7 @@
 								<s:VGroup id="VG3" height="{C3.height-15}"
 										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
 										  paddingRight="0" paddingTop="0">
-									<!--Integrate this group into CustomTitleWindow component [David]-->
-									<!--s:HGroup height="{DG_TW3.headerHeight}" width="{DG_TW3.width}"
-											  horizontalAlign="right" verticalAlign="baseline">
-										<fx:Script>
-											<![CDATA[
-												[Bindable]
-												private var Transactions_DG_tempwidth:Number;
-												
-												private function ShrinkExpandTransactions_DG(event:MouseEvent):void
-												{
-													if (event.target.selected)
-													{
-														TB3.label = 'Expand';
-														Transactions_DG.width = Transactions_DG_tempwidth;
-														
-													} else {
-														TB3.label = 'Shrink';
-														Transactions_DG_tempwidth = Transactions_DG.width;
-													}
-												}
-											]]>
-										</fx:Script>
-										<s:ToggleButton id="TB3" label="Shrink" horizontalCenter="0" 
-														click="ShrinkExpandTransactions_DG(event)"/>
-									</s:HGroup-->
+									
 									<fx:Script>
 										<![CDATA[
 											[Bindable]
@@ -995,6 +977,34 @@
 												]);
 										]]>
 									</fx:Script>
+									
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<s:HGroup height="{DG_TW3.headerHeight}" width="{DG_TW3.width}"
+									horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												[Bindable]
+												private var Transactions_DG_tempwidth:Number;
+												
+												private function ShrinkExpandTransactions_DG(event:MouseEvent):void
+												{
+													//if (event.target.selected)
+													if (TB3.selected)
+													{
+														TB3.label = 'Expand';
+														Transactions_DG.width = Transactions_DG_tempwidth;
+												
+													} else {
+														TB3.label = 'Shrink';
+														Transactions_DG_tempwidth = Transactions_DG.width;
+													}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB3" label="Shrink" horizontalCenter="0" 
+										click="ShrinkExpandTransactions_DG(event)"/>
+									</s:HGroup>
+									
 									<mx:AdvancedDataGrid id="Transactions_DG"
 														 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
 														 headerHeight="20" rowHeight="20" minColumnWidth="0"

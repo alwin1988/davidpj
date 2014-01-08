@@ -118,65 +118,65 @@
 				dataProvider1List = new ArrayCollection(
 					[
 						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', Image:'1.png', checked:false},
 						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', Image:'2.png', checked:false},
 						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', Image:'3.png', checked:false},
 						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', Image:'4.png', checked:false}
 					]);
 				
 				//Set dataprovider2 list
 				dataProvider2List = new ArrayCollection(
 					[
 						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', Image:'1.png', checked:false},
 						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', Image:'2.png', checked:false},
 						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', Image:'3.png', checked:false},
 						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false}
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', Image:'4.png', checked:false}
 					]);
 				
 				//Set dataprovider3 list
 				dataProvider3List = new ArrayCollection(
 					[
 						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', Image:'1.png', checked:false},
 						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', Image:'2.png', checked:false},
 						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', Image:'3.png', checked:false},
 						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', Image:'4.png', checked:false}
 					]);
 				
 				//Set dataprovider4 list
 				dataProvider4List = new ArrayCollection(
 					[
 						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', Image:'1.png', checked:false},
 						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', Image:'2.png', checked:false},
 						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', Image:'3.png', checked:false},
 						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', Image:'4.png', checked:false}
 					]);
 				
 				//Set dataprovider5 list
 				dataProvider5List = new ArrayCollection(
 					[
 						{DocID:'22', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'WORD', Image:'1.png', checked:false},
 						{DocID:'33', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'TIF', Image:'2.png', checked:false},
 						{DocID:'11', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', checked:false},
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'PDF', Image:'3.png', checked:false},
 						{DocID:'44', IndexValue1:'xxxx', IndexValue2:'xxxx', IndexValue3:'xxxx',
-							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', checked:false}
+							IndexValue4:'xxxx', IndexValue5:'xxxx', DocFormat:'EXCEL', Image:'4.png', checked:false}
 					]);
 			}
 
@@ -200,17 +200,19 @@
 				if ( state == "I" ) { //Initial page
 					mainDetailBoxID.visible = false;
 					mainDetailBoxID.includeInLayout = false;
+/* Commented out by David
 					maskDetailBoxID.percentHeight = 100;
 					maskDetailBoxID.visible = true;
-					maskDetailBoxID.includeInLayout = true;
+					maskDetailBoxID.includeInLayout = true;*/
 					mainDetailBoxFlag = "I";
 					
 				} else if ( state == "S" ) { //When click search button or double click folder tree
 					mainDetailBoxID.visible = true;
 					mainDetailBoxID.includeInLayout = true;
+/* Commented out by David
 					maskDetailBoxID.percentHeight = 0;
 					maskDetailBoxID.visible = false;
-					maskDetailBoxID.includeInLayout = false;
+					maskDetailBoxID.includeInLayout = false;*/
 					mainDetailBoxFlag = "S";
 					//mytreeID.swapTreeClickToDBClickHandler();
 				}
@@ -438,7 +440,7 @@
 			protected function advanceddatagrid_itemDoubleClickHandler(evt:ListEvent):void
 			{
 				// TODO Auto-generated method stub
-				//var customTitleWindow:CustomTitleWindow = new CustomTitleWindow();
+				var customTitleWindow:CustomTitleWindow = new CustomTitleWindow();
 				{
 					pop = new PopUpCustomTitleWindow();
 					pop.height=FlexGlobals.topLevelApplication.height;
@@ -637,10 +639,10 @@
 
 					<!-- Add 20131217 -->
 					<!--Commented out by David-->
-					<mx:VBox id="maskDetailBoxID" height="0" width="100%" verticalAlign="middle" horizontalAlign="center">
+					<!--mx:VBox id="maskDetailBoxID" height="0" width="100%" verticalAlign="middle" horizontalAlign="center">
 						<mx:Text text="No folder selected.." width="100%" height="100" textAlign="center" fontSize="35" color="gray"/>
 						<mx:Text text="Please click search button or select treefolders in search filter section" width="100%" height="100" textAlign="center" fontSize="35" color="gray"/>
-					</mx:VBox>
+					</mx:VBox-->
 					
 					<mx:VDividedBox id="mainDetailBoxID" width="100%" height="100%">
 						<!-- ########################### DG1 ########################### -->

@@ -225,8 +225,9 @@
 				
 				} else if (page == Constants.WORK_MANAGER_LABEL) {
 					searchBoxDataProvider.removeAll();
-					searchBoxDataProvider.addItem( {label:"Cases"} );
-					searchBoxDataProvider.addItem( {label:"Documents"} );
+					searchBoxDataProvider.addItem( {label:"Batches"} );
+					searchBoxDataProvider.addItem( {label:"SubBatches"} );
+					searchBoxDataProvider.addItem( {label:"Objects"} );
 					
 				} else if (page == Constants.CHART_REPORT_LABEL) {
 					searchBoxDataProvider.removeAll();
@@ -241,7 +242,7 @@
 					searchBoxDataProvider.addItem( {label:"Groups"} );
 					searchBoxDataProvider.addItem( {label:"Roles"} );
 					searchBoxDataProvider.addItem( {label:"Folders"} );
-					searchBoxDataProvider.addItem( {label:"Document Classes"} );
+					searchBoxDataProvider.addItem( {label:"Document Types"} );
 					searchBoxDataProvider.addItem( {label:"Workflow Procedures"} );
 				}
 			}

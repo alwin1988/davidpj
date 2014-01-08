@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="955" minHeight="600"
+			   xmlns:panzoom="org.rockholla.controls.panzoom.*"
+			   creationComplete="init(event)"
+			   >
+	<fx:Script>
+		<![CDATA[
+			import component.CustomTitleWindow;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			import skin.CustomTitleWindowSkin;
+			
+			import spark.events.TitleWindowBoundsEvent;
+			
+			private var pop:ResizableTitleWindow = new ResizableTitleWindow();
+			protected function init(event:FlexEvent):void
+			{
+				var x:Number;
+				x = gg.height + 30;
+				//pop.headerHeight = 50;
+				pop.title = 'Nice title';
+
+				// pop = CustomTitleWindow(PopUpManager.createPopUp(gg,CustomTitleWindow,true));
+				//pop.width = ImageViewer.width;
+				//pop.height = ImageViewer.height
+				pop.height = x;
+				//pop.height = 400;
+				pop.width = 800;
+				pop.addElement(gg);
+				PopUpManager.addPopUp(pop,gg,false);
+//				pop.setStyle("skinClass",skin.CustomTitleWindowSkin);
+		//		pop.setStyle("skinClass",skin.ResizableTitleWindowSkin);
+				pop.setStyle("skinClass",ResizableTitleWindowSkin);
+//				pop.width = this.width;
+//				pop.height = this.height;
+//				pop.width = ImageViewer.width;
+//				pop.height = ImageViewer.height;
+				pop.width = 400;
+				//pop.height = 400;
+	
+				pop.addEventListener(TitleWindowBoundsEvent.WINDOW_MOVING,twmoveing);
+				pop.addEventListener(CloseEvent.CLOSE,closepop);
+			}
+			
+			protected function closepop(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(pop);
+			}
+			
+			protected function twmoveing(evt:TitleWindowBoundsEvent):void
+			{
+				if (evt.afterBounds.left < 0) {
+					evt.afterBounds.left = 0;
+				} else if (evt.afterBounds.right > systemManager.stage.stageWidth) {
+					evt.afterBounds.left = systemManager.stage.stageWidth - evt.afterBounds.width;
+				}
+				if (evt.afterBounds.top < 0) {
+					evt.afterBounds.top = 0;
+				} else if (evt.afterBounds.bottom > systemManager.stage.stageHeight) {
+					evt.afterBounds.top = systemManager.stage.stageHeight - evt.afterBounds.height;
+				}
+				
+			}
+			
+			//protected function imageLoaded(event:Event):void
+			//{
+			//	var img:Image = event.target as Image;
+			//	img.source = new Bitmap( Bitmap(img.content).bitmapData, "auto", true );
+			//	img.scaleX = img.scaleY = (20 / img.contentHeight);
+			//}
+			
+			protected function _onZoom():void
+			{		
+				//	var smoothBitmapData : BitmapData = new BitmapData(
+				//		loadedBitmap.width + (loadedBitmap.width % 2),
+				//		loadedBitmap.height + (loadedBitmap.height % 2),
+				//		true, 0x00FF0000);
+				//	smoothBitmapData.draw(loadedBitmap, null, null, null, null, true);
+				//	
+				//	smoothBitmap = new Bitmap(smoothBitmapData, PixelSnapping.NEVER, true);
+				
+				//if(ZoomSlider.value/100 != this.panzoom.scale)
+				{
+					ZoomSlider.value = this.panzoom.scale * 100;
+				}
+			}
+			
+			protected function HandleImageDoubleClick(mouseEvent):void
+			{
+				if(this.panzoom.scale == 1.8 || ZoomSlider.value == 180)
+				{
+					ZoomSlider.value = 100;
+					this.panzoom.zoomToPoint(new Point(0, 0), 1);
+					this.panzoom.scale = 1;
+				}
+				else
+				{
+					ZoomSlider.value = 180;
+					this.panzoom.zoomToPoint(new Point(325, 400), 1.8);
+					this.panzoom.scale = 1.8;
+				}
+			}
+			
+			// When our slider changes, we want the zoom level to update.  There's a public zoom method
+			// within the PanZoomComponent that accepts a scale value (1 = actual size or 100%, 0.5 = half the size or 50%, etc.)
+			protected function ZoomSliderChangeEventHandler(change):void
+			{
+				//	this.panzoom.zoom(ZoomSlider.value/100);
+				this.panzoom.scale = ZoomSlider.value/100;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		s|TabBar s|TabBarTab:upAndSelected,
+		s|TabBar s|TabBarTab:overAndSelected,
+		s|TabBar s|TabBarTab:downAndSelected,
+		s|Tabbar s|TabBarTab:disabledAndSelected {
+			chromeColor: #95B9C7;
+			color: #000000;
+		}
+		s|TabBar { 
+			chromeColor: #95B9C7;
+			color: #000000;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<!-- Image is set here -->
+		<s:BitmapImage id="PNGImage"
+					   source="@Embed('assets/11.png')"/>
+	</fx:Declarations>
+
+	<s:Group width="100%" height="100%" id="gg" clipAndEnableScrolling="false" >
+		<s:TitleWindow id="ImageViewer" title="Your Lovely Image" width="{ImageWindow.width}" minWidth="{panzoom.minWidth}" maxWidth="{panzoom.maxWidth}" 
+					   height="{ImageWindow.height}" minHeight="{ImageWindow.minHeight}" maxHeight="{ImageWindow.maxHeight}">
+			
+			<s:VGroup height="100%" width="100%" gap="0">
+				
+				<s:BorderContainer id="ImageWindow" width="{panzoom.width}" height="{panzoom.height}" borderVisible="true" borderStyle="solid" dropShadowVisible="false">
+					<s:layout>
+						<s:BasicLayout/>
+					</s:layout>
+					
+					<panzoom:PanZoomComponent id="panzoom" 
+											  x="0" y="0"
+											  width="336" minWidth="150" maxWidth="400" height="475" minHeight="200" maxHeight="400"
+											  backgroundColor="0x807F7A" borderVisible="true" borderStyle="solid" borderColor="black"							  
+											  scaleMin="1" scaleMax="600" 
+											  childPreventsPan="false"
+											  zoomToCursor="false"
+											  zoomSpeed="1"
+											  horizontalScrollPolicy="off" verticalScrollPolicy="off"
+											  panScrollBarsVisible="true"
+											  loadCenterPoint="{new Point(325, 400)}"
+											  initialZoomLevel="1.8">
+						<!--zoom="this._onZoom()"-->
+						<panzoom:PanZoomContent width="336" minWidth="150" maxWidth="400" height="475" minHeight="200" maxHeight="400"
+												backgroundColor="0x000000" borderVisible="true">
+							<s:Image id="DocImage" source="{PNGImage.source}" 
+									 width="336" height="475" 
+									 doubleClickEnabled="true" doubleClick="HandleImageDoubleClick(event)"
+									 smooth="false" smoothingQuality="default">
+<!--  depth="1" -->
+							</s:Image>
+							<!--doubleClick="{this.panzoom.scale=1}"/-->
+						</panzoom:PanZoomContent>
+					</panzoom:PanZoomComponent>	
+				</s:BorderContainer>
+				
+				<s:BorderContainer id="Slider_G" width="100%" height="15" borderVisible="true" dropShadowVisible="false">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="center"/>
+					</s:layout>
+					<s:HSlider id="ZoomSlider"
+							   showDataTip="false"
+							   minimum="100" maximum="600" stepSize="100"
+							   value="100"
+							   snapInterval="1" 
+							   liveDragging="true"
+							   change="ZoomSliderChangeEventHandler(event)"/>
+					<!--mx:Text text="{ZoomSlider.value}" color="red"/-->
+				</s:BorderContainer>
+				
+				<!--s:BorderContainer id="Thumbs_G" width="100%" height="55" borderVisible="true" dropShadowVisible="false">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="center" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:Rect width="15" height="100%">
+						<s:fill>
+							<s:SolidColor color="black"/>
+						</s:fill>
+					</s:Rect>
+					<s:List width="100%" height="100%" itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
+							horizontalCenter="0" verticalCenter="0" verticalScrollPolicy="off" borderVisible="false">
+						<s:layout>
+							<s:TileLayout rowHeight="{Thumbs_G.height}" columnWidth="50" requestedColumnCount="5" requestedRowCount="1" 
+										  columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" horizontalGap="0" verticalGap="0" 
+										  paddingLeft="2" paddingRight="2"/>		
+						</s:layout>
+						<s:dataProvider>
+							<s:ArrayList>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/11.png"/>							
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/11.png"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/1l.png"/>
+							</s:ArrayList>		
+						</s:dataProvider>
+					</s:List>
+					<s:Rect width="15" height="100%">
+						<s:fill>
+							<s:SolidColor color="black"/>
+						</s:fill>
+					</s:Rect>
+				</s:BorderContainer-->
+				
+			</s:VGroup>
+			
+		</s:TitleWindow>
+	</s:Group>
+</s:Application>

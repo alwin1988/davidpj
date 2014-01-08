@@ -9,10 +9,8 @@
 
 	<fx:Script>
 		<![CDATA[
-			import component.PopUpCustomTitleWindow;
-			
+			import component.PopUpCustomTitleWindow;		
 			import event.DocViewerEvent;
-			
 			import mx.collections.ArrayCollection;
 			import mx.collections.CursorBookmark;
 			import mx.collections.HierarchicalCollectionView;
@@ -20,16 +18,15 @@
 			import mx.collections.XMLListCollection;
 			import mx.core.FlexGlobals;
 			import mx.events.AdvancedDataGridEvent;
+			import mx.events.ItemClickEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
+			import spark.components.ToggleButton;
 			
 			//############################### Variable #################################//
 			
 			[Bindable]
 			private var DGwidth:Number = 1162;
-			
-			//Left Tree Data Provider
-			public var tmpWidth:int;
 			
 			[Bindable]
 			public var BatchesTree_XC:XMLListCollection;
@@ -38,80 +35,10 @@
 			public var DocumentsTree_XC:XMLListCollection;
 			
 			[Bindable]
+			public var TransactionsTree_XC:XMLListCollection;
+			
+			[Bindable]
 			public var pop:PopUpCustomTitleWindow;
-			
-			[Bindable]
-			public var BatchesTreeList:XMLList = 
-				<>
-					<folder label="Batch Type" isBranch="true" open="true" state="checked">
-						<folder label="ALL BATCH TYPES" isBranch="false" open="true" state="unchecked"/>
-						<folder label="BatchType1" isBranch="true" open="true" state="unchecked">
-							<folder label="SubBatchType1" isBranch="false" open="true" state="unchecked"/>
-						</folder>
-						<folder label="BatchType2" isBranch="false" open="true" state="unchecked"/>
-					</folder>
-				</>;
-			
-			[Bindable]
-			public var DocumentsTreeList:XMLList =
-				<>
-					<folder label="ALL DOCUMENT FOLDERS" isBranch="true" open="true" state="checked">
-						<folder label="Folder1" isBranch="false" open="true" state="unchecked"/>
-						<folder label="Folder2" isBranch="false" open="true" state="unchecked"/>
-					</folder>
-				</>;
-			
-			[Bindable]
-			private var AC2:ArrayCollection = new ArrayCollection(
-				[
-					{EntityType:"Batch", Priority:"1", ID:"Batch1ID", Type:"Batch1Type", 
-						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-						Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
-						checked:"false", children: [
-							{EntityType:"SubBatch", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
-								Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"2",
-								checked:"false", children: [
-									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:false},
-									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:false},
-									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:false},
-									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-										checked:false}
-								]}
-						]},
-					{EntityType:"Batch", Priority:"4", ID:"Batch2ID", Type:"Batch2Type", 
-						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-						Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
-						checked:"false", children: [
-							{EntityType:"Object", Priority:"5", ID:"Obj3ID", Type:"Doc1Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:false},
-							{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:false},
-							{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:false},
-							{EntityType: "Object", Priority:"6", ID:"Obj4ID", Type:"Doc2Type", 
-								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
-								Started:"dd/mm/yyyy hh:mm", Completed:34, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
-								checked:false}
-						]}
-				]);
 
 			//############################### Variable #################################//
 			
@@ -120,6 +47,7 @@
 			public function init():void {
 				BatchesTree_XC = new XMLListCollection(BatchesTreeList);
 				DocumentsTree_XC = new XMLListCollection(DocumentsTreeList);
+				TransactionsTree_XC = new XMLListCollection(TransactionsTreeList);
 			}
 	
 //This does not work: fix it [David]
@@ -133,18 +61,24 @@
 				var xList:XMLList = DocumentsTreeList..folder.(hasOwnProperty("@open") && @open == "true");
 				DocumentsTree.openItems = xList;
 			}
+			
+//This does not work -- fix it [David]
+			private function TransactionsTreeNodes():void {
+				var xList:XMLList = TransactionsTreeList..folder.(hasOwnProperty("@open") && @open == "true");
+				TransactionsTree.openItems = xList;
+			}
 			//############################### Set & Initial Method #####################################//
 			
 			private function closeFolder():void {
-				var hcv:HierarchicalCollectionView = WM_Batches_DG.dataProvider as HierarchicalCollectionView;
-				WM_Batches_DG.dataProvider.refresh();
-				WM_Batches_DG.validateNow();
-				WM_Batches_DG.invalidateDisplayList();
-				for (var i:int = 0; i < WM_Batches_DG.dataProvider.source.source.length; i++) 
+				var hcv:HierarchicalCollectionView = Batches_DG.dataProvider as HierarchicalCollectionView;
+				Batches_DG.dataProvider.refresh();
+				Batches_DG.validateNow();
+				Batches_DG.invalidateDisplayList();
+				for (var i:int = 0; i < Batches_DG.dataProvider.source.source.length; i++) 
 				{
-					if(WM_Batches_DG.dataProvider.source.source[i].children.length > 0 ){
+					if(Batches_DG.dataProvider.source.source[i].children.length > 0 ){
 						
-						hcv.closeNode(WM_Batches_DG.dataProvider.source.source[i] as Object);
+						hcv.closeNode(Batches_DG.dataProvider.source.source[i] as Object);
 					}
 				}
 				hcv.refresh();
@@ -176,7 +110,7 @@
 			}
 			
 			public function selectAllWmSuccess(ac:ArrayCollection):void {
-				WM_Batches_DG.dataProvider = new HierarchicalData(ac);
+				Batches_DG.dataProvider = new HierarchicalData(ac);
 			}
 			
 			//must be in every project that use CustomADG
@@ -213,8 +147,8 @@
 			public function setOpenNodes(numLevels:int = 1):Boolean
 			{
 				var chk:Boolean = false;
-				var hcv:HierarchicalCollectionView = WM_Batches_DG.dataProvider as HierarchicalCollectionView;
-				var dataCursor:IHierarchicalCollectionViewCursor = WM_Batches_DG.dataProvider.createCursor();
+				var hcv:HierarchicalCollectionView = Batches_DG.dataProvider as HierarchicalCollectionView;
+				var dataCursor:IHierarchicalCollectionViewCursor = Batches_DG.dataProvider.createCursor();
 				dataCursor.seek(CursorBookmark.FIRST);
 				while (!dataCursor.afterLast)
 				{
@@ -250,7 +184,7 @@
 			public function setOpenCurrNodes(numLevels:int = 1):Boolean
 			{
 				var chk:Boolean = false;
-				var dataCursor:IHierarchicalCollectionViewCursor = WM_Batches_DG.dataProvider.createCursor();
+				var dataCursor:IHierarchicalCollectionViewCursor = Batches_DG.dataProvider.createCursor();
 				dataCursor.seek(CursorBookmark.FIRST);
 				while (!dataCursor.afterLast)
 				{
@@ -261,7 +195,7 @@
 							chk = true;
 						}
 						
-						if( WM_Batches_DG.isItemOpen(dataCursor.current) ){
+						if( Batches_DG.isItemOpen(dataCursor.current) ){
 							trace('isopen');
 						}
 					}	
@@ -329,7 +263,7 @@
 /* David commented out
 			protected function dg_itemOpenHandler(event:AdvancedDataGridEvent):void
 			{
-				var i:int =	WM_Batches_DG.getCurrentDepth(event.item);	
+				var i:int =	Batches_DG.getCurrentDepth(event.item);	
 				var chk:Boolean = setOpenCurrNodes(i);
 				WmModule.getInstance.setCurrDeptOpen(i,chk);  // 1,true
 			}*/
@@ -337,7 +271,7 @@
 /* David commented out
 			protected function dg_itemCloseHandler(event:AdvancedDataGridEvent):void
 			{
-				var i:int = WM_Batches_DG.getCurrentDepth(event.item);
+				var i:int = Batches_DG.getCurrentDepth(event.item);
 				var chk:Boolean = setOpenCurrNodes(i);
 				
 				WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));
@@ -345,7 +279,7 @@
 			}*/
 			
 			private function chkOpenAll(depth:int):Boolean {
-				var hcv:HierarchicalCollectionView = WM_Batches_DG.dataProvider as HierarchicalCollectionView;
+				var hcv:HierarchicalCollectionView = Batches_DG.dataProvider as HierarchicalCollectionView;
 				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
 				var i:int = 0;			
 				dataCursor.seek(CursorBookmark.FIRST);
@@ -353,7 +287,7 @@
 				{
 					//					trace('isopen',dg.isItemOpen(dataCursor.current));
 					if (dataCursor.currentDepth >= depth) {
-						if(WM_Batches_DG.isItemOpen(dataCursor.current)){
+						if(Batches_DG.isItemOpen(dataCursor.current)){
 							i++;
 						}
 					} 
@@ -387,34 +321,23 @@
 			
 			protected function dg_itemOpenHandler(e:AdvancedDataGridEvent):void
 			{
-								var i:int =	WM_Batches_DG.getCurrentDepth(e.item as Object);	
+								var i:int =	Batches_DG.getCurrentDepth(e.item as Object);	
 								var chk:Boolean = setOpenCurrNodes(i);
 								WmModule.getInstance.setCurrDeptOpen(i,chk);  // 1,true
 			}
 			protected function dg_itemCloseHandler(e:AdvancedDataGridEvent):void
 			{
-								var i:int = WM_Batches_DG.getCurrentDepth(e.item as Object);
+								var i:int = Batches_DG.getCurrentDepth(e.item as Object);
 								var chk:Boolean = setOpenCurrNodes(i);
 								
 								WmModule.getInstance.setCurrentDeptClose(i,chkOpenAll(i));
 			}
 			
-			protected function WM_Batches_DG_headerReleaseHandler(e:AdvancedDataGridEvent):void
+			protected function Batches_DG_headerReleaseHandler(e:AdvancedDataGridEvent):void
 			{
 				if(e.dataField == 'ID'){
 					e.preventDefault();
 				}
-			}
-						protected function button1_clickHandler(event:MouseEvent):void
-			{
-				// TODO Auto-generated method stub
-				tmpWidth = WM_Batches_DG.width;	
-			}
-			
-			protected function button2_clickHandler(event:MouseEvent):void
-			{
-				// TODO Auto-generated method stub
-				WM_Batches_DG.width = tmpWidth;
 			}
 		]]>
 	</fx:Script>
@@ -438,15 +361,30 @@
 										paddingTop="5"/>
 				</s:layout>
 				
-				<!--Boxes accordion-->
-				<s:VGroup width="170">
+				<!--Boxes "accordion"-->
+				<s:VGroup width="170" gap="5">
 					
-					<s:VGroup y="0" width="170" gap="0" verticalCenter="0" verticalAlign="middle">
+					<s:VGroup width="170" height="130" gap="0" verticalCenter="0" verticalAlign="middle">
 						<components:CollapsiblePanel id="Section1" title="Batch Processing"
 													 width="100%" dropShadowVisible="false"
 													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
 													 styleName="WM_PanelHeader">
 							<s:VGroup width="100%" paddingTop="2.5" paddingBottom="2.5" gap="0">
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										public var BatchesTreeList:XMLList = 
+											<>
+												<folder label="Batch Type" isBranch="true" open="true" state="checked">
+													<folder label="ALL BATCH TYPES" isBranch="false" open="true" state="unchecked"/>
+													<folder label="BatchType1" isBranch="true" open="true" state="unchecked">
+														<folder label="SubBatchType1" isBranch="false" open="true" state="unchecked"/>
+													</folder>
+													<folder label="BatchType2" isBranch="false" open="true" state="unchecked"/>
+												</folder>
+											</>;
+									]]>
+								</fx:Script>
 								<mx:Tree id="BatchesTree" 
 										 width="100%" borderVisible="false"
 										 labelField="@label" rowHeight="15"
@@ -460,12 +398,24 @@
 						</components:CollapsiblePanel>
 					</s:VGroup>
 	
-					<s:VGroup y="0" width="170" gap="0" verticalCenter="0" verticalAlign="middle">
+					<s:VGroup width="170" height="130" gap="0" verticalCenter="0" verticalAlign="middle">
 						<components:CollapsiblePanel id="Section2" title="Document Processing"
 													 width="100%" dropShadowVisible="false"
 													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
 													 styleName="WM_PanelHeader">
 							<s:VGroup width="100%" paddingTop="2.5" paddingBottom="2.5" gap="0">
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										public var DocumentsTreeList:XMLList =
+											<>
+												<folder label="ALL DOCUMENT Types" isBranch="true" open="true" state="checked">
+													<folder label="DocType1" isBranch="false" open="true" state="unchecked"/>
+													<folder label="DocType2" isBranch="false" open="true" state="unchecked"/>
+												</folder>
+											</>;
+									]]>
+								</fx:Script>
 								<mx:Tree id="DocumentsTree" 
 										 width="100%" borderVisible="false"
 										 labelField="@label" rowHeight="15"
@@ -482,12 +432,45 @@
 						</components:CollapsiblePanel>
 					</s:VGroup>
 					
-					<s:BorderContainer width="170" height="40" borderVisible="false">
+					<s:VGroup width="170" height="130" gap="0" verticalCenter="0" verticalAlign="middle">
+						<components:CollapsiblePanel id="Section3" title="Transactions"
+													 width="100%" dropShadowVisible="false"
+													 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin"
+													 styleName="WM_PanelHeader">
+							<s:VGroup width="100%" paddingTop="2.5" paddingBottom="2.5" gap="0">
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										public var TransactionsTreeList:XMLList =
+											<>
+												<folder label="ALL PROCEDURES" isBranch="true" open="true" state="checked">
+													<folder label="Procedure1" isBranch="false" open="true" state="unchecked"/>
+													<folder label="Procedure2" isBranch="false" open="true" state="unchecked"/>
+												</folder>
+											</>;
+									]]>
+								</fx:Script>
+								<mx:Tree id="TransactionsTree" 
+										 width="100%" borderVisible="false"
+										 labelField="@label" rowHeight="15"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 styleName="WM_PanelBody"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 dataProvider="{TransactionsTree_XC}"
+										 creationComplete="OpenDocumentsTreeNodes()">
+									<!--folderClosedIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
+									folderOpenIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
+									defaultLeafIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"-->
+								</mx:Tree>
+							</s:VGroup>
+						</components:CollapsiblePanel>
+					</s:VGroup>
+					
+					<s:BorderContainer width="170" height="30" borderVisible="false">
 						<s:layout>
-							<s:VerticalLayout gap="0"/>
+							<s:VerticalLayout verticalAlign="middle"/>
 						</s:layout>
-						<s:CheckBox width="170" label="Include closed cases"
-									styleName="ClientLabelDark"/>					
+						<s:CheckBox width="170" label="Include closed transactions" styleName="ClientLabelDark"/>					
 					</s:BorderContainer>
 				</s:VGroup>
 				
@@ -500,57 +483,132 @@
 					<!--Start of datagrids-->
 					<mx:VDividedBox width="100%" height="100%">
 
-						<component:CustomTitleWindow id="WM_TW" title="Batches &amp; Objects"
+						<component:CustomTitleWindow id="DG_TW1" title="Batches &amp; Objects"
 													 width="100%" height="100%" headerHeight="18" dropShadowVisible="false" borderVisible="true"
 													 skinClass="skin.CustomTitleWindowSkin">
-							<!--Integrate this group into CustomTitleWindow component [David]>
-							<s:Group height="{WM_TW.headerHeight}" width="{WM_TW.width}">
-								<s:layout>
-									<s:HorizontalLayout horizontalAlign="right" verticalAlign="baseline"/>
-								</s:layout>
-								<s:Button label="Shrink to fit" 
-										  click="button1_clickHandler(event);
-										  WM_Batches_DG.width=DGwidth;"/>
-								<s:Button label="Expand" click="button2_clickHandler(event)"/>
-							</s:Group-->
-
-							<mx:Canvas id="C2" x="0" width="100%" height="100%" borderVisible="false"
+							<mx:Canvas id="C1" x="0" width="100%" height="100%" borderVisible="false"
 									   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
-								<s:VGroup id="VG" height="{C2.height-15}"
+								<s:VGroup id="VG1" height="{C1.height-15}"
 										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
 										  paddingRight="0" paddingTop="0">
-									
-									<pages:CustomADG id="WM_Batches_DG"
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<!--s:HGroup height="{DG_TW1.headerHeight}" width="{DG_TW1.width}"
+											  horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												private var Batches_DG_tempwidth:Number;
+												
+												private function ShrinkExpandBatches_DG(event:Event):void
+												{
+													if (event.target.selected)
+													{
+														TB1.label = 'Expand';
+														Batches_DG.width = Batches_DG_tempwidth;
+
+													} else {
+														TB1.label = 'Shrink';
+														Batches_DG_tempwidth = Batches_DG.width;
+													}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB1" label="Shrink" horizontalCenter="0" 
+														click="ShrinkExpandBatches_DG(event)"/>
+									</s:HGroup-->
+									<fx:Script>
+										<![CDATA[
+											[Bindable]
+											private var Batches_AC:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Batch", Priority:"1", ID:"Batch1ID", Type:"Batch1Type", 
+														Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:"false", children: [
+															{EntityType:"SubBatch", Priority:"1", ID:"Batch2ID", Type:"Batch2Type", 
+																Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"2",
+																checked:"false", children: [
+																	{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+																		Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																		Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																		checked:false},
+																	{EntityType:"Object", Priority:"2", ID:"Obj2ID", Type:"Doc1Type", 
+																		Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																		Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																		checked:false},
+																	{EntityType:"Object", Priority:"3", ID:"Obj3ID", Type:"Doc2Type", 
+																		Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																		Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																		checked:false},
+																	{EntityType:"Object", Priority:"3", ID:"Obj4ID", Type:"Doc2Type", 
+																		Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																		Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																		checked:false}
+																]}
+														]},
+													{EntityType:"Batch", Priority:"4", ID:"Batch3ID", Type:"Batch3Type", 
+														Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:"false", children: [
+															{EntityType:"Object", Priority:"2", ID:"Obj5ID", Type:"Doc1Type", 
+																Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																checked:false},
+															{EntityType:"Object", Priority:"3", ID:"Obj6ID", Type:"Doc2Type", 
+																Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																checked:false},
+															{EntityType: "Object", Priority:"6", ID:"Obj7ID", Type:"Doc2Type", 
+																Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+																Started:"dd/mm/yyyy hh:mm", Completed:34, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+																checked:false}
+														]}
+												]);
+											
+											[Bindable]
+											private var BatchObjects_AC:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj1ID", ThumbImage:"1T.png", Image:"1.png"},
+													{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj2ID", ThumbImage:"2T.png", Image:"2.png"},
+													{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj3ID", ThumbImage:"3T.png", Image:"3.png"},
+													{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj4ID", ThumbImage:"4T.png", Image:"4.png"},
+													{EntityType:"Object", BatchID:"Batch3ID", ObjID:"Obj5ID", ThumbImage:"1T.png", Image:"1.png"},
+													{EntityType:"Object", BatchID:"Batch3ID", ObjID:"Obj6ID", ThumbImage:"2T.png", Image:"2.png"},
+													{EntityType:"Object", BatchID:"Batch3ID", ObjID:"Obj7ID", ThumbImage:"3T.png", Image:"3.png"}
+												]);
+										]]>
+									</fx:Script>
+									<pages:CustomADG id="Batches_DG"
 													 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
 													 headerHeight="20" rowHeight="20" minColumnWidth="0"
 													 horizontalScrollPolicy="off" verticalScrollPolicy="off"
 													 draggableColumns="true" resizableColumns="true" sortableColumns="true"
 													 sortExpertMode="true"
-													 treeColumn="{WM_Batches_DG_ID}" indentation="17" 
+													 treeColumn="{Batches_DG_ID}" indentation="17" 
 													 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
 													 styleName="DataGridBody" headerStyleName="DataGridHeader"
 													 doubleClickEnabled="true" 
 													 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
 													 itemOpen="dg_itemOpenHandler(event)"
 													 itemClose="dg_itemCloseHandler(event)"
-													 headerRelease="WM_Batches_DG_headerReleaseHandler(event)"
+													 headerRelease="Batches_DG_headerReleaseHandler(event)"
 													 >
 										<pages:dataProvider>
-											<mx:HierarchicalData source="{AC2}"/>
+											<mx:HierarchicalData source="{Batches_AC}"/>
 										</pages:dataProvider>
 										<pages:columns>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Checkbox" headerText="" dataField="checked" 
-																	   width="{(WM_TW.width-WM_TW.width)+18}" textAlign="center"										   
+											<mx:AdvancedDataGridColumn id="Batches_DG_Checkbox" headerText="" dataField="checked" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"										   
 																	   draggable="false" resizable="false" sortable="false"
-																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
 																	   rendererIsEditor="false"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" dataField="Information" 
-																	   width="{(WM_TW.width-WM_TW.width)+18}" textAlign="center"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Info" dataField="Information" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"
 																	   draggable="false" resizable="false" sortable="false">
 												<mx:headerRenderer>
 													<fx:Component>
-														<mx:HBox width="{outerDocument.WM_Batches_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">																
+														<mx:HBox width="{outerDocument.Batches_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">																
 															<s:Image 
 																source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
 																<fx:Script>
@@ -564,7 +622,7 @@
 												</mx:headerRenderer>
 												<mx:itemRenderer>
 													<fx:Component>
-														<mx:HBox width="{outerDocument.WM_Batches_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">							
+														<mx:HBox width="{outerDocument.Batches_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">							
 															<fx:Script>
 																<![CDATA[
 																	import component.CustomTitleWindow;
@@ -606,16 +664,16 @@
 												</mx:itemRenderer>
 											</mx:AdvancedDataGridColumn>
 											<!--itemRenderer="component.PriorityItemRenderer"-->
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Priority" dataField="Priority" 
-																	   width="{(WM_TW.width-WM_TW.width)+39}" minWidth="39" textAlign="left"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Priority" headerText="Priority" dataField="Priority" 
+																	   width="{(DGwidth-DGwidth)+45}" minWidth="45" textAlign="left"
 																	   draggable="false" resizable="false" sortable="true"
 																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID" headerText="ID" dataField="ID"
-																	   width="198" textAlign="left"
+											<mx:AdvancedDataGridColumn id="Batches_DG_ID" headerText="ID" dataField="ID"
+																	   width="190" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true">
 												<mx:headerRenderer>
 													<fx:Component>
-														<mx:HBox width="{outerDocument.WM_Batches_DG_ID.width}"
+														<mx:HBox width="{outerDocument.Batches_DG_ID.width}"
 																 horizontalAlign="left"
 																 horizontalGap="0"
 																 verticalAlign="middle">
@@ -628,12 +686,12 @@
 																	 visible="{WmModule.getInstance.level1}"
 																	 click="outerDocument.lv1Click(event)"
 																	 source="{ WmModule.getInstance.lv1OpenClose ? FlexGlobals.topLevelApplication.FLODER_OPEN : FlexGlobals.topLevelApplication.FLODER_CLOSE}"/>
-															<s:Spacer width="{ outerDocument.WM_Batches_DG.getStyle('indentation')-12 }"/>
+															<s:Spacer width="{ outerDocument.Batches_DG.getStyle('indentation')-12 }"/>
 															<s:Image id="imglv2"
 																	 visible="{WmModule.getInstance.level2}"
 																	 click="outerDocument.lv2click()"
 																	 source="{WmModule.getInstance.lv2OpenClose ? FlexGlobals.topLevelApplication.FLODER_OPEN2 : FlexGlobals.topLevelApplication.FLODER_CLOSE2}"/>
-															<s:Spacer width="{ outerDocument.WM_Batches_DG.getStyle('indentation')-12 }"/>
+															<s:Spacer width="{ outerDocument.Batches_DG.getStyle('indentation')-12 }"/>
 															<s:Image id="imglv3"
 																	 visible="{WmModule.getInstance.level3}"
 																	 click="outerDocument.lv3click()"
@@ -644,47 +702,427 @@
 													</fx:Component>
 												</mx:headerRenderer>
 											</mx:AdvancedDataGridColumn>		
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Type" headerText="Type" dataField="Type"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Type" headerText="Type" dataField="Type"
 																	   width="118" minWidth="120" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"
 																	   color="red"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages" headerText="Pages" dataField="Pages"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Pages" headerText="Pages" dataField="Pages"
 																	   width="60" minWidth="60" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Docs" headerText="Docs" dataField="Docs"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Docs" headerText="Docs" dataField="Docs"
 																	   width="60" minWidth="60" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>					
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Source" headerText="Source" dataField="Source"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Source" headerText="Source" dataField="Source"
 																	   width="140" minWidth="140" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Filename" headerText="Filename" dataField="Filename"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Filename" headerText="Filename" dataField="Filename"
 																	   width="80" minWidth="80" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Status" headerText="Status" dataField="Status"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Status" headerText="Status" dataField="Status"
 																	   width="200" minWidth="120" textAlign="left"
 																	   draggable="true" resizable="true" sortable="true"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Started" headerText="Filename" dataField="Filename"
-																	   width="100" minWidth="100" textAlign="left"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Started" headerText="Started" dataField="Started"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Completed" headerText="% Completed" dataField="Completed"
-																	   width="100" minWidth="100" textAlign="left"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Completed" headerText="% Completed" dataField="Completed"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"
 																	   itemRenderer="component.CompletionBarItemRenderer"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
-																	   width="100" minWidth="100" textAlign="left"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
+																	   width="{(DGwidth-DGwidth)+100}"  minWidth="100" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"/>
-											<mx:AdvancedDataGridColumn id="WM_Batches_DG_Deadline" headerText="Deadline" dataField="Deadline"
-																	   width="100" minWidth="100" textAlign="left"
+											<mx:AdvancedDataGridColumn id="Batches_DG_Deadline" headerText="Deadline" dataField="Deadline"
+																	   width="{(DGwidth-DGwidth)+95}"  minWidth="95" textAlign="left"
 																	   draggable="true" resizable="false" sortable="true"/>
 										</pages:columns>
 									</pages:CustomADG>
+									
+								</s:VGroup>
+							</mx:Canvas>						
+						</component:CustomTitleWindow>
+						
+						<component:CustomTitleWindow id="DG_TW2" title="Document Processing"
+													 width="100%" height="100%" headerHeight="18" dropShadowVisible="false" borderVisible="true"
+													 skinClass="skin.CustomTitleWindowSkin">
+							<mx:Canvas id="C2" x="0" width="100%" height="100%" borderVisible="false"
+									   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+								<s:VGroup id="VG2" height="{C2.height-15}"
+										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
+										  paddingRight="0" paddingTop="0">
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<!--s:HGroup height="{DG_TW2.headerHeight}" width="{DG_TW2.width}"
+											  horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												private var Documents_DG_tempwidth:Number;
+												
+												private function ShrinkExpandDocuments_DG(event:MouseEvent):void
+												{
+													if (event.target.selected)
+													{
+														TB2.label = 'Expand';
+														Documents_DG.width = Documents_DG_tempwidth;
+														
+													} else {
+														TB2.label = 'Shrink';
+														Documents_DG_tempwidth = Documents_DG.width;
+													}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB2" label="Shrink" horizontalCenter="0" 
+														click="ShrinkExpandDocuments_DG(event);"/>
+									</s:HGroup-->
+									<fx:Script>
+										<![CDATA[
+											[Bindable]
+											private var Documents_AC:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Document", Priority:"1", ID:"Doc1ID", Type:"Doc1Type", 
+														Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+														DocID:"Doc1ID", FormID:"1", checked:false},
+													{EntityType:"Document", Priority:"1", ID:"Doc2ID", Type:"Doc2Type", 
+														Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+														DocID:"Doc1ID", FormID:"1", checked:false},
+													{EntityType:"Document", Priority:"1", ID:"Doc3ID", Type:"Doc3Type", 
+														Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", 
+														DocID:"Doc1ID", FormID:"1", checked:false}
+												]);
+											
+											[Bindable]
+											private var DocumentObjects_AC:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Document", DocID:"Doc1ID", ThumbImage:"1T.png", Image:"1.png"},
+													{EntityType:"Document", DocID:"Doc2ID", ThumbImage:"2T.png", Image:"2.png"},
+													{EntityType:"Document", DocID:"Doc3ID", ThumbImage:"3T.png", Image:"3.png"}
+												]);
+										]]>
+									</fx:Script>
+									<mx:AdvancedDataGrid id="Documents_DG"
+														 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
+														 headerHeight="20" rowHeight="20" minColumnWidth="0"
+														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+														 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+														 sortExpertMode="true" 
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
+														 doubleClickEnabled="true" 
+														 dataProvider="{Documents_AC}"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
+														 itemOpen="dg_itemOpenHandler(event)"
+														 itemClose="dg_itemCloseHandler(event)"
+														 headerRelease="Batches_DG_headerReleaseHandler(event)"
+													 >
+										<mx:columns>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Checkbox" headerText="" dataField="checked" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"										   
+																	   draggable="false" resizable="false" sortable="false"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
+																	   rendererIsEditor="false"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Info" dataField="Information" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"
+																	   draggable="false" resizable="false" sortable="false">
+												<mx:headerRenderer>
+													<fx:Component>
+														<mx:HBox width="{outerDocument.Documents_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">																
+															<s:Image 
+																source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+																<fx:Script>
+																	<![CDATA[
+																		import mx.controls.Alert;
+																	]]>
+																</fx:Script>
+															</s:Image>
+														</mx:HBox>						
+													</fx:Component>							
+												</mx:headerRenderer>
+												<mx:itemRenderer>
+													<fx:Component>
+														<mx:HBox width="{outerDocument.Documents_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">							
+															<fx:Script>
+																<![CDATA[
+																	import component.CustomTitleWindow;
+																	
+																	import mx.containers.TitleWindow;
+																	import mx.core.FlexGlobals;
+																	import mx.events.CloseEvent;
+																	import mx.managers.PopUpManager;
+																	//private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	protected function image1_clickHandler(event:MouseEvent):void
+																	{
+																		ttw.addEventListener(CloseEvent.CLOSE,closePopup);
+																		ttw.ld = data;
+																		PopUpManager.addPopUp(ttw,FlexGlobals.topLevelApplication as DisplayObject,true);
+																		PopUpManager.centerPopUp(ttw);
+																		ttw.setData();
+																		
+																	}
+																	
+																	protected function closePopup(event:Event):void
+																	{
+																		PopUpManager.removePopUp(ttw);										
+																	}
+																	
+																]]>
+															</fx:Script>
+															
+															<s:Image click="image1_clickHandler(event)"
+																	 source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+																<fx:Script>
+																	<![CDATA[
+																		import mx.controls.Alert;
+																	]]>
+																</fx:Script>
+															</s:Image>
+														</mx:HBox>						
+													</fx:Component>
+												</mx:itemRenderer>
+											</mx:AdvancedDataGridColumn>
+											<!--itemRenderer="component.PriorityItemRenderer"-->
+											<mx:AdvancedDataGridColumn id="Documents_DG_Priority" headerText="Priority" dataField="Priority" 
+																	   width="{(DGwidth-DGwidth)+45}" minWidth="45" textAlign="left"
+																	   draggable="false" resizable="false" sortable="true"
+																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_ID" headerText="ID" dataField="ID"
+																	   width="190" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>	
+											<mx:AdvancedDataGridColumn id="Documents_DG_Type" headerText="Type" dataField="Type"
+																	   width="118" minWidth="120" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"
+																	   color="red"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Pages" headerText="Pages" dataField="Pages"
+																	   width="60" minWidth="60" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Docs" headerText="Docs" dataField="Docs"
+																	   width="60" minWidth="60" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>					
+											<mx:AdvancedDataGridColumn id="Documents_DG_Source" headerText="Source" dataField="Source"
+																	   width="140" minWidth="140" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Filename" headerText="Filename" dataField="Filename"
+																	   width="80" minWidth="80" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Status" headerText="Status" dataField="Status"
+																	   width="200" minWidth="120" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Started" headerText="Started" dataField="Started"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Completed" headerText="% Completed" dataField="Completed"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"
+																	   itemRenderer="component.CompletionBarItemRenderer"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
+																	   width="{(DGwidth-DGwidth)+100}"  minWidth="100" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Documents_DG_Deadline" headerText="Deadline" dataField="Deadline"
+																	   width="{(DGwidth-DGwidth)+95}"  minWidth="95
+																	   " textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+										</mx:columns>
+									</mx:AdvancedDataGrid>
 									
 								</s:VGroup>
 							</mx:Canvas>
 							
 						</component:CustomTitleWindow>
 						
-						<!--End of datagrids-->
+						<component:CustomTitleWindow id="DG_TW3" title="Transactions"
+													 width="100%" height="100%" headerHeight="18" dropShadowVisible="false" borderVisible="true"
+													 skinClass="skin.CustomTitleWindowSkin">
+							<mx:Canvas id="C3" x="0" width="100%" height="100%" borderVisible="false"
+									   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+								<s:VGroup id="VG3" height="{C3.height-15}"
+										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
+										  paddingRight="0" paddingTop="0">
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<!--s:HGroup height="{DG_TW3.headerHeight}" width="{DG_TW3.width}"
+											  horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												[Bindable]
+												private var Transactions_DG_tempwidth:Number;
+												
+												private function ShrinkExpandTransactions_DG(event:MouseEvent):void
+												{
+													if (event.target.selected)
+													{
+														TB3.label = 'Expand';
+														Transactions_DG.width = Transactions_DG_tempwidth;
+														
+													} else {
+														TB3.label = 'Shrink';
+														Transactions_DG_tempwidth = Transactions_DG.width;
+													}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB3" label="Shrink" horizontalCenter="0" 
+														click="ShrinkExpandTransactions_DG(event)"/>
+									</s:HGroup-->
+									<fx:Script>
+										<![CDATA[
+											[Bindable]
+											private var Transactions_AC:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Transaction", Priority:"1", ID:"Transaction1ID", 
+														WorkField1:"WorkField1Value", WorkField2:"WorkField2Value", WorkField3:"WorkField3Value", 
+														WorkField4:"WorkField4Value", WorkField5:"WorkField5Value", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:false},
+													{EntityType:"Transaction", Priority:"1", ID:"Transaction2ID", 
+														WorkField1:"WorkField1Value", WorkField1:"WorkField2Value", WorkField3:"WorkField3Value", 
+														WorkField3:"WorkField4Value", WorkField4:"WorkField5Value", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:false},
+													{EntityType:"Transaction", Priority:"1", ID:"Transaction3ID", 
+														WorkField1:"WorkField1Value", WorkField1:"WorkField2Value", WorkField3:"WorkField3Value", 
+														WorkField3:"WorkField4Value", WorkField4:"WorkField5Value", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:false},
+												]);
+											
+											[Bindable]
+											private var TransactionObjects_AC:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Transaction", TransactionID:"Doc1ID", ThumbImage:"1T.png", Image:"1.png"},
+													{EntityType:"Transaction", TransactionID:"Doc2ID", ThumbImage:"2T.png", Image:"2.png"},
+													{EntityType:"Transaction", TransactionID:"Doc3ID", ThumbImage:"3T.png", Image:"3.png"}
+												]);
+										]]>
+									</fx:Script>
+									<mx:AdvancedDataGrid id="Transactions_DG"
+														 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
+														 headerHeight="20" rowHeight="20" minColumnWidth="0"
+														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+														 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+														 sortExpertMode="true" 
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
+														 doubleClickEnabled="true" 
+														 dataProvider="{Transactions_AC}"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
+														 itemOpen="dg_itemOpenHandler(event)"
+														 itemClose="dg_itemCloseHandler(event)"
+														 headerRelease="Batches_DG_headerReleaseHandler(event)"
+														 >
+										<mx:columns>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Checkbox" headerText="" dataField="checked" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"										   
+																	   draggable="false" resizable="false" sortable="false"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
+																	   rendererIsEditor="false"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Info" dataField="Information" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"
+																	   draggable="false" resizable="false" sortable="false">
+												<mx:headerRenderer>
+													<fx:Component>
+														<mx:HBox width="{outerDocument.Transactions_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">																
+															<s:Image 
+																source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+																<fx:Script>
+																	<![CDATA[
+																		import mx.controls.Alert;
+																	]]>
+																</fx:Script>
+															</s:Image>
+														</mx:HBox>						
+													</fx:Component>							
+												</mx:headerRenderer>
+												<mx:itemRenderer>
+													<fx:Component>
+														<mx:HBox width="{outerDocument.Transactions_DG_Info.width}" horizontalAlign="center" verticalAlign="middle">							
+															<fx:Script>
+																<![CDATA[
+																	import component.CustomTitleWindow;
+																	
+																	import mx.containers.TitleWindow;
+																	import mx.core.FlexGlobals;
+																	import mx.events.CloseEvent;
+																	import mx.managers.PopUpManager;
+																	//private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	protected function image1_clickHandler(event:MouseEvent):void
+																	{
+																		ttw.addEventListener(CloseEvent.CLOSE,closePopup);
+																		ttw.ld = data;
+																		PopUpManager.addPopUp(ttw,FlexGlobals.topLevelApplication as DisplayObject,true);
+																		PopUpManager.centerPopUp(ttw);
+																		ttw.setData();
+																		
+																	}
+																	
+																	protected function closePopup(event:Event):void
+																	{
+																		PopUpManager.removePopUp(ttw);										
+																	}
+																	
+																]]>
+															</fx:Script>
+															
+															<s:Image click="image1_clickHandler(event)"
+																	 source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+																<fx:Script>
+																	<![CDATA[
+																		import mx.controls.Alert;
+																	]]>
+																</fx:Script>
+															</s:Image>
+														</mx:HBox>						
+													</fx:Component>
+												</mx:itemRenderer>
+											</mx:AdvancedDataGridColumn>
+											<!--itemRenderer="component.PriorityItemRenderer"-->
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Priority" headerText="Priority" dataField="Priority" 
+																	   width="{(DGwidth-DGwidth)+45}" minWidth="45" textAlign="left"
+																	   draggable="false" resizable="false" sortable="true"
+																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_ID" headerText="ID" dataField="ID"
+																	   width="190" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>	
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Field1" headerText="WorkField1" dataField="WorkField1"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Field2" headerText="WorkField2" dataField="WorkField2"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Field3" headerText="WorkField3" dataField="WorkField3"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Field4" headerText="WorkField4" dataField="WorkField4"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Field5" headerText="WorkField5" dataField="WorkField5"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Status" headerText="Status" dataField="Status"
+																	   width="200" minWidth="120" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Started" headerText="Started" dataField="Started"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Completed" headerText="% Completed" dataField="Completed"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"
+																	   itemRenderer="component.CompletionBarItemRenderer"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
+																	   width="{(DGwidth-DGwidth)+100}"  minWidth="100" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG_Deadline" headerText="Deadline" dataField="Deadline"
+																	   width="{(DGwidth-DGwidth)+95}"  minWidth="95" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+										</mx:columns>
+									</mx:AdvancedDataGrid>
+									
+								</s:VGroup>
+							</mx:Canvas>						
+						</component:CustomTitleWindow>
+						
+					<!--End of datagrids-->
 					</mx:VDividedBox>
 					
 					<!--Control buttons-->

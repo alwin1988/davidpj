@@ -3,23 +3,164 @@
 							 xmlns:s="library://ns.adobe.com/flex/spark"
 							 xmlns:mx="library://ns.adobe.com/flex/mx"
 							 xmlns:component="component.*"
-							 width="400" height="300"
-							 skinClass="skin.CustomTitleWindowSkin" close="customtitlewindow1_closeHandler(event)">
+							 xmlns:panzoom="org.rockholla.controls.panzoom.*"
+							 width="{ImageWindow.width}"
+							 height="{ImageWindow.height}" minWidth="{panzoom.minWidth}"
+							 minHeight="{ImageWindow.minHeight}" maxWidth="{panzoom.maxWidth}"
+							 maxHeight="{ImageWindow.maxHeight}" borderVisible="true"
+							 close="customtitlewindow1_closeHandler(event)"
+							 dropShadowVisible="false" headerHeight="16"
+							 skinClass="skin.CustomTitleWindowSkin" title="Image ID {DocumentID}">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
+			
+			[Bindable] public var DocumentID:String;	
+			[Bindable] public var LeftArrow:String = "<";
+			[Bindable] public var RightArrow:String = ">";
 			
 			protected function customtitlewindow1_closeHandler(event:CloseEvent):void
 			{
 				// TODO Auto-generated method stub
 				PopUpManager.removePopUp(this);
 			}
+
+			protected function HandleImageDoubleClick(mouseEvent):void
+			{
+				if(this.panzoom.scale == 1.8 || ZoomSlider.value == 180)
+				{
+					ZoomSlider.value = 100;
+					this.panzoom.zoomToPoint(new Point(0, 0), 1);
+					this.panzoom.scale = 1;
+				}
+				else
+				{
+					ZoomSlider.value = 180;
+					this.panzoom.zoomToPoint(new Point(325, 400), 1.8);
+					this.panzoom.scale = 1.8;
+				}
+			}
 			
+			// When our slider changes, we want the zoom level to update.  There's a public zoom method
+			// within the PanZoomComponent that accepts a scale value (1 = actual size or 100%, 0.5 = half the size or 50%, etc.)
+			protected function ZoomSliderChangeEventHandler(change):void
+			{
+				//	this.panzoom.zoom(ZoomSlider.value/100);
+				this.panzoom.scale = ZoomSlider.value/100;
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<!-- Image is set here -->
+		<s:BitmapImage id="PNGImage" source="@Embed('assets/1.png')"/>
 	</fx:Declarations>
-	
+	<s:VGroup width="100%" height="100%" gap="0">
+		
+		<s:BorderContainer id="ImageWindow" width="{panzoom.width}" height="{panzoom.height}"
+						   borderStyle="solid" borderVisible="false" dropShadowVisible="false">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			
+			<panzoom:PanZoomComponent id="panzoom" x="0" y="0" width="336" height="475"
+									  minWidth="150" minHeight="200" maxWidth="400" maxHeight="400"
+									  backgroundColor="0x807F7A" borderColor="black"
+									  borderStyle="solid" borderVisible="true"
+									  childPreventsPan="false" horizontalScrollPolicy="off"
+									  initialZoomLevel="1.8" loadCenterPoint="{new Point(325, 400)}"
+									  panScrollBarsVisible="true" scaleMax="600" scaleMin="1"
+									  verticalScrollPolicy="off" zoomSpeed="1" zoomToCursor="false">
+				<!--zoom="this._onZoom()"-->
+				<panzoom:PanZoomContent width="336" height="100" minWidth="150" minHeight="200"
+										maxWidth="400" maxHeight="400" backgroundColor="0x000000"
+										borderVisible="true" dropShadowVisible="false">
+					<s:Image id="DocImage" width="336" height="100" depth="1"
+							 doubleClick="HandleImageDoubleClick(event)" doubleClickEnabled="true"
+							 smooth="false" smoothingQuality="default" source="{PNGImage.source}">
+					</s:Image>
+					<!--doubleClick="{this.panzoom.scale=1}"/-->
+				</panzoom:PanZoomContent>
+			</panzoom:PanZoomComponent>	
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="Thumbs_G" width="100%" height="50" borderVisible="false"
+						   dropShadowVisible="false">
+			<s:layout>
+				<s:HorizontalLayout gap="0" horizontalAlign="center" paddingBottom="0"
+									paddingLeft="0" paddingRight="0" paddingTop="0"/>
+			</s:layout>
+			<s:BorderContainer width="20" height="50" borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout gap="0" horizontalAlign="center" paddingBottom="0"
+									  paddingLeft="0" paddingRight="0" paddingTop="0"/>
+				</s:layout>
+				<s:BorderContainer width="20" height="35" backgroundColor="black"
+								   borderVisible="false" chromeColor="green">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="center" verticalAlign="top"/>
+					</s:layout>
+					<s:VSlider id="ZoomSlider" height="18"
+							   change="ZoomSliderChangeEventHandler(event)" liveDragging="true"
+							   maximum="600" minimum="100" showDataTip="false" snapInterval="1"
+							   stepSize="100" value="100"/>
+				</s:BorderContainer>
+				<s:BorderContainer width="20" height="15" backgroundColor="red" borderColor="red"
+								   borderVisible="true" buttonMode="true" chromeColor="red">
+					<s:Label text="{LeftArrow}"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<s:BorderContainer width="100%" backgroundColor="gray" borderColor="gray"
+							   borderVisible="true">
+				<s:layout>
+					<s:HorizontalLayout/>
+				</s:layout>
+				<s:List width="100%" height="50" borderVisible="false" chromeColor="gray"
+						horizontalCenter="0"
+						itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
+						verticalCenter="-3" verticalScrollPolicy="off">
+					<s:layout>
+						<s:TileLayout columnAlign="justifyUsingGap" columnWidth="50"
+									  horizontalGap="2" paddingBottom="2" paddingLeft="2"
+									  paddingRight="2" paddingTop="2" requestedColumnCount="5"
+									  requestedRowCount="1" rowAlign="justifyUsingGap"
+									  rowHeight="{Thumbs_G.height}" verticalGap="0"/>		
+					</s:layout>
+					<s:dataProvider>
+						<s:ArrayList>
+							<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+									 source="assets/1.png"/>							
+							<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+									 source="assets/2.png"/>
+							<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+									 source="assets/3.png"/>
+						</s:ArrayList>		
+					</s:dataProvider>
+				</s:List>
+			</s:BorderContainer>
+			
+			<s:BorderContainer width="20" height="50" borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout gap="0" horizontalAlign="center" paddingBottom="0"
+									  paddingLeft="0" paddingRight="0" paddingTop="0"/>
+				</s:layout>
+				<s:BorderContainer width="20" height="35" backgroundColor="black"
+								   borderVisible="false" chromeColor="green">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="center" verticalAlign="top"/>
+					</s:layout>
+					<s:VSlider id="ZoomSlider2" height="18"
+							   change="ZoomSliderChangeEventHandler(event)" liveDragging="true"
+							   maximum="600" minimum="100" showDataTip="false" snapInterval="1"
+							   stepSize="100" value="100"/>
+				</s:BorderContainer>
+				<s:BorderContainer width="20" height="15" backgroundColor="red" borderColor="red"
+								   borderVisible="true" buttonMode="true" chromeColor="red">
+					<s:Label fontFamily="Arial Black" fontSize="12" text="{RightArrow}"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+	</s:VGroup>	
 </component:CustomTitleWindow>

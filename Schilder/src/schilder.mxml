@@ -1,0 +1,999 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   width="100%" height="100%">
+	
+	<fx:Style source="main.css"/>
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			[Bindable] public var PlateCharacterWidth:Number = 35;
+			[Bindable] public var PlateCharacterHeight:Number = 94;
+		]]>
+	</fx:Script>
+	
+
+	<!-- Outer container -->
+	<s:BorderContainer width="540" height="406"
+					   minWidth="0" minHeight="0"
+					   horizontalCenter="0" verticalCenter="0">
+		<s:layout>
+			<s:VerticalLayout paddingTop="10" paddingBottom="4" paddingLeft="10" paddingRight="10"
+							  gap="0"/>
+		</s:layout>
+		<!-- Plate container -->
+		<s:BorderContainer id="PlateContainer"
+						   depth="1"
+						   width="520" height="113"
+						   minWidth="0" maxHeight="0"
+						   borderVisible="true" borderWeight="2" cornerRadius="8"
+						   backgroundColor="yellow">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<!-- Suction cups -->
+			<s:Ellipse depth="12"
+					   x="0" y="0"
+					   width="19" height="19">
+				<s:fill>
+					<s:SolidColor color="white" alpha=".5"/>
+				</s:fill>
+				<s:stroke>
+					<s:SolidColorStroke color="white" alpha="1" weight="1.375"/>
+				</s:stroke>
+			</s:Ellipse>			
+			<s:Ellipse depth="12"
+					   x="496" y="0"
+					   width="19" height="19">
+				<s:fill>
+					<s:SolidColor color="white" alpha=".5"/>
+				</s:fill>
+				<s:stroke>
+					<s:SolidColorStroke color="white" alpha="1" weight="1.375"/>
+				</s:stroke>
+			</s:Ellipse>
+			<!-- Plate outer (border) container -->
+			<s:BorderContainer id="PlateOuterContentContainer"
+							   x="1" y="1"
+							   depth="2"
+							   width="514" height="107"
+							   minWidth="0" minHeight="0"
+							   borderVisible="true" borderWeight="5" cornerRadius="8"
+							   borderStyle="inset"
+							   backgroundAlpha="0"
+							   borderColor="red">
+				<s:layout>
+					<s:BasicLayout/>
+				</s:layout>
+				<!-- Holes -->
+				<s:Ellipse depth="11"
+						   x="0" y="0"
+						   width="8" height="8">
+					<s:fill>
+						<s:SolidColor color="gray" alpha=".25"/>
+					</s:fill>
+					<s:stroke>
+						<s:SolidColorStroke color="gray" alpha="1" weight=".25"/>
+					</s:stroke>
+				</s:Ellipse>
+				<s:Ellipse depth="11"
+						x="496" y="0"
+						width="8" height="8">
+					<s:fill>
+						<s:SolidColor color="gray" alpha=".25"/>
+					</s:fill>
+					<s:stroke>
+						<s:SolidColorStroke color="gray" alpha="1" weight=".25"/>
+					</s:stroke>
+				</s:Ellipse>
+				<!-- Flag sticker -->
+				<s:Image id="FlagSticker"
+						 x="0" y="0"
+						 depth="4"
+						 width="38" height="100%"
+						 fillMode="scale" scaleMode="stretch"
+						 source="assets/nl.jpg"/>
+				<!-- Dates -->
+				<s:BorderContainer x="466" y="0" 
+								   width="38" height="100%"
+								   minWidth="0" minHeight="0"
+								   borderVisible="false"
+								   backgroundAlpha="0">
+					<s:layout>
+						<s:VerticalLayout paddingTop="6" paddingBottom="6" paddingLeft="3" paddingRight="3"
+										  gap="2"/>
+					</s:layout>
+					<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
+					<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
+					<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
+				</s:BorderContainer>
+				<!-- Plate content container -->
+				<s:BorderContainer id="PlateInnerContentContainer"
+								   depth="6"
+								   x="50" y="50"
+								   width="428" height="100%"
+								   minWidth="0" minHeight="0"
+								   verticalCenter="0" horizontalCenter="0"
+								   backgroundAlpha="0"
+								   borderVisible="false" backgroundColor="yellow">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"/>
+					</s:layout>
+					<!-- Symbol container -->
+					<s:BorderContainer id="SymbolContainer"
+									   depth="7"
+									   width="70" height="100%"
+									   minWidth="0" minHeight="0"
+									   verticalCenter="0" horizontalCenter="0"
+									   backgroundAlpha="0"
+									   borderVisible="false" backgroundColor="yellow">
+						<s:layout>
+							<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+						</s:layout>
+						<!-- Symbols -->
+						<s:Image id="Symbol"
+								 depth="8"
+								 width="70" height="70"
+								 verticalCenter="0" horizontalCenter="0"
+								 fillMode="scale" scaleMode="stretch"
+								 source="assets/redpeacesign.jpg"/>
+					</s:BorderContainer>
+					<!-- Plate text container-->
+					<s:BorderContainer id="PlateTextContainer"
+									   depth="9"
+									   width="100%" height="100%"
+									   minWidth="0" minHeight="0"
+									   backgroundAlpha="0" 
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"
+												gap="-5"/>
+						</s:layout>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="F"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="U"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="N"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="S"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="C"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="H"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="I"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="L"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="D"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="E"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
+							<s:Label text="R"
+									 depth="11"
+									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+									 styleName="PlateText"
+									 color="red"/>
+						</s:Group>
+						<!--mx:Text text="K" 
+										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
+										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="O" 
+										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
+										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"							 
+										styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="N" 
+										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
+										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"							 
+										styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="I" 
+										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
+										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"						 
+										styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="N" 
+										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
+										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"					 
+										styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="G" 
+										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
+										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+										styleName="PlateText"
+								 color="red"/-->
+					</s:BorderContainer>
+				</s:BorderContainer>
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<!-- Error message and control to clear plate contents -->
+		<s:BorderContainer width="100%" height="16" borderVisible="false">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="right" verticalAlign="top"
+									paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+									gap="0"/>
+			</s:layout>
+			<!-- Controls to reset plate contents -->
+			<s:BorderContainer width="169" height="16" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="right" verticalAlign="top"
+										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										gap="4"/>				
+				</s:layout>
+				<mx:Text text="Clear text"
+						 height="16" fontStyle="normal" styleName="ResetButton" 
+						 textDecoration="underline" verticalCenter="0"/>
+				<mx:Text text="Clear all"
+						 height="16" fontStyle="normal" styleName="ResetButton" 
+						 textDecoration="underline" verticalCenter="0"/>
+				<mx:Text text="Start over"
+						 height="16" fontStyle="normal" styleName="ResetButton" 
+						 textDecoration="underline" verticalCenter="0"/>
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<s:Spacer height="4"/>
+		
+		<!-- Controls to set the plate size -->
+		<s:BorderContainer width="100%" height="33.9" borderVisible="false">
+			<s:layout>
+				<s:HorizontalLayout gap="4" verticalAlign="middle"/>
+			</s:layout>
+			<s:BorderContainer width="80" height="34" borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout verticalAlign="middle"
+									  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+									  gap="0"/>
+				</s:layout>
+				<mx:Text text="Plate size"
+						 width="100%" height="35"
+						 verticalCenter="0" leading="0"
+						 styleName="DirectiveLabel"/>
+			</s:BorderContainer>
+			<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"
+						   selected="true"/>
+			<s:BorderContainer width="156" height="33.9" borderVisible="true" cornerRadius="6">
+				<s:layout>
+					<s:HorizontalLayout  horizontalAlign="center" verticalAlign="middle"/>
+				</s:layout>
+				<mx:Text text="520mm x 113mm"
+						 verticalCenter="0"
+						 fontFamily="Arial Narrow" fontSize="11"/>
+			</s:BorderContainer>
+			<s:Spacer width="100%"/>
+			<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"/>
+			<s:BorderContainer width="120" height="33.9" borderVisible="true" cornerRadius="6">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+				</s:layout>
+				<mx:Text text="400mm x 113mm"
+						 verticalCenter="0"
+						 fontFamily="Arial Narrow" fontSize="11"/>
+			</s:BorderContainer>
+			<s:Spacer width="100%"/>
+			<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"/>
+			<s:BorderContainer width="78" height="22.5" borderVisible="true" cornerRadius="5">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+				</s:layout>
+				<mx:Text text="290mm x 75mm"
+						 verticalCenter="0"
+						 fontFamily="Arial Narrow" fontSize="11"/>
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<s:Spacer height="2"/>
+		
+		<!-- Controls to choose orientation et al -->
+		<s:BorderContainer width="100%" height="24" borderVisible="false">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
+									paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
+			</s:layout>
+			<!--s:BorderContainer width="100%" height="18" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
+										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
+				</s:layout-->
+			<mx:Text text="How many lines of text"
+					 width="145" verticalCenter="0"
+					 styleName="DirectiveLabel"/>
+			<s:RadioButton groupName="PlateOrientation" 
+						   width="10" verticalCenter="0" symbolColor="blue"
+						   selected="true"/>
+			<mx:Text text="1 line"
+					 width="36" verticalCenter="0"
+					 fontFamily="Arial" fontSize="11"/>
+			<s:RadioButton groupName="PlateOrientation" 
+						   width="10" verticalCenter="0"/>
+			<mx:Text text="2 lines"
+					 width="38" verticalCenter="0"
+					 fontFamily="Arial" fontSize="11"/>
+			<s:Spacer width="4"/>
+			<mx:Text text="Date, stickers, symbols, colors, and holes"
+					 width="251.4" verticalCenter="0" horizontalCenter="134"
+					 leading="0" textAlign="center"
+					 styleName="DirectiveLabel"/>
+		</s:BorderContainer>
+		
+		<s:Spacer height="4"/>
+		
+		<!-- Outer container for plate content controls -->
+		<s:BorderContainer width="100%" height="196" 
+						   borderVisible="false">
+			<s:layout>
+				<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+									gap="8"/>
+			</s:layout>
+			<s:BorderContainer width="100%" height="100%" 
+							   borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+									  gap="0"/>
+				</s:layout>
+				<!-- Outer container for character buttons -->
+				<s:BorderContainer id="CharacterButtonContainer"
+								   width="320" height="164"
+								   borderVisible="true">
+					<s:layout>
+						<s:VerticalLayout paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4"
+										  gap="2"/>
+					</s:layout>
+					<s:BorderContainer width="100%" height="37"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+												paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												gap="2"/>
+						</s:layout>
+						<s:Button id="CharacterButton"
+								  label="A"
+								  width="26" height="37"
+								  horizontalCenter="0" verticalCenter="0"
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="&#196;" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"
+								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="B" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="C" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"
+								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="D" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"
+								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="E" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="F" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="G" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="H" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="I" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="J" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="309" height="37"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+												paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												gap="2"/>
+						</s:layout>
+						<s:Button label="K" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="L" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="M" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>	
+						<s:Button label="N" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="O" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="&#214;" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="P" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="Q" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="R" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="S" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="T" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="309" height="37"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+												paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												gap="2"/>
+						</s:layout>
+						<s:Button label="U" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="&#220;" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="V" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="W" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="X" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="Y" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="Z" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="1" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="2" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="3" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="4" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="309" height="37"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+												paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												gap="2"/>
+						</s:layout>
+						<s:Button label="5" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="6" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="7" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="8" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="9" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="0" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="-" 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="." 
+								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="?" 
+								  width="{CharacterButton.width}" height="37"								  horizontalCenter="0" verticalCenter="0" 
+								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+						<s:Spacer width="1"/>
+						<s:BorderContainer width="52" 
+										   height="37"
+										   borderVisible="false">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="left" verticalAlign="top"
+												  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+							</s:layout>
+							<s:BorderContainer width="52"
+											   height="22"
+											   borderVisible="false">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="left" verticalAlign="top"
+														paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+														gap="2"/>
+								</s:layout>
+								<s:Button label="" 
+										  width="23" height="24" 
+										  verticalCenter="0" horizontalCenter="0"/>
+								<s:Button label="" 
+										  width="15" height="24" 
+										  verticalCenter="0" horizontalCenter="0"/>
+								<s:Button label="" 
+										  width="10" height="24" 
+										  verticalCenter="0" horizontalCenter="0"/>
+							</s:BorderContainer>
+							<s:BorderContainer width="52"
+											   height="12"
+											   borderVisible="false">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="bottom"
+														paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+								</s:layout>
+								<s:Label text="Spaces"
+										 width="40" height="12"
+										 fontFamily="Arial" fontSize="11" fontWeight="normal"/>
+							</s:BorderContainer>
+						</s:BorderContainer>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<s:Spacer height="4"/>
+				
+				<!-- Controls to set the plate size -->
+				<s:BorderContainer width="100%" height="15" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout gap="0" verticalAlign="middle"/>
+					</s:layout>
+					<mx:Text text="Text size"
+							 width="63"
+							 verticalCenter="0"
+							 styleName="DirectiveLabel"/>
+					<s:RadioButton groupName="FontSize" width="15" symbolColor="blue"/>
+					<mx:Text text="ABC" 
+							 verticalCenter="0"
+							 fontFamily="GL-Nummernschild-Eng" fontSize="19.75"/>
+					<mx:Text text="(79mm)"
+							 verticalCenter="0"
+							 fontFamily="Arial Narrow" fontSize="12"/>
+					<s:Spacer width="100%"/>
+					<s:RadioButton groupName="FontSize" width="15" symbolColor="blue"
+								   selected="true"/>
+					<mx:Text text="ABC"
+							 verticalCenter="0"
+							 fontFamily="GL-Nummernschild-Eng" fontSize="14.5"/>
+					<mx:Text text="(58mm)" 
+							 verticalCenter="0"
+							 fontFamily="Arial Narrow" fontSize="11"/>
+					<s:Spacer width="100%"/>
+					<s:RadioButton groupName="FontSize" width="15" symbolColor="blue"/>
+					<mx:Text text="ABC"
+							 verticalCenter="0"
+							 fontFamily="GL-Nummernschild-Eng" fontSize="10"/>
+					<mx:Text text="(40mm)"
+							 verticalCenter="0"
+							 fontFamily="Arial Narrow" fontSize="11"/>
+				</s:BorderContainer>		
+			</s:BorderContainer>
+			
+			<!-- Outer container for date controls and flag -->
+			<s:BorderContainer width="42" height="100%"
+							   minWidth="0" minHeight="0"
+							   borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout paddingTop="0" paddingBottom="2" paddingLeft="0" paddingRight="0"
+									  gap="6"
+									  horizontalAlign="left"/>
+				</s:layout>
+				
+				<!-- Outer container for date controls -->		
+				<s:BorderContainer width="100%" height="97" 
+								   minWidth="0" minHeight="0"
+								   borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout horizontalAlign="center"
+										  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="4"/>
+					</s:layout>
+					
+					<s:NumericStepper width="100%" height="21" horizontalCenter="0"
+									  value="0" 
+									  stepSize="1" 
+									  maximum="31"
+									  styleName="NumericStepperDates"/>
+					<s:NumericStepper width="100%" height="21" horizontalCenter="0"
+									  value="0" 
+									  stepSize="1" 
+									  maximum="12"
+									  styleName="NumericStepperDates"/>
+					<s:NumericStepper width="100%" height="21" horizontalCenter="0"
+									  value="0" 
+									  stepSize="1" 
+									  maximum="99"
+									  styleName="NumericStepperDates"/>
+					
+					<s:BorderContainer width="100%" height="14"
+									   minWidth="0" minHeight="0"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout horizontalAlign="center" gap="4"/>
+						</s:layout>
+						<s:Button label="L" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="R" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+
+				<!-- Control to set the flag -->
+				<s:BorderContainer width="100%" height="60"
+								   minWidth="0" minHeight="0"
+								   borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="0" horizontalAlign="center" verticalAlign="top"/>
+					</s:layout>
+					<s:BorderContainer width="30" height="60"
+									   borderVisible="true">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						<s:Image width="100%" height="100%"
+								 horizontalAlign="center" verticalAlign="top"
+								 horizontalCenter="0" verticalCenter="0" 
+								 fillMode="scale" scaleMode="stretch"
+								 source="assets/nl.jpg"/>
+					</s:BorderContainer>
+					<s:Image source="assets/down_triangle.png" 
+							 width="16" height="10"
+							 horizontalAlign="center" horizontalCenter="0"
+							 verticalAlign="top" verticalCenter="0"/>
+			
+					<s:BorderContainer width="100%" height="14"
+									   minWidth="0" minHeight="0"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout horizontalAlign="center" gap="4"/>
+						</s:layout>
+						<s:Button label="L" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="R" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<!-- Outer container for symbols, stickers, plate style, colors, and holes -->
+			<s:BorderContainer width="140.4" height="100%"
+							   minWidth="0" minHeight="0"
+							   borderVisible="false">
+				<s:layout>
+					<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+									  gap="10"/>
+				</s:layout>
+				
+				<!-- Outer container for symbols and stickers -->
+				<s:BorderContainer width="100%" height="57"
+								   borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="top"
+											paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											gap="0"/>
+					</s:layout>
+					
+					<!-- Control to set the symbol -->
+					<s:BorderContainer width="57" height="63"
+									   borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											  gap="0" horizontalAlign="center" verticalAlign="middle"/>
+						</s:layout>
+						<s:BorderContainer width="57" height="57"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Image source="assets/peacesign.jpg"
+									 width="100%" height="100%"
+									 horizontalCenter="0" horizontalAlign="center" 
+									 verticalCenter="0" verticalAlign="middle" 
+									 fillMode="scale" scaleMode="stretch"/>
+						</s:BorderContainer>
+						<s:Image source="assets/down_triangle.png" 
+								 width="16" height="10"
+								 horizontalAlign="center" horizontalCenter="0"
+								 verticalAlign="top" verticalCenter="0"/>
+					</s:BorderContainer>
+					<s:Spacer width="3"/>
+					<s:BorderContainer width="14" height="40" borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout gap="4"/>
+						</s:layout>
+						<s:Button label="L" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="C" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="R" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+					
+					<s:Spacer width="8"/>
+
+					<!-- Control to set the sticker -->
+					<s:BorderContainer width="41" height="63"
+									   borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											  gap="0" horizontalAlign="center" verticalAlign="middle"/>
+						</s:layout>
+						<s:BorderContainer width="100%" height="57"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Image width="100%" height="100%" 
+									 horizontalAlign="left"
+									 horizontalCenter="0" source="@Embed('assets/dalmatian.jpg')"
+									 verticalAlign="top" verticalCenter="0"
+									 fillMode="scale" scaleMode="stretch"/>
+						</s:BorderContainer>
+						<s:Image source="assets/down_triangle.png" 
+								 width="16" height="10"
+								 horizontalAlign="center" horizontalCenter="0"
+								 verticalAlign="top" verticalCenter="0"/>
+					</s:BorderContainer>
+					<s:Spacer width="3"/>
+					<s:BorderContainer width="14" height="40" borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout gap="4"/>
+						</s:layout>
+						<s:Button label="L" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="C" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						<s:Button label="R" 
+								  width="14" height="14"
+								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+
+				<!-- Outer container for symbols and stickers -->
+				<s:BorderContainer width="140" height="100%"
+								   minWidth="0" minHeight="0"
+								   borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout horizontalAlign="center" verticalAlign="top" 
+										  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="0"/>
+					</s:layout>
+
+					<!-- Control to set the plate color -->
+					<s:BorderContainer width="140.4" height="30.51"
+									   minWidth="0" minHeight="0"
+									   borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"
+											  gap="0"/>
+						</s:layout>
+						<s:BorderContainer width="100%" height="100%"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true" borderWeight="1.5"
+										   cornerRadius="3"
+										   backgroundColor="yellow" backgroundAlpha="1">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Rect x="2.5" y="2.5"
+									width="128.4" height="19.51"
+									radiusX="3" radiusY="3">                              
+								<s:stroke>
+									<s:SolidColorStroke weight="2" color="gray"/>
+								</s:stroke>
+							</s:Rect>
+							<!-- Mini-plate text container -->
+							<s:BorderContainer x="3" y="3"
+											   width="127.9" height="19.01"
+											   minWidth="0" minHeight="0"
+											   horizontalCenter="0" verticalCenter="0"
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+								</s:layout>
+								<mx:Text text="Solid yellow" styleName="NumericStepperDates"/>
+							</s:BorderContainer>
+						</s:BorderContainer>
+					</s:BorderContainer>
+					<s:Image source="assets/down_triangle.png" 
+							 width="16" height="10"
+							 horizontalAlign="center" horizontalCenter="0"
+							 verticalAlign="top" verticalCenter="0"/>
+					
+					<s:Spacer height="1"/>
+					
+					<!-- Control to set the border, symbol, and character color -->
+					<s:BorderContainer width="140.4" height="30.51"
+									   minHeight="0" minWidth="0"
+									   borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
+											  paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"/>
+						</s:layout>
+						<s:BorderContainer width="100%" height="100%"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true" borderWeight="1.5"
+										   cornerRadius="3"
+										   backgroundAlpha="0">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Rect x="2.5" y="2.5"
+									width="128.4" height="19.51"
+									radiusX="3" radiusY="3">                              
+								<s:stroke>
+									<s:SolidColorStroke weight="2" color="red"/>
+								</s:stroke>
+							</s:Rect>
+							<!-- Mini-plate text container -->
+							<s:BorderContainer x="3" y="3"
+											   width="127.9" height="19.01"
+											   minWidth="0" minHeight="0"
+											   horizontalCenter="0" verticalCenter="0"
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+								</s:layout>
+<!-- Text won't center properly so indented here for now -->
+								<s:Label text="        VIBRANT RED"
+										 width="100%" height="100%" 
+										 horizontalCenter="0" verticalCenter="0"
+										 styleName="MiniPlateText" 
+										 color="red"/>
+							</s:BorderContainer>
+						</s:BorderContainer>
+					</s:BorderContainer>
+					<s:Image source="assets/down_triangle.png" 
+							 width="16" height="10"
+							 horizontalAlign="center" horizontalCenter="0"
+							 verticalAlign="top" verticalCenter="0"/>
+					
+					<s:Spacer height="1"/>
+					
+					<!-- Control to set the holes -->
+					<s:BorderContainer width="140.4" height="30.51"
+									   minWidth="0" minHeight="0"
+									   borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"
+											  gap="0"/>
+						</s:layout>
+						<s:BorderContainer width="100%" height="100%"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true" borderWeight="1.5"
+										   cornerRadius="3"
+										   backgroundAlpha="0">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Rect x="2.5" y="2.5"
+									width="128.4" height="19.51"
+									radiusX="3" radiusY="3">                              
+								<s:stroke>
+									<s:SolidColorStroke weight="2" color="gray"/>
+								</s:stroke>
+							</s:Rect>
+							<s:Ellipse depth="11"
+									   x="5.5" y="5.5"
+									   width="6" height="6">
+								<s:fill>
+									<s:SolidColor color="white" alpha="1"/>
+								</s:fill>
+								<s:stroke>
+									<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
+								</s:stroke>
+							</s:Ellipse>
+							<s:Ellipse depth="11"
+									   x="123" y="5.5"
+									   width="6" height="6">
+								<s:fill>
+									<s:SolidColor color="white" alpha="1"/>
+								</s:fill>
+								<s:stroke>
+									<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
+								</s:stroke>
+							</s:Ellipse>
+							<!-- Mini-plate text container -->
+							<s:BorderContainer x="3" y="3"
+											   width="127.9" height="19.01"
+											   minWidth="0" minHeight="0"
+											   horizontalCenter="0" verticalCenter="0"
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+								</s:layout>
+								<mx:Text text="Holes in corners" styleName="NumericStepperDates"/>
+							</s:BorderContainer>
+						</s:BorderContainer>
+					</s:BorderContainer>
+					<s:Image source="assets/down_triangle.png" 
+							 width="16" height="10"
+							 horizontalAlign="center" horizontalCenter="0"
+							 verticalAlign="top" verticalCenter="0"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+		</s:BorderContainer>
+	</s:BorderContainer>
+</s:Application>

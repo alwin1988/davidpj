@@ -11,7 +11,8 @@
 							 dropShadowVisible="false" 
 							 title="Image ID {DocumentID}"
 							 skinClass="skin.CustomTitleWindowSkin"
-							 close="customtitlewindow1_closeHandler(event)">
+							 close="customtitlewindow1_closeHandler(event)"
+							 windowMoving="customtitlewindow1_windowMovingHandler(event)">
 <!--
 minWidth="{panzoom.minWidth}"
 minHeight="{ImageWindow.minHeight}"
@@ -21,6 +22,8 @@ maxHeight="{ImageWindow.maxHeight}"-->
 		<![CDATA[
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
+			
+			import spark.events.TitleWindowBoundsEvent;
 			[Bindable] public var Image:String;
 			
 			[Bindable] public var testImage:Object = 'assets/1.png';
@@ -57,6 +60,22 @@ maxHeight="{ImageWindow.maxHeight}"-->
 				//	this.panzoom.zoom(ImageZoomSlider.value/100);
 				this.panzoom.scale = ImageZoomSlider.value/100;
 			}
+			
+			protected function customtitlewindow1_windowMovingHandler(evt:TitleWindowBoundsEvent):void
+			{
+				// TODO Auto-generated method stub
+				if (evt.afterBounds.left < 0) {
+					evt.afterBounds.left = 0;
+				} else if (evt.afterBounds.right > systemManager.stage.stageWidth) {
+					evt.afterBounds.left = systemManager.stage.stageWidth - evt.afterBounds.width;
+				}
+				if (evt.afterBounds.top < 0) {
+					evt.afterBounds.top = 0;
+				} else if (evt.afterBounds.bottom > systemManager.stage.stageHeight) {
+					evt.afterBounds.top = systemManager.stage.stageHeight - evt.afterBounds.height;
+				}				
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>

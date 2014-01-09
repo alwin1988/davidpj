@@ -59,6 +59,32 @@
 			import mx.managers.PopUpManager;
 			
 			//[Bindable] private var docFormatDataProvider:ArrayCollection = new ArrayCollection(); Comment on 20131217
+			[Bindable]
+			private var HowActioned_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Label:'Touched', Data:'Touched'},
+					{Label:'Filed', Data:'Filed'},
+					{Label:'Viewed', Data:'Viewed'},
+					{Label:'Output', Data:'Output'},
+					{Label:'Exported', Data:'Exported'},
+					{Label:'Modified', Data:'Modified'},
+					{Label:'Reindexed', Data:'Reindexed'},
+					{Label:'Actioned', Data:'Actioned'}
+				]);
+			
+			[Bindable]
+			private var WhenActioned_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Label:'Any time', Data:'Any time'},
+					{Label:'Yesterday', Data:'Yesterday'},
+					{Label:'This week', Data:'This week'},
+					{Label:'Past week', Data:'Past week'},
+					{Label:'Past month', Data:'Past month'},
+					{Label:'Last month', Data:'Last month'},
+					{Label:'This year', Data:'This year'},
+					{Label:'Past year', Data:'Past year'},
+					{Label:'Before past year', Data:'Before past year'}
+				]);
 			
 			[Bindable] 
 			private var DGwidth:Number = 1162;
@@ -454,7 +480,7 @@
 				//evt;
 				var obj:Object = (evt.currentTarget as AdvancedDataGrid).selectedItem;
 				var docViewTTW:DocViewerTitleWindow = new DocViewerTitleWindow();
-				docViewTTW.Image = obj.Image;
+				docViewTTW.ImageName = obj.Image;
 				PopUpManager.addPopUp(docViewTTW,this,false);
 				PopUpManager.centerPopUp(docViewTTW);
 			}
@@ -575,37 +601,7 @@
 													 styleName="DropDownListText"
 													 dataProviderXML="{docsFormatXML}"/>
 						<s:Spacer height="5"/>
-						
-						<fx:Script>
-							<![CDATA[
-								[Bindable]
-								private var HowActioned_AC:ArrayCollection = new ArrayCollection(
-									[
-										{Label:'Touched', Data:'Touched'},
-										{Label:'Filed', Data:'Filed'},
-										{Label:'Viewed', Data:'Viewed'},
-										{Label:'Output', Data:'Output'},
-										{Label:'Exported', Data:'Exported'},
-										{Label:'Modified', Data:'Modified'},
-										{Label:'Reindexed', Data:'Reindexed'},
-										{Label:'Actioned', Data:'Actioned'}
-									]);
-								
-								[Bindable]
-								private var WhenActioned_AC:ArrayCollection = new ArrayCollection(
-									[
-										{Label:'Any time', Data:'Any time'},
-										{Label:'Yesterday', Data:'Yesterday'},
-										{Label:'This week', Data:'This week'},
-										{Label:'Past week', Data:'Past week'},
-										{Label:'Past month', Data:'Past month'},
-										{Label:'Last month', Data:'Last month'},
-										{Label:'This year', Data:'This year'},
-										{Label:'Past year', Data:'Past year'},
-										{Label:'Before past year', Data:'Before past year'}
-									]);
-							]]>
-						</fx:Script>
+
 						<s:Label text="When actioned:" 
 								 styleName="MenuBodyHeading"/>
 						<s:HGroup width="100%" gap="2">

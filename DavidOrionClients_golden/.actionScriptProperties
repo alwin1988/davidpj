@@ -14,6 +14,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="david/viewers/Maintw.mxml"/>
     <application path="david/pages/CA.mxml"/>
     <application path="component/PopUpCustomTitleWindow.mxml"/>
     <application path="david/viewers/FormViewer.mxml"/>
@@ -27,7 +28,6 @@
     <application path="Main.mxml"/>
     <application path="david/pages/WM.mxml"/>
     <application path="david/viewers/xDocViewer.mxml"/>
-    <application path="david/viewers/Maintw.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

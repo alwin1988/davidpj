@@ -159,7 +159,7 @@
 				
 				<panzoom:PanZoomComponent id="panzoom" 
 										  x="0" y="0"
-										  width="336" minWidth="150" maxWidth="400" height="475" minHeight="200" maxHeight="400"
+										  width="336" minWidth="150" maxWidth="400" height="275" minHeight="200" maxHeight="400"
 										  backgroundColor="0x807F7A" borderVisible="true" borderStyle="solid" borderColor="black"							  
 										  scaleMin="1" scaleMax="600" 
 										  childPreventsPan="false"
@@ -236,7 +236,7 @@
 								   snapInterval="1" liveDragging="true"
 								   change="ZoomSliderChangeEventHandler(event)"/>
 					</s:BorderContainer>
-					<s:BorderContainer width="20" height="15" backgroundColor="red" chromeColor="red" borderVisible="true" borderColor="red" buttonMode="true">
+					<s:BorderContainer width="10" height="15" backgroundColor="red" chromeColor="red" borderVisible="true" borderColor="red" buttonMode="true">
 						<s:Label text="{RightArrow}" fontFamily="Arial Black" fontSize="12"/>
 					</s:BorderContainer>
 				</s:BorderContainer>

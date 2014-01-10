@@ -3,6 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:component="component.*"
+			   xmlns:local="*"
 			   minWidth="955" minHeight="600"
 			   creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Declarations>
@@ -624,10 +625,11 @@
 								 dragDrop="FormFields_DG_dragDropHandler(event)" dragEnabled="true"
 								 draggableColumns="true" dragMoveEnabled="true" dropEnabled="true"
 								 editable="true" folderClosedIcon="{null}" folderOpenIcon="{null}"
-								 headerHeight="24" horizontalScrollPolicy="off" minColumnWidth="0"
-								 resizableColumns="true" rowHeight="20" sortableColumns="false"
-								 sortExpertMode="true" styleName="DataGridText" treeColumn="{FormFields_DG_Name}"
-								 verticalScrollPolicy="auto" wordWrap="true" indentation="0">
+								 headerHeight="24" horizontalScrollPolicy="off" indentation="0"
+								 minColumnWidth="0" resizableColumns="true" rowHeight="20"
+								 sortableColumns="false" sortExpertMode="true"
+								 styleName="DataGridText" treeColumn="{FormFields_DG_Name}"
+								 verticalScrollPolicy="auto" wordWrap="true">
 				<mx:dataProvider>
 					<mx:HierarchicalData source="{FormFields_DG_AC}"/>
 				</mx:dataProvider>
@@ -636,17 +638,20 @@
 													textAlign="center">
 						<mx:AdvancedDataGridColumn width="20" dataField="i"/>
 						<mx:AdvancedDataGridColumnGroup headerText="Form field">
-							<mx:AdvancedDataGridColumn width="120" id="FormFields_DG_Name" dataField="Name" headerText="Name" editable="false"/>
-							<mx:AdvancedDataGridColumn width="80" dataField="Label"
-													   headerText="Label" editable="true"/>
+							<mx:AdvancedDataGridColumn id="FormFields_DG_Name" width="120"
+													   dataField="Name" editable="false"
+													   headerText="Name"/>
+							<mx:AdvancedDataGridColumn width="80" dataField="Label" editable="true"
+													   headerText="Label"/>
 							<mx:AdvancedDataGridColumn width="110" dataField="Description"
-													   headerText="Tooltip" editable="true"/>
+													   editable="true" headerText="Tooltip"/>
 							<mx:AdvancedDataGridColumn id="FC" width="120" dataField="FieldControl"
-													   headerText="Control" editable="false">
+													   editable="false" headerText="Control">
 								<mx:itemRenderer>
 									<fx:Component>
-										<mx:VBox horizontalGap="0" paddingBottom="0" paddingLeft="0"
-												 paddingRight="0" paddingTop="0" verticalGap="0" horizontalScrollPolicy="off">
+										<mx:VBox horizontalGap="0" horizontalScrollPolicy="off"
+												 paddingBottom="0" paddingLeft="0" paddingRight="0"
+												 paddingTop="0" verticalGap="0">
 											
 											<fx:Script>
 												<![CDATA[
@@ -654,6 +659,7 @@
 													import mx.events.AdvancedDataGridEvent;
 													import mx.events.FlexEvent;
 													import mx.managers.FocusManager;
+													import mx.utils.StringUtil;
 													
 													import spark.events.IndexChangeEvent;
 													
@@ -667,8 +673,7 @@
 													private function AssignFieldControl(event):void
 													{
 														var FC_DD_Data:Object = event.target.selectedItem as Object;
-														
-														outerDocument.FC.dataField = FC_DD_Data.Data;
+														data.FieldControl = FC_DD_Data.Data;
 													}
 													/*
 													[Bindable]
@@ -698,6 +703,20 @@
 															}
 														}
 													}*/
+													
+													protected function FC_DD_creationCompleteHandler(event:FlexEvent):void
+													{
+														// TODO Auto-generated method stub
+														data;
+														if (String(data.FieldControl).toLowerCase() == "TextInput"){
+															FC_DD.selectedIndex = 0;
+														}else if (String(data.FieldControl).toLowerCase() == "DropDownList"){
+															FC_DD.selectedIndex = 1;
+														}else{
+															FC_DD.selectedIndex = 0;
+														}
+													}
+													
 												]]>
 											</fx:Script>
 											
@@ -706,12 +725,19 @@
 											visible="true" enabled="false" mouseEnabled="false" 
 											creationComplete="AU_m_DG_Enabled_LB_creationCompleteHandler(event)"
 											click="AU_m_DG_Enabled_LB_clickHandler(event)"/-->
-											<s:DropDownList id="FC_DD" labelField="Label" 
-																		  width="{outerDocument.FC.width}"
-																		  dataProvider="{FC_AC}"
-																		  styleName="DropDownListText" dropShadowVisible="false"
-																		  visible="true" enabled="true" mouseEnabled="true"
-																		  change="AssignFieldControl(event)"/>
+											<local:DropdownList16Height id="FC_DD" visible="true"
+																		width="{outerDocument.FC.width}"
+																		height="13"
+																		change="AssignFieldControl(event)"
+																		dataProvider="{FC_AC}"
+																		dropShadowVisible="false"
+																		enabled="true" fontSize="11"
+																		labelField="Label"
+																		mouseEnabled="true"
+																		styleName="DropDownListText"
+																		verticalCenter="0" creationComplete="FC_DD_creationCompleteHandler(event)">
+												
+											</local:DropdownList16Height>
 											<!--
 											creationComplete="AU_m_DG_Enabled_DD_creationCompleteHandler(event)"
 											focusOut="AU_m_DG_Enabled_DD_focusOutHandler(event)"															
@@ -721,13 +747,14 @@
 									</fx:Component>
 								</mx:itemRenderer>
 							</mx:AdvancedDataGridColumn>
-							<mx:AdvancedDataGridColumn width="40" dataField="Size" headerText="Size" editable="true"/>
+							<mx:AdvancedDataGridColumn width="40" dataField="Size" editable="true"
+													   headerText="Size"/>
 						</mx:AdvancedDataGridColumnGroup>
 						<mx:AdvancedDataGridColumnGroup headerText="Value">
 							<mx:AdvancedDataGridColumn width="70" dataField="InitialValue"
-													   headerText="Initial" editable="true"/>
+													   editable="true" headerText="Initial"/>
 							<mx:AdvancedDataGridColumn width="30" dataField="Required"
-													   headerText="Req" editable="true"/>
+													   editable="true" headerText="Req"/>
 						</mx:AdvancedDataGridColumnGroup>
 					</mx:AdvancedDataGridColumnGroup>
 				</mx:groupedColumns>
@@ -738,7 +765,8 @@
 				<s:Button id="FormPreviewButton" height="25" label="Preview"
 						  click="button1_clickHandler(event)"/>
 			</s:HGroup>
-			<s:Panel width="100%" height="100%" horizontalCenter="0" verticalCenter="0" borderVisible="true">
+			<s:Panel width="100%" height="100%" borderVisible="true" horizontalCenter="0"
+					 verticalCenter="0">
 				<mx:Form id="form"/>
 				<s:Button id="submitButton" visible="false" label="Submit"
 						  click="submitButton_clickHandler(event)"/>	

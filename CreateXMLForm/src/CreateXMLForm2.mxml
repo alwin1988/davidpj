@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*"
+			   minWidth="955" minHeight="600"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		@namespace component "component.*";
+		@namespace components "com.shinynet.shinylib.components.*";
+		@namespace pages "david.pages.*";
+		
+		.TitleWindowTitleText {
+			fontFamily: Arial;
+			fontSize: 12;
+			fontWeight: bold;
+			color: black;
+			kerning: true;
+		}
+		
+		.DataGridHeaderText {
+			fontFamily: Arial;
+			fontSize: 11;
+			fontWeight: bold;
+			color: black;
+			kerning: true;
+		}
+		
+		.DataGridText {
+			fontFamily: Arial;
+			fontSize: 10;
+			fontWeight: normal;
+			color: black;
+			kerning: true;
+		}
+		
+		.ControlButtonLabels {
+			fontFamily: Arial;
+			fontSize: 10;
+			fontWeight: normal;
+			color: black;
+			kerning: true;
+		}
+	</fx:Style>
+	
+	<fx:Declarations>
+		<fx:XML id="formdef">
+			<form>
+				<formdef>
+					<firstname FieldControl="TextInput" Label="First Name 1" Required="true"></firstname>
+					<lastname FieldControl="TextInput" Label="Last Name" Required="true"></lastname>
+					<nickname FieldControl="TextInput" Label="Nick Name" Required="false"></nickname>
+					<combobox FieldControl="ComboBox" Label="Gender" Required="true">Male,Female</combobox>
+					<type FieldControl="ComboBox" Label="Type" Required="false">Book,Cds,Games</type>
+					<radioButtonGroup FieldControl="RadioButtonGroup" Label="Gender" Required="false">
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Male</radiobutton>
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Female</radiobutton>
+					</radioButtonGroup>	
+					
+				</formdef>
+			</form>
+		</fx:XML>
+		<fx:XML id="formdef2">
+			<form>
+				<formdef>
+					<firstname FieldControl="TextInput" Label="First Name 2" Required="true">true</firstname>
+					<lastname FieldControl="TextInput" Label="Last Name" Required="true">true</lastname>
+					<nickname FieldControl="TextInput" Label="Nick Name" Required="false">false</nickname>
+					<combobox FieldControl="ComboBox" Label="Gender" Required="true">Male,Female</combobox>
+					<type FieldControl="ComboBox" Label="Type" Required="false">Book,Cds,Games</type>
+					<radioButtonGroup FieldControl="RadioButtonGroup" Label="Gender" Required="false">
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Male</radiobutton>
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Female</radiobutton>
+					</radioButtonGroup>	
+					
+				</formdef>
+			</form>
+		</fx:XML>
+		<fx:XML id="formdef3">
+			<form>
+				<formdef>
+					<firstname FieldControl="TextInput" Label="First Name 3" Required="true">true</firstname>
+					<lastname FieldControl="TextInput" Label="Last Name" Required="true">true</lastname>
+					<nickname FieldControl="TextInput" Label="Nick Name" Required="false">false</nickname>
+					<combobox FieldControl="ComboBox" Label="Gender" Required="true">Male,Female</combobox>
+					<type FieldControl="ComboBox" Label="Type" Required="false">Book,Cds,Games</type>
+					<radioButtonGroup FieldControl="RadioButtonGroup" Label="Gender" Required="false">
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Male</radiobutton>
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Female</radiobutton>
+					</radioButtonGroup>	
+					
+				</formdef>
+			</form>
+		</fx:XML>
+		<fx:XML id="formdef4">
+			<form>
+				<formdef>
+					<firstname FieldControl="TextInput" Label="First Name 4" Required="true">true</firstname>
+					<lastname FieldControl="TextInput" Label="Last Name" Required="true">true</lastname>
+					<nickname FieldControl="TextInput" Label="Nick Name" Required="false">false</nickname>
+					<combobox FieldControl="ComboBox" Label="Gender" Required="true">Male,Female</combobox>
+					<type FieldControl="ComboBox" Label="Type" Required="false">Book,Cds,Games</type>
+					<radioButtonGroup FieldControl="RadioButtonGroup" Label="Gender" Required="false">
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Male</radiobutton>
+						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Female</radiobutton>
+					</radioButtonGroup>	
+					
+				</formdef>
+			</form>
+		</fx:XML>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import flashx.textLayout.events.SelectionEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.collections.IHierarchicalData;
+			import mx.containers.Form;
+			import mx.containers.FormItem;
+			import mx.containers.HBox;
+			import mx.containers.VBox;
+			import mx.controls.Alert;
+			import mx.controls.Button;
+			import mx.controls.Label;
+			import mx.controls.RadioButton;
+			import mx.controls.RadioButtonGroup;
+			import mx.controls.TextInput;
+			import mx.core.UIComponent;
+			import mx.events.AdvancedDataGridEvent;
+			import mx.events.CloseEvent;
+			import mx.events.CollectionEvent;
+			import mx.events.DragEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			import mx.events.ListEvent;
+			import mx.events.ValidationResultEvent;
+			import mx.managers.DragManager;
+			import mx.managers.FocusManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
+			import mx.validators.NumberValidator;
+			import mx.validators.StringValidator;
+			
+			import spark.components.ComboBox;
+			import spark.components.DropDownList;
+			import spark.components.RadioButton;
+			import spark.components.RadioButtonGroup;
+			import spark.components.TextArea;
+			import spark.events.IndexChangeEvent;
+			
+			[bindable]
+			public var DGwidth:Number = 1162;
+			
+			public var xmlForm:XML = 
+				<form>
+				</form>;
+			
+			public var xmlFormDef:XML =
+				<formdef>
+				</formdef>;
+			
+			protected function FormPreviewButton_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public function dataChange(event:CollectionEvent):void
+			{
+				trace("");
+				//button1_clickHandler();
+			}
+			
+			protected function button1_clickHandler(event:MouseEvent=null):void
+			{
+				xmlForm = 
+					<form>
+					</form>;
+				
+				xmlFormDef =
+					<formdef>
+					</formdef>;
+				
+				submitButton.visible = true;
+				for (var i:int=0; i<FormFields_DG_AC.length; i++)
+				{
+					//trace(arrayList[i]);
+					//if (FormFields_DG_AC.getItemAt(i).Name == "tagName"){
+						var tagName:String = FormFields_DG_AC.getItemAt(i).Name;
+					//}else if (FormFields_DG_AC.getItemAt(i).label == "inputType"){
+						//inputType = FormFields_DG_AC.getItemAt(i).value;
+						var inputType:String = FormFields_DG_AC.getItemAt(i).FieldControl;
+					//}else if (FormFields_DG_AC.getItemAt(i).label == "formLabel"){
+						var formLabel:String = FormFields_DG_AC.getItemAt(i).Label;
+					//}else if (FormFields_DG_AC.getItemAt(i).label == "required"){
+						var required:String = FormFields_DG_AC.getItemAt(i).Required;
+					//}
+						
+						var xmlSource:XML = 
+							<{tagName} FieldControl={inputType} Label={formLabel} Required={required}></{tagName}>;
+						
+						// TODO Auto-generated method stub
+						xmlFormDef.appendChild(xmlSource);
+				}
+				
+				//var xmlSource:XML = 
+				//	<{tagName} FieldControl={inputType} Label={formLabel} Required={required}></{tagName}>;
+				
+				// TODO Auto-generated method stub
+				//xmlFormDef.appendChild(xmlSource);
+				xmlForm.appendChild(xmlFormDef);
+				trace( xmlForm.toXMLString() );		
+				textArea.text = ( xmlForm.toXMLString() );	
+				
+				handleCreationComplete(xmlForm);
+			}
+			
+			
+			private var xx:String = "abc";
+			
+			private function handleCreationComplete(xml:XML=null):void
+			{
+				//Below line can be used for XML from an external source
+				//XMLService.send();
+				
+				//buildForm(new XML(formdef));
+				buildForm(new XML(xml));
+			}
+			
+			private function errorHandler(evt:FaultEvent):void
+			{
+				Alert.show("Error: " + evt.fault.message);
+			}
+			
+			private function resultHandler(evt:ResultEvent):void
+			{				
+				buildForm(new XML(evt.result));
+			}
+			
+			private function buildForm(xml:XML):void
+			{
+				form.removeAllChildren();
+				var lst:XMLList = xml.children();
+				
+				for(var i:int = 0; i < lst.length(); i++)
+				{
+					var x:XMLList = lst[i].children();
+					
+					for(var j:int = 0; j < x.length(); j++)
+					{
+						if(x[j].@FieldControl == 'TextInput')
+						{
+							var frmItem:FormItem = new FormItem();
+							frmItem.direction = "horizontal";
+							frmItem.label = x[j].@Label;
+							// make sure boolean is pasrsed to a string before assigned 
+							// to required property of the formitem
+							var validString : String = x[j].@required;
+							var valid : Boolean = (validString == "true"); 
+							frmItem.required = valid;
+							
+							var tb:TextInput = new TextInput();
+							tb.text = x[j];
+							frmItem.addChild(tb);
+							
+							
+							form.addChild(frmItem);
+						}
+						else if(x[j].@FieldControl == 'ComboBox')
+						{
+							
+							var frmItemCB:FormItem = new FormItem();
+							frmItemCB.direction = "horizontal";
+							frmItemCB.label = x[j].@Label;
+							// make sure boolean is pasrsed to a string before assigned 
+							// to required property of the formitem
+							var validString : String = x[j].@required;
+							var valid : Boolean = (validString == "true"); 
+							frmItemCB.required = valid;
+							
+							// make sure the string is split, assigned to an array, and parsed 
+							// to an arraycollection to assgn it as dataprovider for dropdownlist 
+							var str:String = x[j];
+							var arr:Array = str.split(","); 
+							var arrcol:ArrayCollection = new ArrayCollection;
+							
+							for(var k:int = 0; k < arr.length; k++)
+							{
+								var obj:Object = {name:arr[k]}
+								arrcol.addItem(obj);
+							}
+							
+							var cb:DropDownList = new DropDownList();
+							cb.dataProvider = arrcol;
+							cb.labelField = "name";
+							frmItemCB.addChild(cb);
+							
+							
+							form.addChild(frmItemCB);
+						}
+						else if(x[j].@FieldControl == 'RadioButtonGroup')
+						{
+							
+							var frmItemRB:FormItem = new FormItem();
+							frmItemRB.direction = "horizontal";
+							frmItemRB.label = x[j].@Label;
+							// make sure boolean is pasrsed to a string before assigned 
+							// to required property of the formitem
+							var validString : String = x[j].@required;
+							var valid : Boolean = (validString == "true"); 
+							frmItemRB.required = valid;	
+							
+							var frmItemRB1:FormItem = new FormItem();
+							frmItemRB1.addChild(label);
+							
+							var y:XMLList = x[j].children();
+							var radioGroup:mx.controls.RadioButtonGroup = new mx.controls.RadioButtonGroup();
+							radioGroup.addEventListener(ItemClickEvent.ITEM_CLICK,
+								radioGroup_itemClick);
+							for(var l:int = 0; l < y.length(); l++)
+							{								
+								var rb:mx.controls.RadioButton= new mx.controls.RadioButton;
+								rb.label = y[l];
+								rb.group = radioGroup;
+								
+								frmItemRB.addChild(rb);									
+								
+								form.addChild(frmItemRB);
+							}
+						}							
+					}
+				}
+			}
+			public var label:TextInput = new TextInput();
+			private function radioGroup_itemClick(evt:ItemClickEvent):void {
+				
+				label.text = evt.label ;
+			}
+			/**
+			 * Helper function that returns all the fields for a
+			 * given form. Pass in requiredOnly = true if you only want
+			 * the required fields.
+			 */
+			private function getFields(form:Form, requiredOnly:Boolean=false):Array
+			{
+				var a:Array = [];
+				// get every child of the Form
+				var formItems:Array = form.getChildren();
+				for (var i:int=0; i<formItems.length; i++)
+				{
+					// make sure it's a FormItem - if you use FormHeading or have
+					// items that are not wrapped in a FormItem tag then ignore those
+					if (formItems[i] is FormItem)
+					{
+						var formItem:FormItem = formItems[i];
+						// add the formItem's child to the array.
+						// if you only need required items, set requiredOnly = true
+						// Note: this assumes you only have one form field per FormItem
+						//       You could easily add additional logic here for more
+						if (formItem.required || !requiredOnly)
+							a.push(formItem.getChildAt(0));
+					}
+				}
+				return a;
+			}
+			
+			/**
+			 * Validates all fields in a given form.
+			 */
+			private function validateForm(form:Form):Boolean
+			{
+				// reset the flag
+				var _isValid:Boolean = true;
+				var _notValid:Boolean = false;
+				
+				// populate the fields - if your fields aren't dynamic put this in creationComplete
+				var fields:Array = getFields(form, true);
+				
+				for each(var source:UIComponent in fields)
+				{
+					// create a simple string validator
+					var stringValidator:StringValidator = new StringValidator();
+					stringValidator.minLength = 2;
+					stringValidator.source = source;
+					stringValidator.property = "text";
+					stringValidator.requiredFieldError = "This field requires a value";
+					
+					var numberValidator:NumberValidator = new NumberValidator();
+					numberValidator.minValue = 0;
+					numberValidator.source = source;
+					numberValidator.property = "text";
+					numberValidator.lowerThanMinError = "This field requires a value";
+					
+					var rbValidator:StringValidator = new StringValidator();
+					rbValidator.minLength = 1;
+					rbValidator.maxLength = 80;
+					rbValidator.source = source;
+					rbValidator.property = "selectedValue";
+					rbValidator.requiredFieldError = "This field requires a value";
+					
+					var result:ValidationResultEvent;
+					//var radiogroup:spark.components.RadioButtonGroup = new spark.components.RadioButtonGroup;
+					// typical validation, but check to this checks for any different
+					// types of UIComponent here
+					if (source is TextInput)
+						result = stringValidator.validate(TextInput(source).text)
+					else if (source is TextArea)
+						result = stringValidator.validate(TextArea(source).text)						
+					else if (source is DropDownList)
+						result = numberValidator.validate(DropDownList(source).selectedIndex)
+					else if (source is Label)
+						result = stringValidator.validate(Label(source).text)
+					//if(source is spark.components.RadioButton)
+					//result = numberValidator.validate(mx.controls.RadioButton(source))
+					
+					// if the source is valid, then mark the form as valid
+					_isValid = (result.type == ValidationResultEvent.VALID) && _isValid;						
+				}					
+				return _isValid;
+			}
+			
+			
+			protected function submitButton_clickHandler(event:MouseEvent):void
+			{
+				if(validateForm(form) == true)
+				{
+					Alert.show("Validation OK","Alert");
+				}
+				else
+				{
+					Alert.show("Validation error");
+				}
+			}
+			
+			protected function FormFields_DG_dragDropHandler(event:DragEvent):void
+			{
+				// TODO Auto-generated method stub
+				event.preventDefault();
+				trace("");FormFields_DG.dataProvider;
+			}
+			
+			protected function FormFields_DG_dragCompleteHandler(event:DragEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace("");FormFields_DG.dataProvider;
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				FormFields_DG_AC.addEventListener(CollectionEvent.COLLECTION_CHANGE,dataChange);
+			}
+			
+		]]>	
+	</fx:Script>
+	
+	<s:HGroup width="100%" height="400" gap="0">
+		
+		<fx:Script>
+			<![CDATA[
+				[Bindable]	
+				private var Fields_DG_AC:ArrayCollection = new ArrayCollection(
+					[
+						{Name:"Doc Type DocTypeA", children: [
+							{Name:"Header fieldsets", children: [
+								{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", children: [
+									{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", Description:"Field1Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field1Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name", Description:"Field2Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+										Label:"Field2Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name", Description:"Field3Description",
+										Type:"Date",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field3Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"5", Sequence:"4", Name:"Field4Name", Description:"Field4Description",
+										Type:"DateTime",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field4Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"6", Sequence:"5", Name:"Field5Name", Description:"Field5Description",
+										Type:"Amount",Precision:"2", MinLength:"", MaxLength:"", MinValue:"0", MaxValue:"140,000.00", InitialValue:"",
+										Label:"Field5Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"7", Sequence:"6", Name:"Field6Name", Description:"Field6Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field6Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"8", Sequence:"7", Name:"Field7Name", Description:"Field7Description",
+										Type:"Number",Precision:"", MinLength:"", MaxLength:"", MinValue:"1", MaxValue:"100,000", InitialValue:"",
+										Label:"Field7Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"9", Sequence:"8", Name:"Field8Name", Description:"Field8Description",
+										Type:"True-False",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"True",
+										Label:"Field8Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"10", Sequence:"9", Name:"Field9Name", Description:"Field9Description",
+										Type:"Number",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field9Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"11", Sequence:"10", Name:"Field10Name", Description:"Field10Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field10Label", FieldControl:"TextInput"}
+								]},
+								{EntityType:"Fieldset", ObjId:"12", Name:"Fieldset2Name", children: [
+									{EntityType:"Field", ObjId:"13", Sequence:"1", Name:"Field11Name", Description:"Field11Description",
+										Type:"Number",Precision:"", MinLength:"", MaxLength:"", MinValue:"1", MaxValue:"1,000,000", InitialValue:"",
+										Label:"Field11Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"14", Sequence:"2", Name:"Field12Name", Description:"Field12Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field12Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"15", Sequence:"3", Name:"Field13Name", Description:"Field13Description",
+										Type:"Number",Precision:"", MinLength:"", MaxLength:"", MinValue:"100", MaxValue:"200", InitialValue:"",
+										Label:"Field13Label", FieldControl:"TextInput"}
+								]}
+							]},
+							{Name:"Detail fieldsets", children: [
+								{EntityType:"Fieldset", ObjId:"16", Name:"Fieldset3Name", children: [
+									{EntityType:"Field", ObjId:"17", Sequence:"1", Name:"Field14Name", Description:"Field14Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field14Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"18", Sequence:"2", Name:"Field15Name", Description:"Field15Description",
+										Type:"Date",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field15Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"19", Sequence:"3", Name:"Field16Name", Description:"Field16Description",
+										Type:"DateTime",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field16Label", FieldControl:"TextInput"}
+								]},
+								{EntityType:"Fieldset", ObjId:"20", Name:"Fieldset4Name", children: [
+									{EntityType:"Field", ObjId:"21", Sequence:"1", Name:"Field17Name", Description:"Field17Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+										Label:"Field17Label", FieldControl:"TextInput"},
+									{EntityType:"Number", ObjId:"22", Sequence:"2", Name:"Field18Name", Description:"Field18Description",
+										Type:"Amount",Precision:"2", MinLength:"", MaxLength:"", MinValue:"1,000.00", MaxValue:"250,000.00", InitialValue:"0",
+										Label:"Field18Label", FieldControl:"TextInput"},
+									{EntityType:"Field", ObjId:"23", Sequence:"3", Name:"Field19Name", Description:"Field1Description",
+										Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""}
+								]}
+							]},
+							{Name:"Procedure ProcedureA", children: [
+								{Name:"Header fieldsets", children: [
+									{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", children: [
+										{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", Description:"Field1Description",
+											Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+											Label:"Field1Label", FieldControl:"TextInput"},
+										{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", Description:"Field1Description",
+											Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"",
+											Label:"Field1Label", FieldControl:"TextInput"}
+									]}
+								]}
+							]}
+						]}			
+					]);	
+			]]>
+		</fx:Script>
+		
+		<mx:AdvancedDataGrid id="Fields_DG" width="{DGwidth/2}" height="100%" borderVisible="true"
+							 defaultLeafIcon="{null}" displayItemsExpanded="true"
+							 doubleClickEnabled="false" dragEnabled="true" draggableColumns="true"
+							 dragMoveEnabled="false" dropEnabled="true" editable="false"
+							 folderClosedIcon="{null}" folderOpenIcon="{null}" headerHeight="24"
+							 horizontalScrollPolicy="off" indentation="10" minColumnWidth="0"
+							 resizableColumns="true" rowHeight="20" selectionMode="multipleRows"
+							 sortableColumns="false" sortExpertMode="true" styleName="DataGridText"
+							 treeColumn="{Name}" verticalScrollPolicy="auto" wordWrap="true">
+			<mx:dataProvider>
+				<mx:HierarchicalData source="{Fields_DG_AC}"/>
+			</mx:dataProvider>
+			<mx:groupedColumns>
+				<mx:AdvancedDataGridColumnGroup headerText="Fieldsets/fields for workflow procedure XXXXXXXXXXXXXXXXXX"
+												textAlign="center">
+					<mx:AdvancedDataGridColumn width="20" dataField="i"/>
+					<mx:AdvancedDataGridColumnGroup>
+						<mx:AdvancedDataGridColumn id="Name" width="120" dataField="Name"
+												   headerText="Name"/>
+						<mx:AdvancedDataGridColumn width="160" dataField="Description"
+												   headerText="Description"/>
+						<mx:AdvancedDataGridColumn width="70" dataField="Type" headerText="Type"/>
+						<mx:AdvancedDataGridColumn width="30" dataField="Precision" headerText="Dec"/>
+					</mx:AdvancedDataGridColumnGroup>
+					<mx:AdvancedDataGridColumnGroup headerText="Length" textAlign="center">
+						<mx:AdvancedDataGridColumn width="30" dataField="MinLength" headerText="Min"/>
+						<mx:AdvancedDataGridColumn width="30" dataField="MaxLength" headerText="Max"/>
+					</mx:AdvancedDataGridColumnGroup>
+					<mx:AdvancedDataGridColumnGroup headerText="Value" textAlign="center">
+						<mx:AdvancedDataGridColumn width="30" dataField="MinValue" headerText="Min"/>
+						<mx:AdvancedDataGridColumn width="30" dataField="MaxValue" headerText="Max"/>
+						<mx:AdvancedDataGridColumn width="70" dataField="InitialValue"
+												   headerText="Initial"/>
+					</mx:AdvancedDataGridColumnGroup>
+				</mx:AdvancedDataGridColumnGroup>
+			</mx:groupedColumns>
+		</mx:AdvancedDataGrid>
+		
+		<s:VGroup id="VG" width="{DGwidth/2}" height="400" gap="5">
+			
+			<fx:Script>
+				<![CDATA[
+					[Bindable]	
+					private var FormFields_DG_AC:ArrayCollection = new ArrayCollection(
+						[
+							
+						]);
+				]]>
+			</fx:Script>
+			
+			<mx:AdvancedDataGrid id="FormFields_DG" width="{DGwidth/2}"
+								 height="{VG.height-FormPreviewButton.height-5}"
+								 borderVisible="true" defaultLeafIcon="{null}"
+								 disclosureClosedIcon="{null}" disclosureOpenIcon="{null}"
+								 displayItemsExpanded="true" doubleClickEnabled="false"
+								 dragComplete="FormFields_DG_dragCompleteHandler(event)"
+								 dragDrop="FormFields_DG_dragDropHandler(event)" dragEnabled="true"
+								 draggableColumns="true" dragMoveEnabled="true" dropEnabled="true"
+								 editable="true" folderClosedIcon="{null}" folderOpenIcon="{null}"
+								 headerHeight="24" horizontalScrollPolicy="off" minColumnWidth="0"
+								 resizableColumns="true" rowHeight="20" sortableColumns="false"
+								 sortExpertMode="true" styleName="DataGridText" treeColumn="{FormFields_DG_Name}"
+								 verticalScrollPolicy="auto" wordWrap="true" indentation="0">
+				<mx:dataProvider>
+					<mx:HierarchicalData source="{FormFields_DG_AC}"/>
+				</mx:dataProvider>
+				<mx:groupedColumns>
+					<mx:AdvancedDataGridColumnGroup headerText="Form fields for form type XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+													textAlign="center">
+						<mx:AdvancedDataGridColumn width="20" dataField="i"/>
+						<mx:AdvancedDataGridColumnGroup headerText="Form field">
+							<mx:AdvancedDataGridColumn width="120" id="FormFields_DG_Name" dataField="Name" headerText="Name" editable="false"/>
+							<mx:AdvancedDataGridColumn width="80" dataField="Label"
+													   headerText="Label" editable="true"/>
+							<mx:AdvancedDataGridColumn width="110" dataField="Description"
+													   headerText="Tooltip" editable="true"/>
+							<mx:AdvancedDataGridColumn id="FC" width="120" dataField="FieldControl"
+													   headerText="Control" editable="false">
+								<mx:itemRenderer>
+									<fx:Component>
+										<mx:VBox horizontalGap="0" paddingBottom="0" paddingLeft="0"
+												 paddingRight="0" paddingTop="0" verticalGap="0" horizontalScrollPolicy="off">
+											
+											<fx:Script>
+												<![CDATA[
+													import mx.collections.ArrayCollection;
+													import mx.events.AdvancedDataGridEvent;
+													import mx.events.FlexEvent;
+													import mx.managers.FocusManager;
+													
+													import spark.events.IndexChangeEvent;
+													
+													[Bindable]
+													private var FC_AC:ArrayCollection = new ArrayCollection
+														([
+															{Label:"Text Box", Data:"TextInput", Selected:true},
+															{Label:"Drop Down List", Data:"DropDownList", Selected:false}
+														]);
+													
+													private function AssignFieldControl(event):void
+													{
+														var FC_DD_Data:Object = event.target.selectedItem as Object;
+														
+														outerDocument.FC.dataField = FC_DD_Data.Data;
+													}
+													/*
+													[Bindable]
+													private var EntityIsEnabled:Boolean;
+													
+													private function IsEntityEnabled():void
+													{
+														for (var i:int=0; i < AU_m_DG_Enabled_DD.dataProvider.length; ++i)
+															
+															var obj:Object = AU_m_DG_Enabled_DD.dataProvider;
+														if (obj.Data == true)
+														{
+															EntityIsEnabled == true;
+														}	
+													}
+													
+													protected function AU_m_DG_Enabled_DD_creationCompleteHandler(event:FlexEvent):void
+													{
+														for (var i:int=0; i < AU_m_DG_Enabled_DD.dataProvider.length; i++)
+														{
+															//var obj:Object = AU_m_DG_Enabled.getItemAt(i);
+															var obj:Object = AU_m_DG_Enabled_DD.dataProvider.getItemAt(i);
+															if (obj.Selected == true)
+															{
+																AU_m_DG_Enabled_DD.selectedIndex = i;
+																break;
+															}
+														}
+													}*/
+												]]>
+											</fx:Script>
+											
+											<!--s:Label id="AU_m_DG_Enabled_LB"
+											width="100" paddingLeft="8" paddingTop="5" 
+											visible="true" enabled="false" mouseEnabled="false" 
+											creationComplete="AU_m_DG_Enabled_LB_creationCompleteHandler(event)"
+											click="AU_m_DG_Enabled_LB_clickHandler(event)"/-->
+											<s:DropDownList id="FC_DD" labelField="Label" 
+																		  width="{outerDocument.FC.width}"
+																		  dataProvider="{FC_AC}"
+																		  styleName="DropDownListText" dropShadowVisible="false"
+																		  visible="true" enabled="true" mouseEnabled="true"
+																		  change="AssignFieldControl(event)"/>
+											<!--
+											creationComplete="AU_m_DG_Enabled_DD_creationCompleteHandler(event)"
+											focusOut="AU_m_DG_Enabled_DD_focusOutHandler(event)"															
+											click="AU_m_DG_Enabled_DD_clickHandler(event)"
+											change="AU_m_DG_Enabled_DD_changeHandler(event)"/-->
+										</mx:VBox>
+									</fx:Component>
+								</mx:itemRenderer>
+							</mx:AdvancedDataGridColumn>
+							<mx:AdvancedDataGridColumn width="40" dataField="Size" headerText="Size" editable="true"/>
+						</mx:AdvancedDataGridColumnGroup>
+						<mx:AdvancedDataGridColumnGroup headerText="Value">
+							<mx:AdvancedDataGridColumn width="70" dataField="InitialValue"
+													   headerText="Initial" editable="true"/>
+							<mx:AdvancedDataGridColumn width="30" dataField="Required"
+													   headerText="Req" editable="true"/>
+						</mx:AdvancedDataGridColumnGroup>
+					</mx:AdvancedDataGridColumnGroup>
+				</mx:groupedColumns>
+			</mx:AdvancedDataGrid>
+			
+			<s:HGroup>
+				<s:Spacer width="5"/>
+				<s:Button id="FormPreviewButton" height="25" label="Preview"
+						  click="button1_clickHandler(event)"/>
+			</s:HGroup>
+			<s:Panel width="100%" height="100%" horizontalCenter="0" verticalCenter="0" borderVisible="true">
+				<mx:Form id="form"/>
+				<s:Button id="submitButton" visible="false" label="Submit"
+						  click="submitButton_clickHandler(event)"/>	
+			</s:Panel>			
+		</s:VGroup>
+		<s:TextArea id="textArea" width="100%" height="100%"/>		
+	</s:HGroup>
+	
+</s:Application>

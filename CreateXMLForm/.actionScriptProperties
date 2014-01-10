@@ -15,6 +15,7 @@
   </compiler>
   <applications>
     <application path="CreateXMLForm.mxml"/>
+    <application path="CreateXMLForm2.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

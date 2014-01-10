@@ -247,7 +247,7 @@ in accordance with the terms of the license agreement accompanying it.
 				
 				<!--- @copy spark.components.TitleWindow#closeButton -->
 				<s:Button id="closeButton" skinClass="skin.CustomTitleWindowCloseButtonSkin"
-						  width="15" height="15" right="3" top="7" verticalCenter="0" buttonMode="false"/>
+						  width="15" height="15" right="3" top="7" verticalCenter="0" buttonMode="false" visible="{hostComponent.showCloseButton}"/>
 			</s:Group>
 			
 			<!--

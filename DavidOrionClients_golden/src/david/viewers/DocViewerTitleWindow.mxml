@@ -26,27 +26,27 @@ maxHeight="{ImageWindow.maxHeight}"-->
 			import spark.events.TitleWindowBoundsEvent;
 			[Bindable] public var ImageName:String;
 			
-			[Bindable] public var testImage:Object = 'assets/1.png';
+//			[Bindable] public var testImage:Object = 'assets/1.png';
 			[Bindable] public var DocumentID:String;	
 			[Bindable] public var LeftArrow:String = "<";
 			[Bindable] public var RightArrow:String = ">";
 			
-			[Bindable] [Embed(source="assets/1.png")]
-			public var image1:Class;
-			[Bindable] [Embed(source="assets/1T.png")]
-			public var image1T:Class;
-			[Bindable] [Embed(source="assets/2.png")]
-			public var image2:Class;
-			[Bindable] [Embed(source="assets/2T.png")]
-			public var image2T:Class;
-			[Bindable] [Embed(source="assets/3.png")]
-			public var image3:Class;
-			[Bindable] [Embed(source="assets/3T.png")]
-			public var image3T:Class;
-			[Bindable] [Embed(source="assets/4.png")]
-			public var image4:Class;
-			[Bindable] [Embed(source="assets/4T.png")]
-			public var image4T:Class;
+//			[Bindable] [Embed(source="assets/1.png")]
+//			public var image1:Class;
+//			[Bindable] [Embed(source="assets/1T.png")]
+//			public var image1T:Class;
+//			[Bindable] [Embed(source="assets/2.png")]
+//			public var image2:Class;
+//			[Bindable] [Embed(source="assets/2T.png")]
+//			public var image2T:Class;
+//			[Bindable] [Embed(source="assets/3.png")]
+//			public var image3:Class;
+//			[Bindable] [Embed(source="assets/3T.png")]
+//			public var image3T:Class;
+//			[Bindable] [Embed(source="assets/4.png")]
+//			public var image4:Class;
+//			[Bindable] [Embed(source="assets/4T.png")]
+//			public var image4T:Class;
 			
 			protected function customtitlewindow1_closeHandler(event:CloseEvent):void
 			{
@@ -97,7 +97,7 @@ maxHeight="{ImageWindow.maxHeight}"-->
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Image is set here -->
-		<s:BitmapImage id="PNGImage" source="{testImage}"/>
+<!--		<s:BitmapImage id="PNGImage" source="{testImage}"/>-->
 	</fx:Declarations>
 	<s:VGroup width="100%" height="100%" gap="0">
 		
@@ -120,9 +120,10 @@ maxHeight="{ImageWindow.maxHeight}"-->
 					<s:Image id="DocImage" 
 							 width="336" height="100" depth="1"
 							 doubleClickEnabled="true" doubleClick="HandleImageDoubleClick(event)"
-							 smooth="false" smoothingQuality="default" 
-							 source="{PNGImage.source}">
+							 smooth="false" smoothingQuality="default"
+							 source="assets/{ImageName}" >
 					</s:Image>
+							 <!--source="{PNGImage.source}">-->
 					<!--doubleClick="{this.panzoom.scale=1}"/-->
 				</panzoom:PanZoomContent>
 			</panzoom:PanZoomComponent>	

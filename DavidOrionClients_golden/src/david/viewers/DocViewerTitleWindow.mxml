@@ -179,7 +179,7 @@ maxHeight="{ImageWindow.maxHeight}"-->
 				<s:List id="listImage" width="100%" height="50" borderVisible="false" chromeColor="gray"
 						horizontalCenter="0"
 						itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
-						verticalCenter="-3" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+						verticalCenter="-3" horizontalScrollPolicy="on" verticalScrollPolicy="off">
 					<s:layout>
 						<s:TileLayout columnWidth="50" rowHeight="{Thumbs.height}"
 									  requestedColumnCount="5" requestedRowCount="1" columnAlign="justifyUsingGap" rowAlign="justifyUsingGap"

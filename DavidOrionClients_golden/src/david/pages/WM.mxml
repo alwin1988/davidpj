@@ -9,8 +9,12 @@
 
 	<fx:Script>
 		<![CDATA[
-			import component.PopUpCustomTitleWindow;		
+			import component.PopUpCustomTitleWindow;
+			
+			import david.viewers.DocViewerTitleWindow;
+			
 			import event.DocViewerEvent;
+			
 			import mx.collections.ArrayCollection;
 			import mx.collections.CursorBookmark;
 			import mx.collections.HierarchicalCollectionView;
@@ -21,6 +25,7 @@
 			import mx.events.ItemClickEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
+			
 			import spark.components.ToggleButton;
 			
 			//############################### Variable #################################//
@@ -304,13 +309,20 @@
 			{
 				// TODO Auto-generated method stub
 				//var customTitleWindow:CustomTitleWindow = new CustomTitleWindow();
-				{
+				/* {
 					pop = new PopUpCustomTitleWindow();
 					pop.height=FlexGlobals.topLevelApplication.height;
 					pop.width=FlexGlobals.topLevelApplication.width;
 					pop.addEventListener(DocViewerEvent.DocViewer_CLOSE,closePopUp);
 					PopUpManager.addPopUp(pop,this);	
-				}
+				} */
+				
+				var obj:Object = (evt.currentTarget as AdvancedDataGrid).selectedItem;
+				var docViewTTW:DocViewerTitleWindow = new DocViewerTitleWindow();
+				//docViewTTW.ImageName = obj.Image;
+				docViewTTW.ImageName = "1.png";
+				PopUpManager.addPopUp(docViewTTW,this,false);
+				PopUpManager.centerPopUp(docViewTTW);
 			}
 			
 			public function closePopUp(event:DocViewerEvent):void
@@ -1014,7 +1026,7 @@
 														 styleName="DataGridBody" headerStyleName="DataGridHeader"
 														 doubleClickEnabled="true" 
 														 dataProvider="{Transactions_AC}"
-														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
+														 
 														 itemOpen="dg_itemOpenHandler(event)"
 														 itemClose="dg_itemCloseHandler(event)"
 														 headerRelease="Batches_DG_headerReleaseHandler(event)"

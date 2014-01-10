@@ -85,6 +85,18 @@
 					{Label:'Past year', Data:'Past year'},
 					{Label:'Before past year', Data:'Before past year'}
 				]);
+
+			[Bindable]
+			private var BatchObjects_AC:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj1ID", ThumbImage:"1T.png", Image:"1.png"},
+					{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj2ID", ThumbImage:"2T.png", Image:"2.png"},
+					{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj3ID", ThumbImage:"3T.png", Image:"3.png"},
+					{EntityType:"Object", BatchID:"Batch2ID", ObjID:"Obj4ID", ThumbImage:"4T.png", Image:"4.png"},
+					{EntityType:"Object", BatchID:"Batch3ID", ObjID:"Obj5ID", ThumbImage:"1T.png", Image:"1.png"},
+					{EntityType:"Object", BatchID:"Batch3ID", ObjID:"Obj6ID", ThumbImage:"2T.png", Image:"2.png"},
+					{EntityType:"Object", BatchID:"Batch3ID", ObjID:"Obj7ID", ThumbImage:"3T.png", Image:"3.png"}
+				]);
 			
 			[Bindable] 
 			private var DGwidth:Number = 1162;

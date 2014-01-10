@@ -121,6 +121,12 @@
 			{
 				super.updateDisplayList(unscaledWidth,unscaledHeight);
 				
+				if (data.EntityType == "Object"){
+					pmb.visible = false;
+				}else{
+					pmb.visible = true;
+				}
+				
 				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 				trace(data[adgld.dataField]);
 				

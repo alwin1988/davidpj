@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties analytics="false" mainApplicationPath="Juggle5.mxml" projectUUID="dfa99ac5-90af-451f-85ae-72ab9c3b334f" version="10">
+  <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
+    <libraryPath defaultLinkType="0">
+      <libraryPathEntry kind="4" path="">
+        <excludedEntries>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/core.swc" useDefaultLinkType="false"/>
+        </excludedEntries>
+      </libraryPathEntry>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <applications>
+    <application path="CAPlayPSTA.mxml"/>
+    <application path="CA.mxml"/>
+    <application path="CAplay3.mxml"/>
+    <application path="CAplay4.mxml"/>
+    <application path="CAplay8.mxml"/>
+    <application path="CAplay9-hmm.mxml"/>
+    <application path="CAPlayPSTA3.mxml"/>
+    <application path="Juggle4.mxml"/>
+    <application path="wipe.mxml"/>
+    <application path="CAplay7.mxml"/>
+    <application path="CAplay5.mxml"/>
+    <application path="Juggle5.mxml"/>
+    <application path="Juggle.mxml"/>
+    <application path="Juggle3.mxml"/>
+    <application path="CAplay9.mxml"/>
+    <application path="CAplay2.mxml"/>
+    <application path="vstest.mxml"/>
+    <application path="CAplay.mxml"/>
+    <application path="Juggle2.mxml"/>
+    <application path="CAplay6.mxml"/>
+    <application path="CAPlayPSTA2.mxml"/>
+  </applications>
+  <modules/>
+  <buildCSSFiles/>
+  <flashCatalyst validateFlashCatalystCompatibility="false"/>
+</actionScriptProperties>

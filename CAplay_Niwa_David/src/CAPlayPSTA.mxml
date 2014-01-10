@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[bindable] private var DGwidth:Number = 1162;
+		]]>
+	</fx:Script>
+	
+	<s:TitleWindow title="CRUD procedure" width="1162" height="600">
+		<s:layout>
+			<s:VerticalLayout gap="0"/>
+		</s:layout>
+		<s:HGroup width="100%" height="24" chromeColor="yellow">
+			<s:Label text="Drag and drop ..."/>
+		</s:HGroup>
+		<mx:HDividedBox width="100%" height="100%">
+			<s:VGroup width="100%" height="100%">
+				<mx:AdvancedDataGrid width="100%" height="100%">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup headerText="Procedure / Steps / Tasks / Actions">
+								<mx:AdvancedDataGridColumn headerText="Seq."/>
+								<mx:AdvancedDataGridColumn headerText="Name"/>
+								<mx:AdvancedDataGridColumn headerText="Description"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:AdvancedDataGridColumnGroup>
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+			</s:VGroup>
+			<s:VGroup width="100%" height="100%">
+				<s:Panel width="100%" height="100%" title="Step, Task, and Action Types">
+					<mx:Accordion width="100%" height="100%">
+						<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
+							<s:layout>
+								<s:VerticalLayout/>
+							</s:layout>
+							<fx:Script>
+								<![CDATA[
+									[Bindable]
+									private var STA_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Label:"Steps", Data:"Steps"},
+											{Label:"Tasks", Data:"Tasks"},
+											{Label:"Actions", Data:"Actions"}
+										]);	
+									
+									private var StepTypes_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Name:"StepType1Name", Description:"StepType1Description"},
+											{Name:"StepType2Name", Description:"StepType2Description"},
+											{Name:"StepType3Name", Description:"StepType3Description"}
+										]);	
+									
+									private var TaskTypes_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Name:"TaskType1Name", Description:"TaskType1Description"},
+											{Name:"TaskType2Name", Description:"TaskType2Description"},
+											{Name:"TaskType3Name", Description:"TaskType3Description"}
+										]);	
+									
+									private var ActionTypes_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Name:"ActionType1Name", Description:"ActionType1Description"},
+											{Name:"ActionType2Name", Description:"ActionType2Description"},
+											{Name:"ActionType3Name", Description:"ActionType3Description"}
+										]);	
+									
+									private var DG:Object;
+									
+									private function TabBarChangeHandler(event:IndexChangeEvent):void 
+									{
+										var TB_Data:Object = event.target.selectedItem as Object;
+										
+										if (TB_Data.label = "Steps") 
+										{
+											HideDG('TaskTypes_DG');
+											HideDG('ActionTypes_DG');
+										}
+										else if (TB_Data.label = "Tasks") 
+										{
+											HideDG('StepTypes_DG');
+											HideDG('ActionTypes_DG');
+										}
+										//else if (TB_Data.label = "Actions") 
+										{
+											DG = 'ActionTypes_DG';
+											//HideDG('StepTypes_DG');
+											//HideDG('TaskTypes_DG');
+											DG.width = 0;
+											DG.includeInLayout = false;
+											DG.visibile = false;
+										}
+									}
+									
+									protected function HideDG(DGname:Object):void
+									{
+										DGname.width = 0;
+										DGname.includeInLayout = false;
+										DGname.visibility = false;
+									}
+								]]>
+							</fx:Script>
+							<s:TabBar id="TB" height="24" labelField="Label" 
+									  dataProvider="{STA_AC}"
+									  change="TabBarChangeHandler(event)">
+							</s:TabBar>
+							<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
+								<mx:AdvancedDataGrid id="StepTypes_DG" width="100%" height="100%" dataProvider="{StepTypes_AC}">
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumnGroup>
+											<mx:AdvancedDataGridColumnGroup headerText="Step Types">
+												<mx:AdvancedDataGridColumn headerText="Step Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+											</mx:AdvancedDataGridColumnGroup>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+								<mx:AdvancedDataGrid id="TaskTypes_DG" width="100%" height="100%" dataProvider="{TaskTypes_AC}">
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumnGroup>
+											<mx:AdvancedDataGridColumnGroup headerText="Task Types">
+												<mx:AdvancedDataGridColumn headerText="Task Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+											</mx:AdvancedDataGridColumnGroup>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+								<mx:AdvancedDataGrid id="ActionTypes_DG" width="100%" height="100%" dataProvider="{ActionTypes_AC}">
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumnGroup>
+											<mx:AdvancedDataGridColumnGroup headerText="Action Types">
+												<mx:AdvancedDataGridColumn headerText="Action Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+											</mx:AdvancedDataGridColumnGroup>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+							</s:HGroup>
+						</s:NavigatorContent>
+						<s:NavigatorContent label="Messages" width="100%" height="100%">
+							<s:VGroup width="100%" height="100%"/>
+						</s:NavigatorContent>
+					</mx:Accordion>
+				</s:Panel>
+			</s:VGroup>
+		</mx:HDividedBox>
+	</s:TitleWindow>
+	
+</s:Application>

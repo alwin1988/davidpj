@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:component="component.*"
+			   minWidth="955" minHeight="600" 
+			   creationComplete="application1_creationCompleteHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.collections.IHierarchicalData;
+			import mx.controls.Button;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.events.SliderEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import component.CustomTitleWindow;
+			import component.CustomTitleWindowSkin;
+			
+			[Bindable]
+			private var dummy_TB:ArrayCollection = new ArrayCollection([
+				{label:"dummy", data:"dummy"}
+			]);
+			
+			[Bindable]
+			private var D_TB:ArrayCollection = new ArrayCollection([
+				{label:"Props1", data:"D_Props1"},
+				{label:"Props2", data:"D_Props2"},
+				{label:"Props3", data:"D_Props3"},
+				{label:"Props4", data:"D_Props4"},
+				{label:"FF", data:"FF"}
+			]);
+			
+			[Bindable]
+			private var _tb_P:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"P-Tab1", data:"P-Tab1"},
+				{label:"P-Tab2", data:"P-Tab2"},
+				{label:"P-Tab3", data:"P-Tab3"},
+				{label:"P-Tab4", data:"P-Tab4"}
+			]);
+			
+			[Bindable]
+			private var _tb_S:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"S-Tab1", data:"S-Tab1"},
+				{label:"S-Tab2", data:"S-Tab2"},
+				{label:"S-Tab3", data:"S-Tab3"}
+			]);
+			
+			[Bindable]
+			private var _tb_T:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"},
+				{label:"T-Tab1", data:"T-Tab1"},
+				{label:"T-Tab2", data:"T-Tab2"}
+			]);
+			
+			[Bindable]
+			private var _tb_A:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"A-Tab1", data:"A-Tab1"},
+				{label:"A-Tab2", data:"A-Tab2"}
+			]);
+			
+			[Bindable]
+			private var _tb_Action1Type:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"TabA1", data:"t1"},
+				{label:"TabA2", data:"t2"},
+				{label:"TabA3", data:"t1"},
+				{label:"TabA4", data:"t2"}
+			]);
+			
+			[Bindable]
+			private var _tb_act2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_act3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_A1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			protected function TB_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				var TB_object:Object = event.target.selectedItem as Object;
+				
+				if (TB_object.data == "D_Props1") 
+				{
+					detail_VS.selectedChild=D_detail_view;
+					D_detail_CG1.visible=true;
+					D_detail_CG2.visible=false;
+					D_detail_CG3.visible=false;
+					D_detail_CG4.visible=false;
+				}
+				else if (TB_object.data == "D_Props2") 
+				{
+					detail_VS.selectedChild=D_detail_view;
+					D_detail_CG1.visible=false;
+					D_detail_CG2.visible=true;
+					D_detail_CG3.visible=false;
+					D_detail_CG4.visible=false;
+				}
+				else if (TB_object.data == "D_Props3") 
+				{
+					detail_VS.selectedChild=D_detail_view;
+					D_detail_CG1.visible=false;
+					D_detail_CG2.visible=false;
+					D_detail_CG3.visible=true;
+					D_detail_CG4.visible=false;
+				}
+				else if (TB_object.data == "D_Props4") 
+				{
+					detail_VS.selectedChild=D_detail_view;
+					D_detail_CG1.visible=false;
+					D_detail_CG2.visible=false;
+					D_detail_CG3.visible=false;
+					D_detail_CG4.visible=true;
+				}
+				else if (TB_object.data == "FF") 
+				{
+					detail_VS.selectedChild=DF_view;
+				}
+			}
+			
+			[Bindable]	
+			private var W_master_AC:ArrayCollection = new ArrayCollection(
+				[
+				{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
+					Prop1:"Value", children: [
+					{EntityType:"S", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", 
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]},
+						{EntityType:"T", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]},
+						{EntityType:"T", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+								{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type",
+									Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+									Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+									Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]}
+					]},
+					{EntityType:"S", Name:"Step2Name", Description:"Step1Description", Type:"Step1Type",
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task4Name", Description:"Task4Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task5Name", Description:"Task5Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action4Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action5Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action6Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task6Name", Description:"Task6Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action7Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action8Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action9Description", Type:"Action3Type"}
+						]}
+					]},
+					{EntityType:"S", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", 
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task7Name", Description:"Task7Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task8Name", Description:"Task8Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action4Type"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action5Type"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action6Type"}
+						]},
+						{EntityType:"T", Name:"Task9Name", Description:"Task9Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action8Type"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action9Type"}
+						]}
+					]}
+				]}
+			]);
+			
+			[Bindable]	
+			private var proc_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", Prop1:"P1Prop1Value", Prop2:"P1Prop2Value", Prop3:"P1Prop3Value"},
+				{ProcName:"Procedure2Name", Prop1:"P2Prop1Value", Prop2:"P2Prop2Value", Prop3:"P2Prop3Value"},
+				{ProcName:"Procedure3Name", Prop1:"P3Prop1Value", Prop2:"P3Prop2Value", Prop3:"P3Prop3Value"},
+			]);
+			
+			[Bindable]	
+			private var step_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P1Step1Prop1Value", Prop2:"P1Step1Prop2Value", Prop3:"P1Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P1Step2Prop1Value", Prop2:"P1Step2Prop2Value", Prop3:"P1Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P1Step3Prop1Value", Prop2:"P1Step3Prop2Value", Prop3:"P1Step3Prop3Value"}
+				]},
+				{ProcName:"Procedure2Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P2Step1Prop1Value", Prop2:"P2Step1Prop2Value", Prop3:"P2Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P2Step2Prop1Value", Prop2:"P2Step2Prop2Value", Prop3:"P2Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P2Step3Prop1Value", Prop2:"P2Step3Prop2Value", Prop3:"P2Step3Prop3Value"}
+				]},
+				{ProcName:"Procedure3Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P3Step1Prop1Value", Prop2:"P3Step1Prop2Value", Prop3:"P3Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P3Step2Prop1Value", Prop2:"P3Step2Prop2Value", Prop3:"P3Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P3Step3Prop1Value", Prop2:"P3Step3Prop2Value", Prop3:"P3Step3Prop3Value"}
+				]}
+			]);
+
+			[Bindable]	
+			private var task_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", StepName:"Step1Name", StepNum:"1", children: [
+					{TaskName:"Task1Name", Prop1:"P1S1Task1Prop1Value", Prop2:"P1S1Task1Prop2Value", Prop3:"P1S1Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S1Task2Prop1Value", Prop2:"P1S1Task2Prop2Value", Prop3:"P1S1Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S1Task3Prop1Value", Prop2:"P1S1Task3Prop2Value", Prop3:"P1S1Task3Prop3Value"}
+				]},
+				{ProcName:"Procedure1Name", StepName:"Step2Name", StepNum:"2", children: [
+					{TaskName:"Task1Name", Prop1:"P1S2Task1Prop1Value", Prop2:"P1S2Task1Prop2Value", Prop3:"P1S2Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S2Task2Prop1Value", Prop2:"P1S2Task2Prop2Value", Prop3:"P1S2Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S2Task3Prop1Value", Prop2:"P1S2Task3Prop2Value", Prop3:"P1S2Task3Prop3Value"}
+				]},
+				{ProcName:"Procedure1Name", StepName:"Step3Name", StepNum:"3", children: [
+					{TaskName:"Task1Name", Prop1:"P1S3Task1Prop1Value", Prop2:"P1S3Task1Prop2Value", Prop3:"P1S3Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S3Task2Prop1Value", Prop2:"P1S3Task2Prop2Value", Prop3:"P1S3Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S3Task3Prop1Value", Prop2:"P1S3Task3Prop2Value", Prop3:"P1S3Task3Prop3Value"}
+				]}
+			]);
+					
+			[Bindable]	
+			private var action_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", StepName:"Step1Name", StepNum:"1", TaskName:"Task1Name", children: [
+					{ActionName:"Action1Name", Prop1:"P1S1T1Action1Prop1Value", Prop2:"P1S1T1Action1Prop2Value", Prop3:"P1S1T1Action1Prop3Value"}, 
+					{ActionName:"Action2Name", Prop1:"P1S1T1Action2Prop1Value", Prop2:"P1S1T1Action2Prop1Value", Prop3:"P1S1T1Action2Prop3Value"},
+					{ActionName:"Action3Name", Prop1:"P1S1T1Action3Prop1Value", Prop2:"P1S1T1Action3Prop1Value", Prop3:"P1S1T1Action3Prop3Value"}
+				]}
+			]);
+			
+			[Bindable]	
+			private var DF_master_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Header fieldsets", children: [
+						{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", children: [
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"5", Name:"Fieldset2Name", children: [
+							{EntityType:"Field", ObjId:"6", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"FIeld", ObjId:"7", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"8", Sequence:"3", Name:"Field3Name"}
+						]}
+					]},
+					{Name:"Detail fieldsets", children: [
+						{EntityType:"Fieldset", ObjId:"9", Name:"Fieldset3Name", children: [
+							{EntityType:"Field", ObjId:"10", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"11", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"12", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"13", Name:"Fieldset4Name", children: [
+							{EntityType:"Field", ObjId:"14", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"15", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"16", Sequence:"3", Name:"Field3Name"}
+						]}
+					]}
+				]);	
+			
+			[Bindable]	
+			private var BC_master_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Batch barcodes", children: [
+						{EntityType:"Document 1", ObjId:"1", Name:"Fieldset1Name", children: [
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"5", Name:"Fieldset2Name", children: [
+							{EntityType:"Field", ObjId:"6", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"FIeld", ObjId:"7", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"8", Sequence:"3", Name:"Field3Name"}
+						]}
+					]},
+					{Name:"Document barcodes", children: [
+						{EntityType:"All pages", ObjId:"9", Name:"Fieldset3Name", children: [
+							{EntityType:"Field", ObjId:"10", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"11", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"12", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Page 1", ObjId:"13", Name:"Fieldset4Name", children: [
+							{EntityType:"Field", ObjId:"14", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"15", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"16", Sequence:"3", Name:"Field3Name"}
+						]}
+					]}
+				]);		
+			
+			[Bindable]
+			private var D_master_AC:ArrayCollection = new ArrayCollection(
+				[
+				{EntityType:"DocType", ObjId:"1", Name:"DocType1Name", Description:"DocType1Description", 
+					Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"},
+				{EntityType:"DocType", ObjId:"2", Name:"DocType2Name", Description:"DocType2Description",
+					Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"},
+				{EntityType:"DocType", ObjId:"3", Name:"DocType3Name", Description:"DocType3Description",
+					Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"}
+			]);
+			
+			[Bindable]
+			private var DF_dummy_AC:ArrayCollection = new ArrayCollection([
+				{Property:"", Value:""}
+			]);		
+			
+			[Bindable]
+			private var Fieldset1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Fieldset Name", Value:"Fieldset1Name"}, 
+				{Property:"Description", Value:"Fieldset1Description"},
+				{Property:"Legend Name", Value:"Legeld1Name"}
+			]);	
+			
+			[Bindable]
+			private var Field2_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Field Name", Value:"Field1Name"}, 
+				{Property:"Description", Value:"Field1Description"},
+				{Property:"Data type", Value:"Text"},
+				{Property:"Length", Value:"20"}
+			]);
+			
+			[Bindable]
+			private var BC_dummy_AC:ArrayCollection = new ArrayCollection([
+				{Property:"", Value:""}
+			]);
+			
+			[Bindable]
+			private var BarCodeSet1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Fieldset Name", Value:"Fieldset1Name"}, 
+				{Property:"Description", Value:"Fieldset1Description"},
+				{Property:"Legend Name", Value:"Legeld1Name"}
+			]);	
+			
+			[Bindable]
+			private var BarCode2_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Field Name", Value:"Field1Name"}, 
+				{Property:"Description", Value:"Field1Description"},
+				{Property:"Data type", Value:"Text"},
+				{Property:"Length", Value:"20"}
+			]);
+			
+			[Bindable]
+			private var P1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var P1S1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var P1S1T1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var P1S1T1A1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A1 qualifier"}
+			]);
+
+			[Bindable]
+			private var P1S1T1A2_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A2 qualifier"}
+			]);
+
+			[Bindable]
+			private var P1S1T1A3_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A3 qualifier"}
+			]);
+			
+			private function row_click(event:ListEvent):void 
+			{
+				var _object:Object = event.target.selectedItem as Object;
+				
+				/*if (_object.ProcName == "Proc1Name")
+				Put rollover stuff here
+				*/
+				
+				if (_object.EntityType == "P" && _object.Name == "Procedure1Name") 
+				{
+					//tb.dataProvider = ArrayCollection(_tb_P);
+					W_detail_DG.dataProvider = ArrayCollection(P1_AC);
+					detail_VS.selectedChild=W_detail_view;
+					step_props_CG.headerText = "Procedure Properties";
+					
+					//set control group header
+					//set field controls
+				}
+				
+				if (_object.EntityType == "S" && _object.StepNum =="1")
+				{
+					//tb.dataProvider = ArrayCollection(_tb_S);
+					W_detail_DG.dataProvider = ArrayCollection(P1S1_AC);
+					detail_VS.selectedChild=W_detail_view;
+				}
+				
+				if (_object.EntityType == "T" && _object.Name == "Task1Name") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_T);
+					W_detail_DG.dataProvider = ArrayCollection(P1S1T1_AC);
+					detail_VS.selectedChild=W_detail_view;
+				}
+				
+				if (_object.EntityType == "A" && _object.Name == "Action1Name") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_A);
+					W_detail_DG.dataProvider = ArrayCollection(P1S1T1A1_AC);
+					detail_VS.selectedChild=W_detail_view;
+				}
+				
+				if (_object.EntityType == "Fieldset" && _object.ObjId == "1") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_A);
+					DF_detail_DG.dataProvider = ArrayCollection(Fieldset1_AC);
+				}
+				
+				if (_object.EntityType == "Field" && _object.ObjId == "2") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_A);
+					DF_detail_DG.dataProvider = ArrayCollection(Field2_AC);
+				}
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				if (master_VS.selectedChild == "D_master_view") 
+				{
+					TB.dataProvider = ArrayCollection(D_TB);
+				}				
+				else if (master_VS.selectedChild == "W_master_view") 
+				{
+					TB.dataProvider = ArrayCollection(_tb_P);
+				}
+			}
+			
+		]]>			
+	</fx:Script>
+	
+	<s:BorderContainer id="Results" width="100%" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout gap="0" horizontalAlign="left"/>
+		</s:layout>
+		
+		<s:VGroup width="100%" horizontalAlign="left">
+			
+			<!--s:Button label="WM" 
+					  click="
+					  master_VS.width=1145;
+					  detail_VS.width=0;
+					  W_master_view.width=1145;
+					  W_master_DG.width=1145;
+					  master_qualifier.visible=true;
+					  master_qualifier.width=575;						  
+					  master_VS.selectedChild=W_master_view;>
+			<s:Button label="WD" click="detail_VS.selectedChild=W_detail_view;"/>
+			<s:Button label="Procs" click="detail_VS.selectedChild=detail_view;"/>
+			<s:Button label="Steps" click="detail_VS.selectedChild=detail_view;"/>
+			<s:Button label="Tasks" click="detail_VS.selectedChild=detail_view;"/>
+			<s:Button label="Actions" click="detail_VS.selectedChild=detail_view;"/>
+			<s:Button label="DM" click="master_VS.selectedChild=D_master_view;"/>
+			<s:Button label="DD" click="detail_VS.selectedChild=D_detail_view;"/>
+			<s:Button label="DF"
+					  click="
+					  master_VS.width=575;
+					  W_master_view.width=575;
+					  W_master_DG.width=575;
+					  master_qualifier.visible=false;
+					  master_qualifier.width=0;
+					  detail_VS.selectedChild=DF_view;
+					  detail_VS.width=575;
+					  "/>
+			<s:Button label="BC" click="detail_VS.selectedChild=BC_view;"/-->
+			
+			<s:Spacer height="10"/>
+			
+			<s:HGroup>
+				<s:Spacer width="10"/>
+				<s:Spacer width="160"/>
+				<s:Spacer width="10"/>
+				<s:Spacer width="390"/>
+				<s:TabBar id="TB" 
+						  height="20" 
+						  fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+						  dataProvider="{D_TB}"
+						  change="TB_changeHandler(event)"/>				
+			</s:HGroup>
+			
+		</s:VGroup>
+		
+		<s:HGroup height="200" width="100%">
+			
+			<s:Spacer width="10"/>
+			
+			<s:BorderContainer width="160" borderVisible="true">
+				<s:layout>
+					<s:VerticalLayout/>
+				</s:layout>
+				<s:Label text="Accounts [A]"/>
+				<s:Label text="Document Types [D]"/>
+				<s:Label text="Work Processing [W]"/>
+				<s:Label text="Folders [F]"/>
+				<s:Label text="Jobs [J]"/>
+				<s:Label text="System [S]"/>
+			</s:BorderContainer>
+			
+			<s:Spacer width="10"/>
+
+			<component:CustomTitleWindow id="CA_Title" title="Configuration blah"
+										 height="100%" width="1140" headerHeight="16" borderVisible="true" dropShadowVisible="false" 
+										 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal" 
+										 skinClass="component.CustomTitleWindowSkin">
+				<component:layout>
+					<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="-1"/>
+				</component:layout>
+			
+				<mx:ViewStack id="master_VS" width="100%" height="100%" creationPolicy="all">
+					
+					<mx:Box id="W_master_view" width="100%" height="100%" borderVisible="false">
+						<s:BorderContainer width="100%" height="100%" borderVisible="false">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<mx:AdvancedDataGrid id="W_master_DG"
+												 x="0" y="0" width="100%" height="100%" rowHeight="20" borderVisible="false"
+												 treeColumn="{W_master_Name}" sortExpertMode="true" editable="false"
+												 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+												 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+												 displayItemsExpanded="false"
+												 itemClick="row_click(event)">
+								<mx:dataProvider>
+									<mx:HierarchicalData source="{W_master_AC}"/>
+								</mx:dataProvider>
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn id="W_master_Checkbox"
+															   dataField="checked"
+															   width="20" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="W_master_Col"
+															   width="20"/>					
+									<mx:AdvancedDataGridColumnGroup id="W_master_identification" 
+																	headerText="Procedures / Steps / Tasks / Actions" textAlign="left">										
+										<mx:AdvancedDataGridColumn id="W_master_Name" 
+																   headerText="Name" dataField="Name"
+																   width="340"/>
+										<!--mx:AdvancedDataGridColumn id="W_master_Description" 
+																   headerText="Description" dataField="Description"/-->
+										<mx:AdvancedDataGridColumn id="W_master_Type" 
+																   headerText="Type" dataField="Type"
+																   width="190"/>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="W_master_properties"
+																	textAlign="left" headerText="Properties"">
+										<mx:AdvancedDataGridColumn id="W_master_Qualifier" 
+																   headerText="Execution Qualifier" dataField="Qualifier"
+																   width="570"/>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:BorderContainer>
+
+					</mx:Box>
+				
+				</mx:ViewStack>
+	
+			</component:CustomTitleWindow>
+			
+		</s:HGroup>
+
+		<!--s:Spacer height="10"/>	
+		
+		<s:HGroup verticalAlign="baseline">
+			<s:Spacer width="10"/>
+			<s:Spacer width="160"/>
+			<s:Spacer width="10"/>
+
+			<s:Label text="Identification width"/>
+			<s:HSlider id="W_slider" minimum="0" maximum="1040" value="0" liveDragging="true"/>
+		</s:HGroup-->		
+
+	</s:BorderContainer>
+
+</s:Application>

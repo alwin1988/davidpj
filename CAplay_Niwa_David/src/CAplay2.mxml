@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.collections.IHierarchicalData;
+			import mx.controls.Button;
+			import mx.controls.List;
+			
+			import spark.events.IndexChangeEvent;
+			import spark.events.ListEvent;
+			
+			[Bindable]
+			private var _tb0_blank:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"},
+				{label:"Tab", data:"t"}
+			]);
+			
+			[Bindable]
+			private var _tb_P:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"P-Tab1", data:"P-Tab1"},
+				{label:"P-Tab2", data:"P-Tab2"},
+				{label:"P-Tab3", data:"P-Tab3"},
+				{label:"P-Tab4", data:"P-Tab4"}
+			]);
+			
+			[Bindable]
+			private var _tb_S:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"S-Tab1", data:"S-Tab1"},
+				{label:"S-Tab2", data:"S-Tab2"},
+				{label:"S-Tab3", data:"S-Tab3"}
+			]);
+			
+			[Bindable]
+			private var _tb_T:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"},
+				{label:"T-Tab1", data:"T-Tab1"},
+				{label:"T-Tab2", data:"T-Tab2"}
+			]);
+			
+			[Bindable]
+			private var _tb_A:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"A-Tab1", data:"A-Tab1"},
+				{label:"A-Tab2", data:"A-Tab2"}
+			]);
+			
+			[Bindable]
+			private var _tb_Action1Type:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"TabA1", data:"t1"},
+				{label:"TabA2", data:"t2"},
+				{label:"TabA3", data:"t1"},
+				{label:"TabA4", data:"t2"}
+			]);
+			
+			[Bindable]
+			private var _tb_act2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_act3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_A1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]	
+			private var master_AC:ArrayCollection = new ArrayCollection(
+				[
+				{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
+					Qualifier:"", children: [
+					{EntityType:"S", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", 
+						Qualifier:"Step1Qualifier", children: [
+						{EntityType:"T", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", 
+							Qualifier:"Step1Qualifier", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type",
+							Qualifier:"Action1Qualifier"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type",
+							Qualifier:"Action2Qualifier"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type",
+							Qualifier:"Action3Qualifier"}
+						]},
+						{EntityType:"T", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action1Type",
+							Qualifier:"Action4Qualifier"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action2Type",
+							Qualifier:"Action5Qualifier"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action3Type",
+							Qualifier:"Action6Qualifier"}
+						]},
+						{EntityType:"T", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action1Type",
+							Qualifier:"Action7Qualifier"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action2Type",
+							Qualifier:"Action8Qualifier"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action3Type",
+							Qualifier:"Action9Qualifier"}
+						]}
+					]},
+					{EntityType:"S", Name:"Step2Name", Description:"Step1Description", Type:"Step1Type", children: [
+						{EntityType:"T", Name:"Task4Name", Description:"Task4Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task5Name", Description:"Task5Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action4Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action5Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action6Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task6Name", Description:"Task6Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action7Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action8Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action9Description", Type:"Action3Type"}
+						]}
+					]},
+					{EntityType:"S", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", children: [
+						{EntityType:"T", Name:"Task7Name", Description:"Task7Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task8Name", Description:"Task8Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action4Type"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action5Type"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action6Type"}
+						]},
+						{EntityType:"T", Name:"Task9Name", Description:"Task9Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action8Type"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action9Type"}
+						]}
+					]}
+				]}
+			]);
+			
+			[Bindable]	
+			private var proc_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", Prop1:"P1Prop1Value", Prop2:"P1Prop2Value", Prop3:"P1Prop3Value"},
+				{ProcName:"Procedure2Name", Prop1:"P2Prop1Value", Prop2:"P2Prop2Value", Prop3:"P2Prop3Value"},
+				{ProcName:"Procedure3Name", Prop1:"P3Prop1Value", Prop2:"P3Prop2Value", Prop3:"P3Prop3Value"},
+			]);
+			
+			[Bindable]	
+			private var step_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P1Step1Prop1Value", Prop2:"P1Step1Prop2Value", Prop3:"P1Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P1Step2Prop1Value", Prop2:"P1Step2Prop2Value", Prop3:"P1Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P1Step3Prop1Value", Prop2:"P1Step3Prop2Value", Prop3:"P1Step3Prop3Value"}
+				]},
+				{ProcName:"Procedure2Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P2Step1Prop1Value", Prop2:"P2Step1Prop2Value", Prop3:"P2Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P2Step2Prop1Value", Prop2:"P2Step2Prop2Value", Prop3:"P2Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P2Step3Prop1Value", Prop2:"P2Step3Prop2Value", Prop3:"P2Step3Prop3Value"}
+				]},
+				{ProcName:"Procedure3Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P3Step1Prop1Value", Prop2:"P3Step1Prop2Value", Prop3:"P3Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P3Step2Prop1Value", Prop2:"P3Step2Prop2Value", Prop3:"P3Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P3Step3Prop1Value", Prop2:"P3Step3Prop2Value", Prop3:"P3Step3Prop3Value"}
+				]}
+			]);
+
+			[Bindable]	
+			private var task_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", StepName:"Step1Name", StepNum:"1", children: [
+					{TaskName:"Task1Name", Prop1:"P1S1Task1Prop1Value", Prop2:"P1S1Task1Prop2Value", Prop3:"P1S1Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S1Task2Prop1Value", Prop2:"P1S1Task2Prop2Value", Prop3:"P1S1Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S1Task3Prop1Value", Prop2:"P1S1Task3Prop2Value", Prop3:"P1S1Task3Prop3Value"}
+				]},
+				{ProcName:"Procedure1Name", StepName:"Step2Name", StepNum:"2", children: [
+					{TaskName:"Task1Name", Prop1:"P1S2Task1Prop1Value", Prop2:"P1S2Task1Prop2Value", Prop3:"P1S2Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S2Task2Prop1Value", Prop2:"P1S2Task2Prop2Value", Prop3:"P1S2Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S2Task3Prop1Value", Prop2:"P1S2Task3Prop2Value", Prop3:"P1S2Task3Prop3Value"}
+				]},
+				{ProcName:"Procedure1Name", StepName:"Step3Name", StepNum:"3", children: [
+					{TaskName:"Task1Name", Prop1:"P1S3Task1Prop1Value", Prop2:"P1S3Task1Prop2Value", Prop3:"P1S3Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S3Task2Prop1Value", Prop2:"P1S3Task2Prop2Value", Prop3:"P1S3Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S3Task3Prop1Value", Prop2:"P1S3Task3Prop2Value", Prop3:"P1S3Task3Prop3Value"}
+				]}
+			]);
+					
+			[Bindable]	
+			private var action_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", StepName:"Step1Name", StepNum:"1", TaskName:"Task1Name", children: [
+					{ActionName:"Action1Name", Prop1:"P1S1T1Action1Prop1Value", Prop2:"P1S1T1Action1Prop2Value", Prop3:"P1S1T1Action1Prop3Value"}, 
+					{ActionName:"Action2Name", Prop1:"P1S1T1Action2Prop1Value", Prop2:"P1S1T1Action2Prop1Value", Prop3:"P1S1T1Action2Prop3Value"},
+					{ActionName:"Action3Name", Prop1:"P1S1T1Action3Prop1Value", Prop2:"P1S1T1Action3Prop1Value", Prop3:"P1S1T1Action3Prop3Value"}
+				]}
+			]);
+			
+			[Bindable]
+			private var A1_single_AC:ArrayCollection = new ArrayCollection([
+				{PropName:"P1S1T1Action1Prop1Name", PropValue:"P1S1T1Action1Prop1Value"}, 
+				{PropName:"P1S1T1Action1Prop2Name", PropValue:"P1S1T1Action1Prop2Value"}, 
+				{PropName:"P1S1T1Action1Prop3Name", PropValue:"P1S1T1Action1Prop3Value"}, 
+			]);
+								
+			[Bindable]	
+			private var A1_multi_AC:ArrayCollection = new ArrayCollection([
+				{Item:"X1", Entity:"Task1Name", children: [
+					{Item:"X1P1", Prop1:"P1S1T1Action1Prop1Value", Prop2:"P1S1T1Action1Prop1Value"}, 
+					{Item:"X1P2", Prop1:"P1S1T1Action1Prop2Value", Prop2:"P1S1T1Action1Prop2Value"}
+				]}
+			]);			
+			[Bindable]
+			private var _dp_P1:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var _dp_P1S1:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var _dp_P1S1T1:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var _dp_P1S1T1A1:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A1 qualifier"}
+			]);
+
+			[Bindable]
+			private var _dp_P1S1T1A2:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A2 qualifier"}
+			]);
+
+			[Bindable]
+			private var _dp_P1S1T1A3:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A3 qualifier"}
+			]);
+
+			[Bindable]
+			private var _dp_A3:ArrayCollection = new ArrayCollection([
+				{Property:"Action3-1 name", Value:"Property action 3-1 value"}, 
+				{Property:"Action3-2 name", Value:"Property action 3-2 value"}
+			]);
+			
+			[Bindable]
+			private var _dp_S1:ArrayCollection = new ArrayCollection([
+				{Property:"Step1-1 name", Value:"Property Step 1-1 value"}, 
+				{Property:"Step1-2 name", Value:"Property Step 1-2 value"}
+			]);
+			
+			[Bindable]
+			private var _dp_S2:ArrayCollection = new ArrayCollection([
+				{Property:"Step2-1 name", Value:"Property Step 2-1 value"}, 
+				{Property:"Step2-2 name", Value:"Property Step 2-2 value"}
+			]);
+			
+			[Bindable]
+			private var _dp_S3:ArrayCollection = new ArrayCollection([
+				{Property:"Step3-1 name", Value:"Property Step 3-1 value"}, 
+				{Property:"Step3-2 name", Value:"Property Step 3-2 value"}
+			]);
+			
+			[Bindable]
+			private var _dp_T1:ArrayCollection = new ArrayCollection([
+				{Property:"Task1-1 name", Value:"Property Task 1-1 value"}, 
+				{Property:"Task1-2 name", Value:"Property Task 1-2 value"}
+			]);
+			
+			[Bindable]
+			private var _dp_T2:ArrayCollection = new ArrayCollection([
+				{Property:"Task2-1 name", Value:"Property Task 2-1 value"}, 
+				{Property:"Task2-2 name", Value:"Property Task 2-2 value"}
+			]);
+			
+			[Bindable]
+			private var _dp_T3:ArrayCollection = new ArrayCollection([
+				{Property:"Task3-1 name", Value:"Property Task 3-1 value"}, 
+				{Property:"Task3-2 name", Value:"Property Task 3-2 value"}
+			]);
+						
+			private function row_rollover(event:ListEvent):void
+			{
+				var hd:IHierarchicalData  = IHierarchicalCollectionView(event.target.dataProvider).source;
+				var source:ArrayCollection = hd.getRoot() as ArrayCollection;
+				//var _object:Object = event.target.selectedItem as Object;
+				var _object:Object = source.getItemAt(event.rowIndex);
+				
+				if (_object.ProcName == "Proc1Name") 
+				{	
+					//detail_DG.dataProvider = ArrayCollection(A1_single_AC);
+					
+					//if (_object.Item == "P1") {	
+					//	dg_column_group.headerText="Properties for procedure P1";
+					//	dg_right.dataProvider = new HierarchicalData(_dp_P1);			
+					//
+				}
+				
+				if (_object.ProcName == "Proc2Name") {	
+					tb.dataProvider = ArrayCollection(_tb_P);		
+				}
+				
+				if (_object.ProcName == "Proc2Name") {	
+					tb.dataProvider = ArrayCollection(_tb_P);		
+				}
+				
+				if (_object.EntityType == "S") {	
+				tb.dataProvider = ArrayCollection(_tb_S);		
+				}
+				
+				if (_object.EntityType == "T") {	
+				tb.dataProvider = ArrayCollection(_tb_T);		
+				}
+				
+				if (_object.EntityType == "A") {	
+				tb.dataProvider = ArrayCollection(_tb_A);		
+				}
+				
+				if (_object.Name == "Action1Name") {	
+				tb.dataProvider = ArrayCollection(_tb_Action1Type);		
+				}
+			}
+			
+			protected function row_click(event:List):void
+			{
+				var _object:Object = event.target.selectedItem as Object;
+				
+				if (_object.ProcName == "Proc1Name") {	
+					tb.dataProvider = ArrayCollection(_tb_P);		
+				}
+				
+				if (_object.ProcName == "Proc2Name") {	
+					tb.dataProvider = ArrayCollection(_tb_P);		
+				}
+				
+				if (_object.ProcName == "Proc2Name") {	
+					tb.dataProvider = ArrayCollection(_tb_P);		
+				}
+				
+				if (_object.EntityType == "S") {	
+					tb.dataProvider = ArrayCollection(_tb_S);		
+				}
+				
+				if (_object.EntityType == "T") {	
+					tb.dataProvider = ArrayCollection(_tb_T);		
+				}
+				
+				if (_object.EntityType == "A") {	
+					tb.dataProvider = ArrayCollection(_tb_A);		
+				}
+				
+				if (_object.Name == "Action1Name") {	
+					tb.dataProvider = ArrayCollection(_tb_Action1Type);		
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer id="Entities" width="100%" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout gap="0" horizontalAlign="left"/>
+		</s:layout>
+		<s:HGroup horizontalAlign="left">
+			<s:Button label="Master" click="VS.selectedChild=master_view;"/>
+			<!--s:Button label="P-all" click="VS.selectedChild=P_all_view;
+					  P_all_group_1.width=573;
+					  P_all_g1_column_1.width=143; P_all_g1_column_2.width=430;
+					  P_all_dg_column_1.visible=true;P_all_dg_column_1.width=192;
+					  P_all_dg_column_2.visible=true;P_all_dg_column_2.width=192;
+					  P_all_dg_column_3.visible=true;P_all_dg_column_3.width=191;"/-->
+			<s:Button label="Procs" click="VS.selectedChild=proc_view;"/>
+			<s:Button label="Steps" click="VS.selectedChild=step_view;"/>
+			<s:Button label="Tasks" click="VS.selectedChild=task_view;"/>
+			<s:Button label="Actions" click="VS.selectedChild=action_view;"/>
+			<s:Button label="Single" click="VS.selectedChild=single_view;"/>
+			<s:Button label="Multi" click="VS.selectedChild=multi_view;"/>
+			<s:Spacer width="400"/>
+			<s:TabBar id="tb" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold" change="tb_changeHandler(event)">
+			<!--<s:TabBar id="tb" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold" change="(event.newIndex)">-->
+				<s:dataProvider>{_tb0_blank}</s:dataProvider>
+			</s:TabBar>
+		</s:HGroup>
+		
+		<s:TitleWindow width="1150" height="100%" dropShadowVisible="false">
+			<s:layout>
+				<s:VerticalLayout/>
+			</s:layout>
+				
+			<mx:ViewStack id="VS" width="100%" height="100%" creationPolicy="all">
+				
+				<mx:HBox id="master_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="master_DG" 
+											 x="0" y="0" width="50%" height="100%"	rowHeight="20"
+											 treeColumn="{master_proc}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false"
+											 itemClick="row_click(event)">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{master_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center"
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>							
+								<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Procedures / Steps / Tasks / Actions">
+									<mx:AdvancedDataGridColumn id="master_proc" width="235" headerText="Name" dataField="Name"/>
+									<mx:AdvancedDataGridColumn width="150" headerText="Description" dataField="Description"/>
+									<mx:AdvancedDataGridColumn width="150" headerText="Type" dataField="Type"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:AdvancedDataGrid id="detail_DG" 
+											 x="575" y="0" width="50%" height="100%"	rowHeight="20"
+											 sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false"
+											 itemClick="row_click(event)"
+											 dataProvider="{A1_single_AC}">
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup id="detail_DG_props" textAlign="center" headerText="Properties">
+									<mx:AdvancedDataGridColumn headerText="Property Name" dataField="PropName"/>
+									<mx:AdvancedDataGridColumn headerText="Property Value" dataField="PropValue"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+												
+					</s:BorderContainer>
+				</mx:HBox>
+				<!--mx:HBox id="master_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="master_DG" 
+											 x="0" y="0" width="100%" height="100%"	rowHeight="20"
+											 treeColumn="{master_proc}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false"
+											 itemClick="row_click(event)">
+							
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{master_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center"
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>							
+								<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Procedures / Steps / Tasks / Actions">
+									<mx:AdvancedDataGridColumn id="master_proc" width="235" headerText="Name" dataField="Name"/>
+									<mx:AdvancedDataGridColumn width="150" headerText="Description" dataField="Description"/>
+									<mx:AdvancedDataGridColumn width="150" headerText="Type" dataField="Type"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup textAlign="center" headerText="Properties">
+									<mx:AdvancedDataGridColumn headerText="Qualifier" dataField="Qualifier"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:VRule x="575" y="{master_DG.headerHeight+2}" strokeWidth="1" strokeColor="black" height="100%" depth="3"/>
+						
+					</s:BorderContainer>
+				</mx:HBox-->
+				
+				<mx:HBox id="proc_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="proc_DG" 
+											 x="0" y="0" width="100%" height="100%"	rowHeight="20"
+											 treeColumn="{P_all_g1_column_1}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false"
+											 dataProvider="{proc_AC}">
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center"
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>								
+								<mx:AdvancedDataGridColumnGroup id="P_all_group_1" textAlign="left" headerText="All Procedures">
+									<mx:AdvancedDataGridColumn id="P_all_g1_column_1" width="535" headerText="Procedure" dataField="ProcName"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Procedure Properties">
+									<mx:AdvancedDataGridColumn id="P_all_dg_column_1" width="192" headerText="ProcProp1" dataField="Prop1"/>
+									<mx:AdvancedDataGridColumn id="P_all_dg_column_2" width="192" headerText="ProcProp2" dataField="Prop2"/>
+									<mx:AdvancedDataGridColumn id="P_all_dg_column_3" width="191" headerText="ProcProp3" dataField="Prop3"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:VRule x="575" y="{proc_DG.headerHeight+2}" strokeWidth="1" strokeColor="black" height="100%" depth="3"/>
+						
+					</s:BorderContainer>				
+				</mx:HBox>
+				
+				<mx:HBox id="step_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+					
+						<mx:AdvancedDataGrid id="step_DG" 
+											 x="0" y="0" width="100%" height="100%"	rowHeight="20"
+											 treeColumn="{proc_step}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{step_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center" 
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>
+								<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="All Steps">
+									<mx:AdvancedDataGridColumn id="proc_step" width="128" headerText="Procedure" dataField="ProcName"/>
+									<mx:AdvancedDataGridColumn width="23" headerText="#" dataField="StepNum"/>
+									<mx:AdvancedDataGridColumn width="384" headerText="Step" dataField="StepName"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Step Properties">
+									<mx:AdvancedDataGridColumn width="192" headerText="ProcProp1" dataField="Prop1"/>
+									<mx:AdvancedDataGridColumn width="192" headerText="ProcProp2" dataField="Prop2"/>
+									<mx:AdvancedDataGridColumn width="191" headerText="ProcProp3" dataField="Prop3"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:VRule x="575" y="{step_DG.headerHeight+2}" strokeWidth="1" strokeColor="black" height="100%" depth="3"/>
+						
+					</s:BorderContainer>					
+				</mx:HBox>
+				
+				<mx:HBox id="task_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="task_DG" 
+											 x="0" y="0" width="100%" height="100%"	rowHeight="20"
+											 treeColumn="{proc_task}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{task_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center" 
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>
+								<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="All Tasks">
+									<mx:AdvancedDataGridColumn id="proc_task" width="128" headerText="Procedure" dataField="ProcName"/>
+									<mx:AdvancedDataGridColumn width="23" headerText="#" dataField="StepNum"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Step" dataField="StepName"/>
+									<mx:AdvancedDataGridColumn width="256" headerText="Task" dataField="TaskName"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Task Properties">
+									<mx:AdvancedDataGridColumn width="192" headerText="TaskProp1" dataField="Prop1"/>
+									<mx:AdvancedDataGridColumn width="192" headerText="TaskProp2" dataField="Prop2"/>
+									<mx:AdvancedDataGridColumn width="191" headerText="TaskProp3" dataField="Prop3"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:VRule x="575" y="{task_DG.headerHeight+2}" strokeWidth="1" strokeColor="black" height="100%" depth="3"/>
+						
+					</s:BorderContainer>					
+				</mx:HBox>
+				
+				<mx:HBox id="action_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="action_DG" 
+											 x="0" y="0" width="100%" height="100%"	rowHeight="20"
+											 treeColumn="{proc_action}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{action_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center" 
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>
+								<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="All Actions">
+									<mx:AdvancedDataGridColumn id="proc_action" width="128" headerText="Procedure" dataField="ProcName"/>
+									<mx:AdvancedDataGridColumn width="23" headerText="#" dataField="StepNum"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Step" dataField="StepName"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Task" dataField="TaskName"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Action" dataField="ActionName"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Action Properties">
+									<mx:AdvancedDataGridColumn width="192" headerText="ActionProp1" dataField="Prop1"/>
+									<mx:AdvancedDataGridColumn width="192" headerText="ActionProp2" dataField="Prop2"/>
+									<mx:AdvancedDataGridColumn width="191" headerText="ActionProp3" dataField="Prop3"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:VRule x="575" y="{action_DG.headerHeight+2}" strokeWidth="1" strokeColor="black" height="100%" depth="3"/>
+						
+					</s:BorderContainer>					
+				</mx:HBox>
+				<!--mx:HBox id="action_view" width="100%" height="100%">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="action_DG" 
+											 x="0" y="0" width="100%" height="100%"	rowHeight="20"
+											 treeColumn="{proc_action}" sortExpertMode="true"
+											 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+											 displayItemsExpanded="false">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{action_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumn dataField="checked"
+														   width="20" textAlign="center" 
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn headerText="" width="20"/>
+								<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="All Actions">
+									<mx:AdvancedDataGridColumn id="proc_action" width="128" headerText="Procedure" dataField="ProcName"/>
+									<mx:AdvancedDataGridColumn width="23" headerText="#" dataField="StepNum"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Step" dataField="StepName"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Task" dataField="TaskName"/>
+									<mx:AdvancedDataGridColumn width="128" headerText="Action" dataField="ActionName"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Action Properties">
+									<mx:AdvancedDataGridColumn width="192" headerText="ActionProp1" dataField="Prop1"/>
+									<mx:AdvancedDataGridColumn width="192" headerText="ActionProp2" dataField="Prop2"/>
+									<mx:AdvancedDataGridColumn width="191" headerText="ActionProp3" dataField="Prop3"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:VRule x="575" y="{action_DG.headerHeight+2}" strokeWidth="1" strokeColor="black" height="100%" depth="3"/>
+						
+					</s:BorderContainer>					
+				</mx:HBox-->
+
+				<mx:HBox id="single_view" width="100%" height="100%" horizontalGap="-1">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+						
+						<mx:AdvancedDataGrid id="A_all_left_DGa" x="0" y="0" width="50%" height="100%"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" indentation="300">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{action_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup width="573" textAlign="left" headerText="landing value">
+									<mx:AdvancedDataGridColumn width="143" headerText="Procedure" dataField="Procedure"/>
+									<mx:AdvancedDataGridColumn width="143" headerText="Step" dataField="Step"/>
+									<mx:AdvancedDataGridColumn width="143" headerText="Task" dataField="Task"/>
+									<mx:AdvancedDataGridColumn width="144" headerText="Action" dataField="Action"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:AdvancedDataGrid id="single_right_DG" x="575" y="0" width="50%" height="100%"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+											 dataProvider="{A1_single_AC}">
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup textAlign="left" headerText="landing value">
+									<mx:AdvancedDataGridColumn headerText="PropName" dataField="PropName"/>
+									<mx:AdvancedDataGridColumn headerText="PropValue" dataField="PropValue"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+					</s:BorderContainer>
+				</mx:HBox>
+				
+				<mx:HBox id="multi_view" width="100%" height="100%" horizontalGap="-1">
+					<s:BorderContainer width="100%" height="100%" borderVisible="false">
+						<s:layout>
+							<s:BasicLayout/>
+						</s:layout>
+					
+						<mx:AdvancedDataGrid id="A_all_left_DGb" x="0" y="0" width="50%" height="100%"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" indentation="300">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{action_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup width="573" textAlign="left" headerText="landing value">
+									<mx:AdvancedDataGridColumn width="143" headerText="Procedure" dataField="Procedure"/>
+									<mx:AdvancedDataGridColumn width="143" headerText="Step" dataField="Step"/>
+									<mx:AdvancedDataGridColumn width="143" headerText="Task" dataField="Task"/>
+									<mx:AdvancedDataGridColumn width="144" headerText="Action" dataField="Action"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						
+						<mx:AdvancedDataGrid id="multi_DG" x="575" y="0" width="50%" height="100%"
+											 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" indentation="300">
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{A1_multi_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup id="xxxdg_column_group" textAlign="left" paddingLeft="5" headerText="landing value">
+									<mx:AdvancedDataGridColumn headerText="Prop1" dataField="Prop1"/>
+									<mx:AdvancedDataGridColumn headerText="Prop2" dataField="Prop2"/>
+									<mx:AdvancedDataGridColumn headerText="Prop3" dataField="Prop3"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+
+					</s:BorderContainer>
+				</mx:HBox>
+				
+			</mx:ViewStack>
+				
+		</s:TitleWindow>
+
+	</s:BorderContainer>
+
+</s:Application>

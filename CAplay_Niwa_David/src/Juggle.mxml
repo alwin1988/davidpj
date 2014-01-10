@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+
+	<fx:Declarations>
+		<!--s:Animate id="mover" target="{button}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="100"/>
+		</s:Animate>
+		<s:Animate id="HideFO" target="{FO}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="-100"/>
+		</s:Animate>
+		<s:Animate id="ShowFM" target="{FM}">
+			<s:SimpleMotionPath property="x" valueFrom="-100" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="HideFM" target="{FM}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="-100"/>
+		</s:Animate>
+		<s:Animate id="ShowFO" target="{FO}">
+			<s:SimpleMotionPath property="x" valueFrom="-100" valueTo="0"/>
+		</s:Animate-->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.effects.AnimateProperty;
+			import spark.effects.Animate;
+		]]>
+	</fx:Script>
+	
+	<s:VGroup id="VG">
+		
+		<!--s:VGroup>
+			<s:Button label="swap"/>
+			<s:HGroup gap="0">
+				<mx:AdvancedDataGrid rowCount="4">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="FieldMaster"/>	
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+				<mx:AdvancedDataGrid rowCount="4">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="DocFields"/>	
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+				<mx:AdvancedDataGrid rowCount="4">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="WorkFields"/>	
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+				<mx:AdvancedDataGrid rowCount="4">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="FormFields"/>	
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+			</s:HGroup>
+		</s:VGroup-->
+		
+		<s:VGroup>
+			<!--s:HGroup>
+				<s:Button label="swapIn" click="
+						  FO.visible=false; FO.includeInLayout = false;
+						  FM.visible=true; FM.includeInLayout = true;
+						  HideFO.play(); ShowFM.play();
+						  "/>
+				<s:Button label="swapOut" click="
+						  FM.visible=false; FM.includeInLayout = false;
+						  FO.visible=true; FO.includeInLayout = true;
+						  HideFM.play(); ShowFO.play();
+						  "/>
+			</s:HGroup-->
+			
+			<s:Group>
+				<!--s:TitleWindow title="Grids"-->
+					<mx:AdvancedDataGrid id="FO" x="0" width="{VG.width/2}" rowCount="4">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup headerText="Forms"/>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+					
+					<mx:AdvancedDataGrid id="FM" x="0" width="{VG.width/2}" rowCount="4" visible="false" includeInLayout="false">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup headerText="FieldMaster"/>	
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+					
+					<mx:AdvancedDataGrid id="FF" x="{FF.width}" width="{VG.width/2}" rowCount="4">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup headerText="FormFields"/>	
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				<!--/s:TitleWindow-->
+			</s:Group>
+		</s:VGroup>
+		
+		<!--s:Group>
+			<s:Button id="button" label="button" click="mover.play();"/>
+		</s:Group-->
+		
+	</s:VGroup>
+</s:Application>

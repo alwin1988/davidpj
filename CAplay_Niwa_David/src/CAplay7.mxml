@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:component="component.*"
+			   minWidth="955" minHeight="600">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.collections.IHierarchicalData;
+			import mx.controls.Button;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.events.SliderEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import component.CustomTitleWindow;
+			import component.CustomTitleWindowSkin;
+						
+			[Bindable]	
+			private var W_master_AC:ArrayCollection = new ArrayCollection(
+				[
+				{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
+					Prop1:"Value", children: [
+					{EntityType:"S", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", 
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]},
+						{EntityType:"T", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]},
+						{EntityType:"T", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+								{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type",
+									Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+									Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+									Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]}
+					]},
+					{EntityType:"S", Name:"Step2Name", Description:"Step1Description", Type:"Step1Type",
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task4Name", Description:"Task4Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task5Name", Description:"Task5Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action4Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action5Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action6Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task6Name", Description:"Task6Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action7Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action8Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action9Description", Type:"Action3Type"}
+						]}
+					]},
+					{EntityType:"S", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", 
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task7Name", Description:"Task7Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task8Name", Description:"Task8Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action4Type"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action5Type"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action6Type"}
+						]},
+						{EntityType:"T", Name:"Task9Name", Description:"Task9Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action8Type"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action9Type"}
+						]}
+					]}
+				]}
+			]);
+			
+		]]>			
+	</fx:Script>
+
+	<s:BorderContainer id="Results" width="100%" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout gap="0" horizontalAlign="left"/>
+		</s:layout>
+		
+		<s:VGroup width="100%" horizontalAlign="left">
+
+			<s:Spacer height="10"/>
+			
+			<s:HGroup>
+				<s:Spacer width="10"/>
+				<s:Spacer width="160"/>
+				<s:Spacer width="10"/>
+				<s:Spacer width="390"/>			
+			</s:HGroup>
+			
+		</s:VGroup>
+		
+		<s:HGroup height="200" width="100%">
+			
+			<s:Spacer width="10"/>
+			
+			<s:BorderContainer width="160" borderVisible="true">
+				<s:layout>
+					<s:VerticalLayout/>
+				</s:layout>
+				<s:Label text="Accounts [A]"/>
+				<s:Label text="Document Types [D]"/>
+				<s:Label text="Work Processing [W]"/>
+				<s:Label text="Folders [F]"/>
+				<s:Label text="Jobs [J]"/>
+				<s:Label text="System [S]"/>
+			</s:BorderContainer>
+			
+			<s:Spacer width="10"/>
+
+			<component:CustomTitleWindow id="CA_Title" title="Configuration blah"
+										 height="100%" width="1140" headerHeight="16" borderVisible="true" dropShadowVisible="false" 
+										 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal" 
+										 skinClass="component.CustomTitleWindowSkin">
+				<component:layout>
+					<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="-1"/>
+				</component:layout>
+			
+				<mx:ViewStack id="master_VS" width="100%" height="100%" creationPolicy="all">
+					
+					<mx:Box id="W_master_view" width="100%" height="100%" borderVisible="false">
+						<s:BorderContainer width="100%" height="100%" borderVisible="false">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<mx:AdvancedDataGrid id="W_master_DG"
+												 x="0" y="0" width="100%" height="100%" rowHeight="20" borderVisible="false"
+												 treeColumn="{W_master_Name}" sortExpertMode="true" editable="false"
+												 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+												 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" depth="2"
+												 displayItemsExpanded="false">
+								<mx:dataProvider>
+									<mx:HierarchicalData source="{W_master_AC}"/>
+								</mx:dataProvider>
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn id="W_master_Checkbox"
+															   dataField="checked"
+															   width="20" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="W_Col"
+															   width="20" textAlign="center"/>
+									<mx:AdvancedDataGridColumnGroup id="W_master_identification" 
+																	headerText="Procedures / Steps / Tasks / Actions" textAlign="left">										
+										<mx:AdvancedDataGridColumn id="W_master_Name" 
+																   headerText="Name" dataField="Name"
+																   width="{240-(W_slider.value/3)}"/>
+										<mx:AdvancedDataGridColumn id="W_master_Description" 
+																   headerText="Description" dataField="Description"
+																   width="{150-(W_slider.value/3)}"/>
+										<mx:AdvancedDataGridColumn id="W_master_Type" 
+																   headerText="Type" dataField="Type"
+																   width="{140-(W_slider.value/3)}"/>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="W_master_properties"
+																	textAlign="left" headerText="Properties">
+										<mx:AdvancedDataGridColumn id="W_master_Qualifier" 
+																   headerText="Execution Qualifier" dataField="Qualifier"
+																   width="{570+W_slider.value}"/>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:BorderContainer>
+
+					</mx:Box>
+				
+				</mx:ViewStack>
+	
+			</component:CustomTitleWindow>
+			
+		</s:HGroup>
+
+		<s:Spacer height="10"/>	
+		
+		<s:HGroup verticalAlign="baseline">
+			<s:Spacer width="10"/>
+			<s:Spacer width="160"/>
+			<s:Spacer width="10"/>
+			<s:Label text="Identification width"/>
+			<s:HSlider id="W_slider" minimum="0" maximum="100" value="0" liveDragging="true"/>
+			<s:Label text="Show as grid"/>
+		</s:HGroup>		
+
+	</s:BorderContainer>
+
+</s:Application>

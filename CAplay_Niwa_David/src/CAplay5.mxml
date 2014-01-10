@@ -1,0 +1,2168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:components="com.shinynet.shinylib.components.*"
+			   xmlns:component="component.*"
+			   minWidth="955" minHeight="600" 
+			   creationComplete="application1_creationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			private var uu:String = 'User';
+			private var aa:String = 'AC';
+			private var xx:String = 'User_AC';
+			
+			public var isKeyboardPress:Boolean = false;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.collections.IHierarchicalData;
+			import mx.controls.Button;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var dummy_TB:ArrayCollection = new ArrayCollection([
+				{label:"dummy", data:"dummy"}
+			]);
+			
+			[Bindable]
+			private var X_m_BB_AC:ArrayCollection = new ArrayCollection([
+				{label:"dummy"},
+				{label:"dummy"},
+				{label:"dummy"}
+			]);
+			
+			[Bindable]
+			private var D_sd_BB_AC:ArrayCollection = new ArrayCollection([
+				{label:"dummy"},
+				{label:"dummy"},
+				{label:"dummy"}
+			]);
+			
+			[Bindable]
+			private var W_sd_BB_AC:ArrayCollection = new ArrayCollection([
+				{label:"dummy"},
+				{label:"dummy"},
+				{label:"dummy"}
+			]);
+			
+			[Bindable]
+			private var D_TB:ArrayCollection = new ArrayCollection([
+				{label:"Props1", data:"D_Props1"},
+				{label:"Props2", data:"D_Props2"},
+				{label:"Props3", data:"D_Props3"},
+				{label:"Props4", data:"D_Props4"},
+				{label:"Ds", data:"Ds"}
+			]);
+			
+			[Bindable]
+			private var _tb_P:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"P-Tab1", data:"P-Tab1"},
+				{label:"P-Tab2", data:"P-Tab2"},
+				{label:"P-Tab3", data:"P-Tab3"},
+				{label:"P-Tab4", data:"P-Tab4"}
+			]);
+			
+			[Bindable]
+			private var _tb_S:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"S-Tab1", data:"S-Tab1"},
+				{label:"S-Tab2", data:"S-Tab2"},
+				{label:"S-Tab3", data:"S-Tab3"}
+			]);
+			
+			[Bindable]
+			private var _tb_T:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"},
+				{label:"T-Tab1", data:"T-Tab1"},
+				{label:"T-Tab2", data:"T-Tab2"}
+			]);
+			
+			[Bindable]
+			private var _tb_A:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"A-Tab1", data:"A-Tab1"},
+				{label:"A-Tab2", data:"A-Tab2"}
+			]);
+			
+			[Bindable]
+			private var _tb_Action1Type:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"TabA1", data:"t1"},
+				{label:"TabA2", data:"t2"},
+				{label:"TabA3", data:"t1"},
+				{label:"TabA4", data:"t2"}
+			]);
+			
+			[Bindable]
+			private var _tb_act2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_act3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_step3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task2:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_task3:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			[Bindable]
+			private var _tb_A1:ArrayCollection = new ArrayCollection([
+				{label:"Qualifier", data:"q"}, 
+				{label:"Tab1", data:"t1"},
+				{label:"Tab2", data:"t2"},
+				{label:"Tab3", data:"t3"}
+			]);
+			
+			/*protected function TB_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				var TB_object:Object = event.target.selectedItem as Object;
+				
+				if (TB_object.data == "D_Props1") 
+				{
+					d_VS.selectedChild=D_d_view;
+					D_d_CG1.visible=true;
+					D_d_CG2.visible=false;
+					D_d_CG3.visible=false;
+					D_d_CG4.visible=false;
+				}
+				else if (TB_object.data == "D_Props2") 
+				{
+					d_VS.selectedChild=D_d_view;
+					D_d_CG1.visible=false;
+					D_d_CG2.visible=true;
+					D_d_CG3.visible=false;
+					D_d_CG4.visible=false;
+				}
+				else if (TB_object.data == "D_Props3") 
+				{
+					d_VS.selectedChild=D_d_view;
+					D_d_CG1.visible=false;
+					D_d_CG2.visible=false;
+					D_d_CG3.visible=true;
+					D_d_CG4.visible=false;
+				}
+				else if (TB_object.data == "D_Props4") 
+				{
+					d_VS.selectedChild=D_d_view;
+					D_d_CG1.visible=false;
+					D_d_CG2.visible=false;
+					D_d_CG3.visible=false;
+					D_d_CG4.visible=true;
+				}
+				else if (TB_object.data == "Ds") 
+				{
+//					d_VS.selectedChild=D_sd_view;
+				}
+			}*/	
+			
+			[Bindable]	
+			private var GroupRole1_AC:ArrayCollection = new ArrayCollection(
+				[
+					{checked:"true", UserName:"UserName4", UserId:"UserID4"},
+				]);
+			
+			[Bindable]	
+			private var GroupRole2_AC:ArrayCollection = new ArrayCollection(
+				[
+					{checked:"true", UserName:"UserName5", UserId:"UserID5"}, 
+				]);
+			
+			[Bindable]	
+			private var GroupRole3_AC:ArrayCollection = new ArrayCollection(
+				[
+					{checked:"true", UserName:"UserName6", UserId:"UserID6"}
+				]);
+			
+			[Bindable]	
+			public var W_m_DG_Type_AC:ArrayCollection = new ArrayCollection(
+				[
+					{data:"Type1", label:"Type1"},
+					{data:"Type2", label:"Type2"},
+					{data:"Type3", label:"Type3"}
+				]);
+			
+			[Bindable]	
+			private var F_m_AC:ArrayCollection = new ArrayCollection([
+				{Folder:"Batches/Objects", Name:"Batches/Objects", Description:"Batch and object folders", children: [
+					{Folder:"Batch1ID", Name:"Batch1Type", Description:"Batch1Description"},
+					{Folder:"Batch2ID", Name:"Batch2Type", Description:"Batch2Description", children: [
+						{Folder:"SubBatch2aID", Name:"SubBatch2aType", Description:"SubBatch2aDescription"}, 
+						{Folder:"SubBatch2bID", Name:"SubBatch2bType", Description:"SubBatch2bDescription"},
+						{Folder:"SubBatch2cID", Name:"SubBatch2cType", Description:"SubBatch2cDescription"}						
+					]},
+					{Folder:"Batch3ID", Name:"Batch3Type", Description:"Batch3Description"},
+					{Folder:"Batch4ID", Name:"Batch4Type", Description:"Batch4Description"}
+					]},
+				{Folder:"Cases", Name:"Cases", Description:"Case folders", children: [
+					{Folder:"Case1ID", Name:"Case1Type", Description:"Case1Description"},
+					{Folder:"Case2ID", Name:"Case2Type", Description:"Case2Description"},
+					{Folder:"Case3ID", Name:"Case3Type", Description:"Case3Description"}
+				]},
+				{Folder:"Documents", Name:"Documents", Description:"Document folders", children: [
+					{Folder:"Folder1Name", Name:"Folder1Name", Description:"Folder1Description", children: [
+						{Folder:"SubFolder1aName", Name:"SubFolder1aName", Description:"SubFolder1aDescription", children: [
+							{Folder:"SubSubFolder1a1Name", Name:"SubSubFolder1a1Name", Description:"SubSubFolder1a1Description"}, 
+							{Folder:"SubSubFolder1a2Name", Name:"SubSubFolder1a2Name", Description:"SubSubFolder1a2Description"}, 
+							{Folder:"SubSubFolder1a3Name", Name:"SubSubFolder1a3Name", Description:"SubSubFolder1a3Description"}						
+						]}
+					]},
+					{Folder:"Folder2Name", Name:"Folder2Name", Description:"Folder2Description"},
+					{Folder:"Folder3Name", Name:"Folder3Name", Description:"Folder3Description"}, 
+					{Folder:"Folder4Name", Name:"Folder4Name", Description:"Folder4Description"}
+				]}
+			]);
+
+		
+			[Bindable]	
+			private var W_m_AC:ArrayCollection = new ArrayCollection(
+				[
+				{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
+					Prop1:"Value", children: [
+					{EntityType:"S", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", 
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]},
+						{EntityType:"T", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action1Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]},
+						{EntityType:"T", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", 
+							Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+							Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+								{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type",
+									Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+									Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+									Prop7:"Value", Prop8:"Value", Prop9:"Value"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action2Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action3Type",
+								Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+								Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+								Prop7:"Value", Prop8:"Value", Prop9:"Value"},
+						]}
+					]},
+					{EntityType:"S", Name:"Step2Name", Description:"Step1Description", Type:"Step1Type",
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task4Name", Description:"Task4Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task5Name", Description:"Task5Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action4Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action5Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action6Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task6Name", Description:"Task6Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action7Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action8Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action9Description", Type:"Action3Type"}
+						]}
+					]},
+					{EntityType:"S", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", 
+						Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+						Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+						{EntityType:"T", Name:"Task7Name", Description:"Task7Description", Type:"Task1Type", children: [
+							{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type"}, 
+							{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type"},
+							{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type"}
+						]},
+						{EntityType:"T", Name:"Task8Name", Description:"Task8Description", Type:"Task2Type", children: [
+							{EntityType:"A", Name:"Action4Name", Description:"Action4Description", Type:"Action4Type"}, 
+							{EntityType:"A", Name:"Action5Name", Description:"Action5Description", Type:"Action5Type"},
+							{EntityType:"A", Name:"Action6Name", Description:"Action6Description", Type:"Action6Type"}
+						]},
+						{EntityType:"T", Name:"Task9Name", Description:"Task9Description", Type:"Task3Type", children: [
+							{EntityType:"A", Name:"Action7Name", Description:"Action7Description", Type:"Action7Type"}, 
+							{EntityType:"A", Name:"Action8Name", Description:"Action8Description", Type:"Action8Type"},
+							{EntityType:"A", Name:"Action9Name", Description:"Action9Description", Type:"Action9Type"}
+						]}
+					]}
+				]}
+			]);
+
+			[Bindable]
+			private var W_d_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Prop1Name", Value:"Prop1Value"}, 
+				{Property:"Prop2Name", Value:"Prop2Value"},
+				{Property:"Prop3Name", Value:"Prop3Value"},
+				{Property:"Prop4Name", Value:"Prop4Value"}
+			]);
+			
+			[Bindable]	
+			private var proc_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", Prop1:"P1Prop1Value", Prop2:"P1Prop2Value", Prop3:"P1Prop3Value"},
+				{ProcName:"Procedure2Name", Prop1:"P2Prop1Value", Prop2:"P2Prop2Value", Prop3:"P2Prop3Value"},
+				{ProcName:"Procedure3Name", Prop1:"P3Prop1Value", Prop2:"P3Prop2Value", Prop3:"P3Prop3Value"},
+			]);
+			
+			[Bindable]	
+			private var step_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P1Step1Prop1Value", Prop2:"P1Step1Prop2Value", Prop3:"P1Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P1Step2Prop1Value", Prop2:"P1Step2Prop2Value", Prop3:"P1Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P1Step3Prop1Value", Prop2:"P1Step3Prop2Value", Prop3:"P1Step3Prop3Value"}
+				]},
+				{ProcName:"Procedure2Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P2Step1Prop1Value", Prop2:"P2Step1Prop2Value", Prop3:"P2Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P2Step2Prop1Value", Prop2:"P2Step2Prop2Value", Prop3:"P2Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P2Step3Prop1Value", Prop2:"P2Step3Prop2Value", Prop3:"P2Step3Prop3Value"}
+				]},
+				{ProcName:"Procedure3Name", children: [
+					{StepNum:"1", StepName:"Step1Name", Prop1:"P3Step1Prop1Value", Prop2:"P3Step1Prop2Value", Prop3:"P3Step1Prop3Value"}, 
+					{StepNum:"2", StepName:"Step2Name", Prop1:"P3Step2Prop1Value", Prop2:"P3Step2Prop2Value", Prop3:"P3Step2Prop3Value"},
+					{StepNum:"3", StepName:"Step3Name", Prop1:"P3Step3Prop1Value", Prop2:"P3Step3Prop2Value", Prop3:"P3Step3Prop3Value"}
+				]}
+			]);
+
+			[Bindable]	
+			private var task_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", StepName:"Step1Name", StepNum:"1", children: [
+					{TaskName:"Task1Name", Prop1:"P1S1Task1Prop1Value", Prop2:"P1S1Task1Prop2Value", Prop3:"P1S1Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S1Task2Prop1Value", Prop2:"P1S1Task2Prop2Value", Prop3:"P1S1Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S1Task3Prop1Value", Prop2:"P1S1Task3Prop2Value", Prop3:"P1S1Task3Prop3Value"}
+				]},
+				{ProcName:"Procedure1Name", StepName:"Step2Name", StepNum:"2", children: [
+					{TaskName:"Task1Name", Prop1:"P1S2Task1Prop1Value", Prop2:"P1S2Task1Prop2Value", Prop3:"P1S2Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S2Task2Prop1Value", Prop2:"P1S2Task2Prop2Value", Prop3:"P1S2Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S2Task3Prop1Value", Prop2:"P1S2Task3Prop2Value", Prop3:"P1S2Task3Prop3Value"}
+				]},
+				{ProcName:"Procedure1Name", StepName:"Step3Name", StepNum:"3", children: [
+					{TaskName:"Task1Name", Prop1:"P1S3Task1Prop1Value", Prop2:"P1S3Task1Prop2Value", Prop3:"P1S3Task1Prop3Value"}, 
+					{TaskName:"Task2Name", Prop1:"P1S3Task2Prop1Value", Prop2:"P1S3Task2Prop2Value", Prop3:"P1S3Task2Prop3Value"},
+					{TaskName:"Task3Name", Prop1:"P1S3Task3Prop1Value", Prop2:"P1S3Task3Prop2Value", Prop3:"P1S3Task3Prop3Value"}
+				]}
+			]);
+					
+			[Bindable]	
+			private var action_AC:ArrayCollection = new ArrayCollection(
+				[
+				{ProcName:"Procedure1Name", StepName:"Step1Name", StepNum:"1", TaskName:"Task1Name", children: [
+					{ActionName:"Action1Name", Prop1:"P1S1T1Action1Prop1Value", Prop2:"P1S1T1Action1Prop2Value", Prop3:"P1S1T1Action1Prop3Value"}, 
+					{ActionName:"Action2Name", Prop1:"P1S1T1Action2Prop1Value", Prop2:"P1S1T1Action2Prop1Value", Prop3:"P1S1T1Action2Prop3Value"},
+					{ActionName:"Action3Name", Prop1:"P1S1T1Action3Prop1Value", Prop2:"P1S1T1Action3Prop1Value", Prop3:"P1S1T1Action3Prop3Value"}
+				]}
+			]);
+			
+			[Bindable]	
+			private var Ds_m_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Header fieldsets", children: [
+						{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", children: [
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"5", Name:"Fieldset2Name", children: [
+							{EntityType:"Field", ObjId:"6", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"FIeld", ObjId:"7", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"8", Sequence:"3", Name:"Field3Name"}
+						]}
+					]},
+					{Name:"Detail fieldsets", children: [
+						{EntityType:"Fieldset", ObjId:"9", Name:"Fieldset3Name", children: [
+							{EntityType:"Field", ObjId:"10", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"11", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"12", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"13", Name:"Fieldset4Name", children: [
+							{EntityType:"Field", ObjId:"14", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"15", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"16", Sequence:"3", Name:"Field3Name"}
+						]}
+					]}
+				]);	
+			
+			[Bindable]	
+			private var WS_m_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Batch barcodes", children: [
+						{EntityType:"Document 1", ObjId:"1", Name:"Fieldset1Name", children: [
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"},
+							{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Fieldset", ObjId:"5", Name:"Fieldset2Name", children: [
+							{EntityType:"Field", ObjId:"6", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"FIeld", ObjId:"7", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"8", Sequence:"3", Name:"Field3Name"}
+						]}
+					]},
+					{Name:"Document barcodes", children: [
+						{EntityType:"All pages", ObjId:"9", Name:"Fieldset3Name", children: [
+							{EntityType:"Field", ObjId:"10", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"11", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"12", Sequence:"3", Name:"Field3Name"}
+						]},
+						{EntityType:"Page 1", ObjId:"13", Name:"Fieldset4Name", children: [
+							{EntityType:"Field", ObjId:"14", Sequence:"1", Name:"Field1Name"},
+							{EntityType:"Field", ObjId:"15", Sequence:"2", Name:"Field2Name"},
+							{EntityType:"Field", ObjId:"16", Sequence:"3", Name:"Field3Name"}
+						]}
+					]}
+				]);		
+			
+			[Bindable]
+			private var D_m_AC:ArrayCollection = new ArrayCollection(
+				[
+				{EntityType:"DocType", ObjId:"1", Name:"DocType1Name", Description:"DocType1Description", 
+					Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"},
+				{EntityType:"DocType", ObjId:"2", Name:"DocType2Name", Description:"DocType2Description",
+					Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"},
+				{EntityType:"DocType", ObjId:"3", Name:"DocType3Name", Description:"DocType3Description",
+					Prop1Name:"Prop1Value", Prop2Name:"Prop2Value", Prop3Name:"Prop3Value"}
+			]);
+			
+			[Bindable]	
+			private var S_m_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Property1", Value:"Value1"},
+					{Name:"Subcategory1", children: [
+						{Name:"Propery2", Value:"Value2"}, 
+						{Name:"Propery3", Value:"Value3"},
+						{Name:"Propery4", Value:"Value4"}
+					]},
+					{Name:"Property5", Value:"Value5"},
+					{Name:"Subcategory2", children: [
+						{Name:"Propery6", Value:"Value6"}, 
+						{Name:"Propery7", Value:"Value7"},
+						{Name:"Propery8", Value:"Value8"}
+					]},
+					{Name:"Property9", Value:"Value9"}
+				]);
+			
+			[Bindable]	
+			private var J_m_AC:ArrayCollection = new ArrayCollection(
+				[
+					{Name:"Job category 1", children: [
+						{Name:"Job subcategory1", children: [
+							{Name:"Job1Name", Description:"Job1Description"},
+							{Name:"Job2Name", Description:"Job2Description"},
+							{Name:"Job3Name", Description:"Job3Description"},
+							{Name:"Job4Name", Description:"Job4Description"},
+							{Name:"Job5Name", Description:"Job5Description"}
+						]},
+						{Name:"Job subcategory2", children: [
+							{Name:"Job1Name", Description:"Job1Description"},
+							{Name:"Job2Name", Description:"Job2Description"},
+							{Name:"Job3Name", Description:"Job3Description"},
+							{Name:"Job4Name", Description:"Job4Description"},
+							{Name:"Job5Name", Description:"Job5Description"}
+						]}
+					]},
+					{Name:"Job category 2", children: [
+						{Name:"Job1Name", Description:"Job1Description"},
+						{Name:"Job2Name", Description:"Job2Description"},
+						{Name:"Job3Name", Description:"Job3Description"},
+						{Name:"Job4Name", Description:"Job4Description"},
+						{Name:"Job5Name", Description:"Job5Description"}
+					]}
+				]);	
+			
+			[Bindable]
+			private var J_d_AC:ArrayCollection = new ArrayCollection([
+				{Property:"", Value:""},
+				{Property:"", Value:""},
+				{Property:"", Value:""}
+			]);
+			
+			[Bindable]
+			private var d_dummy_AC:ArrayCollection = new ArrayCollection([
+				{Property:"", Value:""},
+				{Property:"", Value:""},
+				{Property:"", Value:""}
+			]);
+			
+			[Bindable]
+			private var D_p_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Property1Name", Value:"Property1Value"},
+				{Property:"Property2Name", Value:"Property2Value"},
+				{Property:"Property3Name", Value:"Property3Value"}
+			]);	
+			
+			[Bindable]
+			private var W_p_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Property1Name", Value:"Property1Value"},
+				{Property:"Property2Name", Value:"Property2Value"},
+				{Property:"Property3Name", Value:"Property3Value"}
+			]);	
+			
+			[Bindable]
+			private var Fieldset1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Fieldset Name", Value:"Fieldset1Name"}, 
+				{Property:"Description", Value:"Fieldset1Description"},
+				{Property:"Legend Name", Value:"Legeld1Name"}
+			]);	
+			
+			[Bindable]
+			private var Field2_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Field Name", Value:"Field1Name"}, 
+				{Property:"Description", Value:"Field1Description"},
+				{Property:"Data type", Value:"Text"},
+				{Property:"Length", Value:"20"}
+			]);
+			
+			[Bindable]
+			private var W_dummy_AC:ArrayCollection = new ArrayCollection([
+				{Property:"", Value:""}
+			]);
+			
+			[Bindable]
+			private var BarCodeSet1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Fieldset Name", Value:"Fieldset1Name"}, 
+				{Property:"Description", Value:"Fieldset1Description"},
+				{Property:"Legend Name", Value:"Legeld1Name"}
+			]);	
+			
+			[Bindable]
+			private var BarCode2_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Field Name", Value:"Field1Name"}, 
+				{Property:"Description", Value:"Field1Description"},
+				{Property:"Data type", Value:"Text"},
+				{Property:"Length", Value:"20"}
+			]);
+			
+			[Bindable]
+			private var P1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var P1S1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var P1S1T1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1 qualifier"}
+			]);
+			
+			[Bindable]
+			private var P1S1T1A1_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A1 qualifier"}
+			]);
+
+			[Bindable]
+			private var P1S1T1A2_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A2 qualifier"}
+			]);
+
+			[Bindable]
+			private var P1S1T1A3_AC:ArrayCollection = new ArrayCollection([
+				{Property:"Gen", Value:"1"}, 
+				{Property:"Qualifier", Value:"P1S1T1A3 qualifier"}
+			]);
+			
+			private function row_click(event:ListEvent):void 
+			{
+				var _object:Object = event.target.selectedItem as Object;
+				
+				/*if (_object.ProcName == "Proc1Name")
+				Put rollover stuff here
+				*/
+				
+				if (_object.EntityType == "P" && _object.Name == "Procedure1Name") 
+				{
+					//tb.dataProvider = ArrayCollection(_tb_P);
+					W_d_DG.dataProvider = ArrayCollection(P1_AC);
+					d_VS.selectedChild=W_d_view;
+					//step_props_CG.headerText = "Procedure Properties";
+					
+					//set control group header
+					//set field controls
+				}
+				
+				if (_object.EntityType == "S" && _object.StepNum =="1")
+				{
+					//tb.dataProvider = ArrayCollection(_tb_S);
+					W_d_DG.dataProvider = ArrayCollection(P1S1_AC);
+					d_VS.selectedChild=W_d_view;
+				}
+				
+				if (_object.EntityType == "T" && _object.Name == "Task1Name") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_T);
+					W_d_DG.dataProvider = ArrayCollection(P1S1T1_AC);
+					d_VS.selectedChild=W_d_view;
+				}
+				
+				if (_object.EntityType == "A" && _object.Name == "Action1Name") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_A);
+					W_d_DG.dataProvider = ArrayCollection(P1S1T1A1_AC);
+					d_VS.selectedChild=W_d_view;
+				}
+				
+				if (_object.EntityType == "Fieldset" && _object.ObjId == "1") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_A);
+					D_sd_DG.dataProvider = ArrayCollection(Fieldset1_AC);
+				}
+				
+				if (_object.EntityType == "Field" && _object.ObjId == "2") 
+				{	
+					//tb.dataProvider = ArrayCollection(_tb_A);
+					D_sd_DG.dataProvider = ArrayCollection(Field2_AC);
+				}
+			}
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+			/*	if (m_VS.selectedChild == "D_m_view") 
+				{
+					TB.dataProvider = ArrayCollection(D_TB);
+				}				
+				else if (m_VS.selectedChild == "W_m_view") 
+				{
+					TB.dataProvider = ArrayCollection(_tb_P);
+				} */
+			}
+			
+		]]>			
+	</fx:Script>
+	
+	<s:BorderContainer width="1144" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout gap="0" horizontalAlign="left"/>
+		</s:layout>
+		
+		<!--Due to a quirk in Flex, datagrid column widths do not work in view stacks unless you set horizontalScrollPolicy to 'on', set the column widths,
+			and then set horizontal scroll policy to the desired value-->
+		<s:HGroup width="100%" horizontalAlign="left" verticalAlign="bottom">
+			<s:VGroup width="50%" gap="1">
+				<s:HGroup>
+					<s:Button label="A_m" click="
+							  TB.visible=true;
+							  A_m_u_DG.horizontalScrollPolicy='on';
+							  A_m_u_DG.dragEnabled=true;
+							  A_m_u_DG_Checkbox.width=20;
+							  A_m_u_DG_Information.width=20;
+							  A_m_u_DG_Disposition.width=20;
+							  A_m_u_DG_UserID.width=100;
+							  A_m_u_DG_UserName.width=200;
+							  A_m_u_DG_Property1.width=105;
+							  A_m_u_DG_Property2.width=105;
+							  A_m_u_DG_propertiesA.visible=true;
+							  A_m_u_DG_Property3.width=570;
+							  A_m_u_DG_propertiesB.visible=true;
+							  A_m_u_DG.horizontalScrollPolicy='off';
+							  A_m_g_DG.horizontalScrollPolicy='on';
+							  A_m_g_DG.dragEnabled=true;
+							  A_m_g_DG_Checkbox.width=20;
+							  A_m_g_DG_Information.width=20;
+							  A_m_g_DG_Disposition.width=20;
+							  A_m_g_DG_GroupID.width=100;
+							  A_m_g_DG_GroupName.width=200;
+							  A_m_g_DG_Property1.width=105;
+							  A_m_g_DG_Property2.width=105;
+							  A_m_g_DG_propertiesA.visible=true;
+							  A_m_g_DG_Property3.width=570;
+							  A_m_g_DG_propertiesB.visible=true;
+							  A_m_g_DG.horizontalScrollPolicy='off';
+							  A_m_r_DG.horizontalScrollPolicy='on';
+							  A_m_r_DG.dragEnabled=true;
+							  A_m_r_DG_Checkbox.width=20;
+							  A_m_r_DG_Information.width=20;
+							  A_m_r_DG_Disposition.width=20;
+							  A_m_r_DG_RoleID.width=100;
+							  A_m_r_DG_RoleName.width=200;
+							  A_m_r_DG_Property1.width=105;
+							  A_m_r_DG_Property2.width=105;
+							  A_m_r_DG_propertiesA.visible=true;
+							  A_m_r_DG_Property3.width=570;
+							  A_m_r_DG_propertiesB.visible=true;
+							  A_m_r_DG.horizontalScrollPolicy='off';	
+							  m_VS.width=1140;
+							  d_VS.width=0;
+							  s_VS.width=0;
+							  m_VS.selectedChild=A_m_view;
+							  "/>
+					<s:Button label="A_d1" click="
+							  TB.visible=true;
+							  A_m_u_DG.horizontalScrollPolicy='on';
+							  A_m_u_DG.dragEnabled=true;
+							  A_m_u_DG_Checkbox.width=20;
+							  A_m_u_DG_Information.width=20;
+							  A_m_u_DG_Disposition.width=20;
+							  A_m_u_DG_UserID.width=100;
+							  A_m_u_DG_UserName.width=200;
+							  A_m_u_DG_Property1.width=105;
+							  A_m_u_DG_Property2.width=105;
+							  A_m_u_DG_propertiesA.visible=true;
+							  A_m_u_DG_propertiesB.visible=false;
+							  A_m_u_DG.horizontalScrollPolicy='off';
+							  A_m_g_DG.horizontalScrollPolicy='on';
+							  A_m_g_DG.dragEnabled=true;
+							  A_m_g_DG_Checkbox.width=20;
+							  A_m_g_DG_Information.width=20;
+							  A_m_g_DG_Disposition.width=20;
+							  A_m_g_DG_GroupID.width=100;
+							  A_m_g_DG_GroupName.width=200;
+							  A_m_g_DG_Property1.width=105;
+							  A_m_g_DG_Property2.width=105;
+							  A_m_g_DG_propertiesA.visible=true;
+							  A_m_g_DG_propertiesB.visible=false;
+							  A_m_g_DG.horizontalScrollPolicy='off';
+							  A_m_r_DG.horizontalScrollPolicy='on';
+							  A_m_r_DG.dragEnabled=true;
+							  A_m_r_DG_Checkbox.width=20;
+							  A_m_r_DG_Information.width=20;
+							  A_m_r_DG_Disposition.width=20;
+							  A_m_r_DG_RoleID.width=100;
+							  A_m_r_DG_RoleName.width=200;
+							  A_m_r_DG_Property1.width=105;
+							  A_m_r_DG_Property2.width=105;
+							  A_m_r_DG_propertiesA.visible=true;
+							  A_m_r_DG_propertiesB.visible=false;
+							  A_m_r_DG.horizontalScrollPolicy='off';	
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=A_m_view;
+							  d_VS.selectedChild=A_d1_view;
+							  "/>
+					<s:Button label="A_d2" click="
+							  TB.visible=true;
+							  A_m_u_DG.horizontalScrollPolicy='on';
+							  A_m_u_DG.dragEnabled=true;
+							  A_m_u_DG_Checkbox.width=20;
+							  A_m_u_DG_Information.width=20;
+							  A_m_u_DG_Disposition.width=20;
+							  A_m_u_DG_UserID.width=100;
+							  A_m_u_DG_UserName.width=200;
+							  A_m_u_DG_Property1.width=105;
+							  A_m_u_DG_Property2.width=105;
+							  A_m_u_DG_propertiesA.visible=true;
+							  A_m_u_DG_propertiesB.visible=false;
+							  A_m_u_DG.horizontalScrollPolicy='off';
+							  A_m_g_DG.horizontalScrollPolicy='on';
+							  A_m_g_DG.dragEnabled=true;
+							  A_m_g_DG_Checkbox.width=20;
+							  A_m_g_DG_Information.width=20;
+							  A_m_g_DG_Disposition.width=20;
+							  A_m_g_DG_GroupID.width=100;
+							  A_m_g_DG_GroupName.width=200;
+							  A_m_g_DG_Property1.width=105;
+							  A_m_g_DG_Property2.width=105;
+							  A_m_g_DG_propertiesA.visible=true;
+							  A_m_g_DG_propertiesB.visible=false;
+							  A_m_g_DG.horizontalScrollPolicy='off';
+							  A_m_r_DG.horizontalScrollPolicy='on';
+							  A_m_r_DG.dragEnabled=true;
+							  A_m_r_DG_Checkbox.width=20;
+							  A_m_r_DG_Information.width=20;
+							  A_m_r_DG_Disposition.width=20;
+							  A_m_r_DG_RoleID.width=100;
+							  A_m_r_DG_RoleName.width=200;
+							  A_m_r_DG_Property1.width=105;
+							  A_m_r_DG_Property2.width=105;
+							  A_m_r_DG_propertiesA.visible=true;
+							  A_m_r_DG_propertiesB.visible=false;
+							  A_m_r_DG.horizontalScrollPolicy='off';	
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=A_m_view;
+							  d_VS.selectedChild=A_d2_view;
+							  "/>
+					<s:Button label="A_s" click="
+							  TB.visible=true;
+							  A_m_u_DG.horizontalScrollPolicy='on';
+							  A_m_u_DG.dragEnabled=true;
+							  A_m_u_DG_Checkbox.width=20;
+							  A_m_u_DG_Information.width=20;
+							  A_m_u_DG_Disposition.width=20;
+							  A_m_u_DG_UserID.width=100;
+							  A_m_u_DG_UserName.width=200;
+							  A_m_u_DG_Property1.width=105;
+							  A_m_u_DG_Property2.width=105;
+							  A_m_u_DG_propertiesA.visible=true;
+							  A_m_u_DG_propertiesB.visible=false;
+							  A_m_u_DG.horizontalScrollPolicy='off';
+							  A_m_g_DG.horizontalScrollPolicy='on';
+							  A_m_g_DG.dragEnabled=true;
+							  A_m_g_DG_Checkbox.width=20;
+							  A_m_g_DG_Information.width=20;
+							  A_m_g_DG_Disposition.width=20;
+							  A_m_g_DG_GroupID.width=100;
+							  A_m_g_DG_GroupName.width=200;
+							  A_m_g_DG_Property1.width=105;
+							  A_m_g_DG_Property2.width=105;
+							  A_m_g_DG_propertiesA.visible=true;
+							  A_m_g_DG_propertiesB.visible=false;
+							  A_m_g_DG.horizontalScrollPolicy='off';
+							  A_m_r_DG.horizontalScrollPolicy='on';
+							  A_m_r_DG.dragEnabled=true;
+							  A_m_r_DG_Checkbox.width=20;
+							  A_m_r_DG_Information.width=20;
+							  A_m_r_DG_Disposition.width=20;
+							  A_m_r_DG_RoleID.width=100;
+							  A_m_r_DG_RoleName.width=200;
+							  A_m_r_DG_Property1.width=105;
+							  A_m_r_DG_Property2.width=105;
+							  A_m_r_DG_propertiesA.visible=true;
+							  A_m_r_DG_propertiesB.visible=false;
+							  A_m_r_DG.horizontalScrollPolicy='off';	
+							  A_sm_DG.horizontalScrollPolicy='on';
+							  A_sm_DG_DocType.width=250;
+							  A_sm_DG_identification.visible=true;
+							  A_sm_DG.horizontalScrollPolicy='off';							  
+							  A_sd_DG.horizontalScrollPolicy='on';
+							  A_sd_DG_A1.width=32;
+							  A_sd_DG_A2.width=32;
+							  A_sd_DG_A3.width=32;
+							  A_sd_DG_A4.width=32;
+							  A_sd_DG_A5.width=32;
+							  A_sd_DG_A6.width=32;
+							  A_sd_DG_A7.width=32;
+							  A_sd_DG_A8.width=32;
+							  A_sd_DG_A9.width=32;
+							  A_sd_DG_A10.width=32;
+							  A_sd_DG_authorities.visible=true;
+							  A_sd_DG.horizontalScrollPolicy='off';	
+							  m_VS.width=570;
+							  d_VS.width=0;
+							  s_VS.width=570;
+							  m_VS.selectedChild=A_m_view;
+							  s_VS.selectedChild=A_s_view;
+							  "/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Button label="D_m" click="
+							  TB.visible=true;
+							  D_m_DG.horizontalScrollPolicy='on';
+							  D_m_DG_Checkbox.width=20;
+							  D_m_DG_Information.width=20;
+							  D_m_DG_Disposition.width=20;
+							  D_m_DG_Name.width=210;
+							  D_m_DG_Description.width=300;
+							  D_m_DG_Property1.width=190;
+							  D_m_DG_Property2.width=190;
+							  D_m_DG_Property3.width=190;
+							  D_m_DG_properties1.visible=true;
+							  D_m_DG.horizontalScrollPolicy='off';
+							  m_VS.width=1140;
+							  d_VS.width=0;
+							  s_VS.width=0;
+							  m_VS.selectedChild=D_m_view;
+							  "/>
+					<s:Button label="D_d" click="
+							  TB.visible=true;
+							  D_m_DG.horizontalScrollPolicy='on';
+							  D_m_DG_Checkbox.width=20;
+							  D_m_DG_Information.width=20;
+							  D_m_DG_Disposition.width=20;
+							  D_m_DG_Name.width=210;
+							  D_m_DG_Description.width=300;
+							  D_m_DG_Property1.width=0;
+							  D_m_DG_Property2.width=0;
+							  D_m_DG_Property3.width=0;
+							  D_m_DG_properties1.visible=false;
+							  D_m_DG.horizontalScrollPolicy='off';
+							  D_d_DG.horizontalScrollPolicy='on';
+							  D_d_DG_Property4.width=190;
+							  D_d_DG_Property5.width=190;
+							  D_d_DG_Property6.width=190;
+							  D_d_DG_properties2.visible=true;
+							  D_d_DG.horizontalScrollPolicy='off';
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=D_m_view;
+							  d_VS.selectedChild=D_d_view;
+							  "/>
+					<s:Button label="D_s" click="
+							  TB.visible=true;
+							  D_m_DG.horizontalScrollPolicy='on';
+							  D_m_DG_Checkbox.width=20;
+							  D_m_DG_Information.width=20;
+							  D_m_DG_Disposition.width=20;
+							  D_m_DG_Name.width=210;
+							  D_m_DG_Description.width=300;
+							  D_m_DG_Property1.width=0;
+							  D_m_DG_Property2.width=0;
+							  D_m_DG_Property3.width=0;
+							  D_m_DG_properties1.visible=false;
+							  D_m_DG.horizontalScrollPolicy='off';
+							  D_sm_DG.horizontalScrollPolicy='on';
+							  D_sm_DG_Checkbox.width=20;
+							  D_sm_DG_Information.width=20;
+							  D_sm_DG_Name.width=215;
+							  D_sm_DG_identification.visible=true;
+							  D_sm_DG.horizontalScrollPolicy='off';
+							  D_sd_DG.horizontalScrollPolicy='on';
+							  D_sd_DG_Property.width=115;
+							  D_sd_DG_Value.width=200;
+							  D_sd_DG_properties.visible=true;
+							  D_sd_DG.horizontalScrollPolicy='off';
+							  m_VS.width=570;
+							  d_VS.width=0;
+							  s_VS.width=570;
+							  m_VS.selectedChild=D_m_view;
+							  s_VS.selectedChild=D_s_view;
+							  "/>
+					<s:Button label="D_p" click="
+							  TB.visible=false;
+							  D_m_DG.horizontalScrollPolicy='on';
+							  D_m_DG_Checkbox.width=20;
+							  D_m_DG_Information.width=20;
+							  D_m_DG_Disposition.width=20;
+							  D_m_DG_Name.width=210;
+							  D_m_DG_Description.width=300;
+							  D_m_DG_Property1.width=0;
+							  D_m_DG_Property2.width=0;
+							  D_m_DG_Property3.width=0;
+							  D_m_DG_properties1.visible=false;
+							  D_m_DG.horizontalScrollPolicy='off';
+							  D_p_DG.horizontalScrollPolicy='on';
+							  D_p_DG_Property.width=150;
+							  D_p_DG_Value.width=420;
+							  D_p_DG_properties.visible=true;
+							  D_p_DG.horizontalScrollPolicy='off';
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=D_m_view;
+							  d_VS.selectedChild=D_p_view;
+							  "/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Button label="W_m" click="
+							  TB.visible=true;
+							  W_m_DG.horizontalScrollPolicy='on';
+							  W_m_DG_Checkbox.width=20;
+							  W_m_DG_Information.width=20;
+							  W_m_DG_Disposition.width=20;
+							  W_m_DG_Sequence.width=20;
+							  W_m_DG_Name.width=230;
+							  W_m_DG_Description.width=150;
+							  W_m_DG_Type.width=130;
+							  W_m_DG_Qualifier.visible=true;
+							  W_m_DG_Qualifier.width=570;
+							  W_m_DG.horizontalScrollPolicy='off';
+							  m_VS.width=1140;
+							  d_VS.width=0;
+							  s_VS.width=0;
+							  m_VS.selectedChild=W_m_view;
+							  "/>
+					<s:Button label="W_d" click="
+							  TB.visible=true;
+							  W_m_DG.horizontalScrollPolicy='on';
+							  W_m_DG_Checkbox.width=20;
+							  W_m_DG_Information.width=20;
+							  W_m_DG_Disposition.width=20;
+							  W_m_DG_Sequence.width=20;
+							  W_m_DG_Name.width=230;
+							  W_m_DG_Description.width=150;
+							  W_m_DG_Type.width=130;
+							  W_m_DG_Qualifier.visible=false;
+							  W_m_DG_Qualifier.width=0;
+							  W_m_DG.horizontalScrollPolicy='off';
+							  W_d_DG.horizontalScrollPolicy='on';
+							  W_d_DG_Property.width=150;
+							  W_d_DG_Value.width=420;
+							  W_d_DG.horizontalScrollPolicy='off';
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=W_m_view;
+							  d_VS.selectedChild=W_d_view;
+							  "/>
+					<s:Button label="W_s" click="
+							  TB.visible=true;
+							  W_m_DG.horizontalScrollPolicy='on';
+							  W_m_DG_Checkbox.width=20;
+							  W_m_DG_Information.width=20;
+							  W_m_DG_Disposition.width=20;
+							  W_m_DG_Sequence.width=20;
+							  W_m_DG_Name.width=230;
+							  W_m_DG_Description.width=150;
+							  W_m_DG_Type.width=130;
+							  W_m_DG_Qualifier.visible=false;
+							  W_m_DG_Qualifier.width=0;
+							  W_m_DG.horizontalScrollPolicy='off';
+							  W_sm_DG.horizontalScrollPolicy='on';
+							  W_sm_DG_Checkbox.width=20;
+							  W_sm_DG_Information.width=20;
+							  W_sm_DG_Name.width=215;
+							  W_sm_DG_identification.visible=true;
+							  W_sm_DG.horizontalScrollPolicy='off';
+							  W_sd_DG.horizontalScrollPolicy='on';
+							  W_sd_DG_Property.width=115;
+							  W_sd_DG_Value.width=200;
+							  W_sd_DG_properties.visible=true;
+							  W_sd_DG.horizontalScrollPolicy='off';
+							  m_VS.width=570;
+							  d_VS.width=0;
+							  s_VS.width=570;
+							  m_VS.selectedChild=W_m_view;
+							  s_VS.selectedChild=W_s_view;
+							  "/>
+					<s:Button label="W_p" click="
+							  TB.visible=false;
+							  W_m_DG.horizontalScrollPolicy='on';
+							  W_m_DG_Checkbox.width=20;
+							  W_m_DG_Information.width=20;
+							  W_m_DG_Disposition.width=20;
+							  W_m_DG_Sequence.width=20;
+							  W_m_DG_Name.width=230;
+							  W_m_DG_Description.width=150;
+							  W_m_DG_Type.width=130;
+							  W_m_DG_Qualifier.visible=false;
+							  W_m_DG_Qualifier.width=0;
+							  W_m_DG.horizontalScrollPolicy='off';
+							  W_p_DG.horizontalScrollPolicy='on';
+							  W_p_DG_Property.width=150;
+							  W_p_DG_Value.width=420;
+							  W_p_DG_properties.visible=true;
+							  W_p_DG.horizontalScrollPolicy='off';
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=W_m_view;
+							  d_VS.selectedChild=W_p_view;
+							  "/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Button label="F_m" click="
+							  TB.visible=true;
+							  F_m_DG.horizontalScrollPolicy='on';
+							  F_m_DG_Checkbox.width=20;
+							  F_m_DG_Information.width=20;
+							  F_m_DG_TypeIcon.width=20;
+							  F_m_DG_Folder.width=160;
+							  F_m_DG_Name.width=110;
+							  F_m_DG_Description.width=140;
+							  F_m_DG_identification.visible=true;
+							  F_m_DG_MemberCount.width=80;
+							  F_m_DG_membercount.visible=true;
+							  F_m_DG_Property1.width=570;
+							  F_m_DG_properties.visible=true;
+							  F_m_DG.horizontalScrollPolicy='on';
+							  m_VS.width=1140;
+							  d_VS.width=0;
+							  s_VS.width=0;
+							  m_VS.selectedChild=F_m_view;
+							  "/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Button label="J_m" click="
+							  TB.visible=false;
+							  J_m_DG.horizontalScrollPolicy='on';
+							  J_m_DG_Checkbox.width=20;
+							  J_m_DG_Information.width=20;
+							  J_m_DG_TypeIcon.width=20;
+							  J_m_DG_Name.width=140;
+							  J_m_DG_Description.width=370;
+							  J_m_DG_identification.visible=true;
+							  J_m_DG.horizontalScrollPolicy='off';
+							  J_d_DG.horizontalScrollPolicy='on';
+							  J_d_DG_Property.width=170;
+							  J_d_DG_Value.width=400;
+							  J_d_DG_properties.visible=true;
+							  J_d_DG.horizontalScrollPolicy='on';
+							  m_VS.width=570;
+							  d_VS.width=570;
+							  s_VS.width=0;
+							  m_VS.selectedChild=J_m_view;
+							  d_VS.selectedChild=J_d_view;
+							  "/>
+				</s:HGroup>
+				<s:HGroup>
+					<s:Button label="S_m" click="
+							  TB.visible=false;
+							  m_VS.width=1140;
+							  d_VS.width=0;
+							  s_VS.width=0;
+							  m_VS.selectedChild=S_m_view;
+							  "/>
+				</s:HGroup>
+				<s:Spacer height="10"/>
+				<s:ButtonBar id="X_m_BB" dataProvider="{X_m_BB_AC}"/>	
+			</s:VGroup>
+			
+			<s:Group width="50%">
+				<s:TabBar id="TB" visible="true"
+						  height="20"
+						  fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold"
+						  dataProvider="{D_TB}"/>				
+<!--change="TB_changeHandler(event)"/-->
+				<!--s:TabBar id="tb" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold" change="TB_changeHandler(event)"-->
+				<!--<s:TabBar id="tb" height="20" fontFamily="Franklin Gothic Medium" fontSize="13" fontWeight="bold" change="(event.newIndex)"-->
+			</s:Group>
+		</s:HGroup>
+		
+<!-- INCREASE HEIGHT TO 100% -->
+		
+		<component:CustomTitleWindow id="CA_TW" title="Configuration blah"
+									 width="100%" height="200" headerHeight="16" borderVisible="false" dropShadowVisible="false" 
+									 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal" 
+									 skinClass="component.CustomTitleWindowSkin">
+			<component:layout>
+				<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</component:layout>
+				
+			<mx:ViewStack id="m_VS" width="1140" height="100%" creationPolicy="all" borderVisible="false">
+				
+				<mx:Box id="A_m_view" width="100%" height="100%" borderVisible="false">				
+					<mx:Accordion width="100%" height="100%" depth="1">
+					
+						<s:NavigatorContent label="Users"
+											width="100%" height="100%">
+							<fx:Script>
+								<![CDATA[
+									[Bindable]
+									private var A_m_u_AC:ArrayCollection = new ArrayCollection(
+										[
+											{checked:"true", UserName:"UserName1", UserId:"UserID1"},
+											{checked:"true", UserName:"UserName2", UserId:"UserID2"}, 
+											{checked:"true", UserName:"UserName3", UserId:"UserID3"}
+										]);
+								]]>
+							</fx:Script>
+							<mx:AdvancedDataGrid id="A_m_u_DG"
+												 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+												 borderVisible="true" depth="1"
+												 sortExpertMode="true" editable="true"
+												 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+												 
+												 
+												 
+												 allowDragSelection="true" allowMultipleSelection="true"
+												 dragEnabled="false" dragMoveEnabled="false"
+												 draggableColumns="true" resizableColumns="false" sortableColumns="true"
+												 dataProvider="{A_m_u_AC}">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn id="A_m_u_DG_Checkbox"
+															   dataField="checked"
+															   width="20" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_m_u_DG_Information"
+															   headerText=""
+															   width="20"/>
+									<mx:AdvancedDataGridColumn id="A_m_u_DG_Disposition" 
+															   width="20"/>
+									<mx:AdvancedDataGridColumnGroup id="A_m_u_DG_identification">							
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_UserID"
+																   headerText="User ID" dataField="UserId"
+																   width="100"/>
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_UserName" headerText="User Name" dataField="UserName"
+																   width="200"/>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="A_m_u_DG_propertiesA" 
+																	headerText="PropertiesA">
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_Property1" 
+																   headerText="Property1" 
+																   width="105"/>
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_Property2"
+																   headerText="Property2" 
+																   width="105"/>	
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="A_m_u_DG_propertiesB"
+																	headerText="PropertiesB">
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_Property3"
+																   headerText="Property3" 
+																   width="570"/>	
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:NavigatorContent>
+						
+						<s:NavigatorContent label="Groups"
+											width="100%" height="100%">
+							<fx:Script>
+								<![CDATA[
+									[Bindable]
+									private var A_m_g_AC:ArrayCollection = new ArrayCollection(
+										[
+											{checked:"true", GroupName:"UserName1", GroupId:"UserID1"},
+											{checked:"true", GroupName:"UserName2", GroupId:"UserID2"}, 
+											{checked:"true", GroupName:"UserName3", GroupId:"UserID3"}
+										]);
+								]]>
+							</fx:Script>
+							<mx:AdvancedDataGrid id="A_m_g_DG"
+												 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+												 borderVisible="true" depth="1"
+												 sortExpertMode="true" editable="true"
+												 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+												 dragEnabled="false" dragMoveEnabled="false"
+												 draggableColumns="true" resizableColumns="false" sortableColumns="true"
+												 dataProvider="{A_m_g_AC}">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn id="A_m_g_DG_Checkbox"
+															   dataField="checked"
+															   width="20" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_m_g_DG_Information"
+															   headerText=""
+															   width="20"/>
+									<mx:AdvancedDataGridColumn id="A_m_g_DG_Disposition" 
+															   width="20"/>
+									<mx:AdvancedDataGridColumnGroup id="A_m_g_DG_identification">							
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_GroupID"
+																   headerText="Group ID" dataField="GroupId"
+																   width="100"/>
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_GroupName" headerText="Group Name" dataField="GroupName"
+																   width="200"/>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="A_m_g_DG_propertiesA" 
+																	headerText="PropertiesA">
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_Property1" 
+																   headerText="Property1" 
+																   width="105"/>
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_Property2"
+																   headerText="Property2" 
+																   width="105"/>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="A_m_g_DG_propertiesB"
+																	headerText="PropertiesB">
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_Property3"
+																   headerText="Property3" 
+																   width="570"/>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:NavigatorContent>
+
+						<s:NavigatorContent label="Roles"
+											width="100%" height="100%">
+							<fx:Script>
+								<![CDATA[
+									[Bindable]
+									private var A_m_r_AC:ArrayCollection = new ArrayCollection(
+										[
+											{checked:"true", RoleName:"UserName1", RoleId:"UserID1"},
+											{checked:"true", RoleName:"UserName2", RoleId:"UserID2"}, 
+											{checked:"true", RoleName:"UserName3", RoleId:"UserID3"}
+										]);
+								]]>
+							</fx:Script>
+							<mx:AdvancedDataGrid id="A_m_r_DG"
+												 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+												 borderVisible="true" depth="1"
+												 sortExpertMode="true" editable="true"
+												 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+												 dragEnabled="false" dragMoveEnabled="false"
+												 draggableColumns="true" resizableColumns="false" sortableColumns="true"
+												 dataProvider="{A_m_r_AC}">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumn id="A_m_r_DG_Checkbox"
+															   dataField="checked"
+															   width="20" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_m_r_DG_Information"
+															   headerText=""
+															   width="20"/>
+									<mx:AdvancedDataGridColumn id="A_m_r_DG_Disposition" 
+															   width="20"/>
+									<mx:AdvancedDataGridColumnGroup id="A_m_r_DG_identification">							
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_RoleID"
+																   headerText="Role ID" dataField="RoleId"
+																   width="100"/>
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_RoleName" headerText="Role Name" dataField="RoleName"
+																   width="200"/>
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="A_m_r_DG_propertiesA" 
+																	headerText="PropertiesA">
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_Property1" 
+																   headerText="Property1" 
+																   width="105"/>
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_Property2"
+																   headerText="Property2" 
+																   width="105"/>	
+									</mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumnGroup id="A_m_r_DG_propertiesB"
+																	headerText="PropertiesB">
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_Property3"
+																   headerText="Property3" 
+																   width="570"/>	
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:NavigatorContent>
+						
+					</mx:Accordion>
+				</mx:Box>
+				
+				<mx:Box id="D_m_view" width="100%" height="100%" borderVisible="false">					
+					<mx:AdvancedDataGrid id="D_m_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="1"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 itemClick="row_click(event)"
+										 dataProvider="{D_m_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumn id="D_m_DG_Checkbox"
+													   dataField="checked" editable="true"
+													   width="20" textAlign="center"
+													   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+													   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+							<mx:AdvancedDataGridColumn id="D_m_DG_Information"
+													   headerText="" editable="false"
+													   width="20" />
+							<mx:AdvancedDataGridColumn id="D_m_DG_Disposition"
+													   headerText="" editable="true"
+													   width="20"/>	
+							<mx:AdvancedDataGridColumnGroup id="D_m_DG_Identification"
+															textAlign="center" headerText="Document Types"
+															width="20">
+								<mx:AdvancedDataGridColumn id="D_m_DG_Name" 
+														   headerText="Name" dataField="Name" editable="true"
+														   width="210"/>
+								<mx:AdvancedDataGridColumn id="D_m_DG_Description"
+														   headerText="Description" dataField="Description"
+														   width="300"/>
+							</mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup id="D_m_DG_properties1" 
+															textAlign="center" headerText="Properties1">
+								<mx:AdvancedDataGridColumn id="D_m_DG_Property1"
+														   headerText="Prop1Name" dataField="Prop1Value"
+														   width="190"/>
+								<mx:AdvancedDataGridColumn id="D_m_DG_Property2"
+														   headerText="Prop2Name" dataField="Prop2Value"
+														   width="190"/>
+								<mx:AdvancedDataGridColumn id="D_m_DG_Property3"
+														   headerText="Prop3Name" dataField="Prop3Value"
+														   width="190"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>			
+				</mx:Box>
+				
+				<mx:Box id="W_m_view" width="100%" height="100%" borderVisible="false">				
+					<mx:AdvancedDataGrid id="W_m_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="1"
+										 treeColumn="{W_m_DG_Name}" sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 dragEnabled="true" dropEnabled="true" dragMoveEnabled="false"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 displayItemsExpanded="false"
+										 itemClick="row_click(event)">
+						<mx:dataProvider>
+							<mx:HierarchicalData source="{W_m_AC}"/>
+						</mx:dataProvider>
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumn id="W_m_DG_Checkbox"
+													   dataField="checked" editable="true"
+													   width="20" textAlign="center"
+													   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+													   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+							<mx:AdvancedDataGridColumn id="W_m_DG_Information"
+													   width="20" editable="false"/>
+							<mx:AdvancedDataGridColumn id="W_m_DG_Disposition"
+													   width="20" editable="true"/>
+							<mx:AdvancedDataGridColumnGroup id="W_m_DG_identification" 
+															headerText="Procedures / Steps / Tasks / Actions" textAlign="left">	
+								<mx:AdvancedDataGridColumn id="W_m_DG_Sequence" 
+														   headerText="#" dataField="Sequence"
+														   width="20"/>
+								<mx:AdvancedDataGridColumn id="W_m_DG_Name" 
+														   headerText="Name" dataField="Name" editable="true"
+														   width="230"/>
+								<mx:AdvancedDataGridColumn id="W_m_DG_Description" 
+														   headerText="Description" dataField="Description" editable="true"
+														   width="150"/>
+								<mx:AdvancedDataGridColumn id="W_m_DG_Type"
+														   headerText="Type" dataField="Type" editable="true">
+								<!--mx:itemRenderer>
+									<fx:Component>
+									<s:DropDownList dataProvider="{W_m_DG_Type_AC}"/>
+									</fx:Component>
+									</mx:itemRenderer-->
+								</mx:AdvancedDataGridColumn>
+							</mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup id="W_m_DG_properties"
+															textAlign="left" headerText="Properties">
+								<mx:AdvancedDataGridColumn id="W_m_DG_Qualifier" 
+														   headerText="Qualifier expression" dataField="Qualifier" editable="true"
+														   width="550"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>									
+				</mx:Box>
+				
+				<mx:Box id="F_m_view" width="100%" height="100%" borderVisible="false">			
+					<mx:AdvancedDataGrid id="F_m_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="1"
+										 treeColumn="{F_m_DG_Folder}" sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto" 
+										 dragEnabled="true" dropEnabled="true" dragMoveEnabled="false"										 
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 displayItemsExpanded="false"
+										 itemClick="row_click(event)">
+						<mx:dataProvider>
+							<mx:HierarchicalData source="{F_m_AC}"/>
+						</mx:dataProvider>
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumn id="F_m_DG_Checkbox"
+													   dataField="checked" editable="true"
+													   width="20" textAlign="center"
+													   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+													   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+							<mx:AdvancedDataGridColumn id="F_m_DG_Information"
+													   width="20" editable="false"/>
+							<mx:AdvancedDataGridColumn id="F_m_DG_TypeIcon"
+													   width="20" editable="true"/>
+							<mx:AdvancedDataGridColumnGroup id="F_m_DG_identification" 
+															headerText="Procedures / Steps / Tasks / Actions" textAlign="left">	
+								<mx:AdvancedDataGridColumn id="F_m_DG_Folder" 
+														   headerText="Folder Tree" dataField="Folder" editable="false"
+														   width="160"/>
+								<mx:AdvancedDataGridColumn id="F_m_DG_Name" 
+														   headerText="Folder Name" dataField="Name" editable="true"
+														   width="110"/>
+								<mx:AdvancedDataGridColumn id="F_m_DG_Description" 
+														   headerText="Description" dataField="Description" editable="true"
+														   width="140"/>
+							</mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup id="F_m_DG_membercount">
+								<mx:AdvancedDataGridColumn id="F_m_DG_MemberCount"
+														   headerText="Members" dataField="" editable="false"
+														   width="80"/>
+							</mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup id="F_m_DG_properties"
+															textAlign="left" headerText="Properties">
+								<mx:AdvancedDataGridColumn id="F_m_DG_Property1" 
+														   headerText="Property1" dataField="" editable="true"
+														   width="570"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>									
+				</mx:Box>
+				
+				<mx:Box id="J_m_view" width="100%" height="100%" borderVisible="false">
+					<mx:AdvancedDataGrid id="J_m_DG"
+										 verticalScrollPolicy="auto"
+										 width="100%" height="100%"	headerHeight="20" rowHeight="20"
+										 treeColumn="{J_m_DG_Name}" indentation="10" sortExpertMode="true" editable="true"
+										 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 displayItemsExpanded="false">
+						<mx:dataProvider>
+							<mx:HierarchicalData source="{J_m_AC}"/>
+						</mx:dataProvider>
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumn id="J_m_DG_Checkbox"
+													   dataField="checked" editable="true"
+													   width="20" textAlign="center"
+													   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+													   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+							<mx:AdvancedDataGridColumn id="J_m_DG_Information"
+													   width="20" editable="false"/>
+							<mx:AdvancedDataGridColumn id="J_m_DG_TypeIcon"
+													   width="20" editable="true"/>
+							<mx:AdvancedDataGridColumnGroup id="J_m_DG_identification" headerText="Job">
+								<mx:AdvancedDataGridColumn id="J_m_DG_Name" 
+														   dataField="Name" editable="true"
+														   width="140" />
+								<mx:AdvancedDataGridColumn id="J_m_DG_Description" 
+														   dataField="Description" editable="true"
+														   width="370"/>			
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</mx:Box>
+				
+				<mx:Box id="S_m_view" width="100%" height="100%" borderVisible="false">
+					
+					<mx:Accordion width="100%" height="100%" depth="1">
+						
+						<s:NavigatorContent label="Category1"
+											width="100%" height="100%">
+							<mx:AdvancedDataGrid depth="3" verticalScrollPolicy="auto"
+												 width="100%" height="100%"	headerHeight="20" rowHeight="20"
+												 treeColumn="{xname1}" indentation="10" sortExpertMode="true" editable="true"
+												 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+												 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+												 displayItemsExpanded="false">
+								<mx:dataProvider>
+									<mx:HierarchicalData source="{S_m_AC}"/>
+								</mx:dataProvider>
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="20" dataField="" editable="false"/>
+									<mx:AdvancedDataGridColumn id="xname1" width="300" dataField="Name" editable="false"/>
+									<mx:AdvancedDataGridColumn width="810" dataField="Value" editable="true"/>
+									<mx:AdvancedDataGridColumn width="20" dataField="" editable="false"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>		
+						</s:NavigatorContent>
+						
+						<s:NavigatorContent label="Category2"
+											width="100%" height="100%">
+							<mx:AdvancedDataGrid depth="3" verticalScrollPolicy="auto"
+												 width="100%" height="100%"	headerHeight="20" rowHeight="20"
+												 treeColumn="{xname2}" indentation="10" sortExpertMode="true" editable="false"
+												 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+												 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+												 displayItemsExpanded="false">
+								<mx:dataProvider>
+									<mx:HierarchicalData source="{S_m_AC}"/>
+								</mx:dataProvider>
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="20" dataField="" editable="false"/>
+									<mx:AdvancedDataGridColumn id="xname2" width="300" dataField="Name" editable="false"/>
+									<mx:AdvancedDataGridColumn width="810" dataField="Value" editable="true"/>
+									<mx:AdvancedDataGridColumn width="20" dataField="" editable="false"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>		
+						</s:NavigatorContent>
+						
+						<s:NavigatorContent label="Category3"
+											width="100%" height="100%">
+							<mx:AdvancedDataGrid depth="3" verticalScrollPolicy="auto"
+												 width="100%" height="100%"	headerHeight="20" rowHeight="20"
+												 treeColumn="{xname3}" indentation="10" sortExpertMode="true" editable="false"
+												 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+												 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+												 displayItemsExpanded="false">
+								<mx:dataProvider>
+									<mx:HierarchicalData source="{S_m_AC}"/>
+								</mx:dataProvider>
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="20" dataField="" editable="false"/>
+									<mx:AdvancedDataGridColumn id="xname3" width="300" dataField="Name" editable="false"/>
+									<mx:AdvancedDataGridColumn width="810" dataField="Value" editable="true"/>
+									<mx:AdvancedDataGridColumn width="20" dataField="" editable="false"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>		
+						</s:NavigatorContent>
+						
+					</mx:Accordion>
+						
+				</mx:Box>
+
+			</mx:ViewStack>
+
+			<mx:ViewStack id="d_VS" width="570" height="100%" creationPolicy="all" borderVisible="false">
+				
+				<mx:Box id="A_d1_view" width="100%" height="100%" borderVisible="false">
+					<mx:AdvancedDataGrid id="A_d1_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="A_d1_DG_properties3"
+															headerText="Properties3">
+								<mx:AdvancedDataGridColumn id="A_d1_DG_Property3"
+														   headerText="Property3" width="570"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</mx:Box>
+				
+				<mx:Box id="A_d2_view" width="100%" height="100%" borderVisible="false">
+					<s:HGroup width="100%" height="100%" gap="0">
+						
+						<s:VGroup width="100%" gap="0" verticalCenter="0">
+							
+							<s:Label text="Groups"/>
+							<s:DropDownList width="100%" prompt="Groups"/>
+						
+							<s:VGroup width="100%" gap="0" verticalCenter="0">
+								<components:CollapsiblePanel id="Section1" title="Group1"
+															 width="100%" height="100%" collapsed="true"
+															 openDuration="100" dropShadowVisible="false"															 
+															 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin">
+									<s:VGroup width="100%" gap="0">
+										<mx:AdvancedDataGrid id="GroupRole1_DG" 
+															 width="100%" height="100%" borderVisible="false"
+															 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+															 allowMultipleSelection="true" 
+															 dragEnabled="true" dragMoveEnabled="true"
+															 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+															 dataProvider="{GroupRole1_AC}">
+											<mx:columns>
+												<mx:AdvancedDataGridColumn dataField="checked"
+																		   width="20" textAlign="center"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn width="20" headerText="" />
+												<mx:AdvancedDataGridColumn width="100" headerText="User ID" dataField="UserId"/>
+												<mx:AdvancedDataGridColumn width="200" headerText="User Name" dataField="UserName"/>
+											</mx:columns>				
+										</mx:AdvancedDataGrid>
+									</s:VGroup>
+								</components:CollapsiblePanel>
+							</s:VGroup>
+							
+							<s:VGroup width="100%" gap="0" verticalCenter="0">				
+								<components:CollapsiblePanel id="Section2" title="Group2"
+															 width="100%" height="100%" collapsed="true"
+															 openDuration="100" dropShadowVisible="false"															 
+															 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin">									<s:VGroup width="100%" gap="0">
+										<mx:AdvancedDataGrid id="GroupRole2_DG"
+															 width="100%" height="100" borderVisible="false"
+															 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+															 allowMultipleSelection="true" 
+															 dragEnabled="true" dragMoveEnabled="true"
+															 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+															 dataProvider="{GroupRole2_AC}">
+											<mx:columns>
+												<mx:AdvancedDataGridColumn dataField="checked"
+																		   width="20" textAlign="center"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn width="20" headerText="" />
+												<mx:AdvancedDataGridColumn width="100" headerText="User ID" dataField="UserId"/>
+												<mx:AdvancedDataGridColumn width="200" headerText="User Name" dataField="UserName"/>
+											</mx:columns>				
+										</mx:AdvancedDataGrid>
+									</s:VGroup>
+								</components:CollapsiblePanel>
+							</s:VGroup>
+						</s:VGroup>
+
+						<s:VGroup width="100%" gap="0" verticalCenter="0">
+							
+							<s:Label text="Roles"/>
+							<s:DropDownList width="100%" prompt="Roles"/>
+							  
+							<s:VGroup width="100%" gap="0" verticalCenter="0">
+								<components:CollapsiblePanel id="Section3" title="Role1"
+															 width="100%" height="100%" collapsed="true"
+															 openDuration="100" dropShadowVisible="false"															 
+															 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin">									<s:VGroup width="100%" gap="0">
+										<mx:AdvancedDataGrid id="GroupRole3_DG"
+															 width="100%" height="100" borderVisible="false"
+															 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+															 allowMultipleSelection="true" 
+															 dragEnabled="true" dragMoveEnabled="true"
+															 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+															 dataProvider="{GroupRole3_AC}">
+											<mx:columns>
+												<mx:AdvancedDataGridColumn dataField="checked"
+																		   width="20" textAlign="center"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																		   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn width="20" headerText="" />
+												<mx:AdvancedDataGridColumn width="100" headerText="User ID" dataField="UserId"/>
+												<mx:AdvancedDataGridColumn width="200" headerText="User Name" dataField="UserName"/>
+											</mx:columns>				
+										</mx:AdvancedDataGrid>
+									</s:VGroup>
+								</components:CollapsiblePanel>
+							</s:VGroup>
+							
+						</s:VGroup>
+					</s:HGroup>	
+				</mx:Box>
+				
+				<mx:Box id="D_d_view" width="100%" height="100%" borderVisible="false">					
+					<mx:AdvancedDataGrid id="D_d_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+										 dataProvider="{D_m_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="D_d_DG_properties2" 
+															textAlign="center" headerText="Properties2">
+								<mx:AdvancedDataGridColumn id="D_d_DG_Property4"
+														   headerText="Prop4Name" dataField="Prop4Value"
+														   width="190"/>
+								<mx:AdvancedDataGridColumn id="D_d_DG_Property5"
+														   headerText="Prop5Name" dataField="Prop5Value"
+														   width="190"/>
+								<mx:AdvancedDataGridColumn id="D_d_DG_Property6"
+														   headerText="Prop6Name" dataField="Prop6Value"
+														   width="190"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>					
+				</mx:Box>
+				
+				<mx:Box id="D_p_view" width="100%" height="100%" borderVisible="false">	
+					<mx:AdvancedDataGrid id="D_p_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 dataProvider="{D_p_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="D_p_DG_properties" 
+															headerText="Properties"
+															textAlign="center" visible="true">
+								<mx:AdvancedDataGridColumn id="D_p_DG_Property" 
+														   headerText="Name" dataField="Property" editable="false"
+														   width="150"/>
+								<mx:AdvancedDataGridColumn id="D_p_DG_Value" 
+														   headerText="Value" dataField="Value" editable="true"
+														   width="420"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</mx:Box>
+		
+				<mx:Box id="W_d_view" width="100%" height="100%" borderVisible="false">	
+					<mx:AdvancedDataGrid id="W_d_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 dataProvider="{W_d_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="W_d_DG_properties" 
+															headerText="Properties"
+															textAlign="center" visible="true">
+								<mx:AdvancedDataGridColumn id="W_d_DG_Property" 
+														   headerText="Name" dataField="Property" editable="false"
+														   width="150"/>
+								<mx:AdvancedDataGridColumn id="W_d_DG_Value" 
+														   headerText="Value" dataField="Value" editable="true"
+														   width="420"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>					
+				</mx:Box>
+												
+				<mx:Box id="W_p_view" width="100%" height="100%" borderVisible="false">
+					<mx:AdvancedDataGrid id="W_p_DG"
+										 width="100%" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 dataProvider="{W_p_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="W_p_DG_properties" 
+															headerText="Properties"
+															textAlign="center" visible="true">
+								<mx:AdvancedDataGridColumn id="W_p_DG_Property" 
+														   headerText="Name" dataField="Property" editable="false"
+														   width="150"/>
+								<mx:AdvancedDataGridColumn id="W_p_DG_Value" 
+														   headerText="Value" dataField="Value" editable="true"
+														   width="420"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</mx:Box>
+				
+				<mx:Box id="J_d_view" width="100%" height="100%" borderVisible="false">
+					<mx:AdvancedDataGrid id="J_d_DG"
+										 width="100%" height="100%"	headerHeight="20" rowHeight="20"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortExpertMode="true" editable="true"
+										 minColumnWidth="0" sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 dataProvider="{J_d_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="J_d_DG_properties"
+															headerText="Properties">
+								<mx:AdvancedDataGridColumn id="J_d_DG_Property" 
+														   headerText="Property" dataField="" editable="false"
+														   width="170"/>
+								<mx:AdvancedDataGridColumn id="J_d_DG_Value"
+														   headerText="Value" dataField="" editable="true"
+														   width="400" />						
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</mx:Box>
+				
+			</mx:ViewStack>
+				
+			<mx:ViewStack id="s_VS" width="570" height="100%" creationPolicy="all" borderVisible="false">
+				
+				<mx:Box id="A_s_view" width="100%" height="100%" borderVisible="false">
+					
+					<s:HGroup width="100%" height="100%" gap="0">
+						
+						<mx:AdvancedDataGrid id="A_sm_DG"
+											 width="250" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+											 borderVisible="true" depth="2"
+											 sortExpertMode="true" editable="true"
+											 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+											 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+							<mx:dataProvider>
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										private var As_sm_AC:ArrayCollection = new ArrayCollection([
+											{DocType:"DocType1"}
+										]);
+									]]>
+								</fx:Script>
+								<mx:HierarchicalData source="{As_sm_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup id="A_sm_DG_identification"
+																textAlign="center" headerText="Buttons here" color="red">
+									<mx:AdvancedDataGridColumn id="A_sm_DG_DocType"
+															   headerText="DocType" dataField="DocType"
+															   width="255"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+						<mx:AdvancedDataGrid id="A_sd_DG"
+											 width="320" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+											 borderVisible="true" depth="3"
+											 sortExpertMode="true" editable="true"
+											 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+											 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+							<mx:dataProvider>
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										private var A_sd_AC:ArrayCollection = new ArrayCollection([
+											{DocType:"DocType1", A1_checked:"true", A2_checked:"true", A3_checked:"true",
+												A4_checked:"true", A5_checked:"true", A6_checked:"true", A7_checked:"true",
+												A8_checked:"true", A9_checked:"true", A10_checked:"true"},
+											{DocType:"DocType2", A1_checked:"true", A2_checked:"true", A3_checked:"true",
+												A4_checked:"true", A5_checked:"true", A6_checked:"true", A7_checked:"true",
+												A8_checked:"true", A9_checked:"true", A10_checked:"true"},
+											{DocType:"DocType3", A1_checked:"true", A2_checked:"true", A3_checked:"true",
+												A4_checked:"true", A5_checked:"true", A6_checked:"true", A7_checked:"true",
+												A8_checked:"true", A9_checked:"true", A10_checked:"true"}
+										]);
+									]]>
+								</fx:Script>
+								<mx:HierarchicalData source="{A_sd_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup id="A_sd_DG_authorities"
+																textAlign="center" headerText="Access Permissions">
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A1"
+															   headerText="A1" dataField="A1_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A2"
+															   headerText="A2" dataField="A2_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A3"
+															   headerText="A3" dataField="A3_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A4"
+															   headerText="A4" dataField="A4_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A5"
+															   headerText="A5" dataField="A5_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A6"
+															   headerText="A6" dataField="A6_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A7"
+															   headerText="A7" dataField="A7_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A8"
+															   headerText="A8" dataField="A8_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A9"
+															   headerText="A9" dataField="A9_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="A_sd_DG_A10"
+															   headerText="A10" dataField="A10_checked"
+															   width="32" textAlign="center"
+															   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+															   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+					</s:HGroup>
+					
+					<s:Spacer width="100%" height="15"/>
+					
+					<!--s:HGroup width="100%" horizontalAlign="left" gap="20">
+						<s:ButtonBar id="D_sd_BB" dataProvider="{D_sd_BB_AC}"/>
+						<s:Button label="Save"/>
+					</s:HGroup-->
+				</mx:Box>
+
+				<mx:Box id="D_s_view" width="100%" height="100%" borderVisible="false">
+					
+					<s:HGroup width="100%" height="100%" gap="0">
+
+					<mx:AdvancedDataGrid id="D_sm_DG"
+										 width="255" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 treeColumn="{D_sm_DG_Name}" sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 displayItemsExpanded="true"
+										 itemClick="row_click(event)">
+						<mx:dataProvider>
+							<mx:HierarchicalData source="{Ds_m_AC}"/>
+						</mx:dataProvider>
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumn id="D_sm_DG_Checkbox"
+														   dataField="checked"
+														   width="20" textAlign="center"
+														   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+														   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+							<mx:AdvancedDataGridColumn id="D_sm_DG_Information"
+														   width="20"/>
+							<mx:AdvancedDataGridColumnGroup id="D_sm_DG_identification"
+															textAlign="center" headerText="Fieldsets/Fields">
+								<mx:AdvancedDataGridColumn id="D_sm_DG_Name"
+														   headerText="Name" dataField="Name"
+														   width="215"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+					
+					<mx:AdvancedDataGrid id="D_sd_DG"
+										 width="315" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="3"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 dataProvider="{Ds_m_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="D_sd_DG_properties"
+															textAlign="center" headerText="Properties">
+								<mx:AdvancedDataGridColumn id="D_sd_DG_Property"
+														   headerText="Name" dataField="Property" editable="false"
+														   width="115"/>
+								<mx:AdvancedDataGridColumn id="D_sd_DG_Value"
+														   headerText="Value" dataField="Value" editable="true"
+														   width="200"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+
+					</s:HGroup>
+
+					<s:Spacer width="100%" height="15"/>
+					
+					<s:HGroup width="100%" horizontalAlign="left" gap="20">
+						<s:ButtonBar id="D_sd_BB" dataProvider="{D_sd_BB_AC}"/>
+						<s:Button label="Save"/>
+					</s:HGroup>
+				</mx:Box>
+				
+				<mx:Box id="W_s_view" width="{s_VS.width}" height="100%" borderVisible="false">	
+					
+					<s:HGroup width="100%" height="100%" gap="0">
+
+					<mx:AdvancedDataGrid id="W_sm_DG"
+										 width="255" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="2"
+										 treeColumn="{W_sm_DG_Name}" sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+										 displayItemsExpanded="true"
+										 itemClick="row_click(event)">
+						<mx:dataProvider>
+							<mx:HierarchicalData source="{W_m_AC}"/>
+						</mx:dataProvider>
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumn id="W_sm_DG_Checkbox"
+													   dataField="checked"
+													   width="20" textAlign="center"
+													   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+													   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+							<mx:AdvancedDataGridColumn id="W_sm_DG_Information"
+													   width="20"/>
+							<mx:AdvancedDataGridColumnGroup id="W_sm_DG_identification"
+															textAlign="center" headerText="Fieldsets/Fields">
+								<mx:AdvancedDataGridColumn id="W_sm_DG_Name"
+														   headerText="Name" dataField="Name"
+														   width="215"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+
+					<mx:AdvancedDataGrid id="W_sd_DG"
+										 width="315" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+										 borderVisible="true" depth="3"
+										 sortExpertMode="true" editable="true"
+										 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+										 sortableColumns="false" resizableColumns="false" draggableColumns="false"
+										 dataProvider="{W_p_AC}">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup id="W_sd_DG_properties"
+															headerText="Properties" textAlign="center">
+								<mx:AdvancedDataGridColumn id="W_sd_DG_Property"
+														   headerText="Name" dataField="Property" editable="false"
+														   width="115"/>
+								<mx:AdvancedDataGridColumn id="W_sd_DG_Value"
+														   headerText="Value" dataField="Value" editable="true"
+														   width="200"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+						
+					</s:HGroup>
+					
+					<s:Spacer width="100%" height="15"/>
+					
+					<s:HGroup width="100%" horizontalAlign="left" gap="20">
+						<s:ButtonBar id="W_sd_BB" dataProvider="{W_sd_BB_AC}"/>
+						<s:Button label="Save"/>
+					</s:HGroup>
+					
+				</mx:Box>
+			
+			</mx:ViewStack>
+
+		</component:CustomTitleWindow>
+		
+		<s:HGroup width="100%" horizontalAlign="left" gap="20">
+			<s:Button label="Save"/>
+		</s:HGroup>
+		
+	</s:BorderContainer>
+
+</s:Application>

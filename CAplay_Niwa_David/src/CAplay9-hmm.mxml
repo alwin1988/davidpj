@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:components="com.shinynet.shinylib.components.*"
+			   xmlns:component="component.*"
+			   minWidth="955" minHeight="600">
+
+	<fx:Script>
+		<![CDATA[
+			public var isKeyboardPress:Boolean = false;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IHierarchicalCollectionView;
+			import mx.collections.IHierarchicalData;
+			import mx.controls.Button;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var fullwidth:Number = 1140;
+			private var halfwidth:Number = 570;
+			private var quarterwidth:Number = 285;
+						
+			[Bindable]
+			private var X_m_BB_AC:ArrayCollection = new ArrayCollection([
+				{label:"dummy"},
+				{label:"dummy"},
+				{label:"dummy"}
+			]);	
+			
+				/*protected function B_A_m_clickHandler(ItemClickEvent:Event):void{
+				A_m_u_DG.dragEnabled=true;
+				A_m_u_DG_propertiesA.visible=true;
+				A_m_u_DG_propertiesB.visible=true;
+				A_m_g_DG.dragEnabled=true;
+				A_m_g_DG_propertiesA.visible=true;
+				A_m_g_DG_propertiesB.visible=true;
+				A_m_r_DG.dragEnabled=true;
+				A_m_r_DG_propertiesA.visible=true;
+				A_m_r_DG_propertiesB.visible=true;
+				}*/
+		]]>			
+	</fx:Script>
+	
+	<s:BorderContainer width="{fullwidth}" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout gap="0" horizontalAlign="left"/>
+		</s:layout>
+		
+		<s:HGroup width="{fullwidth}" horizontalAlign="left" verticalAlign="bottom">
+			<s:VGroup width="{halfwidth}" gap="1">
+				<s:HGroup>
+					<!--s:Button label="A_m" click="B_A_m_clickHandler(event);"/-->
+					<s:Button label="A_M" click="
+							  //A_m_u_DG.dragEnabled=true;
+							  A_m_u_DG_propertiesA.visible=false;
+							  A_m_u_DG_propertiesB.visible=false;
+							  //A_m_g_DG.dragEnabled=true;
+							  A_m_g_DG_propertiesA.visible=false;
+							  A_m_g_DG_propertiesB.visible=false;
+							  //A_m_r_DG.dragEnabled=true;
+							  A_m_r_DG_propertiesA.visible=false;
+							  A_m_r_DG_propertiesB.visible=false;
+							  "/>
+				</s:HGroup>	
+			</s:VGroup>
+		</s:HGroup>
+		
+		<s:ButtonBar id="X_m_BB" dataProvider="{X_m_BB_AC}"/>
+		
+		<component:CustomTitleWindow id="CA_TW" title="Configuration blah"
+									 width="{fullwidth}" height="200" headerHeight="16" borderVisible="true" dropShadowVisible="false" 
+									 fontFamily="Franklin Gothic Medium" fontSize="11" fontWeight="normal" 
+									 skinClass="component.CustomTitleWindowSkin">
+			<component:layout>
+				<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</component:layout>
+			
+			<mx:ViewStack id="CC_VS" width="{fullwidth}" height="100%" creationPolicy="all" borderVisible="false" visible="true">								
+				<s:NavigatorContent id="CC_A_view" width="{fullwidth}" height="100%" visible="true">
+
+					<s:Group id="A_m_view" width="{fullwidth}" height="100%" visible="true">
+						<mx:Accordion width="{fullwidth}" height="100%" depth="1" creationPolicy="all">
+							<s:NavigatorContent label="Users"
+												width="{fullwidth}" height="100%">
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										private var A_m_u_AC:ArrayCollection = new ArrayCollection(
+											[
+												{checked:"true", UserName:"UserName1", UserId:"UserID1"},
+												{checked:"true", UserName:"UserName2", UserId:"UserID2"}, 
+												{checked:"true", UserName:"UserName3", UserId:"UserID3"}
+											]);
+									]]>
+								</fx:Script>
+								<mx:AdvancedDataGrid id="A_m_u_DG"
+													 width="{fullwidth}" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+													 borderVisible="true" depth="1"
+													 sortExpertMode="true" editable="true"
+													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+													 allowDragSelection="true" allowMultipleSelection="true"
+													 dragEnabled="false" dragMoveEnabled="false"
+													 draggableColumns="true" resizableColumns="false" sortableColumns="true"
+													 dataProvider="{A_m_u_AC}">
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_Checkbox"
+																   dataField="checked"
+																   width="20" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_Information"
+																   headerText=""
+																   width="20"/>
+										<mx:AdvancedDataGridColumn id="A_m_u_DG_Disposition" 
+																   width="20"/>
+										<mx:AdvancedDataGridColumnGroup id="A_m_u_DG_identification">							
+											<mx:AdvancedDataGridColumn id="A_m_u_DG_UserID"
+																	   headerText="User ID" dataField="UserId"
+																	   width="100"/>
+											<mx:AdvancedDataGridColumn id="A_m_u_DG_UserName" headerText="User Name" dataField="UserName"
+																	   width="200"/>
+										</mx:AdvancedDataGridColumnGroup>
+										<mx:AdvancedDataGridColumnGroup id="A_m_u_DG_propertiesA" 
+																		headerText="PropertiesA">
+											<mx:AdvancedDataGridColumn id="A_m_u_DG_Property1" 
+																	   headerText="Property1" 
+																	   width="105"/>
+											<mx:AdvancedDataGridColumn id="A_m_u_DG_Property2"
+																	   headerText="Property2" 
+																	   width="105"/>	
+										</mx:AdvancedDataGridColumnGroup>
+										<mx:AdvancedDataGridColumnGroup id="A_m_u_DG_propertiesB"
+																		headerText="PropertiesB">
+											<mx:AdvancedDataGridColumn id="A_m_u_DG_Property3"
+																	   headerText="Property3" 
+																	   width="570"/>	
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+							</s:NavigatorContent>
+							
+							<s:NavigatorContent label="Groups"
+												width="{fullwidth}" height="100%">
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										private var A_m_g_AC:ArrayCollection = new ArrayCollection(
+											[
+												{checked:"true", GroupName:"UserName1", GroupId:"UserID1"},
+												{checked:"true", GroupName:"UserName2", GroupId:"UserID2"}, 
+												{checked:"true", GroupName:"UserName3", GroupId:"UserID3"}
+											]);
+									]]>
+								</fx:Script>
+								<mx:AdvancedDataGrid id="A_m_g_DG"
+													 width="{fullwidth}" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+													 borderVisible="true" depth="1"
+													 sortExpertMode="true" editable="true"
+													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+													 dragEnabled="false" dragMoveEnabled="false"
+													 draggableColumns="true" resizableColumns="false" sortableColumns="true"
+													 dataProvider="{A_m_g_AC}">
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_Checkbox"
+																   dataField="checked"
+																   width="20" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_Information"
+																   headerText=""
+																   width="20"/>
+										<mx:AdvancedDataGridColumn id="A_m_g_DG_Disposition" 
+																   width="20"/>
+										<mx:AdvancedDataGridColumnGroup id="A_m_g_DG_identification">							
+											<mx:AdvancedDataGridColumn id="A_m_g_DG_GroupID"
+																	   headerText="Group ID" dataField="GroupId"
+																	   width="100"/>
+											<mx:AdvancedDataGridColumn id="A_m_g_DG_GroupName" headerText="Group Name" dataField="GroupName"
+																	   width="200"/>
+										</mx:AdvancedDataGridColumnGroup>
+										<mx:AdvancedDataGridColumnGroup id="A_m_g_DG_propertiesA" 
+																		headerText="PropertiesA">
+											<mx:AdvancedDataGridColumn id="A_m_g_DG_Property1" 
+																	   headerText="Property1" 
+																	   width="105"/>
+											<mx:AdvancedDataGridColumn id="A_m_g_DG_Property2"
+																	   headerText="Property2" 
+																	   width="105"/>
+										</mx:AdvancedDataGridColumnGroup>
+										<mx:AdvancedDataGridColumnGroup id="A_m_g_DG_propertiesB"
+																		headerText="PropertiesB">
+											<mx:AdvancedDataGridColumn id="A_m_g_DG_Property3"
+																	   headerText="Property3" 
+																	   width="570"/>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+							</s:NavigatorContent>
+							
+							<s:NavigatorContent label="Roles"
+												width="{fullwidth}" height="100%">
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										private var A_m_r_AC:ArrayCollection = new ArrayCollection(
+											[
+												{checked:"true", RoleName:"UserName1", RoleId:"UserID1"},
+												{checked:"true", RoleName:"UserName2", RoleId:"UserID2"}, 
+												{checked:"true", RoleName:"UserName3", RoleId:"UserID3"}
+											]);
+									]]>
+								</fx:Script>
+								<mx:AdvancedDataGrid id="A_m_r_DG"
+													 width="{fullwidth}" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+													 borderVisible="true" depth="1"
+													 sortExpertMode="true" editable="true"
+													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+													 dragEnabled="false" dragMoveEnabled="false"
+													 draggableColumns="true" resizableColumns="false" sortableColumns="true"
+													 dataProvider="{A_m_r_AC}">
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_Checkbox"
+																   dataField="checked"
+																   width="20" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_Information"
+																   headerText=""
+																   width="20"/>
+										<mx:AdvancedDataGridColumn id="A_m_r_DG_Disposition" 
+																   width="20"/>
+										<mx:AdvancedDataGridColumnGroup id="A_m_r_DG_identification">							
+											<mx:AdvancedDataGridColumn id="A_m_r_DG_RoleID"
+																	   headerText="Role ID" dataField="RoleId"
+																	   width="100"/>
+											<mx:AdvancedDataGridColumn id="A_m_r_DG_RoleName" headerText="Role Name" dataField="RoleName"
+																	   width="200"/>
+										</mx:AdvancedDataGridColumnGroup>
+										<mx:AdvancedDataGridColumnGroup id="A_m_r_DG_propertiesA" 
+																		headerText="PropertiesA">
+											<mx:AdvancedDataGridColumn id="A_m_r_DG_Property1" 
+																	   headerText="Property1" 
+																	   width="105"/>
+											<mx:AdvancedDataGridColumn id="A_m_r_DG_Property2"
+																	   headerText="Property2" 
+																	   width="105"/>	
+										</mx:AdvancedDataGridColumnGroup>
+										<mx:AdvancedDataGridColumnGroup id="A_m_r_DG_propertiesB"
+																		headerText="PropertiesB">
+											<mx:AdvancedDataGridColumn id="A_m_r_DG_Property3"
+																	   headerText="Property3" 
+																	   width="570"/>	
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+							</s:NavigatorContent>							
+						</mx:Accordion>						
+					</s:Group>
+									
+					<s:Group id="A_d1_view" width="0" height="100%" visible="false">
+						<mx:AdvancedDataGrid id="A_d1_DG"
+											 width="{fullwidth}" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+											 borderVisible="true" depth="2"
+											 sortExpertMode="true" editable="true"
+											 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+											 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup id="A_d1_DG_properties3"
+																headerText="Properties3">
+									<mx:AdvancedDataGridColumn id="A_d1_DG_Property3"
+															   headerText="Property3" width="570"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+					</s:Group>
+					
+					<s:Group id="A_d2_view" width="0" height="100%" visible="false">
+						<s:HGroup width="{fullwidth}" height="100%" gap="0">
+							
+							<s:VGroup width="{fullwidth}" gap="0" verticalCenter="0">
+								
+								<s:Label text="Groups"/>
+								<s:DropDownList width="100%" prompt="Groups"/>
+								
+								<s:VGroup width="{fullwidth}" gap="0" verticalCenter="0">
+									<components:CollapsiblePanel id="Section1" title="Group1"
+																 width="100%" height="100%" collapsed="true"
+																 openDuration="100" dropShadowVisible="false"															 
+																 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin">
+										<s:VGroup width="100%" gap="0">
+											<fx:Script>
+												<![CDATA[
+													[Bindable]	
+													private var GroupRole1_AC:ArrayCollection = new ArrayCollection(
+														[
+															{checked:"true", UserName:"UserName4", UserId:"UserID4"},
+														]);
+												]]>
+											</fx:Script>
+											<mx:AdvancedDataGrid id="GroupRole1_DG" 
+																 width="100%" height="100%" borderVisible="false"
+																 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+																 allowMultipleSelection="true" 
+																 dragEnabled="true" dragMoveEnabled="true"
+																 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+																 dataProvider="{GroupRole1_AC}">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn dataField="checked"
+																			   width="20" textAlign="center"
+																			   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																			   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+													<mx:AdvancedDataGridColumn width="20" headerText="" />
+													<mx:AdvancedDataGridColumn width="100" headerText="User ID" dataField="UserId"/>
+													<mx:AdvancedDataGridColumn width="200" headerText="User Name" dataField="UserName"/>
+												</mx:columns>				
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</components:CollapsiblePanel>
+								</s:VGroup>
+								
+								<s:VGroup width="100%" gap="0" verticalCenter="0">				
+									<components:CollapsiblePanel id="Section2" title="Group2"
+																 width="100%" height="100%" collapsed="true"
+																 openDuration="100" dropShadowVisible="false"															 
+																 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin">
+										<s:VGroup width="100%" gap="0">
+											<fx:Script>
+												<![CDATA[
+													[Bindable]	
+													private var GroupRole2_AC:ArrayCollection = new ArrayCollection(
+														[
+															{checked:"true", UserName:"UserName5", UserId:"UserID5"}, 
+														]);
+												]]>
+											</fx:Script>
+											<mx:AdvancedDataGrid id="GroupRole2_DG" 
+																 width="100%" height="100%" borderVisible="false"
+																 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+																 allowMultipleSelection="true" 
+																 dragEnabled="true" dragMoveEnabled="true"
+																 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+																 dataProvider="{GroupRole2_AC}">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn dataField="checked"
+																			   width="20" textAlign="center"
+																			   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																			   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+													<mx:AdvancedDataGridColumn width="20" headerText="" />
+													<mx:AdvancedDataGridColumn width="100" headerText="User ID" dataField="UserId"/>
+													<mx:AdvancedDataGridColumn width="200" headerText="User Name" dataField="UserName"/>
+												</mx:columns>				
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</components:CollapsiblePanel>
+								</s:VGroup>
+							</s:VGroup>
+							
+							<s:VGroup width="100%" gap="0" verticalCenter="0">
+								
+								<s:Label text="Roles"/>
+								<s:DropDownList width="100%" prompt="Roles"/>
+								
+								<s:VGroup width="100%" gap="0" verticalCenter="0">
+									<components:CollapsiblePanel id="Section3" title="Group3"
+																 width="100%" height="100%" collapsed="true"
+																 openDuration="100" dropShadowVisible="false"															 
+																 skinClass="com.shinynet.shinylib.skins.CollapsiblePanelSkin">
+										<s:VGroup width="100%" gap="0">
+											<fx:Script>
+												<![CDATA[
+													[Bindable]	
+													private var GroupRole3_AC:ArrayCollection = new ArrayCollection(
+														[
+															{checked:"true", UserName:"UserName6", UserId:"UserID6"}
+														]);	
+												]]>
+											</fx:Script>
+											<mx:AdvancedDataGrid id="GroupRole3_DG" 
+																 width="100%" height="100%" borderVisible="false"
+																 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+																 allowMultipleSelection="true" 
+																 dragEnabled="true" dragMoveEnabled="true"
+																 horizontalScrollPolicy="auto" verticalScrollPolicy="auto"
+																 dataProvider="{GroupRole3_AC}">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn dataField="checked"
+																			   width="20" textAlign="center"
+																			   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																			   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+													<mx:AdvancedDataGridColumn width="20" headerText="" />
+													<mx:AdvancedDataGridColumn width="100" headerText="User ID" dataField="UserId"/>
+													<mx:AdvancedDataGridColumn width="200" headerText="User Name" dataField="UserName"/>
+												</mx:columns>				
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</components:CollapsiblePanel>
+								</s:VGroup>
+								
+							</s:VGroup>
+						</s:HGroup>	
+					</s:Group>
+					
+					<s:Group id="A_s_view" width="{halfwidth}" height="100%" visible="false">
+						
+						<s:HGroup width="100%" height="100%" gap="0">
+							
+							<mx:AdvancedDataGrid id="A_sm_DG"
+												 width="250" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+												 borderVisible="true" depth="2"
+												 sortExpertMode="true" editable="true"
+												 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+												 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+								<mx:dataProvider>
+									<fx:Script>
+										<![CDATA[
+											[Bindable]
+											private var As_sm_AC:ArrayCollection = new ArrayCollection([
+												{DocType:"DocType1"}
+											]);
+										]]>
+									</fx:Script>
+									<mx:HierarchicalData source="{As_sm_AC}"/>
+								</mx:dataProvider>
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup id="A_sm_DG_identification"
+																	textAlign="center" headerText="Buttons here" color="red">
+										<mx:AdvancedDataGridColumn id="A_sm_DG_DocType"
+																   headerText="DocType" dataField="DocType"
+																   width="255"/>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+							
+							<mx:AdvancedDataGrid id="A_sd_DG"
+												 width="320" height="100%" headerHeight="24" rowHeight="20" minColumnWidth="0" 
+												 borderVisible="true" depth="3"
+												 sortExpertMode="true" editable="true"
+												 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+												 sortableColumns="false" resizableColumns="false" draggableColumns="false">
+								<mx:dataProvider>
+									<fx:Script>
+										<![CDATA[
+											[Bindable]
+											private var A_sd_AC:ArrayCollection = new ArrayCollection([
+												{DocType:"DocType1", A1_checked:"true", A2_checked:"true", A3_checked:"true",
+													A4_checked:"true", A5_checked:"true", A6_checked:"true", A7_checked:"true",
+													A8_checked:"true", A9_checked:"true", A10_checked:"true"},
+												{DocType:"DocType2", A1_checked:"true", A2_checked:"true", A3_checked:"true",
+													A4_checked:"true", A5_checked:"true", A6_checked:"true", A7_checked:"true",
+													A8_checked:"true", A9_checked:"true", A10_checked:"true"},
+												{DocType:"DocType3", A1_checked:"true", A2_checked:"true", A3_checked:"true",
+													A4_checked:"true", A5_checked:"true", A6_checked:"true", A7_checked:"true",
+													A8_checked:"true", A9_checked:"true", A10_checked:"true"}
+											]);
+										]]>
+									</fx:Script>
+									<mx:HierarchicalData source="{A_sd_AC}"/>
+								</mx:dataProvider>
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup id="A_sd_DG_authorities"
+																	textAlign="center" headerText="Access Permissions">
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A1"
+																   headerText="A1" dataField="A1_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A2"
+																   headerText="A2" dataField="A2_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A3"
+																   headerText="A3" dataField="A3_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A4"
+																   headerText="A4" dataField="A4_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A5"
+																   headerText="A5" dataField="A5_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A6"
+																   headerText="A6" dataField="A6_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A7"
+																   headerText="A7" dataField="A7_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A8"
+																   headerText="A8" dataField="A8_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A9"
+																   headerText="A9" dataField="A9_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+										<mx:AdvancedDataGridColumn id="A_sd_DG_A10"
+																   headerText="A10" dataField="A10_checked"
+																   width="32" textAlign="center"
+																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer" 
+																   itemRenderer="component.CheckboxItemRenderer" rendererIsEditor="false"/>
+									</mx:AdvancedDataGridColumnGroup>
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+							
+						</s:HGroup>
+						
+						<s:Spacer width="100%" height="15"/>
+						
+					</s:Group>
+					
+				</s:NavigatorContent>				
+			</mx:ViewStack>
+
+		</component:CustomTitleWindow>
+		
+		<s:HGroup width="100%" horizontalAlign="left" gap="20">
+			<s:Button label="Save"/>
+		</s:HGroup>
+		
+	</s:BorderContainer>
+
+</s:Application>

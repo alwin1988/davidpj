@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   creationComplete = "AppCreationComplete()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.HDividedBox;
+			import mx.controls.Alert;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[bindable] private var DGwidth:Number = 1162;
+			
+			private function AppCreationComplete():void
+			{
+				DivBox.setStyle("horizontalGap",0);
+				PSTA_DG.width = (DGwidth/2);
+				PSTA_DG.includeInLayout = true;
+				PSTA_DG.visible = true;
+				STAtypes.width = 0;
+				STAtypes.includeInLayout = false;
+				STAtypes.visible = false;
+				StepTypes_DG.width = (DGwidth/2);
+				StepTypes_DG.includeInLayout = true;
+				StepTypes_DG.visible = true;
+				TaskTypes_DG.width = 0;
+				TaskTypes_DG.includeInLayout = false;
+				TaskTypes_DG.visible = false;
+				ActionTypes_DG.width = 0;
+				ActionTypes_DG.includeInLayout = false;
+				ActionTypes_DG.visible = false;
+				Props_TB.dataProvider = ArrayCollection(PProps_TB_AC);
+				Props_DG.dataProvider = ArrayCollection(PProps_AC);	
+			}
+		]]>
+	</fx:Script>
+	
+	<s:TitleWindow title="CRUD procedure" width="{DGwidth}" height="600">
+		<s:layout>
+			<s:VerticalLayout gap="0"/>
+		</s:layout>
+		<s:HGroup width="100%" height="24" chromeColor="yellow">
+			<fx:Script>
+				<![CDATA[
+					private function CRUDmode(event):void
+					{
+						DivBox.setStyle("horizontalGap",5);
+						STAtypes.width = DGwidth;
+						STAtypes.includeInLayout = true;
+						STAtypes.visible = true;
+					}
+					
+					private function UnCRUDmode(event):void
+					{
+						STAtypes.width = 0;
+						STAtypes.includeInLayout = false;
+						STAtypes.visible = false;
+						DivBox.setStyle("horizontalGap",0);
+						DivBox.setStyle("numDividers",1);
+					}
+				]]>
+			</fx:Script>
+			<s:Button id="CRUD_Button" label="CRUD" click="CRUDmode(event)"/>
+			<s:Button id="UnCRUD_Button" label="UnCRUD" click="UnCRUDmode(event)"/>
+			<s:Label text="Drag and drop ..."/>
+		</s:HGroup>
+		<mx:HDividedBox id="DivBox"
+						width="100%" height="100%">
+			<s:VGroup width="100%" height="100%">
+				<fx:Script>
+					<![CDATA[
+						[Bindable]
+						private var PSTA_AC:ArrayCollection = new ArrayCollection(
+							[
+								{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
+									Prop1:"Value", children: [
+										{EntityType:"S", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", 
+											Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+											Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+												{EntityType:"T", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", 
+													Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+													Prop4:"Value", Prop5:"Value", Prop6:"Value", children: [
+														{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type",
+															Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+															Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+															Prop7:"Value", Prop8:"Value", Prop9:"Value", checked:false}, 
+														{EntityType:"A", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type",
+															Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+															Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+															Prop7:"Value", Prop8:"Value", Prop9:"Value", checked:false},
+														{EntityType:"A", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type",
+															Qualifier:"Qualifier", Prop1:"Value", Prop2:"Value", Prop3:"Value", 
+															Prop4:"Value", Prop4:"Value", Prop5:"Value", Prop6:"Value", 
+															Prop7:"Value", Prop8:"Value", Prop9:"Value", checked:false},
+													]}
+											]}
+									]}
+							]);	
+					]]>
+				</fx:Script>
+				<mx:AdvancedDataGrid id="PSTA_DG" 
+									 width="100%" height="100%"
+									 displayItemsExpanded="true" treeColumn="{Name}" indentation="10"
+									 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+									 dragEnabled="true" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"	 
+									 itemClick="PSTArowClick(event)">
+					<mx:dataProvider>
+						<mx:HierarchicalData source="{PSTA_AC}"/>
+					</mx:dataProvider>
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup headerText="Procedure / Steps / Tasks / Actions">
+								<mx:AdvancedDataGridColumn headerText="Seq." dataField="Sequence"/>
+								<mx:AdvancedDataGridColumn id="Name" headerText="Name" dataField="Name"/>
+								<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+							</mx:AdvancedDataGridColumnGroup>
+						</mx:AdvancedDataGridColumnGroup>
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+			</s:VGroup>
+			<s:VGroup width="100%" height="100%">
+				<s:Panel id="STAtypes"
+						 width="100%" height="100%" title="Step, Task, and Action Types">
+					<mx:Accordion width="100%" height="100%">
+						<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
+							<s:layout>
+								<s:VerticalLayout/>
+							</s:layout>
+							<fx:Script>
+								<![CDATA[
+									[Bindable]
+									private var STA_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Label:"Step Types", Data:"StepTypes"},
+											{Label:"Task Types", Data:"TaskTypes"},
+											{Label:"Action Types", Data:"ActionTypes"}
+										]);	
+									
+									[Bindable]
+									private var StepTypes_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Name:"StepType1Name", Description:"StepType1Description"},
+											{Name:"StepType2Name", Description:"StepType2Description"},
+											{Name:"StepType3Name", Description:"StepType3Description"}
+										]);	
+									
+									[Bindable]
+									private var TaskTypes_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Name:"TaskType1Name", Description:"TaskType1Description"},
+											{Name:"TaskType2Name", Description:"TaskType2Description"},
+											{Name:"TaskType3Name", Description:"TaskType3Description"}
+										]);	
+									
+									[Bindable]
+									private var ActionTypes_AC:ArrayCollection = new ArrayCollection(
+										[
+											{Name:"ActionType1Name", Description:"ActionType1Description"},
+											{Name:"ActionType2Name", Description:"ActionType2Description"},
+											{Name:"ActionType3Name", Description:"ActionType3Description"}
+										]);	
+									
+									private function TabBarChangeHandler(event:IndexChangeEvent):void 
+									{
+										var STAtypes_TB_Data:Object = event.target.selectedItem as Object;
+										
+										if (STAtypes_TB_Data.Data == "StepTypes")
+										{
+											StepTypes_DG.width = (DGwidth/2);
+											StepTypes_DG.includeInLayout = true;
+											StepTypes_DG.visible = true;
+											TaskTypes_DG.width = 0;
+											TaskTypes_DG.includeInLayout = false;
+											TaskTypes_DG.visible = false;
+											ActionTypes_DG.width = 0;
+											ActionTypes_DG.includeInLayout = false;
+											ActionTypes_DG.visible = false;
+										}
+										if (STAtypes_TB_Data.Data == "TaskTypes")
+										{
+											StepTypes_DG.width = 0;
+											StepTypes_DG.includeInLayout = false;
+											StepTypes_DG.visible = false;
+											TaskTypes_DG.width = (DGwidth/2);
+											TaskTypes_DG.includeInLayout = true;
+											TaskTypes_DG.visible = true;
+											ActionTypes_DG.width = 0;
+											ActionTypes_DG.includeInLayout = false;
+											ActionTypes_DG.visible = false;
+										}
+										if (STAtypes_TB_Data.Data == "ActionTypes")
+										{
+											StepTypes_DG.width = 0;
+											StepTypes_DG.includeInLayout = false;
+											StepTypes_DG.visible = false;
+											TaskTypes_DG.width = 0;
+											TaskTypes_DG.includeInLayout = false;
+											TaskTypes_DG.visible = false;
+											ActionTypes_DG.width = (DGwidth/2);
+											ActionTypes_DG.includeInLayout = true;
+											ActionTypes_DG.visible = true;
+										}
+									}
+								]]>
+							</fx:Script>
+							<s:TabBar id="STAtypes_TB" height="24" labelField="Label" 
+									  dataProvider="{STA_AC}"
+									  change="TabBarChangeHandler(event)">
+							</s:TabBar>
+							<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
+								<mx:AdvancedDataGrid id="StepTypes_DG" 
+													 width="{(DGwidth/2)}" height="100%" visible="true" includeInLayout="true" 
+													 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+													 displayItemsExpanded="true" indentation="0"
+													 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+													 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}">
+									<mx:dataProvider>
+										<mx:HierarchicalData source="{StepTypes_AC}"/>
+									</mx:dataProvider>
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumnGroup>
+											<mx:AdvancedDataGridColumnGroup headerText="Step Types">
+												<mx:AdvancedDataGridColumn headerText="Step Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+											</mx:AdvancedDataGridColumnGroup>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+								<mx:AdvancedDataGrid id="TaskTypes_DG"
+													 width="{(DGwidth/2)}" height="100%" visible="true" includeInLayout="true" 
+													 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+													 displayItemsExpanded="true" indentation="0"
+													 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+													 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}">
+									<mx:dataProvider>
+										<mx:HierarchicalData source="{TaskTypes_AC}"/>
+									</mx:dataProvider>
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumnGroup>
+											<mx:AdvancedDataGridColumnGroup headerText="Task Types">
+												<mx:AdvancedDataGridColumn headerText="Task Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+											</mx:AdvancedDataGridColumnGroup>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+								<mx:AdvancedDataGrid id="ActionTypes_DG" 
+													 width="{(DGwidth/2)}" height="100%" visible="true" includeInLayout="true" 
+													 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+													 displayItemsExpanded="true" indentation="0"
+													 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+													 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}">
+									<mx:dataProvider>
+										<mx:HierarchicalData source="{ActionTypes_AC}"/>
+									</mx:dataProvider>
+									<mx:groupedColumns>
+										<mx:AdvancedDataGridColumnGroup>
+											<mx:AdvancedDataGridColumnGroup headerText="Action Types">
+												<mx:AdvancedDataGridColumn headerText="Action Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+											</mx:AdvancedDataGridColumnGroup>
+										</mx:AdvancedDataGridColumnGroup>
+									</mx:groupedColumns>
+								</mx:AdvancedDataGrid>
+							</s:HGroup>
+						</s:NavigatorContent>
+						<s:NavigatorContent label="Messages" width="100%" height="100%">
+							<s:VGroup width="100%" height="100%"/>
+						</s:NavigatorContent>
+					</mx:Accordion>
+				</s:Panel>
+			</s:VGroup>
+			<s:VGroup>
+				<fx:Script>
+					<![CDATA[
+						[Bindable]
+						private var PProps_TB_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Label:"PProps1", Data:"PProps1"},
+								{Label:"PProps2", Data:"PProps2"},
+								{Label:"PProps3", Data:"PProps3"},
+							]);
+						
+						private var SProps_TB_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Label:"SProps1", Data:"SProps1"},
+								{Label:"SProps2", Data:"SProps2"},
+								{Label:"SProps3", Data:"SProps3"},
+							]);
+						
+						private var TProps_TB_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Label:"TProps1", Data:"TProps1"},
+								{Label:"TProps2", Data:"TProps2"},
+								{Label:"TProps3", Data:"TProps3"},
+							]);
+						
+						private var AProps_TB_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Label:"AProps1", Data:"AProps1"},
+								{Label:"AProps2", Data:"AProps2"},
+								{Label:"AProps3", Data:"AProps3"},
+							]);
+						
+						private var PProps_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Name:"PProperty1Name", Value:"PProperty1Value"},
+								{Name:"PProperty1Name", Value:"PProperty1Value"},
+								{Name:"PProperty1Name", Value:"PProperty1Value"}
+							]);
+						
+						private var SProps_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Name:"SProperty1Name", Value:"SProperty1Value"},
+								{Name:"SProperty1Name", Value:"SProperty1Value"},
+								{Name:"SProperty1Name", Value:"SProperty1Value"}
+							]);
+						
+						private var TProps_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Name:"TProperty1Name", Value:"TProperty1Value"},
+								{Name:"TProperty1Name", Value:"TProperty1Value"},
+								{Name:"TProperty1Name", Value:"TProperty1Value"}
+							]);
+						
+						private var AProps_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Name:"AProperty1Name", Value:"AProperty1Value"},
+								{Name:"AProperty1Name", Value:"AProperty1Value"},
+								{Name:"AProperty1Name", Value:"AProperty1Value"}
+							]);
+						
+						private var Step1_AC:ArrayCollection = new ArrayCollection(
+							[
+								{Name:"S1Property1Name", Value:"S1Property1Value"},
+								{Name:"S1Property1Name", Value:"S1Property1Value"},
+								{Name:"S1Property1Name", Value:"S1Property1Value"}
+							]);
+						
+						private function PSTArowClick(event:ListEvent):void
+						{
+							var PSTAitem:Object = event.target.selectedItem as Object;
+							
+							if (PSTAitem.Name == "Step1Name") {	
+								Props_TB.dataProvider = ArrayCollection(SProps_TB_AC);
+								Props_DG.dataProvider = ArrayCollection(Step1_AC);
+							}
+							else if (PSTAitem.EntityType == "P") {
+								Props_TB.dataProvider = ArrayCollection(PProps_TB_AC);
+								Props_DG.dataProvider = ArrayCollection(PProps_AC);		
+							}
+							else if (PSTAitem.EntityType == "S") {
+								Props_TB.dataProvider = ArrayCollection(SProps_TB_AC);
+								Props_DG.dataProvider = ArrayCollection(SProps_AC);		
+							}
+							else if (PSTAitem.EntityType == "T") {
+								Props_TB.dataProvider = ArrayCollection(TProps_TB_AC);
+								Props_DG.dataProvider = ArrayCollection(TProps_AC);	
+							}
+							else if (PSTAitem.EntityType == "A") {	
+								Props_TB.dataProvider = ArrayCollection(AProps_TB_AC);
+								Props_DG.dataProvider = ArrayCollection(AProps_AC);		
+							}
+						}
+					]]>
+				</fx:Script>
+				
+				<s:TabBar id="Props_TB" labelField="Label"/>
+				<mx:AdvancedDataGrid id="Props_DG">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn headerText="Property Name" dataField="Name"/>
+						<mx:AdvancedDataGridColumn headerText="Property Value" dataField="Value"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+			</s:VGroup>
+		</mx:HDividedBox>
+	</s:TitleWindow>
+	
+</s:Application>

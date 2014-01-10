@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+
+	<fx:Declarations>
+		<s:Animate id="HideFO" target="{FO}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="-100"/>
+		</s:Animate>
+		<s:Animate id="ShowFO" target="{FO}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="-100" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="HideFM" target="{FM}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="-100"/>
+		</s:Animate>
+		<s:Animate id="ShowFM" target="{FM}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="-100" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="MoveFORight" target="{FO}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="100"/>
+		</s:Animate>
+		<s:Animate id="MoveFOLeft" target="{FO}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="100" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="MoveFFRight" target="{FF}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="100"/>
+		</s:Animate>
+		<s:Animate id="MoveFFLeft" target="{FF}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="100" valueTo="0"/>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.effects.AnimateProperty;
+			import spark.effects.Animate;
+			import spark.effects.WipeDirection;
+			
+			[Bindable]
+			private var SwapDuration:Number = 750;
+			
+			private function SwapMasterDG(event:Event):void
+			{
+				if (event.target.selected)
+				{
+					TB.label = 'ShowFormMaster';
+					HideFO.play();
+					//FO.visible=false; FO.includeInLayout = false;
+					FM.visible=true;
+					FM.includeInLayout=true;
+					ShowFM.play();
+				} else {
+					TB.label = 'ShowFieldMaster';
+					HideFM.play();
+					//FM.visible=false; FM.includeInLayout = false;
+					FO.visible=true;
+					FO.includeInLayout=true;
+					ShowFO.play();
+				}
+			}
+			
+			private function SwapMasterDetailDG(event:Event):void
+			{
+				if (event.target.selected)
+				{
+					TB2.label = 'FO/FF';
+					MoveFORight.play();
+					MoveFFLeft.play();
+				} else {
+					TB2.label = 'FF/FO';
+					MoveFOLeft.play();
+					MoveFFRight.play();
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<s:VGroup x="200" width="300" height="162">
+		<s:HGroup width="100%" horizontalAlign="center">
+			<s:ToggleButton id="TB" label="ShowFieldMaster" horizontalCenter="0" click="SwapMasterDG(event);"/>
+			<s:ToggleButton id="TB2" label="FO/FF" horizontalCenter="0" click="SwapMasterDetailDG(event);"/>		
+		</s:HGroup>
+
+		<s:Group height="100">
+			<s:Rect x="0" y="0" width="100" height="135" depth="3">
+				<s:fill>
+					<s:SolidColor color="white" alpha="1"/>
+				</s:fill>
+			</s:Rect>
+			<s:TitleWindow id="VG" title="Grids" x="100" y="0" width="200" depth="2" dropShadowVisible="false">
+				<mx:AdvancedDataGrid id="FO" x="0" width="{VG.width/2}" rowCount="4">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="Forms"/>
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+				
+				<mx:AdvancedDataGrid id="FM" x="0" y="0" width="{VG.width/2}" rowCount="4" visible="false" includeInLayout="false">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="FieldMaster"/>	
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+				
+				<mx:AdvancedDataGrid id="FF" x="{FF.width}" y="0" width="{VG.width/2}" rowCount="4">
+					<mx:groupedColumns>
+						<mx:AdvancedDataGridColumnGroup headerText="FormFields"/>	
+					</mx:groupedColumns>
+				</mx:AdvancedDataGrid>
+			</s:TitleWindow>
+		</s:Group>
+		
+	</s:VGroup>
+	
+</s:Application>

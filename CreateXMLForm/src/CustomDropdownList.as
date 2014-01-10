@@ -4,11 +4,11 @@ package
 	
 	import spark.components.DropDownList;
 	
-	public class DropdownList16Height extends DropDownList
+	public class CustomDropdownList extends DropDownList
 	{
 		private var partArray:Array = new Array();
 		
-		public function DropdownList16Height()
+		public function CustomDropdownList()
 		{
 			super();
 		}

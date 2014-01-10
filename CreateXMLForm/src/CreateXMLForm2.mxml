@@ -285,7 +285,8 @@
 							
 							form.addChild(frmItem);
 						}
-						else if(x[j].@FieldControl == 'ComboBox')
+						//else if(x[j].@FieldControl == 'ComboBox')
+						else if(x[j].@FieldControl == 'DropDownList')
 						{
 							
 							var frmItemCB:FormItem = new FormItem();
@@ -725,7 +726,7 @@
 											visible="true" enabled="false" mouseEnabled="false" 
 											creationComplete="AU_m_DG_Enabled_LB_creationCompleteHandler(event)"
 											click="AU_m_DG_Enabled_LB_clickHandler(event)"/-->
-											<local:DropdownList16Height id="FC_DD" visible="true"
+											<local:CustomDropdownList id="FC_DD" visible="true"
 																		width="{outerDocument.FC.width}"
 																		height="13"
 																		change="AssignFieldControl(event)"
@@ -737,7 +738,7 @@
 																		styleName="DropDownListText"
 																		verticalCenter="0" creationComplete="FC_DD_creationCompleteHandler(event)">
 												
-											</local:DropdownList16Height>
+											</local:CustomDropdownList>
 											<!--
 											creationComplete="AU_m_DG_Enabled_DD_creationCompleteHandler(event)"
 											focusOut="AU_m_DG_Enabled_DD_focusOutHandler(event)"															

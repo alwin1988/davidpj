@@ -23,7 +23,7 @@
 			import mx.collections.XMLListCollection;
 			import mx.core.FlexGlobals;
 			import mx.events.AdvancedDataGridEvent;
-			import mx.events.ItemClickEvent;
+			import mx.events.CloseEvent;
 			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
 			
@@ -363,6 +363,95 @@
 				PopUpManager.centerPopUp(workViewTTW);				
 			}
 			
+			//############################ See: Modify 20140108 - 20140110 ##########################//
+			protected function BatchesTree_itemDoubleClickHandler():void
+			{
+				var node:XML = BatchesTree.selectedItem as XML;
+				var mainRoot:String = node.@root;
+				
+				if ( mainRoot == "1" ) {
+					openCloseDGByTree("BP", !DG_TW1.visible);
+				}
+			}
+			
+			protected function DocumentsTree_itemDoubleClickHandler():void
+			{
+				var node:XML = DocumentsTree.selectedItem as XML;
+				var mainRoot:String = node.@root;
+				
+				if ( mainRoot == "1" ) {
+					openCloseDGByTree("DP", !DG_TW2.visible);
+				}
+			}
+			
+			protected function TransactionsTree_itemDoubleClickHandler():void
+			{
+				var node:XML = TransactionsTree.selectedItem as XML;
+				var selectedLabel:String = node.@label;
+				
+				if ( selectedLabel == "Procedure1" ) {
+					openCloseDGByTree("T1", !DG_TW3_1.visible);
+					
+				} else if ( selectedLabel == "Procedure2" ) {
+					openCloseDGByTree("T2", !DG_TW3_2.visible);
+				}
+			}
+			
+			protected function openCloseDGByTree(type:String, isToggle:Boolean):void
+			{
+				if ( type == "BP" ) { //Batch processing
+					DG_TW1.visible = isToggle;
+					DG_TW1.includeInLayout = isToggle;
+					
+				} else if ( type == "DP" ) { //Document processing
+					DG_TW2.visible = isToggle;
+					DG_TW2.includeInLayout = isToggle;
+					
+				} else if ( type == "T1" ) { //Transactions1
+					DG_TW3_1.visible = isToggle;
+					DG_TW3_1.includeInLayout = isToggle;
+					
+				} else if ( type == "T2" ) { //Transactions2
+					DG_TW3_2.visible = isToggle;
+					DG_TW3_2.includeInLayout = isToggle;
+				}
+			}
+			
+			protected function DG_TW1_closeHandler():void
+			{
+				openCloseDGByTree("BP", false);
+			}
+			
+			protected function DG_TW2_closeHandler():void
+			{
+				openCloseDGByTree("DP", false);
+			}
+			
+			protected function DG_TW3_1_closeHandler():void
+			{
+				openCloseDGByTree("T1", false);
+			}
+			
+			protected function DG_TW3_2_closeHandler():void
+			{
+				openCloseDGByTree("T2", false);
+			}
+			
+			public function chkTreeCheckBoxType(dataProviderType:String, root:String, isToggle:Boolean):void 
+			{
+				if ( (dataProviderType == "BP") || (dataProviderType == "DP") ) {
+					if ( root == "1" ) {
+						openCloseDGByTree(dataProviderType, isToggle);
+					}
+					
+				} else if ( (dataProviderType == "T1") || (dataProviderType == "T2") ) {
+					if ( root != "1" ) {
+						openCloseDGByTree(dataProviderType, isToggle);
+					}
+					
+				}
+			}
+			//############################ See: Modify 20140108 - 20140110 ##########################//
 		]]>
 	</fx:Script>
 	<s:BorderContainer width="100%" height="100%">
@@ -401,12 +490,12 @@
 										[Bindable]
 										public var BatchesTreeList:XMLList = 
 											<>
-												<folder label="Batch Type" isBranch="true" open="true" state="checked">
-													<folder label="ALL BATCH TYPES" isBranch="false" open="true" state="unchecked"/>
-													<folder label="BatchType1" isBranch="true" open="true" state="unchecked">
-														<folder label="SubBatchType1" isBranch="false" open="true" state="unchecked"/>
+												<folder label="Batch Type" isBranch="true" open="true" state="checked" root="1" providerType="BP">
+													<folder label="ALL BATCH TYPES" isBranch="false" open="true" state="unchecked" root="0" providerType="BP"/>
+													<folder label="BatchType1" isBranch="true" open="true" state="unchecked" root="0" providerType="BP">
+														<folder label="SubBatchType1" isBranch="false" open="true" state="unchecked" root="0" providerType="BP"/>
 													</folder>
-													<folder label="BatchType2" isBranch="false" open="true" state="unchecked"/>
+													<folder label="BatchType2" isBranch="false" open="true" state="unchecked" root="0" providerType="BP"/>
 												</folder>
 											</>;
 									]]>
@@ -415,7 +504,9 @@
 										 creationComplete="OpenBatchesTreeNodes()"
 										 dataProvider="{BatchesTree_XC}" defaultLeafIcon="{null}"
 										 folderClosedIcon="{null}" folderOpenIcon="{null}"
-										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer_For_WM"
+										 doubleClickEnabled="true"
+										 itemDoubleClick="BatchesTree_itemDoubleClickHandler()"
 										 labelField="@label" rowHeight="15" styleName="WM_PanelBody">
 								</mx:Tree>
 							</s:VGroup>
@@ -435,9 +526,9 @@
 										[Bindable]
 										public var DocumentsTreeList:XMLList =
 											<>
-												<folder label="ALL DOCUMENT Types" isBranch="true" open="true" state="checked">
-													<folder label="DocType1" isBranch="false" open="true" state="unchecked"/>
-													<folder label="DocType2" isBranch="false" open="true" state="unchecked"/>
+												<folder label="ALL DOCUMENT Types" isBranch="true" open="true" state="checked" root="1" providerType="DP">
+													<folder label="DocType1" isBranch="false" open="true" state="unchecked" root="0" providerType="DP"/>
+													<folder label="DocType2" isBranch="false" open="true" state="unchecked" root="0" providerType="DP"/>
 												</folder>
 											</>;
 									]]>
@@ -446,7 +537,9 @@
 										 creationComplete="OpenDocumentsTreeNodes()"
 										 dataProvider="{DocumentsTree_XC}" defaultLeafIcon="{null}"
 										 folderClosedIcon="{null}" folderOpenIcon="{null}"
-										 itemRenderer="custom_tree_component.CheckTreeRenderer"
+										 doubleClickEnabled="true"
+										 itemDoubleClick="DocumentsTree_itemDoubleClickHandler()"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer_For_WM"
 										 labelField="@label" rowHeight="15" styleName="WM_PanelBody">
 									<!--folderClosedIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
 									folderOpenIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
@@ -468,20 +561,25 @@
 										[Bindable]
 										public var TransactionsTreeList:XMLList =
 											<>
-												<folder label="ALL PROCEDURES" isBranch="true" open="true" state="checked">
-													<folder label="Procedure1" isBranch="false" open="true" state="unchecked"/>
-													<folder label="Procedure2" isBranch="false" open="true" state="unchecked"/>
+												<folder label="ALL PROCEDURES" isBranch="true" open="true" state="checked" providerType="T">
+													<folder label="Procedure1" isBranch="false" open="true" state="unchecked" providerType="T1"/>
+													<folder label="Procedure2" isBranch="false" open="true" state="unchecked" providerType="T2"/>
 												</folder>
 											</>;
 									]]>
 								</fx:Script>
-								<mx:Tree id="TransactionsTree" width="100%" borderVisible="false"
+								<mx:Tree id="TransactionsTree" 
+										 width="100%" borderVisible="false"
 										 creationComplete="OpenDocumentsTreeNodes()"
-										 dataProvider="{TransactionsTree_XC}"
-										 defaultLeafIcon="{null}" folderClosedIcon="{null}"
+										 labelField="@label" rowHeight="15"
+										 folderClosedIcon="{null}"
 										 folderOpenIcon="{null}"
-										 itemRenderer="custom_tree_component.CheckTreeRenderer"
-										 labelField="@label" rowHeight="15" styleName="WM_PanelBody">
+										 defaultLeafIcon="{null}"
+										 styleName="WM_PanelBody"
+										 doubleClickEnabled="true"
+										 itemDoubleClick="TransactionsTree_itemDoubleClickHandler()"
+										 dataProvider="{TransactionsTree_XC}"
+										 itemRenderer="custom_tree_component.CheckTreeRenderer_For_WM">
 									<!--folderClosedIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
 									folderOpenIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"
 									defaultLeafIcon="@Embed(source='Assets.swf',symbol='TreeFolderClosed')"-->
@@ -507,12 +605,11 @@
 					
 					<!--Start of datagrids-->
 					<mx:VDividedBox width="100%" height="100%">
-
-						<component:CustomTitleWindow id="DG_TW1" width="100%" height="100%"
-													 borderVisible="true" dropShadowVisible="false"
-													 headerHeight="18"
+						<component:CustomTitleWindow id="DG_TW1" title="Batches &amp; Objects"
+													 width="100%" height="100%" headerHeight="18"
+													 dropShadowVisible="false" borderVisible="true"
 													 skinClass="skin.CustomTitleWindowSkin"
-													 title="Batches &amp; Objects">
+													 close="DG_TW1_closeHandler()">
 							<mx:Canvas id="C1" x="0" width="100%" height="100%" borderVisible="false"
 									   clipContent="true" horizontalScrollPolicy="auto"
 									   verticalScrollPolicy="auto">
@@ -853,11 +950,11 @@
 							</mx:Canvas>						
 						</component:CustomTitleWindow>
 						
-						<component:CustomTitleWindow id="DG_TW2" width="100%" height="100%"
-													 borderVisible="true" dropShadowVisible="false"
-													 headerHeight="18"
+						<component:CustomTitleWindow id="DG_TW2" title="Document Processing"
+													 width="100%" height="100%" headerHeight="18"
+													 dropShadowVisible="false" borderVisible="true"
 													 skinClass="skin.CustomTitleWindowSkin"
-													 title="Document Processing">
+													 close="DG_TW2_closeHandler()">
 							<mx:Canvas id="C2" x="0" width="100%" height="100%" borderVisible="false"
 									   clipContent="true" horizontalScrollPolicy="auto"
 									   verticalScrollPolicy="auto">
@@ -1129,15 +1226,15 @@
 							
 						</component:CustomTitleWindow>
 						
-						<component:CustomTitleWindow id="DG_TW3" width="100%" height="100%"
-													 borderVisible="true" dropShadowVisible="false"
-													 headerHeight="18"
+						<component:CustomTitleWindow id="DG_TW3_1" title="Transactions Procedure 1"
+													 width="100%" height="100%" headerHeight="18"
+													 dropShadowVisible="false" borderVisible="true"
 													 skinClass="skin.CustomTitleWindowSkin"
-													 title="Transactions">
-							<mx:Canvas id="C3" x="0" width="100%" height="100%" borderVisible="false"
+													 close="DG_TW3_1_closeHandler()">
+							<mx:Canvas id="C31" x="0" width="100%" height="100%" borderVisible="false"
 									   clipContent="true" horizontalScrollPolicy="auto"
 									   verticalScrollPolicy="auto">
-								<s:VGroup id="VG3" height="{C3.height-15}"
+								<s:VGroup id="VG31" height="{C31.height-15}"
 										  clipAndEnableScrolling="true" gap="0" paddingBottom="0"
 										  paddingLeft="0" paddingRight="0" paddingTop="0">
 									
@@ -1174,8 +1271,8 @@
 									</fx:Script>
 									
 									<!--Integrate this group into CustomTitleWindow component [David]-->
-									<s:HGroup width="{DG_TW3.width}" height="{DG_TW3.headerHeight}"
-											  horizontalAlign="right" verticalAlign="baseline">
+									<s:HGroup height="{DG_TW3_1.headerHeight}" width="{DG_TW3_1.width}"
+									horizontalAlign="right" verticalAlign="baseline">
 										<fx:Script>
 											<![CDATA[
 												[Bindable]
@@ -1184,66 +1281,65 @@
 												private function ShrinkExpandTransactions_DG(event:MouseEvent):void
 												{
 													//if (event.target.selected)
-													if (TB3.selected)
+													if (TB31.selected)
 													{
-														TB3.label = 'Expand';
-														Transactions_DG.width = Transactions_DG_tempwidth;
+														TB31.label = 'Expand';
+														Transactions_DG1.width = Transactions_DG_tempwidth;
 												
 													} else {
-														TB3.label = 'Shrink';
-														Transactions_DG_tempwidth = Transactions_DG.width;
+														TB31.label = 'Shrink';
+														Transactions_DG_tempwidth = Transactions_DG1.width;
 													}
 												}
 											]]>
 										</fx:Script>
-										<s:ToggleButton id="TB3" label="Shrink"
-														click="ShrinkExpandTransactions_DG(event)"
-														horizontalCenter="0"/>
+										<s:ToggleButton id="TB31" label="Shrink"
+														horizontalCenter="0" 
+														click="ShrinkExpandTransactions_DG(event)"/>
 									</s:HGroup>
 									
-									<mx:AdvancedDataGrid id="Transactions_DG" width="{DGwidth}"
-														 height="100%" borderVisible="false"
+									<mx:AdvancedDataGrid id="Transactions_DG1" width="{DGwidth}"
+														 height="100%" verticalAlign="middle"
+														 borderVisible="false" 
+														 headerHeight="20"
+														 rowHeight="20"
+														 minColumnWidth="0"
+														 horizontalScrollPolicy="off"
+														 verticalScrollPolicy="off"
+														 draggableColumns="true"
+														 resizableColumns="true"
+														 sortableColumns="true"
+														 sortExpertMode="true" 
+														 styleName="DataGridBody"
+														 headerStyleName="DataGridHeader"
 														 dataProvider="{Transactions_AC}"
 														 doubleClickEnabled="true"
-														 draggableColumns="true" headerHeight="20"
 														 headerRelease="Batches_DG_headerReleaseHandler(event)"
-														 headerStyleName="DataGridHeader"
-														 horizontalScrollPolicy="off"
 														 itemClose="dg_itemCloseHandler(event)"
 														 itemDoubleClick="Transactions_DG_itemDoubleClickHandler(event)"
-														 itemOpen="dg_itemOpenHandler(event)"
-														 minColumnWidth="0" resizableColumns="true"
-														 rowHeight="20" sortableColumns="true"
-														 sortExpertMode="true"
-														 styleName="DataGridBody"
-														 verticalAlign="middle"
-														 verticalScrollPolicy="off">
+														 itemOpen="dg_itemOpenHandler(event)">
 										<mx:columns>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Checkbox"
-																	   width="{(DGwidth-DGwidth)+18}"
-																	   dataField="checked"
-																	   draggable="false"
+
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Checkbox"
+																	   headerText="" dataField="checked" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"										   
+																	   draggable="false" resizable="false" sortable="false"
 																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
-																	   headerText=""
 																	   itemRenderer="component.CheckBoxItemRenderer"
-																	   rendererIsEditor="false"
-																	   resizable="false"
-																	   sortable="false"
-																	   textAlign="center"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Info"
+																	   rendererIsEditor="false"/>
+
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Info"
+																	   dataField="Information" 
 																	   width="{(DGwidth-DGwidth)+18}"
-																	   dataField="Information"
-																	   draggable="false"
-																	   resizable="false"
-																	   sortable="false"
-																	   textAlign="center">
+																	   textAlign="center" draggable="false"
+																	   resizable="false" sortable="false">
+
 												<mx:headerRenderer>
 													<fx:Component>
-														<mx:HBox width="{outerDocument.Transactions_DG_Info.width}"
-																 horizontalAlign="center"
-																 verticalAlign="middle">																
-															<s:Image width="90%" height="90%"
-																	 source="@Embed('assets/iconinfo.png')">
+														<mx:HBox width="{outerDocument.Transactions_DG1_Info.width}"
+																 horizontalAlign="center" verticalAlign="middle">																
+															<s:Image source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+
 																<fx:Script>
 																	<![CDATA[
 																		import mx.controls.Alert;
@@ -1255,9 +1351,8 @@
 												</mx:headerRenderer>
 												<mx:itemRenderer>
 													<fx:Component>
-														<mx:HBox width="{outerDocument.Transactions_DG_Info.width}"
-																 horizontalAlign="center"
-																 verticalAlign="middle">							
+														<mx:HBox width="{outerDocument.Transactions_DG1_Info.width}"
+																 horizontalAlign="center" verticalAlign="middle">							
 															<fx:Script>
 																<![CDATA[
 																	import component.CustomTitleWindow;
@@ -1268,6 +1363,7 @@
 																	import mx.managers.PopUpManager;
 																	//private var ttw:WmTitleWindows = new WmTitleWindows();	
 																	private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	
 																	protected function image1_clickHandler(event:MouseEvent):void
 																	{
 																		ttw.addEventListener(CloseEvent.CLOSE,closePopup);
@@ -1300,108 +1396,242 @@
 												</mx:itemRenderer>
 											</mx:AdvancedDataGridColumn>
 											<!--itemRenderer="component.PriorityItemRenderer"-->
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Priority"
-																	   width="{(DGwidth-DGwidth)+45}"
-																	   minWidth="45"
-																	   dataField="Priority"
-																	   draggable="false"
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Priority" headerText="Priority" dataField="Priority" 
+																	   width="{(DGwidth-DGwidth)+45}" minWidth="45" textAlign="left"
+																	   draggable="false" resizable="false" sortable="true"
+																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_ID" headerText="ID" dataField="ID"
+																	   width="190" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>	
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Field1" headerText="WorkField1" dataField="WorkField1"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Field2" headerText="WorkField2" dataField="WorkField2"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Field3" headerText="WorkField3" dataField="WorkField3"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Field4" headerText="WorkField4" dataField="WorkField4"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Field5" headerText="WorkField5" dataField="WorkField5"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Status" headerText="Status" dataField="Status"
+																	   width="200" minWidth="120" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Started" headerText="Started" dataField="Started"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Completed" headerText="% Completed" dataField="Completed"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"
+																	   itemRenderer="component.CompletionBarItemRenderer"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Estimate" headerText="Est. Completion" dataField="Estimate"
+																	   width="{(DGwidth-DGwidth)+100}"  minWidth="100" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG1_Deadline" headerText="Deadline" dataField="Deadline"
+																	   width="{(DGwidth-DGwidth)+95}"  minWidth="95" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+										</mx:columns>
+									</mx:AdvancedDataGrid>
+									
+								</s:VGroup>
+							</mx:Canvas>						
+						</component:CustomTitleWindow>
+
+						<component:CustomTitleWindow id="DG_TW3_2" title="Transactions Procedure 2"
+													 width="100%" height="100%" headerHeight="18" dropShadowVisible="false" borderVisible="true"
+													 skinClass="skin.CustomTitleWindowSkin" close="DG_TW3_2_closeHandler()">
+							<mx:Canvas id="C32" x="0" width="100%" height="100%" borderVisible="false"
+									   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+								<s:VGroup id="VG32" height="{C32.height-15}"
+										  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
+										  paddingRight="0" paddingTop="0">
+									
+									<fx:Script>
+										<![CDATA[
+											[Bindable]
+											private var Transactions_AC2:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Transaction", Priority:"1", ID:"Transaction1ID", 
+														WorkField1:"WorkField1Value", WorkField2:"WorkField2Value", WorkField3:"WorkField3Value", 
+														WorkField4:"WorkField4Value", WorkField5:"WorkField5Value", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:false},
+													{EntityType:"Transaction", Priority:"1", ID:"Transaction2ID", 
+														WorkField1:"WorkField1Value", WorkField1:"WorkField2Value", WorkField3:"WorkField3Value", 
+														WorkField3:"WorkField4Value", WorkField4:"WorkField5Value", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:false},
+													{EntityType:"Transaction", Priority:"1", ID:"Transaction3ID", 
+														WorkField1:"WorkField1Value", WorkField1:"WorkField2Value", WorkField3:"WorkField3Value", 
+														WorkField3:"WorkField4Value", WorkField4:"WorkField5Value", Status:"StatusValue", 
+														Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+														checked:false},
+												]);
+											
+											[Bindable]
+											private var TransactionObjects_AC2:ArrayCollection = new ArrayCollection(
+												[
+													{EntityType:"Transaction", TransactionID:"Doc1ID", ThumbImage:"1T.png", Image:"1.png"},
+													{EntityType:"Transaction", TransactionID:"Doc2ID", ThumbImage:"2T.png", Image:"2.png"},
+													{EntityType:"Transaction", TransactionID:"Doc3ID", ThumbImage:"3T.png", Image:"3.png"}
+												]);
+										]]>
+									</fx:Script>
+									
+									<!--Integrate this group into CustomTitleWindow component [David]-->
+									<s:HGroup height="{DG_TW3_2.headerHeight}" width="{DG_TW3_2.width}"
+											  horizontalAlign="right" verticalAlign="baseline">
+										<fx:Script>
+											<![CDATA[
+												[Bindable]
+												//private var Transactions_DG_tempwidth:Number;
+												
+												private function ShrinkExpandTransactions_DG2(event:MouseEvent):void
+												{
+													//if (event.target.selected)
+													//if (TB32.selected)
+													//{
+													//	TB32.label = 'Expand';
+													//	Transactions_DG2.width = Transactions_DG_tempwidth;
+														
+													//} else {
+													//	TB32.label = 'Shrink';
+													//	Transactions_DG_tempwidth = Transactions_DG2.width;
+													//}
+												}
+											]]>
+										</fx:Script>
+										<s:ToggleButton id="TB32" label="Shrink" horizontalCenter="0" 
+														click="ShrinkExpandTransactions_DG2(event)"/>
+									</s:HGroup>
+									
+									<mx:AdvancedDataGrid id="Transactions_DG2"
+														 width="{DGwidth}" height="100%" verticalAlign="middle" borderVisible="false" 
+														 headerHeight="20" rowHeight="20" minColumnWidth="0"
+														 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+														 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+														 sortExpertMode="true" 
+														 styleName="DataGridBody" headerStyleName="DataGridHeader"
+														 doubleClickEnabled="true" 
+														 dataProvider="{Transactions_AC}"
+														 itemDoubleClick="advanceddatagrid_itemDoubleClickHandler(event)"
+														 itemOpen="dg_itemOpenHandler(event)"
+														 itemClose="dg_itemCloseHandler(event)"
+														 headerRelease="Batches_DG_headerReleaseHandler(event)"
+														 >
+										<mx:columns>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Checkbox" headerText="" dataField="checked" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"										   
+																	   draggable="false" resizable="false" sortable="false"
+																	   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																	   itemRenderer="component.CheckBoxItemRenderer"
+																	   rendererIsEditor="false"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Info" dataField="Information" 
+																	   width="{(DGwidth-DGwidth)+18}" textAlign="center"
+																	   draggable="false" resizable="false" sortable="false">
+												<mx:headerRenderer>
+													<fx:Component>
+														<mx:HBox width="{outerDocument.Transactions_DG2_Info.width}" horizontalAlign="center" verticalAlign="middle">																
+															<s:Image 
+																source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+																<fx:Script>
+																	<![CDATA[
+																		import mx.controls.Alert;
+																	]]>
+																</fx:Script>
+															</s:Image>
+														</mx:HBox>						
+													</fx:Component>							
+												</mx:headerRenderer>
+												<mx:itemRenderer>
+													<fx:Component>
+														<mx:HBox width="{outerDocument.Transactions_DG2_Info.width}" horizontalAlign="center" verticalAlign="middle">							
+															<fx:Script>
+																<![CDATA[
+																	import component.CustomTitleWindow;
+																	
+																	import mx.containers.TitleWindow;
+																	import mx.core.FlexGlobals;
+																	import mx.events.CloseEvent;
+																	import mx.managers.PopUpManager;
+																	//private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	private var ttw:WmTitleWindows = new WmTitleWindows();	
+																	protected function image1_clickHandler(event:MouseEvent):void
+																	{
+																		ttw.addEventListener(CloseEvent.CLOSE,closePopup);
+																		ttw.ld = data;
+																		PopUpManager.addPopUp(ttw,FlexGlobals.topLevelApplication as DisplayObject,true);
+																		PopUpManager.centerPopUp(ttw);
+																		ttw.setData();
+																		
+																	}
+																	
+																	protected function closePopup(event:Event):void
+																	{
+																		PopUpManager.removePopUp(ttw);										
+																	}
+																	
+																]]>
+															</fx:Script>
+															
+															<s:Image click="image1_clickHandler(event)"
+																	 source="@Embed('assets/iconinfo.png')" height="90%" width="90%">
+																<fx:Script>
+																	<![CDATA[
+																		import mx.controls.Alert;
+																	]]>
+																</fx:Script>
+															</s:Image>
+														</mx:HBox>						
+													</fx:Component>
+												</mx:itemRenderer>
+											</mx:AdvancedDataGridColumn>
+											<!--itemRenderer="component.PriorityItemRenderer"-->
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Priority"
 																	   headerText="Priority"
-																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"
-																	   resizable="false"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_ID"
-																	   width="190" dataField="ID"
-																	   draggable="true"
-																	   headerText="ID"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>	
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Field1"
-																	   width="100" minWidth="100"
-																	   dataField="WorkField1"
-																	   draggable="true"
-																	   headerText="WorkField1"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Field2"
-																	   width="100" minWidth="100"
-																	   dataField="WorkField2"
-																	   draggable="true"
-																	   headerText="WorkField2"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Field3"
-																	   width="100" minWidth="100"
-																	   dataField="WorkField3"
-																	   draggable="true"
-																	   headerText="WorkField3"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Field4"
-																	   width="100" minWidth="100"
-																	   dataField="WorkField4"
-																	   draggable="true"
-																	   headerText="WorkField4"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Field5"
-																	   width="100" minWidth="100"
-																	   dataField="WorkField5"
-																	   draggable="true"
-																	   headerText="WorkField5"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Status"
-																	   width="200" minWidth="120"
-																	   dataField="Status"
-																	   draggable="true"
-																	   headerText="Status"
-																	   resizable="true"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Started"
-																	   width="{(DGwidth-DGwidth)+105}"
-																	   minWidth="105"
-																	   dataField="Started"
-																	   draggable="true"
-																	   headerText="Started"
-																	   resizable="false"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Completed"
-																	   width="{(DGwidth-DGwidth)+105}"
-																	   minWidth="105"
-																	   dataField="Completed"
-																	   draggable="true"
-																	   headerText="% Completed"
-																	   itemRenderer="component.CompletionBarItemRenderer"
-																	   resizable="false"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Estimate"
-																	   width="{(DGwidth-DGwidth)+100}"
-																	   minWidth="100"
-																	   dataField="Estimate"
-																	   draggable="true"
-																	   headerText="Est. Completion"
-																	   resizable="false"
-																	   sortable="true"
-																	   textAlign="left"/>
-											<mx:AdvancedDataGridColumn id="Transactions_DG_Deadline"
-																	   width="{(DGwidth-DGwidth)+95}"
-																	   minWidth="95"
-																	   dataField="Deadline"
-																	   draggable="true"
-																	   headerText="Deadline"
-																	   resizable="false"
-																	   sortable="true"
-																	   textAlign="left"/>
+																	   dataField="Priority" 
+																	   width="{(DGwidth-DGwidth)+45}"
+																	   minWidth="45" textAlign="left"
+																	   draggable="false" resizable="false" sortable="true"
+																	   itemRenderer="component.PopUpButtonItemRenderer_Priority"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_ID" headerText="ID" dataField="ID"
+																	   width="190" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>	
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Field1" headerText="WorkField1" dataField="WorkField1"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Field2" headerText="WorkField2" dataField="WorkField2"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Field3" headerText="WorkField3" dataField="WorkField3"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Field4" headerText="WorkField4" dataField="WorkField4"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Field5" headerText="WorkField5" dataField="WorkField5"
+																	   width="100" minWidth="100" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Status" headerText="Status" dataField="Status"
+																	   width="200" minWidth="120" textAlign="left"
+																	   draggable="true" resizable="true" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Started" headerText="Started" dataField="Started"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Completed" headerText="% Completed" dataField="Completed"
+																	   width="{(DGwidth-DGwidth)+105}"  minWidth="105" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"
+																	   itemRenderer="component.CompletionBarItemRenderer"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Estimate" headerText="Est. Completion" dataField="Estimate"
+																	   width="{(DGwidth-DGwidth)+100}"  minWidth="100" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
+											<mx:AdvancedDataGridColumn id="Transactions_DG2_Deadline" headerText="Deadline" dataField="Deadline"
+																	   width="{(DGwidth-DGwidth)+95}"  minWidth="95" textAlign="left"
+																	   draggable="true" resizable="false" sortable="true"/>
 										</mx:columns>
 									</mx:AdvancedDataGrid>
 									

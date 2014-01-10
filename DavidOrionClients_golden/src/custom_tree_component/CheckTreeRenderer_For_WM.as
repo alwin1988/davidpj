@@ -125,7 +125,7 @@ package custom_tree_component
 				var dataProviderType:String = data.@providerType;
 				
 				var myListData:TreeListData=TreeListData(this.listData);
-				var selectedNode:Object=myListData.item;
+				//var selectedNode:Object=myListData.item;
 				var tree:Tree=Tree(myListData.owner);
 				var toggle:Boolean=myCheckBox.selected;
 				if (toggle)

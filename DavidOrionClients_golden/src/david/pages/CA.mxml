@@ -68,8 +68,11 @@
 			{
 				var TB_Data:Object = event.currentTarget.selectedItem as Object;
 				
-				if (CategoryAlias == "WP" && TB_Data.Data == "1") {
-					CategoryView = "1";
+				if (CategoryAlias == "WP" && TB_Data.Data == "CRUD") {
+					CategoryView = "CRUD";
+				}			
+				else if (CategoryAlias == "WP" && TB_Data.Data == "Forms") {
+					CategoryView = "Forms";
 				}
 				
 				SetCAView(CategoryAlias, CategoryView);
@@ -211,17 +214,6 @@
 				{
 					//Workflow Management
 					TB.visible = true;
-					TB.dataProvider = W_TB_AC;
-					DG_TW.title = 'Procedures / Plans';
-					m_VS.selectedChild = W_m_view;
-					W_m_view.percentWidth = DGwidth;
-					W_m_view.includeInLayout = true;
-					W_m_view.visible = true;
-					W_m_DG.width = DGwidth;
-					W_m_DG.percentHeight = 100;
-					W_m_DG.horizontalScrollPolicy ='on';
-					//
-					W_m_DG.horizontalScrollPolicy ='off';
 				}
 				if (CategoryAlias == "WX") 
 				{
@@ -230,19 +222,31 @@
 				}
 				if (CategoryAlias == "WP")
 				{
-
+					TB.dataProvider = WP_TB_AC;
+					DG_TW.title = 'Procedures / Plans';
+					m_VS.selectedChild = WP_m_view;
 				}
 				if (CategoryAlias == "WP" && CategoryView == "Main")
 				{
 					ClearAll();
-					m_VS.selectedChild = WP_m_view;
-					WP_m_view.percentWidth = 100;
+					WP_m_view.percentWidth = DGpercentwidth;
 					WP_m_view.includeInLayout = true;
 					WP_m_view.visible = true;
+					WP_m_DG.width = DGwidth;
+					WP_m_DG.percentHeight = 100;
+					WP_m_DG.horizontalScrollPolicy ='on';
+					//
+					WP_m_DG.horizontalScrollPolicy ='off';
 				}
-				if (CategoryAlias == "WP" && CategoryView == "1")
+				if (CategoryAlias == "WP" && CategoryView == "CRUD")
 				{
-					WP_m_view.percentWidth = 100;
+					WP_m_view.percentWidth = (DGpercentwidth/2);
+					W_d_VS.percentWidth = (DGwidth/2);
+					W_d_VS.includeInLayout = true;
+					W_d_VS.visible = true;
+					WP_CRUD_view.percentWidth = (DGwidth/2);
+					WP_CRUD_view.includeInLayout = true;
+					WP_CRUD_view.visible = true;
 				}
 				if (CategoryAlias == "WS")
 				{
@@ -264,28 +268,23 @@
 				}
 				if (CategoryAlias == "WF" && CategoryView == "Main")
 				{
-					DG_TW.title = 'Forms dammit';
-					//The left viewstack was included and made visible already
-					
-					m_VS.percentWidth = 50; //Set left view to 50%
-					m_VS.selectedChild = WF_m_view; //Set the left view
-					
-					WF_m_view.percentWidth = 100; //Set the left view to 100% (of 50%)
-					WF_m_view.includeInLayout = true; //Include the left view in layout
-					WF_m_view.visible = true; //Make the left view visible
-					
-					W_d_VS.percentWidth = 50; //Set right viewstack to 50%
+					DG_TW.title = 'Forms';
+					m_VS.percentWidth = 50;
+					m_VS.selectedChild = WF_m_view;
+					WF_m_view.percentWidth = 100;
+					WF_m_view.includeInLayout = true;
+					WF_m_view.visible = true;
+					W_d_VS.percentWidth = 50;
 					W_d_VS.percentHeight = 100;
-					W_d_VS.includeInLayout = true; //Include the right viewstack in layout
-					W_d_VS.visible = true; //Make the right viewstack visible
-					W_d_VS.selectedChild = WF_d1_view; //Set the right view
-					WF_d1_view.percentWidth = 100; //Set the right view to 100% (of 50%)
-					WF_d1_view.percentHeight = 100;
-					WF_d1_view.includeInLayout = true; //Include the right view in layout
-					WF_d1_view.visible = true; //Make the right view visible
-					
-					WF_m_DG.width = (DGwidth/2); //Set the left DG width to half=50% (of 1162 = 581)
-					WF_m_DG.percentHeight = 100; //Set the left DG height to 100%
+					W_d_VS.includeInLayout = true;
+					W_d_VS.visible = true;
+					W_d_VS.selectedChild = WF_Forms_view;
+					WF_Forms_view.percentWidth = 100;
+					WF_Forms_view.percentHeight = 100;
+					WF_Forms_view.includeInLayout = true;
+					WF_Forms_view.visible = true;
+					WF_m_DG.width = (DGwidth/2);
+					WF_m_DG.percentHeight = 100;
 				}
 				if (CategoryAlias == "WQ")
 				{
@@ -498,7 +497,7 @@
 										]},
 										{Category:"Fieldsets / Fields", Alias:"FF"},
 										{Category:"Folders", Alias:"FD"},
-										{Category:"Work Management", Alias:"W", children: [
+										{Category:"Work Management", Alias:"WX", children: [
 											{Category:"Procedures / Plans", Alias:"WP"},
 											{Category:"Steps Types / Steps", Alias:"WS"},
 											{Category:"Task Types / Tasks", Alias:"WT"},
@@ -574,7 +573,6 @@
 							<s:NavigatorContent id="AU_m_view" includeInLayout="false" visible="false">
 								<fx:Script>
 									<![CDATA[
-										[Bindable]
 										[Bindable]
 										private var AU_TB_AC:ArrayCollection = new ArrayCollection(
 											[
@@ -1450,18 +1448,19 @@
 								
 							</s:NavigatorContent> <!--Folder master view-->
 							
-							<!--Workflow master view-->
-							<s:NavigatorContent id="W_m_view" includeInLayout="false" visible="false">
+							<!--Workflow procedure master view-->
+							<s:NavigatorContent id="WP_m_view" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
 										[Bindable]
-										private var W_TB_AC:ArrayCollection = new ArrayCollection([
-											{Label:"1", Data:"1"}
+										private var WP_TB_AC:ArrayCollection = new ArrayCollection([
+											{Label:"CRUD", Data:"CRUD"},
+											{Label:"Forms", Data:"Forms"}
 										]);
 										
 										[Bindable]	
-										private var W_m_AC:ArrayCollection = new ArrayCollection(
+										private var WP_m_AC:ArrayCollection = new ArrayCollection(
 											[
 												{EntityType:"P", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", 
 													Prop1:"Value", children: [
@@ -1560,12 +1559,12 @@
 									]]>
 								</fx:Script>
 								
-								<mx:AdvancedDataGrid id="W_m_DG"
+								<mx:AdvancedDataGrid id="WP_m_DG"
 													 width="{DGwidth}" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
 													 headerHeight="18" rowHeight="20" minColumnWidth="0"
 													 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-													 displayItemsExpanded="true" treeColumn="{W_m_DG_Name}" indentation="10"
+													 displayItemsExpanded="true" treeColumn="{WP_m_DG_Name}" indentation="10"
 													 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
 													 dragEnabled="false" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
 													 draggableColumns="true" resizableColumns="true" sortableColumns="false"
@@ -1573,138 +1572,56 @@
 													 allowMultipleSelection="true" editable="false">
 									<!-- itemClick="row_click(event)" -->
 									<mx:dataProvider>
-										<mx:HierarchicalData source="{W_m_AC}"/>
+										<mx:HierarchicalData source="{WP_m_AC}"/>
 									</mx:dataProvider>
 									<mx:groupedColumns>
-										<mx:AdvancedDataGridColumn id="W_m_DG_Checkbox"
+										<mx:AdvancedDataGridColumn id="WP_m_DG_Checkbox"
 																   dataField="checked" textAlign="center"
 																   width="{(DG_TW.width-DG_TW.width)+18}"
 																   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																   itemRenderer="component.CheckBoxItemRenderer"
 																   rendererIsEditor="false"/>
-										<mx:AdvancedDataGridColumn id="W_m_DG_Information"
+										<mx:AdvancedDataGridColumn id="WP_m_DG_Information"
 																   width="{(DG_TW.width-DG_TW.width)+20}"/>
-										<mx:AdvancedDataGridColumn id="W_m_DG_Enabled"
+										<mx:AdvancedDataGridColumn id="WP_m_DG_Enabled"
 																   editable="false"
 																   width="{DG_TW.width-DG_TW.width+40}"/>
-										<mx:AdvancedDataGridColumnGroup id="W_m_DG_identification"
+										<mx:AdvancedDataGridColumnGroup id="WP_m_DG_identification"
 																		headerText="Procedures / Steps / Tasks / Actions"
 																		textAlign="left">	
-											<mx:AdvancedDataGridColumn id="W_m_DG_Sequence" width="20"
+											<mx:AdvancedDataGridColumn id="WP_m_DG_Sequence" width="20"
 																	   dataField="Sequence" headerText="#"/>
-											<mx:AdvancedDataGridColumn id="W_m_DG_Name" width="230"
+											<mx:AdvancedDataGridColumn id="WP_m_DG_Name" width="230"
 																	   dataField="Name" editable="true"
 																	   headerText="Name"/>
-											<mx:AdvancedDataGridColumn id="W_m_DG_Description" width="150"
+											<mx:AdvancedDataGridColumn id="WP_m_DG_Description" width="150"
 																	   dataField="Description" editable="true"
 																	   headerText="Description"/>
-											<mx:AdvancedDataGridColumn id="W_m_DG_Type" dataField="Type"
+											<mx:AdvancedDataGridColumn id="WP_m_DG_Type" dataField="Type"
 																	   editable="true" headerText="Type">
 												<!--mx:itemRenderer>
 												<fx:Component>
-												<s:DropDownList dataProvider="{W_m_DG_Type_AC}"/>
+												<s:DropDownList dataProvider="{WP_m_DG_Type_AC}"/>
 												</fx:Component>
 												</mx:itemRenderer-->
 											</mx:AdvancedDataGridColumn>
 										</mx:AdvancedDataGridColumnGroup>
-										<mx:AdvancedDataGridColumnGroup id="W_m_DG_qualifier"
+										<mx:AdvancedDataGridColumnGroup id="WP_m_DG_qualifier"
 																		headerText="Qualifier" textAlign="left">
-											<mx:AdvancedDataGridColumn id="W_m_DG_Qualifier" width="550"
+											<mx:AdvancedDataGridColumn id="WP_m_DG_Qualifier" width="550"
 																	   dataField="Qualifier" editable="true"
 																	   headerText="Qualifier expression"/>
 										</mx:AdvancedDataGridColumnGroup>
-										<mx:AdvancedDataGridColumnGroup id="W_m_DG_properties1"
+										<mx:AdvancedDataGridColumnGroup id="WP_m_DG_properties1"
 																		headerText="Properties 1" 
 																		width="581" textAlign="left" visible="false"/>
-										<mx:AdvancedDataGridColumnGroup id="W_m_DG_properties2"
+										<mx:AdvancedDataGridColumnGroup id="WP_m_DG_properties2"
 																		headerText="Properties 2" 
 																		width="581" textAlign="left" visible="false"/>
 									</mx:groupedColumns>
 								</mx:AdvancedDataGrid>
 								
-							</s:NavigatorContent> <!--Workflow master view-->
-							
-							<!-- WIP workflow master view -->
-							<s:NavigatorContent id="WP_m_view" width="100%" height="100%" includeInLayout="false" visible="false">
-								
-								<s:TitleWindow title="CRUD procedure" width="1162" height="600">
-									<s:layout>
-										<s:VerticalLayout gap="0"/>
-									</s:layout>
-									<s:HGroup width="100%" height="24" chromeColor="yellow">
-										<s:Label text="Drag and drop ..."/>
-									</s:HGroup>
-									<mx:HDividedBox width="100%" height="100%">
-										<s:VGroup width="100%" height="100%">
-											<mx:AdvancedDataGrid width="100%" height="100%">
-												<mx:groupedColumns>
-													<mx:AdvancedDataGridColumnGroup>
-														<mx:AdvancedDataGridColumnGroup headerText="Procedure / Steps / Tasks / Actions">
-															<mx:AdvancedDataGridColumn headerText="Seq."/>
-															<mx:AdvancedDataGridColumn headerText="Name"/>
-															<mx:AdvancedDataGridColumn headerText="Description"/>
-														</mx:AdvancedDataGridColumnGroup>
-													</mx:AdvancedDataGridColumnGroup>
-												</mx:groupedColumns>
-											</mx:AdvancedDataGrid>
-										</s:VGroup>
-										<s:VGroup width="100%" height="100%">
-											<s:Panel width="100%" height="100%" title="Step, Task, and Action Types">
-												<mx:Accordion width="100%" height="100%">
-													<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
-														<s:layout>
-															<s:VerticalLayout/>
-														</s:layout>
-														<s:TabBar height="24">
-															<mx:ArrayCollection>
-																<fx:String>Steps</fx:String>
-																<fx:String>Tasks</fx:String>
-																<fx:String>Actions</fx:String>
-															</mx:ArrayCollection>
-														</s:TabBar>
-														<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
-															<mx:AdvancedDataGrid width="100%" height="100%">
-																<mx:groupedColumns>
-																	<mx:AdvancedDataGridColumnGroup>
-																		<mx:AdvancedDataGridColumnGroup headerText="Step Types">
-																			<mx:AdvancedDataGridColumn headerText="Step Type"/>
-																			<mx:AdvancedDataGridColumn headerText="Description"/>
-																		</mx:AdvancedDataGridColumnGroup>
-																	</mx:AdvancedDataGridColumnGroup>
-																</mx:groupedColumns>
-															</mx:AdvancedDataGrid>
-															<mx:AdvancedDataGrid width="100%" height="100%">
-																<mx:groupedColumns>
-																	<mx:AdvancedDataGridColumnGroup>
-																		<mx:AdvancedDataGridColumnGroup headerText="Task Types">
-																			<mx:AdvancedDataGridColumn headerText="Task Type"/>
-																			<mx:AdvancedDataGridColumn headerText="Description"/>
-																		</mx:AdvancedDataGridColumnGroup>
-																	</mx:AdvancedDataGridColumnGroup>
-																</mx:groupedColumns>
-															</mx:AdvancedDataGrid>
-															<mx:AdvancedDataGrid width="100%" height="100%">
-																<mx:groupedColumns>
-																	<mx:AdvancedDataGridColumnGroup>
-																		<mx:AdvancedDataGridColumnGroup headerText="Action Types">
-																			<mx:AdvancedDataGridColumn headerText="Action Type"/>
-																			<mx:AdvancedDataGridColumn headerText="Description"/>
-																		</mx:AdvancedDataGridColumnGroup>
-																	</mx:AdvancedDataGridColumnGroup>
-																</mx:groupedColumns>
-															</mx:AdvancedDataGrid>
-														</s:HGroup>
-													</s:NavigatorContent>
-													<s:NavigatorContent label="Messages" width="100%" height="100%">
-														<s:VGroup width="100%" height="100%"/>
-													</s:NavigatorContent>
-												</mx:Accordion>
-											</s:Panel>
-										</s:VGroup>
-									</mx:HDividedBox>
-								</s:TitleWindow>
-								
-							</s:NavigatorContent> <!--WIP workflow master view-->
+							</s:NavigatorContent> <!--Workflow procedure master view-->
 							
 							<!--Form master view-->
 							<s:NavigatorContent id="WF_m_view" width="100%" height="100%" includeInLayout="false" visible="false">
@@ -2037,8 +1954,90 @@
 						<!--Workflow Management detail view stack-->
 						<mx:ViewStack id="W_d_VS" includeInLayout="false" visible="false" creationPolicy="all" clipContent="true">
 							
+							<!-- WIP workflow master view -->
+							<s:NavigatorContent id="WP_CRUD_view" width="100%" height="100%" includeInLayout="false" visible="false">
+								
+								<s:TitleWindow title="CRUD procedure" width="1162" height="600">
+									<s:layout>
+										<s:VerticalLayout gap="0"/>
+									</s:layout>
+									<s:HGroup width="100%" height="24" chromeColor="yellow">
+										<s:Label text="Drag and drop ..."/>
+									</s:HGroup>
+									<mx:HDividedBox width="100%" height="100%">
+										<s:VGroup width="100%" height="100%">
+											<mx:AdvancedDataGrid width="100%" height="100%">
+												<mx:groupedColumns>
+													<mx:AdvancedDataGridColumnGroup>
+														<mx:AdvancedDataGridColumnGroup headerText="Procedure / Steps / Tasks / Actions">
+															<mx:AdvancedDataGridColumn headerText="Seq."/>
+															<mx:AdvancedDataGridColumn headerText="Name"/>
+															<mx:AdvancedDataGridColumn headerText="Description"/>
+														</mx:AdvancedDataGridColumnGroup>
+													</mx:AdvancedDataGridColumnGroup>
+												</mx:groupedColumns>
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+										<s:VGroup width="100%" height="100%">
+											<s:Panel width="100%" height="100%" title="Step, Task, and Action Types">
+												<mx:Accordion width="100%" height="100%">
+													<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
+														<s:layout>
+															<s:VerticalLayout/>
+														</s:layout>
+														<s:TabBar height="24">
+															<mx:ArrayCollection>
+																<fx:String>Steps</fx:String>
+																<fx:String>Tasks</fx:String>
+																<fx:String>Actions</fx:String>
+															</mx:ArrayCollection>
+														</s:TabBar>
+														<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
+															<mx:AdvancedDataGrid width="100%" height="100%">
+																<mx:groupedColumns>
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup headerText="Step Types">
+																			<mx:AdvancedDataGridColumn headerText="Step Type"/>
+																			<mx:AdvancedDataGridColumn headerText="Description"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:groupedColumns>
+															</mx:AdvancedDataGrid>
+															<mx:AdvancedDataGrid width="100%" height="100%">
+																<mx:groupedColumns>
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup headerText="Task Types">
+																			<mx:AdvancedDataGridColumn headerText="Task Type"/>
+																			<mx:AdvancedDataGridColumn headerText="Description"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:groupedColumns>
+															</mx:AdvancedDataGrid>
+															<mx:AdvancedDataGrid width="100%" height="100%">
+																<mx:groupedColumns>
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup headerText="Action Types">
+																			<mx:AdvancedDataGridColumn headerText="Action Type"/>
+																			<mx:AdvancedDataGridColumn headerText="Description"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:groupedColumns>
+															</mx:AdvancedDataGrid>
+														</s:HGroup>
+													</s:NavigatorContent>
+													<s:NavigatorContent label="Messages" width="100%" height="100%">
+														<s:VGroup width="100%" height="100%"/>
+													</s:NavigatorContent>
+												</mx:Accordion>
+											</s:Panel>
+										</s:VGroup>
+									</mx:HDividedBox>
+								</s:TitleWindow>
+								
+							</s:NavigatorContent> <!--WIP workflow master view-->
+							
 							<!--Workflow form render detail view-->
-							<s:NavigatorContent id="WF_d1_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="WF_Forms_view" includeInLayout="false" visible="false">
 								<fx:Script>
 									<![CDATA[
 										private var WF_d1_AC:ArrayCollection = new ArrayCollection(

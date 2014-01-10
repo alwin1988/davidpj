@@ -42,7 +42,6 @@
 				ClearDetail();
 			}
 
-				
 			protected function ClearDetail():void
 			{
 				F_d_VS.width = 0;
@@ -55,7 +54,7 @@
 			
 			protected function CategoryMenuChangeHandler(event:ListEvent):void
 			{
-				var CategoryItem:Object = event.currentTarget.selectedItem as Object;
+				var CategoryItem:Object = event.target.selectedItem as Object;
 				
 				CategoryAlias = CategoryItem.Alias;
 				CategoryAliasGroup = CategoryItem.Alias.substring(0, 1);
@@ -66,7 +65,7 @@
 			
 			protected function TabBarChangeHandler(event:IndexChangeEvent):void
 			{
-				var TB_Data:Object = event.currentTarget.selectedItem as Object;
+				var TB_Data:Object = event.target.selectedItem as Object;
 				
 				if (CategoryAlias == "WP" && TB_Data.Data == "CRUD") {
 					CategoryView = "CRUD";
@@ -90,6 +89,9 @@
 				{
 					//Account Management
 					TB.visible = true;
+					m_VS.width = DGwidth;
+					m_VS.includeInLayout = true;
+					m_VS.visible = true;
 				}
 				if (CategoryAlias == "AX")
 				{
@@ -161,6 +163,9 @@
 				{
 					//Document management
 					TB.visible = true;
+					m_VS.width = DGwidth;
+					m_VS.includeInLayout = true;
+					m_VS.visible = true;
 				}
 				if (CategoryAlias == "DX")
 				{
@@ -214,6 +219,9 @@
 				{
 					//Workflow Management
 					TB.visible = true;
+					m_VS.width = DGwidth;
+					m_VS.includeInLayout = true;
+					m_VS.visible = true;
 				}
 				if (CategoryAlias == "WX") 
 				{
@@ -228,7 +236,6 @@
 				}
 				if (CategoryAlias == "WP" && CategoryView == "Main")
 				{
-					ClearAll();
 					WP_m_view.percentWidth = DGpercentwidth;
 					WP_m_view.includeInLayout = true;
 					WP_m_view.visible = true;
@@ -241,6 +248,8 @@
 				if (CategoryAlias == "WP" && CategoryView == "CRUD")
 				{
 					WP_m_view.percentWidth = (DGpercentwidth/2);
+					WP_m_view.includeInLayout = true;
+					WP_m_view.visible = true;
 					W_d_VS.percentWidth = (DGwidth/2);
 					W_d_VS.includeInLayout = true;
 					W_d_VS.visible = true;
@@ -1455,6 +1464,7 @@
 									<![CDATA[
 										[Bindable]
 										private var WP_TB_AC:ArrayCollection = new ArrayCollection([
+											{Label:"Main", Data:"Main"},
 											{Label:"CRUD", Data:"CRUD"},
 											{Label:"Forms", Data:"Forms"}
 										]);

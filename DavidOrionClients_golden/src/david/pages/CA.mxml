@@ -73,6 +73,15 @@
 				else if (CategoryAlias == "WP" && TB_Data.Data == "Forms") {
 					CategoryView = "Forms";
 				}
+				else if (CategoryAlias == "FF" && TB_Data.Data == "FormUsage1") {
+					CategoryView = "FormUsage1";
+				}
+				else if (CategoryAlias == "FF" && TB_Data.Data == "FormUsage2") {
+					CategoryView = "FormUsage2";
+				}
+				else if (CategoryAlias == "FF" && TB_Data.Data == "Fieldsets") {
+					CategoryView = "Fieldsets";
+				}
 				
 				SetCAView(CategoryAlias, CategoryView);
 			}
@@ -80,6 +89,13 @@
 			protected function SetCAView(CategoryAlias:String, CategoryView:String):void
 			{
 				if (CategoryView == "Main") {
+					H2.percentWidth = DGpercentwidth;
+					H2.includeInLayout = true;
+					H2.visible = true;
+					H3.percentWidth = 0;
+					H3.includeInLayout = false;
+					H3.visible = false;
+					HDB.setStyle('horizontalGap',0);
 					m_VS.percentWidth = DGpercentwidth;
 					m_VS.includeInLayout = true;
 					m_VS.visible = true;
@@ -97,7 +113,6 @@
 				{
 					//Blank the stage
 					ClearAll();
-					
 				}
 				if (CategoryAlias == "AU")
 				{
@@ -201,6 +216,51 @@
 					FF_m_view.includeInLayout = true;
 					FF_m_view.visible = true;
 					Reset_FF_m_DG();
+					FF_m_DG_formusage1.visible = false;
+					FF_m_DG_formusage2.visible = false;
+				}
+				if (CategoryAlias == "FF" && CategoryView == "FormUsage1")
+				{
+					m_VS.selectedChild = FF_m_view;
+					FF_m_view.percentWidth = DGpercentwidth;
+					FF_m_view.includeInLayout = true;
+					FF_m_view.visible = true;
+					Reset_FF_m_DG();
+					FF_m_DG_formusage1.visible = true;
+					FF_m_DG_formusage2.visible = false;
+					
+				}
+				if (CategoryAlias == "FF" && CategoryView == "FormUsage2")
+				{
+					m_VS.selectedChild = FF_m_view;
+					FF_m_view.percentWidth = DGpercentwidth;
+					FF_m_view.includeInLayout = true;
+					FF_m_view.visible = true;
+					Reset_FF_m_DG();
+					FF_m_DG_formusage1.visible = false;
+					FF_m_DG_formusage2.visible = true;
+				}
+				if (CategoryAlias == "FF" && CategoryView == "Fieldsets")
+				{
+					H2.percentWidth = (DGpercentwidth/2);
+					H2.includeInLayout = true;
+					H2.visible = true;
+					HDB.setStyle('horizontalGap',5);
+					H3.percentWidth = (DGpercentwidth/2);
+					H3.includeInLayout = true;
+					H3.visible = true;
+					m_VS.selectedChild = FF_m_view;
+					FF_m_view.percentWidth = (DGpercentwidth/2);
+					FF_m_view.includeInLayout = true;
+					FF_m_view.visible = true;
+					Reset_FF_m_DG();
+					FF_m_DG_formusage1.visible = false;
+					FF_m_DG_formusage2.visible = false;
+					F_d_VS.selectedChild = FF_Fieldsets_view;
+					FF_Fieldsets_view.width = (DGwidth/2)
+					FF_Fieldsets_DG.width = (DGwidth/2);
+					FF_Fieldsets_DG.includeInLayout = true;
+					FF_Fieldsets_DG.visible = true;
 				}
 				if (CategoryAlias == "FD")
 				{
@@ -247,6 +307,7 @@
 				}
 				if (CategoryAlias == "WP" && CategoryView == "CRUD")
 				{
+					ClearAll();
 					WP_m_view.percentWidth = (DGpercentwidth/2);
 					WP_m_view.includeInLayout = true;
 					WP_m_view.visible = true;
@@ -278,22 +339,76 @@
 				if (CategoryAlias == "WF" && CategoryView == "Main")
 				{
 					DG_TW.title = 'Forms';
+				}
+				if (CategoryAlias == "WF" && CategoryView == "Main")
+				{
+					H2.percentWidth = (DGpercentwidth/2);
+					H2.includeInLayout = true;
+					H2.visible = true;
+					HDB.setStyle('horizontalGap',0);
+					H1.percentWidth = (DGpercentwidth/2);
+					H1.includeInLayout = true;
+					H1.visible = true;
 					m_VS.percentWidth = 50;
 					m_VS.selectedChild = WF_m_view;
-					WF_m_view.percentWidth = 100;
+					WF_m_view.percentWidth = 50;
 					WF_m_view.includeInLayout = true;
 					WF_m_view.visible = true;
+					WF_m_DG.width = DGwidth;
 					W_d_VS.percentWidth = 50;
-					W_d_VS.percentHeight = 100;
 					W_d_VS.includeInLayout = true;
 					W_d_VS.visible = true;
-					W_d_VS.selectedChild = WF_Forms_view;
-					WF_Forms_view.percentWidth = 100;
-					WF_Forms_view.percentHeight = 100;
-					WF_Forms_view.includeInLayout = true;
-					WF_Forms_view.visible = true;
-					WF_m_DG.width = (DGwidth/2);
-					WF_m_DG.percentHeight = 100;
+					H1_VS.selectedChild = WF_Preview_view;
+					WF_Preview_view.percentWidth = 100;
+					WF_Preview_view.includeInLayout = true;
+					WF_Preview_view.visible = true;
+				}
+				if (CategoryAlias == "WF" && CategoryView == "Fields")
+				{					
+					H2.percentWidth = (DGpercentwidth/2);
+					H2.includeInLayout = true;
+					H2.visible = true;
+					HDB.setStyle('horizontalGap',5);
+					H3.percentWidth = (DGpercentwidth/2);
+					H3.includeInLayout = true;
+					H3.visible = true;
+					m_VS.selectedChild = FF_m_view;
+					FF_m_view.percentWidth = (DGpercentwidth/2);
+					FF_m_view.includeInLayout = true;
+					FF_m_view.visible = true;
+					Reset_FF_m_DG();
+					FF_m_DG_formusage1.visible = false;
+					FF_m_DG_formusage2.visible = false;
+					F_d_VS.selectedChild = FF_Fieldsets_view;
+					FF_Fieldsets_view.width = (DGwidth/2)
+					FF_Fieldsets_DG.width = (DGwidth/2);
+					FF_Fieldsets_DG.includeInLayout = true;
+					FF_Fieldsets_DG.visible = true;
+				}
+				if (CategoryAlias == "WF" && CategoryView == "Preview")
+				{		
+					HDB.setStyle('horizontalGap',5);
+					H1.percentWidth = (DGpercentwidth/3);
+					H1.includeInLayout = true;
+					H1.visible = true;
+					H2.percentWidth = (DGpercentwidth/3);
+					H2.includeInLayout = true;
+					H2.visible = true;
+					H3.percentWidth = (DGpercentwidth/3);
+					H3.includeInLayout = true;
+					H3.visible = true;
+					m_VS.selectedChild = FF_m_view;
+					FF_m_view.percentWidth = (DGpercentwidth/2);
+					FF_m_view.includeInLayout = true;
+					FF_m_view.visible = true;
+					Reset_FF_m_DG();
+					FF_m_DG_formusage1.visible = false;
+					FF_m_DG_formusage2.visible = false;
+					F_d_VS.selectedChild = FF_Fieldsets_view;
+					FF_Fieldsets_view.width = (DGwidth/2)
+					FF_Fieldsets_DG.width = (DGwidth/2);
+					FF_Fieldsets_DG.includeInLayout = true;
+					FF_Fieldsets_DG.visible = true;
 				}
 				if (CategoryAlias == "WQ")
 				{
@@ -565,21 +680,69 @@
 						</s:VGroup>
 					</s:BorderContainer>
 					
-					<!-- Title window container for all datagrids -->
-					<component:CustomTitleWindow id="DG_TW" title=""
-												 width="100%" height="100%" headerHeight="18" borderVisible="true" dropShadowVisible="false"
+<!-- Title window container for all datagrids -->
+<component:CustomTitleWindow id="DG_TW" title=""
+												 width="{DGwidth}" height="100%" headerHeight="18" borderVisible="true" dropShadowVisible="false"
 												 styleName="TitleWindowTitleText"
 												 skinClass="skin.CustomTitleWindowSkin">
 						<component:layout>
-							<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-												paddingTop="0"/>
+							<s:HorizontalLayout gap="0" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
 						</component:layout>
 						
+<mx:HDividedBox id="HDB" width ="{DG_TW.width}" height="{DG_TW.height}" clipContent="true">
+							
+<s:HGroup id="H1" width="{HDB.width/2}" height="{HDB.height}" clipAndEnableScrolling="true">
+									  
+									  <!--H1 stuff-->
+<mx:Canvas id="H1_Canvas" width="100%" height="100%" borderVisible="false"
+										   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+									<s:VGroup id="H1_VG"
+											  height="{H1_Canvas.height-15}"
+											  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
+											  paddingRight="0" paddingTop="0">
+										
+										<!--H1 view stack-->
+										<mx:ViewStack id="H1_VS" width="{H2.width}" height="{H2.height}" includeInLayout="false" visible="false" 
+													  creationPolicy="all" clipContent="true">
+																							
+											<!--Workflow form preview view-->
+											<s:NavigatorContent id="WF_Preview_view" width="{H1_VS.width}" height="{H1_VS.height}" includeInLayout="false" visible="false">
+												
+												<mx:VBox width="100%" height="100%" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" borderVisible="false"
+														 paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
+													<component:CustomTitleWindow width="100%" height="100%" borderVisible="true" dropShadowVisible="false">
+														<component:layout>
+															<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
+														</component:layout>
+														<mx:Box width="100%" height="100%" borderVisible="true" borderColor="blue" borderAlpha=".7">
+															<s:Form width="100%" height="100%">
+																<s:FormHeading label="Some form" color="red"/>
+															</s:Form>											
+														</mx:Box>
+													</component:CustomTitleWindow>
+												</mx:VBox>
+												
+											</s:NavigatorContent> <!--Workflow form preview view-->
+												
+										</mx:ViewStack>
+									</s:VGroup>
+								</mx:Canvas>
+							</s:HGroup>
+							
+<s:HGroup id="H2" width="{HDB.width/2}" height="{HDB.height}" clipAndEnableScrolling="true">
+	<mx:Canvas id="H2_Canvas" width="100%" height="100%" borderVisible="false"
+			   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+		<s:VGroup id="H2_VG"
+				  height="{H2_Canvas.height-15}"
+				  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
+				  paddingRight="0" paddingTop="0">
+
 						<!--Master view stack-->
-						<mx:ViewStack id="m_VS" width="100%" height="100%" includeInLayout="false" visible="false" creationPolicy="all">
+						<mx:ViewStack id="m_VS" width="{H2.width}" height="{H2.height}" includeInLayout="false" visible="false" 
+									  creationPolicy="all" clipContent="true">
 							
 							<!--User master view-->
-							<s:NavigatorContent id="AU_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="AU_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								<fx:Script>
 									<![CDATA[
 										[Bindable]
@@ -619,12 +782,6 @@
 									]]>
 								</fx:Script>
 								
-								<mx:Canvas id="C2" x="0" width="100%" height="100%" borderVisible="false"
-										   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
-									<s:VGroup id="VG" height="{C2.height-15}"
-											  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
-											  paddingRight="0" paddingTop="0">
-										
 										<mx:AdvancedDataGrid id="AU_m_DG"
 															 width="{DGwidth}" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
 															 headerHeight="18" rowHeight="20" minColumnWidth="0"
@@ -817,14 +974,11 @@
 												</mx:AdvancedDataGridColumnGroup>
 											</mx:groupedColumns>
 										</mx:AdvancedDataGrid>
-										
-									</s:VGroup>
-								</mx:Canvas>
 								
 							</s:NavigatorContent> <!--User master view-->
 							
 							<!--Group master view-->
-							<s:NavigatorContent id="AG_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="AG_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
@@ -911,7 +1065,7 @@
 							</s:NavigatorContent> <!--Group master view-->
 							
 							<!--Role master view-->
-							<s:NavigatorContent id="AR_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="AR_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
@@ -949,7 +1103,7 @@
 								</fx:Script>
 								
 								<mx:AdvancedDataGrid id="AR_m_DG"
-													 width="{DGwidth}" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
+													 width="{DGwidth}" height="{DG_TW.height}" borderVisible="true" verticalAlign="middle" verticalCenter="0"
 													 headerHeight="18" rowHeight="20" minColumnWidth="0"
 													 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
@@ -999,7 +1153,7 @@
 							</s:NavigatorContent> <!--Role master view-->
 							
 							<!--Document Types master view-->
-							<s:NavigatorContent id="DT_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="DT_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
@@ -1085,72 +1239,32 @@
 							</s:NavigatorContent> <!--Document Types master view-->
 																	
 							<!--Fieldset/fields master view-->
-							<s:NavigatorContent id="FF_m_view">
+							<s:NavigatorContent id="FF_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
 										private var FF_TB_AC:ArrayCollection = new ArrayCollection(
 											[
-												{Label:"Tab1", Data:"Tab1"},
-												{Label:"Tab2", Data:"Tab2"},
-												{Label:"Tab3", Data:"Tab3"},
+												{Label:"Attributes", Data:"Attributes"},
+												{Label:"FormUsage1", Data:"FormUsage1"},
+												{Label:"FormUsage2", Data:"FormUsage2"},
+												{Label:"Fieldsets", Data:"Fieldsets"}
 											]);	
 										
 										[Bindable]
 										private var FF_m_AC:ArrayCollection = new ArrayCollection(
 											[
-												{Name:"Header fieldsets", children: [
-													{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", children: [
-														{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"3", Sequence:"2", Name:"Field2Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"4", Sequence:"3", Name:"Field3Name", Description:"Field1Description",
-															Type:"Date",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"5", Sequence:"4", Name:"Field4Name", Description:"Field1Description",
-															Type:"DateTime",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"6", Sequence:"5", Name:"Field5Name", Description:"Field1Description",
-															Type:"Amount",Precision:"2", MinLength:"", MaxLength:"", MinValue:"0", MaxValue:"140,000.00", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"7", Sequence:"6", Name:"Field6Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"8", Sequence:"7", Name:"Field7Name", Description:"Field1Description",
-															Type:"Number",Precision:"", MinLength:"", MaxLength:"", MinValue:"1", MaxValue:"100,000", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"9", Sequence:"8", Name:"Field8Name", Description:"Field1Description",
-															Type:"True-False",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"True", checked:false},
-														{EntityType:"Field", ObjId:"10", Sequence:"9", Name:"Field9Name", Description:"Field1Description",
-															Type:"Number",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"11", Sequence:"10", Name:"Field10Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false}
-													]},
-													{EntityType:"Fieldset", ObjId:"12", Name:"Fieldset2Name", children: [
-														{EntityType:"Field", ObjId:"13", Sequence:"1", Name:"Field11Name", Description:"Field1Description",
-															Type:"Number",Precision:"", MinLength:"", MaxLength:"", MinValue:"1", MaxValue:"1,000,000", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"14", Sequence:"2", Name:"Field12Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"15", Sequence:"3", Name:"Field13Name", Description:"Field1Description",
-															Type:"Number",Precision:"", MinLength:"", MaxLength:"", MinValue:"100", MaxValue:"200", InitialValue:"", checked:false}
-													]},
-												]},
-												{Name:"Detail fieldsets", children: [
-													{EntityType:"Fieldset", ObjId:"16", Name:"Fieldset3Name", children: [
-														{EntityType:"Field", ObjId:"17", Sequence:"1", Name:"Field14Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"18", Sequence:"2", Name:"Field15Name", Description:"Field1Description",
-															Type:"Date",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Field", ObjId:"19", Sequence:"3", Name:"Field16Name", Description:"Field1Description",
-															Type:"DateTime",Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", checked:false}
-													]},
-													{EntityType:"Fieldset", ObjId:"20", Name:"Fieldset4Name", children: [
-														{EntityType:"Field", ObjId:"21", Sequence:"1", Name:"Field17Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false},
-														{EntityType:"Number", ObjId:"22", Sequence:"2", Name:"Field18Name", Description:"Field1Description",
-															Type:"Amount",Precision:"2", MinLength:"", MaxLength:"", MinValue:"1,000.00", MaxValue:"250,000.00", InitialValue:"0", checked:false},
-														{EntityType:"Field", ObjId:"23", Sequence:"3", Name:"Field19Name", Description:"Field1Description",
-															Type:"Text",Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", checked:false}
-													]}
-												]}
+												{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
+													Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+													Label:"Field1Label", FieldControl:"FieldControl", checked:false},
+												{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
+													Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+													Label:"Field2Label", FieldControl:"FieldControl", checked:false},
+												{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
+													Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", 
+													Label:"Field3Label", FieldControl:"FieldControl", checked:false}
 											]);	
-										
+																				
 										protected function Reset_FF_m_DG():void
 										{
 											FF_m_DG.width = DGwidth;
@@ -1172,6 +1286,7 @@
 													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 													 displayItemsExpanded="true" treeColumn="{FF_m_DG_Name}" indentation="10"
 													 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+													 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}"
 													 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
 													 draggableColumns="true" resizableColumns="true" sortableColumns="false"
 													 doubleClickEnabled="false" sortExpertMode="true" 
@@ -1213,6 +1328,46 @@
 																				   headerText="Dec" dataField="Precision" 
 																				   width="30"/>
 													</mx:AdvancedDataGridColumnGroup>
+													<mx:AdvancedDataGridColumnGroup id="FF_m_DG_formusage1" headerText="Form Usage 1" color="red"																	
+																					width="{DGwidth/2}" visible="false">
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Label" dataField="Label" headerText="Label"
+																				   width="60"/>					
+													</mx:AdvancedDataGridColumnGroup>
+													<mx:AdvancedDataGridColumnGroup id="FF_d_DG_fieldcontrol" headerText="Field Control">
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Control" headerText="Control" dataField="FieldControl" 
+																				   width="65"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Style" headerText="Style" dataField="Style"
+																				   width="69"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Width" headerText="Width" dataField="Width"
+																				   width="25"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Column" headerText="Col." dataField="Column"
+																				   width="25"/>
+													</mx:AdvancedDataGridColumnGroup>
+													<mx:AdvancedDataGridColumnGroup id="FF_d_DG_length" headerText="Length" textAlign="center">
+														<mx:AdvancedDataGridColumn id="FF_d_DG_MinLength" headerText="Min" dataField="MinLength"
+																				   width="25"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_MaxLength" headerText="Max" dataField="MaxLength"
+																				   width="25"/>
+													</mx:AdvancedDataGridColumnGroup>
+													<mx:AdvancedDataGridColumnGroup id="FF_d_DG_value" headerText="Value" textAlign="center">
+														<mx:AdvancedDataGridColumn id="FF_d_DG_MinValue" headerText="Min" dataField="MinValue" 
+																				   width="53"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_MaxValue" headerText="Max" dataField="MaxValue"
+																				   width="53"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Pattern" headerText="Pattern" dataField="Pattern"
+																				   width="16"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Required" headerText="Req." dataField="Required"
+																				   width="16"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_InitialValue" headerText="Initial" dataField="InitialValue"
+																				   width="53"/>
+														<mx:AdvancedDataGridColumn id="FF_d_DG_MultiValue" headerText="Multi" dataField="MultiValue"
+																				   width="16"/>
+													</mx:AdvancedDataGridColumnGroup>
+													<mx:AdvancedDataGridColumnGroup id="FF_m_DG_formusage2" headerText="Form Usage 2" color="red"
+																					width="{DGwidth/2}" visible="false">
+														<mx:AdvancedDataGridColumn id="FF_d_DG_Tooltip" headerText="Tooltip" dataField="Tooltip"
+																				   width="160"/>
+													</mx:AdvancedDataGridColumnGroup>
 												</mx:AdvancedDataGridColumnGroup>
 											</mx:AdvancedDataGridColumnGroup>
 										</mx:AdvancedDataGridColumnGroup>
@@ -1222,7 +1377,7 @@
 							</s:NavigatorContent> <!--Fieldset/fields master view-->
 							
 							<!--Folder master view-->
-							<s:NavigatorContent id="FD_m_view">
+							<s:NavigatorContent id="FD_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
@@ -1458,7 +1613,7 @@
 							</s:NavigatorContent> <!--Folder master view-->
 							
 							<!--Workflow procedure master view-->
-							<s:NavigatorContent id="WP_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="WP_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
@@ -1569,6 +1724,20 @@
 									]]>
 								</fx:Script>
 								
+								<s:HGroup height="24" gap="10">
+									<s:Label text="Procedure" width="96"/>
+									<s:DropDownList width="180"/>
+									<s:Spacer width="5"/>
+									<s:Label text="Step" width="70"/>
+									<s:DropDownList width="180"/>
+									<s:Spacer width="5"/>
+									<s:Label text="Task" width="70"/>
+									<s:DropDownList width="180"/>
+									<s:Spacer width="5"/>
+									<s:Label text="Action" width="76"/>
+									<s:DropDownList width="180"/>
+								</s:HGroup>
+								
 								<mx:AdvancedDataGrid id="WP_m_DG"
 													 width="{DGwidth}" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
 													 headerHeight="18" rowHeight="20" minColumnWidth="0"
@@ -1634,24 +1803,24 @@
 							</s:NavigatorContent> <!--Workflow procedure master view-->
 							
 							<!--Form master view-->
-							<s:NavigatorContent id="WF_m_view" width="100%" height="100%" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="WF_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
 										[Bindable]
 										private var WF_TB_AC:ArrayCollection = new ArrayCollection(
 											[
-												{Label:"Tab1", Data:"Tab1"},
-												{Label:"Tab2", Data:"Tab2"},
-												{Label:"Tab3", Data:"Tab3"},
+												{Label:"Master", Data:"Main"},
+												{Label:"Fields", Data:"Fields"},
+												{Label:"Preview", Data:"Preview"},
 											]);	
 										
 										[Bindable]	
 										private var WF_m_AC:ArrayCollection = new ArrayCollection(
 											[
 												{EntityType:"Form", UID:"1", Name:"Form1Name", Description:"Form1Description", Enabled:true, checked:false},
-												{EntityType:"Form", UID:"2", Name:"Form1Name", Description:"Form2Description", Enabled:true, checked:false},
-												{EntityType:"Form", UID:"3", Name:"Form1Name", Description:"Form3Description", Enabled:true, checked:false}
+												{EntityType:"Form", UID:"2", Name:"Form2Name", Description:"Form2Description", Enabled:true, checked:false},
+												{EntityType:"Form", UID:"3", Name:"Form3Name", Description:"Form3Description", Enabled:true, checked:false}
 											]);
 									]]>
 								</fx:Script>
@@ -1696,7 +1865,7 @@
 							</s:NavigatorContent> <!--Form master view-->
 							
 							<!--Jobs master view-->
-							<s:NavigatorContent id="J_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="J_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<fx:Script>
 									<![CDATA[
@@ -1769,7 +1938,7 @@
 							</s:NavigatorContent> <!--Jobs master view-->
 							
 							<!--System master view-->
-							<s:NavigatorContent id="S_m_view" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="S_m_view" width="{m_VS.width}" height="{m_VS.height}" includeInLayout="false" visible="false">
 								
 								<mx:Accordion width="{DGwidth}" height="100%" depth="1">									
 									<s:NavigatorContent width="100%" height="100%" label="Category1">
@@ -1883,74 +2052,99 @@
 							</s:NavigatorContent> <!--System master view-->
 							
 						</mx:ViewStack> <!--Master view stack-->
+			
+			</s:VGroup>
+		</mx:Canvas>
+</s:HGroup>
+							
+<s:HGroup id="H3" width="{HDB.width/2}" height="{HDB.height}" clipAndEnableScrolling="true">
+	<mx:Canvas id="H3_Canvas" width="100%" height="100%" borderVisible="false"
+			   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+		<s:VGroup id="H3_VG"
+				  height="{H3_Canvas.height-15}"
+				  clipAndEnableScrolling="true" gap="0" paddingBottom="0" paddingLeft="0"
+				  paddingRight="0" paddingTop="0">
 						
 						<!--Fieldsets/Fields detail view stack-->
-						<mx:ViewStack id="F_d_VS" includeInLayout="false" visible="false" creationPolicy="all" clipContent="true">
+						<mx:ViewStack id="F_d_VS" width="{H3.width}" height="{H3.height}" includeInLayout="false" visible="false" 
+									  creationPolicy="all" clipContent="true">
 							
 							<!--Fieldsets/Fields detail view-->
-							<s:NavigatorContent id="FF_d_view" includeInLayout="false" visible="false" >								
+							<s:NavigatorContent id="FF_Fieldsets_view" width="{F_d_VS.width}" height="{F_d_VS.height}" includeInLayout="false" visible="false">
 								<fx:Script>
 									<![CDATA[
-										[Bindable]
-										private var FF_d_AC:ArrayCollection = new ArrayCollection(
-											[
-												
-											]);
+
+											[Bindable]	
+											private var S_m_xAC:ArrayCollection = new ArrayCollection(
+												[
+													{Name:"Property1", Value:"Value1"},
+													{Name:"Subcategory1", children: [
+														{Name:"Propery2", Value:"Value2"}, 
+														{Name:"Propery3", Value:"Value3"},
+														{Name:"Propery4", Value:"Value4"}
+													]},
+													{Name:"Property5", Value:"Value5"},
+													{Name:"Subcategory2", children: [
+														{Name:"Propery6", Value:"Value6"}, 
+														{Name:"Propery7", Value:"Value7"},
+														{Name:"Propery8", Value:"Value8"}
+													]},
+													{Name:"Property9", Value:"Value9"}
+												]);
+											[Bindable]
+											private var FF_Fieldsets_AC:ArrayCollection = new ArrayCollection(
+												[
+													{Name:"Header fieldsets", children: [
+														{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", Legend:"Legend1Name", children: [
+															{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", checked:false},
+														]},
+														{EntityType:"Fieldset", ObjId:"12", Name:"Fieldset2Name", children: [
+															{EntityType:"Field", ObjId:"13", Sequence:"1", Name:"Field11Name", checked:false},
+															{EntityType:"Field", ObjId:"14", Sequence:"2", Name:"Field12Name", checked:false}
+														]},
+													]},
+													{Name:"Detail fieldsets", children: [
+														{EntityType:"Fieldset", ObjId:"16", Name:"Fieldset3Name", Legend:"Legend2Name", children: [
+															{EntityType:"Field", ObjId:"17", Sequence:"1", Name:"Field14Name", checked:false},
+															{EntityType:"Field", ObjId:"18", Sequence:"2", Name:"Field15Name", checked:false},
+															{EntityType:"Field", ObjId:"19", Sequence:"3", Name:"Field16Name", checked:false}
+														]},
+														{EntityType:"Fieldset", ObjId:"20", Name:"Fieldset4Name", Legend:"Legend3Name", children: [
+															{EntityType:"Field", ObjId:"21", Sequence:"1", Name:"Field17Name", checked:false},
+															{EntityType:"Number", ObjId:"22", Sequence:"2", Name:"Field18Name", InitialValue:"0", checked:false},
+															{EntityType:"Field", ObjId:"23", Sequence:"3", Name:"Field19Name", checked:false}
+														]}
+													]}
+												]);
 									]]>
 								</fx:Script>
-								<mx:AdvancedDataGrid id="FF_d_DG"
+								<mx:AdvancedDataGrid id="FF_Fieldsets_DG"
 													 width="{DG_TW.width/2}" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
 													 headerHeight="18" rowHeight="20" minColumnWidth="0"
 													 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 													 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-													 displayItemsExpanded="true" treeColumn="{FF_d_DG_Name}" indentation="10"
+													 displayItemsExpanded="true" treeColumn="{FF_Fieldsets_DG_Name}" indentation="10"
 													 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
 													 dragEnabled="true" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
 													 draggableColumns="true" resizableColumns="true" sortableColumns="false"
 													 doubleClickEnabled="false" sortExpertMode="true" 
 													 allowMultipleSelection="true" editable="false">
 									<mx:dataProvider>
-										<mx:HierarchicalData source="{FF_d_AC}"/>
+										<mx:HierarchicalData source="{FF_Fieldsets_AC}"/>
 									</mx:dataProvider>
 									<mx:groupedColumns>
 										<mx:AdvancedDataGridColumnGroup headerText="Drag..." textAlign="left" color="red">
 											<mx:AdvancedDataGridColumnGroup headerText="Fieldsets/fields for workflow procedure XXXXXXXXXXXXXXXXXX" textAlign="left" color="red">
 												<mx:AdvancedDataGridColumnGroup>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Name"
+													<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Name"
 																			   dataField="Name" headerText="Name"
 																			   width="80"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Label" dataField="Label" headerText="Label"
-																			   width="60"/>											
-												</mx:AdvancedDataGridColumnGroup>
-												<mx:AdvancedDataGridColumnGroup id="FF_d_DG_fieldcontrol" headerText="Field Control">
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Control" headerText="Control" dataField="FieldControl" 
-																			   width="65"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Style" headerText="Style" dataField="Style"
-																			   width="69"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Width" headerText="Width" dataField="Width"
-																			   width="25"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Column" headerText="Col." dataField="Column"
-																			   width="25"/>
-												</mx:AdvancedDataGridColumnGroup>
-												<mx:AdvancedDataGridColumnGroup id="FF_d_DG_length" headerText="Length" textAlign="center">
-													<mx:AdvancedDataGridColumn id="FF_d_DG_MinLength" headerText="Min" dataField="MinLength"
-																			   width="25"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_MaxLength" headerText="Max" dataField="MaxLength"
-																			   width="25"/>
-												</mx:AdvancedDataGridColumnGroup>
-												<mx:AdvancedDataGridColumnGroup id="FF_d_DG_value" headerText="Value" textAlign="center">
-													<mx:AdvancedDataGridColumn id="FF_d_DG_MinValue" headerText="Min" dataField="MinValue" 
-																			   width="53"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_MaxValue" headerText="Max" dataField="MaxValue"
-																			   width="53"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Pattern" headerText="Pattern" dataField="Pattern"
-																			   width="16"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_Required" headerText="Req." dataField="Required"
-																			   width="16"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_InitialValue" headerText="Initial" dataField="InitialValue"
-																			   width="53"/>
-													<mx:AdvancedDataGridColumn id="FF_d_DG_MultiValue" headerText="Multi" dataField="MultiValue"
-																			   width="16"/>
+													<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Legend"
+																			   dataField="Legend" headerText="Name"
+																			   width="80"/>
+													<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Sequence"
+																			   dataField="Sequence" headerText="Sequence"
+																			   width="80"/>
 												</mx:AdvancedDataGridColumnGroup>
 											</mx:AdvancedDataGridColumnGroup>
 										</mx:AdvancedDataGridColumnGroup>
@@ -1962,10 +2156,11 @@
 						</mx:ViewStack> <!--Fieldsets/Fields detail view stack-->
 						
 						<!--Workflow Management detail view stack-->
-						<mx:ViewStack id="W_d_VS" includeInLayout="false" visible="false" creationPolicy="all" clipContent="true">
+						<mx:ViewStack id="W_d_VS" width="{H3.width}" height="{H3.height}" includeInLayout="false" visible="false" 
+									  creationPolicy="all" clipContent="true">
 							
 							<!-- WIP workflow master view -->
-							<s:NavigatorContent id="WP_CRUD_view" width="100%" height="100%" includeInLayout="false" visible="false">
+							<s:NavigatorContent id="WP_CRUD_view" width="{W_d_VS.width}" height="{W_d_VS.height}" includeInLayout="false" visible="false">
 								
 								<s:TitleWindow title="CRUD procedure" width="1162" height="600">
 									<s:layout>
@@ -2046,15 +2241,13 @@
 								
 							</s:NavigatorContent> <!--WIP workflow master view-->
 							
-							<!--Workflow form render detail view-->
-							<s:NavigatorContent id="WF_Forms_view" includeInLayout="false" visible="false">
+							<!--Workflow form fields view-->
+							<s:NavigatorContent id="WF_Fields_view" width="{W_d_VS.width}" height="{W_d_VS.height}" includeInLayout="false" visible="false">
 								<fx:Script>
 									<![CDATA[
-										private var WF_d1_AC:ArrayCollection = new ArrayCollection(
+										private var WF_Form_AC:ArrayCollection = new ArrayCollection(
 											[
-												{EntityType:"Form", UID:"1", Name:"Form1Name", Description:"Form1Description", Enabled:true, checked:false},
-												{EntityType:"Form", UID:"2", Name:"Form1Name", Description:"Form2Description", Enabled:true, checked:false},
-												{EntityType:"Form", UID:"3", Name:"Form1Name", Description:"Form3Description", Enabled:true, checked:false}
+												
 											]);
 									]]>
 								</fx:Script>
@@ -2073,9 +2266,15 @@
 									</component:CustomTitleWindow>
 								</mx:VBox>
 								
-							</s:NavigatorContent> <!--Workflow form render view-->
+							</s:NavigatorContent> <!--Workflow form fields view-->
 							
 						</mx:ViewStack> <!--Workflow Management detail view stack-->
+		
+			</s:VGroup>
+		</mx:Canvas>
+</s:HGroup>
+							
+</mx:HDividedBox>
 
 					<!--Inner datagrids container-->		
 					</component:CustomTitleWindow>

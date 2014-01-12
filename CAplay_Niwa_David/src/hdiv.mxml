@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			private function Ainvis(event):void
+			{
+				for (var i:int = 0; i < A.numDividers; i++)
+				{
+					A.getDividerAt(i).visible = false;
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<s:HGroup>
+		<s:Button label="hide" click="
+				  G.includeInLayout = false;
+				  G.visible = false;
+				  G.width = 0"/>
+		<s:Button label="invis" click="Ainvis(event)"/>
+
+	
+	<s:TitleWindow>
+		<mx:HDividedBox id="A" horizontalGap="5">
+			<s:Group>
+				<mx:AdvancedDataGrid width="100"/>
+			</s:Group>
+			<s:Group>
+				<mx:AdvancedDataGrid width="200"/>
+			</s:Group>
+		</mx:HDividedBox>
+	</s:TitleWindow>
+		
+		<s:TitleWindow>
+			<mx:HDividedBox horizontalGap="5">
+				<s:Group>
+					<mx:AdvancedDataGrid width="100"/>
+				</s:Group>
+				<s:Group id="G">
+					<mx:AdvancedDataGrid width="200"/>
+				</s:Group>
+			</mx:HDividedBox>
+		</s:TitleWindow>
+		
+	</s:HGroup>
+</s:Application>

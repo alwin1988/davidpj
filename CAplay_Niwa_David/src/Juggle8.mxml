@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600">
+
+	<fx:Script>
+		<![CDATA[
+			[Bindable] private var FullWidth:Number = 800;
+			[Bindable] private var HalfWidth:Number = 400;
+			[Bindable] private var FullHeight:Number = 400;
+		]]>
+	</fx:Script>
+	
+	<s:VGroup>
+		
+		<s:BorderContainer width="{FullWidth}" height="70" borderVisible="false">
+			<s:layout>
+				<s:TileLayout requestedRowCount="3" verticalGap="3"/>
+			</s:layout>
+			<s:Button label="AUM" click="
+					  TW.title='User Master';
+					  VS.selectedChild=A_NC;
+					  AUM.width=FullWidth;
+					  AUM.includeInLayout=true; AUM.visible=true;
+					  AGM.includeInLayout=false; AGM.visible=false;
+					  ARM.includeInLayout=false; ARM.visible=false;
+					  AAC.includeInLayout=false; AAC.visible=false;
+					  UGR.includeInLayout=false; UGR.visible=false;
+					  "/>
+			<s:Button label="uac" click="
+					  TW.title='User Access Controls';
+					  VS.selectedChild=A_NC;
+					  AUM.width=HalfWidth;
+					  AUM.includeInLayout=true; AUM.visible=true;
+					  AGM.includeInLayout=false; AGM.visible=false;
+					  ARM.includeInLayout=false; ARM.visible=false;
+					  AUM.width=HalfWidth;
+					  AAC.includeInLayout=true; AAC.visible=true;
+					  UGR.includeInLayout=false; UGR.visible=false;
+					  "/>
+			<s:Button label="ugr" click="
+					  TW.title='User Group/Role Management';
+					  VS.selectedChild=A_NC;
+					  AUM.width=HalfWidth;
+					  AUM.includeInLayout=true; AUM.visible=true;
+					  AGM.includeInLayout=false; AGM.visible=false;
+					  ARM.includeInLayout=false; ARM.visible=false;
+					  AAC.includeInLayout=false; AAC.visible=false;
+					  UGR.width=HalfWidth;
+					  UGR.includeInLayout=true; UGR.visible=true;
+					  "/>
+			<s:Button label="AGM" click="
+					  TW.title='Group Master';
+					  VS.selectedChild=A_NC;
+					  AUM.includeInLayout=false; AUM.visible=false;
+					  AGM.width=FullWidth;
+					  AGM.includeInLayout=true; AGM.visible=true;
+					  ARM.includeInLayout=false; ARM.visible=false;
+					  AAC.includeInLayout=false; AAC.visible=false;
+					  UGR.includeInLayout=false; UGR.visible=false;
+					  "/>
+			<s:Button label="gac" click="
+					  TW.title='Group Access Controls';
+					  VS.selectedChild=A_NC;
+					  AUM.includeInLayout=false; AUM.visible=false;
+					  AGM.width=HalfWidth;
+					  AGM.includeInLayout=true; AGM.visible=true;
+					  ARM.includeInLayout=false; ARM.visible=false;
+					  AAC.width=HalfWidth;
+					  AAC.includeInLayout=true; AAC.visible=true;
+					  UGR.includeInLayout=false; UGR.visible=false;
+					  "/>
+			<s:Button label="ARM" click="
+					  TW.title='Role Master';
+					  VS.selectedChild=A_NC;
+					  AUM.includeInLayout=false; AUM.visible=false;
+					  AGM.includeInLayout=false; AGM.visible=false;
+					  ARM.width=FullWidth;
+					  ARM.includeInLayout=true; ARM.visible=true;
+					  AAC.includeInLayout=false; AAC.visible=false;
+					  UGR.includeInLayout=false; UGR.visible=false;
+					  "/>
+			<s:Button label="rac" click="
+					  TW.title='Role Access Controls';
+					  VS.selectedChild=A_NC;
+					  AUM.includeInLayout=false; AUM.visible=false;
+					  AGM.includeInLayout=false; AGM.visible=false;
+					  ARM.width=HalfWidth;
+					  ARM.includeInLayout=true; ARM.visible=true;
+					  ARM.width=HalfWidth;
+					  AAC.includeInLayout=true; AAC.visible=true;
+					  UGR.includeInLayout=false; UGR.visible=false;
+					  "/>
+			<s:Button label="DTM" click="
+					  TW.title='Document Type Master';
+					  VS.selectedChild=D_NC;
+					  DTM.width=FullWidth;
+					  DTM.includeInLayout=true; DTM.visible=true;
+					  DTF.includeInLayout=false; DTF.visible=false;
+					  "/>
+			<s:Button label="dtf" click="
+					  TW.title='Document Type Fields/Fieldsets';
+					  VS.selectedChild=D_NC;
+					  DTM.width=HalfWidth;
+					  DTM.includeInLayout=true; DTM.visible=true;
+					  DTF.width=HalfWidth;
+					  DTF.includeInLayout=true; DTF.visible=true;
+					  "/>
+			<s:Button label="FSM" click="
+					  TW.title='Fields/Fieldsets Master';
+					  VS.selectedChild=F_NC;
+					  F_HG.gap=0;
+					  FSM.width=FullWidth;
+					  FSM.includeInLayout=true; FSM.visible=true;
+					  FDT.includeInLayout=false; FDT.visible=false;
+					  FWP.includeInLayout=false; FWP.visible=false;
+					  FWF.includeInLayout=false; FWF.visible=false;
+					  FDM.includeInLayout=false; FDM.visible=false;
+					  FDP.includeInLayout=false; FDP.visible=false;
+					  "/>
+			<s:Button label="fdt" click="
+					  TW.title='Fields - Document Types';
+					  VS.selectedChild=F_NC;
+					  F_HG.gap=3;
+					  FSM.width=HalfWidth;
+					  FSM.width=(HalfWidth-3);
+					  FSM.includeInLayout=true; FSM.visible=true;
+					  FDT.width=(HalfWidth-3);
+					  FDT.includeInLayout=true; FDT.visible=true;
+					  FWP.includeInLayout=false; FWP.visible=false;
+					  FWF.includeInLayout=false; FWF.visible=false;
+					  FDM.includeInLayout=false; FDM.visible=false;
+					  FDP.includeInLayout=false; FDP.visible=false;
+					  "/>
+			<s:Button label="fwp" click="
+					  TW.title='Fields - Work Plans';
+					  VS.selectedChild=F_NC;
+					  F_HG.gap=3;
+					  FSM.width=HalfWidth;
+					  FSM.width=(HalfWidth-3);
+					  FSM.includeInLayout=true; FSM.visible=true;
+					  FDT.includeInLayout=false; FDT.visible=false;
+					  FWP.width=(HalfWidth-3);
+					  FWP.includeInLayout=true; FWP.visible=true;
+					  FWF.includeInLayout=false; FWF.visible=false;
+					  FDM.includeInLayout=false; FDM.visible=false;
+					  FDP.includeInLayout=false; FDP.visible=false;
+					  "/>
+			<s:Button label="fwf" click="
+					  TW.title='Fields - Work Forms';
+					  VS.selectedChild=F_NC;
+					  F_HG.gap=3;
+					  FSM.width=HalfWidth;
+					  FSM.width=(HalfWidth-3);
+					  FSM.includeInLayout=true; FSM.visible=true;
+					  FDT.includeInLayout=false; FDT.visible=false;
+					  FWP.includeInLayout=false; FWP.visible=false;
+					  FWF.width=(HalfWidth-3);
+					  FWF.includeInLayout=true; FWF.visible=true;
+					  FDM.includeInLayout=false; FDM.visible=false;
+					  FDP.includeInLayout=false; FDP.visible=false;
+					  "/>
+			<s:Button label="FDM" click="
+					  TW.title='Folder Master';
+					  VS.selectedChild=F_NC;
+					  F_HG.gap=0;
+					  FSM.includeInLayout=false; FSM.visible=false;
+					  FDT.includeInLayout=false; FDT.visible=false;
+					  FWP.includeInLayout=false; FWP.visible=false;
+					  FWF.includeInLayout=false; FWF.visible=false;
+					  FDM.width=FullWidth;
+					  FDM.includeInLayout=true; FDM.visible=true;
+					  FDP.includeInLayout=false; FDP.visible=false;
+					  "/>
+			<s:Button label="fdp" click="
+					  TW.title='Folder Profiles';
+					  VS.selectedChild=F_NC;
+					  F_HG.gap=0;
+					  FSM.includeInLayout=false; FSM.visible=false;
+					  FDT.includeInLayout=false; FDT.visible=false;
+					  FWP.includeInLayout=false; FWP.visible=false;
+					  FWF.includeInLayout=false; FWF.visible=false;
+					  FDM.width=HalfWidth;
+					  FDM.includeInLayout=true; FDM.visible=true;
+					  FDP.width=HalfWidth;
+					  FDP.includeInLayout=true; FDP.visible=true;
+					  "/>
+			<s:Button label="WPM" click="
+					  TW.title='Work Plans / Procedures';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.width=FullWidth;
+					  WPM.includeInLayout=true; WPM.visible=true;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WSM" click="
+					  TW.title='Work Step / Task List Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.width=FullWidth;
+					  WSM.includeInLayout=true; WSM.visible=true;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WTM" click="
+					  TW.title='Work Task Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.width=FullWidth;
+					  WTM.includeInLayout=true; WTM.visible=true;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WAM" click="
+					  TW.title='Work Action Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.width=FullWidth;
+					  WAM.includeInLayout=true; WAM.visible=true;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WEM" click="
+					  TW.title='Work Qualifier Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.width=FullWidth;
+					  WEM.includeInLayout=true; WEM.visible=true;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WFM" click="
+					  TW.title='Work Form Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.width=HalfWidth;
+					  WFM.includeInLayout=true; WFM.visible=true;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFP.width=HalfWidth;
+					  WFP.includeInLayout=true; WFP.visible=true;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="ffm/wff" click="
+					  TW.title='Work Form Fields';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=3;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  FFM.width=(HalfWidth-3);
+					  FFM.includeInLayout=true; FFM.visible=true;
+					  WFF.width=(HalfWidth-3);
+					  WFF.includeInLayout=true; WFF.visible=true;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="wfp" click="
+					  TW.title='Work Form Preview';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.width=HalfWidth;
+					  WFF.includeInLayout=true; WFF.visible=true;
+					  WFP.width=HalfWidth;
+					  WFP.includeInLayout=true; WFP.visible=true;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WQM" click="
+					  TW.title='Work Query Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.width=FullWidth;
+					  WQM.includeInLayout=true; WQM.visible=true;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WCM" click="
+					  TW.title='Work Script Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.width=FullWidth;
+					  WCM.includeInLayout=true; WCM.visible=true;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WNM" click="
+					  TW.title='Work Notification Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.width=FullWidth;
+					  WNM.includeInLayout=true; WNM.visible=true;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WMM" click="
+					  TW.title='Work Message Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WNM.width=FullWidth;
+					  WMM.includeInLayout=true; WMM.visible=true;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WVM" click="
+					  TW.title='Work Event Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WNM.width=FullWidth;
+					  WMM.includeInLayout=true; WMM.visible=true;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WST" click="
+					  TW.title='Work Step Types Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.width=FullWidth;
+					  WST.includeInLayout=true; WST.visible=true;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WTT" click="
+					  TW.title='Work Task Types Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.width=FullWidth;
+					  WTT.includeInLayout=true; WTT.visible=true;
+					  WAT.includeInLayout=false; WAT.visible=false;
+					  "/>
+			<s:Button label="WAT" click="
+					  TW.title='Work Action Types Master';
+					  VS.selectedChild=W_NC;
+					  W_HG.gap=0;
+					  WPM.includeInLayout=false; WPM.visible=false;
+					  WSM.includeInLayout=false; WSM.visible=false;
+					  WTM.includeInLayout=false; WTM.visible=false;
+					  WAM.includeInLayout=false; WAM.visible=false;
+					  WEM.includeInLayout=false; WEM.visible=false;
+					  WFM.includeInLayout=false; WFM.visible=false;
+					  FFM.includeInLayout=false; FFM.visible=false;
+					  WFF.includeInLayout=false; WFF.visible=false;
+					  WFP.includeInLayout=false; WFP.visible=false;
+					  WQM.includeInLayout=false; WQM.visible=false;
+					  WCM.includeInLayout=false; WCM.visible=false;
+					  WNM.includeInLayout=false; WNM.visible=false;
+					  WMM.includeInLayout=false; WMM.visible=false;
+					  WST.includeInLayout=false; WST.visible=false;
+					  WTT.includeInLayout=false; WTT.visible=false;
+					  WAT.width=FullWidth;
+					  WAT.includeInLayout=true; WAT.visible=true;
+					  "/>
+			<s:Button label="OJM" click="
+					  TW.title='Job Master';
+					  VS.selectedChild=O_NC;
+					  OJM.width=FullWidth;
+					  OJM.includeInLayout=true; OJM.visible=true;
+					  OSM.includeInLayout=false; OSM.visible=false;
+					  "/>
+			<s:Button label="OSM" click="
+					  TW.title='System Settings';
+					  VS.selectedChild=O_NC;
+					  OJM.includeInLayout=false; OJM.visible=false;
+					  OSM.width=FullWidth;
+					  OSM.includeInLayout=true; OSM.visible=true;
+					  "/>
+		</s:BorderContainer>
+		
+		<s:TitleWindow id="TW" title="Users" width="{FullWidth}" height="{FullHeight}" borderVisible="false" dropShadowVisible="false">
+			
+			<mx:ViewStack id="VS" width="100%">
+				
+				<s:NavigatorContent id="A_NC" width="100%" creationPolicy="all">
+					
+					<s:HGroup id="A_HG" gap="0" width="100%" clipAndEnableScrolling="true">
+						
+						<s:VGroup id="AUM" width="{FullWidth}" height="{FullHeight}" includeInLayout="true" visible="true">
+							<mx:AdvancedDataGrid id="AUM_DG" width="{AUM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="User Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="aac" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="AAC_DG" width="{AAC.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Account Access Controls"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="ugr" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="AGR_DG" width="{AGR.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Groups/Roles"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="AGM" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="AGM_DG" width="{AGM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Group Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="gac" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="GAC_DG" width="{GAC.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Group Access Controls"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="agu" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="AGU_DG" width="{AGU.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Group User Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="ARM" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="ARM_DG" width="{ARM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Role Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="rac" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="RAC_DG" width="{RAC.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Role Access Controls"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="aru" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="ARU_DG" width="{ARU.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Role User Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+					</s:HGroup>
+					
+				</s:NavigatorContent>
+				
+				<s:NavigatorContent id="D_NC" width="100%" creationPolicy="all">
+					
+					<s:HGroup id="D_HG" gap="0" width="100%" clipAndEnableScrolling="true">
+						
+						<s:VGroup id="DTM" width="{FullWidth}" height="{FullHeight}" includeInLayout="true" visible="true">
+							<mx:AdvancedDataGrid id="DTM_DG" width="{DTM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Document Type Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="DTF" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="DTF_DG" width="{DTF.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Document Type Fields/Fieldsets"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+					</s:HGroup>
+					
+				</s:NavigatorContent>
+				
+				<s:NavigatorContent id="F_NC" width="100%" creationPolicy="all">
+					
+					<s:HGroup id="F_HG" gap="0" width="100%" clipAndEnableScrolling="true">
+						
+						<s:VGroup id="FSM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FSM_DG" width="{FSM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Fields/Fieldsets Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="FDT" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FDT_DG" width="{FDT.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Fields - Document Types"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="FWP" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FWP_DG" width="{FWP.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Fields - Procedures/Plans"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="FWF" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FWF_DG" width="{FWF.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Fields - Work Forms"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="FDM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FDM_DG" width="{FDM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Folder Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="FDP" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FDP_DG" width="{FDP.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Folder Profiles"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+					</s:HGroup>
+					
+				</s:NavigatorContent>
+				
+				<s:NavigatorContent id="W_NC" width="100%" creationPolicy="all">
+					
+					<s:HGroup id="W_HG" gap="0" width="100%" clipAndEnableScrolling="true">
+						
+						<s:VGroup id="WPM" width="{FullWidth}" height="{FullHeight}" includeInLayout="true" visible="true">
+							<mx:AdvancedDataGrid id="WPM_DG" width="{WPM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Plan/Procedure Master"/>	
+								</mx:groupedColumns>
+				 			</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WPP" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WPP_DG" width="{WPP.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Plan/Procedure Paths"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WPV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WPV_DG" width="{WPV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Plan/Procedure Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WSM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WSM_DG" width="{WSM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Step/Task List Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WSC" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WSC_DG" width="{WSC.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Step Chains"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WSE" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WSE_DG" width="{WSE.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Step Entry/Exit Points"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WSV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WSV_DG" width="{WSV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Step Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WTM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WTM_DG" width="{WTM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Task Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WTV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WTV_DG" width="{WTV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Task Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WAM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WAM_DG" width="{WAM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Action Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WQA" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WQA_DG" width="{WQA.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Query Actions"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WSA" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WSA_DG" width="{WSA.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Script Actions"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WNA" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WNA_DG" width="{WNA.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Notification Actions"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WMA" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WMA_DG" width="{WMA.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Message Actions"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WAV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WAV_DG" width="{WAV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Action Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WEM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WEM_DG" width="{WEM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Qualifier Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WFM" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WFM_DG" width="{WFM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Form Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WFP" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<s:Panel id="WFP_Panel" title="Form Preview" width="{WFP.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<s:Form/>
+							</s:Panel>
+						</s:VGroup>
+						
+						<s:VGroup id="FFM" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="FFM_DG" width="{FFM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Related Document Type and Work Plan/Procedure Fieldsets/Fields"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WFF" width="{HalfWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WFF_DG" width="{WFF.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Form Fields"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WQM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WQM_DG" width="{WQM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Query Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WCM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WCM_DG" width="{WCM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Script Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WNM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WNM_DG" width="{WNM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Notification Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WMM" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WMM_DG" width="{WMM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Message Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="PPT" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="PPT_DG" width="{PPT.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Plan/Procedure Templates"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="PPV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="PPV_DG" width="{PPV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Plan/Procedure Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WST" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WST_DG" width="{WST.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Step Types Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="SSV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="SSV_DG" width="{SSV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Step Types Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WTT" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WTT_DG" width="{WTT.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Task Types Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="TTV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="TTV_DG" width="{TTV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Task Types Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="WAT" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="WAT_DG" width="{WAT.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Action Types Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="ATV" width="{FullWidth}" height="{FullHeight}" includeInLayout="false" visible="false">
+							<mx:AdvancedDataGrid id="ATV_DG" width="{ATV.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Work Action Types Event Management"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+					</s:HGroup>
+					
+				</s:NavigatorContent>
+				
+				<s:NavigatorContent id="O_NC" width="100%" creationPolicy="all">
+					
+					<s:HGroup id="O_HG" gap="0" width="100%" clipAndEnableScrolling="true">
+						
+						<s:VGroup id="OJM" width="{FullWidth}" height="{FullHeight}" includeInLayout="true" visible="true">
+							<mx:AdvancedDataGrid id="OJM_DG" width="{OJM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="Job Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+						
+						<s:VGroup id="OSM" width="{FullWidth}" height="{FullHeight}" includeInLayout="true" visible="true">
+							<mx:AdvancedDataGrid id="OSM_DG" width="{OSM.width}" height="{FullHeight}" borderVisible="true" dropShadowVisible="false">
+								<mx:groupedColumns>
+									<mx:AdvancedDataGridColumnGroup headerText="System Master"/>	
+								</mx:groupedColumns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+												
+					</s:HGroup>
+					
+				</s:NavigatorContent>
+				
+			</mx:ViewStack>
+			
+		</s:TitleWindow>
+		
+	</s:VGroup>
+	
+</s:Application>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+
+	<fx:Declarations>
+		<s:Animate id="HideOM" target="{OM_VG}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="-{HalfWidth}"/>
+		</s:Animate>
+		<s:Animate id="ShowOM" target="{OM_VG}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="-{HalfWidth}" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="HideFM" target="{FM_VG}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="-{HalfWidth}"/>
+		</s:Animate>
+		<s:Animate id="ShowFM" target="{FM_VG}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="-{HalfWidth}" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="Move_OM_OffStageToLeft" target="OM_VG" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{StageLeft}" valueTo="{OffStageLeft}"/>
+		</s:Animate>
+		<s:Animate id="Move_OM_OnStageFromLeft" target="{OM_VG}" duration="{SwapDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{OffStageLeft}" valueTo="{StageLeft}"/>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.effects.AnimateProperty;
+			import spark.effects.Animate;
+			import spark.effects.WipeDirection;
+			
+			[Bindable] private var SwapDuration:Number = 700;
+			
+			[Bindable] private var FullWidth:Number = 400;
+			[Bindable] private var HalfWidth:Number = 200;
+			[Bindable] private var OffStageLeft:Number = 0;
+			[Bindable] private var StageLeft:Number = 200;
+			[Bindable] private var StageRight:Number = 400;
+			[Bindable] private var OffStageRight:Number = 600;
+
+/*			private function SwapMasterDG(event:Event):void
+			{
+				if (event.target.selected)
+				{
+					TB.label = 'ShowFormMaster';
+					HideFO.play();
+					//FO.visible=false; FO.includeInLayout = false;
+					OM_VG.visible=true;
+					OM_VG.includeInLayout=true;
+					ShowFM.play();
+				} else {
+					TB.label = 'ShowFieldMaster';
+					HideFM.play();
+					//FM.visible=false; FM.includeInLayout = false;
+					OM_VG.visible=true;
+					OM_VG.includeInLayout=true;
+					ShowFO.play();
+				}
+			}
+			
+			private function SwapOMandFM(event:Event):void
+			{
+				if (event.target.selected)
+				{
+					TB2.label = 'OM';
+					MoveFORight.play();
+					MoveFFLeft.play();
+				} else {
+					TB2.label = 'FF/FO';
+					MoveFOLeft.play();
+					MoveFFRight.play();
+				}
+			}*/
+		]]>
+	</fx:Script>
+	
+	<s:SkinnableContainer x="{OffStageLeft}" y="0" width="{(FullWidth*2)}" height="100%">
+		
+		<s:HGroup x="{OffStageLeft}" y="0" height="30">
+			<mx:Box width="200" borderVisible="true"/>
+			<mx:Box width="200" borderVisible="true"/>
+			<mx:Box width="200" borderVisible="true"/>
+			<mx:Box width="200" borderVisible="true"/>
+		</s:HGroup>
+		
+		<s:HGroup x="{StageLeft}" y="30" width="{FullWidth}" height="30" horizontalAlign="center">
+			<s:Button label="Move OM offstage" click="Move_OM_OffStageToLeft.play()"/>
+			<s:Button label="Move OM onstage" click="Move_OM_OnStageFromLeft.play()"/>
+			<!--s:ToggleButton id="TB" label="ShowFieldMaster" click="SwapMasterDG(event);"/>
+			<s:ToggleButton id="TB2" label="FO/FF" click="SwapMasterDetailDG(event);"/-->		
+		</s:HGroup>
+		
+		<s:Rect x="{OffStageLeft}" y="0" width="{HalfWidth}" height="100%" depth="3">
+			<s:fill>
+				<s:SolidColor color="white" alpha="1"/>
+			</s:fill>
+		</s:Rect>
+		
+		<s:TitleWindow id="Head_TW" title="Grids" 
+					   x="{StageLeft}" y="60" width="{FullWidth}" height="100%" borderVisible="false" dropShadowVisible="false" depth="2">
+			
+			<s:SkinnableContainer x="{Head_TW.x}" y="90" width="100%" height="100%">
+			
+				<s:VGroup id="OM_VG" x="{StageLeft}" width="{HalfWidth}" height="100%" visible="true">
+					<mx:AdvancedDataGrid id="OM_DG" width="{HalfWidth}" height="90%" borderVisible="true">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup headerText="Form Master"/>	
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</s:VGroup>
+				
+				<s:VGroup id="OP_VG" x="{StageRight}" width="{HalfWidth}" height="100%">
+					<s:Panel id="FO" title="Form Preview" height="90%" borderVisible="true">
+					</s:Panel>
+				</s:VGroup>
+				
+				<s:VGroup id="FM_VG" x="{StageLeft}" width="{HalfWidth}" height="100%" visible="false">
+					<mx:AdvancedDataGrid id="FM_DG" width="{HalfWidth}" height="90%" borderVisible="true">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup headerText="Field Master"/>	
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</s:VGroup>
+				
+				<s:VGroup id="OF_VG" x="{StageRight}" width="{HalfWidth}" height="100%" visible="false">
+					<mx:AdvancedDataGrid id="OF_DG" width="{HalfWidth}" height="90%" borderVisible="true">
+						<mx:groupedColumns>
+							<mx:AdvancedDataGridColumnGroup headerText="Form Fields"/>	
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</s:VGroup>
+				
+			</s:SkinnableContainer>
+			
+		</s:TitleWindow>
+		
+		<s:Rect x="{OffStageRight}" y="0" width="{HalfWidth}" height="100%" depth="3">
+			<s:fill>
+				<s:SolidColor color="white" alpha="1"/>
+			</s:fill>
+		</s:Rect>
+		
+	</s:SkinnableContainer>
+	
+</s:Application>

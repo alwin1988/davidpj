@@ -9,7 +9,7 @@ package
 	import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
 	import mx.controls.advancedDataGridClasses.MXAdvancedDataGridItemRenderer;
 	
-	public class ADGCheckBoxItemRenderer extends MXAdvancedDataGridItemRenderer
+	public class HADGCheckBoxItemRenderer extends MXAdvancedDataGridItemRenderer
 	{
 		
 		protected var myImage:Image;
@@ -24,7 +24,7 @@ package
 		static private var STATE_CHECKED:String="checked";
 		static private var STATE_UNCHECKED:String="unchecked";
 		
-		public function ADGCheckBoxItemRenderer()
+		public function HADGCheckBoxItemRenderer()
 		{
 			super();
 		}

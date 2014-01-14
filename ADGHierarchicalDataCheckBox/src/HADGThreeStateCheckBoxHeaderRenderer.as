@@ -33,7 +33,7 @@ package
 	 * @Modify by Cmee 06-15-2013
 	 */
 	
-	public class ThreeStateCheckBoxHeaderRenderer extends MXAdvancedDataGridItemRenderer {
+	public class HADGThreeStateCheckBoxHeaderRenderer extends MXAdvancedDataGridItemRenderer {
 		protected var myCheckBox:CheckBox;
 		protected var myImage:Image;
 		private var imageWidth:Number = 7;
@@ -52,7 +52,7 @@ package
 		[Bindable] private var imageClick:Boolean = false;
 		
 		//Constuctor 
-		public function ThreeStateCheckBoxHeaderRenderer() {
+		public function HADGThreeStateCheckBoxHeaderRenderer() {
 			super();
 			super.autoDrawBackground = false;
 		}

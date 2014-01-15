@@ -906,16 +906,16 @@
 														private var AU_m_AC:ArrayCollection = new ArrayCollection(
 															[
 																{EntityType:"User", UID:"1", UserId:"User1Id", UserName:"User1Name", Description:"User1Description",
-																	CO0:true, CO1:true, CO2:true, CO3:true, CO4:true, CO5:true,
-																	CO6:true, CO7:true, CO8:true, CO9:true, CO10:true,
-																	Enabled:true, checked:false},
+																	CO0_checked:false, CO1_checked:false, CO2_checked:false, CO3_checked:false, CO4_checked:false, CO5_checked:false,
+																	CO6_checked:false, CO7_checked:false, CO8_checked:false, CO9_checked:false, CO10_checked:false,
+																	Enabled:false, checked:false},
 																{EntityType:"User", UID:"2", UserId:"User2Id", UserName:"User2Name", Description:"User2Description",
-																	CO0:true, CO1:true, CO2:true, CO3:true, CO4:true, CO5:true,
-																	CO6:true, CO7:true, CO8:true, CO9:true, CO10:true,
-																	Enabled:true, checked:false},
+																	CO0_checked:false, CO1_checked:false, CO2_checked:false, CO3_checked:false, CO4_checked:false, CO5_checked:false,
+																	CO6_checked:false, CO7_checked:false, CO8_checked:false, CO9_checked:false, CO10_checked:false,
+																	Enabled:false, checked:false},
 																{EntityType:"User", UID:"3", UserId:"User3Id", UserName:"User3Name", Description:"User3Description",
-																	CO0:true, CO1:true, CO2:true, CO3:true, CO4:true, CO5:true,
-																	CO6:true, CO7:true, CO8:true, CO9:true, CO10:true,
+																	CO0_checked:false, CO1_checked:false, CO2_checked:false, CO3_checked:false, CO4_checked:false, CO5_checked:false,
+																	CO6_checked:false, CO7_checked:false, CO8_checked:false, CO9_checked:false, CO10_checked:false,
 																	Enabled:true, checked:false}
 															]);
 														
@@ -1046,7 +1046,7 @@
 														<mx:AdvancedDataGridColumnGroup id="AU_m_DG_propertiesC" headerText="Companies" visible="false">
 															<mx:AdvancedDataGridColumnGroup headerText="All" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO0"
-																						   dataField="AU_m_DG_CO0" textAlign="center"
+																						   dataField="CO0_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1054,7 +1054,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 01" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO1"
-																						   dataField="AU_m_DG_CO1" textAlign="center"
+																						   dataField="CO1_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1062,7 +1062,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 02" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO2"
-																						   dataField="AU_m_DG_CO2" textAlign="center"
+																						   dataField="CO2_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1070,7 +1070,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 03" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO3"
-																						   dataField="AU_m_DG_CO3" textAlign="center"
+																						   dataField="CO3_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1078,7 +1078,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 04" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO4"
-																						   dataField="AU_m_DG_CO4" textAlign="center"
+																						   dataField="CO4_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1086,7 +1086,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 05" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO5"
-																						   dataField="AU_m_DG_CO5" textAlign="center"
+																						   dataField="CO5_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1094,7 +1094,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 06" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO6"
-																						   dataField="AU_m_DG_CO6" textAlign="center"
+																						   dataField="CO6_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1102,7 +1102,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 07" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO7"
-																						   dataField="AU_m_DG_CO7" textAlign="center"
+																						   dataField="CO7_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1110,7 +1110,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 08" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO8"
-																						   dataField="AU_m_DG_CO8" textAlign="center"
+																						   dataField="CO8_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1118,7 +1118,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 09" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO9"
-																						   dataField="AU_m_DG_CO9" textAlign="center"
+																						   dataField="CO9_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -1126,7 +1126,7 @@
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 10" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO10"
-																						   dataField="AU_m_DG_CO10" textAlign="center"
+																						   dataField="CO10_checked" textAlign="center"
 																						   width="{(AU_m_DG.width-AU_m_DG.width)+53}"
 																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																						   itemRenderer="component.CheckBoxItemRenderer"
@@ -2531,7 +2531,7 @@
 												</fx:Script>
 												
 												<mx:AdvancedDataGrid id="HeadersOnly_DG" 
-																	 width="581" height="36" minColumnWidth="0" verticalAlign="middle"
+																	 width="581" height="18" minColumnWidth="0" verticalAlign="middle"
 																	 headerHeight="18" rowHeight="20" rowCount="2"
 																	 verticalScrollPolicy="off">
 													<mx:columns>
@@ -2577,7 +2577,7 @@
 															]]>
 														</fx:Script>
 														<mx:AdvancedDataGrid id="A_AC1_DG"
-																			 width="581" height="100%" borderVisible="false" verticalAlign="middle" verticalCenter="0"
+																			 width="50%" height="100%" borderVisible="false" verticalAlign="middle" verticalCenter="0"
 																			 headerHeight="18" rowHeight="20" minColumnWidth="0"
 																			 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 																			 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
@@ -2718,7 +2718,7 @@
 															]]>
 														</fx:Script>
 														<mx:AdvancedDataGrid id="A_AC2_DG" 
-																			 width="581" height="100%" borderVisible="false" verticalAlign="middle" verticalCenter="0"
+																			 width="50%" height="100%" borderVisible="false" verticalAlign="middle" verticalCenter="0"
 																			 headerHeight="18" rowHeight="20" minColumnWidth="0"
 																			 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 																			 horizontalScrollPolicy="off" verticalScrollPolicy="auto"

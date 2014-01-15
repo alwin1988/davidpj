@@ -200,6 +200,8 @@ package
 				if(dataCursor != null){
 					dataCursor.seek(CursorBookmark.FIRST);
 					
+					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+					trace(adgld.dataField);
 					while (!dataCursor.afterLast) {
 						if (dataCursor.current != null){
 							dataCursor.current.checked = true;

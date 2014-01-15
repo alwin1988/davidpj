@@ -1,4 +1,4 @@
-package 
+package
 {
 	import flash.events.MouseEvent;
 	
@@ -40,8 +40,11 @@ package
 		private var imageHeight:Number = 7;
 		//private var inner:String = "@Embed('../assets/inner.png')";
 		
-		[Bindable] [Embed(source="inner.png")]
+		[Bindable] [Embed("assets/inner.png")]
 		public var ICON_INNER:Class;
+
+		//[Embed("assets/pri1button.png")]
+		//public const pri1button:Class;
 		
 		private const SELECT_STATE:String="select";
 		private const UNSELECT_STATE:String="unselect";
@@ -192,19 +195,26 @@ package
 		 */
 		private function selectAll():void{			
 			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-			
-			dataCursor.seek(CursorBookmark.FIRST);
-			
-			while (!dataCursor.afterLast) {
-				if (dataCursor.current != null){
-					dataCursor.current.checked = true;
+			if (hcv != null){
+				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+				if(dataCursor != null){
+					dataCursor.seek(CursorBookmark.FIRST);
+					
+					while (!dataCursor.afterLast) {
+						if (dataCursor.current != null){
+							dataCursor.current.checked = true;
+						}
+				
+						//hcv.openNode(dataCursor.current);
+						dataCursor.moveNext();
+					}
+					hcv.refresh();
+				}else{
+					trace("dataCursor is null");
 				}
-		
-				//hcv.openNode(dataCursor.current);
-				dataCursor.moveNext();
+			}else{
+				trace("hcv is null");
 			}
-			hcv.refresh();
 		}
 		
 		/**
@@ -214,19 +224,26 @@ package
 		private function unSelectAll():void{
 			
 			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-			
-			dataCursor.seek(CursorBookmark.FIRST);
-			
-			while (!dataCursor.afterLast) {
-				if (dataCursor.current != null){
-					dataCursor.current.checked = false;
+			if (hcv != null){
+				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+				if (dataCursor != null){
+					dataCursor.seek(CursorBookmark.FIRST);
+					
+					while (!dataCursor.afterLast) {
+						if (dataCursor.current != null){
+							dataCursor.current.checked = false;
+						}
+						
+						//hcv.openNode(dataCursor.current);
+						dataCursor.moveNext();
+					}
+					hcv.refresh();
+				}else{
+					trace("dataCursor is null");
 				}
-				
-				//hcv.openNode(dataCursor.current);
-				dataCursor.moveNext();
+			}else{
+				trace("hcv is null");
 			}
-			hcv.refresh();
 		}
 		
 		/**
@@ -240,20 +257,29 @@ package
 			
 			var b:Boolean=true;
 			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-			
-			dataCursor.seek(CursorBookmark.FIRST);
-			
-			while (!dataCursor.afterLast) {
-				if (!dataCursor.current.checked){
-					b=false;
-					break;
+			if (hcv != null){
+				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+				if (dataCursor != null){
+					dataCursor.seek(CursorBookmark.FIRST);
+					
+					while (!dataCursor.afterLast) {
+						if (!dataCursor.current.checked){
+							b=false;
+							break;
+						}
+						
+						//hcv.openNode(dataCursor.current);
+						dataCursor.moveNext();
+					}
+					return b;
+				}else{
+					trace("dataCursor is null");
+					return b;
 				}
-				
-				//hcv.openNode(dataCursor.current);
-				dataCursor.moveNext();
+			}else{
+				trace("hcv is null");
+				return b;
 			}
-			return b;
 		}
 		
 		/**
@@ -266,22 +292,31 @@ package
 			
 			var b:Boolean=false;
 			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-			
-			dataCursor.seek(CursorBookmark.FIRST);
-			
-			while (!dataCursor.afterLast) {
-				if (dataCursor.current.checked){
-					b=true;
+			if (hcv != null){
+				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+				if (dataCursor != null){
+					dataCursor.seek(CursorBookmark.FIRST);
+					
+					while (!dataCursor.afterLast) {
+						if (dataCursor.current.checked){
+							b=true;
+							trace(b);
+							return b;
+						}
+						
+						//hcv.openNode(dataCursor.current);
+						dataCursor.moveNext();
+					}
 					trace(b);
 					return b;
+				}else{
+					trace("dataCursor is null");
+					return b;
 				}
-				
-				//hcv.openNode(dataCursor.current);
-				dataCursor.moveNext();
+			}else{
+				trace("hcv is null");
+				return b;
 			}
-			trace(b);
-			return b;
 		}
 	}
 }

@@ -17,7 +17,7 @@ package
 		private var imageWidth:Number=9;
 		private var imageHeight:Number=9;
 		//private var inner:String="@Embed('../assets/inner.png')";
-		[Bindable] [Embed(source="inner.png")]
+		[Bindable] [Embed("assets/inner.png")]
 		public var ICON_INNER:Class;
 		
 		static private var STATE_SCHRODINGER:String="schrodinger";

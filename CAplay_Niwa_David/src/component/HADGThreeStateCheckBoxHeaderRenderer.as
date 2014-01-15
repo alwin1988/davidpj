@@ -1,7 +1,13 @@
-package component {
+package 
+{
 	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.CursorBookmark;
+	import mx.collections.HierarchicalCollectionView;
+	import mx.collections.HierarchicalData;
+	import mx.collections.IHierarchicalCollectionViewCursor;
+	import mx.collections.IViewCursor;
 	import mx.controls.AdvancedDataGrid;
 	import mx.controls.Alert;
 	import mx.controls.Image;
@@ -27,14 +33,14 @@ package component {
 	 * @Modify by Cmee 06-15-2013
 	 */
 	
-	public class ThreeStateCheckBoxHeaderRenderer extends MXAdvancedDataGridItemRenderer {
+	public class HADGThreeStateCheckBoxHeaderRenderer extends MXAdvancedDataGridItemRenderer {
 		protected var myCheckBox:CheckBox;
 		protected var myImage:Image;
-		private var imageWidth:Number = 9.5;
-		private var imageHeight:Number = 9.5;
+		private var imageWidth:Number = 7;
+		private var imageHeight:Number = 7;
 		//private var inner:String = "@Embed('../assets/inner.png')";
 		
-		[Bindable] [Embed(source="../assets/inner.png")]
+		[Bindable] [Embed(source="inner.png")]
 		public var ICON_INNER:Class;
 		
 		private const SELECT_STATE:String="select";
@@ -46,7 +52,7 @@ package component {
 		[Bindable] private var imageClick:Boolean = false;
 		
 		//Constuctor 
-		public function ThreeStateCheckBoxHeaderRenderer() {
+		public function HADGThreeStateCheckBoxHeaderRenderer() {
 			super();
 			super.autoDrawBackground = false;
 		}
@@ -59,8 +65,13 @@ package component {
 			super.createChildren();
 			
 			myCheckBox = new CheckBox();
-			myCheckBox.setStyle("horizontalCenter", "0");
+			myCheckBox.height = 8;
+			myCheckBox.width = 8;
+			myCheckBox.setStyle("horizontalCenter", "-2");
+			myCheckBox.setStyle("horizontalAlign", "center");
 			myCheckBox.setStyle("verticalCenter", "0");
+			myCheckBox.setStyle("verticalAlign", "middle");
+			myCheckBox.setStyle("chromeColor", "white");
 			myCheckBox.addEventListener( MouseEvent.CLICK, checkBoxClickHandler );
 			addElement(myCheckBox);
 			myImage = new Image();
@@ -68,6 +79,15 @@ package component {
 			myImage.addEventListener( MouseEvent.CLICK, imageClickHandler );
 			myImage.visible = false;
 			addElement(myImage);
+		}
+
+		override public function set data(value:Object):void
+		{
+			if (value != null)
+			{
+				super.data=value;
+				checkState();
+			}
 		}
 		
 		/**
@@ -83,8 +103,8 @@ package component {
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			
-			myImage.x = myCheckBox.x+2;
-			myImage.y = myCheckBox.y+4;
+			myImage.x = myCheckBox.x+3;
+			myImage.y = myCheckBox.y+1;
 			
 			myImage.width = imageWidth;
 			myImage.height = imageHeight;
@@ -170,12 +190,21 @@ package component {
 		 * Selects all the rows in the datagrid.  
 		 * 
 		 */
-		private function selectAll():void{
-			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
-			for each (var o:Object in ac){
-				o.checked = myCheckBox.selected;
+		private function selectAll():void{			
+			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+			
+			dataCursor.seek(CursorBookmark.FIRST);
+			
+			while (!dataCursor.afterLast) {
+				if (dataCursor.current != null){
+					dataCursor.current.checked = true;
+				}
+		
+				//hcv.openNode(dataCursor.current);
+				dataCursor.moveNext();
 			}
-			AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider = ac;
+			hcv.refresh();
 		}
 		
 		/**
@@ -183,13 +212,21 @@ package component {
 		 * 
 		 */
 		private function unSelectAll():void{
-			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
-			myCheckBox.selected = false;
-			for each (var o:Object in ac){
-				o.checked = myCheckBox.selected;
+			
+			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+			
+			dataCursor.seek(CursorBookmark.FIRST);
+			
+			while (!dataCursor.afterLast) {
+				if (dataCursor.current != null){
+					dataCursor.current.checked = false;
+				}
+				
+				//hcv.openNode(dataCursor.current);
+				dataCursor.moveNext();
 			}
-			myCheckBox.selected
-			AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider = ac;
+			hcv.refresh();
 		}
 		
 		/**
@@ -200,13 +237,21 @@ package component {
 		 * 
 		 */
 		private function areAllSelected():Boolean{
-			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			
 			var b:Boolean=true;
-			for each (var o:Object in ac){
-				if(!o.checked){
+			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+			
+			dataCursor.seek(CursorBookmark.FIRST);
+			
+			while (!dataCursor.afterLast) {
+				if (!dataCursor.current.checked){
 					b=false;
 					break;
 				}
+				
+				//hcv.openNode(dataCursor.current);
+				dataCursor.moveNext();
 			}
 			return b;
 		}
@@ -218,16 +263,25 @@ package component {
 		 * 
 		 */
 		private function isAnyColumnSelected():Boolean{
-			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			
 			var b:Boolean=false;
-			for each (var o:Object in ac){
-				if(o.checked){
+			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+			var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+			
+			dataCursor.seek(CursorBookmark.FIRST);
+			
+			while (!dataCursor.afterLast) {
+				if (dataCursor.current.checked){
 					b=true;
-					break;
+					trace(b);
+					return b;
 				}
+				
+				//hcv.openNode(dataCursor.current);
+				dataCursor.moveNext();
 			}
+			trace(b);
 			return b;
 		}
 	}
 }
-

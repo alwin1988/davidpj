@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true">
+	
+	<!--<s:Label text="{data}"/>-->
+	
+	<mx:MenuBar id="mBar"
+				labelField="@label"
+				horizontalCenter="0">
+				<mx:dataProvider>
+					<s:XMLListCollection>
+						<fx:XMLList xmlns="">
+							<menu label="Edit...">
+								<item label="Cut">
+									<item label="Cut1" />
+									<item label="Cut2" />
+									<item label="Cut3" />							
+								</item>
+								<item label="Copy" />
+								<item label="Paste" />
+								<fake type="separator" />
+								<item label="Undo" />
+								<item label="Redo" />
+								<fake type="separator" />
+								<item label="radio button" type="radio" toggled="true" />
+								<item label="check box" type="check" toggled="true" />
+							</menu>
+						</fx:XMLList>
+					</s:XMLListCollection>
+				</mx:dataProvider>
+	</mx:MenuBar>
+	
+	
+</s:ItemRenderer>

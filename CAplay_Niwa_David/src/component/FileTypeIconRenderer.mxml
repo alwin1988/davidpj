@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" 
+								  xmlns:mx="library://ns.adobe.com/flex/mx" 
+								  focusEnabled="true">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			[Bindable] [Embed(source="../assets/icon_excel.png")]
+			public var ICON_EXCEL:Class;			
+			[Bindable] [Embed(source="../assets/icon_pdf.png")]
+			public var ICON_PDF:Class;			
+			[Bindable] [Embed(source="../assets/icon_tif.png")]
+			public var ICON_TIF:Class;
+			[Bindable] [Embed(source="../assets/icon_word.png")]
+			public var ICON_WORD:Class;
+			
+			public function init():void {}
+			
+			override public function set data(value:Object):void {
+				super.data = value;
+				iconHBoxID.removeAllChildren();
+				if (data.IndexValue2 != null){
+					renderIcon(data.IndexValue2[0], data.IndexValue2[1]);
+				}				
+			}
+			
+			public function renderIcon(fileType:String, detail:String):void {
+				var iconComponent:IconComponent = new IconComponent();
+				var labelComponent:LabelComponent = new LabelComponent();
+				
+				iconHBoxID.addChild(iconComponent);
+				iconHBoxID.addChild(labelComponent);
+				
+				if(fileType.toUpperCase() == "TIF"){
+					iconComponent.imageID.source = ICON_TIF;
+				}
+				if(fileType.toUpperCase() == "PDF"){
+					iconComponent.imageID.source = ICON_PDF;
+				}
+				if(fileType.toUpperCase() == "EXCEL"){
+					iconComponent.imageID.source = ICON_EXCEL;
+				}
+				if(fileType.toUpperCase() == "WORD"){
+					iconComponent.imageID.source = ICON_WORD;
+				}
+				labelComponent.textLabelID.text = detail;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<mx:HBox id="iconHBoxID" width="100%" horizontalAlign="left" horizontalGap="0"
+			 horizontalScrollPolicy="off" paddingLeft="5" verticalAlign="middle"
+			 verticalScrollPolicy="off">
+	</mx:HBox>
+	
+	
+</s:MXAdvancedDataGridItemRenderer>

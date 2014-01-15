@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+								  xmlns:s="library://ns.adobe.com/flex/spark"
+								  xmlns:mx="library://ns.adobe.com/flex/mx"
+								  xmlns:component="component.*"
+								  focusEnabled="true" initialize="mxadvanceddatagriditemrenderer1_initializeHandler(event)">
+	<!--<s:Label id="lblData" top="0" left="0" right="0" bottom="0" text="{listData.label}" />-->
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Menu;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			
+			[Bindable]
+			public var menuData:Array = 
+				[
+					{label:"Priority 1", icon:"pri1button", data:"1"},
+					{label:"Priority 2", icon:"pri2button", data:"2"},
+					{label:"Priority 3", icon:"pri3button", data:"3"},
+					{label:"Priority 4", icon:"pri4button", data:"4"},
+					{label:"Priority 5", icon:"pri5button", data:"5"}
+				];
+			
+			[Embed("assets/pri1button.png")]
+			public const pri1button:Class;
+			
+			[Embed("assets/pri2button.png")]
+			public const pri2button:Class;
+			
+			[Embed("assets/pri3button.png")]
+			public const pri3button:Class;
+			
+			[Embed("assets/pri4button.png")]
+			public const pri4button:Class;
+			
+			[Embed("assets/pri5button.png")]
+			public const pri5button:Class;	
+			
+			override public function set data(value:Object):void
+			{	
+				super.data = value;	
+		
+				//after execute invalidateProperties() call commitProperties()
+				invalidateProperties();
+			}
+			
+			override protected function commitProperties():void 
+			{ 
+				super.commitProperties();
+				
+				//get dataField that use with ItemRenderer
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(data[adgld.dataField]);
+				
+				if (pmb.popUp)
+				{
+					if (data[adgld.dataField] == "1"){
+						//pmb.selectedIndex = 0;
+						Menu(pmb.popUp).selectedIndex = 0;
+					}else if (data[adgld.dataField] == "2"){
+						//pmb.selectedIndex = 1;
+						Menu(pmb.popUp).selectedIndex = 1;
+					}else if (data[adgld.dataField] == "3"){
+						//pmb.selectedIndex = 2;
+						Menu(pmb.popUp).selectedIndex = 2;
+					}else if (data[adgld.dataField] == "4"){
+						//pmb.selectedIndex = 3;	
+						Menu(pmb.popUp).selectedIndex = 3;
+					}else if (data[adgld.dataField] == "5"){
+						//pmb.selectedIndex = 4;	
+						Menu(pmb.popUp).selectedIndex = 4;
+					}	
+				}
+			}		
+
+			protected function pmb_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				pmb.popUp.addEventListener("itemClick", changeHandler);
+			}
+			
+			protected function changeHandler(event:MenuEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(event.item.data);
+				data.Priority = String(event.item.data);
+			}
+
+			protected function mxadvanceddatagriditemrenderer1_initializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				pmb.dataProvider = menuData;
+				callLater(initMenu);
+			}
+
+			private function initMenu():void
+			{
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(data[adgld.dataField]);
+				
+					if (data[adgld.dataField] == "1"){
+						//pmb.selectedIndex = 0;
+						Menu(pmb.popUp).selectedIndex = 0;
+					}else if (data[adgld.dataField] == "2"){
+						//pmb.selectedIndex = 1;
+						Menu(pmb.popUp).selectedIndex = 1;
+					}else if (data[adgld.dataField] == "3"){
+						//pmb.selectedIndex = 2;
+						Menu(pmb.popUp).selectedIndex = 2;
+					}else if (data[adgld.dataField] == "4"){
+						//pmb.selectedIndex = 3;	
+						Menu(pmb.popUp).selectedIndex = 3;
+					}else if (data[adgld.dataField] == "5"){
+						//pmb.selectedIndex = 4;	
+						Menu(pmb.popUp).selectedIndex = 4;
+					}	
+			}
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
+			{
+				super.updateDisplayList(unscaledWidth,unscaledHeight);
+				
+				if (data.EntityType == "Object"){
+					pmb.visible = false;
+				}else{
+					pmb.visible = true;
+				}
+				
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(data[adgld.dataField]);
+				
+				if (data[adgld.dataField] == "1"){
+					//pmb.selectedIndex = 0;
+					Menu(pmb.popUp).selectedIndex = 0;
+				}else if (data[adgld.dataField] == "2"){
+					//pmb.selectedIndex = 1;
+					Menu(pmb.popUp).selectedIndex = 1;
+				}else if (data[adgld.dataField] == "3"){
+					//pmb.selectedIndex = 2;
+					Menu(pmb.popUp).selectedIndex = 2;
+				}else if (data[adgld.dataField] == "4"){
+					//pmb.selectedIndex = 3;	
+					Menu(pmb.popUp).selectedIndex = 3;
+				}else if (data[adgld.dataField] == "5"){
+					//pmb.selectedIndex = 4;	
+					Menu(pmb.popUp).selectedIndex = 4;
+				}
+			}				
+		]]>
+	</fx:Script>
+	
+	<mx:Box paddingTop="0" paddingBottom="0" paddingLeft="2.5" paddingRight="0" horizontalAlign="center" verticalAlign="middle">
+		<mx:PopUpMenuButton id="pmb" width="35" height="18" label="" leading="0"
+							creationComplete="pmb_creationCompleteHandler(event)"
+							dataProvider="{menuData}" verticalCenter="0" verticalGap="0"/>
+		
+	</mx:Box>
+	
+</s:MXAdvancedDataGridItemRenderer>

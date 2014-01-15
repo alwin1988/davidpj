@@ -1693,7 +1693,7 @@
 					width="159" height="100%" borderVisible="false" 
 					styleName="MenuText" contentBackgroundAlpha=".0"
 					allowMultipleSelection="false" 
-					click="CategorySelector_clickhandler(event);">
+					click="CategorySelector_clickhandler(event)">
 				<mx:ArrayCollection>
 					<fx:String>Accounts</fx:String>
 					<fx:String>   Users</fx:String>

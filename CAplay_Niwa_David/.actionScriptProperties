@@ -40,6 +40,7 @@
     <application path="Juggle7.mxml"/>
     <application path="Juggle8.mxml"/>
     <application path="CAPlayPSTA4.mxml"/>
+    <application path="CAPlayPSTA5.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

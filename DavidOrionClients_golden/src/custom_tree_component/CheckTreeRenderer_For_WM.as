@@ -47,6 +47,20 @@ package custom_tree_component
 				toggleParents(tree.getParentItem(item), tree, getState(tree, tree.getParentItem(item)));
 			}
 		}
+		
+		//-- See 20140113 : find state of main root node
+		private function findRootState(item:Object, tree:Tree):String
+		{
+			var rootState:String = null;
+			
+			if ( item.@root == "1" ) {
+				rootState = item.@state;
+			} else {
+				rootState = findRootState(tree.getParentItem(item), tree);
+			}
+			
+			return rootState;
+		}
 
 		private function toggleChildren(item:Object, tree:Tree, state:String):void
 		{
@@ -121,13 +135,12 @@ package custom_tree_component
 		{
 			if (data)
 			{
-				var root:String = data.@root; //Get selected checkbox is root?
 				var dataProviderType:String = data.@providerType;
-				
+				var treeType:String = data.@treeType;
 				var myListData:TreeListData=TreeListData(this.listData);
-				//var selectedNode:Object=myListData.item;
 				var tree:Tree=Tree(myListData.owner);
 				var toggle:Boolean=myCheckBox.selected;
+				
 				if (toggle)
 				{
 					toggleChildren(data, tree, STATE_CHECKED);
@@ -139,7 +152,31 @@ package custom_tree_component
 				var parent:Object=tree.getParentItem(data);
 				toggleParents(parent, tree, getState(tree, parent));
 				
-				FlexGlobals.topLevelApplication.workManagerID.chkTreeCheckBoxType(dataProviderType, root, toggle);
+				
+				//-- See 20140113 : logic for set open/close datagrid
+				var rootState:String = null;
+				//Batch Processing and DocumentsTree
+				if ( treeType == "A" ) { 
+					//selected check box is not first root node
+					if ( parent != null ) {
+						//find state of main root node
+						rootState = findRootState(parent, tree);
+						if ( rootState == "checked" ) {
+							FlexGlobals.topLevelApplication.workManagerID.chkTreeCheckBoxType(dataProviderType, true);
+						
+						} else if ( rootState == "unchecked" ) {
+							FlexGlobals.topLevelApplication.workManagerID.chkTreeCheckBoxType(dataProviderType, false);
+						}
+						
+					} else { //first root node
+						FlexGlobals.topLevelApplication.workManagerID.chkTreeCheckBoxType(dataProviderType, toggle);
+					}
+					
+					
+				} else if ( treeType == "B" ) { //Transactions
+					FlexGlobals.topLevelApplication.workManagerID.chkTreeCheckBoxType(dataProviderType, toggle);
+				}
+				
 			}
 		}
 
@@ -203,6 +240,9 @@ package custom_tree_component
 
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
+			
+			//Alert.show("fine updateDisplayList!!");
+			
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
 			if (super.data)
 			{
@@ -221,6 +261,14 @@ package custom_tree_component
 					myCheckBox.y=5;
 					super.label.x=myCheckBox.x + myCheckBox.width + 17;
 				}
+				
+				/*if (data.@state == STATE_CHECKED) {
+					myCheckBox.selected = true;
+				
+				} else if ( data.@state == STATE_UNCHECKED ) {
+					myCheckBox.selected = false;
+				}*/
+				
 				if (data.@state == STATE_SCHRODINGER)
 				{
 					//myImage.x=myCheckBox.x + 4;

@@ -91,8 +91,8 @@ package component {
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			
-			myImage.x = myCheckBox.x+2;
-			myImage.y = myCheckBox.y+4;
+			myImage.x = myCheckBox.x+3;
+			myImage.y = myCheckBox.y+1;
 			
 			myImage.width = imageWidth;
 			myImage.height = imageHeight;
@@ -180,8 +180,12 @@ package component {
 		 */
 		private function selectAll():void{
 			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
+			
 			for each (var o:Object in ac){
-				o.checked = myCheckBox.selected;
+				//o.checked = myCheckBox.selected;
+				o[adgld.dataField] = myCheckBox.selected;
 			}
 			AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider = ac;
 		}
@@ -192,9 +196,12 @@ package component {
 		 */
 		private function unSelectAll():void{
 			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
 			myCheckBox.selected = false;
 			for each (var o:Object in ac){
-				o.checked = myCheckBox.selected;
+				//o.checked = myCheckBox.selected;
+				o[adgld.dataField] = myCheckBox.selected;
 			}
 			myCheckBox.selected
 			AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider = ac;
@@ -209,9 +216,12 @@ package component {
 		 */
 		private function areAllSelected():Boolean{
 			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
 			var b:Boolean=true;
 			for each (var o:Object in ac){
-				if(!o.checked){
+				//if(!o.checked){
+				if(!o[adgld.dataField]){
 					b=false;
 					break;
 				}
@@ -227,9 +237,12 @@ package component {
 		 */
 		private function isAnyColumnSelected():Boolean{
 			var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
 			var b:Boolean=false;
 			for each (var o:Object in ac){
-				if(o.checked){
+				//if(o.checked){
+				if(o[adgld.dataField]){
 					b=true;
 					break;
 				}

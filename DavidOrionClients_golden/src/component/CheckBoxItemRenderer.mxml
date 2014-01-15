@@ -22,7 +22,10 @@
 			 */ 
 			public function clickHandler(event:MouseEvent):void {
 				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
-				o.checked = cb.selected;
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(adgld.dataField);
+				
+				o[adgld.dataField] = cb.selected;
 				ArrayCollection(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider).setItemAt(o,AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedIndex);
 			}
 			
@@ -35,7 +38,10 @@
 			override public function set data(value:Object):void {
 				if ( value != null ) {
 					super.data = value; 
-					cb.selected = value.checked;
+					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+					trace(adgld.dataField);
+					
+					cb.selected = value[adgld.dataField];
 				}
 			}
 		]]>

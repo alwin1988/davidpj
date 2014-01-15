@@ -53,8 +53,12 @@ package
 		{
 			if (data)
 			{
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(adgld.dataField);
+				
 				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
-				o.checked = myCheckBox.selected;		
+				//o.checked = myCheckBox.selected;		
+				o[adgld.dataField] = myCheckBox.selected;		
 				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
 				hcv.refresh();
 			}
@@ -65,7 +69,11 @@ package
 			if (value != null)
 			{
 				super.data=value;
-				myCheckBox.selected = value.checked;
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(adgld.dataField);
+				
+				//myCheckBox.selected = value.checked;
+				myCheckBox.selected = value[adgld.dataField];
 			}
 		}
 		

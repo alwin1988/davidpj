@@ -1,4 +1,4 @@
-package 
+package component
 {
 	import flash.events.MouseEvent;
 	
@@ -40,8 +40,11 @@ package
 		private var imageHeight:Number = 7;
 		//private var inner:String = "@Embed('../assets/inner.png')";
 		
-		[Bindable] [Embed(source="inner.png")]
+		[Bindable] [Embed("assets/inner.png")]
 		public var ICON_INNER:Class;
+
+		//[Embed("assets/pri1button.png")]
+		//public const pri1button:Class;
 		
 		private const SELECT_STATE:String="select";
 		private const UNSELECT_STATE:String="unselect";

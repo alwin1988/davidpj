@@ -485,7 +485,7 @@
 					
 					Reset_WF_FF_DG();
 				}
-				if (CategoryAlias == "WF" && CategoryView = "PF")
+				if (CategoryAlias == "WF" && CategoryView == "PF")
 				{
 					ClearMaster();
 					

@@ -89,8 +89,6 @@ package component
 			if (value != null)
 			{
 				super.data=value;
-				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
-				trace(adgld.dataField);
 				checkState();
 			}
 		}
@@ -202,9 +200,12 @@ package component
 				if(dataCursor != null){
 					dataCursor.seek(CursorBookmark.FIRST);
 					
+					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+					trace(adgld.dataField);
 					while (!dataCursor.afterLast) {
 						if (dataCursor.current != null){
-							dataCursor.current.checked = true;
+							//dataCursor.current.checked = true;
+							dataCursor.current[adgld.dataField] = true;
 						}
 				
 						//hcv.openNode(dataCursor.current);
@@ -230,10 +231,13 @@ package component
 				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
 				if (dataCursor != null){
 					dataCursor.seek(CursorBookmark.FIRST);
-					
+
+					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+					trace(adgld.dataField);
 					while (!dataCursor.afterLast) {
 						if (dataCursor.current != null){
-							dataCursor.current.checked = false;
+							//dataCursor.current.checked = false;
+							dataCursor.current[adgld.dataField] = false;
 						}
 						
 						//hcv.openNode(dataCursor.current);
@@ -263,9 +267,12 @@ package component
 				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
 				if (dataCursor != null){
 					dataCursor.seek(CursorBookmark.FIRST);
-					
+
+					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+					trace(adgld.dataField);
 					while (!dataCursor.afterLast) {
-						if (!dataCursor.current.checked){
+						//if (!dataCursor.current.checked){
+						if (!dataCursor.current[adgld.dataField]){
 							b=false;
 							break;
 						}
@@ -298,9 +305,12 @@ package component
 				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
 				if (dataCursor != null){
 					dataCursor.seek(CursorBookmark.FIRST);
-					
+				
+					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+					trace(adgld.dataField);					
 					while (!dataCursor.afterLast) {
-						if (dataCursor.current.checked){
+						//if (dataCursor.current.checked){
+						if (dataCursor.current[adgld.dataField]){
 							b=true;
 							trace(b);
 							return b;

@@ -17,7 +17,6 @@ package component
 		private var imageWidth:Number=9;
 		private var imageHeight:Number=9;
 		//private var inner:String="@Embed('../assets/inner.png')";
-		
 		[Bindable] [Embed("assets/inner.png")]
 		public var ICON_INNER:Class;
 		
@@ -43,7 +42,7 @@ package component
 			//myImage.setStyle("verticalAlign", "middle");
 			//addElement(myImage);
 		}
-
+		
 		private function imageToggleHandlder(event:MouseEvent):void
 		{
 			myCheckBox.selected=!myCheckBox.selected;
@@ -54,8 +53,12 @@ package component
 		{
 			if (data)
 			{
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(adgld.dataField);
+				
 				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
-				o.checked = myCheckBox.selected;		
+				//o.checked = myCheckBox.selected;		
+				o[adgld.dataField] = myCheckBox.selected;		
 				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
 				hcv.refresh();
 			}
@@ -66,7 +69,11 @@ package component
 			if (value != null)
 			{
 				super.data=value;
-				myCheckBox.selected = value.checked;
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(adgld.dataField);
+				
+				//myCheckBox.selected = value.checked;
+				myCheckBox.selected = value[adgld.dataField];
 			}
 		}
 		

@@ -23,7 +23,7 @@
 			public function clickHandler(event:MouseEvent):void {
 				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
 				o.checked = cb.selected;
-				//ArrayCollection(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider).setItemAt(o,AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedIndex);
+				ArrayCollection(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider).setItemAt(o,AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedIndex);
 			}
 			
 			/**

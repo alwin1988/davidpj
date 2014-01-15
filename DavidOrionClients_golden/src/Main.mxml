@@ -471,7 +471,7 @@
 					<!-- View Stack of (DE,WM,CR,CA) -->
 					<mx:ViewStack id="mainStackID" width="100%" height="100%" creationPolicy="all">
 						<pages:Home id="homeID"/>
-						<pages:CA id="configAdminID"/>
+						<pages:CA_stripped id="configAdminID"/>
 						<pages:WM id="workManagerID"/>
 						<pages:CR id="chartReportID"/>
 						<pages:DE id="documentExplorerID"/>

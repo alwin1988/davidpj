@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   xmlns:component="component.*"
-			   xmlns:local="*"
-			   width="100%" height="100%">
-			   <!--creationComplete="canvas1_creationCompleteHandler()"-->
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:component="component.*"
+		   xmlns:local="*"
+		   width="100%" height="100%">
+	<!--creationComplete="canvas1_creationCompleteHandler()"-->
 	
 	<fx:Declarations>
 		<fx:XML id="formdef">
@@ -25,7 +25,7 @@
 			</form>
 		</fx:XML>
 	</fx:Declarations>
-
+	
 	<fx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
@@ -65,7 +65,7 @@
 				sm1_VS.includeInLayout = false; sm1_VS.visible = false;
 				sm2_VS.includeInLayout = false; sm2_VS.visible = false;
 			}
-
+			
 			protected function ClearDetail():void
 			{
 				A_d_VS.includeInLayout = false; A_d_VS.visible = false;
@@ -80,7 +80,7 @@
 				CategoryAlias = CategoryItem.Alias;
 				CategoryAliasGroup = CategoryItem.Alias.substring(0, 1);
 				CategoryView = "Main";
-
+				
 				SetCAView(CategoryAlias, CategoryView);
 			}
 			
@@ -140,7 +140,7 @@
 				{
 					CategoryView = "Forms";
 				}
-
+				
 				SetCAView(CategoryAlias, CategoryView);
 			}
 			protected function SetCAView(CategoryAlias:String, CategoryView:String):void
@@ -225,7 +225,7 @@
 					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50; 
 					B1B.includeInLayout=false; B1B.visible=false; 
 					B2.includeInLayout=true; B2.visible=true; B2.percentWidth=50;
-										
+					
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=false;
 					AU_m_DG_propertiesC.visible=false;
@@ -235,7 +235,7 @@
 					Reset_HeaderOnly_DG();
 					Reset_A_AC1_DG();
 					Reset_A_AC2_DG();
-
+					
 				}
 				if (CategoryAlias == "AG")
 				{
@@ -407,7 +407,7 @@
 					m_VS.includeInLayout=true; m_VS.visible=true;
 					m_VS.selectedChild = WP_m_view;
 				}
-
+				
 				if (CategoryAlias == "WP" && CategoryView == "CRUD")
 				{
 					ClearAll();
@@ -474,7 +474,7 @@
 					ClearMaster();
 					
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
-
+					
 					sm2_VS.selectedChild = WF_FF_view;
 					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=100;
 					
@@ -495,7 +495,7 @@
 					
 					sm1_VS.selectedChild = WP_FF_view;
 					sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.percentWidth=50;
-			
+					
 					sm2_VS.selectedChild = WF_FF_view;
 					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=50;
 					
@@ -593,43 +593,43 @@
 			}
 			
 			
-/*			[Bindable]
+			/*			[Bindable]
 			public function set dataProvider1List(value:Object):void {
-				_dataProvider1List = value as ArrayCollection
+			_dataProvider1List = value as ArrayCollection
 			}
 			public function get dataProvider1List():Object {
-				return _dataProvider1List;
+			return _dataProvider1List;
 			}
-*/			
-/*			protected function toggleButtonChange_handle(evt:Event):void {
-				var thisToggle:Object = evt.target as Object;
-				var toggleItem:String = new String(thisToggle.label.toString());
-				setDefaultTab();
-				setAllFalse();
-				thisToggle.selected = true;
-				//mainDtg.visible = true;
-				if (toggleItem == "Authority") {
-					isEnabledAuthority(true);
-				}
-				else if (toggleItem == "Contact") {
-					isEnabledContact(true);
-				} 
-				else if (toggleItem == "Explorer") {
-					isEnabledAppExplorer(true);
-				} 
-				else if (toggleItem == "Windows") {
-					isEnabledAppWindows(true);
-				}
-				else if (toggleItem == "Workflow") {
-					isEnabledAppWorkflow(true);
-				}
-				else if (toggleItem == "Other") {
-					isEnabledAppOther(true);
-				}
+			*/			
+			/*			protected function toggleButtonChange_handle(evt:Event):void {
+			var thisToggle:Object = evt.target as Object;
+			var toggleItem:String = new String(thisToggle.label.toString());
+			setDefaultTab();
+			setAllFalse();
+			thisToggle.selected = true;
+			//mainDtg.visible = true;
+			if (toggleItem == "Authority") {
+			isEnabledAuthority(true);
+			}
+			else if (toggleItem == "Contact") {
+			isEnabledContact(true);
+			} 
+			else if (toggleItem == "Explorer") {
+			isEnabledAppExplorer(true);
+			} 
+			else if (toggleItem == "Windows") {
+			isEnabledAppWindows(true);
+			}
+			else if (toggleItem == "Workflow") {
+			isEnabledAppWorkflow(true);
+			}
+			else if (toggleItem == "Other") {
+			isEnabledAppOther(true);
+			}
 			}*/
 			
-/*			private function setDefaultTab():void {
-				tabbar_id.selectedItem = tabAuthority;
+			/*			private function setDefaultTab():void {
+			tabbar_id.selectedItem = tabAuthority;
 			}*/
 			
 			public function setAllFalse():void {
@@ -668,29 +668,29 @@
 				//grpAppOther.visible=state;
 			}
 			
-/*			[Bindable]
+			/*			[Bindable]
 			protected function tabbarChangeHandler(event:IndexChangeEvent):void {
-				var toggleItem:String =  String(event.currentTarget.selectedItem.label);
-				setAllFalse();
-				
-				if (toggleItem == "Authority") {
-					isEnabledAuthority(true);
-				}
-				else if (toggleItem == "Contact") {
-					isEnabledContact(true);
-				} 
-				else if (toggleItem == "Explorer") {
-					isEnabledAppExplorer(true);
-				} 
-				else if (toggleItem == "Windows") {
-					isEnabledAppWindows(true);
-				}
-				else if (toggleItem == "Workflow") {
-					isEnabledAppWorkflow(true);
-				}
-				else if (toggleItem == "Other") {
-					isEnabledAppOther(true);
-				}
+			var toggleItem:String =  String(event.currentTarget.selectedItem.label);
+			setAllFalse();
+			
+			if (toggleItem == "Authority") {
+			isEnabledAuthority(true);
+			}
+			else if (toggleItem == "Contact") {
+			isEnabledContact(true);
+			} 
+			else if (toggleItem == "Explorer") {
+			isEnabledAppExplorer(true);
+			} 
+			else if (toggleItem == "Windows") {
+			isEnabledAppWindows(true);
+			}
+			else if (toggleItem == "Workflow") {
+			isEnabledAppWorkflow(true);
+			}
+			else if (toggleItem == "Other") {
+			isEnabledAppOther(true);
+			}
 			}	*/
 		]]>
 	</fx:Script>
@@ -1783,9 +1783,9 @@
 															</mx:AdvancedDataGridColumn>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WP_m_DG_propertiesA"
-																					   dataField="Qualifier" editable="true"
-																					   headerText="Qualifier expression"
-																					   width="581">
+																						dataField="Qualifier" editable="true"
+																						headerText="Qualifier expression"
+																						width="581">
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WP_m_DG_propertiesB"
 																						headerText="Properties 1" 
@@ -1945,7 +1945,7 @@
 												</mx:AdvancedDataGrid>
 												
 											</s:NavigatorContent> <!--Jobs master view-->
-										
+											
 											<!--System master view-->
 											<s:NavigatorContent id="S_m_view" width="100%" height="{m_VS.height}" includeInLayout="false" visible="false">
 												
@@ -2061,7 +2061,7 @@
 											</s:NavigatorContent> <!--System master view-->
 											
 										</mx:ViewStack> <!--Master view stack-->
-											
+										
 									</s:VGroup>
 								</mx:Canvas>
 							</s:HGroup>
@@ -2070,8 +2070,8 @@
 								<mx:Canvas id="B1B_Canvas" width="100%" height="100%" borderVisible="false"
 										   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
 									<mx:HDividedBox id="B1B_HDB"
-											  width="100%" height="{B2_Canvas.height-15}"
-											  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipContent="true" horizontalGap="0">
+													width="100%" height="{B2_Canvas.height-15}"
+													paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipContent="true" horizontalGap="0">
 										
 										<!--Submaster 1 view stack-->
 										<mx:ViewStack id="sm1_VS" width="100%" height="{B1B.height}" clipContent="true" creationPolicy="all" includeInLayout="false" visible="false">
@@ -2460,7 +2460,7 @@
 												<s:layout>
 													<s:VerticalLayout gap="0"/>
 												</s:layout>
-													
+												
 												<fx:Script>
 													<![CDATA[
 														protected function Reset_HeaderOnly_DG():void
@@ -3009,19 +3009,19 @@
 							
 						</mx:HDividedBox>
 						
-					<!--Inner datagrids container-->		
+						<!--Inner datagrids container-->		
 					</component:CustomTitleWindow>
 					
-				<!--End control buttons, tabbar, and datagrids -->
+					<!--End control buttons, tabbar, and datagrids -->
 				</s:BorderContainer>		
 				
-			<!--End category chooser-->
+				<!--End category chooser-->
 			</s:BorderContainer>
 			
-		<!--End stage-->
+			<!--End stage-->
 		</s:BorderContainer>
 		
-	<!--End Master container-->
+		<!--End Master container-->
 	</s:BorderContainer>
 	
 </mx:Canvas>

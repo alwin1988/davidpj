@@ -185,10 +185,6 @@
 	horizontalGridLinesColor: '0xA9A9A9';
 	vertialGridLinesColor: '0x767676';
 }
-
-.ToggleSwitch {
-	skinClass:ClassReference("ToggleSwitchSkin");
-}
 	
 .InsertButton {
 	fontFamily: Arial;

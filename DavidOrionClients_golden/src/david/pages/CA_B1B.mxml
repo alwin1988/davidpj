@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:component="component.*"
+			   xmlns:local="*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			protected function canvas1_creationCompleteHandler():void 
+			{
+				sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.percentWidth=50;
+				sm1_VS.selectedChild = WP_FF_view;
+				
+				sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=50;
+				sm2_VS.selectedChild = WF_FF_view;
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:HDividedBox id="B1B" width="100%" height="100%" horizontalGap="0" clipContent="true" includeInLayout="true" visible="true">
+		
+		<!--Submaster 1 view stack-->
+		<mx:ViewStack id="sm1_VS" width="100%" height="{B1B.height}" clipContent="true" includeInLayout="true" visible="true" creationPolicy="all" >
+			
+			<!--Work Plan/Procedure work fields view-->
+			<s:NavigatorContent id="WP_FF_view" width="50%" height="{sm1_VS.height}">
+				<mx:Canvas id="WP_FF_Canvas" width="100%" height="100%" borderVisible="false"
+						   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+					<s:VGroup id="WP_FF_VG" width="100%" height="{WP_FF_Canvas.height-15}"
+							  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipAndEnableScrolling="true" gap="0">		
+						
+						<fx:Script>
+							<![CDATA[
+								[Bindable]
+								private var WP_FF_DG_AC:ArrayCollection = new ArrayCollection(
+									[
+										{EntityType:"Procedure", ObjId:"0", Name:"Procedure1Name", Required:true, children: [
+											{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false},
+											{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false},
+											{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false}
+										]},
+										{EntityType:"Procedure", ObjId:"0", Name:"Procedure2Name", Required:true, children: [
+											{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false},
+											{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false},
+											{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false}
+										]},
+										{EntityType:"Procedure", ObjId:"0", Name:"Procedure3Name", Required:true, children: [
+											{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false},
+											{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false},
+											{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
+												Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
+												Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+												Enabled:true, checked:false}
+										]}
+									]);
+								
+								private function Reset_WP_FF_DG():void
+								{
+									WP_FF_DG.horizontalScrollPolicy="on";
+									WP_FF_DG_Checkbox.width=18;
+									WP_FF_DG_Information.width=18;
+									WP_FF_DG_Enabled.width=39;
+									WP_FF_DG_Name.width=100; 
+									WP_FF_DG_Label.width=130;
+									WP_FF_DG_FieldControl.width=120;
+									WP_FF_DG_Size.width=40;
+									WP_FF_DG_InitialValue.width=86;
+									WP_FF_DG_Required.width=30;
+									WP_FF_DG.horizontalScrollPolicy="off";
+								}
+							]]>
+						</fx:Script>
+						
+						<mx:AdvancedDataGrid id="WP_FF_DG" 
+											 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
+											 headerHeight="18" rowHeight="20" minColumnWidth="0"
+											 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+											 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+											 displayItemsExpanded="true" treeColumn="{WP_FF_DG_Name}" indentation="10"
+											 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+											 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+											 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+											 doubleClickEnabled="false" sortExpertMode="true" 
+											 allowMultipleSelection="true" editable="false">
+							<!--dragComplete="WP_FF_DG_dragCompleteHandler(event)"
+							dragDrop="WP_FF_DG_dragDropHandler(event)"-->
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{WP_FF_DG_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Checkbox"
+															   dataField="checked" textAlign="center"
+															   width="{(WP_FF_DG.width-WP_FF_DG.width)+18}"
+															   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.HADGCheckBoxItemRenderer"
+															   rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Information"
+															   width="{(WP_FF_DG.width-WP_FF_DG.width)+18}"/>
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Enabled"
+															   editable="false"
+															   width="{(WP_FF_DG.width-WP_FF_DG.width)+39}"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="WP_FF_DG_identification">
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Name" 
+															   width="100"
+															   dataField="Name" editable="false"
+															   headerText="Name"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Work fields for procedure XXX" color="red">
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Label"
+															   width="130" dataField="Label" editable="true"
+															   headerText="Label"/>
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_FieldControl" width="120" dataField="FieldControl"
+															   editable="false" headerText="Control">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:VBox horizontalGap="0" horizontalScrollPolicy="off"
+														 paddingBottom="0" paddingLeft="0" paddingRight="0"
+														 paddingTop="0" verticalGap="0">
+													
+													<fx:Script>
+														<![CDATA[
+															import mx.collections.ArrayCollection;
+															import mx.events.AdvancedDataGridEvent;
+															import mx.events.FlexEvent;
+															import mx.managers.FocusManager;
+															import mx.utils.StringUtil;
+															
+															import spark.events.IndexChangeEvent;
+															
+															[Bindable]
+															private var FC_AC:ArrayCollection = new ArrayCollection
+																([
+																	{Label:"Text Box", Data:"TextInput", Selected:true},
+																	{Label:"Drop Down List", Data:"DropDownList", Selected:false}
+																]);
+															
+															private function AssignFieldControl(event):void
+															{
+																var FC_DD_Data:Object = event.target.selectedItem as Object;
+																data.FieldControl = FC_DD_Data.Data;
+															}
+															
+															protected function FC_DD_creationCompleteHandler(event:FlexEvent):void
+															{
+																// TODO Auto-generated method stub
+																data;
+																if (String(data.FieldControl).toLowerCase() == "TextInput"){
+																	FC_DD.selectedIndex = 0;
+																}else if (String(data.FieldControl).toLowerCase() == "DropDownList"){
+																	FC_DD.selectedIndex = 1;
+																}else{
+																	FC_DD.selectedIndex = 0;
+																}
+															}																						
+														]]>
+													</fx:Script>
+													<local:CustomDropdownList id="FC_DD" visible="true"
+																			  width="{outerDocument.WP_FF_DG_FieldControl.width}"
+																			  height="16"
+																			  change="AssignFieldControl(event)"
+																			  dataProvider="{FC_AC}"
+																			  dropShadowVisible="false"
+																			  enabled="true" fontSize="11"
+																			  labelField="Label"
+																			  mouseEnabled="true"
+																			  styleName="DropDownListText"
+																			  verticalCenter="0" creationComplete="FC_DD_creationCompleteHandler(event)">																			
+													</local:CustomDropdownList>
+												</mx:VBox>
+											</fx:Component>
+										</mx:itemRenderer>
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Size" width="40" dataField="Size" editable="true"
+															   headerText="Size"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="WP_FF_DG_value" headerText="Value">
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_InitialValue" width="86" dataField="InitialValue"
+															   editable="true" headerText="Initial"/>
+									<mx:AdvancedDataGridColumn id="WP_FF_DG_Required" dataField="Required"
+															   textAlign="center"
+															   width="{(WP_FF_DG.width-WP_FF_DG.width)+30}"
+															   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.HADGCheckBoxItemRenderer"
+															   rendererIsEditor="false"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+					</s:VGroup>
+				</mx:Canvas>
+			</s:NavigatorContent> <!--Work Plan/Procedure work fields view-->
+			
+		</mx:ViewStack> <!--Submaster 1 view stack-->
+		
+		<!--Submaster 2 view stack-->
+		<mx:ViewStack id="sm2_VS" width="100%" height="{B1B.height}" clipContent="true" includeInLayout="true" visible="true" creationPolicy="all">
+			
+			<!--Work form fields view-->
+			<s:NavigatorContent id="WF_FF_view" width="50%" height="{sm2_VS.height}">
+				<mx:Canvas id="WF_FF_Canvas" width="100%" height="100%" borderVisible="false"
+						   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+					<s:VGroup id="WF_FF_VG" width="100%" height="{WF_FF_Canvas.height-15}"
+							  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipAndEnableScrolling="true" gap="0">	
+						
+						<fx:Script>
+							<![CDATA[
+								[Bindable]
+								private var WF_FF_DG_AC:ArrayCollection = new ArrayCollection(
+									[
+										{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
+											Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
+											Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+											Enabled:true, checked:false},
+										{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
+											Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
+											Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+											Enabled:true, checked:false},
+										{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
+											Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
+											Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+											Enabled:true, checked:false},
+									]);
+								
+								private function Reset_WF_FF_DG():void
+								{
+									WF_FF_DG.horizontalScrollPolicy="on";
+									WF_FF_DG_Checkbox.width=18;
+									WF_FF_DG_Information.width=18;
+									WF_FF_DG_Enabled.width=39;
+									WF_FF_DG_Name.width=100; 
+									WF_FF_DG_Label.width=130;
+									WF_FF_DG_FieldControl.width=120;
+									WF_FF_DG_Size.width=40;
+									WF_FF_DG_InitialValue.width=86;
+									WF_FF_DG_Required.width=30;
+									WF_FF_DG.horizontalScrollPolicy="off";
+								}
+								
+								/*protected function WF_FF_DG_dragDropHandler(event:DragEvent):void
+								{
+								// TODO Auto-generated method stub
+								event.preventDefault();
+								trace("");WF_FF_DG.dataProvider;
+								}
+								
+								protected function WF_FF_DG_dragCompleteHandler(event:DragEvent):void
+								{
+								// TODO Auto-generated method stub
+								trace("");WF_FF_DG.dataProvider;
+								}*/
+							]]>
+						</fx:Script>
+						
+						<mx:AdvancedDataGrid id="WF_FF_DG" 
+											 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
+											 headerHeight="18" rowHeight="20" minColumnWidth="0"
+											 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+											 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+											 displayItemsExpanded="false" treeColumn="{WF_FF_DG_Name}" indentation="0"
+											 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+											 disclosureClosedIcon="{null}" disclosureOpenIcon="{null}" 
+											 dragEnabled="true" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
+											 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+											 doubleClickEnabled="false" sortExpertMode="true" 
+											 allowMultipleSelection="true" editable="false">
+							<!--dragComplete="WF_FF_DG_dragCompleteHandler(event)"
+							dragDrop="WF_FF_DG_dragDropHandler(event)"-->
+							<mx:dataProvider>
+								<mx:HierarchicalData source="{WF_FF_DG_AC}"/>
+							</mx:dataProvider>
+							<mx:groupedColumns>
+								<mx:AdvancedDataGridColumnGroup>
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Checkbox"
+															   dataField="checked" textAlign="center"
+															   width="{(WF_FF_DG.width-WF_FF_DG.width)+18}"
+															   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.HADGCheckBoxItemRenderer"
+															   rendererIsEditor="false"/>
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Information"
+															   width="{(WF_FF_DG.width-WF_FF_DG.width)+18}"/>
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Enabled"
+															   editable="false"
+															   width="{WF_FF_DG.width-WF_FF_DG.width+39}"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="WF_FF_DG_identification">
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Name" 
+															   width="100"
+															   dataField="Name" editable="false"
+															   headerText="Name"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup headerText="Form field">
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Label"
+															   width="130" dataField="Label" editable="true"
+															   headerText="Label"/>
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_FieldControl" width="120" dataField="FieldControl"
+															   editable="false" headerText="Control">
+										<mx:itemRenderer>
+											<fx:Component>
+												<mx:VBox horizontalGap="0" horizontalScrollPolicy="off"
+														 paddingBottom="0" paddingLeft="0" paddingRight="0"
+														 paddingTop="0" verticalGap="0">
+													
+													<fx:Script>
+														<![CDATA[
+															import mx.collections.ArrayCollection;
+															import mx.events.AdvancedDataGridEvent;
+															import mx.events.FlexEvent;
+															import mx.managers.FocusManager;
+															import mx.utils.StringUtil;
+															
+															import spark.events.IndexChangeEvent;
+															
+															[Bindable]
+															private var FC_AC:ArrayCollection = new ArrayCollection
+																([
+																	{Label:"Text Box", Data:"TextInput", Selected:true},
+																	{Label:"Drop Down List", Data:"DropDownList", Selected:false}
+																]);
+															
+															private function AssignFieldControl(event):void
+															{
+																var FC_DD_Data:Object = event.target.selectedItem as Object;
+																data.FieldControl = FC_DD_Data.Data;
+															}
+															
+															protected function FC_DD_creationCompleteHandler(event:FlexEvent):void
+															{
+																// TODO Auto-generated method stub
+																data;
+																if (String(data.FieldControl).toLowerCase() == "TextInput"){
+																	FC_DD.selectedIndex = 0;
+																}else if (String(data.FieldControl).toLowerCase() == "DropDownList"){
+																	FC_DD.selectedIndex = 1;
+																}else{
+																	FC_DD.selectedIndex = 0;
+																}
+															}																						
+														]]>
+													</fx:Script>
+													<local:CustomDropdownList id="FC_DD" visible="true"
+																			  width="{outerDocument.WF_FF_DG_FieldControl.width}"
+																			  height="16"
+																			  change="AssignFieldControl(event)"
+																			  dataProvider="{FC_AC}"
+																			  dropShadowVisible="false"
+																			  enabled="true" fontSize="11"
+																			  labelField="Label"
+																			  mouseEnabled="true"
+																			  styleName="DropDownListText"
+																			  verticalCenter="0" creationComplete="FC_DD_creationCompleteHandler(event)">																			
+													</local:CustomDropdownList>
+												</mx:VBox>
+											</fx:Component>
+										</mx:itemRenderer>
+									</mx:AdvancedDataGridColumn>
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Size" width="40" dataField="Size" editable="true"
+															   headerText="Size"/>
+								</mx:AdvancedDataGridColumnGroup>
+								<mx:AdvancedDataGridColumnGroup id="WF_FF_DG_value" headerText="Value">
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_InitialValue" width="86" dataField="InitialValue"
+															   editable="true" headerText="Initial"/>
+									<mx:AdvancedDataGridColumn id="WF_FF_DG_Required"
+															   headerText="Req." dataField="Required" textAlign="center"
+															   width="{(WF_FF_DG.width-WF_FF_DG.width)+30}"
+															   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+															   itemRenderer="component.HADGCheckBoxItemRenderer"
+															   rendererIsEditor="false"/>
+								</mx:AdvancedDataGridColumnGroup>
+							</mx:groupedColumns>
+						</mx:AdvancedDataGrid>
+						
+					</s:VGroup>
+				</mx:Canvas>
+			</s:NavigatorContent> <!--Form fields view-->
+			
+		</mx:ViewStack> <!--Submaster 2 view stack-->
+		
+	</mx:HDividedBox>
+
+</s:Application>

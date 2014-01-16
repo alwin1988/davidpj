@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" 
+								  xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.AdvancedDataGrid;
+			
+			/**
+			 * Overides <code>data</code> parameter to set the <code>selected</code> parameter of the
+			 * checkbox.
+			 * 
+			 * @param value Object
+			 */ 
+			override public function set data(value:Object):void {
+				if ( value != null ) {
+					super.data = value;
+				}
+			}
+			
+			protected function img_clickHandler(event:MouseEvent):void
+			{
+				var adg:AdvancedDataGrid = event.currentTarget.parent.parent.parent.parent as AdvancedDataGrid;
+				trace(adg.selectedIndex);
+				if (adg !=null)
+				{
+					var ac:ArrayCollection = adg.dataProvider as ArrayCollection;
+					if (ac != null)
+					{
+						ac.removeAll();
+						ac.refresh();
+					}
+				}
+			}
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth,unscaledHeight);
+				
+				img.x;
+				img.y;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Image buttonMode="true" id="img" click="img_clickHandler(event)" source="@Embed('assets/delete.png')">
+		
+	</s:Image>
+</s:MXAdvancedDataGridItemRenderer>

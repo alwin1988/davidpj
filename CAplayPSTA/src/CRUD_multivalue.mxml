@@ -19,6 +19,47 @@
 					{Entity:"MultiValue", Label:"Label2", Value:"Value2", Default:true},
 					{Entity:"MultiValue", Label:"Label3", Value:"Value3", Default:false}
 				]);
+			
+			private var folderNum:Number = 0;
+			
+			protected function iaBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var obj:Object = {Entity:"MultiValue", Label:"New Label"+folderNum, Value:"New Value"+folderNum, Default:false};
+				if (FID_ADG.selectedIndex == -1)
+				{
+					FID.addItemAt(obj,0);	
+				}else{
+				 	FID.addItemAt(obj,FID_ADG.selectedIndex);					
+				}
+				FID.refresh();
+				folderNum++;
+			}
+			
+			protected function ibBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var obj:Object = {Entity:"MultiValue", Label:"New Label"+folderNum, Value:"New Value"+folderNum, Default:false};
+				FID.addItemAt(obj,FID_ADG.selectedIndex+1);
+				FID.refresh();
+				folderNum++;				
+			}
+			
+			protected function idBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace();
+				var i:Number=0;
+				for each (var obj:Object in FID)
+				{
+					if (obj.checked == true)
+					{
+						FID.removeItemAt(i);
+						i++;
+					}
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -26,11 +67,11 @@
 								 skinClass="skin.CustomTitleWindowSkin">
 		<s:VGroup width="100%" height="100%">
 			
-			<mx:AdvancedDataGrid width="100%" height="100%" borderVisible="false"
+			<mx:AdvancedDataGrid id="FID_ADG" width="100%" height="100%" borderVisible="false"
 								 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 								 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
 								 sortExpertMode="true"
-								 dataProvider="{FID}">
+								 dataProvider="{FID}" selectedIndex="0">
 				<mx:columns>
 					<mx:AdvancedDataGridColumn id="FID_Checkbox"
 											   dataField="checked"
@@ -82,29 +123,51 @@
 											   itemRenderer="component.CheckBoxItemRenderer"
 											   rendererIsEditor="false"/>
 					<mx:AdvancedDataGridColumn id="FID_Delete"
-											   width="20">
-						<mx:headerRenderer>
+											   width="20" itemRenderer="component.DeleteADGItemRenderer" headerRenderer="component.DeleteADGHeaderRenderer">
+						<!--<mx:headerRenderer>
 							<fx:Component>
 								<mx:Box paddingLeft="2">
-									<s:Image width="85%" height="85%" source="@Embed('assets/delete.png')"/>
+									
+									<fx:Script>
+										<![CDATA[
+											protected function image2_clickHandler(event:MouseEvent):void
+											{
+												// TODO Auto-generated method stub
+												
+											}
+										]]>
+									</fx:Script>
+									
+									<s:Image width="85%" height="85%" source="@Embed('assets/delete.png')" click="image2_clickHandler(event)"/>
 								</mx:Box>
 							</fx:Component>
-						</mx:headerRenderer>
-						<mx:itemRenderer>
+						</mx:headerRenderer>-->
+						<!--<mx:itemRenderer>
 							<fx:Component>
 								<mx:Box paddingLeft="2">
-									<s:Image width="85%" height="85%" source="@Embed('assets/delete.png')"/>
+									
+									<fx:Script>
+										<![CDATA[
+											protected function image1_clickHandler(event:MouseEvent):void
+											{
+												// TODO Auto-generated method stub
+												
+											}
+										]]>
+									</fx:Script>
+									
+									<s:Image width="85%" height="85%" source="@Embed('assets/delete.png')" click="image1_clickHandler(event)"/>
 								</mx:Box>
 							</fx:Component>
-						</mx:itemRenderer>
+						</mx:itemRenderer>-->
 					</mx:AdvancedDataGridColumn>
 				</mx:columns>
 			</mx:AdvancedDataGrid>
 			
 			<s:HGroup paddingTop="5" paddingLeft="5">
-				<s:Button label="Insert Above"/>
-				<s:Button label="Insert Below"/>
-				<s:Button label="Insert Delete"/>
+				<s:Button label="Insert Above" id="iaBtn" click="iaBtn_clickHandler(event)"/>
+				<s:Button label="Insert Below" id="ibBtn" click="ibBtn_clickHandler(event)"/>
+				<s:Button label="Insert Delete" id="idBtn" click="idBtn_clickHandler(event)"/>
 			</s:HGroup>
 			
 		</s:VGroup>

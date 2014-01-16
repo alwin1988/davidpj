@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   xmlns:component="component.*"
+			   creationComplete = "AppCreationComplete()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.MouseEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.HDividedBox;
+			import mx.controls.Alert;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[bindable] private var DGwidth:Number = 1162;
+			
+			private function AppCreationComplete():void
+			{/*
+				DivBox.setStyle("horizontalGap",0);
+				PSTA_DG.width = (DGwidth/2);
+				PSTA_DG.includeInLayout = true;
+				PSTA_DG.visible = true;
+				STAtypes.width = 0;
+				STAtypes.includeInLayout = false;
+				STAtypes.visible = false;
+				StepTypes_DG.width = (DGwidth/2);
+				StepTypes_DG.includeInLayout = true;
+				StepTypes_DG.visible = true;
+				TaskTypes_DG.width = 0;
+				TaskTypes_DG.includeInLayout = false;
+				TaskTypes_DG.visible = false;
+				ActionTypes_DG.width = 0;
+				ActionTypes_DG.includeInLayout = false;
+				ActionTypes_DG.visible = false;
+				Props_TB.dataProvider = ArrayCollection(PProps_TB_AC);
+				Props_DG.dataProvider = ArrayCollection(PProps_AC);	
+			*/}
+		]]>
+	</fx:Script>
+	
+	<s:VGroup width="100%" height="100%">
+		
+		<s:HGroup width="100%" height="24" chromeColor="yellow">
+			<s:Button id="CRUD_Button" label="CRUD" click="DoCRUD(event)"/>
+			<s:Button id="NewProps_Button" label="NewProps" click="DoNewProps(event)"/>
+			<s:Button id="Props_Button" label="Props" click="DoProps(event)"/>
+			<s:Button id="Reset_Button" label="Reset" click="DoReset(event)"/>
+			<s:Label text="Drag and drop ..."/>
+		</s:HGroup>
+		
+		<s:Spacer height="25"/>
+		
+		<s:TitleWindow title="CRUD procedure" width="{DGwidth}" height="400">
+			<s:layout>
+				<s:VerticalLayout gap="0"/>
+			</s:layout>
+			
+			<fx:Script>
+				<![CDATA[
+					private function DoCRUD(event):void
+					{
+						DivBox.setStyle("horizontalGap",3);
+						NewProps.includeInLayout = false; NewProps.visible=false;
+						STA.includeInLayout = true; STA.visible = true;
+						Props.includeInLayout = false; Props.visible = false;
+						properties1.visible = false;
+						properties2.visible = false;
+					}
+					
+					private function DoNewProps(event):void
+					{
+						DivBox.setStyle("horizontalGap",0);
+						STA.includeInLayout = false; STA.visible = false;
+						properties1.visible = false;
+						properties2.visible = false;
+						NewProps.includeInLayout = true; NewProps.visible = true;
+					}
+					
+					private function DoProps(event):void
+					{
+						DivBox.setStyle("horizontalGap",0);
+						NewProps.includeInLayout = false; NewProps.visible=false;
+						properties1.visible=false;
+						properties2.visible=true;
+						STA.includeInLayout = false; STA.visible = false;
+						NewProps.includeInLayout = false; NewProps.visible=false;
+						/*Props.includeInLayout = true; Props.visible = true;*/
+					}
+					
+					private function DoReset(event):void
+					{
+						properties1.visible = true;
+						NewProps.includeInLayout = false; NewProps.visible=false;
+						Props.includeInLayout = false; Props.visible = false;
+						STA.includeInLayout = false; STA.visible = false;
+						PSTA_DG.horizontalScrollPolicy = 'on';
+						identification.width = 581;
+						properties1.width = 581;
+						properties2.visible = false;
+						PSTA_DG.horizontalScrollPolicy = 'off';
+						NewProps.includeInLayout = false; NewProps.visible=false;
+						DivBox.setStyle("horizontalGap",0);
+						DivBox.setStyle("numDividers",1);
+					}
+				]]>
+			</fx:Script>
+			
+			<mx:HDividedBox id="DivBox" width="1162" height="100%">
+				
+				<s:VGroup id="PSTA" width="50%" height="100%" gap="-1" includeInLayout="true" visible="true">
+					<fx:Script>
+						<![CDATA[
+							[Bindable]
+							private var PSTA_AC:ArrayCollection = new ArrayCollection(
+								[
+									{EntityType:"Procedure", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", Sequence:"", 
+										PProp1Name:"PProp1Value", PProp2Name:"PProp2Name", PProp3Name:"PProp3Value", checked:false, children: [
+											{EntityType:"Step", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", Sequence:"1",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																TProp1Name:"AProp1Value", TProp2Name:"AProp2Value", TProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step2Name", Description:"Step2Description", Type:"Step2Type", Sequence:"2",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", Sequence:"3",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]}
+										]},
+									{EntityType:"Procedure", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", Sequence:"", 
+										PProp1Name:"PProp1Value", PProp2Name:"PProp2Name", PProp3Name:"PProp3Value", checked:false, children: [
+											{EntityType:"Step", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", Sequence:"1",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step2Name", Description:"Step2Description", Type:"Step2Type", Sequence:"2",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", Sequence:"3",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]}
+										]},
+									{EntityType:"Procedure", Name:"Procedure2Name", Description:"Procedure2Description", Type:"", Sequence:"", 
+										PProp1Name:"PProp1Value", PProp2Name:"PProp2Name", PProp3Name:"PProp3Value", checked:false, children: [
+											{EntityType:"Step", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", Sequence:"1",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step2Name", Description:"Step2Description", Type:"Step2Type", Sequence:"2",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", Sequence:"3",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]}
+										]},
+									{EntityType:"Procedure", Name:"Procedure3Name", Description:"Procedure3Description", Type:"", Sequence:"", 
+										PProp1Name:"PProp1Value", PProp2Name:"PProp2Name", PProp3Name:"PProp3Value", checked:false, children: [
+											{EntityType:"Step", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", Sequence:"1",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"Prop1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"1",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"1",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step2Name", Description:"Step2Description", Type:"Step2Type", Sequence:"2",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]}
+												]},
+											{EntityType:"Step", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", Sequence:"3",
+												Qualifier:"SQualifier", 
+												SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", checked:false, children: [
+													{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
+														Qualifier:"Task1Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}										
+														]},
+													{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
+														Qualifier:"Task2Qualifier", 
+														TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}
+														]},
+													{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
+														Qualifier:"Task3Qualifier", 
+														TProp1Name:"Value", TProp2Name:"Value", TProp3Name:"Value", checked:false, children: [
+															{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"2",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false},
+															{EntityType:"A", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"3",
+																Qualifier:"AQualifier", 
+																AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", checked:false}	
+														]},
+												]}
+										]}
+								]);
+							
+							[Bindable]
+							private var P_S_TA_AC:ArrayCollection = new ArrayCollection(
+								[
+									
+								]);								
+							
+							[Bindable]
+							private var PS_T_A_AC:ArrayCollection = new ArrayCollection(
+								[
+									
+								]);
+							
+							[Bindable]
+							private var PST_A_AC:ArrayCollection = new ArrayCollection(
+								[
+									
+								]);
+							
+							
+							/*private function PSTArowClick(event:ListEvent):void
+							{
+							var PSTAitem:Object = event.target.selectedItem as Object;
+							
+							if (PSTAitem.Name == "Step1Name") {	
+							Props_TB.dataProvider = ArrayCollection(SProps_TB_AC);
+							Props_DG.dataProvider = ArrayCollection(Step1_AC);
+							}
+							else if (PSTAitem.EntityType == "P") {
+							Props_TB.dataProvider = ArrayCollection(PProps_TB_AC);
+							Props_DG.dataProvider = ArrayCollection(PProps_AC);		
+							}
+							else if (PSTAitem.EntityType == "S") {
+							Props_TB.dataProvider = ArrayCollection(SProps_TB_AC);
+							Props_DG.dataProvider = ArrayCollection(SProps_AC);		
+							}
+							else if (PSTAitem.EntityType == "T") {
+							Props_TB.dataProvider = ArrayCollection(TProps_TB_AC);
+							Props_DG.dataProvider = ArrayCollection(TProps_AC);	
+							}
+							else if (PSTAitem.EntityType == "A") {	
+							Props_TB.dataProvider = ArrayCollection(AProps_TB_AC);
+							Props_DG.dataProvider = ArrayCollection(AProps_AC);		
+							}
+							}*/
+							
+						]]>
+					</fx:Script>
+					
+					<!--s:HGroup width="50%" height="44" paddingTop="2" paddingLeft="10" gap="15" verticalAlign="baseline">
+						<s:Label text="Filters:" width="80"/>
+						<s:VGroup width="15%" gap="2" verticalAlign="middle">
+							<s:Label text="Procedure"/>
+							<s:Label text="Step"/>
+						</s:VGroup>
+						<s:VGroup width="35%" gap="2" verticalAlign="middle">
+							<component:CustomDropDownList width="180" height="16"/>
+							<component:CustomDropDownList width="180" height="16"/>
+						</s:VGroup>
+						<s:VGroup width="15%" gap="2" verticalAlign="middle">
+							<s:Label text="Task"/>
+							<s:Label text="Action"/>
+						</s:VGroup>
+						<s:VGroup width="35%" gap="2" verticalAlign="middle">
+							<component:CustomDropDownList width="180" height="16"/>
+							<component:CustomDropDownList width="180" height="16"/>
+						</s:VGroup>
+					</s:HGroup-->
+					
+					<mx:AdvancedDataGrid id="PSTA_DG" 
+										 width="100%" height="100%"
+										 displayItemsExpanded="false" treeColumn="{Name}" indentation="10"
+										 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+										 dragEnabled="true" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true">	 
+						<!--itemClick="PSTArowClick(event)"-->
+						<mx:dataProvider>
+							<mx:HierarchicalData source="{PSTA_AC}"/>
+						</mx:dataProvider>
+						<mx:groupedColumns>
+							<!--mx:AdvancedDataGridColumnGroup>
+							<mx:headerRenderer>
+							<fx:Component>
+							<mx:HBox>
+							<s:Label text="Procedure"/>
+							<s:DropDownList/>
+							</mx:HBox>
+							</fx:Component>
+							</mx:headerRenderer-->
+							<mx:AdvancedDataGridColumnGroup id="identification" headerText="Procedure / Steps / Tasks / Actions" width="581">
+								<mx:AdvancedDataGridColumn dataField="checked" textAlign="center"
+														   width="{(PSTA_DG.width-PSTA_DG.width)+18}"
+														   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+														   itemRenderer="component.HADGCheckBoxItemRenderer"
+														   rendererIsEditor="false"/>
+								<mx:AdvancedDataGridColumn width="{(PSTA_DG.width-PSTA_DG.width)+18}"/>
+								<mx:AdvancedDataGridColumn headerText="Seq." dataField="Sequence"
+														   width="20"/>
+								<mx:AdvancedDataGridColumn id="Name" headerText="Name" dataField="Name"/>
+								<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+							</mx:AdvancedDataGridColumnGroup>
+							<!--/mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup-->
+							<mx:AdvancedDataGridColumnGroup id="properties1" visible="true"
+															headerText="Properties1">
+								<mx:AdvancedDataGridColumn headerText="Qualifier" dataField="Qualifier"
+														   width="581"/>
+							</mx:AdvancedDataGridColumnGroup>
+							<!--/mx:AdvancedDataGridColumnGroup>
+							<mx:AdvancedDataGridColumnGroup-->
+							<mx:AdvancedDataGridColumnGroup id="properties2" visible="false"
+															headerText="Properties2">
+								<mx:AdvancedDataGridColumn headerText="PProp1" dataField="Prop1"/>
+								<mx:AdvancedDataGridColumn headerText="PProp2" dataField="Prop2"/>
+								<mx:AdvancedDataGridColumn headerText="PProp3" dataField="Prop3"/>
+							</mx:AdvancedDataGridColumnGroup>
+							<!--/mx:AdvancedDataGridColumnGroup-->
+						</mx:groupedColumns>
+					</mx:AdvancedDataGrid>
+				</s:VGroup>
+				
+				<s:VGroup id="STA" width="50%" height="100%" gap="0" includeInLayout="false" visible="false">
+					<s:Panel id="STAtypes" width="100%" height="100%" title="Step, Task, and Action Types">
+						<mx:Accordion width="100%" height="100%">
+							<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
+								<s:layout>
+									<s:VerticalLayout gap="0"/>
+								</s:layout>
+								<fx:Script>
+									<![CDATA[
+										[Bindable]
+										private var STA_AC:ArrayCollection = new ArrayCollection(
+											[
+												{Label:"Step Types", Data:"StepTypes"},
+												{Label:"Task Types", Data:"TaskTypes"},
+												{Label:"Action Types", Data:"ActionTypes"}
+											]);	
+										
+										[Bindable]
+										private var StepTypes_AC:ArrayCollection = new ArrayCollection(
+											[
+												{Name:"StepType1Name", Description:"StepType1Description", Class:"Step1Class", checked:false},
+												{Name:"StepType2Name", Description:"StepType2Description", Class:"Step2Class", checked:false},
+												{Name:"StepType3Name", Description:"StepType3Description", Class:"Step3Class", checked:false}
+											]);	
+										
+										[Bindable]
+										private var TaskTypes_AC:ArrayCollection = new ArrayCollection(
+											[
+												{Name:"TaskType1Name", Description:"TaskType1Description", Class:"Task1Class", checked:false},
+												{Name:"TaskType2Name", Description:"TaskType2Description", Class:"Task2Class", checked:false},
+												{Name:"TaskType3Name", Description:"TaskType3Description", Class:"Task3Class", checked:false}
+											]);	
+										
+										[Bindable]
+										private var ActionTypes_AC:ArrayCollection = new ArrayCollection(
+											[
+												{Name:"ActionType1Name", Description:"ActionType1Description", Class:"Action1Class", checked:false},
+												{Name:"ActionType2Name", Description:"ActionType2Description", Class:"Action2Class", checked:false},
+												{Name:"ActionType3Name", Description:"ActionType3Description", Class:"Action3Class", checked:false}
+											]);	
+										
+										private function TabBarChangeHandler(event:IndexChangeEvent):void 
+										{
+											var STAtypes_TB_Data:Object = event.target.selectedItem as Object;
+											
+											if (STAtypes_TB_Data.Data == "StepTypes")
+											{
+												StepTypes_DG.width = (DGwidth/2);
+												StepTypes_DG.includeInLayout = true;
+												StepTypes_DG.visible = true;
+												TaskTypes_DG.width = 0;
+												TaskTypes_DG.includeInLayout = false;
+												TaskTypes_DG.visible = false;
+												ActionTypes_DG.width = 0;
+												ActionTypes_DG.includeInLayout = false;
+												ActionTypes_DG.visible = false;
+											}
+											if (STAtypes_TB_Data.Data == "TaskTypes")
+											{
+												StepTypes_DG.width = 0;
+												StepTypes_DG.includeInLayout = false;
+												StepTypes_DG.visible = false;
+												TaskTypes_DG.width = (DGwidth/2);
+												TaskTypes_DG.includeInLayout = true;
+												TaskTypes_DG.visible = true;
+												ActionTypes_DG.width = 0;
+												ActionTypes_DG.includeInLayout = false;
+												ActionTypes_DG.visible = false;
+											}
+											if (STAtypes_TB_Data.Data == "ActionTypes")
+											{
+												StepTypes_DG.width = 0;
+												StepTypes_DG.includeInLayout = false;
+												StepTypes_DG.visible = false;
+												TaskTypes_DG.width = 0;
+												TaskTypes_DG.includeInLayout = false;
+												TaskTypes_DG.visible = false;
+												ActionTypes_DG.width = (DGwidth/2);
+												ActionTypes_DG.includeInLayout = true;
+												ActionTypes_DG.visible = true;
+											}
+										}
+									]]>
+								</fx:Script>
+								
+								<s:HGroup horizontalAlign="right">
+									<s:TabBar id="STAtypes_TB" height="24" labelField="Label" 
+											  dataProvider="{STA_AC}"
+											  change="TabBarChangeHandler(event)"/>
+								</s:HGroup>
+								
+								<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
+									<mx:AdvancedDataGrid id="StepTypes_DG" 
+														 width="{(DGwidth/2)}" height="100%" visible="true" includeInLayout="true" 
+														 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+														 displayItemsExpanded="true" indentation="0"
+														 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+														 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}">
+										<mx:dataProvider>
+											<mx:HierarchicalData source="{StepTypes_AC}"/>
+										</mx:dataProvider>
+										<mx:groupedColumns>
+											<!--mx:AdvancedDataGridColumnGroup-->
+											<mx:AdvancedDataGridColumnGroup headerText="Step Types">
+												<mx:AdvancedDataGridColumn dataField="checked" textAlign="center"
+																		   width="{(PSTA_DG.width-PSTA_DG.width)+18}"
+																		   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.HADGCheckBoxItemRenderer"
+																		   rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn width="{(StepTypes_DG.width-StepTypes_DG.width)+18}"/>
+												<mx:AdvancedDataGridColumn width="{(StepTypes_DG.width-StepTypes_DG.width)+18}"/>
+												<mx:AdvancedDataGridColumn headerText="Step Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+												<mx:AdvancedDataGridColumn headerText="Step Class" dataField="Class"/>
+											</mx:AdvancedDataGridColumnGroup>
+											<!--/mx:AdvancedDataGridColumnGroup-->
+										</mx:groupedColumns>
+									</mx:AdvancedDataGrid>
+									<mx:AdvancedDataGrid id="TaskTypes_DG"
+														 width="{(DGwidth/2)}" height="100%" visible="true" includeInLayout="true" 
+														 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+														 displayItemsExpanded="true" indentation="0"
+														 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+														 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}">
+										<mx:dataProvider>
+											<mx:HierarchicalData source="{TaskTypes_AC}"/>
+										</mx:dataProvider>
+										<mx:groupedColumns>
+											<!--mx:AdvancedDataGridColumnGroup-->
+											<mx:AdvancedDataGridColumnGroup headerText="Task Types">
+												<mx:AdvancedDataGridColumn dataField="checked" textAlign="center"
+																		   width="{(PSTA_DG.width-PSTA_DG.width)+18}"
+																		   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.HADGCheckBoxItemRenderer"
+																		   rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn width="{(TaskTypes_DG.width-TaskTypes_DG.width)+18}"/>
+												<mx:AdvancedDataGridColumn width="{(TaskTypes_DG.width-TaskTypes_DG.width)+18}"/>
+												<mx:AdvancedDataGridColumn headerText="Task Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+												<mx:AdvancedDataGridColumn headerText="Task Class" dataField="Class"/>
+											</mx:AdvancedDataGridColumnGroup>
+											<!--/mx:AdvancedDataGridColumnGroup-->
+										</mx:groupedColumns>
+									</mx:AdvancedDataGrid>
+									<mx:AdvancedDataGrid id="ActionTypes_DG" 
+														 width="{(DGwidth/2)}" height="100%" visible="true" includeInLayout="true" 
+														 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+														 displayItemsExpanded="true" indentation="0"
+														 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+														 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}">
+										<mx:dataProvider>
+											<mx:HierarchicalData source="{ActionTypes_AC}"/>
+										</mx:dataProvider>
+										<mx:groupedColumns>
+											<!--mx:AdvancedDataGridColumnGroup-->
+											<mx:AdvancedDataGridColumnGroup headerText="Action Types">
+												<mx:AdvancedDataGridColumn dataField="checked" textAlign="center"
+																		   width="{(PSTA_DG.width-PSTA_DG.width)+18}"
+																		   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.HADGCheckBoxItemRenderer"
+																		   rendererIsEditor="false"/>
+												<mx:AdvancedDataGridColumn width="{(ActionTypes_DG.width-ActionTypes_DG.width)+18}"/>
+												<mx:AdvancedDataGridColumn width="{(ActionTypes_DG.width-ActionTypes_DG.width)+18}"/>
+												<mx:AdvancedDataGridColumn headerText="Action Type" dataField="Name"/>
+												<mx:AdvancedDataGridColumn headerText="Description" dataField="Description"/>
+												<mx:AdvancedDataGridColumn headerText="Action Class" dataField="Class"/>
+											</mx:AdvancedDataGridColumnGroup>
+											<!--/mx:AdvancedDataGridColumnGroup-->
+										</mx:groupedColumns>
+									</mx:AdvancedDataGrid>
+								</s:HGroup>
+							</s:NavigatorContent>
+							<s:NavigatorContent label="Messages" width="100%" height="100%">
+								<s:VGroup width="100%" height="100%"/>
+							</s:NavigatorContent>
+						</mx:Accordion>
+					</s:Panel>
+					<s:Spacer height="5"/>
+					<s:CheckBox label="Defer config"/>
+				</s:VGroup>
+				
+				<s:VGroup id="NewProps" width="50%" height="100%" gap="0" includeInLayout="false" visible="false">
+					<s:TitleWindow title="Query Profile" width="100%" height="100%">
+						<s:Form width="100%" height="100%">
+							<s:layout>
+								<s:FormLayout gap="10"/>
+							</s:layout>
+							<s:FormHeading label="Query"/>
+							<s:FormItem label="Database">
+								<s:DropDownList height="12"/>
+							</s:FormItem>
+							<s:FormItem label="Database">
+								<s:TextInput height="12"/>
+							</s:FormItem>
+						</s:Form>
+						
+					</s:TitleWindow>
+					<!--fx:Script>
+					<![CDATA[
+					[Bindable]
+					private var PProps_TB_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Label:"PProps1", Data:"PProps1"},
+					{Label:"PProps2", Data:"PProps2"},
+					{Label:"PProps3", Data:"PProps3"},
+					]);
+					
+					private var SProps_TB_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Label:"SProps1", Data:"SProps1"},
+					{Label:"SProps2", Data:"SProps2"},
+					{Label:"SProps3", Data:"SProps3"},
+					]);
+					
+					private var TProps_TB_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Label:"TProps1", Data:"TProps1"},
+					{Label:"TProps2", Data:"TProps2"},
+					{Label:"TProps3", Data:"TProps3"},
+					]);
+					
+					private var AProps_TB_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Label:"AProps1", Data:"AProps1"},
+					{Label:"AProps2", Data:"AProps2"},
+					{Label:"AProps3", Data:"AProps3"},
+					]);
+					
+					private var PProps_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Name:"PProperty1Name", Value:"PProperty1Value"},
+					{Name:"PProperty1Name", Value:"PProperty1Value"},
+					{Name:"PProperty1Name", Value:"PProperty1Value"}
+					]);
+					
+					private var SProps_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Name:"SProperty1Name", Value:"SProperty1Value"},
+					{Name:"SProperty1Name", Value:"SProperty1Value"},
+					{Name:"SProperty1Name", Value:"SProperty1Value"}
+					]);
+					
+					private var TProps_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Name:"TProperty1Name", Value:"TProperty1Value"},
+					{Name:"TProperty1Name", Value:"TProperty1Value"},
+					{Name:"TProperty1Name", Value:"TProperty1Value"}
+					]);
+					
+					private var AProps_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Name:"AProperty1Name", Value:"AProperty1Value"},
+					{Name:"AProperty1Name", Value:"AProperty1Value"},
+					{Name:"AProperty1Name", Value:"AProperty1Value"}
+					]);
+					
+					private var Step1_AC:ArrayCollection = new ArrayCollection(
+					[
+					{Name:"S1Property1Name", Value:"S1Property1Value"},
+					{Name:"S1Property1Name", Value:"S1Property1Value"},
+					{Name:"S1Property1Name", Value:"S1Property1Value"}
+					]);						
+					]]>
+					</fx:Script-->
+					
+					<s:TabBar id="NewProps_TB" labelField="Label"/>
+					<!--mx:AdvancedDataGrid id="NewProps_DG" width="100%" height="100%">
+					<mx:columns>
+					<mx:AdvancedDataGridColumn headerText="Property Name" dataField="Name"/>
+					<mx:AdvancedDataGridColumn headerText="Property Value" dataField="Value"/>
+					</mx:columns>
+					</mx:AdvancedDataGrid-->
+				</s:VGroup>
+				
+				<s:VGroup id="Props" width="50%" height="100%" includeInLayout="false" visible="false">				
+					<s:TabBar id="Props_TB" labelField="Label"/>
+					<mx:AdvancedDataGrid id="Props_DG" width="100%" height="100%">
+						<mx:columns>
+							<mx:AdvancedDataGridColumn headerText="Prop1" dataField="Prop1Value"/>
+							<mx:AdvancedDataGridColumn headerText="Prop2" dataField="Value"/>
+							<mx:AdvancedDataGridColumn headerText="Prop2" dataField="Value"/>
+						</mx:columns>
+					</mx:AdvancedDataGrid>
+				</s:VGroup>
+				
+			</mx:HDividedBox>
+			
+		</s:TitleWindow>
+		
+	</s:VGroup>
+	
+</s:Application>

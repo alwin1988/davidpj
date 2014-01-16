@@ -48,9 +48,18 @@
 			public var FullHeight:Number = 400;
 			public var DGID:String;
 			
+			[Bindable]
+			public var CheckBoxWidth:Number = 18; //CBW
+			public var CBW:Number = 18; //CBW
+			public var InfoButtonWidth:Number = 18; //IBW
+			public var IBW:Number = 18; //IBW
+			public var EnabledToggleWidth:Number = 14; //ETW
+			public var ETW:Number = 14; //ETW
+			
 			public var CategoryAlias:String
 			public var CategoryAliasGroup:String
 			public var CategoryView:String
+			public var LastCategoryAlias:String
 			
 			protected function canvas1_creationCompleteHandler():void 
 			{
@@ -86,6 +95,9 @@
 			{
 				var CategoryItem:Object = event.target.selectedItem as Object;
 				
+				//Save last-used category to var to detect change of category
+				LastCategoryAlias = CategoryAlias;
+
 				CategoryAlias = CategoryItem.Alias;
 				CategoryAliasGroup = CategoryItem.Alias.substring(0, 1);
 				CategoryView = "Main";
@@ -96,6 +108,12 @@
 			protected function TabBarChangeHandler(event:IndexChangeEvent):void
 			{
 				var TB_Data:Object = event.target.selectedItem as Object;
+				
+				// If category changes, select first tabbar tab
+				if (CategoryAlias != LastCategoryAlias)
+				{
+					TB.selectedIndex = 0;
+				}
 				
 				if (CategoryAlias == "AU" && TB_Data.Data == "ID") //User ID
 				{
@@ -937,9 +955,9 @@
 														
 														protected function Reset_AU_m_DG():void {
 															AU_m_DG.horizontalScrollPolicy = 'on';
-															AU_m_DG_Checkbox.width = 18;
-															AU_m_DG_Information.width = 18;
-															AU_m_DG_Enabled.width = 14;
+															AU_m_DG_Checkbox.width = (AU_m_DG.width-AU_m_DG.width)+CBW;
+															AU_m_DG_Information.width = (AU_m_DG.width-AU_m_DG.width)+IBW;
+															AU_m_DG_Enabled.width = (AU_m_DG.width-AU_m_DG.width)+ETW;
 															AU_m_DG_UserID.width = 100;
 															AU_m_DG_UserName.width = 180;
 															AU_m_DG_Description.width = 251;
@@ -979,34 +997,34 @@
 														<mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumn id="AU_m_DG_Checkbox"
 																					   dataField="checked"
-																					   width="18"
+																					   width="{(AU_m_DG.width-AU_m_DG.width)+CBW}"
 																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
-																<!--mx:headerRenderer>
-																	<fx:Component>
-																		<mx:Box paddingBottom="2" paddingLeft="2" >
-																			<s:CheckBox width="16" height="16" chromeColor="white"/>
-																		</mx:Box>
-																	</fx:Component>
-																</mx:headerRenderer>
-																<mx:itemRenderer>
-																	<fx:Component>
-																		<mx:Box paddingBottom="2" paddingLeft="2">
-																			<s:CheckBox width="16" height="16" chromeColor="white"/>
-																		</mx:Box>
-																	</fx:Component>
-																</mx:itemRenderer>
+															<!--mx:headerRenderer>
+															<fx:Component>
+															<mx:Box paddingBottom="2" paddingLeft="2" >
+															<s:CheckBox width="16" height="16" chromeColor="white"/>
+															</mx:Box>
+															</fx:Component>
+															</mx:headerRenderer>
+															<mx:itemRenderer>
+															<fx:Component>
+															<mx:Box paddingBottom="2" paddingLeft="2">
+															<s:CheckBox width="16" height="16" chromeColor="white"/>
+															</mx:Box>
+															</fx:Component>
+															</mx:itemRenderer>
 															</mx:AdvancedDataGridColumn-->
 															<mx:AdvancedDataGridColumn id="AU_m_DG_Information"
-																					   width="18">
+																					   width="{(AU_m_DG.width-AU_m_DG.width)+IBW}">
 																<!--mx:headerRenderer>
-																	<fx:Component>
-																		<mx:Box paddingLeft="2">
-																			<s:Image width="85%" height="85%"
-																					 source="@Embed('assets/iconinfo.png')"/>
-																		</mx:Box>
-																	</fx:Component>
+																<fx:Component>
+																<mx:Box paddingLeft="2">
+																<s:Image width="85%" height="85%"
+																source="@Embed('assets/iconinfo.png')"/>
+																</mx:Box>
+																</fx:Component>
 																</mx:headerRenderer-->
 																<mx:itemRenderer>
 																	<fx:Component>
@@ -1019,13 +1037,13 @@
 															</mx:AdvancedDataGridColumn>
 															<mx:AdvancedDataGridColumn id="AU_m_DG_Enabled"
 																					   dataField="Enabled"
-																					   width="14">
+																					   width="{(AU_m_DG.width-AU_m_DG.width)+ETW}">
 																<!--mx:headerRenderer>
-																	<fx:Component>
-																		<mx:Box paddingLeft="3.5">
-																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
-																		</mx:Box>
-																	</fx:Component>
+																<fx:Component>
+																<mx:Box paddingLeft="3.5">
+																<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
+																</mx:Box>
+																</fx:Component>
 																</mx:headerRenderer-->
 																<mx:itemRenderer>
 																	<fx:Component>
@@ -1182,9 +1200,9 @@
 														{
 															AG_m_DG.horizontalScrollPolicy = 'on';
 															AG_m_DG.dragEnabled = false;
-															AG_m_DG_Checkbox.width = 18;
-															AG_m_DG_Information.width = 18;
-															AG_m_DG_Enabled.width = 35;
+															AG_m_DG_Checkbox.width = (AG_m_DG.width-AG_m_DG.width)+CBW;
+															AG_m_DG_Information.width = (AG_m_DG.width-AG_m_DG.width)+IBW;
+															AG_m_DG_Enabled.width = (AG_m_DG.width-AG_m_DG.width)+ETW;
 															//
 															AG_m_DG.horizontalScrollPolicy ='off';
 														}
@@ -1204,15 +1222,15 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumn id="AG_m_DG_Checkbox"
 																				   dataField="checked" textAlign="center"
-																				   width="18"
+																				   width="{(AG_m_DG.width-AG_m_DG.width)+CBW}"
 																				   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																				   itemRenderer="component.CheckBoxItemRenderer"
 																				   rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn id="AG_m_DG_Information"
-																				   width="20"/>
+																				   width="{(AG_m_DG.width-AG_m_DG.width)+IBW}"/>
 														<mx:AdvancedDataGridColumn id="AG_m_DG_Enabled"
 																				   editable="false"
-																				   width="40"/>
+																				   width="{(AG_m_DG.width-AG_m_DG.width)+ETW}"/>
 														<mx:AdvancedDataGridColumnGroup id="AG_m_DG_identification"
 																						headerText="Document Types" textAlign="center">						
 															<mx:AdvancedDataGridColumn id="AG_m_DG_GroupName"
@@ -1271,9 +1289,9 @@
 															AR_m_DG.percentHeight = 100;
 															AR_m_DG.horizontalScrollPolicy = 'on';
 															AR_m_DG.dragEnabled = false;
-															AR_m_DG_Checkbox.width = 18;
-															AR_m_DG_Information.width = 18;
-															AR_m_DG_Enabled.width = 35;
+															AR_m_DG_Checkbox.width = (AR_m_DG.width-AR_m_DG.width)+CBW;
+															AR_m_DG_Information.width = (AR_m_DG.width-AR_m_DG.width)+IBW;
+															AR_m_DG_Enabled.width = (AR_m_DG.width-AR_m_DG.width)+ETW;
 															//
 															AR_m_DG.horizontalScrollPolicy ='off';
 														}
@@ -1292,15 +1310,15 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumn id="AR_m_DG_Checkbox"
 																				   dataField="checked" textAlign="center"
-																				   width="18"
+																				   width="{(AR_m_DG.width-AR_m_DG.width)+CBW}"
 																				   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																				   itemRenderer="component.CheckBoxItemRenderer"
 																				   rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn id="AR_m_DG_Information"
-																				   width="20"/>
+																				   width="{(AR_m_DG.width-AR_m_DG.width)+IBW}"/>
 														<mx:AdvancedDataGridColumn id="AR_m_DG_Enabled"
 																				   editable="false"
-																				   width="40"/>									
+																				   width="{(AR_m_DG.width-AR_m_DG.width)+ETW}"/>									
 														<mx:AdvancedDataGridColumnGroup id="AR_m_DG_identification"
 																						headerText="Role Identification">							
 															<mx:AdvancedDataGridColumn id="AR_m_DG_RoleName" 
@@ -1360,9 +1378,9 @@
 															DT_m_DG.percentHeight = 100;
 															DT_m_DG.horizontalScrollPolicy = 'on';
 															DT_m_DG.dragEnabled = false;
-															DT_m_DG_Checkbox.width = 18;
-															DT_m_DG_Information.width = 18;
-															DT_m_DG_Enabled.width = 35;
+															DT_m_DG_Checkbox.width = (DT_m_DG.width-DT_m_DG.width)+CBW;
+															DT_m_DG_Information.width = (DT_m_DG.width-DT_m_DG.width)+IBW;
+															DT_m_DG_Enabled.width = (DT_m_DG.width-DT_m_DG.width)+ETW;
 															DT_m_DG.horizontalScrollPolicy ='off';
 														}
 													]]>
@@ -1381,15 +1399,15 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumn id="DT_m_DG_Checkbox"
 																				   dataField="checked" textAlign="center"
-																				   width="18"
+																				   width="{(DT_m_DG.width-DT_m_DG.width)+CBW}"
 																				   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																				   itemRenderer="component.CheckBoxItemRenderer"
 																				   rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn id="DT_m_DG_Information"
-																				   width="20"/>
+																				   width="{(DT_m_DG.width-DT_m_DG.width)+IBW}"/>
 														<mx:AdvancedDataGridColumn id="DT_m_DG_Enabled"
 																				   editable="false"
-																				   width="40"/>
+																				   width="{(DT_m_DG.width-DT_m_DG.width)+ETW}"/>
 														<mx:AdvancedDataGridColumnGroup id="DT_m_DG_identification"
 																						headerText="Document Types" textAlign="center">
 															<mx:AdvancedDataGridColumn id="DT_m_DG_Name" width="210"
@@ -1448,9 +1466,9 @@
 														{
 															FF_m_DG.horizontalScrollPolicy = 'on';
 															FF_m_DG.dragEnabled = true;
-															FF_m_DG_Checkbox.width = 18;
-															FF_m_DG_Information.width = 18;
-															FF_m_DG_Enabled.width = 35;
+															FF_m_DG_Checkbox.width = (FF_m_DG.width-FF_m_DG.width)+CBW;
+															FF_m_DG_Information.width = (FF_m_DG.width-FF_m_DG.width)+IBW;
+															FF_m_DG_Enabled.width = (FF_m_DG.width-FF_m_DG.width)+ETW;
 															FF_m_DG.horizontalScrollPolicy = 'off';
 														}
 													]]>
@@ -1477,15 +1495,15 @@
 																<mx:AdvancedDataGridColumnGroup>
 																	<mx:AdvancedDataGridColumn id="FF_m_DG_Checkbox"
 																							   dataField="checked" textAlign="center"
-																							   width="18"
+																							   width="{(FF_m_DG.width-FF_m_DG.width)+CBW}"
 																							   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																							   itemRenderer="component.HADGCheckBoxItemRenderer"
 																							   rendererIsEditor="false"/>
 																	<mx:AdvancedDataGridColumn id="FF_m_DG_Information"
-																							   width="20"/>
+																							   width="{(FF_m_DG.width-FF_m_DG.width)+IBW}"/>
 																	<mx:AdvancedDataGridColumn id="FF_m_DG_Enabled"
 																							   editable="false"
-																							   width="40"/>
+																							   width="{(FF_m_DG.width-FF_m_DG.width)+ETW}"/>
 																	<mx:AdvancedDataGridColumnGroup id="FF_m_DG_identification" headerText="Document Types" textAlign="center">
 																		<mx:AdvancedDataGridColumn id="FF_m_DG_Name"
 																								   headerText="Name" dataField="Name" 
@@ -1607,9 +1625,9 @@
 														protected function Reset_FD_m_DG():void {
 															FD_m_DG.horizontalScrollPolicy = 'on';
 															FD_m_DG.dragEnabled = true;
-															FD_m_DG_Checkbox.width = 18;
-															FD_m_DG_Information.width = 18;
-															FD_m_DG_Enabled.width = 35;
+															FD_m_DG_Checkbox.width = (FD_m_DG.width-FD_m_DG.width)+CBW;
+															FD_m_DG_Information.width = (FD_m_DG.width-FD_m_DG.width)+IBW;
+															FD_m_DG_Enabled.width = (FD_m_DG.width-FD_m_DG.width)+ETW;
 															FD_m_DG.horizontalScrollPolicy = 'off';
 														}
 													]]>
@@ -1636,15 +1654,15 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumn id="FD_m_DG_Checkbox"
 																				   dataField="checked" textAlign="center"
-																				   width="18"
+																				   width="{(FD_m_DG.width-FD_m_DG.width)+CBW}"
 																				   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																				   itemRenderer="component.HADGCheckBoxItemRenderer"
 																				   rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn id="FD_m_DG_Information"
-																				   width="20"/>
+																				   width="{(FD_m_DG.width-FD_m_DG.width)+IBW}"/>
 														<mx:AdvancedDataGridColumn id="FD_m_DG_Enabled"
 																				   editable="false"
-																				   width="40"/>
+																				   width="{(FD_m_DG.width-FD_m_DG.width)+ETW}"/>
 														<mx:AdvancedDataGridColumn id="FD_m_DG_TypeIcon"
 																				   editable="true"
 																				   width="20"/>
@@ -1824,15 +1842,15 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumn id="WP_m_DG_Checkbox"
 																				   dataField="checked" textAlign="center"
-																				   width="18"
+																				   width="{(WP_m_DG.width-WP_m_DG.width)+CBW}"
 																				   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																				   itemRenderer="component.HADGCheckBoxItemRenderer"
 																				   rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn id="WP_m_DG_Information"
-																				   width="20"/>
+																				   width="{(WP_m_DG.width-WP_m_DG.width)+IBW}"/>
 														<mx:AdvancedDataGridColumn id="WP_m_DG_Enabled"
 																				   editable="false"
-																				   width="40"/>
+																				   width="{(WP_m_DG.width-WP_m_DG.width)+ETW}"/>
 														<mx:AdvancedDataGridColumnGroup id="WP_m_DG_identification"
 																						headerText="Procedures / Steps / Tasks / Actions"
 																						textAlign="left">	
@@ -1895,9 +1913,9 @@
 														private function Reset_WF_m_DG():void
 														{
 															WF_m_DG.horizontalScrollPolicy="on";
-															WF_m_DG_Checkbox.width=18;
-															WF_m_DG_Information.width=18;
-															WF_m_DG_Enabled.width=39;
+															WF_m_DG_Checkbox.width=(WF_m_DG.width-WF_m_DG.width)+CBW;
+															WF_m_DG_Information.width=(WF_m_DG.width-WF_m_DG.width)+IBW;
+															WF_m_DG_Enabled.width=(WF_m_DG.width-WF_m_DG.width)+ETW;
 															WF_m_DG_Name.width=180;
 															WF_m_DG_Description.width=326;
 															WF_m_DG.horizontalScrollPolicy="off";
@@ -1919,15 +1937,15 @@
 														<mx:AdvancedDataGridColumnGroup headerText="..." textAlign="left" color="red">
 															<mx:AdvancedDataGridColumn id="WF_m_DG_Checkbox"
 																					   headerText="" dataField="checked" textAlign="center"
-																					   width="18" editable="true"
+																					   width="{(WF_m_DG.width-WF_m_DG.width)+CBW}" editable="true"
 																					   draggable="false" resizable="false" sortable="false"
 																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="WF_m_DG_Information"
-																					   width="18"/>
+																					   width="{(WF_m_DG.width-WF_m_DG.width)+IBW}"/>
 															<mx:AdvancedDataGridColumn id="WF_m_DG_Enabled"
-																					   width="39" editable="false"/>
+																					   width="{(WF_m_DG.width-WF_m_DG.width)+ETW}" editable="false"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WF_m_DG_identification" headerText="Form Types" textAlign="center">
 															<mx:AdvancedDataGridColumn id="WF_m_DG_Name"
@@ -1997,15 +2015,15 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumn id="J_m_DG_Checkbox"
 																				   dataField="checked" textAlign="center"
-																				   width="18"
+																				   width="{(J_m_DG.width-J_m_DG.width)+CBW}"
 																				   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																				   itemRenderer="component.HADGCheckBoxItemRenderer"
 																				   rendererIsEditor="false"/>
 														<mx:AdvancedDataGridColumn id="J_m_DG_Information"
-																				   width="20"/>
+																				   width="{(J_m_DG.width-J_m_DG.width)+IBW}"/>
 														<mx:AdvancedDataGridColumn id="J_m_DG_Enabled"
 																				   editable="false"
-																				   width="40"/>
+																				   width="{(J_m_DG.width-J_m_DG.width)+ETW}"/>
 														<mx:AdvancedDataGridColumnGroup id="J_m_DG_identification"
 																						headerText="Jobs">
 															<mx:AdvancedDataGridColumn id="J_m_DG_Name" width="140"
@@ -2158,53 +2176,42 @@
 																{EntityType:"Procedure", ObjId:"0", Name:"Procedure1Name", Required:true, children: [
 																	{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false},
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""},
 																	{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false},
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""},
 																	{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false}
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""}
 																]},
 																{EntityType:"Procedure", ObjId:"0", Name:"Procedure2Name", Required:true, children: [
 																	{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false},
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""},
 																	{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false},
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""},
 																	{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false}
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""}
 																]},
 																{EntityType:"Procedure", ObjId:"0", Name:"Procedure3Name", Required:true, children: [
 																	{EntityType:"Field", ObjId:"1", Name:"Field1Name", Label:"Field1Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal1", Required:true, Description:"Field1Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false},
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""},
 																	{EntityType:"Field", ObjId:"2", Name:"Field2Name", Label:"Field2Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal2", Required:true, Description:"Field2Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false},
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""},
 																	{EntityType:"Field", ObjId:"3", Name:"Field3Name", Label:"Field3Label", FieldControl:"Text Box", 
 																		Size:"0", InitialValue:"InitVal3", Required:true, Description:"Field3Description",
-																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
-																		Enabled:true, checked:false}
+																		Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:""}
 																]}
 															]);
 														
 														private function Reset_WP_FF_DG():void
 														{
 															WP_FF_DG.horizontalScrollPolicy="on";
-															WP_FF_DG_Checkbox.width=18;
-															WP_FF_DG_Information.width=18;
-															WP_FF_DG_Enabled.width=39;
+															WP_FF_DG_Information.width=(WP_FF_DG.width-WP_FF_DG.width)+IBW;
 															WP_FF_DG_Name.width=100; 
 															WP_FF_DG_Label.width=130;
 															WP_FF_DG_FieldControl.width=120;
@@ -2234,17 +2241,17 @@
 													</mx:dataProvider>
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumn id="WP_FF_DG_Checkbox"
+															<!--mx:AdvancedDataGridColumn id="WP_FF_DG_Checkbox"
 																					   dataField="checked" textAlign="center"
-																					   width="18"
+																					   width="{(WP_FF_DG.width+WP_FF_DG.width)+CBW}"
 																					   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="component.HADGCheckBoxItemRenderer"
-																					   rendererIsEditor="false"/>
+																					   rendererIsEditor="false"/-->
 															<mx:AdvancedDataGridColumn id="WP_FF_DG_Information"
-																					   width="18"/>
-															<mx:AdvancedDataGridColumn id="WP_FF_DG_Enabled"
+																					   width="{(WP_FF_DG.width+WP_FF_DG.width)+IBW}"/>
+															<!--mx:AdvancedDataGridColumn id="WP_FF_DG_Enabled"
 																					   editable="false"
-																					   width="39"/>
+																					   width="{(WP_FF_DG.width+WP_FF_DG.width)+ETW}"/-->
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WP_FF_DG_identification">
 															<mx:AdvancedDataGridColumn id="WP_FF_DG_Name" 
@@ -2324,9 +2331,8 @@
 															<mx:AdvancedDataGridColumn id="WP_FF_DG_InitialValue" width="86" dataField="InitialValue"
 																					   editable="true" headerText="Initial"/>
 															<mx:AdvancedDataGridColumn id="WP_FF_DG_Required" dataField="Required"
-																					   textAlign="center"
+																					   headerText="Req." textAlign="center"
 																					   width="30"
-																					   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="component.HADGCheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 														</mx:AdvancedDataGridColumnGroup>
@@ -2371,9 +2377,9 @@
 														private function Reset_WF_FF_DG():void
 														{
 															WF_FF_DG.horizontalScrollPolicy="on";
-															WF_FF_DG_Checkbox.width=18;
-															WF_FF_DG_Information.width=18;
-															WF_FF_DG_Enabled.width=39;
+															WF_FF_DG_Checkbox.width=(WF_FF_DG.width-WF_FF_DG.width)+CBW;
+															WF_FF_DG_Information.width=(WF_FF_DG.width-WF_FF_DG.width)+IBW;
+															WF_FF_DG_Enabled.width=(WF_FF_DG.width-WF_FF_DG.width)+ETW;
 															WF_FF_DG_Name.width=100; 
 															WF_FF_DG_Label.width=130;
 															WF_FF_DG_FieldControl.width=120;
@@ -2419,15 +2425,15 @@
 														<mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumn id="WF_FF_DG_Checkbox"
 																					   dataField="checked" textAlign="center"
-																					   width="18"
+																					   width="{(WF_FF_DG.width-WF_FF_DG.width)+CBW}"
 																					   headerRenderer="component.HADGThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="component.HADGCheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="WF_FF_DG_Information"
-																					   width="18"/>
+																					   width="{(WF_FF_DG.width-WF_FF_DG.width)+IBW}"/>
 															<mx:AdvancedDataGridColumn id="WF_FF_DG_Enabled"
 																					   editable="false"
-																					   width="39"/>
+																					   width="{(WF_FF_DG.width-WF_FF_DG.width)+ETW}"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WF_FF_DG_identification">
 															<mx:AdvancedDataGridColumn id="WF_FF_DG_Name" 
@@ -2525,12 +2531,12 @@
 							</mx:HDividedBox> <!--B1B-->
 							
 							<mx:HDividedBox id="B2" width="50%" height="100%" horizontalGap="0" clipContent="true" includeInLayout="false" visible="false">
-										
+								
 								<!--Accounts detail view stack-->
 								<mx:ViewStack id="A_d_VS" width="100%" height="100%" clipContent="true" creationPolicy="all">
 									
 									<!--Fieldsets/Fields detail view-->
-									<s:NavigatorContent id="AU_AC_view" width="100%" height="100%" includeInLayout="false" visible="false">
+									<s:NavigatorContent id="AU_AC_view" width="{A_d_VS.width}" height="{A_d_VS.height}" includeInLayout="false" visible="false">
 										<mx:Canvas id="B2_Canvas" width="100%" height="{AU_AC_view}" borderVisible="false"
 												   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
 											<s:VGroup id="B2_VG" height="{AU_AC_view.height-15}"
@@ -2849,93 +2855,101 @@
 									</s:NavigatorContent> <!--Work form fields view-->
 									
 								</mx:ViewStack>
-										
+								
 								<!--Fieldsets/Fields detail view stack-->
 								<mx:ViewStack id="F_d_VS" width="100%" height="{B2.height}" includeInLayout="false" visible="false" 
 											  creationPolicy="all" clipContent="true">
 									
 									<!--Fieldsets/Fields detail view-->
 									<s:NavigatorContent id="FF_Fieldsets_view" width="50%" height="{F_d_VS.height}" includeInLayout="false" visible="false">
-										<fx:Script>
-											<![CDATA[
+										<mx:Canvas id="FF_Fieldsets_Canvas" width="{FF_Fieldsets_view.width}" height="{FF_Fieldsets_view.height}" borderVisible="false"
+												   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+											<s:VGroup id="FF_Fieldsets_VG" width="{FF_Fieldsets_Canvas.width}" height="{FF_Fieldsets_view.height}"
+													  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipAndEnableScrolling="true" gap="0">
 												
-												[Bindable]	
-												private var S_m_xAC:ArrayCollection = new ArrayCollection(
-													[
-														{Name:"Property1", Value:"Value1"},
-														{Name:"Subcategory1", children: [
-															{Name:"Propery2", Value:"Value2"}, 
-															{Name:"Propery3", Value:"Value3"},
-															{Name:"Propery4", Value:"Value4"}
-														]},
-														{Name:"Property5", Value:"Value5"},
-														{Name:"Subcategory2", children: [
-															{Name:"Propery6", Value:"Value6"}, 
-															{Name:"Propery7", Value:"Value7"},
-															{Name:"Propery8", Value:"Value8"}
-														]},
-														{Name:"Property9", Value:"Value9"}
-													]);
-												[Bindable]
-												private var FF_Fieldsets_AC:ArrayCollection = new ArrayCollection(
-													[
-														{Name:"Header fieldsets", children: [
-															{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", Legend:"Legend1Name", children: [
-																{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", checked:false},
-															]},
-															{EntityType:"Fieldset", ObjId:"12", Name:"Fieldset2Name", children: [
-																{EntityType:"Field", ObjId:"13", Sequence:"1", Name:"Field11Name", checked:false},
-																{EntityType:"Field", ObjId:"14", Sequence:"2", Name:"Field12Name", checked:false}
-															]},
-														]},
-														{Name:"Detail fieldsets", children: [
-															{EntityType:"Fieldset", ObjId:"16", Name:"Fieldset3Name", Legend:"Legend2Name", children: [
-																{EntityType:"Field", ObjId:"17", Sequence:"1", Name:"Field14Name", checked:false},
-																{EntityType:"Field", ObjId:"18", Sequence:"2", Name:"Field15Name", checked:false},
-																{EntityType:"Field", ObjId:"19", Sequence:"3", Name:"Field16Name", checked:false}
-															]},
-															{EntityType:"Fieldset", ObjId:"20", Name:"Fieldset4Name", Legend:"Legend3Name", children: [
-																{EntityType:"Field", ObjId:"21", Sequence:"1", Name:"Field17Name", checked:false},
-																{EntityType:"Number", ObjId:"22", Sequence:"2", Name:"Field18Name", InitialValue:"0", checked:false},
-																{EntityType:"Field", ObjId:"23", Sequence:"3", Name:"Field19Name", checked:false}
-															]}
-														]}
-													]);
-											]]>
-										</fx:Script>
-										<mx:AdvancedDataGrid id="FF_Fieldsets_DG"
-															 width="50%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
-															 headerHeight="18" rowHeight="20" minColumnWidth="0"
-															 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
-															 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-															 displayItemsExpanded="true" treeColumn="{FF_Fieldsets_DG_Name}" indentation="10"
-															 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
-															 dragEnabled="true" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
-															 draggableColumns="true" resizableColumns="true" sortableColumns="false"
-															 doubleClickEnabled="false" sortExpertMode="true" 
-															 allowMultipleSelection="true" editable="false">
-											<mx:dataProvider>
-												<mx:HierarchicalData source="{FF_Fieldsets_AC}"/>
-											</mx:dataProvider>
-											<mx:groupedColumns>
-												<mx:AdvancedDataGridColumnGroup headerText="Drag..." textAlign="left" color="red">
-													<mx:AdvancedDataGridColumnGroup headerText="Fieldsets/fields for work procedure XXXXXXXXXXXXXXXXXX" textAlign="left" color="red">
-														<mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Name"
-																					   dataField="Name" headerText="Name"
-																					   width="80"/>
-															<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Legend"
-																					   dataField="Legend" headerText="Name"
-																					   width="80"/>
-															<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Sequence"
-																					   dataField="Sequence" headerText="Sequence"
-																					   width="80"/>
+												<fx:Script>
+													<![CDATA[
+														
+														[Bindable]	
+														private var S_m_xAC:ArrayCollection = new ArrayCollection(
+															[
+																{Name:"Property1", Value:"Value1"},
+																{Name:"Subcategory1", children: [
+																	{Name:"Propery2", Value:"Value2"}, 
+																	{Name:"Propery3", Value:"Value3"},
+																	{Name:"Propery4", Value:"Value4"}
+																]},
+																{Name:"Property5", Value:"Value5"},
+																{Name:"Subcategory2", children: [
+																	{Name:"Propery6", Value:"Value6"}, 
+																	{Name:"Propery7", Value:"Value7"},
+																	{Name:"Propery8", Value:"Value8"}
+																]},
+																{Name:"Property9", Value:"Value9"}
+															]);
+														[Bindable]
+														private var FF_Fieldsets_AC:ArrayCollection = new ArrayCollection(
+															[
+																{Name:"Header fieldsets", children: [
+																	{EntityType:"Fieldset", ObjId:"1", Name:"Fieldset1Name", Legend:"Legend1Name", children: [
+																		{EntityType:"Field", ObjId:"2", Sequence:"1", Name:"Field1Name", checked:false},
+																	]},
+																	{EntityType:"Fieldset", ObjId:"12", Name:"Fieldset2Name", children: [
+																		{EntityType:"Field", ObjId:"13", Sequence:"1", Name:"Field11Name", checked:false},
+																		{EntityType:"Field", ObjId:"14", Sequence:"2", Name:"Field12Name", checked:false}
+																	]},
+																]},
+																{Name:"Detail fieldsets", children: [
+																	{EntityType:"Fieldset", ObjId:"16", Name:"Fieldset3Name", Legend:"Legend2Name", children: [
+																		{EntityType:"Field", ObjId:"17", Sequence:"1", Name:"Field14Name", checked:false},
+																		{EntityType:"Field", ObjId:"18", Sequence:"2", Name:"Field15Name", checked:false},
+																		{EntityType:"Field", ObjId:"19", Sequence:"3", Name:"Field16Name", checked:false}
+																	]},
+																	{EntityType:"Fieldset", ObjId:"20", Name:"Fieldset4Name", Legend:"Legend3Name", children: [
+																		{EntityType:"Field", ObjId:"21", Sequence:"1", Name:"Field17Name", checked:false},
+																		{EntityType:"Number", ObjId:"22", Sequence:"2", Name:"Field18Name", InitialValue:"0", checked:false},
+																		{EntityType:"Field", ObjId:"23", Sequence:"3", Name:"Field19Name", checked:false}
+																	]}
+																]}
+															]);
+													]]>
+												</fx:Script>
+												
+												<mx:AdvancedDataGrid id="FF_Fieldsets_DG"
+																	 width="50%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
+																	 headerHeight="18" rowHeight="20" minColumnWidth="0"
+																	 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+																	 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+																	 displayItemsExpanded="true" treeColumn="{FF_Fieldsets_DG_Name}" indentation="10"
+																	 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+																	 dragEnabled="true" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
+																	 draggableColumns="true" resizableColumns="true" sortableColumns="false"
+																	 doubleClickEnabled="false" sortExpertMode="true" 
+																	 allowMultipleSelection="true" editable="false">
+													<mx:dataProvider>
+														<mx:HierarchicalData source="{FF_Fieldsets_AC}"/>
+													</mx:dataProvider>
+													<mx:groupedColumns>
+														<mx:AdvancedDataGridColumnGroup headerText="Drag..." textAlign="left" color="red">
+															<mx:AdvancedDataGridColumnGroup headerText="Fieldsets/fields for work procedure XXXXXXXXXXXXXXXXXX" 
+																							textAlign="left" color="red">
+																<mx:AdvancedDataGridColumnGroup>
+																	<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Name"
+																							   dataField="Name" headerText="Name"
+																							   width="80"/>
+																	<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Legend"
+																							   dataField="Legend" headerText="Name"
+																							   width="80"/>
+																	<mx:AdvancedDataGridColumn id="FF_Fieldsets_DG_Sequence"
+																							   dataField="Sequence" headerText="Sequence"
+																							   width="80"/>
+																</mx:AdvancedDataGridColumnGroup>
+															</mx:AdvancedDataGridColumnGroup>
 														</mx:AdvancedDataGridColumnGroup>
-													</mx:AdvancedDataGridColumnGroup>
-												</mx:AdvancedDataGridColumnGroup>
-											</mx:groupedColumns>
-										</mx:AdvancedDataGrid>
-										
+													</mx:groupedColumns>
+												</mx:AdvancedDataGrid>	
+											</s:VGroup>
+										</mx:Canvas>
 									</s:NavigatorContent> <!--Fieldsets/Fields detail view-->
 									
 								</mx:ViewStack> <!--Fieldsets/Fields detail view stack-->
@@ -2945,132 +2959,150 @@
 									
 									<!--Form preview with-form-master view-->
 									<s:NavigatorContent id="WF_FPm_view" width="100%" height="100%" includeInLayout="false" visible="false">
-										<s:layout>
-											<s:VerticalLayout gap="0"/>
-										</s:layout>	
-										
-										<mx:VBox width="100%" height="100%" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" borderVisible="false"
-												 paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
-											<component:CustomTitleWindow width="100%" height="100%" borderVisible="true" dropShadowVisible="false"
-																		 skinClass="skin.CustomTitleWindowSkin">
-												<component:layout>
-													<s:VerticalLayout paddingTop="15" paddingBottom="15" paddingLeft="15" paddingRight="15" horizontalAlign="center"/>
-												</component:layout>
-												<mx:Box width="100%" height="100%" borderVisible="true" borderColor="blue" borderAlpha=".7">
-													<mx:Form width="100%" height="100%"/>									
-												</mx:Box>
-											</component:CustomTitleWindow>
-										</mx:VBox>
-										
+										<mx:Canvas id="WF_FPm_Canvas" width="{WF_FPm_view.width}" height="{WF_FPm_view.height}" borderVisible="false"
+												   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+											<s:VGroup id="WF_FPm_VG" width="{WF_FPm_Canvas.width}" height="{WF_FPm_Canvas.height-15}"
+													  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipAndEnableScrolling="true" gap="0">	
+												
+												
+												<mx:VBox width="100%" height="100%" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" borderVisible="false"
+														 paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
+													<component:CustomTitleWindow width="100%" height="100%" borderVisible="true" dropShadowVisible="false"
+																				 skinClass="skin.CustomTitleWindowSkin">
+														<component:layout>
+															<s:VerticalLayout paddingTop="15" paddingBottom="15" paddingLeft="15" paddingRight="15" horizontalAlign="center"/>
+														</component:layout>
+														<mx:Box width="100%" height="100%" borderVisible="true" borderColor="blue" borderAlpha=".7">
+															<mx:Form width="100%" height="100%"/>									
+														</mx:Box>
+													</component:CustomTitleWindow>
+												</mx:VBox>
+											</s:VGroup>
+										</mx:Canvas>
 									</s:NavigatorContent> <!--Form preview with-form-master view-->
 									
-									<!-- WIP work master view -->
-									<s:NavigatorContent id="WP_CRUD_view" width="100%" height="{W_d_VS.height}" includeInLayout="false" visible="false">
-										
-										<s:TitleWindow title="CRUD procedure" width="100%" height="600">
-											<s:layout>
-												<s:VerticalLayout gap="0"/>
-											</s:layout>
-											<s:HGroup width="100%" height="24" chromeColor="yellow">
-												<s:Label text="Drag and drop ..."/>
-											</s:HGroup>
-											<mx:HDividedBox width="100%" height="100%">
-												<s:VGroup width="100%" height="100%">
-													<mx:AdvancedDataGrid width="100%" height="100%">
-														<mx:groupedColumns>
-															<mx:AdvancedDataGridColumnGroup>
-																<mx:AdvancedDataGridColumnGroup headerText="Procedure / Steps / Tasks / Actions">
-																	<mx:AdvancedDataGridColumn headerText="Seq."/>
-																	<mx:AdvancedDataGridColumn headerText="Name"/>
-																	<mx:AdvancedDataGridColumn headerText="Description"/>
-																</mx:AdvancedDataGridColumnGroup>
-															</mx:AdvancedDataGridColumnGroup>
-														</mx:groupedColumns>
-													</mx:AdvancedDataGrid>
-												</s:VGroup>
-												<s:VGroup width="100%" height="100%">
-													<s:Panel width="100%" height="100%" title="Step, Task, and Action Types">
-														<mx:Accordion width="100%" height="100%">
-															<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
-																<s:layout>
-																	<s:VerticalLayout/>
-																</s:layout>
-																<s:TabBar height="24">
-																	<mx:ArrayCollection>
-																		<fx:String>Steps</fx:String>
-																		<fx:String>Tasks</fx:String>
-																		<fx:String>Actions</fx:String>
-																	</mx:ArrayCollection>
-																</s:TabBar>
-																<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
-																	<mx:AdvancedDataGrid width="100%" height="100%">
-																		<mx:groupedColumns>
-																			<mx:AdvancedDataGridColumnGroup>
-																				<mx:AdvancedDataGridColumnGroup headerText="Step Types">
-																					<mx:AdvancedDataGridColumn headerText="Step Type"/>
-																					<mx:AdvancedDataGridColumn headerText="Description"/>
-																				</mx:AdvancedDataGridColumnGroup>
-																			</mx:AdvancedDataGridColumnGroup>
-																		</mx:groupedColumns>
-																	</mx:AdvancedDataGrid>
-																	<mx:AdvancedDataGrid width="100%" height="100%">
-																		<mx:groupedColumns>
-																			<mx:AdvancedDataGridColumnGroup>
-																				<mx:AdvancedDataGridColumnGroup headerText="Task Types">
-																					<mx:AdvancedDataGridColumn headerText="Task Type"/>
-																					<mx:AdvancedDataGridColumn headerText="Description"/>
-																				</mx:AdvancedDataGridColumnGroup>
-																			</mx:AdvancedDataGridColumnGroup>
-																		</mx:groupedColumns>
-																	</mx:AdvancedDataGrid>
-																	<mx:AdvancedDataGrid width="100%" height="100%">
-																		<mx:groupedColumns>
-																			<mx:AdvancedDataGridColumnGroup>
-																				<mx:AdvancedDataGridColumnGroup headerText="Action Types">
-																					<mx:AdvancedDataGridColumn headerText="Action Type"/>
-																					<mx:AdvancedDataGridColumn headerText="Description"/>
-																				</mx:AdvancedDataGridColumnGroup>
-																			</mx:AdvancedDataGridColumnGroup>
-																		</mx:groupedColumns>
-																	</mx:AdvancedDataGrid>
-																</s:HGroup>
-															</s:NavigatorContent>
-															<s:NavigatorContent label="Messages" width="100%" height="100%">
-																<s:VGroup width="100%" height="100%"/>
-															</s:NavigatorContent>
-														</mx:Accordion>
-													</s:Panel>
-												</s:VGroup>
-											</mx:HDividedBox>
-										</s:TitleWindow>
-										
+									<!-- WIP CRUD view -->
+									<s:NavigatorContent id="WP_CRUD_view" width="{W_d_VS.width}" height="{W_d_VS.height}" includeInLayout="false" visible="false">
+										<mx:Canvas id="WP_CRUD_Canvas" width="{WP_CRUD_view.width}" height="{WP_CRUD_view.height}" borderVisible="false"
+												   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+											<s:VGroup id="WP_CRUD_VG" width="{WP_CRUD_Canvas.width}" height="{WP_CRUD_Canvas.height-15}"
+													  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipAndEnableScrolling="true" gap="0">	
+												
+												
+												<s:TitleWindow title="CRUD procedure" width="100%" height="600">
+													<s:layout>
+														<s:VerticalLayout gap="0"/>
+													</s:layout>
+													<s:HGroup width="100%" height="24" chromeColor="yellow">
+														<s:Label text="Drag and drop ..."/>
+													</s:HGroup>
+													<mx:HDividedBox width="100%" height="100%">
+														<s:VGroup width="100%" height="100%">
+															<mx:AdvancedDataGrid width="100%" height="100%">
+																<mx:groupedColumns>
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup headerText="Procedure / Steps / Tasks / Actions">
+																			<mx:AdvancedDataGridColumn headerText="Seq."/>
+																			<mx:AdvancedDataGridColumn headerText="Name"/>
+																			<mx:AdvancedDataGridColumn headerText="Description"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:groupedColumns>
+															</mx:AdvancedDataGrid>
+														</s:VGroup>
+														<s:VGroup width="100%" height="100%">
+															<s:Panel width="100%" height="100%" title="Step, Task, and Action Types">
+																<mx:Accordion width="100%" height="100%">
+																	<s:NavigatorContent label="Steps / Tasks / Actions" width="100%" height="100%">
+																		<s:layout>
+																			<s:VerticalLayout/>
+																		</s:layout>
+																		<s:TabBar height="24">
+																			<mx:ArrayCollection>
+																				<fx:String>Steps</fx:String>
+																				<fx:String>Tasks</fx:String>
+																				<fx:String>Actions</fx:String>
+																			</mx:ArrayCollection>
+																		</s:TabBar>
+																		<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
+																			<mx:AdvancedDataGrid width="100%" height="100%">
+																				<mx:groupedColumns>
+																					<mx:AdvancedDataGridColumnGroup>
+																						<mx:AdvancedDataGridColumnGroup headerText="Step Types">
+																							<mx:AdvancedDataGridColumn headerText="Step Type"/>
+																							<mx:AdvancedDataGridColumn headerText="Description"/>
+																						</mx:AdvancedDataGridColumnGroup>
+																					</mx:AdvancedDataGridColumnGroup>
+																				</mx:groupedColumns>
+																			</mx:AdvancedDataGrid>
+																			<mx:AdvancedDataGrid width="100%" height="100%">
+																				<mx:groupedColumns>
+																					<mx:AdvancedDataGridColumnGroup>
+																						<mx:AdvancedDataGridColumnGroup headerText="Task Types">
+																							<mx:AdvancedDataGridColumn headerText="Task Type"/>
+																							<mx:AdvancedDataGridColumn headerText="Description"/>
+																						</mx:AdvancedDataGridColumnGroup>
+																					</mx:AdvancedDataGridColumnGroup>
+																				</mx:groupedColumns>
+																			</mx:AdvancedDataGrid>
+																			<mx:AdvancedDataGrid width="100%" height="100%">
+																				<mx:groupedColumns>
+																					<mx:AdvancedDataGridColumnGroup>
+																						<mx:AdvancedDataGridColumnGroup headerText="Action Types">
+																							<mx:AdvancedDataGridColumn headerText="Action Type"/>
+																							<mx:AdvancedDataGridColumn headerText="Description"/>
+																						</mx:AdvancedDataGridColumnGroup>
+																					</mx:AdvancedDataGridColumnGroup>
+																				</mx:groupedColumns>
+																			</mx:AdvancedDataGrid>
+																		</s:HGroup>
+																	</s:NavigatorContent>
+																	<s:NavigatorContent label="Messages" width="100%" height="100%">
+																		<s:VGroup width="100%" height="100%"/>
+																	</s:NavigatorContent>
+																</mx:Accordion>
+															</s:Panel>
+														</s:VGroup>
+													</mx:HDividedBox>
+												</s:TitleWindow>
+												
+												
+											</s:VGroup>								
+										</mx:Canvas>
 									</s:NavigatorContent> <!--WIP workflow master view-->
 									
 									<!--Work form fields view-->
-									<s:NavigatorContent id="WF_Fields_view" width="100%" height="{W_d_VS.height}" includeInLayout="false" visible="false">
-										<fx:Script>
-											<![CDATA[
-												private var WF_Form_AC:ArrayCollection = new ArrayCollection(
-													[
-														
-													]);
-											]]>
-										</fx:Script>
-										
-										<mx:VBox width="100%" height="100%" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" borderVisible="false"
-												 paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
-											<component:CustomTitleWindow width="100%" height="100%" borderVisible="true" dropShadowVisible="false">
-												<component:layout>
-													<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
-												</component:layout>
-												<mx:Box width="100%" height="100%" borderVisible="true" borderColor="blue" borderAlpha=".7">
-													<s:Form width="100%" height="100%">
-														<s:FormHeading label="Some form" color="red"/>
-													</s:Form>											
-												</mx:Box>
-											</component:CustomTitleWindow>
-										</mx:VBox>
-										
+									<s:NavigatorContent id="WF_Fields_view" width="{W_d_VS.width}" height="{W_d_VS.height}" includeInLayout="false" visible="false">
+										<mx:Canvas id="WF_Fields_Canvas" width="{WF_Fields_view.width}" height="{WF_Fields_view.height}" borderVisible="false"
+												   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+											<s:VGroup id="WF_Fields_VG" width="{WF_Fields_Canvas.width}" height="{WF_Fields_Canvas.height-15}"
+													  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" clipAndEnableScrolling="true" gap="0">	
+												
+												<fx:Script>
+													<![CDATA[
+														private var WF_Form_AC:ArrayCollection = new ArrayCollection(
+															[
+																
+															]);
+													]]>
+												</fx:Script>
+												
+												<mx:VBox width="100%" height="100%" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" borderVisible="false"
+														 paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
+													<component:CustomTitleWindow width="100%" height="100%" borderVisible="true" dropShadowVisible="false">
+														<component:layout>
+															<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
+														</component:layout>
+														<mx:Box width="100%" height="100%" borderVisible="true" borderColor="blue" borderAlpha=".7">
+															<s:Form width="100%" height="100%">
+																<s:FormHeading label="Some form" color="red"/>
+															</s:Form>											
+														</mx:Box>
+													</component:CustomTitleWindow>
+												</mx:VBox>
+												
+											</s:VGroup>
+										</mx:Canvas>
 									</s:NavigatorContent> <!--Work form fields view-->
 									
 								</mx:ViewStack> <!--Work Management detail view stack-->

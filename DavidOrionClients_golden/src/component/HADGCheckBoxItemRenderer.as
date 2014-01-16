@@ -76,7 +76,10 @@ package component
 				trace(adgld.dataField);
 				
 				//myCheckBox.selected = value.checked;
-				myCheckBox.selected = value[adgld.dataField];
+				if (myCheckBox != null)
+				{
+					myCheckBox.selected = value[adgld.dataField];
+				}
 			}
 		}
 		

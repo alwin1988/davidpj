@@ -60,7 +60,10 @@ package
 				//o.checked = myCheckBox.selected;		
 				o[adgld.dataField] = myCheckBox.selected;		
 				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-				hcv.refresh();
+				if (hcv != null)
+				{
+					hcv.refresh();
+				}
 			}
 		}
 		
@@ -73,7 +76,10 @@ package
 				trace(adgld.dataField);
 				
 				//myCheckBox.selected = value.checked;
-				myCheckBox.selected = value[adgld.dataField];
+				if (myCheckBox != null)
+				{
+					myCheckBox.selected = value[adgld.dataField];
+				}
 			}
 		}
 		

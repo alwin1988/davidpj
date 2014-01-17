@@ -47,72 +47,192 @@
 								checked:false}
 						]}
 				]);
+			
+			[Bindable]
+			private var AC2_2:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"Batch", Priority:"1", ID:"Batch1ID", Type:"Batch1Type", 
+						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+						Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+						checked:true, children: [
+							{EntityType:"SubBatch", Priority:"1", ID:"Subbatch1ID", Type:"Batch1Type", 
+								Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+								Started:"dd/mm/yyyy hh:mm", Completed:56, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"2",
+								checked:false, children: [
+									{EntityType:"Object", Priority:"1", ID:"Obj1ID", Type:"Doc1Type", 
+										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+										checked:false},
+									{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+										Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+										checked:false},
+									{EntityType:"Object", Priority:"3", ID:"Obj2ID", Type:"Doc2Type", 
+										Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+										Started:"dd/mm/yyyy hh:mm", Completed:67, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+										checked:false}
+								]}
+						]},
+					{EntityType:"Batch", Priority:"4", ID:"Batch2ID", Type:"Batch2Type", 
+						Pages:"nnnnn", Docs:"nnnn", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+						Started:"dd/mm/yyyy hh:mm", Completed:55, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"1",
+						checked:false, children: [
+							{EntityType:"Object", Priority:"5", ID:"Obj3ID", Type:"Doc1Type", 
+								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+								Started:"dd/mm/yyyy hh:mm", Completed:79, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+								checked:false},
+							{EntityType:"Object", Priority:"2", ID:"Obj1ID", Type:"Doc1Type", 
+								Pages:"nnnnn", Docs:"icon", Source:"Source", Filename:"Filename", Status:"StatusValue", 
+								Started:"dd/mm/yyyy hh:mm", Completed:78, Estimate:"dd/mm/yyyy hh:mm", Deadline:"dd/mm/yyyy", FormID:"3",
+								checked:false}
+						]}
+				]);
 		]]>
 	</fx:Script>
-	<local:CustomADG id="WM_Batches_DG"
-					 width="100%" height="100%" verticalAlign="middle" borderVisible="false" 
-					 headerHeight="20" rowHeight="20" minColumnWidth="0"
-					 horizontalScrollPolicy="off" verticalScrollPolicy="off"
-					 draggableColumns="true" resizableColumns="true" sortableColumns="true"
-					 sortExpertMode="true"
-					 treeColumn="{WM_Batches_DG_ID}" indentation="17" 
-					 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
-					 styleName="DataGridBody" headerStyleName="DataGridHeader"
-					 doubleClickEnabled="true" 
-					 >
-		<local:dataProvider>
-			<mx:HierarchicalData source="{AC2}"/>
-		</local:dataProvider>
-		<local:columns>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Checkbox" headerText="" dataField="checked" 
-									   width="{18}" textAlign="center"										   
-									   draggable="false" resizable="false" sortable="false"
-									   itemRenderer="HADGCheckBoxItemRenderer"
-									   headerRenderer="HADGThreeStateCheckBoxHeaderRenderer"
-									   rendererIsEditor="false"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" dataField="Information" 
-									   width="{18}" textAlign="center"
-									   draggable="false" resizable="false" sortable="false">
-			</mx:AdvancedDataGridColumn>
-			<!--itemRenderer="component.PriorityItemRenderer"-->
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Priority" dataField="Priority" 
-									   width="{39}" minWidth="39" textAlign="left"
-									   draggable="false" resizable="false" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID" headerText="ID" dataField="ID"
-									   width="198" textAlign="left"
-									   draggable="true" resizable="true" sortable="true">
-			</mx:AdvancedDataGridColumn>		
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Type" headerText="Type" dataField="Type"
-									   width="118" minWidth="120" textAlign="left"
-									   draggable="true" resizable="true" sortable="true"
-									   color="red"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages" headerText="Pages" dataField="Pages"
-									   width="60" minWidth="60" textAlign="left"
-									   draggable="true" resizable="true" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Docs" headerText="Docs" dataField="Docs"
-									   width="60" minWidth="60" textAlign="left"
-									   draggable="true" resizable="true" sortable="true"/>					
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Source" headerText="Source" dataField="Source"
-									   width="140" minWidth="140" textAlign="left"
-									   draggable="true" resizable="true" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Filename" headerText="Filename" dataField="Filename"
-									   width="80" minWidth="80" textAlign="left"
-									   draggable="true" resizable="true" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Status" headerText="Status" dataField="Status"
-									   width="200" minWidth="120" textAlign="left"
-									   draggable="true" resizable="true" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Started" headerText="Filename" dataField="Filename"
-									   width="100" minWidth="100" textAlign="left"
-									   draggable="true" resizable="false" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Completed" headerText="% Completed" dataField="Completed"
-									   width="100" minWidth="100" textAlign="left"
-									   draggable="true" resizable="false" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
-									   width="100" minWidth="100" textAlign="left"
-									   draggable="true" resizable="false" sortable="true"/>
-			<mx:AdvancedDataGridColumn id="WM_Batches_DG_Deadline" headerText="Deadline" dataField="Deadline"
-									   width="100" minWidth="100" textAlign="left"
-									   draggable="true" resizable="false" sortable="true"/>
-		</local:columns>
-	</local:CustomADG>
+	<s:VGroup width="100%" height="100%">
+		<s:Label text="HierarchicalData"/>
+		<local:CustomADG id="WM_Batches_DG"
+						 width="100%" height="100%" verticalAlign="middle" borderVisible="false" 
+						 headerHeight="20" rowHeight="20" minColumnWidth="0"
+						 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+						 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+						 sortExpertMode="true"
+						 treeColumn="{WM_Batches_DG_ID}" indentation="17" 
+						 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
+						 styleName="DataGridBody" headerStyleName="DataGridHeader"
+						 doubleClickEnabled="true" 
+						 >
+			<local:dataProvider>
+				<mx:HierarchicalData source="{AC2}"/>
+			</local:dataProvider>
+			<local:columns>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Checkbox" headerText="" dataField="checked" 
+										   width="{18}" textAlign="center"										   
+										   draggable="false" resizable="false" sortable="false"
+										   itemRenderer="HADGCheckBoxItemRenderer"
+										   headerRenderer="HADGThreeStateCheckBoxHeaderRenderer"
+										   rendererIsEditor="false"/>
+				<mx:AdvancedDataGridColumn id="delete" headerText="Del"
+										   width="{18}" textAlign="center"										   
+										   draggable="false" resizable="false" sortable="false"
+										   itemRenderer="DeleteADGItemRenderer"
+										   rendererIsEditor="false"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" dataField="Information" 
+										   width="{18}" textAlign="center"
+										   draggable="false" resizable="false" sortable="false">
+				</mx:AdvancedDataGridColumn>
+				<!--itemRenderer="component.PriorityItemRenderer"-->
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority" headerText="Priority" dataField="Priority" 
+										   width="{39}" minWidth="39" textAlign="left"
+										   draggable="false" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID" headerText="ID" dataField="ID"
+										   width="198" textAlign="left"
+										   draggable="true" resizable="true" sortable="true">
+				</mx:AdvancedDataGridColumn>		
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Type" headerText="Type" dataField="Type"
+										   width="118" minWidth="120" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"
+										   color="red"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages" headerText="Pages" dataField="Pages"
+										   width="60" minWidth="60" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Docs" headerText="Docs" dataField="Docs"
+										   width="60" minWidth="60" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>					
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Source" headerText="Source" dataField="Source"
+										   width="140" minWidth="140" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Filename" headerText="Filename" dataField="Filename"
+										   width="80" minWidth="80" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Status" headerText="Status" dataField="Status"
+										   width="200" minWidth="120" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Started" headerText="Filename" dataField="Filename"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Completed" headerText="% Completed" dataField="Completed"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Estimate" headerText="Est. Completion" dataField="Estimate"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Deadline" headerText="Deadline" dataField="Deadline"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+			</local:columns>
+		</local:CustomADG>
+		<s:Label text="ArrayCollectionData"/>
+		<local:CustomADG id="WM_Batches_DG2"
+						 width="100%" height="100%" verticalAlign="middle" borderVisible="false" 
+						 headerHeight="20" rowHeight="20" minColumnWidth="0"
+						 horizontalScrollPolicy="off" verticalScrollPolicy="off"
+						 draggableColumns="true" resizableColumns="true" sortableColumns="true"
+						 sortExpertMode="true"
+						 treeColumn="{WM_Batches_DG_ID}" indentation="17" 
+						 folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}" 
+						 styleName="DataGridBody" headerStyleName="DataGridHeader"
+						 doubleClickEnabled="true" dataProvider="{AC2_2}"
+						 >
+			<!--<local:dataProvider>
+				<mx:HierarchicalData source="{AC2}"/>
+			</local:dataProvider>-->
+			<local:columns>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Checkbox2" headerText="" dataField="checked" 
+										   width="{18}" textAlign="center"										   
+										   draggable="false" resizable="false" sortable="false"
+										   itemRenderer="HADGCheckBoxItemRenderer"
+										   headerRenderer="HADGThreeStateCheckBoxHeaderRenderer"
+										   rendererIsEditor="false"/>
+				<mx:AdvancedDataGridColumn id="delete2" headerText="Del"
+										   width="{18}" textAlign="center"										   
+										   draggable="false" resizable="false" sortable="false"
+										   itemRenderer="DeleteADGItemRenderer"
+										   rendererIsEditor="false"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info2" dataField="Information" 
+										   width="{18}" textAlign="center"
+										   draggable="false" resizable="false" sortable="false">
+				</mx:AdvancedDataGridColumn>
+				<!--itemRenderer="component.PriorityItemRenderer"-->
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Priority2" headerText="Priority" dataField="Priority" 
+										   width="{39}" minWidth="39" textAlign="left"
+										   draggable="false" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_ID2" headerText="ID" dataField="ID"
+										   width="198" textAlign="left"
+										   draggable="true" resizable="true" sortable="true">
+				</mx:AdvancedDataGridColumn>		
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Type2" headerText="Type" dataField="Type"
+										   width="118" minWidth="120" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"
+										   color="red"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Pages2" headerText="Pages" dataField="Pages"
+										   width="60" minWidth="60" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Docs2" headerText="Docs" dataField="Docs"
+										   width="60" minWidth="60" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>					
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Source2" headerText="Source" dataField="Source"
+										   width="140" minWidth="140" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Filename2" headerText="Filename" dataField="Filename"
+										   width="80" minWidth="80" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Status2" headerText="Status" dataField="Status"
+										   width="200" minWidth="120" textAlign="left"
+										   draggable="true" resizable="true" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Started2" headerText="Filename" dataField="Filename"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Completed2" headerText="% Completed" dataField="Completed"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Estimate2" headerText="Est. Completion" dataField="Estimate"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Deadline2" headerText="Deadline" dataField="Deadline"
+										   width="100" minWidth="100" textAlign="left"
+										   draggable="true" resizable="false" sortable="true"/>
+			</local:columns>
+		</local:CustomADG>
+	</s:VGroup>
 </s:Application>

@@ -1,7 +1,10 @@
 package
 {
+	import avmplus.getQualifiedClassName;
+	
 	import flash.events.MouseEvent;
 	
+	import mx.collections.ArrayCollection;
 	import mx.collections.HierarchicalCollectionView;
 	import mx.controls.AdvancedDataGrid;
 	import mx.controls.CheckBox;
@@ -11,6 +14,8 @@ package
 	
 	public class HADGCheckBoxItemRenderer extends MXAdvancedDataGridItemRenderer
 	{
+		private static const ARRAY_C:String = "mx.collections::ArrayCollection";
+		private static const HIERARCHICAL_C:String = "mx.collections::HierarchicalCollectionView";
 		
 		protected var myImage:Image;
 		protected var myCheckBox:CheckBox;
@@ -43,26 +48,34 @@ package
 			//addElement(myImage);
 		}
 
-		private function imageToggleHandlder(event:MouseEvent):void
+		/*private function imageToggleHandlder(event:MouseEvent):void
 		{
 			myCheckBox.selected=!myCheckBox.selected;
 			checkBoxToggleHandler(event);
-		}
+		}*/
 		
 		private function checkBoxToggleHandler(event:MouseEvent):void
 		{
 			if (data)
 			{
+				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;	
 				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 				trace(adgld.dataField);
-				
-				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
-				//o.checked = myCheckBox.selected;		
-				o[adgld.dataField] = myCheckBox.selected;		
-				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-				if (hcv != null)
-				{
-					hcv.refresh();
+					
+				//check class name
+				if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == HIERARCHICAL_C)
+				{	
+					o[adgld.dataField] = myCheckBox.selected;		
+					var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+					if (hcv != null)
+					{
+						hcv.refresh();
+					}
+				}
+				else if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == ARRAY_C)
+				{	
+					o[adgld.dataField] = myCheckBox.selected;
+					ArrayCollection(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider).setItemAt(o,AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedIndex);					
 				}
 			}
 		}

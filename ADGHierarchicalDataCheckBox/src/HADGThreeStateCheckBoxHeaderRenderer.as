@@ -1,5 +1,7 @@
 package
 {
+	import avmplus.getQualifiedClassName;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
@@ -34,6 +36,9 @@ package
 	 */
 	
 	public class HADGThreeStateCheckBoxHeaderRenderer extends MXAdvancedDataGridItemRenderer {
+		private static const ARRAY_C:String = "mx.collections::ArrayCollection";
+		private static const HIERARCHICAL_C:String = "mx.collections::HierarchicalCollectionView";
+		
 		protected var myCheckBox:CheckBox;
 		protected var myImage:Image;
 		private var imageWidth:Number = 7;
@@ -193,30 +198,43 @@ package
 		 * Selects all the rows in the datagrid.  
 		 * 
 		 */
-		private function selectAll():void{			
-			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			if (hcv != null){
-				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-				if(dataCursor != null){
-					dataCursor.seek(CursorBookmark.FIRST);
+		private function selectAll():void{	
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
+			if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == HIERARCHICAL_C)
+			{
+				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+				if (hcv != null){
+					var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+					if(dataCursor != null){
+						dataCursor.seek(CursorBookmark.FIRST);
+						
+						while (!dataCursor.afterLast) {
+							if (dataCursor.current != null){
+								//dataCursor.current.checked = true;
+								dataCursor.current[adgld.dataField] = true;
+							}
 					
-					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
-					trace(adgld.dataField);
-					while (!dataCursor.afterLast) {
-						if (dataCursor.current != null){
-							//dataCursor.current.checked = true;
-							dataCursor.current[adgld.dataField] = true;
+							//hcv.openNode(dataCursor.current);
+							dataCursor.moveNext();
 						}
-				
-						//hcv.openNode(dataCursor.current);
-						dataCursor.moveNext();
+						hcv.refresh();
+					}else{
+						trace("dataCursor is null");
 					}
-					hcv.refresh();
 				}else{
-					trace("dataCursor is null");
+					trace("hcv is null");
 				}
-			}else{
-				trace("hcv is null");
+			}
+			else if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == ARRAY_C)
+			{
+				var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+				
+				for each (var o:Object in ac){
+					//o.checked = myCheckBox.selected;
+					o[adgld.dataField] = myCheckBox.selected;
+				}
+				AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider = ac;				
 			}
 		}
 		
@@ -225,30 +243,44 @@ package
 		 * 
 		 */
 		private function unSelectAll():void{
-			
-			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			if (hcv != null){
-				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-				if (dataCursor != null){
-					dataCursor.seek(CursorBookmark.FIRST);
-
-					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
-					trace(adgld.dataField);
-					while (!dataCursor.afterLast) {
-						if (dataCursor.current != null){
-							//dataCursor.current.checked = false;
-							dataCursor.current[adgld.dataField] = false;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
+			if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == HIERARCHICAL_C)
+			{
+				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+				if (hcv != null){
+					var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+					if (dataCursor != null){
+						dataCursor.seek(CursorBookmark.FIRST);
+	
+						while (!dataCursor.afterLast) {
+							if (dataCursor.current != null){
+								//dataCursor.current.checked = false;
+								dataCursor.current[adgld.dataField] = false;
+							}
+							
+							//hcv.openNode(dataCursor.current);
+							dataCursor.moveNext();
 						}
-						
-						//hcv.openNode(dataCursor.current);
-						dataCursor.moveNext();
+						hcv.refresh();
+					}else{
+						trace("dataCursor is null");
 					}
-					hcv.refresh();
 				}else{
-					trace("dataCursor is null");
+					trace("hcv is null");
 				}
-			}else{
-				trace("hcv is null");
+			}
+			else if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == ARRAY_C)
+			{
+				var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+				myCheckBox.selected = false;
+				
+				for each (var o:Object in ac){
+					//o.checked = myCheckBox.selected;
+					o[adgld.dataField] = myCheckBox.selected;
+				}
+				myCheckBox.selected
+				AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider = ac;				
 			}
 		}
 		
@@ -262,33 +294,49 @@ package
 		private function areAllSelected():Boolean{
 			
 			var b:Boolean=true;
-			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			if (hcv != null){
-				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-				if (dataCursor != null){
-					dataCursor.seek(CursorBookmark.FIRST);
-
-					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
-					trace(adgld.dataField);
-					while (!dataCursor.afterLast) {
-						//if (!dataCursor.current.checked){
-						if (!dataCursor.current[adgld.dataField]){
-							b=false;
-							break;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
+			if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == HIERARCHICAL_C)
+			{
+				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+				if (hcv != null){
+					var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+					if (dataCursor != null){
+						dataCursor.seek(CursorBookmark.FIRST);
+	
+						while (!dataCursor.afterLast) {
+							//if (!dataCursor.current.checked){
+							if (!dataCursor.current[adgld.dataField]){
+								b=false;
+								break;
+							}
+							
+							//hcv.openNode(dataCursor.current);
+							dataCursor.moveNext();
 						}
-						
-						//hcv.openNode(dataCursor.current);
-						dataCursor.moveNext();
+						return b;
+					}else{
+						trace("dataCursor is null");
+						return b;
 					}
-					return b;
 				}else{
-					trace("dataCursor is null");
+					trace("hcv is null");
 					return b;
 				}
-			}else{
-				trace("hcv is null");
-				return b;
 			}
+			else if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == ARRAY_C)
+			{
+				var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+				for each (var o:Object in ac){
+					//if(!o.checked){
+					if(!o[adgld.dataField]){
+						b=false;
+						break;
+					}
+				}
+				return b;				
+			}
+			return b;
 		}
 		
 		/**
@@ -300,35 +348,52 @@ package
 		private function isAnyColumnSelected():Boolean{
 			
 			var b:Boolean=false;
-			var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
-			if (hcv != null){
-				var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
-				if (dataCursor != null){
-					dataCursor.seek(CursorBookmark.FIRST);
-				
-					var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
-					trace(adgld.dataField);					
-					while (!dataCursor.afterLast) {
-						//if (dataCursor.current.checked){
-						if (dataCursor.current[adgld.dataField]){
-							b=true;
-							trace(b);
-							return b;
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
+			if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == HIERARCHICAL_C)
+			{
+				var hcv:HierarchicalCollectionView = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as HierarchicalCollectionView;
+				if (hcv != null){
+					var dataCursor:IHierarchicalCollectionViewCursor = hcv.createCursor() as IHierarchicalCollectionViewCursor;
+					if (dataCursor != null){
+						dataCursor.seek(CursorBookmark.FIRST);
+									
+						while (!dataCursor.afterLast) {
+							//if (dataCursor.current.checked){
+							if (dataCursor.current[adgld.dataField]){
+								b=true;
+								trace(b);
+								return b;
+							}
+							
+							//hcv.openNode(dataCursor.current);
+							dataCursor.moveNext();
 						}
-						
-						//hcv.openNode(dataCursor.current);
-						dataCursor.moveNext();
+						trace(b);
+						return b;
+					}else{
+						trace("dataCursor is null");
+						return b;
 					}
-					trace(b);
-					return b;
 				}else{
-					trace("dataCursor is null");
+					trace("hcv is null");
 					return b;
 				}
-			}else{
-				trace("hcv is null");
-				return b;
 			}
+			else if (getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider) == ARRAY_C)
+			{
+				var ac:ArrayCollection = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider as ArrayCollection;
+
+				for each (var o:Object in ac){
+					//if(o.checked){
+					if(o[adgld.dataField]){
+						b=true;
+						break;
+					}
+				}
+				return b;				
+			}
+			return b;
 		}
 	}
 }

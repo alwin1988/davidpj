@@ -117,6 +117,13 @@
 										   draggable="false" resizable="false" sortable="false"
 										   itemRenderer="DeleteADGItemRenderer"
 										   rendererIsEditor="false"/>
+				<mx:AdvancedDataGridColumn id="Transactions_DG1_Info"
+										   width="{18}"
+										   dataField="Information"
+										   draggable="false"
+										   resizable="false"
+										   sortable="false"
+										   textAlign="center" itemRenderer="InfoADGItemRenderer"/>
 				<mx:AdvancedDataGridColumn id="WM_Batches_DG_Info" dataField="Information" 
 										   width="{18}" textAlign="center"
 										   draggable="false" resizable="false" sortable="false">

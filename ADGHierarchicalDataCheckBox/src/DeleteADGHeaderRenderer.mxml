@@ -10,6 +10,11 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.AdvancedDataGrid;
 			
+			
+			//17 JAN 2014
+			//not continue implement
+			//only work with arraycollection
+			
 			/**
 			 * Overides <code>data</code> parameter to set the <code>selected</code> parameter of the
 			 * checkbox.

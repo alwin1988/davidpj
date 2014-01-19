@@ -409,7 +409,6 @@
 						DocumentsTree.expandChildrenOf(DocumentsTree.dataProvider[0],true);
 					//}
 
-//---------------------- Start : [In progress : See 20140115 ] ----------------------//		
 				//Transactions1
 				} else if ( type == "T1" ) {
 					DG_TW3_1.visible = isToggle;
@@ -433,16 +432,10 @@
 					DG_TW3_2.visible = isToggle;
 					DG_TW3_2.includeInLayout = isToggle;
 					
-					//if ( isToggle ) {
-						TransactionsTree.openItems = [];
-						TransactionsTree.expandChildrenOf(TransactionsTree.dataProvider[0],true);
-					//} else {
-					//	TransactionsTree.openItems = [];
-					//	TransactionsTree.expandChildrenOf(TransactionsTree.dataProvider[0],true);
-					//}
+					TransactionsTree.openItems = [];
+					TransactionsTree.expandChildrenOf(TransactionsTree.dataProvider[0],true);
 				}
 			}
-//---------------------- End : [In progress : See 20140115 ] ----------------------//
 					
 			protected function DG_TW1_closeHandler():void {
 				updateTreeFromCloseEvent("BP", "BatchesTree");
@@ -517,124 +510,25 @@
 					}
 
 
-//----------------------------------------- Start : [In progress : See 20140115 ] ------------------------------------------//
+//----------------------------------------- Start : [In progress : See 20140119 ] ------------------------------------------//
 				} else if ( getObj.@treeType == "B" ) {
 					//var xxx:Object = getNodeObject(xl, getObj.@treeType, getObj.@);
 					//Transactions
-					var newObj:Object = findSelectedChildren(getObj, TransactionsTree, chkName);
+					//var selectedObj:Object = findSelectedChildren(getObj, TransactionsTree, chkName, treeidDPTemp);
 					
-					//if ( getObj.@providerType == chkName ) {
-						toggleChildren(getObj, TransactionsTree, "unchecked");
-						tc.addItem(getObj);
-						xmlListTmp3 = tc;
-						TransactionsTree.dataProvider = xmlListTmp3;
-						TransactionsTree.invalidateList();
-						TransactionsTree.invalidateDisplayList();
-					//}
-				}
-				
-				/* for each( var nodelist:XML in xl ) {
-					for (var i:int=nodelist.length()-1; i>=0; i--) {
-						if(nodelist[i].@providerType == chkName){
-							if ( state == "open" ) {
-								nodelist[i].@open = 'yes';
-							} else {
-								nodelist[i].@open = 'no';
-								
-							}
-							break;
-							
-						} else {
-							for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-								if(nodelist.node[j].@name == chkName) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-									break;
-								}
-							}
-						}
-					} */
-				
-				//toggleChildren(treeidDPTemp, BatchesTree, "unchecked");
-				//tc = toggleChildren(xl);
-				
-				/* for each( var nodelist:XML in xl ) {
-					for (var i:int=nodelist.length()-1; i>=0; i--) {
-						//nodelist.node[i].@state = "unchecked";
-						nodelist[i].@state = "unchecked";
-					}
+					findSelectedChildren(getObj, TransactionsTree, chkName, treeidDPTemp);
 					
-						tc.addItem(nodelist);
+					//In progress
+					//var parent:Object=TransactionsTree.getParentItem(selectedObj);
+					//toggleParents(parent, TransactionsTree, getState(TransactionsTree, parent));
+					
+					tc.addItem(getObj);
+					xmlListTmp3 = tc;
+					TransactionsTree.dataProvider = xmlListTmp3;
+					TransactionsTree.invalidateList();
+					TransactionsTree.invalidateDisplayList();
 				}
-				
-				xl1 = tc;
-				BatchesTree.dataProvider = xl1;
-				BatchesTree.invalidateList();
-				BatchesTree.invalidateDisplayList(); */
-				
-				//Loop for change data
-				/* for each( var nodelist:XML in xl ) {
-					for (var i:int=nodelist.length()-1; i>=0; i--) {
-						if(nodelist[i].@providerType == chkName){
-							if ( state == "open" ) {
-								nodelist[i].@open = 'yes';
-							} else {
-								nodelist[i].@open = 'no';
-								
-							}
-							break;
-							
-						} else {
-							for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-								if(nodelist.node[j].@name == chkName) {
-									if ( state == "open" ) {
-										nodelist.node[j].@open = 'yes';
-									} else {
-										nodelist.node[j].@open = 'no';
-									}
-									break;
-								}
-							}
-						}
-					}
-					if(nodelist.node.length() > 0 ){
-						tc.addItem(nodelist);
-					}
-				} */
-				
-				//Set verticalScrollPosition to global variable (before change)
-				/* tempTreeVerticalScrollPosition = treeid.verticalScrollPosition;
-				
-				xl1 = tc;
-				treeid.dataProvider = xl1;
-				treeid.invalidateList();
-				treeid.invalidateDisplayList();
-				//treeid.validateNow();
-				
-				//Loop for update expands index
-				var temp:XMLListCollection = treeid.dataProvider as XMLListCollection; 
-				var xlz:XMLList = new XMLList(temp.toXMLString());
-				var a:int=0;
-				for each( var nodelist:XML in xlz ) {
-					if ( nodelist.@open == 'yes' ) {
-						arrayReturn.addItem(a);
-					} else {
-						for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-							if(nodelist.node[j].@open == 'yes') {
-								arrayReturn.addItem(a);
-								break;
-							}
-						}
-					}
-					a++;
-				} */
-				
-				//return returnObj;
-				
-//----------------------------------------- End : [In progress : See 20140115 ] ------------------------------------------//
+//----------------------------------------- End : [In progress : See 20140119 ] ------------------------------------------//
 			}
 			
 			private function toggleChildren(item:Object, tree:Tree, state:String):void {
@@ -659,50 +553,84 @@
 				}
 			}
 
-//----------------------------------------- Start : [In progress : See 20140115 ] ------------------------------------------//
-			private function findSelectedChildren(item:Object, tree:Tree, checkName:String):Object
+//----------------------------------------- Start : [In progress : See 20140119 ] ------------------------------------------//
+			private function findSelectedChildren(item:Object, tree:Tree, checkName:String, data:Object):void
 			{
-				var foundObj:Object = null;
+				//var foundObj:Object = null;
 				
-				//tree.get
+				var childrenList:Object = item.children();
 				
-				for each( var nodelist:Object in item ) {
+				for each( var nodelist:Object in childrenList ) {
 					if ( nodelist.@providerType == checkName ) {
-						foundObj = nodelist;
-					} else {
-						var treeData:ITreeDataDescriptor=tree.dataDescriptor;
-						if (treeData.hasChildren(nodelist))
-						{
-							var children:ICollectionView=treeData.getChildren(nodelist);
-							var cursor:IViewCursor=children.createCursor();
-							while (!cursor.afterLast)
-							{
-								foundObj = findSelectedChildren(cursor.current, tree, checkName);
-								cursor.moveNext();
-							}
-						}
+						//foundObj = nodelist;
+						toggleChildren(nodelist, TransactionsTree, "unchecked");
+						//foundObj = nodelist;
+						//var parent:Object=tree.getParentItem(nodelist);
+						//toggleParents(parent, tree, getState(tree, parent));
+						break;
 					}
 				}
 				
-				/* var temp:XMLListCollection = treeid.dataProvider as XMLListCollection; 
-				var xlz:XMLList = new XMLList(temp.toXMLString());
-				var a:int=0;
-				for each( var nodelist:XML in xlz ) {
-				if ( nodelist.@open == 'yes' ) {
-				arrayReturn.addItem(a);
-				} else {
-				for ( var j:int=nodelist.node.length()-1; j>=0; j-- ) {
-				if(nodelist.node[j].@open == 'yes') {
-				arrayReturn.addItem(a);
-				break;
-				}
-				}
-				}
-				a++;
-				} */
-				return foundObj;
+				//return foundObj;
 			}
-//----------------------------------------- End : [In progress : See 20140115 ] ------------------------------------------//					
+			
+			private function toggleParents(item:Object, tree:Tree, state:String):void
+			{
+				if (item == null)
+				{
+					return;
+				}
+				else
+				{
+					item.@state=state;
+					toggleParents(tree.getParentItem(item), tree, getState(tree, tree.getParentItem(item)));
+				}
+			}
+			
+			private function getState(tree:Tree, parent:Object):String
+			{
+				var returnState:String = null;
+				var countOfChecks:int=0;
+				var countOfUnChecks:int=0;
+				var countOfSchrodinger:int=0;
+				
+				if (parent != null) {
+					var treeData:ITreeDataDescriptor=tree.dataDescriptor;
+					var cursor:IViewCursor=treeData.getChildren(parent).createCursor();
+					
+					while (!cursor.afterLast) {
+						if (cursor.current.state == "checked") {
+							countOfChecks++;
+						}
+						else if (cursor.current.state == "unchecked") {
+							countOfUnChecks++
+						}
+						else if (cursor.current.state == "schrodinger") {
+							countOfSchrodinger++;
+						}
+						cursor.moveNext();
+					}
+					
+					//check count of state for return
+					if ( (countOfChecks > 0 && countOfUnChecks > 0)
+						|| (countOfChecks > 0 && countOfSchrodinger > 0)
+						|| (countOfUnChecks > 0 &&  countOfSchrodinger > 0)
+						|| countOfSchrodinger > 0 ) {
+						
+						returnState = "schrodinger";
+						
+					} else if ( countOfChecks > 0 ) {
+						returnState = "checked";
+						
+					} else if ( countOfUnChecks > 0 ) {
+						returnState = "unchecked";
+					}
+				}
+				
+				return returnState;
+			}
+			
+//----------------------------------------- End : [In progress : See 20140119 ] ------------------------------------------//					
 			
 			//############################ See: Modify 20140108 - 20140113 ##########################//
 		]]>

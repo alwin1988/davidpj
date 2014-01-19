@@ -15,17 +15,17 @@
   </compiler>
   <applications>
     <application path="david/viewers/Maintw.mxml"/>
-    <application path="david/pages/CA.mxml"/>
     <application path="component/PopUpCustomTitleWindow.mxml"/>
+    <application path="david/pages/CA.mxml"/>
     <application path="david/viewers/FormViewer.mxml"/>
     <application path="david/pages/CAx.mxml"/>
     <application path="david/viewers/Maintw1.mxml"/>
     <application path="nndemo/NNdemoform.mxml"/>
     <application path="david/pages/menuControl.mxml"/>
-    <application path="david/viewers/WorkViewer.mxml"/>
     <application path="david/viewers/test2.mxml"/>
-    <application path="david/pages/WMplay.mxml"/>
+    <application path="david/viewers/WorkViewer.mxml"/>
     <application path="david/viewers/DocViewer.mxml"/>
+    <application path="david/pages/WMplay.mxml"/>
     <application path="Main.mxml"/>
     <application path="david/pages/CA_B1B.mxml"/>
     <application path="david/pages/WM.mxml"/>

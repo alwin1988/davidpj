@@ -11,16 +11,14 @@
 		<fx:XML id="formdef">
 			<form>
 				<formdef>
-					<firstname FieldControl="TextInput" Label="First Name 1" Required="true"></firstname>
-					<lastname FieldControl="TextInput" Label="Last Name" Required="true"></lastname>
-					<nickname FieldControl="TextInput" Label="Nick Name" Required="false"></nickname>
+					<FieldName1 FieldControl="TextInput" Label="Label1" Required="true"></FieldName1>
+					<FieldName2 FieldControl="DropDownList" Label="Label2" Required="true">Label1,Label2,Label3</FieldName2>
+					<FieldName3 FieldControl="TextInput" Label="Label3" Required="false"></FieldName3>
 					<combobox FieldControl="ComboBox" Label="Gender" Required="true">Male,Female</combobox>
-					<type FieldControl="ComboBox" Label="Type" Required="false">Book,Cds,Games</type>
 					<radioButtonGroup FieldControl="RadioButtonGroup" Label="Gender" Required="false">
 						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Male</radiobutton>
 						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Female</radiobutton>
 					</radioButtonGroup>	
-					
 				</formdef>
 			</form>
 		</fx:XML>
@@ -38,23 +36,21 @@
 			
 			import spark.events.IndexChangeEvent;
 			
-			[Bindable]
-			public var FullWidth:Number = 1162;
-			public var FullWidthPct:Number = 100;
-			public var HalfWidth:Number = (FullWidth/2);
-			public var HalfWidthPct:Number = 50;
-			public var QuarterWidth:Number = (FullWidth/4);
-			public var QuarterWidthPct:Number = 25;
-			public var FullHeight:Number = 400;
-			public var DGID:String;
+			[Bindable] public var FullWidth:Number = 1162;
+			[Bindable] public var FullWidthPct:Number = 100;
+			[Bindable] public var HalfWidth:Number = (FullWidth/2);
+			[Bindable] public var HalfWidthPct:Number = 50;
+			[Bindable] public var QuarterWidth:Number = (FullWidth/4);
+			[Bindable] public var QuarterWidthPct:Number = 25;
+			[Bindable] public var FullHeight:Number = 400;
+			[Bindable] public var DGID:String;
 			
-			[Bindable]
-			public var CheckBoxWidth:Number = 18; //CBW
-			public var CBW:Number = 18; //CBW
-			public var InfoButtonWidth:Number = 18; //IBW
-			public var IBW:Number = 18; //IBW
-			public var EnabledToggleWidth:Number = 14; //ETW
-			public var ETW:Number = 14; //ETW
+			[Bindable] public var CheckBoxWidth:Number = 18; //CBW			
+			[Bindable] public var CBW:Number = 18; //CheckBox width
+			[Bindable] public var InfoButtonWidth:Number = 18; //IBW
+			[Bindable] public var IBW:Number = 18; //Info Button width
+			[Bindable] public var EnabledToggleWidth:Number = 14; //ETW
+			[Bindable] public var ETW:Number = 14; //Enabled Toggle width
 			
 			public var CategoryAlias:String
 			public var CategoryAliasGroup:String
@@ -109,11 +105,12 @@
 			{
 				var TB_Data:Object = event.target.selectedItem as Object;
 				
+				//*** This is defective ***
 				// If category changes, select first tabbar tab
-				if (CategoryAlias != LastCategoryAlias)
+				/*if (CategoryAlias != LastCategoryAlias)
 				{
 					TB.selectedIndex = 0;
-				}
+				}*/
 				
 				if (CategoryAlias == "AU" && TB_Data.Data == "ID") //User ID
 				{
@@ -469,12 +466,6 @@
 				{
 					TB.dataProvider = WF_TB_AC;
 					DG_TW.title = 'Forms';
-					m_VS.selectedChild = WF_m_view;
-					m_VS.includeInLayout=true; m_VS.visible=true;
-				}
-				if (CategoryAlias == "WF" && CategoryView == "Main")
-				{
-					DG_TW.title = 'Forms';
 				}
 				if (CategoryAlias == "WF" && CategoryView == "Main")
 				{
@@ -482,37 +473,42 @@
 				}
 				if ((CategoryAlias == "WF" && CategoryView == "ID") || (CategoryAlias == "WF" && CategoryView == "Main"))
 				{
-					BX.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50; 
-					B1B.includeInLayout=false; B1B.visible=false; 
-					B2.includeInLayout=true; B2.visible=true;
+					ClearAll();
 					
+					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50;
+					m_VS.selectedChild=WF_m_view;
+					m_VS.includeInLayout=true; m_VS.visible=true;
+					m_VS.selectedChild=WF_m_view;
 					WF_m_DG_propertiesA.visible=true;
 					WF_m_DG_propertiesB.visible=false;
 					WF_m_DG_propertiesC.visible=false;
 					Reset_WF_m_DG();
 					
-					W_d_VS.selectedChild = WF_FPm_view;
+					B1B.includeInLayout=false; B1B.visible=false; 
+					
+					BX.setStyle('horizontalGap',0);
+					
+					B2.includeInLayout=true; B2.visible=true; B2.percentWidth=50;
 					W_d_VS.includeInLayout=true; W_d_VS.visible=true;
+					W_d_VS.selectedChild=WF_FPm_view;
 				}
 				if (CategoryAlias == "WF" && CategoryView == "FF")
 				{
 					ClearMaster();
-					
-					BX.setStyle('horizontalGap',0);
+										
 					B1A.includeInLayout=false; B1A.visible=false;
-					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=50;
-					B2.includeInLayout=true; B2.visible=true; B2.percentWidth=50;
-					
 					m_VS.includeInLayout=false; m_VS.visible=false;
 					
+					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=50;
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
-
-					sm2_VS.selectedChild = WF_FF_view;
 					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=100;
-										
-					W_d_VS.selectedChild = WF_FPm_view;
+					sm2_VS.selectedChild = WF_FF_view;
+					
+					BX.setStyle('horizontalGap',0);
+					
+					B2.includeInLayout=true; B2.visible=true; B2.percentWidth=50;
 					W_d_VS.includeInLayout=true; W_d_VS.visible=true; W_d_VS.percentWidth=100;
+					W_d_VS.selectedChild = WF_FPm_view;
 					
 					Reset_WF_FF_DG();
 				}
@@ -520,117 +516,101 @@
 				{
 					ClearMaster();
 					
+					BX.setStyle('horizontalGap',0);
+					
+					B1A.includeInLayout=false; B1A.visible=false;
+					
+					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=100;
 					sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.percentWidth=50;
 					sm1_VS.selectedChild = WP_FF_view;
-					
+					B1B.setStyle('horizontalGap',3);
 					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=50;
 					sm2_VS.selectedChild = WF_FF_view;
+					Reset_WP_FF_DG();
+					Reset_WF_FF_DG();
 					
+					B2.includeInLayout=false; B2.visible=false;
 					W_d_VS.selectedChild = WF_FPm_view;
 					W_d_VS.includeInLayout=false; W_d_VS.visible=false;
-					
-					Reset_WP_FF_DG();
-					Reset_WF_FF_DG();
-					
-					BX.setStyle('horizontalGap',0);
-					B1A.includeInLayout=false; B1A.visible=false;
-					B1B.setStyle('horizontalGap',3);
-					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=100;
-					B2.includeInLayout=false; B2.visible=false;
 				}
-				/*Legacy code that worked
-				
-				
-				/*WIP one
-				if (CategoryAlias == "WF" && CategoryView == "PF")
+/*
+				if ((CategoryAlias == "WF" && CategoryView == "ID") || (CategoryAlias == "WF" && CategoryView == "Main"))
 				{
-					ClearMaster();
-					
-					BX.setStyle('horizontalGap',0);
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=false; B1A.visible=false;
-					B1A.setStyle('horizontalGap',3);
-					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=100;
-					B2.includeInLayout=false; B2.visible=false;
-										
-					sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.selectedChild = WP_FF_view; sm1_VS.percentWidth=25; //Work fields
-					WP_FF_view.includeInLayout=true; WP_FF_view.visible=true; percentWidth=25; //Work fields
-					Reset_WP_FF_DG();
-										
-					pnl.visible=true; pnl.includeInLayout=true; pnl.percentWidth=25;
-					
-					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.selectedChild = WF_FF_view; sm2_VS.percentWidth=25; //Form fields
-					WF_FF_view.includeInLayout=true; WF_FF_view.visible=true; percentWidth=25; //Form fields
-					Reset_WF_FF_DG();
-					
-					W_d_VS.includeInLayout=false; W_d_VS.visible=false;
-				}*/
-				/*Old one: ClearMaster();
+				BX.setStyle('horizontalGap',0);
+				B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50; 
+				B1B.includeInLayout=false; B1B.visible=false; 
+				B2.includeInLayout=true; B2.visible=true;
 				
-				sm1_VS.selectedChild = WP_FF_view;
-				sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.percentWidth=50;
+				WF_m_DG_propertiesA.visible=true;
+				WF_m_DG_propertiesB.visible=false;
+				WF_m_DG_propertiesC.visible=false;
+				Reset_WF_m_DG();
+				
+				W_d_VS.selectedChild = WF_FPm_view;
+				W_d_VS.includeInLayout=true; W_d_VS.visible=true;
+				}
+				if (CategoryAlias == "WF" && CategoryView == "FF")
+				{
+				ClearMaster();
+				
+				BX.setStyle('horizontalGap',0);
+				B1A.includeInLayout=false; B1A.visible=false;
+				B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=50;
+				B2.includeInLayout=true; B2.visible=true; B2.percentWidth=50;
+				
+				m_VS.includeInLayout=false; m_VS.visible=false;
+				
+				sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 				
 				sm2_VS.selectedChild = WF_FF_view;
-				sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=50;
+				sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=100;
 				
 				W_d_VS.selectedChild = WF_FPm_view;
 				W_d_VS.includeInLayout=true; W_d_VS.visible=true; W_d_VS.percentWidth=100;
 				
+				Reset_WF_FF_DG();
+				}
+				if (CategoryAlias == "WF" && CategoryView == "PF")
+				{
+				ClearMaster();
+				
+				sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.percentWidth=50;
+				sm1_VS.selectedChild = WP_FF_view;
+				
+				sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=50;
+				sm2_VS.selectedChild = WF_FF_view;
+				
+				W_d_VS.selectedChild = WF_FPm_view;
+				W_d_VS.includeInLayout=false; W_d_VS.visible=false;
+				
 				Reset_WP_FF_DG();
 				Reset_WF_FF_DG();
 				
-				B_HDB.setStyle('horizontalGap',0);
+				BX.setStyle('horizontalGap',0);
 				B1A.includeInLayout=false; B1A.visible=false;
-				B1B_HDB.setStyle('horizontalGap',3);
+				B1B.setStyle('horizontalGap',3);
 				B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=100;
-				B2.includeInLayout=false; B2.visible=false;*/
-				/*Does not blow up:
-				if (CategoryAlias == "WF" && CategoryView == "PF")
-				{
-					ClearMaster();
-					
-					BX.setStyle('horizontalGap',0);
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=false; B1A.visible=false;
-					B1A.setStyle('horizontalGap',3);
-					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=100;
-					B2.includeInLayout=false; B2.visible=false;
-					
-					sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.percentWidth=50;
-					sm1_VS.selectedChild = WP_FF_view;
-					WP_FF_view.includeInLayout=true; WP_FF_view.visible=true; percentWidth=100;
-					
-					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=50;
-					sm2_VS.selectedChild = WF_FF_view;
-					WF_FF_view.includeInLayout=true; WF_FF_view.visible=true; percentWidth=100;
-					
-					W_d_VS.includeInLayout=false; W_d_VS.visible=false;
-					
-					Reset_WP_FF_DG();
-					Reset_WF_FF_DG();
-				}*/
+				B2.includeInLayout=false; B2.visible=false;
+				}
+*/
 				if (CategoryAlias == "WF" && CategoryView == "FP")
-				{		
+				{
+					ClearAll();
+					
+					B1A.includeInLayout=false; B1A.visible=false; 
+					m_VS.includeInLayout=false; m_VS.visible=false;
+					
+					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=50;
+					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
+					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.percentWidth=100;
+					sm2_VS.selectedChild = WF_FF_view;
+					Reset_WF_FF_DG();
+					
 					BX.setStyle('horizontalGap',0);
-					B1A.percentWidth = (FullWidthPct/3);
-					B1A.includeInLayout = true;
-					B1A.visible = true;
-					B1B.includeInLayout=false; B1B.visible=false; 
-					B2.percentWidth = (FullWidthPct/3);
-					B2.includeInLayout = true;
-					B2.visible = true;
-					m_VS.selectedChild = FF_m_view;
-					FF_m_view.percentWidth = (FullWidthPct/2);
-					FF_m_view.includeInLayout = true;
-					FF_m_view.visible = true;
-					Reset_FF_m_DG();
-					FF_m_DG_formusage1.visible = false;
-					FF_m_DG_formusage2.visible = false;
-					F_d_VS.selectedChild = FF_Fieldsets_view;
-					FF_Fieldsets_view.width = (FullWidth/2)
-					FF_Fieldsets_DG.width = (FullWidth/2);
-					FF_Fieldsets_DG.includeInLayout = true;
-					FF_Fieldsets_DG.visible = true;
+
+					B2.includeInLayout=true; B2.visible=true; B2.percentWidth=50;
+					W_d_VS.includeInLayout=true; W_d_VS.visible=true; W_d_VS.percentWidth=100;
+					W_d_VS.selectedChild = WF_FPm_view;
 				}
 				if (CategoryAlias == "WQ")
 				{

@@ -54,16 +54,14 @@
 		<fx:XML id="formdef">
 			<form>
 				<formdef>
-					<firstname FieldControl="TextInput" Label="First Name 1" Required="true"></firstname>
-					<lastname FieldControl="TextInput" Label="Last Name" Required="true"></lastname>
-					<nickname FieldControl="TextInput" Label="Nick Name" Required="false"></nickname>
+					<FieldName1 FieldControl="TextInput" Label="Label1" Required="true"></FieldName1>
+					<FieldName2 FieldControl="DropDownList" Label="Label2" Required="true">Label1,Label2,Label3</FieldName2>
+					<FieldName3 FieldControl="TextInput" Label="Label3" Required="false"></FieldName3>
 					<combobox FieldControl="ComboBox" Label="Gender" Required="true">Male,Female</combobox>
-					<type FieldControl="ComboBox" Label="Type" Required="false">Book,Cds,Games</type>
 					<radioButtonGroup FieldControl="RadioButtonGroup" Label="Gender" Required="false">
 						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Male</radiobutton>
 						<radiobutton FieldControl="RadioButton" Label="Gender" Required="true">Female</radiobutton>
 					</radioButtonGroup>	
-					
 				</formdef>
 			</form>
 		</fx:XML>

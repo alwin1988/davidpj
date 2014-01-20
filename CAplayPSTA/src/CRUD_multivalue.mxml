@@ -169,9 +169,6 @@
 				<s:Button label="Insert Below" id="ibBtn" click="ibBtn_clickHandler(event)"/>
 				<s:Button label="Insert Delete" id="idBtn" click="idBtn_clickHandler(event)"/>
 			</s:HGroup>
-			
 		</s:VGroup>
-		
 	</component:CustomTitleWindow>
-	
 </s:Application>

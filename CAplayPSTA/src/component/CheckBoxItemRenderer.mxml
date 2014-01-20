@@ -6,6 +6,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import avmplus.getQualifiedClassName;
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.AdvancedDataGrid;
@@ -21,6 +22,8 @@
 			 * 
 			 */ 
 			public function clickHandler(event:MouseEvent):void {
+				trace(getQualifiedClassName(AdvancedDataGrid(AdvancedDataGridListData(listData).owner).dataProvider));
+				
 				var o:Object = AdvancedDataGrid(AdvancedDataGridListData(listData).owner).selectedItem;
 				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 				trace(adgld.dataField);

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:CustomTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:components="components.*"
+			   width="400" height="300" close="closewindows(event)" creationComplete="init(event)"
+			   title="Information of folder :{ld.ID}" skinClass="skin.CustomTitleWindowSkin">
+	<components:layout>
+		<s:VerticalLayout/>
+	</components:layout>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			[Bindable] public var ld:Object ;
+			
+			protected function init(event:FlexEvent):void
+			{
+				PopUpManager.centerPopUp(this);
+				closeButton.visible = true;				
+			}
+			
+			protected function closewindows(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+
+			
+			public function setData():void {
+				/* for (var i:int = 0; i < ac.length; i++) 
+				{
+					if(ac[i].idx == ld.ID){
+						taText.text = ac[i].text;
+						break;
+					}
+				} */
+				taText.text = ac[0].text;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		
+		
+		<s:ArrayCollection id="ac">
+			<fx:Object idx="Subbatch1ID"  text ="Sed ut perspiciatis unde omnis iste natus error" /> 
+			<fx:Object idx="Obj1ID"  text ="sit voluptatem accusantium doloremque laudantium" />
+			<fx:Object idx="Obj2ID"  text ="totam rem aperiam, eaque ipsa quae ab illo " />
+			<fx:Object idx="Batch2ID"  text ="inventore veritatis et quasi architecto beatae" /> 
+			<fx:Object idx="Obj3ID"  text ="vitae dicta sunt explicabo. Nemo enim ipsam " />
+			<fx:Object idx="Obj4ID"  text ="voluptatem quia voluptas sit aspernatur aut odit " />
+			<fx:Object idx="7"  text ="aut fugit, sed quia consequuntur magni dolores eos" /> 
+			<fx:Object idx="8"  text ="qui ratione voluptatem sequi nesciunt. Neque porro " />
+			<fx:Object idx="9"  text ="quisquam est, qui dolorem ipsum quia dolor sit amet, " />
+			<fx:Object idx="10"  text ="consectetur, adipisci velit, sed quia non numquam eius modi" /> 
+			<fx:Object idx="11"  text ="tempora incidunt ut labore et dolore magnam " />
+			<fx:Object idx="12"  text ="aliquam quaerat voluptatem. Ut enim ad minima veniam," /> 
+			<fx:Object idx="13"  text ="quis nostrum exercitationem ullam corporis suscipit laboriosam" />
+			<fx:Object idx="14"  text ="nisi ut aliquid ex ea commodi consequatur? " />
+			<fx:Object idx="15"  text ="Quis autem vel eum iure reprehenderit qui in ea voluptate" /> 
+			<fx:Object idx="16"  text ="velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat" /> 
+			<fx:Object idx="17"  text ="quo voluptas nulla pariatur?" />		
+		</s:ArrayCollection>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:HBox>
+		<mx:Text text="ID" />
+		<mx:Text text="{ld.ID}" />
+	</mx:HBox>
+	<s:TextArea width="100%" height="100%" id="taText">
+		
+	</s:TextArea>
+</components:CustomTitleWindow>

@@ -31,6 +31,8 @@ package itemRenderer
 			
 			myImage = new Image();
 			myImage.source = ICON_INFO;
+			myImage.percentWidth=85;
+			myImage.percentHeight=85;
 			myImage.addEventListener( MouseEvent.CLICK, img_clickHandler );
 			myImage.visible = true;
 			addElement(myImage);

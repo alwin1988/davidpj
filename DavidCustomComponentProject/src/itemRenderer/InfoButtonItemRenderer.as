@@ -6,12 +6,16 @@ package itemRenderer
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.controls.AdvancedDataGrid;
+	import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
 	import mx.controls.advancedDataGridClasses.MXAdvancedDataGridItemRenderer;
 	import mx.core.FlexGlobals;
+	import mx.core.mx_internal;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	
 	import spark.components.Image;
+	import spark.layouts.VerticalAlign;
 	
 	public class InfoButtonItemRenderer extends MXAdvancedDataGridItemRenderer
 	{
@@ -64,6 +68,12 @@ package itemRenderer
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(AdvancedDataGrid(listData.owner).getStyle("verticalAlign"));
+			//trace(adgld.dataField);
+			myImage.verticalAlign = AdvancedDataGrid(listData.owner).getStyle("verticalAlign");
+			//myImage.x = 2;
+			//myImage.y = 10;
 		}
 	}
 }

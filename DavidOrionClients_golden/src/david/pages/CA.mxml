@@ -10,6 +10,17 @@
 	<fx:Style source="Styles.css"/>
 	
 	<fx:Declarations>
+		<s:Fade id="FadeShadeOn" target="{Shade}" alphaFrom="0" alphaTo=".3" duration="{FadeDuration}"/>
+		<s:Fade id="FadeShadeOff" target="{Shade}" alphaFrom=".3" alphaTo="0" duration="{FadeDuration}"/>
+		<s:Fade id="FadeBBOut" target="{BB_VG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+		<s:Fade id="FadeBBIn" target="{BB_VG}" alphaFrom=".2" alphaTo="1" duration="{FadeDuration}"/>
+		<s:Animate id="SlideClippedMasterIn" target="" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="{Indent}"/>
+		</s:Animate>
+		<!--s:Animate id="SlideClippedMasterOut" target="{CM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
+		</s:Animate-->
+		
 		<fx:XML id="woid_1">
 			<form>
 				<formdef>
@@ -46,10 +57,14 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
+			import mx.core.Container;
+			import mx.effects.AnimateProperty;
+			import mx.events.DragEvent;
 			import mx.events.IndexChangedEvent;
 			import mx.events.ListEvent;
 			import mx.events.MenuEvent;
 			
+			import spark.effects.Animate;
 			import spark.events.IndexChangeEvent;
 			
 			[Bindable] private var FullWidth:Number = 1162;
@@ -59,7 +74,7 @@
 			[Bindable] private var FullHeightPct:Number = 80;
 			[Bindable] private var DGID:String;
 			
-			[Bindable] private var DGHeaderHeight:Number = 24;
+			[Bindable] private var DGHeaderHeight:Number = 22;
 			[Bindable] private var DGRowHeight:Number = 20;
 			
 			[Bindable] private var CheckBoxWidth:Number=14;		
@@ -74,14 +89,14 @@
 			[Bindable] private var Indent:Number;
 			[Bindable] private var Indent1:Number = 25;
 			[Bindable] private var Indent2:Number = 50;
-			[Bindable] private var FadeDuration:Number = 600;
-			[Bindable] private var SlideDuration:Number = 400;
+			[Bindable] private var FadeDuration:Number = 1200;
+			[Bindable] private var SlideDuration:Number = 800;
 			
 			private var CategoryGroup:String //1 letter
 			private var Category:String //2 letters
 			private var CategoryView:String //3 letters
 			private var LastCategory:String
-			
+						
 			protected function canvas1_creationCompleteHandler():void 
 			{
 				//Landing view
@@ -121,7 +136,7 @@
 
 				Category = CategoryItem.Alias;
 				CategoryGroup = CategoryItem.Alias.substring(0, 1);
-				//CategoryView = "ID";
+				CategoryView = "ID";
 
 				SetCAView(Category, CategoryView);
 				
@@ -202,6 +217,18 @@
 				{
 					CategoryView = "Forms";
 				}
+				else if (Category == "WP" && TabValue == "Steps") 
+				{
+					CategoryView = "Steps";
+				}
+				else if (Category == "WP" && TabValue == "Tasks") 
+				{
+					CategoryView = "Tasks";
+				}
+				else if (Category == "WP" && TabValue == "Actions") 
+				{
+					CategoryView = "Actions";
+				}
 
 				SetCAView(Category, CategoryView);
 			}
@@ -228,10 +255,10 @@
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=100; 
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=100; 
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=true;
 					AU_m_DG_propertiesB.visible=false;
@@ -239,20 +266,20 @@
 					Reset_AU_m_DG();
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 					
-					B1B.includeInLayout=false; B1B.visible=false; 
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false; 
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 					
-					B2A.includeInLayout=false; B2A.visible=false;
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
 					A_d_VS.includeInLayout=false; A_d_VS.visible=false;
 				}
 				if (Category == "AU" && CategoryView == "P1")
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=100; 
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=100; 
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=true;
@@ -260,20 +287,20 @@
 					Reset_AU_m_DG();
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 					
-					B1B.includeInLayout=false; B1B.visible=false; 
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false; 
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 					
-					B2A.includeInLayout=false; B2A.visible=false;
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
 					A_d_VS.includeInLayout=false; A_d_VS.visible=false;
 				}
 				if (Category == "AU" && CategoryView == "CO")
 				{	
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=100; 
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=100; 
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=false;
@@ -281,20 +308,20 @@
 					Reset_AU_m_DG();
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 					
-					B1B.includeInLayout=false; B1B.visible=false; 
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false; 
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 					
-					B2A.includeInLayout=false; B2A.visible=false;
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
 					A_d_VS.includeInLayout=false; A_d_VS.visible=false;
 				}
 				if (Category == "AU" && CategoryView == "AC")
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50;
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=50;
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; 
 					AU_m_view.includeInLayout=true; AU_m_view.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
@@ -303,18 +330,17 @@
 					Reset_AU_m_DG();
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 					
-					B1B.includeInLayout=false; B1B.visible=false;
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false;
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 		
-					B2A.setStyle('horizontalGap',0);
-					B2A.includeInLayout=true; B2A.visible=true; B2A.percentWidth=50;
+					B2A_SC.includeInLayout=true; B2A_SC.visible=true; B2A_SC.percentWidth=50;
+					B2A_HD.setStyle('horizontalGap',0);
 					A_d_VS.includeInLayout=true; A_d_VS.visible=true; A_d_VS.selectedChild=AU_AC_view;
-					B2A.setStyle('horizontalGap',0);
 					Reset_A_AC0_DG();
 					Reset_A_AC1_DG();
 					Reset_A_AC2_DG();
 					
-					B2B.includeInLayout=false; B2B.visible=false;
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 					d2_VS.includeInLayout=false; d2_VS.visible=false;
 				}
 				if (Category == "AG")
@@ -417,13 +443,15 @@
 				}
 				if (Category == "FF" && CategoryView == "Fieldsets")
 				{
-					B1A.percentWidth = 50;
-					B1A.includeInLayout = true;
-					B1A.visible = true;
-					B1B.includeInLayout=false; B1B.visible=false; 
 					//B0.setStyle('horizontalGap',5);
-					B2A.includeInLayout=true; B2A.visible=true; B2A.percentWidth=50;
-					B2B.includeInLayout=false; B2B.visible=false;
+					
+					B1A_SC.includeInLayout = true; B1A_SC.visible = true; B1A_SC.percentWidth = 50;
+					
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false; 
+
+					B2A_SC.includeInLayout=true; B2A_SC.visible=true; B2A_SC.percentWidth=50;
+					
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 					m_VS.selectedChild = FF_m_view;
 					FF_m_view.percentWidth = 50;
 					FF_m_view.includeInLayout = true;
@@ -472,21 +500,22 @@
 				}
 				if ((Category == "WP" && CategoryView == "ID") || (Category == "WP" && CategoryView == "WO"))
 				{
-					B0.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=100; 
-					B1B.includeInLayout=false; B1B.visible=false; 
-					B2A.includeInLayout=false; B2A.visible=false;
-					B2B.includeInLayout=false; B2B.visible=false;
+					B0_HD.setStyle('horizontalGap',0);
 					
-					//WP_m_DG_propertiesA.visible=true;
-					//WP_m_DG_propertiesB.visible=false;
-					//WP_m_DG_propertiesC.visible=false;
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=100; 
+					B1A_HD.setStyle('horizontalGap',0);
+					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild = WP_m_view;
+					WP_m_DG_Qualifier.visible=true;
+					WP_m_DG_properties1.visible=false;
+					WP_m_DG_properties2.visible=false;
 					//Reset_WP_m_DG();
 					
-					m_VS.includeInLayout=true; m_VS.visible=true;
-					m_VS.selectedChild = WP_m_view;
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false; 
 					
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
 					//W_d_VS.includeInLayout = true; W_d_VS.visible = true;
+					
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 				}
 
 				if (Category == "WP" && CategoryView == "CRUD")
@@ -533,13 +562,13 @@
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50;
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=50;
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=false; m_VS.visible=false;
 					
-					B1B.includeInLayout=false; B1B.visible=false;
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false;
 					sm1_VS.includeInLayout=true; sm1_VS.visible=true;
 					sm1_VS.selectedChild=WO_sm_view;
 					WO_sm_DG_propertiesA.visible=false;
@@ -548,24 +577,28 @@
 					Reset_WO_sm_DG();
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 					
-					B2A.setStyle('horizontalGap',0);
-					B2A.includeInLayout=true; B2A.visible=true; B2A.percentWidth=50;
+					B2A_SC.includeInLayout=true; B2A_SC.visible=true; B2A_SC.percentWidth=50;
+					B2A_HD.setStyle('horizontalGap',0);
 					W_d_VS.includeInLayout=true; W_d_VS.visible=true;
 					W_d_VS.selectedChild=WOV_view;
 					
-					B2B.includeInLayout=false; B2B.visible=false;
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 					d2_VS.includeInLayout=false; d2_VS.visible=false;
 				}
 				if (Category == "WO" && CategoryView == "W2")  //Form master + properties
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=100;
-					B1B.includeInLayout=false; B1B.visible=false;
-					B2A.includeInLayout=false; B2A.visible=false;
-					B2B.includeInLayout=false; B2B.visible=false;
+					B0_HD.setStyle('horizontalGap',0);
+					
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=100;
+					B1A_HD.setStyle('horizontalGap',0);
+					
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false;
+					
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
+					
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 					
 					m_VS.includeInLayout=false; m_VS.visible=false;
 					sm1_VS.includeInLayout=true; sm1_VS.visible=true;
@@ -582,22 +615,24 @@
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50;
-					B1B.includeInLayout=false; B1B.visible=false;
-					B2A.includeInLayout=false; B2A.visible=false;
-					B2B.includeInLayout=true; B2B.visible=true; B2B.percentWidth=50;
+					B0_HD.setStyle('horizontalGap',0);
 					
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=50;
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=false; m_VS.visible=false;
-					sm1_VS.includeInLayout=true; sm1_VS.visible=true;
-					sm1_VS.selectedChild=WO_sm_view;
+					sm1_VS.includeInLayout=true; sm1_VS.visible=true; sm1_VS.selectedChild=WO_sm_view;
 					WO_sm_DG_propertiesA.visible=true;
 					WO_sm_DG_propertiesB.visible=false;
 					WO_sm_DG_propertiesC.visible=false;
 					Reset_WO_sm_DG();
+					
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false;
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
+					
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
 					W_d_VS.includeInLayout=false; W_d_VS.visible=false;
+					
+					B2B_SC.includeInLayout=true; B2B_SC.visible=true; B2B_SC.percentWidth=50;
 					d2_VS.includeInLayout=true; d2_VS.visible=true;
 					d2_VS.selectedChild=WOF_d2_view;
 					Reset_WOF_d2_DG();
@@ -606,34 +641,44 @@
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',10);
+					//Indent=Indent1; 
 					
-					B1A.includeInLayout=false; B1A.visible=false;
+					B0_HD.setStyle('horizontalGap',10);
+					
+					B1A_SC.includeInLayout=false; B1A_SC.visible=false;
 					m_VS.includeInLayout=false; m_VS.visible=false;
 					
-					B1B.setStyle('horizontalGap',0);
-					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=50;
+					Shade.x=B1A_HD.x; Shade.y=B1A_HD.y; 
+					Shade.percentWidth=B1A_HD.percentWidth; Shade.percentHeight=B1A_HD.percentHeight; 
+					Shade.includeInLayout=true; Shade.visible=true;
+					
+					FadeShadeOn.play();
+					
+					FadeBBOut.play();
+					
+					SlideClippedMasterIn.target=B2B_SC;
+					SlideClippedMasterIn.play();
+					
+					B1B_SC.includeInLayout=true; B1B_SC.visible=true; B1B_SC.percentWidth=50;
+					B1B_HD.setStyle('horizontalGap',0);
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.selectedChild=WF_sm_view;
-					WO_sm_DG_propertiesA.visible=false;
-					WO_sm_DG_propertiesB.visible=false;
-					WO_sm_DG_propertiesC.visible=false;
-					Reset_WO_sm_DG();
+					Reset_WF_sm_DG();
 					
-					B2A.includeInLayout=false; B2A.visible=false;
-					
-					B2B.includeInLayout=true; B2B.visible=true; B2B.percentWidth=50;
-					d2_VS.includeInLayout=true; d2_VS.visible=true; d2_VS.selectedChild=WOF_d2_view;
+					B2A_SC.includeInLayout=false; B2A_SC.visible=false;
+						
+					B2B_SC.includeInLayout=true; B2B_SC.visible=true; B2B_SC.percentWidth=50;
+					d2_VS.includeInLayout=true; d2_VS.visible=true; d2_VS.selectedChild=WOF_d2_view;;
 					Reset_WOF_d2_DG();
 				}
 				if (Category == "WO" && CategoryView == "W5") //Form fields and form preview
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=true; B1A.visible=true; B1A.percentWidth=50;
+					B1A_SC.includeInLayout=true; B1A_SC.visible=true; B1A_SC.percentWidth=50;
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=false; m_VS.visible=false;
 					sm1_VS.includeInLayout=true; sm1_VS.visible=true;
 					sm1_VS.selectedChild=WO_sm_view;
@@ -642,25 +687,25 @@
 					WO_sm_DG_propertiesC.visible=false;
 					Reset_WO_sm_DG();
 					
-					B1B.includeInLayout=false; B1B.visible=false;
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false;
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 					
-					B2A.setStyle('horizontalGap',0);
-					B2A.includeInLayout=true; B2A.visible=true; B2A.percentWidth=50;
+					B2A_HD.setStyle('horizontalGap',0);
+					B2A_SC.includeInLayout=true; B2A_SC.visible=true; B2A_SC.percentWidth=50;
 					W_d_VS.includeInLayout=true; W_d_VS.visible=true;
 					W_d_VS.selectedChild=WOV_view;
 					d2_VS.includeInLayout=false; d2_VS.visible=false;
 					
-					B2B.includeInLayout=false; B2B.visible=false;
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 				}
 				if (Category == "WO" && CategoryView == "W6") //Form render
 				{
 					ClearAll();
 					
-					B0.setStyle('horizontalGap',0);
+					B0_HD.setStyle('horizontalGap',0);
 					
-					B1A.setStyle('horizontalGap',0);
-					B1A.includeInLayout=false; B1A.visible=false;
+					B1A_SC.includeInLayout=false; B1A_SC.visible=false;
+					B1A_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=false; m_VS.visible=false;
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
 					WO_sm_DG_propertiesA.visible=false;
@@ -668,17 +713,17 @@
 					WO_sm_DG_propertiesC.visible=false;
 					Reset_WO_sm_DG();
 					
-					B1B.includeInLayout=false; B1B.visible=false;
+					B1B_SC.includeInLayout=false; B1B_SC.visible=false;
 					sm2_VS.includeInLayout=false; sm2_VS.visible=false;
 					
-					B2A.setStyle('horizontalGap',0);
-					B2A.includeInLayout=true; B2A.visible=true; B2A.percentWidth=50;
+					B2A_HD.setStyle('horizontalGap',0);
+					B2A_SC.includeInLayout=true; B2A_SC.visible=true; B2A_SC.percentWidth=50;
 					W_d_VS.includeInLayout=true; W_d_VS.visible=true;
 					W_d_VS.selectedChild=WOV_view;
 					d2_VS.includeInLayout=false; d2_VS.visible=false;
 					d2_VS.selectedChild=WOR_view;
 					
-					B2B.includeInLayout=false; B2B.visible=false;
+					B2B_SC.includeInLayout=false; B2B_SC.visible=false;
 				}
 				if (Category == "WQ")
 				{
@@ -740,17 +785,6 @@
 				//setAllFalse();
 				//tabAuthority.selected = true;
 				//isEnabledAuthority(true);
-			}
-					
-			protected function DragDropHandler(event:DragEvent):void
-			{
-			/* event.preventDefault();
-			trace("");WF_FF_DG.dataProvider;
-			var DroppedItem:Object = event.target as Object;  */
-			}
-			
-			protected function DragCompleteHandler(event:DragEvent):void
-			{
 			}
 			
 /*			[Bindable]
@@ -975,7 +1009,7 @@
 							]]>
 						</fx:Script>
 						
-						<s:VGroup width="50%" height="100%" paddingTop="0" verticalAlign="top">
+						<s:VGroup id="BB_VG" width="50%" height="100%" paddingTop="0" verticalAlign="top">
 							<s:HGroup width="100%" height="100%" horizontalAlign="left" paddingTop="0" verticalAlign="top" styleName="Gutter">
 								<mx:PopUpButton id="PB" label="Create new"
 												width="180" height="19" labelPlacement="left" styleName="InsertPopUpButton"
@@ -1002,12 +1036,23 @@
 												 width="100%" height="100%" headerHeight="{DGHeaderHeight}" borderVisible="true" dropShadowVisible="false"
 												 styleName="TitleWindowTitleText" skinClass="skin.CustomTitleWindowSkin">
 						<component:layout>
-							<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+							<s:BasicLayout/>
 						</component:layout>
 						
-						<mx:HDividedBox id="B0" width="100%" height="100%" horizontalGap="0" clipContent="true">
-							
-							<mx:HDividedBox id="B1A" width="100%" height="100%" horizontalGap="0" clipContent="false" includeInLayout="false" visible="false">
+						<s:Group id="Shade" x="0" y="0" width="100" height="100%" alpha="0" includeInLayout="false" visible="false" depth="5">
+							<s:Rect width="100%" height="100%">
+								<s:fill>
+									<s:SolidColor color="black" alpha="0"/>
+								</s:fill>
+							</s:Rect>
+						</s:Group>
+						
+						<s:SkinnableContainer id="B0_SC" x="0" y="0" width="100%" height="100%" depth="3">
+						<mx:HDividedBox id="B0_HD" x="0" y="0" width="{B0_SC.width}" height="{B0_SC.height}" horizontalGap="0" clipContent="true">
+														
+							<s:SkinnableContainer id="B1A_SC" width="100" height="100%" includeInLayout="false" visible="false" depth="3">	
+							<mx:HDividedBox id="B1A_HD" x="0" y="0" width="{B1A_SC.width}" height="{B1A_SC.height}" horizontalGap="0" clipContent="false" 
+											includeInLayout="{B1A_SC.includeInLayout}" visible="{B1A_SC.visible}">
 										
 								<!--Master view stack-->
 								<mx:ViewStack id="m_VS" width="100%" height="100%" clipContent="true" creationPolicy="all" includeInLayout="false" visible="false">
@@ -1795,7 +1840,10 @@
 												private var WP_TB_AC:ArrayCollection = new ArrayCollection([
 													{Label:"Main", Data:"Main"},
 													{Label:"CRUD", Data:"CRUD"},
-													{Label:"Forms", Data:"Forms"}
+													{Label:"Forms", Data:"Forms"},
+													{Label:"Steps", Data:"Steps"},
+													{Label:"Tasks", Data:"Tasks"},
+													{Label:"Actions", Data:"Actions"}
 												]);
 												
 												[Bindable]	
@@ -2263,9 +2311,12 @@
 								</mx:ViewStack> <!--Submaster 1 view stack-->
 										
 							</mx:HDividedBox> <!--B1A-->
+							</s:SkinnableContainer>
 							
-							<mx:HDividedBox id="B1B" width="100%" height="100%" horizontalGap="0" clipContent="true" includeInLayout="false" visible="false">
-															
+							<s:SkinnableContainer id="B1B_SC" width="100" height="100%" includeInLayout="false" visible="false" depth="3">
+							<mx:HDividedBox id="B1B_HD" x="0" y="0" width="{B1B_SC.width}" height="{B1B_SC.height}" horizontalGap="0" clipContent="true" 
+											includeInLayout="{B1B_SC.includeInLayout}" visible="{B1B_SC.visible}">
+
 								<!--Submaster 2 view stack-->
 								<mx:ViewStack id="sm2_VS" width="100%" height="100%" clipContent="true" creationPolicy="all" includeInLayout="false" visible="false">
 																											
@@ -2316,16 +2367,17 @@
 																]}
 															]);
 														
-														private function Reset_WF_sm_DG():void
+														protected function Reset_WF_sm_DG():void
 														{
 															WF_sm_DG.horizontalScrollPolicy="on";
-															WF_sm_DG_Information.width=(WF_sm_DG.width-WF_sm_DG.width)+IBW;
-															WF_sm_DG_Name.width=100;
-															WF_sm_DG_Label.width=130;
-															WF_sm_DG_FieldControl.width=120;
-															WF_sm_DG_Size.width=40;
-															WF_sm_DG_InitialValue.width=86;
-															WF_sm_DG_Required.width=30;
+															WF_sm_DG_Information.width=(WF_sm_DG.width-WF_sm_DG.width)+IBW; WF_sm_DG_Information.minWidth=IBW;
+															WF_sm_DG_Name.width=142;
+															WF_sm_DG_DataType.width=38;
+															//WF_sm_DG_Label.width=109;
+															WF_sm_DG_FieldControl.width=(WF_sm_DG.width-WF_sm_DG.width)+100; WF_sm_DG_FieldControl.minWidth=100;
+															WF_sm_DG_Size.width=36;
+															WF_sm_DG_InitialValue.width=110;
+															WF_sm_DG_Required.width=32;
 															WF_sm_DG.horizontalScrollPolicy="off";
 														}
 													]]>
@@ -2341,7 +2393,9 @@
 																	 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
 																	 draggableColumns="true" resizableColumns="true" sortableColumns="true"
 																	 doubleClickEnabled="false" sortExpertMode="true" 
-																	 allowMultipleSelection="true" editable="false">
+																	 allowMultipleSelection="true" editable="false"
+																	 creationComplete="Reset_WF_sm_DG()"
+																	 resize="Reset_WF_sm_DG()">
 													<!--dragComplete="WF_sm_DG_dragCompleteHandler(event)"
 													dragDrop="WF_sm_DG_dragDropHandler(event)"-->
 													<mx:dataProvider>
@@ -2350,28 +2404,29 @@
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_Information"
-																					   width="{(WF_sm_DG.width+WF_sm_DG.width)+IBW}"
 																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WF_sm_DG_identification">
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_Name" 
-																					   width="100"
 																					   dataField="Name" editable="false"
 																					   headerText="Name"/>
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_DataType"
+																					   dataField="DataType" editable="false"
+																					   headerText="Type"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup headerText="Work fields for procedure XXX" color="red">
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_Label"
-																					   width="130" dataField="Label" editable="true"
+																					   dataField="Label" editable="true"
 																					   headerText="Label"/>
-															<mx:AdvancedDataGridColumn id="WF_sm_DG_FieldControl" width="120" dataField="FieldControl"
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_FieldControl" 
+																					   dataField="FieldControl"
 																					   editable="false" headerText="Control">
 																<mx:itemRenderer>
 																	<fx:Component>
-																		<mx:VBox horizontalGap="0" horizontalScrollPolicy="off"
-																				 paddingBottom="0" paddingLeft="0" paddingRight="0"
-																				 paddingTop="0" verticalGap="0">
-																			
+																		<mx:VBox paddingTop="0" paddingBottom="0" paddingLeft="1" paddingRight="1" 
+																				 horizontalGap="0" verticalGap="0"
+																				 horizontalScrollPolicy="off">
 																			<fx:Script>
 																				<![CDATA[
 																					import mx.collections.ArrayCollection;
@@ -2409,31 +2464,30 @@
 																					}																						
 																				]]>
 																			</fx:Script>
-																			<local:CustomDropdownList id="FC_DD" visible="true"
-																									  width="120"
-																									  height="16"
-																									  change="AssignFieldControl(event)"
-																									  dataProvider="{FC_AC}"
-																									  dropShadowVisible="false"
-																									  enabled="true" fontSize="11"
-																									  labelField="Label"
-																									  mouseEnabled="true"
+																			<local:CustomDropdownList id="FC_DD"
+																									  enabled="true" mouseEnabled="true" visible="true"
+																									  width="{outerDocument.WF_sm_DG_FieldControl.width-2}"
+																									  height="{outerDocument.WF_sm_DG.rowHeight-2}"
+																									  verticalCenter="0" dropShadowVisible="false"
 																									  styleName="DropDownListText"
-																									  verticalCenter="0" creationComplete="FC_DD_creationCompleteHandler(event)">																			
+																									  dataProvider="{FC_AC}" labelField="Label"
+																									  creationComplete="FC_DD_creationCompleteHandler(event)"
+																									  change="AssignFieldControl(event)">																			
 																			</local:CustomDropdownList>
 																		</mx:VBox>
 																	</fx:Component>
 																</mx:itemRenderer>
 															</mx:AdvancedDataGridColumn>
-															<mx:AdvancedDataGridColumn id="WF_sm_DG_Size" width="40" dataField="Size" editable="true"
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_Size" dataField="Size" editable="true"
 																					   headerText="Size"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WF_sm_DG_value" headerText="Value">
-															<mx:AdvancedDataGridColumn id="WF_sm_DG_InitialValue" width="86" dataField="InitialValue"
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_InitialValue"
+																					   dataField="InitialValue"
 																					   editable="true" headerText="Initial"/>
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_Required"
 																					   headerText="Req" dataField="Required"
-																					   width="26"  textAlign="center"
+																					   textAlign="center"
 																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 														</mx:AdvancedDataGridColumnGroup>
@@ -2453,9 +2507,12 @@
 
 								</mx:ViewStack> <!--Submaster 3 view stack-->
 								
-							</mx:HDividedBox> <!--B1B-->
-															
-							<mx:HDividedBox id="B2A" width="100%" height="100%" horizontalGap="0" clipContent="true" includeInLayout="false" visible="false">
+							</mx:HDividedBox> <!--B1B-->								
+							</s:SkinnableContainer>
+									
+							<s:SkinnableContainer id="B2A_SC" width="100" height="100%" includeInLayout="false" visible="false" depth="3">
+							<mx:HDividedBox id="B2A_HD" x="0" y="0" width="{B2A_SC.width}" height="{B2A_SC.height}" horizontalGap="0" clipContent="true" 
+											includeInLayout="{B2A_SC.includeInLayout}" visible="{B2A_SC.visible}">
 								
 								<!--Accounts detail view stack-->
 								<mx:ViewStack id="A_d_VS" width="100%" height="100%" clipContent="true" creationPolicy="all" includeInLayout="false" visible="false">
@@ -3005,8 +3062,11 @@
 								</mx:ViewStack> <!--Work Management detail view stack-->
 								
 							</mx:HDividedBox> <!--B2A-->
+							</s:SkinnableContainer>
 							
-							<mx:HDividedBox id="B2B" width="100%" height="100%" horizontalGap="0" clipContent="true" includeInLayout="false" visible="false">
+							<s:SkinnableContainer id="B2B_SC" width="100" height="100%" includeInLayout="false" visible="false" depth="3">
+							<mx:HDividedBox id="B2B_HD" x="0" y="0" width="{B2B_SC.width}" height="{B2B_SC.height}" horizontalGap="0" clipContent="true" 
+											includeInLayout="{B2B_SC.includeInLayout}" visible="{B2B_SC.visible}">
 								
 								<mx:ViewStack id="d2_VS" width="100%" height="100%" clipContent="true" creationPolicy="all" includeInLayout="false" visible="false">
 									
@@ -3027,17 +3087,42 @@
 														private function Reset_WOF_d2_DG():void
 														{
 															WOF_d2_DG.horizontalScrollPolicy="on";
-															WOF_d2_DG_Checkbox.width=CBW;
-															WOF_d2_DG_Information.width=IBW;
-															WOF_d2_DG_Disposition.width=DTW;
-															WOF_d2_DG_Name.width=100; 
-															WOF_d2_DG_Label.width=110;
-															WOF_d2_DG_FieldControl.width=120;
-															WOF_d2_DG_Size.width=40;
-															WOF_d2_DG_InitialValue.width=86;
-															WOF_d2_DG_Required.width=30;
-															WOF_d2_DG_Delete.width=DBW;
+															WOF_d2_DG_Checkbox.width=(WOF_d2_DG.width-WOF_d2_DG.width)+CBW; WOF_d2_DG_Checkbox.minWidth=CBW;
+															WOF_d2_DG_Information.width=(WOF_d2_DG.width-WOF_d2_DG.width)+IBW; WOF_d2_DG_Information.minWidth=IBW;
+															WOF_d2_DG_Disposition.width=(WOF_d2_DG.width-WOF_d2_DG.width)+DTW; WOF_d2_DG_Disposition.minWidth=DTW;
+															WOF_d2_DG_Name.width=142;
+															//WOF_d2_DG_Label.width=109;
+															WOF_d2_DG_FieldControl.width=(WOF_d2_DG.width-WOF_d2_DG.width)+100; WOF_d2_DG_FieldControl.minWidth=100;
+															WOF_d2_DG_Size.width=36;
+															WOF_d2_DG_InitialValue.width=110;
+															WOF_d2_DG_Required.width=32;
+															WOF_d2_DG_Delete.width=(WOF_d2_DG.width-WOF_d2_DG.width)+DBW; WOF_d2_DG_Delete.minWidth=DBW;
 															WOF_d2_DG.horizontalScrollPolicy="off";
+														}
+														
+														protected function DragEnterHandler(event:DragEvent):void
+														{
+															event.draggedItem;
+															(event.currentTarget as AdvancedDataGrid).selectedItem;
+														}
+														
+														protected function WOF_d2_DG_DragDropHandler(event:DragEvent):void
+														{
+															(event.currentTarget as AdvancedDataGrid).selectedItem;
+															var EntityType = WF_sm_DG.selectedItem.EntityType;
+															
+															if (EntityType == "Procedure")
+															{
+																Alert.show("Procedure");
+															}
+															else if (EntityType == "Field")
+															{
+																Alert.show("Field");
+															}
+														}
+														protected function WOF_d2_DG_DragCompleteHandler(event:DragEvent):void
+														{		
+
 														}
 													]]>
 												</fx:Script>
@@ -3052,9 +3137,11 @@
 																	 dragEnabled="false" dragMoveEnabled="true" dropEnabled="true" allowDragSelection="true"
 																	 draggableColumns="true" resizableColumns="true" sortableColumns="true"
 																	 doubleClickEnabled="false" sortExpertMode="true" 
-																	 allowMultipleSelection="true" editable="true">
-													<!--dragComplete="WOF_d2_DG_dragCompleteHandler(event)"
-													dragDrop="WOF_d2_DG_dragDropHandler(event)"-->
+																	 allowMultipleSelection="true" editable="true"
+																	 creationComplete="Reset_WOF_d2_DG()"
+																	 resize="Reset_WOF_d2_DG()"
+																	 dragDrop="WOF_d2_DG_DragDropHandler(event)"
+																	 dragComplete="WOF_d2_DG_DragCompleteHandler(event)">
 													<mx:dataProvider>
 														<mx:HierarchicalData source="{WOF_d2_DG_AC}"/>
 													</mx:dataProvider>
@@ -3062,17 +3149,14 @@
 														<mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Checkbox"
 																					   dataField="checked" textAlign="center"
-																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+CBW}"
 																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Information"
-																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+IBW}"
 																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Disposition"
-																					   dataField="Disposition"
-																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+DTW}">
+																					   dataField="Disposition">
 																<mx:headerRenderer>
 																	<fx:Component>
 																		<mx:Box paddingLeft="3.5">
@@ -3091,22 +3175,19 @@
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WOF_d2_DG_identification">
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Name" 
-																					   width="100"
 																					   dataField="Name" editable="false"
 																					   headerText="Name"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup headerText="Work fields for form XXX" color="red">
-															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Label"
-																					   width="110" dataField="Label" editable="true"
+															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Label" dataField="Label" editable="true"
 																					   headerText="Label"/>
-															<mx:AdvancedDataGridColumn id="WOF_d2_DG_FieldControl" width="120" dataField="FieldControl"
+															<mx:AdvancedDataGridColumn id="WOF_d2_DG_FieldControl" dataField="FieldControl"
 																					   editable="false" headerText="Control">
-																<!--mx:itemRenderer>
+																<mx:itemRenderer>
 																	<fx:Component>
-																		<mx:VBox horizontalGap="0" horizontalScrollPolicy="off"
-																				 paddingBottom="0" paddingLeft="0" paddingRight="0"
-																				 paddingTop="0" verticalGap="0">
-																			
+																		<mx:VBox paddingTop="0" paddingBottom="0" paddingLeft="1" paddingRight="1" 
+																				 horizontalGap="0" verticalGap="0"
+																				 horizontalScrollPolicy="off">
 																			<fx:Script>
 																				<![CDATA[
 																					import mx.collections.ArrayCollection;
@@ -3144,36 +3225,34 @@
 																					}																						
 																				]]>
 																			</fx:Script>
-																			<local:CustomDropdownList id="FC_DD" visible="true"
-																									  width="{outerDocument.WOF_d2_DG_FieldControl.width}"
-																									  height="16"
-																									  change="AssignFieldControl(event)"
-																									  dataProvider="{FC_AC}"
-																									  dropShadowVisible="false"
-																									  enabled="true" fontSize="11"
-																									  labelField="Label"
-																									  mouseEnabled="true"
+																			<local:CustomDropdownList id="FC_DD"
+																									  enabled="true" mouseEnabled="true" visible="true"
+																									  width="{outerDocument.WF_sm_DG_FieldControl.width-2}"
+																									  height="{outerDocument.WF_sm_DG.rowHeight-2}"
+																									  verticalCenter="0" dropShadowVisible="false"
 																									  styleName="DropDownListText"
-																									  verticalCenter="0" creationComplete="FC_DD_creationCompleteHandler(event)">																			
+																									  dataProvider="{FC_AC}" labelField="Label"
+																									  creationComplete="FC_DD_creationCompleteHandler(event)"
+																									  change="AssignFieldControl(event)">																			
 																			</local:CustomDropdownList>
 																		</mx:VBox>
 																	</fx:Component>
-																</mx:itemRenderer-->
+																</mx:itemRenderer>
 															</mx:AdvancedDataGridColumn>
-															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Size" width="40" dataField="Size" editable="true"
+															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Size" dataField="Size" editable="true"
 																					   headerText="Size"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WOF_d2_DG_value" headerText="Value">
-															<mx:AdvancedDataGridColumn id="WOF_d2_DG_InitialValue" width="86" dataField="InitialValue"
+															<mx:AdvancedDataGridColumn id="WOF_d2_DG_InitialValue" dataField="InitialValue"
 																					   editable="true" headerText="Initial"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Required"
 																					   headerText="Req" dataField="Required"
-																					   width="26"  textAlign="center"
+																					   textAlign="center"
 																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumn id="WOF_d2_DG_Delete" 
-																				   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+DBW}"
+																				   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
 																				   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
 													</mx:groupedColumns>
 												</mx:AdvancedDataGrid>
@@ -3209,9 +3288,11 @@
 									
 								</mx:ViewStack> <!--B2B-->
 								
-							</mx:HDividedBox>
+							</mx:HDividedBox> <!--B2B-->
+							</s:SkinnableContainer> <!--B2B-->
 							
 						</mx:HDividedBox> <!--B0-->
+						</s:SkinnableContainer> <!--B0-->
 						
 						<!--Inner datagrids container-->		
 					</component:CustomTitleWindow>

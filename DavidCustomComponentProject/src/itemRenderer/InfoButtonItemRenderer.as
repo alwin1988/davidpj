@@ -39,6 +39,12 @@ package itemRenderer
 			myImage.addEventListener( MouseEvent.CLICK, img_clickHandler );
 			myImage.width=14;
 			myImage.width=14;
+			
+			myImage.setStyle("horizontalCenter", "0");
+			myImage.setStyle("horizontalAlign", "center");
+			myImage.setStyle("verticalCenter", "0");
+			myImage.setStyle("verticalAlign", "middle");
+			
 			myImage.visible = true;
 			addElement(myImage);
 		}

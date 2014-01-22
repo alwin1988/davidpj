@@ -40,6 +40,13 @@ package itemRenderer
 			myCheckBox=new CheckBox();
 			myCheckBox.setStyle("verticalAlign", "middle");
 			myCheckBox.addEventListener(MouseEvent.CLICK, checkBoxToggleHandler);
+			
+			myCheckBox.setStyle("horizontalCenter", "0");
+			myCheckBox.setStyle("horizontalAlign", "center");
+			myCheckBox.setStyle("verticalCenter", "0");
+			myCheckBox.setStyle("verticalAlign", "middle");
+			myCheckBox.setStyle("chromeColor", "white");
+			
 			addElement(myCheckBox);
 			//myImage = new Image();
 			//myImage.source = ICON_INNER;

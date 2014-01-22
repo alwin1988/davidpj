@@ -27,6 +27,7 @@ package headerRenderer
 		public function DeleteIconHeaderRenderer()
 		{
 			super();
+			super.autoDrawBackground = false;
 		}
 		
 		override protected function createChildren():void
@@ -37,7 +38,7 @@ package headerRenderer
 			myImage.source = ICON_DELETE;
 			myImage.width=14;
 			myImage.width=14;
-			myImage.setStyle("horizontalCenter", "-2");
+			myImage.setStyle("horizontalCenter", "0");
 			myImage.setStyle("horizontalAlign", "center");
 			myImage.setStyle("verticalCenter", "0");
 			myImage.setStyle("verticalAlign", "middle");

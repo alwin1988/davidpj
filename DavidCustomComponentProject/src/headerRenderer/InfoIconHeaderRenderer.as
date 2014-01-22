@@ -27,6 +27,7 @@ package headerRenderer
 		public function InfoIconHeaderRenderer()
 		{
 			super();
+			super.autoDrawBackground = false;
 		}
 		
 		override protected function createChildren():void
@@ -37,7 +38,8 @@ package headerRenderer
 			myImage.source = ICON_INFO;
 			myImage.width=14;
 			myImage.width=14;
-			myImage.setStyle("horizontalCenter", "-2");
+			//myImage.setStyle("horizontalCenter", "-2");
+			myImage.setStyle("horizontalCenter", "0");
 			myImage.setStyle("horizontalAlign", "center");
 			myImage.setStyle("verticalCenter", "0");
 			myImage.setStyle("verticalAlign", "middle");

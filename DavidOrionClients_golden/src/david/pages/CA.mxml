@@ -1149,8 +1149,8 @@
 															</mx:AdvancedDataGridColumn>
 															<mx:AdvancedDataGridColumn id="AU_m_DG_Disposition"
 																					   dataField="Disposition"
-																					   width="{(AU_m_DG.width-AU_m_DG.width)+DTW}">
-																<mx:headerRenderer>
+																					   width="{(AU_m_DG.width-AU_m_DG.width)+DTW}" itemRenderer="itemRenderer.ToggleButtonItemRenderer" headerRenderer="headerRenderer.ToggleButtonHeaderRenderer">
+																<!--<mx:headerRenderer>
 																	<fx:Component>
 																		<mx:Box paddingLeft="3.5">
 																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
@@ -1163,7 +1163,7 @@
 																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
 																		</mx:Box>
 																	</fx:Component>
-																</mx:itemRenderer>
+																</mx:itemRenderer>-->
 															</mx:AdvancedDataGridColumn>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="AU_m_DG_identification" headerText="User Identification" width="380">							
@@ -3156,8 +3156,8 @@
 																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Disposition"
-																					   dataField="Disposition">
-																<mx:headerRenderer>
+																					   dataField="Disposition" itemRenderer="itemRenderer.ToggleButtonItemRenderer" headerRenderer="headerRenderer.ToggleButtonHeaderRenderer">
+																<!--<mx:headerRenderer>
 																	<fx:Component>
 																		<mx:Box paddingLeft="3.5">
 																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
@@ -3170,7 +3170,7 @@
 																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
 																		</mx:Box>
 																	</fx:Component>
-																</mx:itemRenderer>
+																</mx:itemRenderer>-->
 															</mx:AdvancedDataGridColumn>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WOF_d2_DG_identification">

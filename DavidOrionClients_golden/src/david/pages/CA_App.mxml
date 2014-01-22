@@ -2031,10 +2031,8 @@
 													</mx:columns>
 												</mx:AdvancedDataGrid>		
 											</s:NavigatorContent>									
-										</mx:Accordion>
-										
+										</mx:Accordion>										
 									</s:NavigatorContent> <!--System master view-->
-									
 								</mx:ViewStack> <!--Master view stack-->
 								
 								<!--Submaster 1 view stack-->

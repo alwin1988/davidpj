@@ -51,9 +51,11 @@ package headerRenderer
 			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 			trace(AdvancedDataGrid(listData.owner).getStyle("verticalAlign"));
 			//trace(adgld.dataField);
+			
 			myImage.verticalAlign = AdvancedDataGrid(listData.owner).getStyle("verticalAlign");
-			//myImage.x = 2;
-			//myImage.y = 10;
+			myImage.horizontalAlign = AdvancedDataGrid(listData.owner).getStyle("horizontalAlign");
+			myImage.verticalCenter = AdvancedDataGrid(listData.owner).verticalCenter;
+			myImage.horizontalCenter = AdvancedDataGrid(listData.owner).horizontalCenter;
 		}
 	}
 }

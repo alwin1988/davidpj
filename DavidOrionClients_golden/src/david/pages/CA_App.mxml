@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<mx:Canvas xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:component="component.*"
@@ -62,14 +62,14 @@
 			[Bindable] private var DGHeaderHeight:Number = 24;
 			[Bindable] private var DGRowHeight:Number = 20;
 			
-			[Bindable] private var CheckBoxWidth:Number=14;		
-			[Bindable] private var CBW:Number=CheckBoxWidth;
-			[Bindable] private var InfoButtonWidth:Number=14;
-			[Bindable] private var IBW:Number=InfoButtonWidth;
-			[Bindable] private var DispositionToggleWidth:Number=10;
-			[Bindable] private var DTW:Number=DispositionToggleWidth;
-			[Bindable] private var DeleteButtonWidth:Number=14;
-			[Bindable] private var DBW:Number=DeleteButtonWidth;
+			[Bindable] private var CheckBoxWidth:Number = 16; //CBW			
+			[Bindable] private var CBW:Number = 16; //CheckBox width
+			[Bindable] private var InfoButtonWidth:Number = 12; //IBW
+			[Bindable] private var IBW:Number = 12; //Info button width
+			[Bindable] private var DispositionToggleWidth:Number = 8; //DTW
+			[Bindable] private var DTW:Number = 8; //Disposition toggle width
+			[Bindable] private var DeleteButtonWidth:Number = 16; //DTW
+			[Bindable] private var DBW:Number = 16; //Delete button width
 			
 			[Bindable] private var Indent:Number;
 			[Bindable] private var Indent1:Number = 25;
@@ -81,6 +81,11 @@
 			private var Category:String //2 letters
 			private var CategoryView:String //3 letters
 			private var LastCategory:String
+			
+			public function init():void 
+			{
+			//
+			}
 			
 			protected function canvas1_creationCompleteHandler():void 
 			{
@@ -118,15 +123,15 @@
 			protected function CategoryMenuChangeHandler(event:ListEvent):void
 			{
 				var CategoryItem:Object = event.target.selectedItem as Object;
+				
+				//Save last-used category to var to detect change of category
+				LastCategory = Category;
 
 				Category = CategoryItem.Alias;
 				CategoryGroup = CategoryItem.Alias.substring(0, 1);
 				//CategoryView = "ID";
 
 				SetCAView(Category, CategoryView);
-				
-				//Save last-used category to var to detect change of category
-				LastCategory = Category;
 			}
 			
 			protected function TabBarChangeHandler(event:IndexChangeEvent):void
@@ -135,12 +140,12 @@
 				
 				var TabValue:String = TB_Value.Data;
 				
-				//*** This is defective ? ***
-				//If category changes, select first tabbar tab
-				if (Category != LastCategory)
+				//*** This is defective ***
+				// If category changes, select first tabbar tab
+				/*if (Category != LastCategory)
 				{
-//					TB.selectedIndex = 0;
-				}
+					TB.selectedIndex = 0;
+				}*/
 				
 				if (Category == "AU" && TabValue == "ID") //User ID
 				{
@@ -614,7 +619,8 @@
 					B1B.setStyle('horizontalGap',0);
 					B1B.includeInLayout=true; B1B.visible=true; B1B.percentWidth=50;
 					sm1_VS.includeInLayout=false; sm1_VS.visible=false;
-					sm2_VS.includeInLayout=true; sm2_VS.visible=true; sm2_VS.selectedChild=WF_sm_view;
+					sm2_VS.includeInLayout=true; sm2_VS.visible=true;
+					sm2_VS.selectedChild=WF_sm_view;
 					WO_sm_DG_propertiesA.visible=false;
 					WO_sm_DG_propertiesB.visible=false;
 					WO_sm_DG_propertiesC.visible=false;
@@ -623,7 +629,8 @@
 					B2A.includeInLayout=false; B2A.visible=false;
 					
 					B2B.includeInLayout=true; B2B.visible=true; B2B.percentWidth=50;
-					d2_VS.includeInLayout=true; d2_VS.visible=true; d2_VS.selectedChild=WOF_d2_view;
+					d2_VS.includeInLayout=true; d2_VS.visible=true;
+					d2_VS.selectedChild=WOF_d2_view;
 					Reset_WOF_d2_DG();
 				}
 				if (Category == "WO" && CategoryView == "W5") //Form fields and form preview
@@ -733,125 +740,6 @@
 					S_m3_DG.percentHeight = 100;
 				}
 			}
-			
-			private function init():void 
-			{
-				//setDefaultTab();
-				//setAllFalse();
-				//tabAuthority.selected = true;
-				//isEnabledAuthority(true);
-			}
-					
-			protected function DragDropHandler(event:DragEvent):void
-			{
-			/* event.preventDefault();
-			trace("");WF_FF_DG.dataProvider;
-			var DroppedItem:Object = event.target as Object;  */
-			}
-			
-			protected function DragCompleteHandler(event:DragEvent):void
-			{
-			}
-			
-/*			[Bindable]
-			public function set dataProvider1List(value:Object):void {
-				_dataProvider1List = value as ArrayCollection
-			}
-			public function get dataProvider1List():Object {
-				return _dataProvider1List;
-			}
-*/			
-/*			protected function toggleButtonChange_handle(evt:Event):void {
-				var thisToggle:Object = evt.target as Object;
-				var toggleItem:String = new String(thisToggle.label.toString());
-				setDefaultTab();
-				setAllFalse();
-				thisToggle.selected = true;
-				//mainDtg.visible = true;
-				if (toggleItem == "Authority") {
-					isEnabledAuthority(true);
-				}
-				else if (toggleItem == "Contact") {
-					isEnabledContact(true);
-				} 
-				else if (toggleItem == "Explorer") {
-					isEnabledAppExplorer(true);
-				} 
-				else if (toggleItem == "Windows") {
-					isEnabledAppWindows(true);
-				}
-				else if (toggleItem == "Workflow") {
-					isEnabledAppWorkflow(true);
-				}
-				else if (toggleItem == "Other") {
-					isEnabledAppOther(true);
-				}
-			}*/
-			
-/*			private function setDefaultTab():void {
-				tabbar_id.selectedItem = tabAuthority;
-			}*/
-			
-/*			public function setAllFalse():void {
-				isEnabledAuthority(false);
-				isEnabledContact(false);
-				isEnabledAppExplorer(false);
-				isEnabledAppWindows(false);
-				isEnabledAppWorkflow(false);
-				isEnabledAppOther(false);
-			}
-			
-			public function isEnabledAuthority(state:Boolean):void {
-				//grpPrivilledge.visible=state;
-				//grpAuthentication.visible=state;
-				//grpLanguage.visible=state;
-			}
-			
-			public function isEnabledContact(state:Boolean):void {
-				//grpLocation.visible=state;
-				//grpContact.visible=state;
-			}
-			
-			public function isEnabledAppExplorer(state:Boolean):void {
-				//grpAppExplorer.visible=state;
-			}
-			
-			public function isEnabledAppWindows(state:Boolean):void {
-				//grpAppWindows.visible=state;
-			}
-			
-			public function isEnabledAppWorkflow(state:Boolean):void {
-				//grpAppWorkflow.visible=state;
-			}
-			
-			public function isEnabledAppOther(state:Boolean):void {
-				//grpAppOther.visible=state;
-			}
-			
-			[Bindable]
-			protected function tabbarChangeHandler(event:IndexChangeEvent):void {
-				var toggleItem:String =  String(event.currentTarget.selectedItem.label);
-				setAllFalse();
-				
-				if (toggleItem == "Authority") {
-					isEnabledAuthority(true);
-				}
-				else if (toggleItem == "Contact") {
-					isEnabledContact(true);
-				} 
-				else if (toggleItem == "Explorer") {
-					isEnabledAppExplorer(true);
-				} 
-				else if (toggleItem == "Windows") {
-					isEnabledAppWindows(true);
-				}
-				else if (toggleItem == "Workflow") {
-					isEnabledAppWorkflow(true);
-				}
-				else if (toggleItem == "Other") {
-					isEnabledAppOther(true);
-				}
-			}	*/
 		]]>
 	</fx:Script>
 	
@@ -1150,94 +1038,93 @@
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO0"
 																						   dataField="CO0_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 01" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO1"
 																						   dataField="CO1_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 02" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO2"
 																						   dataField="CO2_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 03" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO3"
 																						   dataField="CO3_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 04" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO4"
 																						   dataField="CO4_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 05" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO5"
 																						   dataField="CO5_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 06" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO6"
 																						   dataField="CO6_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 07" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO7"
 																						   dataField="CO7_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 08" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO8"
 																						   dataField="CO8_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 09" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO9"
 																						   dataField="CO9_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 															<mx:AdvancedDataGridColumnGroup headerText="Co. 10" textAlign="center">
 																<mx:AdvancedDataGridColumn id="AU_m_DG_CO10"
 																						   dataField="CO10_checked" textAlign="center"
 																						   width="53"
-																						   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																						   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																						   itemRenderer="component.CheckBoxItemRenderer"
 																						   rendererIsEditor="false"/>
 															</mx:AdvancedDataGridColumnGroup>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumn id="AU_m_DG_Delete"
 																				   width="{(AU_m_DG.width-AU_m_DG.width)+DBW}"
-																				   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
 																				   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
 													</mx:groupedColumns>
 												</mx:AdvancedDataGrid>
@@ -1296,13 +1183,11 @@
 												<mx:AdvancedDataGridColumn id="AG_m_DG_Checkbox"
 																		   dataField="checked" textAlign="center"
 																		   width="{(AG_m_DG.width-AG_m_DG.width)+CBW}"
-																		   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																		   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.CheckBoxItemRenderer"
 																		   rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn id="AG_m_DG_Information"
-																		   width="{(AG_m_DG.width-AG_m_DG.width)+IBW}"
-																		   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		   width="{(AG_m_DG.width-AG_m_DG.width)+IBW}"/>
 												<mx:AdvancedDataGridColumn id="AG_m_DG_Disposition"
 																		   editable="false"
 																		   width="{(AG_m_DG.width-AG_m_DG.width)+DTW}"/>
@@ -1330,10 +1215,6 @@
 																			   headerText="Property3"
 																			   width="570"/>	
 												</mx:AdvancedDataGridColumnGroup>
-												<mx:AdvancedDataGridColumn id="AG_m_DG_Delete"
-																		   width="{(AG_m_DG.width-AG_m_DG.width)+DBW}"
-																		   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
 											</mx:groupedColumns>
 										</mx:AdvancedDataGrid>
 										
@@ -1390,13 +1271,11 @@
 												<mx:AdvancedDataGridColumn id="AR_m_DG_Checkbox"
 																		   dataField="checked" textAlign="center"
 																		   width="{(AR_m_DG.width-AR_m_DG.width)+CBW}"
-																		   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																		   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.CheckBoxItemRenderer"
 																		   rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn id="AR_m_DG_Information"
-																		   width="{(AR_m_DG.width-AR_m_DG.width)+IBW}"
-																		   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		   width="{(AR_m_DG.width-AR_m_DG.width)+IBW}"/>
 												<mx:AdvancedDataGridColumn id="AR_m_DG_Disposition"
 																		   editable="false"
 																		   width="{(AR_m_DG.width-AR_m_DG.width)+DTW}"/>									
@@ -1481,13 +1360,11 @@
 												<mx:AdvancedDataGridColumn id="DT_m_DG_Checkbox"
 																		   dataField="checked" textAlign="center"
 																		   width="{(DT_m_DG.width-DT_m_DG.width)+CBW}"
-																		   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																		   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.CheckBoxItemRenderer"
 																		   rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn id="DT_m_DG_Information"
-																		   width="{(DT_m_DG.width-DT_m_DG.width)+IBW}"
-																		   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		   width="{(DT_m_DG.width-DT_m_DG.width)+IBW}"/>
 												<mx:AdvancedDataGridColumn id="DT_m_DG_Disposition"
 																		   editable="false"
 																		   width="{(DT_m_DG.width-DT_m_DG.width)+DTW}"/>
@@ -1579,13 +1456,11 @@
 															<mx:AdvancedDataGridColumn id="FF_m_DG_Checkbox"
 																					   dataField="checked" textAlign="center"
 																					   width="{(FF_m_DG.width-FF_m_DG.width)+CBW}"
-																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="FF_m_DG_Information"
-																					   width="{(FF_m_DG.width-FF_m_DG.width)+IBW}"
-																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																					   width="{(FF_m_DG.width-FF_m_DG.width)+IBW}"/>
 															<mx:AdvancedDataGridColumn id="FF_m_DG_Disposition"
 																					   editable="false"
 																					   width="{(FF_m_DG.width-FF_m_DG.width)+DTW}"/>
@@ -1636,9 +1511,8 @@
 																						   width="53"/>
 																<mx:AdvancedDataGridColumn id="FF_d_DG_Pattern" headerText="Pattern" dataField="Pattern"
 																						   width="16"/>
-																<mx:AdvancedDataGridColumn id="FF_d_DG_Required" headerText="Req" dataField="Required"
-																						   width="30" textAlign="center"
-																						   itemRenderer="itemRenderer.CheckBoxItemRenderer"/>
+																<mx:AdvancedDataGridColumn id="FF_d_DG_Required" headerText="Req." dataField="Required"
+																						   width="16"/>
 																<mx:AdvancedDataGridColumn id="FF_d_DG_InitialValue" headerText="Initial" dataField="InitialValue"
 																						   width="53"/>
 																<mx:AdvancedDataGridColumn id="FF_d_DG_MultiValue" headerText="Multi" dataField="MultiValue"
@@ -1741,13 +1615,11 @@
 												<mx:AdvancedDataGridColumn id="FD_m_DG_Checkbox"
 																		   dataField="checked" textAlign="center"
 																		   width="{(FD_m_DG.width-FD_m_DG.width)+CBW}"
-																		   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																		   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.CheckBoxItemRenderer"
 																		   rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn id="FD_m_DG_Information"
-																		   width="{(FD_m_DG.width-FD_m_DG.width)+IBW}"
-																		   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		   width="{(FD_m_DG.width-FD_m_DG.width)+IBW}"/>
 												<mx:AdvancedDataGridColumn id="FD_m_DG_Disposition"
 																		   editable="false"
 																		   width="{(FD_m_DG.width-FD_m_DG.width)+DTW}"/>
@@ -1931,13 +1803,11 @@
 												<mx:AdvancedDataGridColumn id="WP_m_DG_Checkbox"
 																		   dataField="checked" textAlign="center"
 																		   width="{(WP_m_DG.width-WP_m_DG.width)+CBW}"
-																		   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																		   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.CheckBoxItemRenderer"
 																		   rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn id="WP_m_DG_Information"
-																		   width="{(WP_m_DG.width-WP_m_DG.width)+IBW}"
-																		   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		   width="{(WP_m_DG.width-WP_m_DG.width)+IBW}"/>
 												<mx:AdvancedDataGridColumn id="WP_m_DG_Disposition"
 																		   editable="false"
 																		   width="{(WP_m_DG.width-WP_m_DG.width)+DTW}"/>
@@ -2031,13 +1901,11 @@
 												<mx:AdvancedDataGridColumn id="J_m_DG_Checkbox"
 																		   dataField="checked" textAlign="center"
 																		   width="{(J_m_DG.width-J_m_DG.width)+CBW}"
-																		   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																		   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																		   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																		   itemRenderer="component.CheckBoxItemRenderer"
 																		   rendererIsEditor="false"/>
 												<mx:AdvancedDataGridColumn id="J_m_DG_Information"
-																		   width="{(J_m_DG.width-J_m_DG.width)+IBW}"
-																		   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																		   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		   width="{(J_m_DG.width-J_m_DG.width)+IBW}"/>
 												<mx:AdvancedDataGridColumn id="J_m_DG_Disposition"
 																		   editable="false"
 																		   width="{(J_m_DG.width-J_m_DG.width)+DTW}"/>
@@ -2229,13 +2097,11 @@
 																					   headerText="" dataField="checked" textAlign="center"
 																					   width="{(WO_sm_DG.width-WO_sm_DG.width)+CBW}" editable="true"
 																					   draggable="false" resizable="false" sortable="false"
-																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="WO_sm_DG_Information"
-																					   width="{(WO_sm_DG.width-WO_sm_DG.width)+IBW}"
-																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																					   width="{(WO_sm_DG.width-WO_sm_DG.width)+IBW}"/>
 															<mx:AdvancedDataGridColumn id="WO_sm_DG_Disposition"
 																					   width="{(WO_sm_DG.width-WO_sm_DG.width)+DTW}" editable="false"/>
 														</mx:AdvancedDataGridColumnGroup>
@@ -2320,7 +2186,7 @@
 														{
 															WF_sm_DG.horizontalScrollPolicy="on";
 															WF_sm_DG_Information.width=(WF_sm_DG.width-WF_sm_DG.width)+IBW;
-															WF_sm_DG_Name.width=100;
+															WF_sm_DG_Name.width=100; 
 															WF_sm_DG_Label.width=130;
 															WF_sm_DG_FieldControl.width=120;
 															WF_sm_DG_Size.width=40;
@@ -2349,10 +2215,17 @@
 													</mx:dataProvider>
 													<mx:groupedColumns>
 														<mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_Checkbox"
+																					   dataField="checked" textAlign="center"
+																					   width="{(WF_sm_DG.width+WF_sm_DG.width)+CBW}"
+																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="component.CheckBoxItemRenderer"
+																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_Information"
-																					   width="{(WF_sm_DG.width+WF_sm_DG.width)+IBW}"
-																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																					   width="{(WF_sm_DG.width+WF_sm_DG.width)+IBW}"/>
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_Disposition"
+																					   editable="false"
+																					   width="{(WF_sm_DG.width+WF_sm_DG.width)+DTW}"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WF_sm_DG_identification">
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_Name" 
@@ -2431,10 +2304,10 @@
 														<mx:AdvancedDataGridColumnGroup id="WF_sm_DG_value" headerText="Value">
 															<mx:AdvancedDataGridColumn id="WF_sm_DG_InitialValue" width="86" dataField="InitialValue"
 																					   editable="true" headerText="Initial"/>
-															<mx:AdvancedDataGridColumn id="WF_sm_DG_Required"
-																					   headerText="Req" dataField="Required"
-																					   width="26"  textAlign="center"
-																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+															<mx:AdvancedDataGridColumn id="WF_sm_DG_Required" dataField="Required"
+																					   headerText="Req." textAlign="center"
+																					   width="30"
+																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 														</mx:AdvancedDataGridColumnGroup>
 													</mx:groupedColumns>
@@ -2548,88 +2421,88 @@
 																<mx:AdvancedDataGridColumnGroup headerText="All" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A0" width=".05"
 																							   dataField="A0_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="A" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A1" width=".05"
 																							   dataField="A1_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="B" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A2" width=".05"
 																							   dataField="A2_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="C" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A3" width=".05"
 																							   dataField="A3_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="D" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A4" width=".05"
 																							   dataField="A4_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="E" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A5" width=".05"
 																							   dataField="A5_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="F" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A6" width=".05"
 																							   dataField="A6_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="G" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A7" width=".05"
 																							   dataField="A7_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="H" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A8" width=".05"
 																							   dataField="A8_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="I" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A9" width=".05"
 																							   dataField="A9_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="J" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC1_DG_A10" width=".05"
 																							   dataField="A10_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
@@ -2693,88 +2566,88 @@
 																<mx:AdvancedDataGridColumnGroup headerText="All" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A0" width=".05"
 																							   dataField="A0_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="A" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A1" width=".05"
 																							   dataField="A1_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="B" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A2" width=".05"
 																							   dataField="A2_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="C" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A3" width=".05"
 																							   dataField="A3_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="D" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A4" width=".05"
 																							   dataField="A4_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="E" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A5" width=".05"
 																							   dataField="A5_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="F" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A6" width=".05"
 																							   dataField="A6_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="G" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A7" width=".05"
 																							   dataField="A7_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="H" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A8" width=".05"
 																							   dataField="A8_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="I" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A9" width=".05"
 																							   dataField="A9_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
 																<mx:AdvancedDataGridColumnGroup headerText="J" textAlign="center">
 																	<mx:AdvancedDataGridColumn id="A_AC2_DG_A10" width=".05"
 																							   dataField="A10_checked"
-																							   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																							   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																							   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																							   itemRenderer="component.CheckBoxItemRenderer"
 																							   rendererIsEditor="false"
 																							   textAlign="center"/>
 																</mx:AdvancedDataGridColumnGroup>
@@ -3049,10 +2922,10 @@
 																	 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 																	 displayItemsExpanded="true" treeColumn="{WOF_d2_DG_Name}" indentation="10"
 																	 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
-																	 dragEnabled="false" dragMoveEnabled="true" dropEnabled="true" allowDragSelection="true"
+																	 dragEnabled="true" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
 																	 draggableColumns="true" resizableColumns="true" sortableColumns="true"
 																	 doubleClickEnabled="false" sortExpertMode="true" 
-																	 allowMultipleSelection="true" editable="true">
+																	 allowMultipleSelection="true" editable="false">
 													<!--dragComplete="WOF_d2_DG_dragCompleteHandler(event)"
 													dragDrop="WOF_d2_DG_dragDropHandler(event)"-->
 													<mx:dataProvider>
@@ -3063,31 +2936,14 @@
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Checkbox"
 																					   dataField="checked" textAlign="center"
 																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+CBW}"
-																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Information"
-																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+IBW}"
-																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+IBW}"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Disposition"
-																					   dataField="Disposition"
-																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+DTW}">
-																<mx:headerRenderer>
-																	<fx:Component>
-																		<mx:Box paddingLeft="3.5">
-																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
-																		</mx:Box>
-																	</fx:Component>
-																</mx:headerRenderer>
-																<mx:itemRenderer>
-																	<fx:Component>
-																		<mx:Box paddingLeft="3.5">
-																			<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
-																		</mx:Box>
-																	</fx:Component>
-																</mx:itemRenderer>
-															</mx:AdvancedDataGridColumn>
+																					   editable="false"
+																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+DTW}"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumnGroup id="WOF_d2_DG_identification">
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Name" 
@@ -3095,13 +2951,13 @@
 																					   dataField="Name" editable="false"
 																					   headerText="Name"/>
 														</mx:AdvancedDataGridColumnGroup>
-														<mx:AdvancedDataGridColumnGroup headerText="Work fields for form XXX" color="red">
+														<mx:AdvancedDataGridColumnGroup headerText="Work fields for procedure XXX" color="red">
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Label"
 																					   width="110" dataField="Label" editable="true"
 																					   headerText="Label"/>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_FieldControl" width="120" dataField="FieldControl"
 																					   editable="false" headerText="Control">
-																<!--mx:itemRenderer>
+																<mx:itemRenderer>
 																	<fx:Component>
 																		<mx:VBox horizontalGap="0" horizontalScrollPolicy="off"
 																				 paddingBottom="0" paddingLeft="0" paddingRight="0"
@@ -3158,7 +3014,7 @@
 																			</local:CustomDropdownList>
 																		</mx:VBox>
 																	</fx:Component>
-																</mx:itemRenderer-->
+																</mx:itemRenderer>
 															</mx:AdvancedDataGridColumn>
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Size" width="40" dataField="Size" editable="true"
 																					   headerText="Size"/>
@@ -3166,10 +3022,11 @@
 														<mx:AdvancedDataGridColumnGroup id="WOF_d2_DG_value" headerText="Value">
 															<mx:AdvancedDataGridColumn id="WOF_d2_DG_InitialValue" width="86" dataField="InitialValue"
 																					   editable="true" headerText="Initial"/>
-															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Required"
-																					   headerText="Req" dataField="Required"
-																					   width="26"  textAlign="center"
-																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+															<mx:AdvancedDataGridColumn id="WOF_d2_DG_Required" dataField="Required"
+																					   textAlign="center"
+																					   width="{(WOF_d2_DG.width-WOF_d2_DG.width)+30}"
+																					   headerRenderer="component.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="component.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
 														</mx:AdvancedDataGridColumnGroup>
 														<mx:AdvancedDataGridColumn id="WOF_d2_DG_Delete" 
@@ -3228,4 +3085,4 @@
 		<!--End Master container-->
 	</s:BorderContainer>
 	
-</s:Application>
+</mx:Canvas>

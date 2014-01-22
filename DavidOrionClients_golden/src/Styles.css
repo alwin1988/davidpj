@@ -5,15 +5,15 @@
 @namespace pages "david.pages.*";
 
 .MagSoftBlue {
-	color: '0xC1DAD6';
+	color: #c1dad6;
 }
 
 .MagSoftOrange {
-	color: '0x315B7E';
+	color: #315b7e;
 }
 
 .BackgroundBlue {
-	backgroundColor: '0x004F6C';
+	backgroundColor: #004f6c;
 }
 
 .ClientTitleText {
@@ -27,7 +27,7 @@
 	fontFamily: 'Franklin Gothic Medium';
 	fontSize: 11;
 	fontWeight: normal;
-	color: '0xC1DAD6';
+	color: #c1dad6;
 	kerning: true;
 }
 
@@ -70,8 +70,8 @@
 }
 
 .SearchBox {
-	borderColor: '0xE3784E';
-	backgroundColor: 'C1DAD6';
+	borderColor: #e3784e;
+	backgroundColor: #c1dad6;
 }
 
 .SearchBoxLabel {
@@ -86,22 +86,22 @@
 	fontSize: 11.5;
 	fontWeight: normal;
 	kerning: true;
-	rollOverColor: '0xC0C0C0';
+	rollOverColor: #c0c0c0;
 }
 
 .Gutter {
-	backgroundColor: #004F6C;
+	backgroundColor: #004f6c;
 	backgroundAlpha: .08;
 }
 
 .GutterOverlay {
-	backgroundColor: #004F6C;
+	backgroundColor: #004f6c;
 	backgroundAlpha: .16;
 }
 
 .MenuHeader {
-	borderColor: '0x004F6C';
-	backgroundColor: '0x004F6C';
+	borderColor: #004f6c;
+	backgroundColor: #004f6c;
 	fontFamily: 'Franklin Gothic Medium';
 	fontSize: 13;
 	fontWeight: bold;
@@ -110,14 +110,14 @@
 }
 
 .MenuBody {
-	borderColor: '0x004F6C';
-	backgroundColor: '0xC1DAD6';
+	borderColor: #004f6c;
+	backgroundColor: #c1dad6;
 	fontFamily: 'Arial Black';
 	fontSize: 11;
 	fontWeight: normal;
 	color: black;
 	kerning: true;
-	rollOverColor: '0xE3784E';
+	rollOverColor: #e3784e;
 }
 
 .MenuBodyHeading {
@@ -129,8 +129,8 @@
 }
 
 .WM_PanelHeader {
-	backgroundColor: '0xC1DAD6';
-	chromeColor: '0x004F6C';
+	backgroundColor: #c1dad6;
+	chromeColor: #004F6C;
 	color: white;
 }
 
@@ -140,8 +140,8 @@
 	fontWeight: normal;
 	color: black;
 	kerning: true;
-	contentBackgroundColor: '0xC1DAD6';
-	chromeColor: '0x004F6C';
+	contentBackgroundColor: #c1dad6;
+	chromeColor: #004f6c;
 }
 
 .TabText {
@@ -173,8 +173,9 @@
 	fontSize: 11;
 	fontWeight: bold;
 	color: black;
-	horizontalGridLinesColor: '0xA9A9A9';
-	vertialGridLinesColor: '0x767676';
+	headerColors: white, white;
+	horizontalGridLinesColor: #a9a9a9;
+	vertialGridLinesColor: #767676;
 }
 
 .DataGridBody {
@@ -182,8 +183,8 @@
 	fontSize: 10.5;
 	fontWeight: normal;
 	color: black;
-	horizontalGridLinesColor: '0xA9A9A9';
-	vertialGridLinesColor: '0x767676';
+	horizontalGridLinesColor: #a9a9a9;
+	vertialGridLinesColor: #767676;
 }
 	
 .InsertButton {
@@ -191,7 +192,21 @@
 	fontSize: 12;
 	fontWeight: normal;
 	color: white;
-	chromeColor: '0x0033CC';
+	chromeColor: #0033cc;
+}
+
+.InsertPopUpButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundAlpha: 1;
+	backgroundColor: white;
+	borderStyle: none;
+	color: white;
+	alternatingItemColors :#0033cc, #0033cc;
+	chromeColor: #0033cc;
+	rollOverColor: white;
+	textAlign: left;
 }
 
 .DeleteButton {
@@ -199,7 +214,21 @@
 	fontSize: 12;
 	fontWeight: normal;
 	color: white;
-	chromeColor: '0xFF3300';
+	chromeColor: #ff3300;
+}
+
+.DeletePopUpButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundAlpha: 1;
+	backgroundColor: white;
+	borderStyle: none;
+	color: white;
+	alternatingItemColors: #ff3300, #ff3300;
+	chromeColor: #ff3300;
+	rollOverColor: white;
+	textAlign: left;
 }
 
 .SaveButton {
@@ -207,7 +236,21 @@
 	fontSize: 12;
 	fontWeight: normal;
 	color: white;
-	chromeColor: '0x339933'
+	chromeColor: #339933;
+}
+
+.SavePopUpButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundAlpha: 1;
+	backgroundColor: white;
+	borderStyle: none;
+	color: white;
+	alternatingItemColors: #339933, #339933;
+	chromeColor: #339933;
+	rollOverColor: white;
+	textAlign: left;
 }
 
 .CompletionBarLabel {
@@ -224,7 +267,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -234,7 +277,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -243,7 +286,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	separatorColor: '0xC1DAD6';
+	separatorColor: #c1dad6;
 	separatorWidth: 1;
 }
 
@@ -253,7 +296,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 	borderColor: '0x339933';
 }
@@ -264,7 +307,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -274,7 +317,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -284,7 +327,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 	borderColor: '0x339933';
 }
@@ -295,7 +338,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -305,7 +348,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -315,7 +358,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -325,7 +368,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -335,7 +378,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -345,7 +388,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 }
 
 .reIndexButton {
@@ -354,7 +397,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -364,7 +407,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -374,7 +417,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -384,7 +427,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -394,7 +437,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -404,7 +447,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -414,7 +457,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 	borderColor: blue;
 }
@@ -425,7 +468,7 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }
 
@@ -435,6 +478,6 @@
 	fontSize: 12;
 	fontWeight: normal;
 	kerning: true;
-	color: '0x000061';
+	color: #000061;
 	chromeColor: white;
 }

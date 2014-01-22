@@ -65,7 +65,7 @@
 							<mx:XMLListCollection>
 								<fx:XMLList>
 									<folder label="Documents">
-										<Pfolder label="By document class"/>>
+										<Pfolder label="By document class"/>
 									</folder>
 									<folder label="Cases">
 										<Pfolder label="By workflow procedure"/>

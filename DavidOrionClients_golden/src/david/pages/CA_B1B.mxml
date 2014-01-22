@@ -166,7 +166,7 @@
 																	{Label:"Drop Down List", Data:"DropDownList", Selected:false}
 																]);
 															
-															private function AssignFieldControl(event):void
+															private function AssignFieldControl(event:Event):void
 															{
 																var FC_DD_Data:Object = event.target.selectedItem as Object;
 																data.FieldControl = FC_DD_Data.Data;
@@ -349,7 +349,7 @@
 																	{Label:"Drop Down List", Data:"DropDownList", Selected:false}
 																]);
 															
-															private function AssignFieldControl(event):void
+															private function AssignFieldControl(event:Event):void
 															{
 																var FC_DD_Data:Object = event.target.selectedItem as Object;
 																data.FieldControl = FC_DD_Data.Data;

@@ -52,12 +52,11 @@ package headerRenderer
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 			trace(AdvancedDataGrid(listData.owner).getStyle("verticalAlign"));
-			//trace(adgld.dataField);
-			
-			myImage.verticalAlign = AdvancedDataGrid(listData.owner).getStyle("verticalAlign");
-			myImage.horizontalAlign = AdvancedDataGrid(listData.owner).getStyle("horizontalAlign");
-			myImage.verticalCenter = AdvancedDataGrid(listData.owner).verticalCenter;
-			myImage.horizontalCenter = AdvancedDataGrid(listData.owner).horizontalCenter;
+			//trace(adgld.dataField);			
+			//myImage.verticalAlign = AdvancedDataGrid(listData.owner).getStyle("verticalAlign");
+			//myImage.horizontalAlign = AdvancedDataGrid(listData.owner).getStyle("horizontalAlign");
+			//myImage.verticalCenter = AdvancedDataGrid(listData.owner).verticalCenter;
+			//myImage.horizontalCenter = AdvancedDataGrid(listData.owner).horizontalCenter;
 		}
 	}
 }

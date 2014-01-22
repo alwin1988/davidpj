@@ -106,7 +106,7 @@ package itemRenderer
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
 			super.updateDisplayList(unscaledWidth, unscaledHeight);
-			myCheckBox.x = 2;
+			//myCheckBox.x = 2;
 		}
 	}
 }

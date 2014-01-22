@@ -73,10 +73,10 @@ package headerRenderer
 			super.createChildren();
 			
 			myCheckBox = new CheckBox();
-			myCheckBox.height = 8;
-			myCheckBox.width = 8;
-			//myCheckBox.setStyle("horizontalCenter", "-2");
-			myCheckBox.setStyle("horizontalCenter", "0");
+			//myCheckBox.height = 8;
+			//myCheckBox.width = 8;
+			myCheckBox.setStyle("horizontalCenter", "3");
+			//myCheckBox.setStyle("horizontalCenter", "0");
 			myCheckBox.setStyle("horizontalAlign", "center");
 			myCheckBox.setStyle("verticalCenter", "0");
 			myCheckBox.setStyle("verticalAlign", "middle");

@@ -18,13 +18,13 @@ package headerRenderer
 	import spark.components.Image;
 	import spark.layouts.VerticalAlign;
 	
-	public class InfoButtonHeaderRenderer extends MXAdvancedDataGridItemRenderer
+	public class DeleteIconHeaderRenderer extends MXAdvancedDataGridItemRenderer
 	{
 		protected var myImage:Image;
-		[Bindable] [Embed("assets/iconinfo.png")]
-		public var ICON_INFO:Class;
+		[Bindable] [Embed("assets/delete.png")]
+		public var ICON_DELETE:Class;
 		
-		public function InfoButtonHeaderRenderer()
+		public function DeleteIconHeaderRenderer()
 		{
 			super();
 		}
@@ -34,9 +34,13 @@ package headerRenderer
 			super.createChildren();
 			
 			myImage = new Image();
-			myImage.source = ICON_INFO;
+			myImage.source = ICON_DELETE;
 			myImage.width=14;
 			myImage.width=14;
+			myImage.setStyle("horizontalCenter", "-2");
+			myImage.setStyle("horizontalAlign", "center");
+			myImage.setStyle("verticalCenter", "0");
+			myImage.setStyle("verticalAlign", "middle");
 			myImage.visible = true;
 			addElement(myImage);
 		}

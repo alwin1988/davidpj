@@ -12,7 +12,7 @@ package itemRenderer
 	
 	import spark.components.Image;
 	
-	public class DeleteItemRenderer extends MXAdvancedDataGridItemRenderer
+	public class DeleteButtonItemRenderer extends MXAdvancedDataGridItemRenderer
 	{
 		private static const ARRAY_C:String = "mx.collections::ArrayCollection";
 		private static const HIERARCHICAL_C:String = "mx.collections::HierarchicalCollectionView";
@@ -21,7 +21,7 @@ package itemRenderer
 		[Bindable] [Embed("assets/delete.png")]
 		public var ICON_BIN:Class;
 		
-		public function DeleteItemRenderer()
+		public function DeleteButtonItemRenderer()
 		{
 			super();
 		}

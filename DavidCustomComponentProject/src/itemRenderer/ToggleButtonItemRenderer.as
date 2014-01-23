@@ -57,32 +57,43 @@ package itemRenderer
 		
 		private function toggleBtnChangeHandler(event:Event=null):void
 		{
+			var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+			trace(adgld.dataField);
+			
 			if (type == "1"){
 				if (!toggleBtn.selected){
-					//red
-					toggleBtn.setStyle('chromeColor',"green");
-				}else{
 					//green
+					toggleBtn.setStyle('chromeColor',"green");
+					data[adgld.dataField] = "Enabled";
+				}else{
+					//red
 					toggleBtn.setStyle('chromeColor',"red");
+					data[adgld.dataField] = "Disabled";
 				}
 			} else if (type == "2"){
 				if (!toggleBtn.selected){
 					//yellow
 					toggleBtn.setStyle('chromeColor',"yellow");
+					data[adgld.dataField] = "Changed";
 				}else{
 					toggleBtn.setStyle('chromeColor',"orange");
+					data[adgld.dataField] = "Saved";
 				}				
 			} else if (type == "3"){
 				if (!toggleBtn.selected){
 					toggleBtn.setStyle('chromeColor',"orange");
+					data[adgld.dataField] = "Saved";
 				}else{
 					toggleBtn.setStyle('chromeColor',"purple");
+					data[adgld.dataField] = "Publish";
 				}				
 			} else if (type == "4"){
 				if (!toggleBtn.selected){
 					toggleBtn.setStyle('chromeColor',"purple");
+					data[adgld.dataField] = "Publish";
 				}else{
 					toggleBtn.setStyle('chromeColor',"green");
+					data[adgld.dataField] = "Enabled";
 				}				
 			}
 		}
@@ -137,6 +148,7 @@ package itemRenderer
 		{
 			super.updateDisplayList(unscaledWidth,unscaledHeight);
 			toggleBtnChangeHandler();
+			
 			//var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
 			//trace(AdvancedDataGrid(listData.owner).getStyle("verticalAlign"));
 			//trace(adgld.dataField);

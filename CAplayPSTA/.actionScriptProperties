@@ -10,6 +10,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="3" linkType="1" path="/DavidCustomComponentProject/bin/DavidCustomComponentProject.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -17,6 +18,9 @@
     <application path="CAplayPSTA.mxml"/>
     <application path="HADG_DragDropText.mxml"/>
     <application path="CRUD_multivalue.mxml"/>
+    <application path="CRUD_multivalue2.mxml"/>
+    <application path="CRUD_multivalue3.mxml"/>
+    <application path="QSNM.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

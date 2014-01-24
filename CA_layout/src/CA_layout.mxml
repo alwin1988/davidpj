@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	
+	<fx:Declarations>
+		<s:Fade id="FadePM_ShadeOn" target="{PM_Shade}" alphaFrom="0" alphaTo=".3" duration="{FadeDuration}"/>
+		<s:Fade id="FadePM_ShadeOff" target="{PM_Shade}" alphaFrom=".3" alphaTo="0" duration="{FadeDuration}"/>
+		<!--s:Fade id="FadeSM_ShadeOn" target="{SM_Shade}" alphaFrom="0" alphaTo=".3" duration="{FadeDuration}"/>
+		<s:Fade id="FadeSM_ShadeOff" target="{SM_Shade}" alphaFrom=".3" alphaTo="0" duration="{FadeDuration}"/-->
+		<!--s:Fade id="FadeBBOut" target="{BB}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+		<s:Fade id="FadeBBIn" target="{BB}" alphaFrom=".2" alphaTo="1" duration="{FadeDuration}"/-->
+		<!--s:Animate id="SlideSMIn" target="{SM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{D.x}" valueTo="{Indent}"/>
+		</s:Animate>
+		<s:Animate id="SlideSMOut" target="{SM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{Indent}" valueTo="{D.x}"/>
+		</s:Animate-->
+		<s:Animate id="SlideCMIn" target="{CM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{D.x}" valueTo="{Indent}"/>
+		</s:Animate>
+		<s:Animate id="SlideCMOut" target="{CM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{Indent}" valueTo="{D.x}"/>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.Container;
+			import mx.effects.AnimateProperty;
+			import mx.events.DragEvent;
+			
+			import spark.effects.Animate;
+			[Bindable] private var FullWidth:Number=800;
+			[Bindable] private var HalfWidth:Number=400;
+			
+			[Bindable] private var Indent:Number;
+			[Bindable] private var Indent1:Number = 15;
+			[Bindable] private var Indent2:Number = 30;
+			[Bindable] private var FadeDuration:Number = 900;
+			[Bindable] private var SlideDuration:Number = 700;
+			
+			[Bindable] private var PM_Shade_Depth: Number = 8; //Revise if there is SM
+			//[Bindable] private var SM_Shade_Depth: Number = 8;
+			//Bindable] private var SM_Cover_Depth: Number = 3;
+			[Bindable] private var CM_Cover_Depth: Number = 3; //Revise if there is SM
+			[Bindable] private var CM_Initial_Depth: Number = 1;
+			[Bindable] private var CM_Depth:Number = 6;
+			[Bindable] private var PM_Depth:Number = 5;
+			//[Bindable] private var SM_Depth:Number = 6;
+			[Bindable] private var D_Depth:Number = 4;
+			
+			//[Bindable] private var Shade = PM_Shade;
+			//[Bindable] private var Overlay = CM;
+		]]>
+	</fx:Script>
+	
+	<s:HGroup>
+		<!--s:Button label="Do SM" click="
+				  Indent=Indent1;
+				  PM_Shade.includeInLayout=true;
+				  FadePM_ShadeOn.play(); 
+				  SlideSMIn.play();
+				  SM.width=(PM.width-Indent); 
+				  SM.depth=SM_Depth;
+				  "/>
+		<s:Button label="Undo SM" click="
+				  Indent=Indent1;
+				  SM.width=D.width;
+				  FadePM_ShadeOff.play();
+				  SlideSMOut.play();
+				  PM_Shade.includeInLayout=false;
+				  "/-->
+		<s:Button label="Do CM" click="
+				  Indent=Indent1; //Change to Indent2 if there is SM
+				  PM_Shade.includeInLayout=true; PM_Shade.visible=true;
+				  FadePM_ShadeOn.play();
+				  SlideCMIn.play();
+				  CM.width=(SM.width-Indent); 
+				  CM.depth=CM_Depth;
+				  "/>
+		<s:Button label="Undo CM" click="
+				  Indent=Indent1; //Change to Indent2 if there is SM
+				  PM.width=D.width;
+				  FadePM_ShadeOff.play();
+				  SlideCMOut.play();
+				  PM_Shade.includeInLayout=false; PM_Shade.visible=false;
+				  //O.depth=1;
+				  "/>
+	</s:HGroup>
+	
+	<s:TitleWindow x="100" y="100" width="{FullWidth}" height="300" dropShadowVisible="false">
+		<mx:HDividedBox width="100%" height="100%" horizontalGap="10">
+			<!--s:SkinnableContainer width="100%" height="100%"-->
+			
+			<s:BorderContainer width="100%" height="100%" borderVisible="false">
+				<s:layout>
+					<s:BasicLayout clipAndEnableScrolling="true"/>
+				</s:layout>
+				<s:Group id="PM_Shade" x="{PM.x}" y="{PM.y}" width="{PM.width}" height="{PM.height}" alpha="0" depth="{PM_Shade_Depth}" includeInLayout="false" visible="true">
+					<s:Rect width="100%" height="100%">
+						<s:fill>
+							<s:SolidColor color="black"/>
+						</s:fill>
+					</s:Rect>
+				</s:Group>
+				<!--s:Group id="SM_Shade" x="{SM.x}" y="{SM.y}" width="{SM.width}" height="{SM.height}" alpha="0" depth="{SM_Shade_Depth}" includeInLayout="false" visible="true">
+					<s:Rect width="100%" height="100%">
+						<s:fill>
+							<s:SolidColor color="black"/>
+						</s:fill>
+					</s:Rect>
+				</s:Group-->
+				<!--mx:Canvas id="SM" x="0" width="100%" height="100%" depth="{SM_Depth}">
+					<s:VGroup width="100%" height="100%">
+						<mx:AdvancedDataGrid width="{SM.width}" height="100%" rowCount="10">
+							<mx:columns>
+								<mx:AdvancedDataGridColumn width="{SM.width}" headerText="Submaster"/>
+						</mx:columns>
+					</mx:AdvancedDataGrid>
+					</s:VGroup>
+				</mx:Canvas-->
+				<mx:Canvas id="PM" x="0" width="100%" height="100%" depth="{PM_Depth}">
+					<s:VGroup width="100%" height="100%">
+						<mx:AdvancedDataGrid width="{PM.width}" height="100%" rowCount="10">
+							<mx:columns>
+								<mx:AdvancedDataGridColumn width="{PM.width}" headerText="Master"/>
+							</mx:columns>
+						</mx:AdvancedDataGrid>
+					</s:VGroup>
+				</mx:Canvas>
+				<!--s:Group id="SM_Cover" x="{D.x}" y="{D.y}" width="{D.width}" height="{D.height}" alpha="1" depth="{CM_Cover_Depth}" includeInLayout="true" visible="true">
+					<s:Rect width="100%" height="100%">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+					</s:Rect>
+				</s:Group-->
+				<s:Group id="CM_Cover" x="{D.x}" y="{D.y}" width="{D.width}" height="{D.height}" alpha="1" depth="{CM_Cover_Depth}" includeInLayout="true" visible="true">
+					<s:Rect width="100%" height="100%">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+					</s:Rect>
+				</s:Group>
+				<s:SkinnableContainer id="CM" x="{D.x}" width="{D.width}" height="{D.height}" depth="{CM_Initial_Depth}" includeInLayout="false" visible="true">
+					<mx:Canvas width="100%" height="100%">
+						<s:VGroup width="100%" height="100%">
+							<mx:AdvancedDataGrid id="CM_DG" width="100%" height="100%" rowCount="10">
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="{CM_DG.width}" headerText="Clipped master"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+					</mx:Canvas>
+				</s:SkinnableContainer>
+			</s:BorderContainer>
+			
+			<s:SkinnableContainer id="D" x="{HalfWidth}" width="100%" maxWidth="{HalfWidth}" height="100%" depth="{D_Depth}">
+				<mx:HDividedBox width="100%" height="100%" horizontalGap="10">
+					<mx:Canvas width="100%" height="100%"> <!--Left detail 1-->
+						<s:VGroup width="100%" height="100%">
+							<mx:AdvancedDataGrid id="PD_DG" width="100%" height="100%" rowCount="10">
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="{PD_DG.width}" headerText="Detail 1"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+					</mx:Canvas>
+					<mx:Canvas width="100%" height="100%"> <!--Right detail-->
+						<s:VGroup width="100%" height="100%">
+							<mx:AdvancedDataGrid id="SD_DG" width="100%" height="100%" rowCount="10">
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="{SD_DG.width}" headerText="Detail 2"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+					</mx:Canvas>
+				</mx:HDividedBox>					
+			</s:SkinnableContainer>
+			
+			<!--/s:SkinnableContainer-->
+		</mx:HDividedBox>		
+	</s:TitleWindow>
+	
+</s:Application>

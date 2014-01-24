@@ -15,34 +15,33 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="QSNM.mxml"/>
-    <application path="CAPlayPSTA.mxml"/>
     <application path="CA.mxml"/>
-    <application path="CAplay3.mxml"/>
-    <application path="CAplay4.mxml"/>
-    <application path="CAplay8.mxml"/>
+    <application path="CAPlayPSTA.mxml"/>
+    <application path="Juggle7.mxml"/>
     <application path="CAplay9-hmm.mxml"/>
-    <application path="CAPlayPSTA3.mxml"/>
     <application path="Juggle4.mxml"/>
-    <application path="wipe.mxml"/>
-    <application path="CAplay7.mxml"/>
-    <application path="CAplay5.mxml"/>
-    <application path="Juggle5.mxml"/>
     <application path="Juggle.mxml"/>
     <application path="Juggle3.mxml"/>
-    <application path="CAplay9.mxml"/>
-    <application path="CAplay2.mxml"/>
-    <application path="vstest.mxml"/>
-    <application path="CAplay.mxml"/>
-    <application path="Juggle2.mxml"/>
-    <application path="CAplay6.mxml"/>
-    <application path="CAPlayPSTA2.mxml"/>
-    <application path="hdiv.mxml"/>
-    <application path="Juggle6.mxml"/>
-    <application path="Juggle7.mxml"/>
     <application path="Juggle8.mxml"/>
+    <application path="Juggle2.mxml"/>
+    <application path="Juggle6.mxml"/>
+    <application path="CAplay3.mxml"/>
+    <application path="CAplay8.mxml"/>
+    <application path="CAplay4.mxml"/>
+    <application path="CAPlayPSTA3.mxml"/>
+    <application path="hdiv.mxml"/>
     <application path="CAPlayPSTA4.mxml"/>
     <application path="CAPlayPSTA5.mxml"/>
+    <application path="wipe.mxml"/>
+    <application path="CAPlayPSTA2.mxml"/>
+    <application path="CAplay7.mxml"/>
+    <application path="Juggle5.mxml"/>
+    <application path="CAplay5.mxml"/>
+    <application path="CAplay9.mxml"/>
+    <application path="CAplay2.mxml"/>
+    <application path="CAplay.mxml"/>
+    <application path="vstest.mxml"/>
+    <application path="CAplay6.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

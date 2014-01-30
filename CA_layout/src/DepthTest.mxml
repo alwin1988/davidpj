@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:HGroup width="600">
+		<mx:Box width="100" height="100" borderVisible="true"/>
+		
+	<mx:HDividedBox width="400" horizontalGap="0">
+		<s:BorderContainer width="100%" includeInLayout="true" visible="true">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<s:Group x="-10" width="0" depth="3">
+				<s:Button label="ButtonA"/>
+			</s:Group>
+			<s:Group width="100%" depth="2">
+				<s:Button label="ButtonB"/>
+			</s:Group>
+		</s:BorderContainer>
+		<s:BorderContainer width="100%" includeInLayout="true" visible="true">
+			<s:layout>
+				<s:BasicLayout clipAndEnableScrolling="true"/>
+			</s:layout>
+			<s:Group width="25%" depth="7">
+				<s:Button label="ButtonC"/>
+			</s:Group>
+			<s:Group width="25%" depth="8">
+				<s:Button label="ButtonD"/>
+			</s:Group>
+				<mx:HDividedBox width="50%" depth="0">
+					<s:Group width="50%">
+						<s:Button label="ButtonE"/>
+					</s:Group>
+					<s:Group width="50%">
+						<s:Button label="ButtonF"/>
+					</s:Group>	
+				</mx:HDividedBox>	
+		</s:BorderContainer>
+	</mx:HDividedBox>
+		
+		
+	</s:HGroup>
+	
+</s:Application>
+
+<!--I thought it was cashflow.  You said November was best ever so I figured it was a timing issue.
+You told me about layoffs.  I did not know it was due to financial, just that they were not the right people".
+I was not asking for money.  Just the courtesy of letting him know in case he did not.
+Lack of empathy?  About what?  I don't know if there are cashflow problems.  I'm not only working for free, I'm paying the team.
+You told me it was a perception problem.  I told you I could ...
+Niels said SUC did not require a client.
+He characterized plans as long-term which made me think he had things in hand.
+Praeme's future and expectations-->
+<!--Shit wifi; 1 power outlet; no chair; mosquitos-->

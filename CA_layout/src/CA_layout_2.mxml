@@ -2,7 +2,7 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
-	
+		
 	<fx:Declarations>
 		<s:Fade id="FadePM_ShadeOn" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
 		<s:Fade id="FadePM_ShadeOff" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
@@ -10,6 +10,7 @@
 		<s:Fade id="FadeSM_ShadeOff" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 		<!--s:Fade id="FadeBBOut" target="{BB}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
 		<s:Fade id="FadeBBIn" target="{BB}" alphaFrom=".2" alphaTo="1" duration="{FadeDuration}"/-->
+		
 		<s:Animate id="SlideSMIn" target="{SM}" duration="{SlideDuration}">
 			<s:SimpleMotionPath property="x" valueFrom="{SM.x}" valueTo="{M.x+SM_Indent}"/>
 		</s:Animate>
@@ -21,6 +22,13 @@
 		</s:Animate>
 		<s:Animate id="SlideVMOut" target="{VM}" duration="{SlideDuration}">
 			<s:SimpleMotionPath property="x" valueFrom="{VM.x}" valueTo="{D.x}"/>
+		</s:Animate>
+		<s:Animate id="SlideRMIn" target="{RM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+		</s:Animate>
+		<!--If use RM.x and D.x for this one it does not have slide effect-->
+		<s:Animate id="SlideRMOut" target="{RM}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
 		</s:Animate>
 	</fx:Declarations>
 	
@@ -37,17 +45,20 @@
 			[Bindable] private var VM_View:Boolean;
 						
 			[Bindable] private var FullWidth:Number=800;
-			[Bindable] private var HalfWidth:Number=400;
+			[Bindable] private var HalfWidth:Number=(FullWidth/2);
+			[Bindable] private var MidPoint:Number=((FullWidth/2)-(B0_Gap/2));
+			[Bindable] private var B0_Gap:Number=10;
+			[Bindable] private var B5_Gap:Number=10;
 			
 			[Bindable] private var Indent1:Number = 15;
 			[Bindable] private var Indent2:Number = 30;
 			[Bindable] private var Indent:Number;
-			[Bindable] private var SM_Indent:Number;
-			[Bindable] private var VM_Indent:Number;
+			[Bindable] private var SM_Indent:Number = Indent1;
+			[Bindable] private var VM_Indent:Number = Indent2;
 			[Bindable] private var FadeDuration:Number = 900;
-			[Bindable] private var SlideDuration:Number = 700;
+			[Bindable] private var SlideDuration:Number = 1200;
 			
-			[Bindable] private var NonShadeAlpha:Number = 1;
+			[Bindable] private var NonShadeAlpha:Number = .3;
 			[Bindable] private var FinalShadeAlpha:Number=.3;
 			[Bindable] private var PM_ShadeInitialAlpha:Number = 0;
 			[Bindable] private var SM_ShadeInitialAlpha:Number = 0;
@@ -55,10 +66,13 @@
 			[Bindable] private var SM_ShadeFinalAlpha:Number;
 			
 			[Bindable] private var PM_Depth:Number = 1;
-			[Bindable] private var PM_Shade_Depth:Number = 5;
-			[Bindable] private var SM_Depth:Number = 2;
-			[Bindable] private var SM_Shade_Depth:Number = 6;
-			[Bindable] private var VM_Depth:Number = 3;		
+			[Bindable] private var PM_Shade_Depth:Number = 2;
+			[Bindable] private var SM_Depth:Number = 3;
+			[Bindable] private var SM_Shade_Depth:Number = 4;
+			[Bindable] private var VM_Depth:Number = 5;
+			
+			[Bindable] private var HD_Depth:Number = 6;
+			[Bindable] private var RM_Depth:Number = 7;	
 			
 			/*private function VM_View():void
 			{
@@ -99,51 +113,64 @@
 		]]>
 	</fx:Script>
 	
-	<s:HGroup>
-		<s:Button label="PM_Shade on" click="VM_View=true; SetViewStuff(); PM_Shade.includeInLayout=true; PM_Shade.visible=true; FadePM_ShadeOn.play()"/>
-		<s:Button label="PM_Shade off" click="FadePM_ShadeOff.play()"/>
-		<s:Button label="SM_Shade on" click="SM_View=true; SetViewStuff(); SM_Shade.includeInLayout=true; SM_Shade.visible=true; FadeSM_ShadeOn.play()"/>
-		<s:Button label="SM_Shade off" click="FadeSM_ShadeOff.play()"/>
-		<!--s:Button label="VM_Slide in" click="VM_Indent=Indent1; VM.includeInLayout=true; VM.alpha=1; SlideVMIn.play()"/>
-		<s:Button label="VM_Slide out" click="SlideVMOut.play()"/-->
-		<s:Button label="Do SM_SM" click="
-				  SM_View=true;
-				  SetViewStuff();
-				  FadePM_ShadeOn.play(); 
-				  SlideSMIn.play();
-				  "/>
-		<s:Button label="Undo SM" click="
-				  SM_View=false;
-				  SlideSMOut.play();
-				  FadePM_ShadeOff.play();
-				  "/>
-		<s:Button label="Do VM" click="
-				  VM_View=true;
-				  SetViewStuff();
-				  VM.height=M.height;
-				  FadePM_ShadeOn.play();
-				  SlideVMIn.play();
-				  "/>
-		<s:Button label="Undo VM" click="
-				  VM_View=false;
-				  SlideVMOut.play();
-				  FadePM_ShadeOff.play();
-				  "/>
-	</s:HGroup>
+	<s:VGroup width="100%">
+		<s:HGroup>
+			<s:Button label="PM_Shade on" click="VM_View=true; PM_Shade.includeInLayout=true; PM_Shade.visible=true; FadePM_ShadeOn.play()"/>
+			<s:Button label="PM_Shade off" click="FadePM_ShadeOff.play()"/>
+			<s:Button label="SM_Shade on" click="SM_View=true; SM_Shade.includeInLayout=true; SM_Shade.visible=true; FadeSM_ShadeOn.play()"/>
+			<s:Button label="SM_Shade off" click="FadeSM_ShadeOff.play()"/>
+			<!--s:Button label="VM_Slide in" click="VM_Indent=Indent1; VM.includeInLayout=true; VM.alpha=1; SlideVMIn.play()"/>
+			<s:Button label="VM_Slide out" click="SlideVMOut.play()"/-->
+			<s:Button label="Do SM" click="
+					  SM_View=true;
+					  FadePM_ShadeOn.play(); 
+					  SlideSMIn.play();
+					  "/>
+			<s:Button label="Undo SM" click="
+					  SM_View=false;
+					  SlideSMOut.play();
+					  FadePM_ShadeOff.play();
+					  "/>
+			<s:Button label="Do VM" click="
+					  VM_View=true;
+					  VM.height=M.height;
+					  FadePM_ShadeOn.play();
+					  SlideVMIn.play();
+					  "/>
+			<s:Button label="Undo VM" click="
+					  VM_View=false;
+					  SlideVMOut.play();
+					  FadePM_ShadeOff.play();
+					  "/>
+			<s:Button label="SMIn" click="SlideSMIn.play()"/>
+			<s:Button label="SMOut" click="SlideSMOut.play()"/>
+			<s:Button label="VMIn" click="SlideVMIn.play()"/>
+			<s:Button label="VMOut" click="SlideVMOut.play()"/>
+			<s:Button label="RMIn" click="SlideRMIn.play()"/>
+			<s:Button label="RMOut" click="SlideRMOut.play()"/>
+			
+		</s:HGroup>
+		<s:HGroup paddingLeft="0" paddingRight="0" gap="0">
+			<s:Spacer width="99"/>
+			<mx:HRule width="{MidPoint}" strokeColor="red"/>
+			<mx:HRule width="{MidPoint}" strokeColor="blue"/>
+		</s:HGroup>
+	</s:VGroup>
 	
-	<s:TitleWindow x="100" y="100" width="{FullWidth}" height="300" dropShadowVisible="false">
-		<mx:HDividedBox id="B0" width="100%" height="100%" horizontalGap="0">
+	<s:TitleWindow id="TW" x="100" y="100" width="{FullWidth}" height="300" dropShadowVisible="false">
+		<!--This should be an HDividedBox but due to issues with sizing the boxes am making it an HGroup for now, with equal sides-->
+		<mx:HDividedBox id="B0" width="100%" height="100%" horizontalGap="{B0_Gap}" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
 			
 			<!--Stage left-->
 			<!--All children are groups with x/y and alpha and depth-->
-			<s:Group id="M" width="100%" minWidth="{HalfWidth}" maxWidth="{FullWidth}" height="100%"> <!--Don't set alpha on this but rather its children-->
+			<s:BorderContainer id="M" width="100%" height="100%" borderColor="red"> <!--Don't set alpha on this but rather its children-->
 				<s:layout>
 					<s:BasicLayout clipAndEnableScrolling="true"/>
 				</s:layout>
-				<s:Group id="PM" x="0" width="100%" height="100%" alpha="{NonShadeAlpha}" depth="{PM_Depth}">
+				<s:Group id="PM" x="0" y="0" width="{M.width}" height="100%" alpha="{NonShadeAlpha}" depth="{PM_Depth}">
 					<mx:Canvas width="100%" height="100%">
-						<s:VGroup width="100%" height="100%">
-							<mx:AdvancedDataGrid width="{PM.width}" height="100%" rowCount="10" editable="true">
+						<s:VGroup y="0" width="100%" height="100%">
+							<mx:AdvancedDataGrid width="{PM.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
 								<mx:columns>
 									<mx:AdvancedDataGridColumn width="{PM.width}" headerText="PM - Primary Master" editable="true"/>
 								</mx:columns>
@@ -151,7 +178,7 @@
 						</s:VGroup>
 					</mx:Canvas>
 				</s:Group>
-				<s:Group id="SM" x="{HalfWidth}" width="{M.width-SM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{SM_Depth}" includeInLayout="true" visible="true">
+				<s:Group id="SM" x="{D.x}" y="0" width="{M.width-SM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{SM_Depth}" includeInLayout="true" visible="true">
 					<mx:Canvas width="100%" height="100%">
 						<s:VGroup width="100%" height="100%">
 							<mx:AdvancedDataGrid id="SM_DG" width="100%" height="100%" rowCount="10" editable="true">
@@ -164,7 +191,7 @@
 				</s:Group>
 				<!--Setting VM.x to D.x makes it vanish on B0 grip move so set it to a value that is off left stage-->
 				<!--VM is hidden under D even though it has a high depth because D is not Spark and doesn't follow depth-->
-				<s:Group id="VM" x="{HalfWidth}" width="{M.width-VM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{VM_Depth}" includeInLayout="true" visible="true">
+				<s:Group id="VM" x="{D.x}" width="{M.width-VM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{VM_Depth}" includeInLayout="true" visible="true">
 					<mx:Canvas width="100%" height="100%">
 						<s:VGroup width="100%" height="100%">
 							<mx:AdvancedDataGrid id="VM_DG" width="100%" height="100%" rowCount="10" editable="true">
@@ -189,31 +216,48 @@
 						</s:fill>
 					</s:Rect>
 				</s:Group>
-			</s:Group>
-			
+			</s:BorderContainer>
+					
 			<!--Stage right-->
-			<!--Depth has no effect for these because they are not Spark-->
-			<s:Group id="D" width="100%" maxWidth="{HalfWidth}" height="100%" visible="true">
-				<mx:HDividedBox width="100%" height="100%" horizontalGap="10">
+			<!--Depth has no effect for non- Spark-->
+			<s:Group id="D" width="100%" height="100%" visible="true" includeInLayout="true">
+				<s:layout>
+					<s:BasicLayout clipAndEnableScrolling="true"/>
+				</s:layout>
+				<!--If use a calculated value for x or M.x, it does not work properly or throws errors-->
+				<s:Group id="RM" x="{MidPoint}" width="{D.width}" height="100%" alpha="{NonShadeAlpha}" depth="{RM_Depth}" includeInLayout="true" visible="true">
 					<mx:Canvas width="100%" height="100%">
 						<s:VGroup width="100%" height="100%">
-							<mx:AdvancedDataGrid id="PD_DG" width="100%" height="100%" rowCount="10">
+							<mx:AdvancedDataGrid id="RM_DG" width="100%" height="100%" rowCount="10" editable="true">
 								<mx:columns>
-									<mx:AdvancedDataGridColumn width="{PD_DG.width}" headerText="PD - Primary Detail"/>
+									<mx:AdvancedDataGridColumn width="{RM_DG.width}" headerText="RM - Reference master" color="red"/>
 								</mx:columns>
 							</mx:AdvancedDataGrid>
 						</s:VGroup>
 					</mx:Canvas>
-					<mx:Canvas width="100%" height="100%">
-						<s:VGroup width="100%" height="100%">
-							<mx:AdvancedDataGrid id="SD_DG" width="100%" height="100%" rowCount="10">
-								<mx:columns>
-									<mx:AdvancedDataGridColumn width="{SD_DG.width}" headerText="SD - Secondary Detail"/>
-								</mx:columns>
-							</mx:AdvancedDataGrid>
-						</s:VGroup>
-					</mx:Canvas>
-				</mx:HDividedBox>					
+				</s:Group>
+				<s:Group id="HD" x="0" width="100%" height="100%" alpha="{NonShadeAlpha}" depth="{HD_Depth}" includeInLayout="true" visible="true">
+					<mx:HDividedBox width="100%" height="100%" horizontalGap="{B5_Gap}">
+						<mx:Canvas width="100%" height="100%">
+							<s:VGroup width="100%" height="100%">
+								<mx:AdvancedDataGrid id="PD_DG" width="100%" height="100%" rowCount="10">
+									<mx:columns>
+										<mx:AdvancedDataGridColumn width="{PD_DG.width}" headerText="PD - Primary Detail"/>
+									</mx:columns>
+								</mx:AdvancedDataGrid>
+							</s:VGroup>
+						</mx:Canvas>
+						<mx:Canvas width="100%" height="100%">
+							<s:VGroup width="100%" height="100%">
+								<mx:AdvancedDataGrid id="SD_DG" width="100%" height="100%" rowCount="10">
+									<mx:columns>
+										<mx:AdvancedDataGridColumn width="{SD_DG.width}" headerText="SD - Secondary Detail"/>
+									</mx:columns>
+								</mx:AdvancedDataGrid>
+							</s:VGroup>
+						</mx:Canvas>
+					</mx:HDividedBox>
+				</s:Group>
 			</s:Group>
 			
 		</mx:HDividedBox>		

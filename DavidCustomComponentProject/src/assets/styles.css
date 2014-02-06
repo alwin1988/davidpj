@@ -1,0 +1,218 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace component "component.*";
+@namespace components "com.shinynet.shinylib.components.*";
+@namespace pages "david.pages.*";
+
+.MagSoftBlue {
+	color: '0xC1DAD6';
+}
+
+.MagSoftOrange {
+	color: '0x315B7E';
+}
+
+.BackgroundBlue {
+	backgroundColor: '0x004F6C';
+}
+
+.ClientTitleText {
+	fontFamily: 'Arial Black';
+	fontSize: 24;
+	fontWeight: normal;
+	color: white; 
+}
+
+.ClientLabelLight {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: '0xC1DAD6';
+	kerning: true;
+}
+
+.ClientLabelDark {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.LoginSatus {
+	fontFamily: 'Arial Black';
+	fontSize: 11.5;
+	fontWeight: normal;
+	alpha: .9;
+}
+
+.LaunchButton {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+}
+.AlertNotifyMiniButton {
+	fontFamily: 'Arial';
+	fontSize: 8;
+	fontWeight: normal;
+	color: white;
+	emphasized: true;
+}
+
+.DashBoardButton {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 10;
+	fontWeight: normal;
+	color: black;
+	chromeColor: white;
+	kerning: true;
+}
+
+.SearchBox {
+	borderColor: '0xE3784E';
+	backgroundColor: 'C1DAD6';
+}
+
+.SearchBoxLabel {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 13;
+	fontWeight: normal;
+	kerning: true;
+}
+
+.DropDownListText {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11.5;
+	fontWeight: normal;
+	kerning: true;
+	rollOverColor: '0xC0C0C0';
+}
+
+.Gutter {
+	backgroundColor: #004F6C;
+	backgroundAlpha: .08;
+}
+
+.GutterOverlay {
+	backgroundColor: #004F6C;
+	backgroundAlpha: .16;
+}
+
+.MenuHeader {
+	borderColor: '0x004F6C';
+	backgroundColor: '0x004F6C';
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 13;
+	fontWeight: bold;
+	color: white;
+	kerning: true;
+}
+
+.MenuBody {
+	borderColor: '0x004F6C';
+	backgroundColor: '0xC1DAD6';
+	fontFamily: 'Arial Black';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+	rollOverColor: '0xE3784E';
+}
+
+.MenuBodyHeading {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.WM_PanelHeader {
+	backgroundColor: '0xC1DAD6';
+	chromeColor: '0x004F6C';
+	color: white;
+}
+
+.WM_PanelBody {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+	contentBackgroundColor: '0xC1DAD6';
+	chromeColor: '0x004F6C';
+}
+
+.TabText {
+	fontFamily: 'Arial Black';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.ControlButtonText {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.TitleWindowTitleText {
+	fontFamily: 'Arial';
+	fontSize: 12;
+	fontWeight: bold;
+	color: black;
+	kerning: true;
+}
+
+.DataGridHeader {
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+	color: black;
+	horizontalGridLinesColor: '0xA9A9A9';
+	vertialGridLinesColor: '0x767676';
+}
+
+.DataGridBody {
+	fontFamily: Arial;
+	fontSize: 10.5;
+	fontWeight: normal;
+	color: black;
+	horizontalGridLinesColor: '0xA9A9A9';
+	vertialGridLinesColor: '0x767676';
+}
+	
+.InsertButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: '0x0033CC';
+}
+
+.DeleteButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: '0xFF3300';
+}
+
+.SaveButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: '0x339933'
+}
+
+.CompletionBarLabel {
+	fontFamily: Arial;
+	fontSize: 9;
+	fontWeight: normal;
+	color: white;
+}

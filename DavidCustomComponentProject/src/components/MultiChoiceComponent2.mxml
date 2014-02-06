@@ -22,29 +22,9 @@
 			
 			[Bindable]
 			public var FF_m_AC2:ArrayCollection;
-			
-			[Bindable]
-			private var FF_m_AC:ArrayCollection = new ArrayCollection(
-				[
-					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						L1Label:"Field1L1Label", L2Label:"FieldL2Label", FieldControl:"TextInput", 
-						L1MultiLabel:"Field1L1MultiLabel", L2MultiLabel:"Field1L2MultiValue", L1MultiValue:"Field1L2MultiLabel", L2MultiValue:"Field1L1L2MultiValue",
-						Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						L1Label:"Field2L1Label", L2Label:"Field2L2Label", FieldControl:"DropDownList", 
-						L1MultiLabel:"Field2L1MultiLabel", L2MultiLabel:"Field2L2MultiValue", L1MultiValue:"Field2L2MultiLabel", L2MultiValue:"Field2L1L2MultiValue",
-						Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
-						Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", 
-						L1Label:"Field3L1Label", L2Label:"Field3L2Label", FieldControl:"TextInput", 
-						L1MultiLabel:"Field3L1MultiLabel", L2MultiLabel:"Field3L2MultiValue", L1MultiValue:"Field3L2MultiLabel", L2MultiValue:"Field3L1L2MultiValue",
-						Enabled:true, checked:false}
-				]);
 
 			[Bindable]
-			public var MVO_TB_AC;
+			public var MVO_TB_AC:ArrayCollection;
 			public function FF_m_DG_Value_MLMVO_TB_ChangeHandler(event:IndexChangeEvent):void{
 				
 			}
@@ -60,7 +40,7 @@
 						 headerHeight="0" rowHeight="20" rowCount="20"
 						 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 						 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-						 sortExpertMode="true" dataProvider="{FF_m_AC}"
+						 sortExpertMode="true" dataProvider="{FF_m_AC2}"
 						 headerStyleName="DataGridHeader" styleName="DataGridBody"
 						 >
 		<mx:columns>

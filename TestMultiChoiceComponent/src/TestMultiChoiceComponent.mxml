@@ -17,6 +17,7 @@
 			import components.MultiChoiceComponent2;
 			
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.events.AdvancedDataGridEvent;
 			import mx.events.IndexChangedEvent;
@@ -36,7 +37,7 @@
 			private var multiChoice:MultiChoiceComponent2;
 			private var SelectedLanguage:String;
 			
-			[bindable]
+			[Bindable]
 			private var FF_m_AC:ArrayCollection = new ArrayCollection(
 				[
 					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
@@ -56,7 +57,7 @@
 						Enabled:true, checked:false}
 				]);
 
-			[bindable]
+			[Bindable]
 			private var FF_m_AC2:ArrayCollection = new ArrayCollection(
 				[
 					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
@@ -75,14 +76,12 @@
 						L1MultiLabel:"Field3L1MultiLabel", L2MultiLabel:"Field3L2MultiValue", L1MultiValue:"Field3L2MultiLabel", L2MultiValue:"Field3L1L2MultiValue",
 						Enabled:true, checked:false}
 				]);
-			[bindable]
-			private var MVO_TB_AC:ArrayCollection = new ArrayCollection(
+			[Bindable]
+			public var MVO_TB_AC:ArrayCollection = new ArrayCollection(
 				[
 					{Entity:"TabLabel", ShortLabel:"EN", LongLabel:"EN-English", Data:"EN", LanguageString:"English"},
 					{Entity:"TabLabel", ShortLabel:"DE", LongLabel:"NL-Dutch", Data:"NL", LanguageString:"Dutch"}
 				]);
-			
-			[bindable]
 			
 			protected function FF_m_DG_Label_MVO_TabBarChangeHandler(event:IndexChangeEvent):void
 			{
@@ -173,15 +172,24 @@
 				PopUpManager.removePopUp(multiChoice);
 				multiChoice = new MultiChoiceComponent2();
 				multiChoice.FF_m_AC2 = this.FF_m_AC2;
-				multiChoice.x = 0;
-				multiChoice.y = 0;
-				//multiChoice.addEventListener(CloseEvent.CLOSE,closePopup);
-				//ttw.ld = data;
-				PopUpManager.addPopUp(multiChoice,skc,false);
+
 				trace(FF_m_DG.x);
 				trace(FF_m_DG.y);
 				//PopUpManager.addPopUp(multiChoice,FF_m_DG,false);
 				//PopUpManager.centerPopUp(ttw);
+				//var globalX:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).x;
+				//var globalY:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).y;
+				var arr:Array = FF_m_DG.columns;
+				var xPos:int = 0;
+				var yPos:int = 0;
+				for (var i:int = 0; i<event.columnIndex; i++){
+					xPos = xPos + AdvancedDataGridColumn(arr[i]).width;
+				}
+				//Alert.show(String(xPos));
+				multiChoice.x = xPos;
+				multiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1);
+				multiChoice.MVO_TB_AC = this.MVO_TB_AC;
+				PopUpManager.addPopUp(multiChoice,this,false);
 			}
 			
 			protected function FF_m_DG_itemEditEndHandler(event:AdvancedDataGridEvent):void
@@ -189,6 +197,7 @@
 				// TODO Auto-generated method stub
 				PopUpManager.removePopUp(multiChoice);
 			}
+			
 			
 		]]>
 	</fx:Script>

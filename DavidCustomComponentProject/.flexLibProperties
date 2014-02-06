@@ -7,7 +7,6 @@
     <classEntry path="components.MultiLabelComponent2"/>
     <classEntry path="components.MultiChoiceComponent"/>
     <classEntry path="components.MultiLabelComponent"/>
-    <classEntry path="components.MultiChoiceComponent1"/>
     <classEntry path="components.MultiLabelComponent1"/>
   </includeClasses>
   <includeResources/>

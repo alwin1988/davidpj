@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="394" height="112" gap="0">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<fx:Style source="css/Styles.css"/>
 	<fx:Script>
 		<![CDATA[
 			import spark.events.IndexChangeEvent;
@@ -28,7 +29,7 @@
 		change="FF_m_DG_Value_MLMVO_TB_ChangeHandler(event)"/>
 	</s:HGroup>
 	<mx:AdvancedDataGrid id="FF_m_DG_Value_MLMVO_DG"
-						 width="394" height="80" borderColor="blue" borderAlpha=".6" borderVisible="true"
+						 width="{this.width}" height="80" borderColor="blue" borderAlpha=".6" borderVisible="true"
 						 headerHeight="0" rowHeight="20" rowCount="20"
 						 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 						 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"

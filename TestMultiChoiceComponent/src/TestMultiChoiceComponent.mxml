@@ -36,6 +36,7 @@
 			
 			private var multiChoice:MultiChoiceComponent2;
 			private var SelectedLanguage:String;
+			private var popUpGapY:Number = 5;
 			
 			[Bindable]
 			private var FF_m_AC:ArrayCollection = new ArrayCollection(
@@ -187,7 +188,7 @@
 				}
 				//Alert.show(String(xPos));
 				multiChoice.x = xPos;
-				multiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1);
+				multiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + popUpGapY;
 				multiChoice.MVO_TB_AC = this.MVO_TB_AC;
 				PopUpManager.addPopUp(multiChoice,this,false);
 			}

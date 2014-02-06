@@ -7,7 +7,110 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import spark.events.IndexChangeEvent;
 			
+			[Bindable]
+			public var CheckBoxWidth:Number = 18; //CBW
+			public var CBW:Number = 18; //CheckBox width
+			public var InfoButtonWidth:Number = 18; //IBW
+			public var IBW:Number = 18; //Info Button width
+			public var EnabledToggleWidth:Number = 14; //ETW
+			public var ETW:Number = 14; //Enabled Toggle width
+			
+			public function FF_m_DG_Value_MLMVO_TB_ChangeHandler(event:IndexChangeEvent):void{
+				
+			}
 		]]>
 	</fx:Script>
+	<s:HGroup id="FF_m_DG_Value_MLMVO_HG" width="100%" height="{30}" horizontalAlign="center" gap="0">
+		<s:Spacer width="10"/>
+		<s:TabBar id="FF_m_DG_Value_MLMVO_TB" height="14" width="30" labelField="ShortLabel" chromeColor="white"
+		change="FF_m_DG_Value_MLMVO_TB_ChangeHandler(event)"/>
+	</s:HGroup>
+	<mx:AdvancedDataGrid id="FF_m_DG_Value_MLMVO_DG"
+						 width="394" height="80" borderColor="blue" borderAlpha=".6" borderVisible="true"
+						 headerHeight="0" rowHeight="20" rowCount="20"
+						 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+						 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
+						 sortExpertMode="true"
+						 headerStyleName="DataGridHeader" styleName="DataGridBody"
+						 >
+		<mx:columns>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Checkbox"
+									   dataField="checked"
+									   width="{CBW}"
+									   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+									   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+									   rendererIsEditor="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Information"
+									   width="{(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW}">
+				<mx:headerRenderer>
+					<fx:Component>
+						<mx:Box paddingLeft="2">
+							<s:Image width="85%" height="85%" source="@Embed('assets/iconinfo.png')"/>
+						</mx:Box>
+					</fx:Component>
+				</mx:headerRenderer>
+				<mx:itemRenderer>
+					<fx:Component>
+						<mx:Box paddingLeft="2">
+							<s:Image width="85%" height="85%" source="@Embed('assets/iconinfo.png')"/>
+						</mx:Box>
+					</fx:Component>
+				</mx:itemRenderer>
+			</mx:AdvancedDataGridColumn>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Enabled"
+									   dataField="Enabled"
+									   width="{(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW}">
+				<mx:headerRenderer>
+					<fx:Component>
+						<mx:Box paddingLeft="3.5">
+							<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
+						</mx:Box>
+					</fx:Component>
+				</mx:headerRenderer>
+				<mx:itemRenderer>
+					<fx:Component>
+						<mx:Box paddingLeft="3.5">
+							<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
+						</mx:Box>
+					</fx:Component>
+				</mx:itemRenderer>
+			</mx:AdvancedDataGridColumn>
+			
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L1MultiLabel" dataField="L1MultiLabel" width="160"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L2MultiLabel" dataField="L2MultiLabel" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L1MultiValue" dataField="L1MultiValue" width="160"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L2MultiValue" dataField="L2MultiValue" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Delete"
+									   width="24">
+				<mx:headerRenderer>
+					<fx:Component>
+						<mx:Box paddingLeft="2">
+							<s:Image width="85%" height="85%" source="@Embed('assets/delete.png')" buttonMode="true"/>
+						</mx:Box>
+					</fx:Component>
+				</mx:headerRenderer>
+				<mx:itemRenderer>
+					<fx:Component>
+						<mx:Box paddingLeft="2">
+							<s:Image width="85%" height="85%" source="@Embed('assets/delete.png')" buttonMode="true"/>
+						</mx:Box>
+					</fx:Component>
+				</mx:itemRenderer>
+			</mx:AdvancedDataGridColumn>
+		</mx:columns>
+	</mx:AdvancedDataGrid>
+
+	<s:BorderContainer width="100%" height="20" backgroundColor="gray" backgroundAlpha=".4" borderColor="blue" borderAlpha=".6" borderVisible="true">
+		<s:layout>
+			<s:HorizontalLayout paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2" gap="5" horizontalAlign="right"/>
+		</s:layout>
+		<s:Button label="Insert Above" width="100%" height="14" styleName="InsertButton" fontSize="10"/>
+		<s:Button label="Insert Below" width="100%" height="14" styleName="InsertButton" fontSize="10"/>
+		<s:Button label="Delete" width="100%" height="14" styleName="DeleteButton" fontSize="10"/>
+		<s:Spacer width="10"/>
+		<s:Button label="Save" width="100%" height="14" styleName="SaveButton" fontSize="10"/>
+		<s:Button label="Cancel" width="100%" height="14" styleName="DeleteButton" fontSize="10"/>
+	</s:BorderContainer>
 </s:VGroup>

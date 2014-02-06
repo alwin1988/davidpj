@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" width="394" height="112" gap="0">
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="394" height="112" gap="0" x="0" y="0">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<fx:Style source="css/Styles.css"/>
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
 			import spark.events.IndexChangeEvent;
 			
 			[Bindable]
@@ -18,11 +20,38 @@
 			public var EnabledToggleWidth:Number = 14; //ETW
 			public var ETW:Number = 14; //Enabled Toggle width
 			
+			[bindable]
+			public var FF_m_AC2:ArrayCollection;
+			/* [bindable]
+			private var FF_m_AC:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
+						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
+						L1Label:"Field1L1Label", L2Label:"FieldL2Label", FieldControl:"TextInput", 
+						L1MultiLabel:"Field1L1MultiLabel", L2MultiLabel:"Field1L2MultiValue", L1MultiValue:"Field1L2MultiLabel", L2MultiValue:"Field1L1L2MultiValue",
+						Enabled:true, checked:false},
+					{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
+						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
+						L1Label:"Field2L1Label", L2Label:"Field2L2Label", FieldControl:"DropDownList", 
+						L1MultiLabel:"Field2L1MultiLabel", L2MultiLabel:"Field2L2MultiValue", L1MultiValue:"Field2L2MultiLabel", L2MultiValue:"Field2L1L2MultiValue",
+						Enabled:true, checked:false},
+					{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
+						Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", 
+						L1Label:"Field3L1Label", L2Label:"Field3L2Label", FieldControl:"TextInput", 
+						L1MultiLabel:"Field3L1MultiLabel", L2MultiLabel:"Field3L2MultiValue", L1MultiValue:"Field3L2MultiLabel", L2MultiValue:"Field3L1L2MultiValue",
+						Enabled:true, checked:false}
+				]); */
+			
 			public function FF_m_DG_Value_MLMVO_TB_ChangeHandler(event:IndexChangeEvent):void{
 				
 			}
 		]]>
 	</fx:Script>
+	<s:Rect width="100%" height="100%">
+		<s:stroke>
+			<s:SolidColorStroke color="0x000000" weight="2" />
+		</s:stroke>
+	</s:Rect>
 	<s:HGroup id="FF_m_DG_Value_MLMVO_HG" width="100%" height="{30}" horizontalAlign="center" gap="0">
 		<s:Spacer width="10"/>
 		<s:TabBar id="FF_m_DG_Value_MLMVO_TB" height="14" width="30" labelField="ShortLabel" chromeColor="white"
@@ -33,7 +62,7 @@
 						 headerHeight="0" rowHeight="20" rowCount="20"
 						 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 						 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-						 sortExpertMode="true"
+						 sortExpertMode="true" dataProvider="{FF_m_AC2}"
 						 headerStyleName="DataGridHeader" styleName="DataGridBody"
 						 >
 		<mx:columns>

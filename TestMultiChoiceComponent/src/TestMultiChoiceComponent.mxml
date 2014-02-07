@@ -37,6 +37,7 @@
 			private var multiChoice:MultiChoiceComponent2;
 			private var SelectedLanguage:String;
 			private var popUpGapY:Number = 5;
+			private var popUpGapX:Number = 4;
 			
 			[Bindable]
 			private var FF_m_AC:ArrayCollection = new ArrayCollection(
@@ -187,16 +188,20 @@
 					xPos = xPos + AdvancedDataGridColumn(arr[i]).width;
 				}
 				//Alert.show(String(xPos));
-				multiChoice.x = xPos;
+				multiChoice.x = xPos - multiChoice.FF_m_DG_Value_MLMVO_DG_Checkbox.width - 
+					multiChoice.FF_m_DG_Value_MLMVO_DG_Information.width - 
+					multiChoice.FF_m_DG_Value_MLMVO_DG_Enabled.width + popUpGapX;
 				multiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + popUpGapY;
+				multiChoice.width = multiChoice.width - multiChoice.FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width + AdvancedDataGridColumn(arr[event.columnIndex]).width;
 				multiChoice.MVO_TB_AC = this.MVO_TB_AC;
+				multiChoice.FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width = AdvancedDataGridColumn(arr[event.columnIndex]).width;
 				PopUpManager.addPopUp(multiChoice,this,false);
 			}
 			
 			protected function FF_m_DG_itemEditEndHandler(event:AdvancedDataGridEvent):void
 			{
 				// TODO Auto-generated method stub
-				PopUpManager.removePopUp(multiChoice);
+				//PopUpManager.removePopUp(multiChoice);
 			}
 			
 			
@@ -318,9 +323,9 @@
 							</mx:itemRenderer>
 						</mx:AdvancedDataGridColumn>
 						<mx:AdvancedDataGridColumn id="FID_Value" headerText="Initial Value" dataField="InitialValue" width="160" />
-						<mx:AdvancedDataGridColumn id="TestCol1" headerText="TestCol1" dataField="InitialValue" width="160" />
-						<mx:AdvancedDataGridColumn id="TestCol2" headerText="TestCol2" dataField="InitialValue" width="160" />
-						<mx:AdvancedDataGridColumn id="TestCol3" headerText="TestCol3" dataField="InitialValue" width="160" />
+						<mx:AdvancedDataGridColumn id="TestCol1" headerText="TestCol1" dataField="L1Label" width="160" />
+						<mx:AdvancedDataGridColumn id="TestCol2" headerText="TestCol2" dataField="L1Label" width="160" />
+						<mx:AdvancedDataGridColumn id="TestCol3" headerText="TestCol3" dataField="L1Label" width="160" />
 					</mx:columns>
 				</mx:AdvancedDataGrid>
 				

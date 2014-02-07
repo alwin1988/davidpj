@@ -52,7 +52,7 @@
 						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
 						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false}
 				]);
-
+			
 			[Bindable]
 			private var FF_ObjId_1_AC:ArrayCollection = new ArrayCollection(
 				[
@@ -92,27 +92,27 @@
 				
 				if (TB_Data.Data == "EN") //English
 				{
-					SelectedLanguage='EN';
-					FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='on';
-					FF_m_DG_Label_MVO_DG_L1Label.width=120;
-					FF_m_DG_Label_MVO_DG_L1Label.visible=true;
-					FF_m_DG_Label_MVO_DG_L2Label.width=0;
-					FF_m_DG_Label_MVO_DG_L2Label.visible=false;
-					FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='off';
-					FF_m_DG_Label_MVO_VG.width=120;
-					FF_m_DG_Label_MVO_DG.width=120;
+				SelectedLanguage='EN';
+				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='on';
+				FF_m_DG_Label_MVO_DG_L1Label.width=120;
+				FF_m_DG_Label_MVO_DG_L1Label.visible=true;
+				FF_m_DG_Label_MVO_DG_L2Label.width=0;
+				FF_m_DG_Label_MVO_DG_L2Label.visible=false;
+				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='off';
+				FF_m_DG_Label_MVO_VG.width=120;
+				FF_m_DG_Label_MVO_DG.width=120;
 				}
 				if (TB_Data.Data == "NL") //Dutch
 				{
-					SelectedLanguage='NL';
-					FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='on';
-					FF_m_DG_Label_MVO_DG_L1Label.width=120;
-					FF_m_DG_Label_MVO_DG_L1Label.visible=true;
-					FF_m_DG_Label_MVO_DG_L2Label.width=120;
-					FF_m_DG_Label_MVO_DG_L2Label.visible=true;
-					FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='off';
-					FF_m_DG_Label_MVO_VG.width=240;
-					FF_m_DG_Label_MVO_VG.width=240;
+				SelectedLanguage='NL';
+				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='on';
+				FF_m_DG_Label_MVO_DG_L1Label.width=120;
+				FF_m_DG_Label_MVO_DG_L1Label.visible=true;
+				FF_m_DG_Label_MVO_DG_L2Label.width=120;
+				FF_m_DG_Label_MVO_DG_L2Label.visible=true;
+				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='off';
+				FF_m_DG_Label_MVO_VG.width=240;
+				FF_m_DG_Label_MVO_VG.width=240;
 				}
 				*/
 			}
@@ -124,43 +124,43 @@
 				
 				if (TB_Data.Data == "EN") //English
 				{
-					SelectedLanguage='EN';
-					FF_m_DG_Value_MLMVO_VG.width=394;
-					FF_m_DG_Value_MLMVO_DG.width=394;
-					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
-					FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
-					FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
-					FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
-					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
-					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
-					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
-					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=false;
-					FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
-					FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
-					FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
-					FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=false;
-					FF_m_DG_Value_MLMVO_DG_Delete.width=24;
-					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
+				SelectedLanguage='EN';
+				FF_m_DG_Value_MLMVO_VG.width=394;
+				FF_m_DG_Value_MLMVO_DG.width=394;
+				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
+				FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
+				FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
+				FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
+				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
+				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
+				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
+				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=false;
+				FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
+				FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
+				FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
+				FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=false;
+				FF_m_DG_Value_MLMVO_DG_Delete.width=24;
+				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
 				}
 				if (TB_Data.Data == "NL") //Dutch
 				{
-					SelectedLanguage='NL';
-					FF_m_DG_Value_MLMVO_VG.width=734;
-					FF_m_DG_Value_MLMVO_DG.width=734;
-					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
-					FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
-					FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
-					FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
-					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
-					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
-					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
-					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=true;
-					FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
-					FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
-					FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
-					FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=true;
-					FF_m_DG_Value_MLMVO_DG_Delete.width=24;
-					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
+				SelectedLanguage='NL';
+				FF_m_DG_Value_MLMVO_VG.width=734;
+				FF_m_DG_Value_MLMVO_DG.width=734;
+				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
+				FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
+				FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
+				FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
+				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
+				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
+				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
+				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=true;
+				FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
+				FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
+				FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
+				FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=true;
+				FF_m_DG_Value_MLMVO_DG_Delete.width=24;
+				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
 				}
 				*/
 			}
@@ -174,7 +174,7 @@
 				PopUpManager.removePopUp(multiChoice);
 				multiChoice = new MultiChoiceComponent2();
 				multiChoice.FF_m_AC2 = this.FF_ObjId_1_AC;
-
+				
 				trace(FF_m_DG.x);
 				trace(FF_m_DG.y);
 				//PopUpManager.addPopUp(multiChoice,FF_m_DG,false);
@@ -211,9 +211,9 @@
 	<s:SkinnableContainer id="skc" width="100%" height="100%">
 		
 		<components:CustomTitleWindow title="Field Master"
-									 x="0" y="0" depth="1"
-									 width="100%" height="200" headerHeight="18" borderVisible="true" dropShadowVisible="false"
-									 skinClass="skin.CustomTitleWindowSkin">
+									  x="0" y="0" depth="1"
+									  width="100%" height="200" headerHeight="18" borderVisible="true" dropShadowVisible="false"
+									  skinClass="skin.CustomTitleWindowSkin">
 			
 			<s:VGroup width="100%" height="100%">
 				
@@ -310,13 +310,13 @@
 											]]>
 										</fx:Script>
 										<components:CustomDropDownList id="FC_DD"
-																	  width="100%" height="100%" 
-																	  verticalCenter="0" dropShadowVisible="false" visible="true"
-																	  mouseEnabled="true" enabled="true" 
-																	  styleName="DropDownListText"
-																	  dataProvider="{FC_AC}" labelField="Label"
-																	  creationComplete="FC_DD_creationCompleteHandler(event)"
-																	  change="AssignFieldControl(event)">																			
+																	   width="100%" height="100%" 
+																	   verticalCenter="0" dropShadowVisible="false" visible="true"
+																	   mouseEnabled="true" enabled="true" 
+																	   styleName="DropDownListText"
+																	   dataProvider="{FC_AC}" labelField="Label"
+																	   creationComplete="FC_DD_creationCompleteHandler(event)"
+																	   change="AssignFieldControl(event)">																			
 										</components:CustomDropDownList>
 									</mx:VBox>
 								</fx:Component>

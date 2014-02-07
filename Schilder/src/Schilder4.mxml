@@ -15,6 +15,7 @@
 		<![CDATA[
 			import mx.charts.BubbleChart;
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.utils.ObjectUtil;
 			
 			[Bindable] public var PlateCharacterWidth:Number = 35;
@@ -310,8 +311,8 @@
 				platebutton.label = keypadbutton.label;
 				platebutton.label = 'ABC';
 				platebutton.setStyle('fontColor', 'black');
-				//platebutton.styleName = 'PlateTextLarge';
-				//platebutton.setStyle('baseColor', PlateColor);
+				platebutton.styleName = 'PlateTextLarge';
+				platebutton.setStyle('baseColor', PlateColor);
 				platebutton.setStyle('skinClass', InvisibleButtonSkin);
 				
 				PlateInnerContentContainer.addElement(platebutton);	

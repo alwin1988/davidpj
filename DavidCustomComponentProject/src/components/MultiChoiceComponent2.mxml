@@ -15,11 +15,11 @@
 			
 			[Bindable]
 			public var CheckBoxWidth:Number = 18; //CBW
-			public var CBW:Number = 25; //CheckBox width
+			public var CBW:Number = 18; //CheckBox width
 			public var InfoButtonWidth:Number = 18; //IBW
-			public var IBW:Number = 25; //Info Button width
+			public var IBW:Number = 18; //Info Button width
 			public var EnabledToggleWidth:Number = 14; //ETW
-			public var ETW:Number = 25; //Enabled Toggle width
+			public var ETW:Number = 14; //Enabled Toggle width
 			
 			[Bindable]
 			public var FF_m_AC2:ArrayCollection;

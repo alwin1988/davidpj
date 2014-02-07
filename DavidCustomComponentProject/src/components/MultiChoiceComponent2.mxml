@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
-		  xmlns:mx="library://ns.adobe.com/flex/mx" width="394" height="112" gap="0" x="0" y="0">
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="394" height="112" gap="0" x="0" y="0" focusOut="vgroup1_focusOutHandler(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -9,6 +9,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
 			
 			import spark.events.IndexChangeEvent;
 			
@@ -22,18 +23,66 @@
 			
 			[Bindable]
 			public var FF_m_AC2:ArrayCollection;
-
+			private var SelectedLanguage:String;
 			[Bindable]
 			public var MVO_TB_AC:ArrayCollection;
 			public function FF_m_DG_Value_MLMVO_TB_ChangeHandler(event:IndexChangeEvent):void{
+				var TB_Data:Object = event.target.selectedItem as Object;
 				
+				if (TB_Data.Data == "EN") //English
+				{
+					SelectedLanguage='EN';
+					//FF_m_DG_Value_MLMVO_VG.width=394;
+					FF_m_DG_Value_MLMVO_DG.width=394;
+					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
+					FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
+					FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
+					FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
+					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
+					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
+					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
+					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=false;
+					FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
+					FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
+					FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
+					FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=false;
+					FF_m_DG_Value_MLMVO_DG_Delete.width=24;
+					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
+				}
+				if (TB_Data.Data == "NL") //Dutch
+				{
+					SelectedLanguage='NL';
+					//FF_m_DG_Value_MLMVO_VG.width=734;
+					FF_m_DG_Value_MLMVO_DG.width=734;
+					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
+					FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
+					FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
+					FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
+					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
+					FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
+					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
+					FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=true;
+					FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
+					FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
+					FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
+					FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=true;
+					FF_m_DG_Value_MLMVO_DG_Delete.width=24;
+					FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
+				}				
 			}
+			
+			protected function vgroup1_focusOutHandler(event:FocusEvent):void
+			{
+				// TODO Auto-generated method stub
+				PopUpManager.removePopUp(this);
+			}
+			
 		]]>
 	</fx:Script>
 	<s:HGroup id="FF_m_DG_Value_MLMVO_HG" width="100%" height="{14}" horizontalAlign="center" gap="0">
 		<!--<s:Spacer width="10"/>-->
 		<s:TabBar id="FF_m_DG_Value_MLMVO_TB" height="14" width="30" labelField="ShortLabel" chromeColor="white"
-		change="FF_m_DG_Value_MLMVO_TB_ChangeHandler(event)" dataProvider="{MVO_TB_AC}"/>
+		change="FF_m_DG_Value_MLMVO_TB_ChangeHandler(event)" dataProvider="{MVO_TB_AC}" focusOut="vgroup1_focusOutHandler(event)"/>
 	</s:HGroup>
 	<mx:AdvancedDataGrid id="FF_m_DG_Value_MLMVO_DG"
 						 width="{this.width}" height="80" borderColor="blue" borderAlpha=".6" borderVisible="true"
@@ -41,7 +90,7 @@
 						 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 						 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
 						 sortExpertMode="true" dataProvider="{FF_m_AC2}"
-						 headerStyleName="DataGridHeader" styleName="DataGridBody"
+						 headerStyleName="DataGridHeader" styleName="DataGridBody" focusOut="vgroup1_focusOutHandler(event)"
 						 >
 		<mx:columns>
 			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Checkbox"

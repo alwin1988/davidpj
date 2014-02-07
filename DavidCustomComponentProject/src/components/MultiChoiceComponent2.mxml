@@ -15,11 +15,11 @@
 			
 			[Bindable]
 			public var CheckBoxWidth:Number = 18; //CBW
-			public var CBW:Number = 18; //CheckBox width
+			public var CBW:Number = 25; //CheckBox width
 			public var InfoButtonWidth:Number = 18; //IBW
-			public var IBW:Number = 18; //Info Button width
+			public var IBW:Number = 25; //Info Button width
 			public var EnabledToggleWidth:Number = 14; //ETW
-			public var ETW:Number = 14; //Enabled Toggle width
+			public var ETW:Number = 25; //Enabled Toggle width
 			
 			[Bindable]
 			public var FF_m_AC2:ArrayCollection;
@@ -77,6 +77,18 @@
 				PopUpManager.removePopUp(this);
 			}
 			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				PopUpManager.removePopUp(this);
+			}
+			
 		]]>
 	</fx:Script>
 	<s:HGroup id="FF_m_DG_Value_MLMVO_HG" width="100%" height="{14}" horizontalAlign="center" gap="0">
@@ -95,7 +107,7 @@
 		<mx:columns>
 			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Checkbox"
 									   dataField="checked"
-									   width="{CBW}"
+									   width="{(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW}"
 									   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
 									   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 									   rendererIsEditor="false"/>
@@ -135,10 +147,14 @@
 				</mx:itemRenderer>
 			</mx:AdvancedDataGridColumn>
 			
-			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L1MultiLabel" dataField="L1MultiLabel" width="160"/>
-			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L2MultiLabel" dataField="L2MultiLabel" width="160" visible="false"/>
-			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L1MultiValue" dataField="L1MultiValue" width="160"/>
-			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L2MultiValue" dataField="L2MultiValue" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L1MultiLabel" dataField="Lang1Label" width="160"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L2MultiLabel" dataField="Lang2Label" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L3MultiLabel" dataField="Lang3Label" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L4MultiLabel" dataField="Lang4Label" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L1MultiValue" dataField="Lang1Value" width="160" visible="true"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L2MultiValue" dataField="Lang1Value" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L3MultiValue" dataField="Lang1Value" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_L4MultiValue" dataField="Lang1Value" width="160" visible="false"/>
 			<mx:AdvancedDataGridColumn id="FF_m_DG_Value_MLMVO_DG_Delete"
 									   width="24">
 				<mx:headerRenderer>
@@ -167,7 +183,7 @@
 		<s:Button label="Insert Below" width="100%" height="14" styleName="InsertButton" fontSize="10"/>
 		<s:Button label="Delete" width="100%" height="14" styleName="DeleteButton" fontSize="10"/>
 		<s:Spacer width="10"/>
-		<s:Button label="Save" width="100%" height="14" styleName="SaveButton" fontSize="10"/>
-		<s:Button label="Cancel" width="100%" height="14" styleName="DeleteButton" fontSize="10"/>
+		<s:Button label="Save" width="100%" height="14" styleName="SaveButton" fontSize="10" click="button2_clickHandler(event)"/>
+		<s:Button label="Cancel" width="100%" height="14" styleName="DeleteButton" fontSize="10" click="button1_clickHandler(event)"/>
 	</s:BorderContainer>
 </s:VGroup>

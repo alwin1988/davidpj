@@ -44,45 +44,45 @@
 				[
 					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
 						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						L1Label:"Field1L1Label", L2Label:"FieldL2Label", FieldControl:"TextInput", 
-						L1MultiLabel:"Field1L1MultiLabel", L2MultiLabel:"Field1L2MultiValue", L1MultiValue:"Field1L2MultiLabel", L2MultiValue:"Field1L1L2MultiValue",
-						Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
+						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false},
+					{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field2Description",
 						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						L1Label:"Field2L1Label", L2Label:"Field2L2Label", FieldControl:"DropDownList", 
-						L1MultiLabel:"Field2L1MultiLabel", L2MultiLabel:"Field2L2MultiValue", L1MultiValue:"Field2L2MultiLabel", L2MultiValue:"Field2L1L2MultiValue",
-						Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
-						Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", 
-						L1Label:"Field3L1Label", L2Label:"Field3L2Label", FieldControl:"TextInput", 
-						L1MultiLabel:"Field3L1MultiLabel", L2MultiLabel:"Field3L2MultiValue", L1MultiValue:"Field3L2MultiLabel", L2MultiValue:"Field3L1L2MultiValue",
-						Enabled:true, checked:false}
+						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false},
+					{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field3Description",
+						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
+						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false}
 				]);
 
 			[Bindable]
-			private var FF_m_AC2:ArrayCollection = new ArrayCollection(
+			private var FF_ObjId_1_AC:ArrayCollection = new ArrayCollection(
 				[
-					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						L1Label:"Field1L1Label", L2Label:"FieldL2Label", FieldControl:"TextInput", 
-						L1MultiLabel:"Field1L1MultiLabel", L2MultiLabel:"Field1L2MultiValue", L1MultiValue:"Field1L2MultiLabel", L2MultiValue:"Field1L1L2MultiValue",
+					{EntityType:"MultiChoice", ObjId:"1",
+						Lang1Label:"Lang1Label1", Lang1Value:"Lang1Label1",
+						Lang2Label:"Lang2Label1", Lang2Value:"Lang2Label1",
+						Lang3Label:"Lang3Label1", Lang3Value:"Lang3Label1",
+						Lang4Label:"Lang4Label1", Lang4Value:"Lang4Label1",
 						Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						L1Label:"Field2L1Label", L2Label:"Field2L2Label", FieldControl:"DropDownList", 
-						L1MultiLabel:"Field2L1MultiLabel", L2MultiLabel:"Field2L2MultiValue", L1MultiValue:"Field2L2MultiLabel", L2MultiValue:"Field2L1L2MultiValue",
+					{EntityType:"MultiChoice", ObjId:"1", 
+						Lang1Label:"Lang1Label2", Lang1Value:"Lang1Label2",
+						Lang2Label:"Lang2Label2", Lang2Value:"Lang2Label2",
+						Lang3Label:"Lang3Label2", Lang3Value:"Lang3Label2",
+						Lang4Label:"Lang4Label2", Lang4Value:"Lang4Label2",
 						Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
-						Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", 
-						L1Label:"Field3L1Label", L2Label:"Field3L2Label", FieldControl:"TextInput", 
-						L1MultiLabel:"Field3L1MultiLabel", L2MultiLabel:"Field3L2MultiValue", L1MultiValue:"Field3L2MultiLabel", L2MultiValue:"Field3L1L2MultiValue",
-						Enabled:true, checked:false}
+					{EntityType:"MultiChoice", ObjId:"1", 
+						Lang1Label:"Lang1Label3", Lang1Value:"Lang1Label3",
+						Lang2Label:"Lang2Label3", Lang2Value:"Lang2Label3",
+						Lang3Label:"Lang3Label3", Lang3Value:"Lang3Label3",
+						Lang4Label:"Lang4Label3", Lang4Value:"Lang4Label3",
+						Enabled:true, checked:false},
 				]);
+			
 			[Bindable]
 			public var MVO_TB_AC:ArrayCollection = new ArrayCollection(
 				[
-					{Entity:"TabLabel", ShortLabel:"EN", LongLabel:"EN-English", Data:"EN", LanguageString:"English"},
-					{Entity:"TabLabel", ShortLabel:"DE", LongLabel:"NL-Dutch", Data:"NL", LanguageString:"Dutch"}
+					{Entity:"TabLabel", LangNo:"1", ShortLabel:"EN", LongLabel:"EN-English", LanguageCode:"EN", LanguageString:"English"},
+					{Entity:"TabLabel", LangNo:"2", ShortLabel:"NL", LongLabel:"NL-Dutch", LanguageCode:"NL", LanguageString:"Dutch"},
+					{Entity:"TabLabel", LangNo:"3", ShortLabel:"FR", LongLabel:"FR-French", LanguageCode:"FR", LanguageString:"French"},
+					{Entity:"TabLabel", LangNo:"4", ShortLabel:"DE", LongLabel:"DE-German", LanguageCode:"DE", LanguageString:"German"},
 				]);
 			
 			protected function FF_m_DG_Label_MVO_TabBarChangeHandler(event:IndexChangeEvent):void
@@ -173,7 +173,7 @@
 				trace("rowIndex:" + event.rowIndex);
 				PopUpManager.removePopUp(multiChoice);
 				multiChoice = new MultiChoiceComponent2();
-				multiChoice.FF_m_AC2 = this.FF_m_AC2;
+				multiChoice.FF_m_AC2 = this.FF_ObjId_1_AC;
 
 				trace(FF_m_DG.x);
 				trace(FF_m_DG.y);

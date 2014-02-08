@@ -26,18 +26,33 @@
 			
 			import spark.events.IndexChangeEvent;
 			
-			[Bindable]
-			public var CheckBoxWidth:Number = 18; //CBW
-			public var CBW:Number = 18; //CheckBox width
-			public var InfoButtonWidth:Number = 18; //IBW
-			public var IBW:Number = 18; //Info Button width
-			public var EnabledToggleWidth:Number = 14; //ETW
-			public var ETW:Number = 14; //Enabled Toggle width
+			[Bindable] private var CheckBoxWidth:Number=14;		
+			[Bindable] private var CBW:Number=CheckBoxWidth;
+			[Bindable] private var InfoButtonWidth:Number=14;
+			[Bindable] private var IBW:Number=InfoButtonWidth;
+			[Bindable] private var DispositionToggleWidth:Number=10;
+			[Bindable] private var DTW:Number=DispositionToggleWidth;
+			[Bindable] private var DeleteButtonWidth:Number=14;
+			[Bindable] private var DBW:Number=DeleteButtonWidth;
 			
-			private var multiChoice:MultiChoiceComponent2;
+			private var MultiChoice:MultiChoiceComponent2;
 			private var SelectedLanguage:String;
 			private var popUpGapY:Number = 5;
 			private var popUpGapX:Number = 4;
+			
+			[Bindable]
+			private var ConfigValues:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"SysConfig", EntityName:"Language1Code:", EntityValue:"us_en", 
+						EntityString:"English", EntityIcon:"assets/flags/us.jpg"},
+					{EntityType:"SysConfig", EntityName:"Language2Code:", EntityValue:"nl_nl", 
+						EntityString:"Dutch", EntityIcon:"assets/flags/nl.jpg"},
+					{EntityType:"SysConfig", EntityName:"Language3Code:", EntityValue:"be_fr", 
+						EntityString:"French", EntityIcon:"assets/flags/fr.jpg"},
+					{EntityType:"SysConfig", EntityName:"Language4Code:", EntityValue:"de_de", 
+						EntityString:"German", EntityIcon:"assets/flags/de.jpg"},
+					{EntityType:"SysConfig", EntityName:"PrimaryLanguage:", EntityValue:"1"}
+				]);
 			
 			[Bindable]
 			private var FF_m_AC:ArrayCollection = new ArrayCollection(
@@ -52,132 +67,52 @@
 						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
 						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false}
 				]);
-			
+
 			[Bindable]
-			private var FF_ObjId_1_AC:ArrayCollection = new ArrayCollection(
+			private var FF_ObjId_n_AC:ArrayCollection = new ArrayCollection(
 				[
-					{EntityType:"MultiChoice", ObjId:"1",
-						Lang1Label:"Lang1Label1", Lang1Value:"Lang1Label1",
-						Lang2Label:"Lang2Label1", Lang2Value:"Lang2Label1",
-						Lang3Label:"Lang3Label1", Lang3Value:"Lang3Label1",
-						Lang4Label:"Lang4Label1", Lang4Value:"Lang4Label1",
-						Enabled:true, checked:false},
-					{EntityType:"MultiChoice", ObjId:"1", 
-						Lang1Label:"Lang1Label2", Lang1Value:"Lang1Label2",
-						Lang2Label:"Lang2Label2", Lang2Value:"Lang2Label2",
-						Lang3Label:"Lang3Label2", Lang3Value:"Lang3Label2",
-						Lang4Label:"Lang4Label2", Lang4Value:"Lang4Label2",
-						Enabled:true, checked:false},
-					{EntityType:"MultiChoice", ObjId:"1", 
-						Lang1Label:"Lang1Label3", Lang1Value:"Lang1Label3",
-						Lang2Label:"Lang2Label3", Lang2Value:"Lang2Label3",
-						Lang3Label:"Lang3Label3", Lang3Value:"Lang3Label3",
-						Lang4Label:"Lang4Label3", Lang4Value:"Lang4Label3",
-						Enabled:true, checked:false},
+					{EntityType:"MultiChoice", Sequence:"1", FieldName:"FieldName",
+						Lang1Label:"Lang1Label1", Lang1Value:"Lang1Value1",
+						Lang2Label:"Lang2Label1", Lang2Value:"Lang2Value1",
+						Lang3Label:"Lang3Label1", Lang3Value:"Lang3Value1",
+						Lang4Label:"Lang4Label1", Lang4Value:"Lang4Value1",
+						Disposition:"Enabled", checked:false},
+					{EntityType:"MultiChoice", Sequence:"2", FieldName:"FieldName",
+						Lang1Label:"Lang1Label2", Lang1Value:"Lang1Value2",
+						Lang2Label:"Lang2Label2", Lang2Value:"Lang2Value2",
+						Lang3Label:"Lang3Label2", Lang3Value:"Lang3Value2",
+						Lang4Label:"Lang4Label2", Lang4Value:"Lang4Value2",
+						Disposition:"Enabled", checked:false},
+					{EntityType:"MultiChoice", Sequence:"3", FieldName:"FieldName",
+						Lang1Label:"Lang1Label3", Lang1Value:"Lang1Value3",
+						Lang2Label:"Lang2Label3", Lang2Value:"Lang2Value3",
+						Lang3Label:"Lang3Label3", Lang3Value:"Lang3Value3",
+						Lang4Label:"Lang4Label3", Lang4Value:"Lang4Value3",
+						Disposition:"Enabled", checked:false},
 				]);
 			
 			[Bindable]
-			public var MVO_TB_AC:ArrayCollection = new ArrayCollection(
+			public var FF_MultiChoice_TB_AC:ArrayCollection = new ArrayCollection(
 				[
-					{Entity:"TabLabel", LangNo:"1", ShortLabel:"EN", LongLabel:"EN-English", LanguageCode:"EN", LanguageString:"English"},
-					{Entity:"TabLabel", LangNo:"2", ShortLabel:"NL", LongLabel:"NL-Dutch", LanguageCode:"NL", LanguageString:"Dutch"},
-					{Entity:"TabLabel", LangNo:"3", ShortLabel:"FR", LongLabel:"FR-French", LanguageCode:"FR", LanguageString:"French"},
-					{Entity:"TabLabel", LangNo:"4", ShortLabel:"DE", LongLabel:"DE-German", LanguageCode:"DE", LanguageString:"German"},
+					{Entity:"TabSpec", LangNo:"1", LangCode:"us_en", Label:"EN", Icon:"assets/flags/us.jpg", ToolTip:"English"},
+					{Entity:"TabSpec", LangNo:"2", LangCode:"nl_nl", Label:"NL", Icon:"assets/flags/nl.jpg", ToolTip:"Dutch"},
+					{Entity:"TabSpec", LangNo:"3", LangCode:"fr_fr", Label:"FR", Icon:"assets/flags/fr.jpg", ToolTip:"French"},
+					{Entity:"TabSpec", LangNo:"4", LangCode:"de_de", Label:"DE", Icon:"assets/flags/de.jpg", ToolTip:"German"},
 				]);
-			
-			protected function FF_m_DG_Label_MVO_TabBarChangeHandler(event:IndexChangeEvent):void
-			{
-				/*
-				var TB_Data:Object = event.target.selectedItem as Object;
-				
-				if (TB_Data.Data == "EN") //English
-				{
-				SelectedLanguage='EN';
-				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='on';
-				FF_m_DG_Label_MVO_DG_L1Label.width=120;
-				FF_m_DG_Label_MVO_DG_L1Label.visible=true;
-				FF_m_DG_Label_MVO_DG_L2Label.width=0;
-				FF_m_DG_Label_MVO_DG_L2Label.visible=false;
-				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='off';
-				FF_m_DG_Label_MVO_VG.width=120;
-				FF_m_DG_Label_MVO_DG.width=120;
-				}
-				if (TB_Data.Data == "NL") //Dutch
-				{
-				SelectedLanguage='NL';
-				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='on';
-				FF_m_DG_Label_MVO_DG_L1Label.width=120;
-				FF_m_DG_Label_MVO_DG_L1Label.visible=true;
-				FF_m_DG_Label_MVO_DG_L2Label.width=120;
-				FF_m_DG_Label_MVO_DG_L2Label.visible=true;
-				FF_m_DG_Label_MVO_DG.horizontalScrollPolicy='off';
-				FF_m_DG_Label_MVO_VG.width=240;
-				FF_m_DG_Label_MVO_VG.width=240;
-				}
-				*/
-			}
-			
-			protected function FF_m_DG_Value_MLMVO_TB_ChangeHandler(event:IndexChangeEvent):void
-			{				
-				/*
-				var TB_Data:Object = event.target.selectedItem as Object;
-				
-				if (TB_Data.Data == "EN") //English
-				{
-				SelectedLanguage='EN';
-				FF_m_DG_Value_MLMVO_VG.width=394;
-				FF_m_DG_Value_MLMVO_DG.width=394;
-				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
-				FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
-				FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
-				FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
-				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
-				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
-				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
-				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=false;
-				FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
-				FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
-				FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
-				FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=false;
-				FF_m_DG_Value_MLMVO_DG_Delete.width=24;
-				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
-				}
-				if (TB_Data.Data == "NL") //Dutch
-				{
-				SelectedLanguage='NL';
-				FF_m_DG_Value_MLMVO_VG.width=734;
-				FF_m_DG_Value_MLMVO_DG.width=734;
-				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='on';
-				FF_m_DG_Value_MLMVO_DG_Checkbox.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+CBW;
-				FF_m_DG_Value_MLMVO_DG_Information.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+IBW;
-				FF_m_DG_Value_MLMVO_DG_Enabled.width=(FF_m_DG_Value_MLMVO_DG.width-FF_m_DG_Value_MLMVO_DG.width)+ETW;
-				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width=160;
-				FF_m_DG_Value_MLMVO_DG_L1MultiLabel.visible=true;
-				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.width=160;
-				FF_m_DG_Value_MLMVO_DG_L2MultiLabel.visible=true;
-				FF_m_DG_Value_MLMVO_DG_L1MultiValue.width=160;
-				FF_m_DG_Value_MLMVO_DG_L1MultiValue.visible=true;
-				FF_m_DG_Value_MLMVO_DG_L2MultiValue.width=160;
-				FF_m_DG_Value_MLMVO_DG_L2MultiValue.visible=true;
-				FF_m_DG_Value_MLMVO_DG_Delete.width=24;
-				FF_m_DG_Value_MLMVO_DG.horizontalScrollPolicy='off';
-				}
-				*/
-			}
-			
+						
 			protected function FF_m_DG_itemEditBeginHandler(event:AdvancedDataGridEvent):void
 			{
 				// TODO Auto-generated method stub
 				trace("edit");
 				trace("columnIndex:" + event.columnIndex);
 				trace("rowIndex:" + event.rowIndex);
-				PopUpManager.removePopUp(multiChoice);
-				multiChoice = new MultiChoiceComponent2();
-				multiChoice.FF_m_AC2 = this.FF_ObjId_1_AC;
-				
+				PopUpManager.removePopUp(MultiChoice);
+				MultiChoice = new MultiChoiceComponent2();
+				MultiChoice.FF_ObjId_n_AC = this.FF_ObjId_n_AC;
+
 				trace(FF_m_DG.x);
 				trace(FF_m_DG.y);
-				//PopUpManager.addPopUp(multiChoice,FF_m_DG,false);
+				//PopUpManager.addPopUp(MultiChoice,FF_m_DG,false);
 				//PopUpManager.centerPopUp(ttw);
 				//var globalX:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).x;
 				//var globalY:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).y;
@@ -188,20 +123,21 @@
 					xPos = xPos + AdvancedDataGridColumn(arr[i]).width;
 				}
 				//Alert.show(String(xPos));
-				multiChoice.x = xPos - multiChoice.FF_m_DG_Value_MLMVO_DG_Checkbox.width - 
-					multiChoice.FF_m_DG_Value_MLMVO_DG_Information.width - 
-					multiChoice.FF_m_DG_Value_MLMVO_DG_Enabled.width + popUpGapX;
-				multiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + popUpGapY;
-				multiChoice.width = multiChoice.width - multiChoice.FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width + AdvancedDataGridColumn(arr[event.columnIndex]).width;
-				multiChoice.MVO_TB_AC = this.MVO_TB_AC;
-				multiChoice.FF_m_DG_Value_MLMVO_DG_L1MultiLabel.width = AdvancedDataGridColumn(arr[event.columnIndex]).width;
-				PopUpManager.addPopUp(multiChoice,this,false);
+				MultiChoice.x = xPos - MultiChoice.FF_MultiChoice_DG_Checkbox.width - 
+					MultiChoice.FF_MultiChoice_DG_Information.width - 
+					MultiChoice.FF_MultiChoice_DG_Disposition.width + popUpGapX;
+				MultiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + popUpGapY;
+				MultiChoice.width = MultiChoice.width - MultiChoice.FF_MultiChoice_DG_Lang1Label.width + 
+					AdvancedDataGridColumn(arr[event.columnIndex]).width;
+				MultiChoice.FF_MultiChoice_TB_AC = this.FF_MultiChoice_TB_AC;
+				MultiChoice.FF_MultiChoice_DG_Lang1Label.width = AdvancedDataGridColumn(arr[event.columnIndex]).width;
+				PopUpManager.addPopUp(MultiChoice,this,false);
 			}
 			
 			protected function FF_m_DG_itemEditEndHandler(event:AdvancedDataGridEvent):void
 			{
 				// TODO Auto-generated method stub
-				//PopUpManager.removePopUp(multiChoice);
+				//PopUpManager.removePopUp(MultiChoice);
 			}
 			
 			
@@ -211,9 +147,9 @@
 	<s:SkinnableContainer id="skc" width="100%" height="100%">
 		
 		<components:CustomTitleWindow title="Field Master"
-									  x="0" y="0" depth="1"
-									  width="100%" height="200" headerHeight="18" borderVisible="true" dropShadowVisible="false"
-									  skinClass="skin.CustomTitleWindowSkin">
+									 x="0" y="0" depth="1"
+									 width="100%" height="200" headerHeight="18" borderVisible="true" dropShadowVisible="false"
+									 skinClass="skin.CustomTitleWindowSkin">
 			
 			<s:VGroup width="100%" height="100%">
 				
@@ -233,40 +169,14 @@
 												   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 												   rendererIsEditor="false" editable="false"/>
 						<mx:AdvancedDataGridColumn id="FF_m_DG_Information"
-												   width="{(FF_m_DG.width-FF_m_DG.width)+IBW}" editable="false">
-							<mx:headerRenderer>
-								<fx:Component>
-									<mx:Box paddingLeft="2">
-										<s:Image width="85%" height="85%" source="@Embed('assets/iconinfo.png')"/>
-									</mx:Box>
-								</fx:Component>
-							</mx:headerRenderer>
-							<mx:itemRenderer>
-								<fx:Component>
-									<mx:Box paddingLeft="2">
-										<s:Image width="85%" height="85%" source="@Embed('assets/iconinfo.png')"/>
-									</mx:Box>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_Enabled"
-												   dataField="Enabled"
-												   width="{(FF_m_DG.width-FF_m_DG.width)+ETW}">
-							<mx:headerRenderer>
-								<fx:Component>
-									<mx:Box paddingLeft="3.5">
-										<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
-									</mx:Box>
-								</fx:Component>
-							</mx:headerRenderer>
-							<mx:itemRenderer>
-								<fx:Component>
-									<mx:Box paddingLeft="3.5">
-										<s:ToggleButton width="8" height="14" cornerRadius="3" chromeColor="green"/>
-									</mx:Box>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
+												   width="{(FF_m_DG.width-FF_m_DG.width)+IBW}" editable="false"
+												   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+												   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+						<mx:AdvancedDataGridColumn id="FF_m_DG_Disposition"
+												   dataField="Disposition"
+												   width="{(FF_m_DG.width-FF_m_DG.width)+DTW}"
+												   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+												   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
 						<mx:AdvancedDataGridColumn id="FF_m_DG_Label" headerText="Field Label" dataField="Label" width="120" editable="true"/>
 						<mx:AdvancedDataGridColumn id="FF_m_DG_FieldControl" headerText="Field Control" dataField="FieldControl" width="120" editable="false">
 							<mx:itemRenderer>
@@ -310,22 +220,22 @@
 											]]>
 										</fx:Script>
 										<components:CustomDropDownList id="FC_DD"
-																	   width="100%" height="100%" 
-																	   verticalCenter="0" dropShadowVisible="false" visible="true"
-																	   mouseEnabled="true" enabled="true" 
-																	   styleName="DropDownListText"
-																	   dataProvider="{FC_AC}" labelField="Label"
-																	   creationComplete="FC_DD_creationCompleteHandler(event)"
-																	   change="AssignFieldControl(event)">																			
+																	  width="100%" height="100%" 
+																	  verticalCenter="0" dropShadowVisible="false" visible="true"
+																	  mouseEnabled="true" enabled="true" 
+																	  styleName="DropDownListText"
+																	  dataProvider="{FC_AC}" labelField="Label"
+																	  creationComplete="FC_DD_creationCompleteHandler(event)"
+																	  change="AssignFieldControl(event)">																			
 										</components:CustomDropDownList>
 									</mx:VBox>
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn id="FID_Value" headerText="Initial Value" dataField="InitialValue" width="160" />
-						<mx:AdvancedDataGridColumn id="TestCol1" headerText="TestCol1" dataField="L1Label" width="160" />
-						<mx:AdvancedDataGridColumn id="TestCol2" headerText="TestCol2" dataField="L1Label" width="160" />
-						<mx:AdvancedDataGridColumn id="TestCol3" headerText="TestCol3" dataField="L1Label" width="160" />
+						<mx:AdvancedDataGridColumn id="FF_m_DG_InitialValue" headerText="Initial Value" dataField="InitialValue" width="160" />
+						<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol1" headerText="TestCol1" dataField="L1Label" width="160" />
+						<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol2" headerText="TestCol2" dataField="L1Label" width="160" />
+						<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol3" headerText="TestCol3" dataField="L1Label" width="160" />
 					</mx:columns>
 				</mx:AdvancedDataGrid>
 				

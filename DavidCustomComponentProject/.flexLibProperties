@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="itemRenderer.ToggleButtonItemRenderer"/>
-    <classEntry path="headerRenderer.ToggleButtonHeaderRenderer"/>
+    <classEntry path="itemRenderer.DispositionToggleButtonItemRenderer"/>
+    <classEntry path="headerRenderer.DispositionToggleButtonHeaderRenderer"/>
     <classEntry path="components.MultiChoiceComponent2"/>
     <classEntry path="components.MultiLabelComponent2"/>
     <classEntry path="components.MultiChoiceComponent"/>

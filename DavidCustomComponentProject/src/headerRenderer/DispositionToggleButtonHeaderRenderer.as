@@ -7,13 +7,13 @@ package headerRenderer
 	
 	import spark.components.ToggleButton;
 	
-	public class ToggleButtonHeaderRenderer extends MXAdvancedDataGridItemRenderer
+	public class DispositionToggleButtonHeaderRenderer extends MXAdvancedDataGridItemRenderer
 	{
 		protected var toggleBtn:ToggleButton;
 		public var type:String = "1";
 		public var myWidth:Number =8;
 		public var myHeight:Number =14;
-		public function ToggleButtonHeaderRenderer()
+		public function DispositionToggleButtonHeaderRenderer()
 		{
 			super();
 			//prevent to draw black color background

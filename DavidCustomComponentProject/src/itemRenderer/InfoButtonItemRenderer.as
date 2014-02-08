@@ -37,8 +37,8 @@ package itemRenderer
 			myImage = new Image();
 			myImage.source = ICON_INFO;
 			myImage.addEventListener( MouseEvent.CLICK, img_clickHandler );
-			myImage.width=14;
-			myImage.width=14;
+			myImage.width=12.5;
+			myImage.width=12.5;
 			
 			myImage.setStyle("horizontalCenter", "0");
 			myImage.setStyle("horizontalAlign", "center");

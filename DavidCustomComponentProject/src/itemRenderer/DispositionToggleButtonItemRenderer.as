@@ -13,7 +13,7 @@ package itemRenderer
 	
 	import spark.components.ToggleButton;
 	
-	public class ToggleButtonItemRenderer extends MXAdvancedDataGridItemRenderer
+	public class DispositionToggleButtonItemRenderer extends MXAdvancedDataGridItemRenderer
 	{
 		private static const ARRAY_C:String = "mx.collections::ArrayCollection";
 		private static const HIERARCHICAL_C:String = "mx.collections::HierarchicalCollectionView";
@@ -24,7 +24,7 @@ package itemRenderer
 		public var myWidth:Number =8;
 		public var myHeight:Number =14;
 		
-		public function ToggleButtonItemRenderer()
+		public function DispositionToggleButtonItemRenderer()
 		{
 			super();
 		}

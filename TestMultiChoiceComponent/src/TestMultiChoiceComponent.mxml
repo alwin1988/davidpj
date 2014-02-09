@@ -4,7 +4,8 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx" 
 			   xmlns:component="component.*"
 			   xmlns:local="*"
-			   minWidth="955" minHeight="600" xmlns:components="components.*" >
+			   minWidth="955" minHeight="600" xmlns:components="components.*"
+			   creationComplete="FF_m_DG_SetColumnWidths()">
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -37,35 +38,21 @@
 			
 			private var MultiChoice:MultiChoiceComponent2;
 			private var SelectedLanguage:String;
-			private var popUpGapY:Number = 5;
-			private var popUpGapX:Number = 4;
+			private var PopUpGapY:Number = 5;
+			private var PopUpGapX:Number = 4;
 			
 			[Bindable]
 			private var ConfigValues:ArrayCollection = new ArrayCollection(
 				[
 					{EntityType:"SysConfig", EntityName:"Language1Code:", EntityValue:"us_en", 
-						EntityString:"English", EntityIcon:"assets/flags/us.jpg"},
+						EntityString:"English", EntityIcon:"assets/flags/us.png"},
 					{EntityType:"SysConfig", EntityName:"Language2Code:", EntityValue:"nl_nl", 
-						EntityString:"Dutch", EntityIcon:"assets/flags/nl.jpg"},
+						EntityString:"Dutch", EntityIcon:"assets/flags/nl.png"},
 					{EntityType:"SysConfig", EntityName:"Language3Code:", EntityValue:"be_fr", 
-						EntityString:"French", EntityIcon:"assets/flags/fr.jpg"},
+						EntityString:"French", EntityIcon:"assets/flags/fr.png"},
 					{EntityType:"SysConfig", EntityName:"Language4Code:", EntityValue:"de_de", 
-						EntityString:"German", EntityIcon:"assets/flags/de.jpg"},
+						EntityString:"German", EntityIcon:"assets/flags/de.png"},
 					{EntityType:"SysConfig", EntityName:"PrimaryLanguage:", EntityValue:"1"}
-				]);
-			
-			[Bindable]
-			private var FF_m_AC:ArrayCollection = new ArrayCollection(
-				[
-					{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field2Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false},
-					{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field3Description",
-						Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
-						InitialValue:"MultiChoiceLabel1", FieldControl:"TextInput", Enabled:true, checked:false}
 				]);
 
 			[Bindable]
@@ -94,152 +81,216 @@
 			[Bindable]
 			public var FF_MultiChoice_TB_AC:ArrayCollection = new ArrayCollection(
 				[
-					{Entity:"TabSpec", LangNo:"1", LangCode:"us_en", Label:"EN", Icon:"assets/flags/us.jpg", ToolTip:"English"},
-					{Entity:"TabSpec", LangNo:"2", LangCode:"nl_nl", Label:"NL", Icon:"assets/flags/nl.jpg", ToolTip:"Dutch"},
-					{Entity:"TabSpec", LangNo:"3", LangCode:"fr_fr", Label:"FR", Icon:"assets/flags/fr.jpg", ToolTip:"French"},
-					{Entity:"TabSpec", LangNo:"4", LangCode:"de_de", Label:"DE", Icon:"assets/flags/de.jpg", ToolTip:"German"},
+					{Entity:"TabSpec", LangNo:"1", LangCode:"us_en", TabLabel:"EN", Icon:"assets/flags/us.jpg", ToolTip:"English"},
+					{Entity:"TabSpec", LangNo:"2", LangCode:"nl_nl", TabLabel:"NL", Icon:"assets/flags/nl.jpg", ToolTip:"Dutch"},
+					{Entity:"TabSpec", LangNo:"3", LangCode:"fr_fr", TabLabel:"FR", Icon:"assets/flags/fr.jpg", ToolTip:"French"},
+					{Entity:"TabSpec", LangNo:"4", LangCode:"de_de", TabLabel:"DE", Icon:"assets/flags/de.jpg", ToolTip:"German"},
 				]);
-						
-			protected function FF_m_DG_itemEditBeginHandler(event:AdvancedDataGridEvent):void
-			{
-				// TODO Auto-generated method stub
-				trace("edit");
-				trace("columnIndex:" + event.columnIndex);
-				trace("rowIndex:" + event.rowIndex);
-				PopUpManager.removePopUp(MultiChoice);
-				MultiChoice = new MultiChoiceComponent2();
-				MultiChoice.FF_ObjId_n_AC = this.FF_ObjId_n_AC;
 
-				trace(FF_m_DG.x);
-				trace(FF_m_DG.y);
-				//PopUpManager.addPopUp(MultiChoice,FF_m_DG,false);
-				//PopUpManager.centerPopUp(ttw);
-				//var globalX:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).x;
-				//var globalY:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).y;
-				var arr:Array = FF_m_DG.columns;
-				var xPos:int = 0;
-				var yPos:int = 0;
-				for (var i:int = 0; i<event.columnIndex; i++){
-					xPos = xPos + AdvancedDataGridColumn(arr[i]).width;
-				}
-				//Alert.show(String(xPos));
-				MultiChoice.x = xPos - MultiChoice.FF_MultiChoice_DG_Checkbox.width - 
-					MultiChoice.FF_MultiChoice_DG_Information.width - 
-					MultiChoice.FF_MultiChoice_DG_Disposition.width + popUpGapX;
-				MultiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + popUpGapY;
-				MultiChoice.width = MultiChoice.width - MultiChoice.FF_MultiChoice_DG_Lang1Label.width + 
-					AdvancedDataGridColumn(arr[event.columnIndex]).width;
-				MultiChoice.FF_MultiChoice_TB_AC = this.FF_MultiChoice_TB_AC;
-				MultiChoice.FF_MultiChoice_DG_Lang1Label.width = AdvancedDataGridColumn(arr[event.columnIndex]).width;
-				PopUpManager.addPopUp(MultiChoice,this,false);
-			}
-			
-			protected function FF_m_DG_itemEditEndHandler(event:AdvancedDataGridEvent):void
+			//Invoke the multichoice popup for only certain columns and only if FieldControl is of certain values
+			protected function FF_m_DG_ItemEditBeginHandler(event:AdvancedDataGridEvent):void
 			{
-				// TODO Auto-generated method stub
-				//PopUpManager.removePopUp(MultiChoice);
+				var ColIndex:Number=5; //Index of InitialValue column
+				
+				var FFitem:Object = event.target.selectedItem as Object;
+				var FieldControl:String = FFitem.FieldControl;
+				
+				if (event.columnIndex == ColIndex && FieldControl == "DropDownList")
+				{
+					trace("edit");
+					trace("columnIndex:" + event.columnIndex);
+					trace("rowIndex:" + event.rowIndex);
+					PopUpManager.removePopUp(MultiChoice);
+					MultiChoice = new MultiChoiceComponent2();
+					MultiChoice.FF_ObjId_n_AC = this.FF_ObjId_n_AC;
+					
+					trace(FF_m_DG.x);
+					trace(FF_m_DG.y);
+					//PopUpManager.addPopUp(MultiChoice,FF_m_DG,false);
+					//PopUpManager.centerPopUp(ttw);
+					//var globalX:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).x;
+					//var globalY:Number = localToGlobal(new Point(myIcon.x, myIcon.y)).y;
+					var arr:Array = FF_m_DG.columns;
+					var xPos:int = 0;
+					var yPos:int = 0;
+					for (var i:int = 0; i<event.columnIndex; i++)
+					{
+						xPos = xPos + AdvancedDataGridColumn(arr[i]).width;
+					}
+					MultiChoice.FF_MultiChoice_DG_SetColumnWidths();
+					//Alert.show(String("xPos:"+xPos));
+					//Alert.show("xPos - " + String(xPos - MultiChoice.FF_MultiChoice_DG_Checkbox.width - 
+					//	MultiChoice.FF_MultiChoice_DG_Information.width - 
+					//	MultiChoice.FF_MultiChoice_DG_Disposition.width));
+					//Alert.show("MultiChoice.FF_MultiChoice_DG_Checkbox.width:"+ MultiChoice.FF_MultiChoice_DG_Checkbox.width);
+					//Alert.show("MultiChoice.FF_MultiChoice_DG_Information.width:"+ MultiChoice.FF_MultiChoice_DG_Information.width);
+					//Alert.show("MultiChoice.FF_MultiChoice_DG_Disposition.width:"+ MultiChoice.FF_MultiChoice_DG_Disposition.width);
+					//Alert.show(String(MultiChoice.FF_MultiChoice_DG_Checkbox.width+MultiChoice.FF_MultiChoice_DG_Information.width+MultiChoice.FF_MultiChoice_DG_Disposition.width))
+					
+					MultiChoice.x = xPos - (MultiChoice.FF_MultiChoice_DG_Checkbox.width+MultiChoice.FF_MultiChoice_DG_Information.width+MultiChoice.FF_MultiChoice_DG_Disposition.width);
+					MultiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + PopUpGapY;
+					//MultiChoice.width = MultiChoice.width - MultiChoice.FF_MultiChoice_DG_Lang1Label.width + 
+					//	AdvancedDataGridColumn(arr[event.columnIndex]).width;
+					MultiChoice.FF_MultiChoice_TB_AC = this.FF_MultiChoice_TB_AC;
+					MultiChoice.FF_MultiChoice_DG_Lang1Label.width = AdvancedDataGridColumn(arr[event.columnIndex]).width;
+					PopUpManager.addPopUp(MultiChoice,this,false);
+				}
 			}
-			
-			
 		]]>
 	</fx:Script>
 	
-	<s:SkinnableContainer id="skc" width="100%" height="100%">
+	<s:SkinnableContainer id="skc" width="962" height="100%">
 		
 		<components:CustomTitleWindow title="Field Master"
-									 x="0" y="0" depth="1"
-									 width="100%" height="200" headerHeight="18" borderVisible="true" dropShadowVisible="false"
-									 skinClass="skin.CustomTitleWindowSkin">
-			
-			<s:VGroup width="100%" height="100%">
-				
-				<mx:AdvancedDataGrid id="FF_m_DG"
-									 width="100%" height="100%" borderVisible="false"
-									 headerHeight="20" rowHeight="20" rowCount="20"
-									 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-									 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-									 sortExpertMode="true"
-									 headerStyleName="DataGridHeader" styleName="DataGridBody"
-									 dataProvider="{FF_m_AC}" editable="true" itemEditBegin="FF_m_DG_itemEditBeginHandler(event)" itemEditEnd="FF_m_DG_itemEditEndHandler(event)">
-					<mx:columns>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_Checkbox"
-												   dataField="checked"
-												   width="{(FF_m_DG.width-FF_m_DG.width)+CBW}"
-												   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-												   itemRenderer="itemRenderer.CheckBoxItemRenderer"
-												   rendererIsEditor="false" editable="false"/>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_Information"
-												   width="{(FF_m_DG.width-FF_m_DG.width)+IBW}" editable="false"
-												   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-												   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_Disposition"
-												   dataField="Disposition"
-												   width="{(FF_m_DG.width-FF_m_DG.width)+DTW}"
-												   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
-												   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_Label" headerText="Field Label" dataField="Label" width="120" editable="true"/>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_FieldControl" headerText="Field Control" dataField="FieldControl" width="120" editable="false">
-							<mx:itemRenderer>
-								<fx:Component>
-									<mx:VBox paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1">
-										<fx:Script>
-											<![CDATA[
-												import mx.collections.ArrayCollection;
-												import mx.events.AdvancedDataGridEvent;
-												import mx.events.FlexEvent;
-												import mx.managers.FocusManager;
-												import mx.utils.StringUtil;
-												
-												import spark.events.IndexChangeEvent;
-												
-												[Bindable]
-												private var FC_AC:ArrayCollection = new ArrayCollection
-													([
-														{Label:"Text Box", Data:"TextInput", Selected:true},
-														{Label:"Drop Down List", Data:"DropDownList", Selected:false}
-													]);
-												
-												private function AssignFieldControl(event):void
-												{
-													var FC_DD_Data:Object = event.target.selectedItem as Object;
-													data.FieldControl = FC_DD_Data.Data;
-												}
-												
-												protected function FC_DD_creationCompleteHandler(event:FlexEvent):void
-												{
-													// TODO Auto-generated method stub
-													data;
-													if (String(data.FieldControl).toLowerCase() == "TextInput"){
-														FC_DD.selectedIndex = 0;
-													}else if (String(data.FieldControl).toLowerCase() == "DropDownList"){
-														FC_DD.selectedIndex = 1;
-													}else{
-														FC_DD.selectedIndex = 0;
-													}
-												}																						
-											]]>
-										</fx:Script>
-										<components:CustomDropDownList id="FC_DD"
-																	  width="100%" height="100%" 
-																	  verticalCenter="0" dropShadowVisible="false" visible="true"
-																	  mouseEnabled="true" enabled="true" 
-																	  styleName="DropDownListText"
-																	  dataProvider="{FC_AC}" labelField="Label"
-																	  creationComplete="FC_DD_creationCompleteHandler(event)"
-																	  change="AssignFieldControl(event)">																			
-										</components:CustomDropDownList>
-									</mx:VBox>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn id="FF_m_DG_InitialValue" headerText="Initial Value" dataField="InitialValue" width="160" />
-						<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol1" headerText="TestCol1" dataField="L1Label" width="160" />
-						<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol2" headerText="TestCol2" dataField="L1Label" width="160" />
-						<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol3" headerText="TestCol3" dataField="L1Label" width="160" />
-					</mx:columns>
-				</mx:AdvancedDataGrid>
-				
-			</s:VGroup>
+									  x="0" y="0" depth="1"
+									  width="100%" height="200" headerHeight="18" borderVisible="true" dropShadowVisible="false"
+									  skinClass="skin.CustomTitleWindowSkin">
+							
+				<mx:Canvas width="100%" height="100%" clipContent="true" borderVisible="false"
+						   horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+					<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true" 
+							  paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" gap="0">
+						
+						<fx:Script>
+							<![CDATA[
+								[Bindable]
+								private var FF_m_AC:ArrayCollection = new ArrayCollection(
+									[
+										{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
+											Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
+											InitialValue:"Field1InitialValue", FieldControl:"TextInput", Enabled:true, checked:false},
+										{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field2Description",
+											Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
+											InitialValue:"Field3Pre-selectedItem", FieldControl:"DropDownList", Enabled:true, checked:false},
+										{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field3Description",
+											Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", 
+											InitialValue:"Field3InitialValue", FieldControl:"TextInput", Enabled:true, checked:false}
+									]);
+								
+								protected function FF_m_DG_SetColumnWidths():void
+								{	
+									FF_m_DG.horizontalScrollPolicy='on';
+									FF_m_DG_Checkbox.width=((FF_m_DG.width-FF_m_DG.width)+CBW); 
+									FF_m_DG_Checkbox.minWidth=((FF_m_DG.width-FF_m_DG.width)+CBW);
+									FF_m_DG_Information.width=((FF_m_DG.width-FF_m_DG.width)+IBW); 
+									FF_m_DG_Information.minWidth=((FF_m_DG.width-FF_m_DG.width)+IBW)
+									FF_m_DG_Disposition.width=((FF_m_DG.width-FF_m_DG.width)+DTW); 
+									FF_m_DG_Disposition.minWidth=((FF_m_DG.width-FF_m_DG.width)+DTW);
+									FF_m_DG_Label.width=120;
+									FF_m_DG_FieldControl.width=120;
+									FF_m_DG_InitialValue.width=160;
+									FF_m_DG_TestCol1.width=180;
+									FF_m_DG_TestCol2.width=180;
+									FF_m_DG_TestCol3.width=180;
+									FF_m_DG_Delete.width=((FF_m_DG.width-FF_m_DG.width)+DBW); 
+									FF_m_DG_Delete.minWidth=((FF_m_DG.width-FF_m_DG.width)+DBW);
+									FF_m_DG.horizontalScrollPolicy='off';
+								}
+								
+								protected function FF_m_DG_ItemEditEndHandler(event:AdvancedDataGridEvent):void
+								{
+									// TODO Auto-generated method stub
+									//PopUpManager.removePopUp(MultiChoice);
+								}
+							]]>
+						</fx:Script>
+						
+						<mx:AdvancedDataGrid id="FF_m_DG"
+											 width="100%" height="100%" borderVisible="false"
+											 headerHeight="20" rowHeight="20" rowCount="20"
+											 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+											 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
+											 sortExpertMode="true"
+											 headerStyleName="DataGridHeader" styleName="DataGridBody"
+											 dataProvider="{FF_m_AC}" editable="true"
+											 draggableColumns="false"
+											 creationComplete="FF_m_DG_SetColumnWidths()"
+											 itemEditBegin="FF_m_DG_ItemEditBeginHandler(event)" 
+											 itemEditEnd="FF_m_DG_ItemEditEndHandler(event)">
+							<mx:columns>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_Checkbox"
+														   dataField="checked"
+														   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+														   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+														   rendererIsEditor="false" editable="false"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_Information"
+														   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+														   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_Disposition"
+														   dataField="Disposition"
+														   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+														   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_Label" headerText="Field Label" dataField="Label" editable="true"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_FieldControl" headerText="Field Control" dataField="FieldControl" editable="false">
+									<mx:itemRenderer>
+										<fx:Component>
+											<mx:VBox paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1">
+												<fx:Script>
+													<![CDATA[
+														import mx.collections.ArrayCollection;
+														import mx.events.AdvancedDataGridEvent;
+														import mx.events.FlexEvent;
+														import mx.managers.FocusManager;
+														import mx.utils.StringUtil;
+														
+														import spark.events.IndexChangeEvent;
+														
+														[Bindable]
+														private var FC_AC:ArrayCollection = new ArrayCollection
+															([
+																{Label:"Text Box", Data:"TextInput", Selected:true},
+																{Label:"Drop Down List", Data:"DropDownList", Selected:false}
+															]);
+														
+														protected function FC_DD_creationCompleteHandler(event:FlexEvent):void
+														{
+															data;
+															if (String(data.FieldControl) == "TextInput")
+															{
+																FC_DD.selectedIndex = 0;
+															}
+															else if
+																(String(data.FieldControl) == "DropDownList")
+															{
+																FC_DD.selectedIndex = 1;
+															}
+															else
+															{
+																FC_DD.selectedIndex = 0;
+															}
+														}	
+														
+														private function AssignFieldControl(event:Event):void
+														{
+															var FC_DD_Data:Object = event.target.selectedItem as Object;
+															data.FieldControl = FC_DD_Data.Data;	
+														}																					
+													]]>
+												</fx:Script>
+												<components:CustomDropDownList id="FC_DD"
+																			   width="100%" height="100%" 
+																			   verticalCenter="0" dropShadowVisible="false" visible="true"
+																			   mouseEnabled="true" enabled="true" 
+																			   styleName="DropDownListText"
+																			   dataProvider="{FC_AC}" labelField="Label"
+																			   creationComplete="FC_DD_creationCompleteHandler(event)"
+																			   change="AssignFieldControl(event)">																		
+												</components:CustomDropDownList>
+											</mx:VBox>
+										</fx:Component>
+									</mx:itemRenderer>
+								</mx:AdvancedDataGridColumn>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_InitialValue" headerText="Initial Value" dataField="InitialValue"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol1" headerText="TestCol1" dataField="L1Label"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol2" headerText="TestCol2" dataField="L1Label"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_TestCol3" headerText="TestCol3" dataField="L1Label"/>
+								<mx:AdvancedDataGridColumn id="FF_m_DG_Delete"
+														   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
+														   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+							</mx:columns>
+						</mx:AdvancedDataGrid>
+					</s:VGroup>
+				</mx:Canvas>
 			
 		</components:CustomTitleWindow>
 	</s:SkinnableContainer>

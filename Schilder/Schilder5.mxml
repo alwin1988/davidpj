@@ -1,0 +1,1506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%">
+			   
+<!--creationComplete="application1_creationCompleteHandler()"-->
+	
+	<fx:Style source="main.css"/>
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.BubbleChart;
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.utils.ObjectUtil;
+			
+			import spark.components.VGroup;
+			
+			[Bindable] public var PlateCharacterWidth:Number = 35;
+			[Bindable] public var PlateCharacterHeight:Number = 94;
+			[Bindable] public var CharacterButtonWidth:Number = 26;
+			[Bindable] public var CharacterButtonHeight:Number = 37;
+			
+			[Bindable] public var SymbolWidth:Number = 70;
+			[Bindable] public var SymbolHeight:Number = 70;
+			
+			[Bindable] public var LargeFlagWidth:Number = 45;
+			[Bindable] public var LargeFlagHeight:Number = 97;
+			
+			[Bindable] public var DatesWidth:Number = 36;
+			[Bindable] public var DatesHeight:Number = 82;
+/*		
+			Constants:
+			
+			SmallPlateHeight (in mm)
+			SmallPlateWidth (in mm)
+			MediumPlateHeight (in mm)
+			MediumPlateWidth (in mm)
+			LargePlateHeight (in mm)
+			LargePlateWidth (in mm)
+			SmallCharacterWidth (in mm)
+			SmallCharacterHeight (in mm)
+			MediumCharacterWidth (in mm)
+			MediumCharacterHeight (in mm)
+			LargeCharacterHeight (in mm)
+			LargeCharacterWidth (in mm)
+			DateHeight (in mm)
+			DatePairWidth (in mm)
+			DatePairLeading (in mm)
+			SymbolHeight (in mm)
+			LargeFlagHeight (in mm)
+			LargeFlagWidth (in mm)
+			SmallFlagHeight (in mm)
+			SmallFlagWidth (in mm)
+			HoleCenterPointOffsetFromEdge (in mm)
+			CupSize (in mm)
+			HolesPriceEUR (float)
+			CupsPriceEUR (float)
+*/
+			
+			[Bindable]
+			private var GermanCharacters_Small_AC:ArrayCollection = new ArrayCollection([
+				//In points
+				//For IDs C2, C17, and C24, need to prefix Label with "&#" and suffix with ";" when rendering (e.g., "&#196;")
+				{ID:"C1", Label:"A", FontID:"1", FontSize:"25"},
+				{ID:"C2", Label:"&#196;", FontID:"1", FontSize:"25"},
+				{ID:"C3", Label:"B", FontID:"1", FontSize:"25"},
+				{ID:"C4", Label:"C", FontID:"1", FontSize:"25"},
+				{ID:"C5", Label:"D", FontID:"1", FontSize:"25"},
+				{ID:"C6", Label:"E", FontID:"1", FontSize:"25"},
+				{ID:"C7", Label:"F", FontID:"1", FontSize:"25"},
+				{ID:"C8", Label:"G", FontID:"1", FontSize:"25"},
+				{ID:"C9", Label:"H", FontID:"1", FontSize:"25"},
+				{ID:"C10", Label:"I", FontID:"1", FontSize:"25"},
+				{ID:"C11", Label:"J", FontID:"1", FontSize:"25"},
+				{ID:"C12", Label:"K", FontID:"1", FontSize:"25"},
+				{ID:"C13", Label:"L", FontID:"1", FontSize:"25"},
+				{ID:"C14", Label:"M", FontID:"1", FontSize:"25"},
+				{ID:"C15", Label:"N", FontID:"1", FontSize:"25"},
+				{ID:"C16", Label:"O", FontID:"1", FontSize:"25"},
+				{ID:"C17", Label:"&#214;", FontID:"1", FontSize:"25"},
+				{ID:"C18", Label:"P", FontID:"1", FontSize:"25"},
+				{ID:"C19", Label:"Q", FontID:"1", FontSize:"25"},
+				{ID:"C20", Label:"R", FontID:"1", FontSize:"25"},
+				{ID:"C21", Label:"S", FontID:"1", FontSize:"25"},
+				{ID:"C22", Label:"T", FontID:"1", FontSize:"25"},
+				{ID:"C23", Label:"U", FontID:"1", FontSize:"25"},
+				{ID:"C24", Label:"&#220;", FontID:"1", FontSize:"25"},
+				{ID:"C25", Label:"V", FontID:"1", FontSize:"25"},
+				{ID:"C26", Label:"W", FontID:"1", FontSize:"25"},
+				{ID:"C27", Label:"X", FontID:"1", FontSize:"25"},
+				{ID:"C28", Label:"Y", FontID:"1", FontSize:"25"},
+				{ID:"C29", Label:"Z", FontID:"1", FontSize:"25"},
+				{ID:"C30", Label:"1", FontID:"1", FontSize:"25"},
+				{ID:"C31", Label:"2", FontID:"1", FontSize:"25"},
+				{ID:"C32", Label:"3", FontID:"1", FontSize:"25"},
+				{ID:"C33", Label:"4", FontID:"1", FontSize:"25"},
+				{ID:"C34", Label:"5", FontID:"1", FontSize:"25"},
+				{ID:"C35", Label:"6", FontID:"1", FontSize:"25"},
+				{ID:"C36", Label:"7", FontID:"1", FontSize:"25"},
+				{ID:"C37", Label:"8", FontID:"1", FontSize:"25"},
+				{ID:"C38", Label:"9", FontID:"1", FontSize:"25"},
+				{ID:"C39", Label:"0", FontID:"1", FontSize:"25"},
+				{ID:"C40", Label:"-", FontID:"1", FontSize:"25"},
+				{ID:"C41", Label:".", FontID:"1", FontSize:"25"},
+				{ID:"C42", Label:"?", FontID:"1", FontSize:"25"},
+			]);
+
+/*
+			public function AddCharacterToPlate(event:MouseEvent) {
+				PlateTextContainer.addElement(...);	
+			}
+			
+/*			private var GermanCharacters_Medium_AC:ArrayCollection = new ArrayCollection([
+				//In points
+				{ID:"Au", Label:"&#196", FontID:"1", FontSize:"50"}
+				//..
+				{ID:"Ou", Label:"&#214", FontID:"1", FontSize:"50"}
+				//..
+				{ID:"Uu", Label:"&#220;", FontID:"1", FontSize:"50"}
+				//..
+			]);
+			
+			private var GermanCharacters_Large_AC:ArrayCollection = new ArrayCollection([
+				//In points
+				{ID:"Au", Label:"&#196", FontID:"1", FontSize:"75"}
+				//..
+				{ID:"Ou", Label:"&#214", FontID:"1", FontSize:"75"}
+				//..
+				{ID:"Uu", Label:"&#220;", FontID:"1", FontSize:"75"}
+					//..
+			]);
+
+			[Bindable]
+			private var Spacers_AC:ArrayCollection = new ArrayCollection([
+				//in mm
+				{Width:"20", Label:""},
+				{Width:"30", Label:""},
+				{Width:"40", Label:""}
+			]);
+*/
+			[Bindable]
+			private var Symbols_AC:ArrayCollection = new ArrayCollection([
+				{ID:"NLFlag", ImageFile:"nl.jpg", PriceEUR:"0.00", Discontinued:false, InStock:true},
+				{ID:"PeaceSign", ImageFile:"peacesign.jpg", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+/*			
+			[Bindable]
+			private var SmallPlateStyles_AC:ArrayCollection = new ArrayCollection([
+				//Either ColorSpec or PatternFile
+				{ID:"SolidBlue", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var MediumPlateStyles_AC:ArrayCollection = new ArrayCollection([
+				//Either ColorSpec or PatternFile
+				{ID:"SolidRed", Label"Solid red", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var LargePlateStyles_AC:ArrayCollection = new ArrayCollection([
+				//Either ColorSpec or PatternFile
+				{ID:"SolidYellow", Label:"Solid Yellow", ColorSpec:"blue", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var FilmStyles_AC:ArrayCollection = new ArrayCollection([
+				//Either ColorSpec or PatternFile
+				{ID:"SolidBlue", Label:"Solid Blue", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var Stickers_AC:ArrayCollection = new ArrayCollection([
+				{ID:"Dalmation", Label:"Dalmation", Width:"20", Height:"50", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var LargeFlags_AC:ArrayCollection = new ArrayCollection([
+				{ID:"DE", Label:"Germany", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var SmallFlags_AC:ArrayCollection = new ArrayCollection([
+				{ID:"DE", Label:"Germany", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var DefaultsByCountry_AC:ArrayCollection = new ArrayCollection([
+				{ID:"DE", Label:"Germany", LanguageID:"DE", PlateSizeID:"GL", PlateStyleID:"PlateStyleID",
+					FilmStyleID:"FilmID", Date:"112233", SymbolID:"SymbolID", StickerID:"StickerID", FlagID:"FlagID", 
+					Currency:"EUR"}
+			]);	
+		
+			public function application1_creationCompleteHandler():void {
+				Button_A.addEventListener(MouseEvent.CLICK, AddCharacterAToPlate);
+				Button_Au.addEventListener(MouseEvent.CLICK, AddCharacterAuToPlate);
+				ClearTextButton.addEventListener(MouseEvent.CLICK, ClearPlate);
+				ClearPlateButton.addEventListener(MouseEvent.CLICK, ClearAll);
+				StartOverButton.addEventListener(MouseEvent.CLICK, StartOver);
+			}
+			
+			public function ConvertMMtoPixels {
+				//Varies by font family?
+			}
+				
+			public function SetPlateSize(event:MouseEvent) {
+				//Change dropdownlist content
+				//Need to retain plate contents, if any
+				//If contents won't fit new plate size, alert and abort 
+				//Recalculate price
+			}
+			
+			public function SetPlateStyle {
+				//Change dropdownlist content
+				//Warn if not in stock
+				//Disallow if discontinued
+				//Recalculate price
+			}
+				
+			public function SetFilmStyle {
+				//Change dropdownlist content
+				//Warn if not in stock
+				//Disallow if discontinued
+				//Recalculate price
+			}
+
+			public function Change1LineTo2Lines(event:MouseEvent) {
+				//If plate size is not large, prompt to change
+				//If character size is not small, prompt to change character size to small
+				//Need to retain plate contents, if any
+				//If contents won't fit new plate size, alert and abort 
+				//Recalculate price
+			}
+			
+			public function Change2LinesTo1Line(event:MouseEvent) {
+				//Prompt to increase character size to medium or large (large if text fits)
+				//Need to retain plate contents, if any
+				//If contents won't fit new plate size, alert and abort 
+				//Recalculate price
+			}
+			
+			public function SetCharacterSize(event:MouseEvent) {
+				//Prompt to clear text if new-size characters will not fit
+				//Recalculate price
+			}
+			
+			public function AddCharacterToPlate(event:MouseEvent) {	
+				//Alert if no room to add
+			}
+			
+			public function AddSymbolToPlate(event:MouseEvent) {
+				//Position as specified
+				//Alert if no room to add
+				//Recalculate price
+			}
+			
+			public function AddDatesToPlate(event:MouseEvent) {
+				//Position as specified
+				//Alert if no room to add
+				//Recalculate price
+			}
+			
+			public function AddStickerToPlate {	
+				//Position as specified
+				//Alert if no room
+				//Recalculate price
+			}
+			
+			public function AddFlagToPlate {
+				//Position as specified
+				//Alert if no room
+				//Recalculate price
+			}
+			
+			public function AddHolesAndCupstoPlate {
+				//Position as specified
+				//Recalculate price
+			}
+*/
+			public const CharacterWidthLarge:Number = 90;
+			public const CharacterHeightLarge:Number = 100;
+			[Bindable] private var PlateName:String = 'Solid Yellow';
+			[Bindable] private var PlateColor = 0xffff00;
+			[Bindable] private var FilmName = 'Red';
+			[Bindable] private var FilmColor = 0xff0000;
+			
+			[Bindable] private var CenterSymbol:Boolean = false;
+			[Bindable] private var CharactersAdded:Number = 0;
+			
+			public function OpenSymbolGallery(event:MouseEvent):void {
+				Galleries.selectedChild = SymbolGallery;
+				SymbolGalleryWindow.visible=true;
+			}
+			
+			public function ChangeSymbolGalleryImage(event:MouseEvent):void {
+				SymbolGalleryImage.source = event.currentTarget;
+			}
+			
+			public function AddFlagToLeftFlagBox(event:MouseEvent):void {
+				var plateimage:Image = new Image;
+				plateimage.source = "assets/flags/nl.jpg";
+				plateimage.width = LargeFlagWidth;
+				plateimage.height = LargeFlagHeight;
+				
+				LeftFlagBox.includeInLayout=true;
+				LeftFlagBox.visible=true;
+				LeftFlagBox.addElement(plateimage);
+			}
+			
+			public function AddDatesToLeftDatesBox(event:MouseEvent):void {
+				var plategroup:VGroup = new VGroup;
+				plategroup.width = DatesWidth;
+				plategroup.height = DatesHeight;
+				plategroup.paddingTop=10;
+				plategroup.setStyle('gap', 10);
+				
+				var d1:Button = new Button;
+				d1.width = DatesWidth;
+				d1.label = '11';
+				var d2:Button = new Button;
+				d2.width = DatesWidth;
+				d2.label = '22';
+				var d3:Button = new Button;
+				d3.width = DatesWidth;
+				d3.label = '33';
+				
+				plategroup.addElement(d1);
+				plategroup.addElement(d2);
+				plategroup.addElement(d3);
+								
+				LeftDatesBox.includeInLayout=true;
+				LeftDatesBox.visible=true;
+				LeftDatesBox.addElement(plategroup);
+			}
+			
+			public function AddDatesToRightDatesBox(event:MouseEvent):void {
+				var plategroup:VGroup = new VGroup;
+				plategroup.width = DatesWidth;
+				plategroup.height = DatesHeight;
+				plategroup.paddingTop=10;
+				plategroup.setStyle('gap', 10);
+				
+				var d1:Button = new Button;
+				d1.width = DatesWidth;
+				d1.label = '11';
+				var d2:Button = new Button;
+				d2.width = DatesWidth;
+				d2.label = '22';
+				var d3:Button = new Button;
+				d3.width = DatesWidth;
+				d3.label = '33';
+				
+				plategroup.addElement(d1);
+				plategroup.addElement(d2);
+				plategroup.addElement(d3);
+				
+				RightDatesBox.includeInLayout=true;
+				RightDatesBox.visible=true;
+				RightDatesBox.addElement(plategroup);
+			}
+			
+			public function AddFlagToRightFlagBox(event:MouseEvent):void {
+				var plateimage:Image = new Image;
+				plateimage.source = "assets/flags/nl.jpg";
+				plateimage.width = CharacterWidthLarge/2;
+				plateimage.height = CharacterHeightLarge;
+				
+				RightFlagBox.includeInLayout=true;
+				RightFlagBox.visible=true;
+				RightFlagBox.addElement(plateimage);
+			}
+			
+			public function AddSymbolToLeftSymbolBox(event:MouseEvent):void {
+				var plateimage:Image = new Image;
+				plateimage.source = "assets/peacesign.jpg";
+				plateimage.width = SymbolWidth;
+				plateimage.height = SymbolHeight;
+				
+				LeftSymbolBox.includeInLayout=true;
+				LeftSymbolBox.visible=true;
+				LeftSymbolBox.addElement(plateimage);
+			}
+			
+			public function AddSymbolToCenterSymbolBox(event:MouseEvent):void {
+				var plateimage:Image = new Image;
+				plateimage.source = "assets/peacesign.jpg";
+				plateimage.width = SymbolWidth;
+				plateimage.height = SymbolHeight;
+				
+				CenterSymbolBox.includeInLayout=true;
+				CenterSymbolBox.visible=true;
+				CenterSymbolBox.addElement(plateimage);
+				
+				//Include 2nd character box for characters to the right of the symbol
+				CenterSymbol=true;
+				CharacterBox2.includeInLayout=true;
+				CharacterBox2.visible=true;
+			}
+			
+			public function AddSymbolToRightSymbolBox(event:MouseEvent):void {
+				var plateimage:Image = new Image;
+				plateimage.source = "assets/peacesign.jpg";
+				plateimage.width = SymbolWidth;
+				plateimage.height = SymbolHeight;
+				
+				RightSymbolBox.includeInLayout=true;
+				RightSymbolBox.visible=true;
+				RightSymbolBox.addElement(plateimage);
+			}
+			
+			public function CloseSymbolGallery(event:MouseEvent):void {
+				//Galleries.selectedChild = SymbolGallery;
+				SymbolGalleryWindow.visible=false;
+			}
+			
+			public function AddCharacterToPlate(event:MouseEvent):void {
+				var keypadbutton:Button = event.target as Button;
+				var platebutton:Button = new Button();
+				
+				platebutton.x = 100;
+				platebutton.width = CharacterWidthLarge;
+				platebutton.height = CharacterHeightLarge;
+				platebutton.label = keypadbutton.label;
+				platebutton.styleName = 'PlateTextLarge';
+				platebutton.setStyle('color', FilmColor);
+				//platebutton.setStyle('skinClass', 'skins.TransparentButtonSkin');
+				
+				CharactersAdded = (CharactersAdded + 1);
+				
+				if (CenterSymbol = false)
+				{
+					CharacterBox1.addElement(platebutton);
+				}
+
+				if (CenterSymbol = true && CharactersAdded < 3)
+				{
+					CharacterBox1.addElement(platebutton);
+				}
+				else 
+				{
+					CharacterBox2.includeInLayout=true;
+					CharacterBox2.visible=true;
+					CharacterBox2.addElement(platebutton);
+				}
+			}
+			
+			public function AddFlagLeft(event:MouseEvent) {
+				var flagimage:Image = new Image();
+				
+				flagimage.width = 38;
+				flagimage.height = 107;
+				flagimage.horizontalAlign = 'left';
+				flagimage.scaleMode = 'stretch';
+				flagimage.fillMode = 'scale';
+				flagimage.source = 'assets/flags/nl.jpg';
+				flagimage.depth = 4;
+				
+				PlateInnerContentContainer.addElement(flagimage);
+			}
+			
+			public function AddFlagRight(event:MouseEvent) {
+				var flagimage:Image = new Image();
+				
+				flagimage.width = 38;
+				flagimage.height = 107;
+				flagimage.horizontalAlign = 'right';
+				flagimage.scaleMode = 'stretch';
+				flagimage.fillMode = 'scale';
+				flagimage.source = 'assets/flags/nl.jpg';
+				flagimage.depth = 4;
+				
+				PlateInnerContentContainer.addElement(flagimage);
+			}
+			
+			public function UndoLastAction(event:MouseEvent) {
+				PlateInnerContentContainer.removeElementAt(0);
+			}
+			
+			public function ClearPlateText(event:MouseEvent) {
+				PlateInnerContentContainer.removeAllElements();
+			}
+			
+			public function ClearPlateAll(event:MouseEvent) {
+			//	FlagStickerContainer.removeAllElements();
+			//	DatesContainer.removeAllElements();
+			//	SymbolContainer.removeAllElements();
+				//PlateTextContainer.removeAllElements();
+			}
+
+/*			public function StartOver(event:MouseEvent) {
+				PlateContainer.removeAllElements();
+				PlateContainer.backgroundColor:'##000000';
+			}
+*/			
+		]]>
+	</fx:Script>
+	
+	<!-- Outer (basic) container -->
+	<s:BorderContainer id="OuterContainer"
+					   width="540" height="406" minWidth="0" minHeight="0" horizontalCenter="0" verticalCenter="0" borderVisible="true">
+		<s:layout>
+			<s:BasicLayout/>
+		</s:layout>
+		<!-- Inner (vertical) container -->
+		<s:BorderContainer id="InnerContainer"
+						   x="0" y="0" width="{OuterContainer.width-2}" height="{OuterContainer.height-2}" borderVisible="false" depth="2">
+			<s:layout>
+				<s:VerticalLayout paddingTop="10" paddingBottom="4" paddingLeft="10" paddingRight="10" gap="0"/>
+			</s:layout>
+			<!-- Plate container -->
+			<s:BorderContainer id="PlateContainer"
+							   depth="1"
+							   width="520" height="113"
+							   minWidth="0" maxHeight="0"
+							   borderVisible="true" borderWeight="2" cornerRadius="8"
+							   backgroundColor="{PlateColor}">
+				<s:layout>
+					<s:BasicLayout/>
+				</s:layout>
+				<!-- Suction cups -->
+				<s:Ellipse depth="12"
+						   x="0" y="0"
+						   width="19" height="19">
+					<s:fill>
+						<s:SolidColor color="white" alpha=".5"/>
+					</s:fill>
+					<s:stroke>
+						<s:SolidColorStroke color="white" alpha="1" weight="1.375"/>
+					</s:stroke>
+				</s:Ellipse>			
+				<s:Ellipse depth="12"
+						   x="496" y="0"
+						   width="19" height="19">
+					<s:fill>
+						<s:SolidColor color="white" alpha=".5"/>
+					</s:fill>
+					<s:stroke>
+						<s:SolidColorStroke color="white" alpha="1" weight="1.375"/>
+					</s:stroke>
+				</s:Ellipse>
+				<!-- Plate outer (border) container -->
+				<s:BorderContainer id="PlateOuterContentContainer"
+								   x="1" y="1"
+								   depth="2"
+								   width="514" height="107"
+								   minWidth="0" minHeight="0"
+								   borderVisible="true" borderWeight="5" cornerRadius="8"
+								   borderStyle="inset"
+								   backgroundAlpha="0"
+								   borderColor="{FilmColor}">
+					<s:layout>
+						<s:BasicLayout/>
+					</s:layout>
+					<!-- Holes -->
+					<s:Ellipse depth="11"
+							   x="0" y="0"
+							   width="8" height="8">
+						<s:fill>
+							<s:SolidColor color="gray" alpha=".25"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" alpha="1" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse depth="11"
+							   x="496" y="0"
+							   width="8" height="8">
+						<s:fill>
+							<s:SolidColor color="gray" alpha=".25"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" alpha="1" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<!-- Plate content container -->
+					<s:HGroup id="PlateInnerContentContainer"
+							  depth="6"
+							  x="50" y="50"
+							  width="100%" height="100%"
+							  verticalCenter="0" horizontalCenter="0" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+							  color="{PlateColor}"
+							  horizontalAlign="left" verticalAlign="middle" gap="0" clipAndEnableScrolling="true">
+						<!--Multiple containers for potential elements, which are hidden and shown as needed-->
+						<s:Group id="LeftFlagBox" width="{LargeFlagWidth}" height="{LargeFlagHeight}" includeInLayout="false" visible="false"/>
+						<s:VGroup id="LeftDatesBox" width="{DatesWidth}" height="{DatesHeight}" includeInLayout="false" visible="false"/>
+						<s:Group id="LeftSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
+						<s:HGroup id="CharacterBox1" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
+								  includeInLayout="true" visible="true"/>
+						<s:Group id="CenterSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
+						<s:HGroup id="CharacterBox2" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
+								  includeInLayout="false" visible="false"/>
+						<s:Group id="RightSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
+						<s:VGroup id="RightDatesBox" width="{DatesWidth}" height="{DatesHeight}" includeInLayout="false" visible="false"/>
+						<s:Group id="RightFlagBox" width="{LargeFlagWidth}" height="{LargeFlagHeight}" includeInLayout="false" visible="false"/>
+						
+						<!-- Flag sticker -->
+						<!--s:Group height="100%" width="38" id="FlagStickerContainer">
+						<s:Image id="FlagSticker"
+						x="0" y="0"
+						depth="4"
+						width="100%" height="100%"
+						fillMode="scale" scaleMode="stretch"
+						source="assets/flags/nl.jpg"/>
+						</s:Group-->
+						<!-- Dates -->
+						<!--s:VGroup id="DatesContainer"
+						x="466" y="0" 
+						paddingTop="6" paddingBottom="6" paddingLeft="3" paddingRight="3"
+						gap="2"
+						width="38" height="100%"
+						minWidth="0" minHeight="0"
+						alpha="0">
+						<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
+						<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
+						<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
+						</s:VGroup-->
+						<!-- Symbol container -->
+						<!--s:BorderContainer id="SymbolContainer"
+						depth="7"
+						width="70" height="100%"
+						minWidth="0" minHeight="0"
+						verticalCenter="0" horizontalCenter="0"
+						backgroundAlpha="0"
+						borderVisible="false" backgroundColor="yellow">
+						<s:layout>
+						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+						</s:layout-->
+						<!-- Symbols -->
+						<!--s:Image id="Symbol"
+						depth="8"
+						width="70" height="70"
+						verticalCenter="0" horizontalCenter="0"
+						fillMode="scale" scaleMode="stretch"
+						source="assets/redpeacesign.jpg"/>
+						</s:BorderContainer-->
+						<!-- Plate text container-->
+						<!--s:HGroup id="PlateTextContainer" 
+						width="504" height="100%" minWidth="0" minHeight="0"
+						horizontalAlign="center" verticalAlign="middle" gap="-5"
+						clipAndEnableScrolling="true" depth="9"
+						</s:HGroup-->
+					</s:HGroup>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<!-- Error message and control to clear plate contents -->
+			<s:BorderContainer width="100%" height="16" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="right" verticalAlign="top"
+										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										gap="0"/>
+				</s:layout>
+				<!-- Controls to reset plate contents -->
+				<s:BorderContainer width="169" height="16" borderVisible="false">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="right" verticalAlign="top"
+											paddingTop="1" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											gap="0"/>				
+					</s:layout>
+					<s:Button id="UndoButton" label="Undo" 
+							  width="45" height="16" verticalCenter="0"
+							  chromeColor="white" skinClass="skins.HTMLButtonSkin"
+							  fontStyle="normal" styleName="HTMLButton"
+							  click="UndoLastAction(event)"/>
+					<s:Button id="ClearTextButton" label="Clear text" 
+							  width="55" height="16" verticalCenter="0"
+							  chromeColor="white" skinClass="skins.HTMLButtonSkin"
+							  fontStyle="normal" styleName="HTMLButton"
+							  click="ClearPlateText(event)"/>
+					<s:Button id="ClearAllButton" label="Clear all"
+							  width="55" height="16" verticalCenter="0"
+							  chromeColor="white" skinClass="skins.HTMLButtonSkin"
+							  fontStyle="normal" styleName="HTMLButton"
+							  click="ClearPlateAll(event)"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<s:Spacer height="4"/>
+			
+			<!-- Controls to set the plate size -->
+			<s:BorderContainer width="100%" height="33.9" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout gap="4" verticalAlign="middle"/>
+				</s:layout>
+				<s:BorderContainer width="80" height="34" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout verticalAlign="middle"
+										  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="0"/>
+					</s:layout>
+					<mx:Text text="Plate size"
+							 width="100%" height="35"
+							 verticalCenter="0" leading="0"
+							 styleName="DirectiveLabel"/>
+				</s:BorderContainer>
+				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"
+							   selected="true"/>
+				<s:BorderContainer width="156" height="33.9" borderVisible="true" cornerRadius="6">
+					<s:layout>
+						<s:HorizontalLayout  horizontalAlign="center" verticalAlign="middle"/>
+					</s:layout>
+					<mx:Text text="520mm x 113mm"
+							 verticalCenter="0"
+							 fontFamily="Arial Narrow" fontSize="11"/>
+				</s:BorderContainer>
+				<s:Spacer width="100%"/>
+				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"/>
+				<s:BorderContainer width="120" height="33.9" borderVisible="true" cornerRadius="6">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+					</s:layout>
+					<mx:Text text="400mm x 113mm"
+							 verticalCenter="0"
+							 fontFamily="Arial Narrow" fontSize="11"/>
+				</s:BorderContainer>
+				<s:Spacer width="100%"/>
+				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"/>
+				<s:BorderContainer width="78" height="22.5" borderVisible="true" cornerRadius="5">
+					<s:layout>
+						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+					</s:layout>
+					<mx:Text text="290mm x 75mm"
+							 verticalCenter="0"
+							 fontFamily="Arial Narrow" fontSize="11"/>
+				</s:BorderContainer>
+			</s:BorderContainer>
+			
+			<s:Spacer height="2"/>
+			
+			<!-- Controls to choose orientation et al -->
+			<s:BorderContainer width="100%" height="24" borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
+										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
+				</s:layout>
+				<!--s:BorderContainer width="100%" height="18" borderVisible="false">
+				<s:layout>
+				<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
+				paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
+				</s:layout-->
+				<mx:Text text="How many lines of text"
+						 width="145" verticalCenter="0"
+						 styleName="DirectiveLabel"/>
+				<s:RadioButton groupName="PlateOrientation" 
+							   width="10" verticalCenter="0" symbolColor="blue"
+							   selected="true"/>
+				<mx:Text text="1 line"
+						 width="36" verticalCenter="0"
+						 fontFamily="Arial" fontSize="11"/>
+				<s:RadioButton groupName="PlateOrientation" 
+							   width="10" verticalCenter="0"/>
+				<mx:Text text="2 lines"
+						 width="38" verticalCenter="0"
+						 fontFamily="Arial" fontSize="11"/>
+				<s:Spacer width="4"/>
+				<mx:Text text="Date, stickers, symbols, colors, and holes"
+						 width="251.4" verticalCenter="0" horizontalCenter="134"
+						 leading="0" textAlign="center"
+						 styleName="DirectiveLabel"/>
+			</s:BorderContainer>
+			
+			<s:Spacer height="4"/>
+			
+			<!-- Outer container for plate content controls -->
+			<s:BorderContainer width="100%" height="196" 
+							   borderVisible="false">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										gap="8"/>
+				</s:layout>
+				<s:BorderContainer width="100%" height="100%" 
+								   borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="0"/>
+					</s:layout>
+					<!-- Outer container for character buttons -->
+					<s:BorderContainer id="CharacterButtonContainer"
+									   width="320" height="164"
+									   borderVisible="true">
+						<s:layout>
+							<s:VerticalLayout paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4"
+											  gap="2"/>
+						</s:layout>
+						<s:BorderContainer width="100%" height="37"
+										   borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+													paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+													gap="2"/>
+							</s:layout>
+							<s:Button id="C1_Button" label="A"
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0"
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C2_Button" label="&#196;"
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>	
+							<s:Button id="C3_Button" label="B"
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C4_Button" label="C" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C5_Button" label="D" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C6_Button" label="E" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C7_Button" label="F" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C8_Button" label="G" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C9_Button" label="H" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C10_Button" label="I" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C11_Button" label="J" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+						</s:BorderContainer>
+						<s:BorderContainer width="309" height="37"
+										   borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+													paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+													gap="2"/>
+							</s:layout>
+							<s:Button id="C12_Btn" label="K" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C13_Button" label="L" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C14_Button" label="M" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>	
+							<s:Button id="C15_Button" label="N" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C16_Button" label="O" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C17_Button" label="&#214;" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C18_Button" label="P" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C19_Button" label="Q" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C20_Button" label="R" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C21_Button" label="S" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C22_Button" label="T" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+						</s:BorderContainer>
+						<s:BorderContainer width="309" height="37"
+										   borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+													paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+													gap="2"/>
+							</s:layout>
+							<s:Button id="C23_Button" label="U" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C24_Button" label="&#220;" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C25_Button" label="V" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C26_Button" label="V" color="red"
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C27_Button" label="X" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C28_Button" label="Y" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C29_Button" label="Z" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C30_Button" label="1" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C31_Button" label="2" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C32_Button" label="3" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C33_Button" label="4" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+						</s:BorderContainer>
+						<s:BorderContainer width="309" height="37"
+										   borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout verticalAlign="middle" horizontalAlign="center"
+													paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+													gap="2"/>
+							</s:layout>
+							<s:Button id="C34_Button" label="5" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C35_Button" label="6" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C36_Button" label="7" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C37_Button" label="8" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C38_Button" label="9" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C39_Button" label="0" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}" horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C40_Button" label="-" 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}"
+									  horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C41_Button" label="." 
+									  width="{CharacterButtonWidth}" height="{CharacterButtonHeight}"
+									  horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Button id="C42_Button" label="?" 
+									  width="{CharacterButtonWidth}" height="37"
+									  horizontalCenter="0" verticalCenter="0" 
+									  styleName="CharacterButton" skinClass="CharacterButtonSkin"
+									  click="AddCharacterToPlate(event)"/>
+							<s:Spacer width="1"/>
+							<s:BorderContainer width="52" 
+											   height="37"
+											   borderVisible="false">
+								<s:layout>
+									<s:VerticalLayout horizontalAlign="left" verticalAlign="top"
+													  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+								</s:layout>
+								<s:BorderContainer width="52"
+												   height="22"
+												   borderVisible="false">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="left" verticalAlign="top"
+															paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+															gap="2"/>
+									</s:layout>
+									<s:Button id="S1_Button" label="" 
+											  width="23" height="24" 
+											  verticalCenter="0" horizontalCenter="0"
+											  click="AddCharacterToPlate(event)"/>
+									<s:Button id="S2_Button" label=""
+											  width="15" height="24" 
+											  verticalCenter="0" horizontalCenter="0"
+											  click="AddCharacterToPlate(event)"/>
+									<s:Button id="S3_Button" label="" 
+											  width="10" height="24" 
+											  verticalCenter="0" horizontalCenter="0"
+											  click="AddCharacterToPlate(event)"/>
+								</s:BorderContainer>
+								<s:BorderContainer width="52"
+												   height="12"
+												   borderVisible="false">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="bottom"
+															paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>
+									</s:layout>
+									<s:Label text="Spaces"
+											 width="40" height="12"
+											 fontFamily="Arial" fontSize="11" fontWeight="normal"/>
+								</s:BorderContainer>
+							</s:BorderContainer>
+						</s:BorderContainer>
+					</s:BorderContainer>
+					
+					<s:Spacer height="4"/>
+					
+					<!-- Controls to set the plate size -->
+					<s:BorderContainer width="100%" height="15" borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout gap="0" verticalAlign="middle"/>
+						</s:layout>
+						<mx:Text text="Text size"
+								 width="63"
+								 verticalCenter="0"
+								 styleName="DirectiveLabel"/>
+						<s:RadioButton groupName="FontSize" width="15" symbolColor="blue"/>
+						<mx:Text text="ABC" 
+								 verticalCenter="0"
+								 fontFamily="GL-Nummernschild-Eng" fontSize="19.75"/>
+						<mx:Text text="(79mm)"
+								 verticalCenter="0"
+								 fontFamily="Arial Narrow" fontSize="12"/>
+						<s:Spacer width="100%"/>
+						<s:RadioButton groupName="FontSize" width="15" symbolColor="blue"
+									   selected="true"/>
+						<mx:Text text="ABC"
+								 verticalCenter="0"
+								 fontFamily="GL-Nummernschild-Eng" fontSize="14.5"/>
+						<mx:Text text="(58mm)" 
+								 verticalCenter="0"
+								 fontFamily="Arial Narrow" fontSize="11"/>
+						<s:Spacer width="100%"/>
+						<s:RadioButton groupName="FontSize" width="15" symbolColor="blue"/>
+						<mx:Text text="ABC"
+								 verticalCenter="0"
+								 fontFamily="GL-Nummernschild-Eng" fontSize="10"/>
+						<mx:Text text="(40mm)"
+								 verticalCenter="0"
+								 fontFamily="Arial Narrow" fontSize="11"/>
+					</s:BorderContainer>		
+				</s:BorderContainer>
+				
+				<!-- Outer container for date controls and flag -->
+				<s:BorderContainer width="42" height="100%"
+								   minWidth="0" minHeight="0"
+								   borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="2" paddingLeft="0" paddingRight="0"
+										  gap="6"
+										  horizontalAlign="left"/>
+					</s:layout>
+					
+					<!-- Outer container for date controls -->		
+					<s:BorderContainer width="100%" height="97" 
+									   minWidth="0" minHeight="0"
+									   borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout horizontalAlign="center"
+											  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											  gap="4"/>
+						</s:layout>
+						
+						<s:NumericStepper width="100%" height="21" horizontalCenter="0"
+										  value="0"
+										  stepSize="1" 
+										  maximum="31"
+										  styleName="NumericStepperDates"/>
+						<s:NumericStepper width="100%" height="21" horizontalCenter="0"
+										  value="0" 
+										  stepSize="1" 
+										  maximum="31"
+										  styleName="NumericStepperDates"/>
+						<s:NumericStepper width="100%" height="21" horizontalCenter="0"
+										  value="0" 
+										  stepSize="1" 
+										  maximum="99"
+										  styleName="NumericStepperDates"/>
+						
+						<s:BorderContainer width="100%" height="14"
+										   minWidth="0" minHeight="0"
+										   borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="center" gap="4"/>
+							</s:layout>
+							<s:Button id="AddDatesToLeftDatesBoxButton" label="L" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddDatesToLeftDatesBox(event)"/>
+							<s:Button id="AddDatesToRightDatesBoxButton" label="R" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddDatesToRightDatesBox(event)"/>
+						</s:BorderContainer>
+					</s:BorderContainer>
+					
+					<!-- Control to set the flag -->
+					<s:BorderContainer width="100%" height="60"
+									   minWidth="0" minHeight="0"
+									   borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											  gap="0" horizontalAlign="center" verticalAlign="top"/>
+						</s:layout>
+						<s:BorderContainer width="30" height="60"
+										   borderVisible="true">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Image width="100%" height="100%"
+									 horizontalAlign="center" verticalAlign="top"
+									 horizontalCenter="0" verticalCenter="0" 
+									 fillMode="scale" scaleMode="stretch"
+									 source="assets/flags/nl.jpg"/>
+						</s:BorderContainer>
+						<s:Image id="vGalleryButton"
+								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+								 buttonMode="true"
+								 source="assets/down_triangle.png"/>
+						
+						<s:BorderContainer width="100%" height="14"
+										   minWidth="0" minHeight="0"
+										   borderVisible="false">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="center" gap="4"/>
+							</s:layout>
+							<s:Button id="AddFlagToLeftFlagBoxButton" label="L" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddFlagToLeftFlagBox(event)"/>
+							<s:Button id="AddFlagToRightFlagBoxButton" label="R" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddFlagToRightFlagBox(event)"/>
+						</s:BorderContainer>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				
+				<!-- Outer container for symbols, stickers, plate style, colors, and holes -->
+				<s:BorderContainer width="140.4" height="100%"
+								   minWidth="0" minHeight="0"
+								   borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+										  gap="10"/>
+					</s:layout>
+					
+					<!-- Outer container for symbols and stickers -->
+					<s:BorderContainer width="100%" height="57"
+									   borderVisible="false">
+						<s:layout>
+							<s:HorizontalLayout verticalAlign="top"
+												paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												gap="0"/>
+						</s:layout>
+						
+						<!-- Control to set the symbol -->
+						<s:BorderContainer width="57" height="63"
+										   borderVisible="false">
+							<s:layout>
+								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												  gap="0" horizontalAlign="center" verticalAlign="middle"/>
+							</s:layout>
+							<s:BorderContainer width="57" height="57"
+											   minWidth="0" minHeight="0"
+											   borderVisible="true">
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>							
+								<s:Image id="SymbolGalleryImage"
+										 source="assets/peacesign.jpg"
+										 width="100%" height="100%"
+										 horizontalCenter="0" horizontalAlign="center" 
+										 verticalCenter="0" verticalAlign="middle" 
+										 fillMode="scale" scaleMode="stretch"/>
+							</s:BorderContainer>
+							<s:Image id="SymbolGalleryButton"
+									 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+									 buttonMode="true"
+									 source="assets/down_triangle.png"
+									 click="OpenSymbolGallery(event)"/>
+						</s:BorderContainer>
+						<s:Spacer width="3"/>
+						<s:BorderContainer width="14" height="40" borderVisible="false">
+							<s:layout>
+								<s:VerticalLayout gap="4"/>
+							</s:layout>
+							<s:Button id="AddSymbolToLeftSymbolBoxButton" label="L" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddSymbolToLeftSymbolBox(event)"/>
+							<s:Button id="AddSymbolToCenterSymbolBoxButton" label="C" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddSymbolToCenterSymbolBox(event)"/>
+							<s:Button id="AddSymbolToRightSymbolBoxButton" label="R" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"
+									  click="AddSymbolToRightSymbolBox(event)"/>
+						</s:BorderContainer>
+						
+						<s:Spacer width="8"/>
+						
+						<!-- Control to set the sticker -->
+						<s:BorderContainer width="41" height="63"
+										   borderVisible="false">
+							<s:layout>
+								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												  gap="0" horizontalAlign="center" verticalAlign="middle"/>
+							</s:layout>
+							<s:BorderContainer width="100%" height="57"
+											   minWidth="0" minHeight="0"
+											   borderVisible="true">
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:Image id="StickerGalleryImage"
+										 width="100%" height="100%" verticalAlign="top" verticalCenter="0" horizontalAlign="left" horizontalCenter="0" 
+										 fillMode="scale" scaleMode="stretch" source="@Embed('assets/dalmatian.jpg')"
+										 click="OpenSymbolGallery(event)"/>
+							</s:BorderContainer>
+							<s:Image id="StickerGalleryButton"
+									 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+									 buttonMode="true"
+									 source="assets/down_triangle.png"
+									 click="OpenSymbolGallery(event)"/>
+						</s:BorderContainer>
+						<s:Spacer width="3"/>
+						<s:BorderContainer width="14" height="40" borderVisible="false">
+							<s:layout>
+								<s:VerticalLayout gap="4"/>
+							</s:layout>
+							<s:Button id="yyy_Button" label="L" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+							<s:Button id="zzzz_Button" label="C" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+							<s:Button id="aaaa_Button" label="R" 
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+						</s:BorderContainer>
+					</s:BorderContainer>
+					
+					<!-- Outer container for symbols and stickers -->
+					<s:BorderContainer width="140" height="100%"
+									   minWidth="0" minHeight="0"
+									   borderVisible="false">
+						<s:layout>
+							<s:VerticalLayout horizontalAlign="center" verticalAlign="top" 
+											  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+											  gap="0"/>
+						</s:layout>
+						
+						<!-- Control to set the plate color -->
+						<s:BorderContainer width="140.4" height="30.51"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true">
+							<s:layout>
+								<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"
+												  gap="0"/>
+							</s:layout>
+							<s:BorderContainer width="100%" height="100%"
+											   minWidth="0" minHeight="0"
+											   borderVisible="true" borderWeight="1.5"
+											   cornerRadius="3"
+											   backgroundColor="{PlateColor}" backgroundAlpha="1">
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:Rect x="2.5" y="2.5"
+										width="128.4" height="19.51"
+										radiusX="3" radiusY="3">                              
+									<s:stroke>
+										<s:SolidColorStroke weight="2" color="gray"/>
+									</s:stroke>
+								</s:Rect>
+								<!-- Mini-plate text container -->
+								<s:BorderContainer x="3" y="3"
+												   width="127.9" height="19.01"
+												   minWidth="0" minHeight="0"
+												   horizontalCenter="0" verticalCenter="0"
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+									</s:layout>
+									<mx:Text text="{PlateName}" styleName="NumericStepperDates"/>
+								</s:BorderContainer>
+							</s:BorderContainer>
+						</s:BorderContainer>
+						<s:Image id="xGalleryButton"
+								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+								 buttonMode="true"
+								 source="assets/down_triangle.png"
+								 click="OpenSymbolGallery(event)"/>
+						
+						<s:Spacer height="1"/>
+						
+						<!-- Control to set the border, symbol, and character color -->
+						<s:BorderContainer width="140.4" height="30.51"
+										   minHeight="0" minWidth="0"
+										   borderVisible="true">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
+												  paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"/>
+							</s:layout>
+							<s:BorderContainer width="100%" height="100%"
+											   minWidth="0" minHeight="0"
+											   borderVisible="true" borderWeight="1.5"
+											   cornerRadius="3"
+											   backgroundAlpha="0">
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:Rect x="2.5" y="2.5"
+										width="128.4" height="19.51"
+										radiusX="3" radiusY="3">                              
+									<s:stroke>
+										<s:SolidColorStroke weight="2" color="{FilmColor}"/>
+									</s:stroke>
+								</s:Rect>
+								<!-- Mini-plate text container -->
+								<s:BorderContainer x="3" y="3"
+												   width="127.9" height="19.01"
+												   minWidth="0" minHeight="0"
+												   horizontalCenter="0" verticalCenter="0"
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+									</s:layout>
+									<!-- Text won't center properly so indented here for now -->
+									<s:Label text="{FilmName}"
+											 horizontalCenter="0" verticalCenter="0"
+											 styleName="MiniPlateText" 
+											 color="{FilmColor}"/>
+								</s:BorderContainer>
+							</s:BorderContainer>
+						</s:BorderContainer>
+						<s:Image id="yGalleryButton"
+								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+								 buttonMode="true"
+								 source="assets/down_triangle.png"
+								 click="OpenSymbolGallery(event)"/>
+						
+						<s:Spacer height="1"/>
+						
+						<!-- Control to set the holes -->
+						<s:BorderContainer width="140.4" height="30.51"
+										   minWidth="0" minHeight="0"
+										   borderVisible="true">
+							<s:layout>
+								<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"
+												  gap="0"/>
+							</s:layout>
+							<s:BorderContainer width="100%" height="100%"
+											   minWidth="0" minHeight="0"
+											   borderVisible="true" borderWeight="1.5"
+											   cornerRadius="3"
+											   backgroundAlpha="0">
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:Rect x="2.5" y="2.5"
+										width="128.4" height="19.51"
+										radiusX="3" radiusY="3">                              
+									<s:stroke>
+										<s:SolidColorStroke weight="2" color="gray"/>
+									</s:stroke>
+								</s:Rect>
+								<s:Ellipse depth="11"
+										   x="5.5" y="5.5"
+										   width="6" height="6">
+									<s:fill>
+										<s:SolidColor color="white" alpha="1"/>
+									</s:fill>
+									<s:stroke>
+										<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
+									</s:stroke>
+								</s:Ellipse>
+								<s:Ellipse depth="11"
+										   x="123" y="5.5"
+										   width="6" height="6">
+									<s:fill>
+										<s:SolidColor color="white" alpha="1"/>
+									</s:fill>
+									<s:stroke>
+										<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
+									</s:stroke>
+								</s:Ellipse>
+								<!-- Mini-plate text container -->
+								<s:BorderContainer x="3" y="3"
+												   width="127.9" height="19.01"
+												   minWidth="0" minHeight="0"
+												   horizontalCenter="0" verticalCenter="0"
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+									</s:layout>
+									<mx:Text text="Holes in corners" styleName="NumericStepperDates"/>
+								</s:BorderContainer>
+							</s:BorderContainer>
+						</s:BorderContainer>
+						<s:Image id="zGalleryButton"
+								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+								 buttonMode="true"
+								 source="assets/down_triangle.png"
+								 click="OpenSymbolGallery(event)"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+			</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<mx:ViewStack id="Galleries" depth="10">
+			
+			<s:NavigatorContent id="SymbolGallery">
+				<s:Group id="SymbolGalleryWindow"
+						 x="5" y="130" visible="false">
+					<s:List x="0" y="0"
+						itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
+						horizontalCenter="0" verticalCenter="0">
+						<s:layout>
+							<s:TileLayout rowHeight="50" columnWidth="50" requestedColumnCount="7" requestedRowCount="5" 
+										  columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" horizontalGap="4" verticalGap="4"/>		
+						</s:layout>
+						<s:dataProvider>
+							<s:ArrayList>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg" toolTip="image1" 
+										 click="
+										 ChangeSymbolGalleryImage(event);
+										 CloseSymbolGallery(event);
+										 "/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/flags/nl.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/dalmatian.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/flags/nl.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/dalmatian.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/flags/nl.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/dalmatian.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/flags/nl.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/dalmatian.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/flags/nl.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/dalmatian.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/flags/nl.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/dalmatian.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/peacesign.jpg"/>
+								<s:Image fillMode="scale" width="100%" height="100%" scaleMode="stretch" source="assets/redpeacesign.jpg"/>
+							</s:ArrayList>		
+						</s:dataProvider>
+					</s:List>
+				</s:Group>
+			</s:NavigatorContent>
+			
+		</mx:ViewStack>
+		
+		<s:Group id="DatesContainer"
+		width="38" height="100%"
+		minWidth="0" minHeight="0"
+		alpha="0">
+		<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
+		<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
+		<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
+			</s:Group>
+		
+	</s:BorderContainer>
+	
+</s:Application>

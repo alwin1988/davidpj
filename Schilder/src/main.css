@@ -69,7 +69,7 @@
 .PlateTextLarge
 {
 	fontFamily: GL-Nummernschild-Eng;
-	fontSize: 100;
+	fontSize: 96;
 	fontWeight: normal;
 	kerning: true;
 }
@@ -121,7 +121,7 @@
 	fontSize: 11;
 	fontWeight: bold;
 }
-.ResetButton
+.HTMLButton
 {
 	color: blue;
 	fontFamily: Arial;

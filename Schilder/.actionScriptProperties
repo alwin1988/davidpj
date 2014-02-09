@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="schilder-2.mxml" projectUUID="8ccc200e-c61c-4ef4-b046-b317d6bb9217" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="Schilder-initial.mxml" projectUUID="8ccc200e-c61c-4ef4-b046-b317d6bb9217" version="10">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -14,10 +14,9 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="schilder-2.mxml"/>
     <application path="schilder.mxml"/>
-    <application path="Schilder3.mxml"/>
-    <application path="Schilder4.mxml"/>
+    <application path="Schilder5.mxml"/>
+    <application path="Schilder6.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

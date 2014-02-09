@@ -6,16 +6,7 @@
 	
 	<fx:Style source="main.css"/>
 	
-	<fx:Declarations>
-	</fx:Declarations>
-	
-	<fx:Script>
-		<![CDATA[
-			[Bindable] public var PlateCharacterWidth:Number = 35;
-			[Bindable] public var PlateCharacterHeight:Number = 94;
-		]]>
-	</fx:Script>
-	
+	<fx:Declarations/>
 
 	<!-- Outer container -->
 	<s:BorderContainer width="540" height="406"
@@ -150,115 +141,94 @@
 									   backgroundAlpha="0" 
 									   borderVisible="false">
 						<s:layout>
-							<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"
-												gap="-5"/>
+							<s:HorizontalLayout horizontalAlign="center" verticalAlign="top"
+												gap="0"/>
 						</s:layout>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="F"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="U"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="N"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="S"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="C"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="H"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="I"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="L"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="D"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="E"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<s:Group depth="10" width="{PlateCharacterWidth}" height="{PlateCharacterHeight}">
-							<s:Label text="R"
-									 depth="11"
-									 verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-									 styleName="PlateText"
-									 color="red"/>
-						</s:Group>
-						<!--mx:Text text="K" 
-										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
-										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
+						<mx:Text depth="10"
+								 text="F"
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="U" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="N" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="S" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="C" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="H" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="I" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="L" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="D" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="E" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<mx:Text text="R" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
+								 color="red"/>
+						<!-- mx:Text text="K" 
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
 								 styleName="PlateText"
 								 color="red"/>
 						<mx:Text text="O" 
-										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
-										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"							 
-										styleName="PlateText"
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
 								 color="red"/>
 						<mx:Text text="N" 
-										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
-										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"							 
-										styleName="PlateText"
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
 								 color="red"/>
 						<mx:Text text="I" 
-										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
-										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"						 
-										styleName="PlateText"
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
 								 color="red"/>
 						<mx:Text text="N" 
-										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
-										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"					 
-										styleName="PlateText"
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
 								 color="red"/>
 						<mx:Text text="G" 
-										width="{PlateCharacterWidth}" height="{PlateCharacterHeight}" 
-										verticalAlign="middle" horizontalCenter="0" verticalCenter="0"
-										styleName="PlateText"
+								 width="29" height="94"
+								 horizontalCenter="0" verticalCenter="0"
+								 styleName="PlateText"
 								 color="red"/-->
 					</s:BorderContainer>
 				</s:BorderContainer>
@@ -405,44 +375,44 @@
 												paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
 												gap="2"/>
 						</s:layout>
-						<s:Button id="CharacterButton"
+						<s:Button id="CharacterButton" 
 								  label="A"
 								  width="26" height="37"
 								  horizontalCenter="0" verticalCenter="0"
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="&#196;" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"
 								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="B" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="C" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"
 								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="D" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"
 								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="E" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="F" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="G" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="H" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="I" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="J" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 					</s:BorderContainer>
 					<s:BorderContainer width="309" height="37"
 									   borderVisible="false">
@@ -453,37 +423,37 @@
 						</s:layout>
 						<s:Button label="K" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="L" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="M" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>	
+								  styleName="CharacterButton"/>	
 						<s:Button label="N" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="O" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="&#214;" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="P" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="Q" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="R" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="S" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="T" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 					</s:BorderContainer>
 					<s:BorderContainer width="309" height="37"
 									   borderVisible="false">
@@ -494,37 +464,37 @@
 						</s:layout>
 						<s:Button label="U" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="&#220;" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="V" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="W" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="X" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="Y" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="Z" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="1" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="2" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="3" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="4" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 					</s:BorderContainer>
 					<s:BorderContainer width="309" height="37"
 									   borderVisible="false">
@@ -535,31 +505,31 @@
 						</s:layout>
 						<s:Button label="5" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="6" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="7" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="8" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="9" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="0" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="-" 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="." 
 								  width="{CharacterButton.width}" height="{CharacterButton.height}"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Button label="?" 
 								  width="{CharacterButton.width}" height="37"								  horizontalCenter="0" verticalCenter="0" 
-								  styleName="CharacterButton" skinClass="CharacterButtonSkin"/>
+								  styleName="CharacterButton"/>
 						<s:Spacer width="1"/>
 						<s:BorderContainer width="52" 
 										   height="37"
@@ -683,10 +653,10 @@
 						</s:layout>
 						<s:Button label="L" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 						<s:Button label="R" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 					</s:BorderContainer>
 				</s:BorderContainer>
 
@@ -722,10 +692,10 @@
 						</s:layout>
 						<s:Button label="L" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 						<s:Button label="R" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:BorderContainer>
@@ -779,13 +749,13 @@
 						</s:layout>
 						<s:Button label="L" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 						<s:Button label="C" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 						<s:Button label="R" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 					</s:BorderContainer>
 					
 					<s:Spacer width="8"/>
@@ -821,13 +791,13 @@
 						</s:layout>
 						<s:Button label="L" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 						<s:Button label="C" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 						<s:Button label="R" 
 								  width="14" height="14"
-								  styleName="PositioningButton" skinClass="CharacterButtonSkin"/>
+								  styleName="PositioningButton" skinClass="myButtonSkin"/>
 					</s:BorderContainer>
 				</s:BorderContainer>
 
@@ -917,7 +887,7 @@
 									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
 								</s:layout>
 <!-- Text won't center properly so indented here for now -->
-								<s:Label text="        VIBRANT RED"
+								<mx:Text text="        VIBRANT RED"
 										 width="100%" height="100%" 
 										 horizontalCenter="0" verticalCenter="0"
 										 styleName="MiniPlateText" 

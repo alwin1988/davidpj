@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		xmlns:s="library://ns.adobe.com/flex/spark" 
-		mxlns:mx="library:/ns/adobe.com/flex/halo">
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx">
 	
 	<fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
@@ -17,39 +17,46 @@
 		<s:State name="up"/>
 		<s:State name="over"/>
 		<s:State name="down"/>
-		<s:state name="disabled"/>
+		<s:State name="disabled"/>
 	</s:states>
 	
 	<s:transitions>
-		<s:Transition toState="over" autoReverse="true">
+		<!--s:Transition toState="over" autoReverse="true">
 			<s:Resize target="{underlineOver}"/>
 		</s:Transition>
 		
 		<s:Transition toState="up" autoReverse="true">
 			<s:Resize target="{underlineOver}"/>
-		</s:Transition>
+		</s:Transition-->
 	</s:transitions>
 	
 	<s:Label id="LabelDisplay"
 			 styleName.up="upStyle"
 			 styleName.over="overStyle"
 			 styleName.down="downStyle"
-			 styleName.disabled="disabledStyle"/>
+			 styleName.disabled="disabledStyle">
 	</s:Label>
 	
 	<!--This is the blue line that is always present -->
-	<s:Rect width="100%" height="1" bottom="0" horizontalCenter="0">
+	<!--s:Rect width="100%" height="1" bottom="0" horizontalCenter="0">
 		<s:fill>
 			<s:SolidColor color="#0000FF"/>
 		</s:fill>
-	</s:Rect>
+	</s:Rect-->
 	
 	<!--This is the green underline that grows 100% width on MouseOver and back to 0% on MouseOut -->
-	<s:Rect id="underlineOver"
+	<!--s:Rect id="underlineOver"
 			width.over="100%" width.up="0" height="1" bottom="0" horizontalCenter="0">
 		<s:fill>
 			<s:SolidColor color="#009900"/>
 		</s:fill>
-	</s:Rect>
+	</s:Rect-->
+	
+	<!-- layer 8: text -->
+	<!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay  -->
+	<s:Label id="labelDisplay" width="26" left="0" right="0" top="0" bottom="0" horizontalCenter="0"
+			 maxDisplayedLines="1" textAlign="center" verticalAlign="middle" verticalCenter="0" alpha="1" textDecoration="underline"
+			 >
+	</s:Label>
 	
 </s:Skin>

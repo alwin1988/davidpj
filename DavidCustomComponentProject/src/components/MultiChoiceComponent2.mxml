@@ -291,15 +291,15 @@
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Checkbox"
 									   dataField="checked"
 									   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-									   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+									   itemRenderer="itemRenderer.CheckBoxItemRenderer" editable="false"
 									   rendererIsEditor="false"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Information"
-									   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+									   headerRenderer="headerRenderer.InfoIconHeaderRenderer" editable="false"
 									   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Disposition"
 									   dataField="Disposition"
 									   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
-									   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+									   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer" editable="false"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang1Label" dataField="Lang1Label" editable="true" visible="true"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang1Value" dataField="Lang1Value" editable="true" visible="true"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang2Label" dataField="Lang2Label" editable="true" visible="false" width="0" minWidth="0"/>
@@ -311,10 +311,10 @@
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Preselect"
 									   dataField="Preselect"
 									   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-									   itemRenderer="itemRenderer.CheckBoxItemRenderer"/>
+									   itemRenderer="itemRenderer.CheckBoxItemRenderer" editable="true"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Delete"
 									   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
-									   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+									   itemRenderer="itemRenderer.DeleteButtonItemRenderer" editable="false"/>
 		</mx:columns>
 	</mx:AdvancedDataGrid>
 

@@ -7,10 +7,6 @@
 			   minWidth="955" minHeight="600" xmlns:components="components.*"
 			   creationComplete="FF_m_DG_SetColumnWidths()">
 	
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	
 	<fx:Style source="Styles.css"/>
 	
 	<fx:Script>
@@ -31,7 +27,7 @@
 			[Bindable] private var CBW:Number=CheckBoxWidth;
 			[Bindable] private var InfoButtonWidth:Number=14;
 			[Bindable] private var IBW:Number=InfoButtonWidth;
-			[Bindable] private var DispositionToggleWidth:Number=10;
+			[Bindable] private var DispositionToggleWidth:Number=12;
 			[Bindable] private var DTW:Number=DispositionToggleWidth;
 			[Bindable] private var DeleteButtonWidth:Number=14;
 			[Bindable] private var DBW:Number=DeleteButtonWidth;
@@ -81,10 +77,10 @@
 			[Bindable]
 			public var FF_MultiChoice_TB_AC:ArrayCollection = new ArrayCollection(
 				[
-					{Entity:"TabSpec", LangNo:"1", LangCode:"us_en", TabLabel:"EN", Icon:"assets/flags/us.jpg", ToolTip:"English"},
-					{Entity:"TabSpec", LangNo:"2", LangCode:"nl_nl", TabLabel:"NL", Icon:"assets/flags/nl.jpg", ToolTip:"Dutch"},
-					{Entity:"TabSpec", LangNo:"3", LangCode:"fr_fr", TabLabel:"FR", Icon:"assets/flags/fr.jpg", ToolTip:"French"},
-					{Entity:"TabSpec", LangNo:"4", LangCode:"de_de", TabLabel:"DE", Icon:"assets/flags/de.jpg", ToolTip:"German"},
+					{Entity:"TabSpec", LangIndex:1, LangCode:"us_en", TabLabel:"EN", Icon:"assets/flags/us.jpg", ToolTip:"English"},
+					{Entity:"TabSpec", LangIndex:2, LangCode:"nl_nl", TabLabel:"NL", Icon:"assets/flags/nl.jpg", ToolTip:"Dutch"},
+					{Entity:"TabSpec", LangIndex:3, LangCode:"fr_fr", TabLabel:"FR", Icon:"assets/flags/fr.jpg", ToolTip:"French"},
+					{Entity:"TabSpec", LangIndex:4, LangCode:"de_de", TabLabel:"DE", Icon:"assets/flags/de.jpg", ToolTip:"German"},
 				]);
 
 			//Invoke the multichoice popup for only certain columns and only if FieldControl is of certain values
@@ -127,7 +123,10 @@
 					//Alert.show("MultiChoice.FF_MultiChoice_DG_Disposition.width:"+ MultiChoice.FF_MultiChoice_DG_Disposition.width);
 					//Alert.show(String(MultiChoice.FF_MultiChoice_DG_Checkbox.width+MultiChoice.FF_MultiChoice_DG_Information.width+MultiChoice.FF_MultiChoice_DG_Disposition.width))
 					
-					MultiChoice.x = xPos - (MultiChoice.FF_MultiChoice_DG_Checkbox.width+MultiChoice.FF_MultiChoice_DG_Information.width+MultiChoice.FF_MultiChoice_DG_Disposition.width);
+					MultiChoice.x = xPos - (
+						MultiChoice.FF_MultiChoice_DG_Checkbox.width +
+						MultiChoice.FF_MultiChoice_DG_Information.width +
+						MultiChoice.FF_MultiChoice_DG_Disposition.width);
 					MultiChoice.y = FF_m_DG.rowHeight*(event.rowIndex+1) + PopUpGapY;
 					//MultiChoice.width = MultiChoice.width - MultiChoice.FF_MultiChoice_DG_Lang1Label.width + 
 					//	AdvancedDataGridColumn(arr[event.columnIndex]).width;
@@ -139,7 +138,7 @@
 		]]>
 	</fx:Script>
 	
-	<s:SkinnableContainer id="skc" width="962" height="100%">
+	<s:SkinnableContainer id="skc" width="966" height="100%">
 		
 		<components:CustomTitleWindow title="Field Master"
 									  x="0" y="0" depth="1"

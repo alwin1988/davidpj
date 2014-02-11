@@ -3,6 +3,7 @@ package
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.display3D.textures.Texture;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -16,10 +17,13 @@ package
 		private var m_textBMD:BitmapData    = null;         // the BitmapData that we use to draw our TextField
 		private var m_drawPoint:Point       = new Point;    // Point used in drawing the final BitmapData
 		private var m_drawRect:Rectangle    = new Rectangle;// the Rectangle we use to determine which part of the texture to take
-		
 		// the texture we're using
-		[Embed(source="texture.jpg")]
+		[Embed(source="texture.png")]
 		private var m_textureImage:Class;
+		
+		[Embed(source="peacesign.png")]
+		private var embeddedImage : Class;
+		public var bmd1:BitmapData;
 		
 		public function TestTexturedText() 
 		{
@@ -29,16 +33,29 @@ package
 			// create textured text 1
 			var bmd:BitmapData = this.getTexturedText( "hello world" );
 			var b:Bitmap = new Bitmap( bmd );
-			b.x = 250.0;
-			b.y = 100.0;
-			this.addChild( b );
+			//b.x = 250.0;
+			//b.y = 100.0;
+			//this.addChild( b );
 			
 			// create textured text 2
+			//bmd = this.getTexturedText( "testing" );
+			//b = new Bitmap( bmd );
+			//b.x = 250.0;
+			//b.y = 150.0;
+			//this.addChild( b );
+			
+			var image : Bitmap = new embeddedImage();
+			bmd1 = image.bitmapData.clone();
+	
 			bmd = this.getTexturedText( "testing" );
 			b = new Bitmap( bmd );
+			b.smoothing = true;
+			b.scaleX = .5;
+			b.scaleY = .5;
 			b.x = 250.0;
 			b.y = 150.0;
 			this.addChild( b );
+			
 		}
 		
 		/**
@@ -49,29 +66,18 @@ package
 		 */
 		public function getTexturedText( text:String, randomPos:Boolean = true ):BitmapData
 		{
-			// set the text
-			this.m_text.text    = text;
-			var tw:int          = int( this.m_text.width + 0.5 ); // quick conver to int without clipping
-			var th:int          = int( this.m_text.height + 0.5 );
-			
-			// reuse our previous BitmapData if we can, rather than always creating a new one
-			if ( this.m_textBMD == null || this.m_textBMD.width < tw || this.m_textBMD.height < th )
-				this.m_textBMD = new BitmapData( tw, th, true, 0x00000000 );
-			else
-				this.m_textBMD.fillRect( this.m_textBMD.rect, 0x00000000 ); // clear the bitmapdata of the old rendering
-			
-			// draw our text
-			this.m_textBMD.draw( this.m_text, null, null, null, null, true );
+			var tw:int          = int( 100 + 0.5 ); // quick conver to int without clipping
+			var th:int          = int( 100 + 0.5 );
 			
 			// set our draw rect position
-			this.m_drawRect.x       = ( randomPos ) ? Math.random() * ( this.m_texture.width - tw ) : 0.0;
-			this.m_drawRect.y       = ( randomPos ) ? Math.random() * ( this.m_texture.height - tw ) : 0.0;
+			this.m_drawRect.x       = ( randomPos ) ? Math.random() * ( 100 - tw ) : 0.0;
+			this.m_drawRect.y       = ( randomPos ) ? Math.random() * ( 100 - tw ) : 0.0;
 			this.m_drawRect.width   = tw;
 			this.m_drawRect.height  = th;
 			
 			// get a new bitmap data (that we'll return) and copy our pixels, using the first bmd as an alpha mask
-			var ret:BitmapData = new BitmapData( tw, th, true, 0x00000000 );
-			ret.copyPixels( this.m_texture, this.m_drawRect, this.m_drawPoint, this.m_textBMD, this.m_drawPoint );
+			var ret:BitmapData = new BitmapData( tw, th, true, 0x00FFFFFF );
+			ret.copyPixels( this.m_texture, this.m_drawRect, this.m_drawPoint, bmd1, this.m_drawPoint );
 			return ret;
 		}
 		

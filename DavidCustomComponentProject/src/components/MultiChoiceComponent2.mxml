@@ -2,11 +2,36 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx" 
-		  x="0" y="0" width="394" height="112" gap="0"
-		  focusOut="FF_MultiChoice_FocusOutHandler(event)">
+		  x="0" y="0" width="390" height="112" gap="0"
+		  focusOut="FF_MultiChoice_Close(event)">
 
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Parallel id="ShrinkMultiChoiceDG">
+			<s:Resize target="{FF_MultiChoice_DG}" widthBy="{-(MultiChoice_DG_Grown_Width-MultiChoice_DG_Shrunk_Width)}" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Checkbox}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Information}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Disposition}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Preselect}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Delete}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang1Label}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang1Value}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang2Label}" widthBy="-160" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang2Value}" widthBy="-160" duration="{ShrinkGrowDuration}"/>
+		</s:Parallel>
+		<s:Parallel id="GrowMultiChoiceDG">
+			<s:Resize target="{FF_MultiChoice_DG}" widthBy="{(MultiChoice_DG_Grown_Width-MultiChoice_DG_Shrunk_Width)}" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Checkbox}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Information}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Disposition}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Preselect}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Delete}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang1Label}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang1Value}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang1Label}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang1Value}" widthBy="0" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang2Label}" widthBy="160" duration="{ShrinkGrowDuration}"/>
+			<s:Resize target="{FF_MultiChoice_DG_Lang2Value}" widthBy="160" duration="{ShrinkGrowDuration}"/>
+		</s:Parallel>
 	</fx:Declarations>
 	
 	<fx:Style source="css/Styles.css"/>
@@ -14,175 +39,280 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
 			import mx.controls.Menu;
 			import mx.events.MenuEvent;
 			import mx.managers.PopUpManager;
 			
+			import spark.effects.Resize;
 			import spark.events.IndexChangeEvent;
 			
 			[Bindable] private var CheckBoxWidth:Number=14;		
 			[Bindable] private var CBW:Number=CheckBoxWidth;
 			[Bindable] private var InfoButtonWidth:Number=14;
 			[Bindable] private var IBW:Number=InfoButtonWidth;
-			[Bindable] private var DispositionToggleWidth:Number=10;
+			[Bindable] private var DispositionToggleWidth:Number=12;
 			[Bindable] private var DTW:Number=DispositionToggleWidth;
 			[Bindable] private var DeleteButtonWidth:Number=14;
 			[Bindable] private var DBW:Number=DeleteButtonWidth;
 			
+			[Bindable] private var MultiChoice_DG_Shrunk_Width:Number = 388;
+			[Bindable] private var MultiChoice_DG_Grown_Width:Number = 708;
+			[Bindable] private var ShrinkGrowDuration:int = 500;
+			
 			[Bindable] public var FF_m_AC2:ArrayCollection;
-			[Bindable] private var SelectedLanguage:String;
+			[Bindable] private var SelectedLangIndex:Number = 0;
 			[Bindable] public var FF_MultiChoice_TB_AC:ArrayCollection;
 			[Bindable] public var FF_ObjId_n_AC:ArrayCollection;
 			
-			public function FF_MultiChoice_TB_ChangeHandler(event:IndexChangeEvent):void{
-				var TB_Data:Object = event.target.selectedItem as Object;
-				
-				SelectedLanguage=TB_Data.LangCode;
-				
+			public function FF_MultiChoice_DG_SetColumnWidths():void
+			{
 				FF_MultiChoice_DG.horizontalScrollPolicy='on';
-				FF_MultiChoice_DG_Checkbox.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+CBW;
+				FF_MultiChoice_DG_Checkbox.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+CBW; 
+				FF_MultiChoice_DG_Checkbox.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+CBW;
 				FF_MultiChoice_DG_Information.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+IBW;
+				FF_MultiChoice_DG_Information.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+IBW;
 				FF_MultiChoice_DG_Disposition.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+DTW;
-				FF_MultiChoice_DG_Lang1Label.width=160;
-				FF_MultiChoice_DG_Lang1Label.visible=true;
-				FF_MultiChoice_DG_Lang1Value.width=160;
-				FF_MultiChoice_DG_Lang1Value.visible=true;
-				FF_MultiChoice_DG_Delete.width=24;
+				FF_MultiChoice_DG_Disposition.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+DTW;
+				FF_MultiChoice_DG_Lang1Label.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				FF_MultiChoice_DG_Lang1Label.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				//FF_MultiChoice_DG_Lang2Label.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				//FF_MultiChoice_DG_Lang2Label.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				//FF_MultiChoice_DG_Lang2Label.width=0;
+				FF_MultiChoice_DG_Lang3Label.width=160;
+				FF_MultiChoice_DG_Lang4Label.width=160;
+				FF_MultiChoice_DG_Lang1Value.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				FF_MultiChoice_DG_Lang1Value.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				//FF_MultiChoice_DG_Lang2Value.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				//FF_MultiChoice_DG_Lang2Value.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+160;
+				//FF_MultiChoice_DG_Lang2Value.width=0;
+				FF_MultiChoice_DG_Lang3Value.width=160;
+				FF_MultiChoice_DG_Lang4Value.width=160;
+				FF_MultiChoice_DG_Preselect.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+CBW;
+				FF_MultiChoice_DG_Preselect.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+CBW
+				FF_MultiChoice_DG_Delete.width=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+DTW;
+				FF_MultiChoice_DG_Delete.minWidth=(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+DTW;
 				FF_MultiChoice_DG.horizontalScrollPolicy='off';
+			}
+			
+			public function FF_MultiChoice_TB_ChangeHandler(event:IndexChangeEvent):void
+			{
+				var TBitem:Object = event.target.selectedItem as Object;
 				
-				if (TB_Data.LangNo == "1")
+				SelectedLangIndex = TBitem.LangIndex;
+				
+				if (SelectedLangIndex == 1)
 				{
-					//FF_MultiChoice_VG.width=394;
-					FF_MultiChoice_DG.width=394;
-					FF_MultiChoice_DG.horizontalScrollPolicy='on';
-					FF_MultiChoice_DG_Lang2Label.width=160;
 					FF_MultiChoice_DG_Lang2Label.visible=false;
-					FF_MultiChoice_DG_Lang3Label.width=160;
 					FF_MultiChoice_DG_Lang3Label.visible=false;
-					FF_MultiChoice_DG_Lang4Label.width=160;
 					FF_MultiChoice_DG_Lang4Label.visible=false;
-					FF_MultiChoice_DG_Lang2Value.width=160;
 					FF_MultiChoice_DG_Lang2Value.visible=false;
-					FF_MultiChoice_DG_Lang3Value.width=160;
 					FF_MultiChoice_DG_Lang3Value.visible=false;
-					FF_MultiChoice_DG_Lang4Value.width=160;
 					FF_MultiChoice_DG_Lang4Value.visible=false;
-					FF_MultiChoice_DG.horizontalScrollPolicy='off';
+					FF_MultiChoice_DG_SetColumnWidths();
+					
+					if (FF_MultiChoice_DG.width || MultiChoice_DG_Shrunk_Width)
+					{
+						FF_MultiChoice_DG_Shrink();
+					}
 				}
-				else if (TB_Data.LangNo == "2")
+				else if (SelectedLangIndex == 2)
 				{
-					FF_MultiChoice_DG.width=734;
-					FF_MultiChoice_DG.horizontalScrollPolicy='on';
-					FF_MultiChoice_DG_Lang2Label.width=160;
 					FF_MultiChoice_DG_Lang2Label.visible=true;
-					FF_MultiChoice_DG_Lang3Label.width=160;
 					FF_MultiChoice_DG_Lang3Label.visible=false;
-					FF_MultiChoice_DG_Lang4Label.width=160;
 					FF_MultiChoice_DG_Lang4Label.visible=false;
-					FF_MultiChoice_DG_Lang2Value.width=160;
 					FF_MultiChoice_DG_Lang2Value.visible=true;
-					FF_MultiChoice_DG_Lang3Value.width=160;
 					FF_MultiChoice_DG_Lang3Value.visible=false;
-					FF_MultiChoice_DG_Lang4Value.width=160;
 					FF_MultiChoice_DG_Lang4Value.visible=false;
-					FF_MultiChoice_DG_Delete.width=24;
-					FF_MultiChoice_DG.horizontalScrollPolicy='off';
+					FF_MultiChoice_DG_SetColumnWidths();
+					
+					if (FF_MultiChoice_DG.width == MultiChoice_DG_Shrunk_Width)
+					{
+						FF_MultiChoice_DG_Grow();
+						/*Alert.show(String(FF_MultiChoice_DG_Lang1Label.width));
+						Alert.show(String(FF_MultiChoice_DG_Lang1Value.width));
+						Alert.show(String(FF_MultiChoice_DG_Lang2Label.width));
+						Alert.show(String(FF_MultiChoice_DG_Lang2Value.width));*/
+						FF_MultiChoice_DG_Lang2Label.width=160;
+						FF_MultiChoice_DG_Lang2Label.minWidth=160;
+						FF_MultiChoice_DG_Lang2Value.width=160;
+						FF_MultiChoice_DG_Lang2Value.minWidth=160;
+						FF_MultiChoice_DG_SetColumnWidths();
+					}
+					
+					if (FF_MultiChoice_DG.width == MultiChoice_DG_Grown_Width)
+					{
+						FF_MultiChoice_DG_Shrink();
+						FF_MultiChoice_DG_Grow();
+					}
+
 				}
-				else if (TB_Data.LangNo == "3")
+				else if (SelectedLangIndex == 3)
 				{
-					//FF_MultiChoice_VG.width=394;
-					FF_MultiChoice_DG.width=394;
-					FF_MultiChoice_DG.horizontalScrollPolicy='on';
-					FF_MultiChoice_DG_Lang2Label.width=160;
 					FF_MultiChoice_DG_Lang2Label.visible=false;
-					FF_MultiChoice_DG_Lang3Label.width=160;
 					FF_MultiChoice_DG_Lang3Label.visible=true;
-					FF_MultiChoice_DG_Lang4Label.width=160;
 					FF_MultiChoice_DG_Lang4Label.visible=false;
-					FF_MultiChoice_DG_Lang2Value.width=160;
 					FF_MultiChoice_DG_Lang2Value.visible=false;
-					FF_MultiChoice_DG_Lang3Value.width=160;
 					FF_MultiChoice_DG_Lang3Value.visible=true;
-					FF_MultiChoice_DG_Lang4Value.width=160;
 					FF_MultiChoice_DG_Lang4Value.visible=false;
-					FF_MultiChoice_DG.horizontalScrollPolicy='off';
+					FF_MultiChoice_DG_SetColumnWidths();
+					
+					if (FF_MultiChoice_DG.width == MultiChoice_DG_Shrunk_Width)
+					{
+						FF_MultiChoice_DG_Grow();
+					}
+					
+					if (FF_MultiChoice_DG.width == MultiChoice_DG_Grown_Width)
+					{
+						FF_MultiChoice_DG_Shrink();
+						FF_MultiChoice_DG_Grow();
+					}
 				}
-				else if (TB_Data.LangNo == "4")
+				else if (SelectedLangIndex == 4)
 				{
-					FF_MultiChoice_DG.width=734;
-					FF_MultiChoice_DG.horizontalScrollPolicy='on';
-					FF_MultiChoice_DG_Lang2Label.width=160;
 					FF_MultiChoice_DG_Lang2Label.visible=false;
-					FF_MultiChoice_DG_Lang3Label.width=160;
 					FF_MultiChoice_DG_Lang3Label.visible=false;
-					FF_MultiChoice_DG_Lang4Label.width=160;
 					FF_MultiChoice_DG_Lang4Label.visible=true;
-					FF_MultiChoice_DG_Lang2Value.width=160;
 					FF_MultiChoice_DG_Lang2Value.visible=false;
-					FF_MultiChoice_DG_Lang3Value.width=160;
 					FF_MultiChoice_DG_Lang3Value.visible=false;
-					FF_MultiChoice_DG_Lang4Value.width=160;
 					FF_MultiChoice_DG_Lang4Value.visible=true;
-					FF_MultiChoice_DG_Delete.width=24;
-					FF_MultiChoice_DG.horizontalScrollPolicy='off';
+					FF_MultiChoice_DG_SetColumnWidths();
+					
+					if (FF_MultiChoice_DG.width == MultiChoice_DG_Shrunk_Width)
+					{
+						FF_MultiChoice_DG_Grow();
+					}
+					
+					if (FF_MultiChoice_DG.width == MultiChoice_DG_Grown_Width)
+					{
+						FF_MultiChoice_DG_Shrink();
+						FF_MultiChoice_DG_Grow();
+					}
 				}		
 			}
 			
-			protected function FF_MultiChoice_FocusOutHandler(event:FocusEvent):void
+			protected function FF_MultiChoice_DG_Grow():void
+			{
+				/*for (var i:int = MultiChoice_DG_Shrunk_Width; i < MultiChoice_DG_Grown_Width; i++)
+				{
+					FF_MultiChoice_DG.width = i+1;
+					Pause(1);
+				}*/
+				/*var resize:Resize = new Resize();
+				resize.target = FF_MultiChoice_DG;
+				resize.widthBy = (MultiChoice_DG_Grown_Width-MultiChoice_DG_Shrunk_Width);
+				resize.duration = 500;
+				FF_MultiChoice_DG_SetColumnWidths();
+				resize.end();
+				FF_MultiChoice_DG_SetColumnWidths();
+				resize.play();
+				FF_MultiChoice_DG_SetColumnWidths();*/
+				
+				GrowMultiChoiceDG.play();
+			}
+						
+			protected function FF_MultiChoice_DG_Shrink():void
+			{
+				/*for (var i:int = MultiChoice_DG_Grown_Width; i > MultiChoice_DG_Shrunk_Width; i--)
+				{
+					FF_MultiChoice_DG.width = i-1;
+					Pause(1);
+				}*/
+				
+				ShrinkMultiChoiceDG.play();
+			}
+			
+			protected function Pause(DurationInMilliseconds:int):void
+			{
+				var init:int = getTimer();
+				while(true)
+				{
+					if (getTimer() - init >= DurationInMilliseconds)
+					{
+						break;
+					}
+				}
+			}
+			
+			protected function FF_MultiChoice_Close(event:FocusEvent):void
 			{
 				// TODO Auto-generated method stub
 				PopUpManager.removePopUp(this);
 			}
 			
-			protected function button1_clickHandler(event:MouseEvent):void
+			protected function FF_MultiChoice_Close_(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				PopUpManager.removePopUp(this);
 			}
-			
 		]]>
 	</fx:Script>
-	<s:HGroup id="FF_MultiChoice_HG" width="100%" height="{14}" horizontalAlign="center" gap="0">
-		<s:TabBar id="FF_MultiChoice_TB" height="14" width="30" labelField="ShortLabel" chromeColor="white"
+	<!--Prep for flags as tabbar icon tabs-->
+	<s:HGroup id="FF_MultiChoice_HG" width="100%" height="{14}" horizontalAlign="right" 
+			  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0">
+		<fx:Script>
+			<![CDATA[
+				[Bindable]
+				[Embed(source="assets/flags/us.png")]
+				private var us:Class;
+				
+				[Bindable]
+				[Embed(source="assets/flags/nl.png")]
+				private var nl:Class;
+				
+				[Bindable]
+				[Embed(source="assets/flags/fr.png")]
+				private var fr:Class;
+				
+				[Bindable]
+				[Embed(source="assets/flags/de.png")]
+				private var de:Class;
+			]]>
+		</fx:Script>
+		
+		<s:TabBar id="FF_MultiChoice_TB" height="14" width="120" labelField="TabLabel" chromeColor="white"
 				  change="FF_MultiChoice_TB_ChangeHandler(event)" 
 				  dataProvider="{FF_MultiChoice_TB_AC}" 
-				  focusOut="FF_MultiChoice_FocusOutHandler(event)"/>
+				  focusOut="FF_MultiChoice_Close(event)"/>
+		<s:Spacer width="{(FF_MultiChoice_DG_Preselect.width+FF_MultiChoice_DG_Delete.width)}"/>
 	</s:HGroup>
+	
 	<mx:AdvancedDataGrid id="FF_MultiChoice_DG"
-						 width="{this.width}" height="80" borderColor="blue" borderAlpha=".6" borderVisible="true"
-						 headerHeight="0" rowHeight="20" rowCount="20"
+						 width="{MultiChoice_DG_Shrunk_Width}" height="80" borderColor="blue" borderAlpha=".6" borderVisible="true"
+						 headerHeight="0" rowHeight="20" rowCount="20" editable="true"
 						 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
 						 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-						 sortExpertMode="true" dataProvider="{FF_ObjId_n_AC}"
+						 sortExpertMode="true" 
+						 dataProvider="{FF_ObjId_n_AC}"
 						 headerStyleName="DataGridHeader" styleName="DataGridBody" 
-						 focusOut="FF_MultiChoice_FocusOutHandler(event)"
-						 >
+						 creationComplete="FF_MultiChoice_DG_SetColumnWidths()"
+						 focusOut="FF_MultiChoice_Close(event)">
 		<mx:columns>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Checkbox"
 									   dataField="checked"
-									   width="{(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+CBW}"
 									   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
 									   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 									   rendererIsEditor="false"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Information"
-									   width="{(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+IBW}"
 									   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
 									   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Disposition"
 									   dataField="Disposition"
-									   width="{(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+DTW}"
 									   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
 									   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang1Label" dataField="Lang1Label" width="160" visible="true"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang1Value" dataField="Lang1Value" width="160" visible="true"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang2Label" dataField="Lang2Label" width="160" visible="false"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang2Value" dataField="Lang2Value" width="160" visible="false"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang3Label" dataField="Lang3Label" width="160" visible="false"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang3Value" dataField="Lang3Value" width="160" visible="false"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang4Label" dataField="Lang4Label" width="160" visible="false"/>
-			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang4Value" dataField="Lang4Value" width="160" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang1Label" dataField="Lang1Label" editable="true" visible="true"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang1Value" dataField="Lang1Value" editable="true" visible="true"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang2Label" dataField="Lang2Label" editable="true" visible="false" width="0" minWidth="0"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang2Value" dataField="Lang2Value" editable="true" visible="false" width="0" minWidth="0"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang3Label" dataField="Lang3Label" editable="true" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang3Value" dataField="Lang3Value" editable="true" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang4Label" dataField="Lang4Label" editable="true" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Lang4Value" dataField="Lang4Value" editable="true" visible="false"/>
+			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Preselect"
+									   dataField="Preselect"
+									   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+									   itemRenderer="itemRenderer.CheckBoxItemRenderer"/>
 			<mx:AdvancedDataGridColumn id="FF_MultiChoice_DG_Delete"
-									   width="{(FF_MultiChoice_DG.width-FF_MultiChoice_DG.width)+DBW}"
 									   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
 									   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
 		</mx:columns>
@@ -230,7 +360,9 @@
 						mouseOver="FF_Insert_PB_MouseOverHandler(event)"/>
 		<s:Button label="Delete" width="60" height="14" styleName="DeleteButton" fontSize="10"/>
 		<s:Spacer width="10"/>
-		<s:Button label="Save" width="60" height="14" styleName="SaveButton" fontSize="10"/>
-		<s:Button label="Cancel" width="60" height="14" styleName="DeleteButton" fontSize="10" click="button1_clickHandler(event)"/>
+		<s:Button label="Save" width="60" height="14" styleName="SaveButton" fontSize="10"
+				  click="FF_MultiChoice_Close_(event)"/>
+		<s:Button label="Cancel" width="60" height="14" styleName="DeleteButton" fontSize="10" 
+				  click="FF_MultiChoice_Close_(event)"/>
 	</s:BorderContainer>
 </s:VGroup>

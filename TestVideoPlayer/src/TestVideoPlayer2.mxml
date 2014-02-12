@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- controls\videoplayer\VideoPlayerEvent.mxml-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:component="component.*">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<fx:Declarations>
+		<s:Animate id="SlidePlayerIn" target="{VP}" duration="400">
+			<s:SimpleMotionPath property="x" valueFrom="{1300}" valueTo="300"/>
+		</s:Animate>
+		<s:Animate id="SlidePlayerOut" target="{VP}" duration="400">
+			<s:SimpleMotionPath property="x" valueFrom="{VP.x}" valueTo="1300"/>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.*;
+			import mx.managers.PopUpManager;
+			import component.TestVideoPlayer;
+			import org.osmf.events.MediaPlayerStateChangeEvent;
+			import org.osmf.events.TimeEvent;
+			import spark.effects.Animate;
+			
+			[Bindable] private var VP:TestVideoPlayer;
+			
+			private function PopUp_Player(event:MouseEvent):void
+			{
+				VP = new TestVideoPlayer;
+				PopUpManager.addPopUp(VP,this,false);
+				SlidePlayerIn.play();
+			}
+			
+			private function Remove_Player(event:MouseEvent):void
+			{
+				SlidePlayerOut.play();
+				//PopUpManager.removePopUp(VP);
+			}
+
+		]]>
+	</fx:Script>
+		
+	<s:Button x="100" y="400" label="Popup player" click="PopUp_Player(event)"/>
+	<s:Button x="200" y="400" label="Remove player" click="Remove_Player(event)"/>
+</s:Application>
+
+
+<!--source="rtmp:flash.oit.duke.edu/vod/_definst_/MP4:test/brunswick.m4v"-->

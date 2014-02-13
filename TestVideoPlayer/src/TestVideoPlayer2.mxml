@@ -19,18 +19,23 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import component.TestVideoPlayer;
+			import component.VideoPlayerComponent;
+			
 			import mx.events.*;
 			import mx.managers.PopUpManager;
-			import component.TestVideoPlayer;
+			
 			import org.osmf.events.MediaPlayerStateChangeEvent;
 			import org.osmf.events.TimeEvent;
+			
 			import spark.effects.Animate;
 			
-			[Bindable] private var VP:TestVideoPlayer;
+			//[Bindable] private var VP:TestVideoPlayer;
+			[Bindable] private var VP:VideoPlayerComponent;
 			
 			private function PopUp_Player(event:MouseEvent):void
 			{
-				VP = new TestVideoPlayer;
+				VP = new VideoPlayerComponent;
 				PopUpManager.addPopUp(VP,this,false);
 				SlidePlayerIn.play();
 			}
@@ -47,6 +52,4 @@
 	<s:Button x="100" y="400" label="Popup player" click="PopUp_Player(event)"/>
 	<s:Button x="200" y="400" label="Remove player" click="Remove_Player(event)"/>
 </s:Application>
-
-
 <!--source="rtmp:flash.oit.duke.edu/vod/_definst_/MP4:test/brunswick.m4v"-->

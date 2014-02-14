@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component:CustomResizableTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+									  xmlns:s="library://ns.adobe.com/flex/spark" 
+									  xmlns:mx="library://ns.adobe.com/flex/mx" 
+									  xmlns:component="component.*" 
+									  width="400" height="300" headerHeight="18"
+									  skinClass="skin.CustomResizableTitleWindowSkin"  
+									  close="PopUpManager.removePopUp(this)">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.managers.PopUpManager;
+			import org.osmf.events.MediaPlayerStateChangeEvent;
+			import org.osmf.events.TimeEvent;
+			
+			[Bindable]
+			private var TT_AC:ArrayCollection = new ArrayCollection(
+				[
+					{EntityType:"TaskType", Label:"TaskType1", Data:"TT1"}
+				]);
+		]]>
+	</fx:Script>
+
+	<s:Group>
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+		
+			<s:HGroup verticalAlign="baseline">
+				<s:Label text="Task type"/>
+				<s:DropDownList dataProvider="{TT_AC}"/>
+			</s:HGroup>
+	</s:Group>
+	
+</component:CustomResizableTitleWindow>

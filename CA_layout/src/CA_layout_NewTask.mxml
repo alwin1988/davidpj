@@ -21,6 +21,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import component.NewTaskComponent;
 			import component.PopUpNewTaskCustomTitleWindow;
 			
 			import event.NewTaskEvent;
@@ -28,8 +29,7 @@
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.core.Container;
-			import mx.effects.AnimateProperty;
-			import mx.events.CloseEvent;
+			import mx.events.*;
 			import mx.events.DragEvent;
 			import mx.managers.PopUpManager;
 			
@@ -64,25 +64,17 @@
 			[Bindable] private var NonShadeAlpha:Number = 1;
 			[Bindable] private var FinalShadeAlpha:Number=.3;
 						
-			[Bindable]
-			public var pop:TitleWindow;
+			[Bindable] public var pop:TitleWindow;
+			
+			[Bindable] private var NT:NewTaskComponent;
 			
 			//protected function advanceddatagrid_itemDoubleClickHandler(evt:ListEvent):void
 			protected function NewTaskPopUp():void
 			{
-				var pop:TitleWindow = new TitleWindow();
-				pop.height=400;
-				pop.width=400;
-				pop.title='New Task';
-				pop.addEventListener(NewTaskEvent.NewTask_CLOSE,closePopUp);
-				PopUpManager.addPopUp(pop,this,true);
-				PopUpManager.centerPopUp(pop);
-			}
-			
-			public function closePopUp(event:NewTaskEvent):void
-			{
-				pop.removeEventListener(NewTaskEvent.NewTask_CLOSE,closePopUp);
-				PopUpManager.removePopUp(pop);
+				NT = new NewTaskComponent;
+				NT.title="New Task";
+				PopUpManager.addPopUp(NT,this,false);
+				PopUpManager.centerPopUp(NT);
 			}
 		]]>
 	</fx:Script>
@@ -178,24 +170,5 @@
 			
 		</mx:HDividedBox>		
 	</s:TitleWindow>
-	
-	<!--s:TitleWindow width="400" height="400" dropShadowVisible="true">
-		<fx:Script>
-			<![CDATA[
-				[Bindable]
-				private var TT_AC:ArrayCollection = new ArrayCollection(
-					[
-						{EntityType:"TaskType", Label:"TaskType1", Data:"TT1"}
-					]);
-			]]>
-		</fx:Script>
-		<s:layout>
-			<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="5"/>
-		</s:layout>
-		<s:HGroup verticalAlign="baseline">
-			<s:Label text="Task type"/>
-			<s:DropDownList dataProvider="{TT_AC}"/>
-		</s:HGroup>
-	</s:TitleWindow-->
 
 </s:Application>

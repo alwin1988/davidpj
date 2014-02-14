@@ -16,11 +16,12 @@
   <applications>
     <application path="CA_layout_2.mxml"/>
     <application path="DepthTest.mxml"/>
+    <application path="CA_layout_NewTask.mxml"/>
+    <application path="CA_layout_5.mxml"/>
+    <application path="component/NewTaskComponent.mxml"/>
     <application path="CA_layout_4.mxml"/>
     <application path="CA_layout.mxml"/>
     <application path="CA_layout_3.mxml"/>
-    <application path="CA_layout_5.mxml"/>
-    <application path="CA_layout_NewTask.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

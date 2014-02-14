@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:component="component.*"
+			   minWidth="955" minHeight="600">
+		
+	<fx:Declarations>
+		<s:Fade id="FadeTD_ShadeOn" target="{TD_Shade}" alphaFrom="{TD_Shade.alpha}" alphaTo="{TD_Shade_FinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeTD_ShadeOff" target="{TD_Shade}" alphaFrom="{TD_Shade.alpha}" alphaTo="{TD_Shade_InitialAlpha}" duration="{FadeDuration}"/>
+		<!--s:Fade id="FadeBBOut" target="{BB}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+		<s:Fade id="FadeBBIn" target="{BB}" alphaFrom=".2" alphaTo="1" duration="{FadeDuration}"/-->
+		
+		<s:Animate id="SlideTTIn" target="{TT}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="SlideTTOut" target="{TT}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
+		</s:Animate>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import component.PopUpNewTaskCustomTitleWindow;
+			
+			import event.NewTaskEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.core.Container;
+			import mx.effects.AnimateProperty;
+			import mx.events.CloseEvent;
+			import mx.events.DragEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.effects.Animate;
+						
+			[Bindable] private var FullWidth:Number=800;
+			[Bindable] private var HalfWidth:Number=(FullWidth/2);
+			[Bindable] private var MidPoint:Number=((FullWidth/2)-(B0_Gap/2));
+			[Bindable] private var T_MidPoint:Number=((FullWidth/2)-(W0_Gap/2));
+			
+			[Bindable] private var HeaderHeight:Number = 20;
+			[Bindable] private var RowHeight:Number = 18;
+			
+			[Bindable] private var B0_Gap:Number=10;
+			[Bindable] private var B5_Gap:Number=10;
+			[Bindable] private var W0_Gap:Number=0;
+			
+			[Bindable] private var Indent1:Number = 15;
+			[Bindable] private var Indent2:Number = 30;
+			[Bindable] private var Indent:Number;
+			[Bindable] private var FadeDuration:Number = (SlideDuration*1.5);
+			[Bindable] private var SlideDuration:Number = 800;
+			
+			[Bindable] private var TD_Shade_InitialAlpha:Number = 0;
+			[Bindable] private var TD_Shade_FinalAlpha:Number = .3;
+			
+			[Bindable] private var TM_Depth:Number = 3;
+			[Bindable] private var TD_Depth:Number = 5;
+			[Bindable] private var TD_Shade_Depth:Number = 6;
+			[Bindable] private var TT_Depth:Number = 8;
+						
+			[Bindable] private var NonShadeAlpha:Number = 1;
+			[Bindable] private var FinalShadeAlpha:Number=.3;
+						
+			[Bindable]
+			public var pop:TitleWindow;
+			
+			//protected function advanceddatagrid_itemDoubleClickHandler(evt:ListEvent):void
+			protected function NewTaskPopUp():void
+			{
+				var pop:TitleWindow = new TitleWindow();
+				pop.height=400;
+				pop.width=400;
+				pop.title='New Task';
+				pop.addEventListener(NewTaskEvent.NewTask_CLOSE,closePopUp);
+				PopUpManager.addPopUp(pop,this,true);
+				PopUpManager.centerPopUp(pop);
+			}
+			
+			public function closePopUp(event:NewTaskEvent):void
+			{
+				pop.removeEventListener(NewTaskEvent.NewTask_CLOSE,closePopUp);
+				PopUpManager.removePopUp(pop);
+			}
+		]]>
+	</fx:Script>
+	
+	<s:VGroup width="100%">
+		<s:HGroup>
+			<s:Button label="TTin" click="
+					  FadeTD_ShadeOn.play();
+					  SlideTTIn.play();
+					  "/>
+			<s:Button label="TTout" click="
+					  SlideTTOut.play();
+					  "/>
+			<s:Button label="NT" click="
+					  NewTaskPopUp()
+					  "/>
+		</s:HGroup>
+	</s:VGroup>	
+	
+	<s:TitleWindow id="TW2" x="100" y="400" width="{FullWidth}" height="{30+HeaderHeight+(RowHeight*2)}" dropShadowVisible="false">
+		<mx:HDividedBox id="W0" width="100%" height="100%" horizontalGap="{W0_Gap}" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
+			
+			<!--Stage left-->
+			<!--All children are groups with x/y and alpha and depth-->
+			<s:BorderContainer id="WM" width="100%" height="100%" borderVisible="false"> <!--Don't set alpha on this but rather its children-->
+				<s:layout>
+					<s:BasicLayout clipAndEnableScrolling="true"/>
+				</s:layout>
+				<s:Group id="TM" x="0" y="0" width="{WM.width}" height="100%" alpha="1" depth="{TM_Depth}">
+					<mx:Canvas width="100%" height="100%" borderVisible="false">
+						<s:VGroup y="0" width="100%" height="100%">
+							<mx:AdvancedDataGrid id="TM_DG" width="100%" height="100%" borderVisible="false" rowCount="2" editable="true" verticalScrollPolicy="off" 
+												 headerHeight="{HeaderHeight}" rowHeight="{RowHeight}">
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="{(TM_DG.width/3)}" headerText="Leading 1" editable="true"/>
+									<mx:AdvancedDataGridColumn width="{(TM_DG.width/3)}" headerText="Leading 2" editable="true"/>
+									<mx:AdvancedDataGridColumn width="{(TM_DG.width/3)}" headerText="Leading 3" editable="true"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+					</mx:Canvas>
+				</s:Group>
+			</s:BorderContainer>
+			
+			<s:VGroup width="1" height="100%" gap="0">
+				<mx:VRule height="{TM_DG.headerHeight}" strokeColor="black" alpha=".7"/>
+				<mx:VRule height="100%" strokeColor="black" alpha=".2"/>
+			</s:VGroup>
+			
+			<!--Stage right-->
+			<!--Depth has no effect for non- Spark-->
+			<s:Group id="WD" width="100%" height="100%" visible="true" includeInLayout="true">
+				<s:layout>
+					<s:BasicLayout clipAndEnableScrolling="true"/>
+				</s:layout>
+				<s:Group id="TD" x="0" y="0" width="100%" height="100%" alpha="1" depth="{TD_Depth}">
+					<mx:Canvas width="100%" height="100%" borderVisible="false">
+						<s:VGroup y="0" width="100%" height="100%">
+							<mx:AdvancedDataGrid id="TD_DG" width="100%" height="100%" borderVisible="false" rowCount="2" editable="true" verticalScrollPolicy="auto"
+												 headerHeight="{HeaderHeight}" rowHeight="{RowHeight}">
+								<mx:columns>
+									<mx:AdvancedDataGridColumn width="{(TD_DG.width/3)}" headerText="Trailing1" editable="true"/>
+									<mx:AdvancedDataGridColumn width="{(TD_DG.width/3)}" headerText="Trailing2" editable="true"/>
+									<mx:AdvancedDataGridColumn width="{(TD_DG.width/3)}" headerText="Trailing3" editable="true"/>
+								</mx:columns>
+							</mx:AdvancedDataGrid>
+						</s:VGroup>
+					</mx:Canvas>
+				</s:Group>
+				<s:Group id="TD_Shade" x="{TD.x}" y="{TD.y}" width="{TD.width}" height="{TD.height}" alpha="0" depth="{TD_Shade_Depth}" includeInLayout="false" visible="false">
+					<s:Rect width="100%" height="100%">
+						<s:fill>
+							<s:SolidColor color="black"/>
+						</s:fill>
+					</s:Rect>
+				</s:Group>
+				<s:Group id="TT" x="{T_MidPoint}" width="{WD.width}" height="100%" alpha="1" depth="{TT_Depth}" includeInLayout="true" visible="true">
+					<mx:HDividedBox width="100%" height="100%" horizontalGap="5">
+						<mx:Canvas width="100%" height="100%" borderVisible="false">
+							<s:VGroup width="100%" height="100%">
+								<mx:AdvancedDataGrid id="TT_DG" width="100%" height="100%" rowCount="2" borderVisible="false" editable="false"
+													 headerHeight="{HeaderHeight}" rowHeight="{RowHeight}">
+									<mx:columns>
+										<mx:AdvancedDataGridColumn width="{TT_DG.width}" headerText="TT - Task Type master"/>
+									</mx:columns>
+								</mx:AdvancedDataGrid>
+							</s:VGroup>
+						</mx:Canvas>
+						<s:Panel width="100%" height="100%"/>
+					</mx:HDividedBox>
+				</s:Group>
+			</s:Group>
+			
+		</mx:HDividedBox>		
+	</s:TitleWindow>
+	
+	<!--s:TitleWindow width="400" height="400" dropShadowVisible="true">
+		<fx:Script>
+			<![CDATA[
+				[Bindable]
+				private var TT_AC:ArrayCollection = new ArrayCollection(
+					[
+						{EntityType:"TaskType", Label:"TaskType1", Data:"TT1"}
+					]);
+			]]>
+		</fx:Script>
+		<s:layout>
+			<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="5"/>
+		</s:layout>
+		<s:HGroup verticalAlign="baseline">
+			<s:Label text="Task type"/>
+			<s:DropDownList dataProvider="{TT_AC}"/>
+		</s:HGroup>
+	</s:TitleWindow-->
+
+</s:Application>

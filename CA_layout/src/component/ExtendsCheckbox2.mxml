@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Original code form : http://stackoverflow.com/questions/1227164/is-there-a-good-way-to-get-a-tri-state-checkbox-in-flex
+	Modify by Cmee : Version1 - 2013/05/26
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			// STATES :
+			/** The intermediate state value. */
+			public static const INTERMEDIATE:int = -1;
+			/** The unchecked state value. */
+			public static const UNCHECKED:int = 0;
+			/** The checked state value. */
+			public static const CHECKED:int = 1;
+			
+			// TRISTATE :
+			private var _isTristate:Boolean;
+			private var _chkBoxType:String;
+			
+			[Bindable] public function get chkBoxType():String { return _chkBoxType; }
+			public function set chkBoxType(value:String):void {
+				_chkBoxType = value;
+			}
+				
+			/** Whether this checkbox is tristate or a normal checkbox. */
+			[Bindable] public function get isTristate():Boolean { return _isTristate; }
+			public function set isTristate(value:Boolean):void {
+				_isTristate = value;
+				this.state = UNCHECKED;
+			}
+			
+			
+			// LABEL :
+			/** The checkbox label. */
+			[Bindable] public var label:String;
+			
+			
+			// STATE CHANGE :
+			
+			private var _state:int;
+			/** The current state of the box. */
+			[Bindable] public function get state():int { return _state; }
+			public function set state(value:int):void {
+				_state = value;
+				
+				//Alert.show("_state : " + _state );
+				
+				switch(_state) {
+					case INTERMEDIATE:
+						if (!_isTristate) {
+							break;
+						} else {
+							tristateImg.visible = true;
+							checkbox.selected = false;
+							break;
+						}
+					case UNCHECKED:
+						tristateImg.visible = false;
+						checkbox.selected = false;
+						break;
+					
+					case CHECKED:
+						tristateImg.visible = false;
+						checkbox.selected = true;
+						break;
+				}
+			}
+			
+			/**
+			 * Simply sets the state according to the current state.
+			 */
+			protected function changeState(ev:Event):void {
+				if(isTristate) ev.preventDefault();
+				switch(state) {
+					case INTERMEDIATE: state = CHECKED; break;
+					case UNCHECKED: state = isTristate ? INTERMEDIATE : CHECKED; break;
+					case CHECKED: state = UNCHECKED; break;
+				}
+				
+			}
+			
+			/**
+			 * Initial state.
+			 */
+			protected function init():void {
+				this.state = UNCHECKED;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:layout>
+		<s:BasicLayout />
+	</s:layout>
+	
+	<s:CheckBox id="checkbox" label="{label}"
+				change="changeState(event)"/>
+	<s:Image id="tristateImg" width="9" height="9"
+			 mouseEnabled="false" mouseChildren="false"
+			 source="@Embed('../assets/inner.png')"
+			 x="{checkbox.x+2}" y="{checkbox.y+4}" />
+
+</s:Group>

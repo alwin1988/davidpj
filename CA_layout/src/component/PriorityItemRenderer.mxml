@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+								  xmlns:s="library://ns.adobe.com/flex/spark"
+								  xmlns:mx="library://ns.adobe.com/flex/mx"
+								  xmlns:component="component.*"
+								  focusEnabled="true">
+	<!--<s:Label id="lblData" top="0" left="0" right="0" bottom="0" text="{listData.label}" />-->
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+			
+			import spark.events.IndexChangeEvent;
+			[Embed("assets/pri1button.png")]
+			public const pri1button:Class;
+			
+			[Embed("assets/pri2button.png")]
+			public const pri2button:Class;
+			
+			[Embed("assets/pri3button.png")]
+			public const pri3button:Class;
+			
+			[Embed("assets/pri4button.png")]
+			public const pri4button:Class;
+			
+			[Embed("assets/pri5button.png")]
+			public const pri5button:Class;		
+			
+			override public function set data(value:Object):void {
+				super.data = value;
+				
+				invalidateProperties();
+			}
+
+			override protected function commitProperties():void 
+			{ 
+				super.commitProperties();
+				
+				//get dataField that use with ItemRenderer
+				var adgld:AdvancedDataGridListData = listData as AdvancedDataGridListData;
+				trace(data[adgld.dataField]);
+				
+				if (data[adgld.dataField] == "1"){
+					cddl.selectedIndex = 0;
+				}else if (data[adgld.dataField] == "2"){
+					cddl.selectedIndex = 1;
+				}else if (data[adgld.dataField] == "3"){
+					cddl.selectedIndex = 2;
+				}else if (data[adgld.dataField] == "4"){
+					cddl.selectedIndex = 3;	
+				}else if (data[adgld.dataField] == "5"){
+					cddl.selectedIndex = 4;			
+				}
+			}		
+			
+			protected function cddl_changeHandler(e:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				e;
+				data.Priority = String(e.newIndex+1);
+			}
+			
+		]]>
+	</fx:Script>
+	<component:CustomDropDownList id="cddl" width="35" height="17" change="cddl_changeHandler(event)"
+								  horizontalCenter="0"
+								  itemRenderer="component.DropDownListItemItemRenderer"
+								  selectedIndex="0" skinClass="skin.CustomDropDownListSkin"
+								  verticalCenter="0" visibleSelectedLabel="false" chromeColor="white">
+		<component:dataProvider>
+			<s:ArrayList>
+				<fx:Object image="pri1button" source="@Embed('assets/pri1button.png')"
+						   text="Set to priority 1"/>
+				<fx:Object image="pri2button" source="@Embed('assets/pri2button.png')"
+						   text="Set to priority 2"/>
+				<fx:Object image="pri1button" source="@Embed('assets/pri3button.png')"
+						   text="Set to priority 3"/>
+				<fx:Object image="pri2button" source="@Embed('assets/pri4button.png')"
+						   text="Set to priority 4"/>
+				<fx:Object image="pri1button" source="@Embed('assets/pri5button.png')"
+						   text="Set to priority 5"/>
+			</s:ArrayList>
+		</component:dataProvider>
+	</component:CustomDropDownList>
+</s:MXAdvancedDataGridItemRenderer>

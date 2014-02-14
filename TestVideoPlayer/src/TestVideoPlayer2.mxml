@@ -19,7 +19,6 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import component.TestVideoPlayer;
 			import component.VideoPlayerComponent;
 			
 			import mx.events.*;
@@ -36,20 +35,20 @@
 			private function PopUp_Player(event:MouseEvent):void
 			{
 				VP = new VideoPlayerComponent;
+				VP.title = "Some help video";
 				PopUpManager.addPopUp(VP,this,false);
 				SlidePlayerIn.play();
 			}
 			
-			private function Remove_Player(event:MouseEvent):void
+			public function Close_Player(event:MouseEvent):void
 			{
 				SlidePlayerOut.play();
-				//PopUpManager.removePopUp(VP);
+				PopUpManager.removePopUp(VP);
 			}
-
 		]]>
 	</fx:Script>
 		
 	<s:Button x="100" y="400" label="Popup player" click="PopUp_Player(event)"/>
-	<s:Button x="200" y="400" label="Remove player" click="Remove_Player(event)"/>
+	<s:Button x="200" y="400" label="Remove player" click="Close_Player(event)"/>
 </s:Application>
 <!--source="rtmp:flash.oit.duke.edu/vod/_definst_/MP4:test/brunswick.m4v"-->

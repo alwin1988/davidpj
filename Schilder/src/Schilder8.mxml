@@ -3,7 +3,7 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   width="100%" height="100%"
-			   creationComplete="SetDefaults()">
+			   creationComplete="SetDefaults()" xmlns:layouts="org.flexlayouts.layouts.*">
 	
 	<fx:Style source="main.css"/>
 	
@@ -14,8 +14,12 @@
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.utils.ObjectUtil;
-			
 			import spark.components.VGroup;
+			
+			//[Bindable] private var PlateName:String;
+			[Bindable] private var PlateColor:Number;
+			[Bindable] private var FoilName:String;
+			[Bindable] private var FoilColor:Number;
 			
 			[Bindable] private var CharacterButtonWidth:Number = 26;
 			[Bindable] private var CharacterButtonHeight:Number = 37;
@@ -133,6 +137,14 @@
 				SelectedSymbolSource = 'assets/symbols/LargePeaceSign.png';
 				SelectedPlateSource = 'assets/plates/DarkYellow.jpg';
 				SelectedHolesSource = 'assets/holes/TopCups.jpg';
+//				PlateName = 'Solid Yellow';
+				PlateColor = 0x00ff00;
+				FoilName = 'BlackFoil';
+				FoilColor = 0x00e600;
+				MiniPlateOuterContainer.includeInLayout = false; 
+				MiniPlateOuterContainer.visible = false;
+				MiniPlateImage.includeInLayout = true; 
+				MiniPlateImage.visible = true;
 			}
 			
 			[Embed(source="assets/symbols/LargePeaceSign.png")]
@@ -313,10 +325,6 @@
 */
 			public const CharacterWidthLarge:Number = 90;
 			public const CharacterHeightLarge:Number = 100;
-			[Bindable] private var PlateName:String = 'Solid Yellow';
-			[Bindable] private var PlateColor:Number = 0xffff00;
-			[Bindable] private var FoilName:String = 'Red';
-			[Bindable] private var FoilColor:Number = 0x00e600;
 			
 			[Bindable] private var CenterSymbol:Boolean = false;
 			[Bindable] private var CharactersAdded:Number = 0;
@@ -368,7 +376,8 @@
 			public function SelectPlateGalleryImage(event:MouseEvent):void 
 			{
 				PlateBackgroundIsImage = true;
-				SelectedPlate
+				MiniPlateImage.includeInLayout = true;
+				MiniPlateImage.visible = true;
 				
 				var PlateGalleryImage:Image;
 				PlateGalleryImage = event.currentTarget as Image;
@@ -386,13 +395,47 @@
 				FoilColor = 0x00e600;
 			}
 			
-			/*public function SelectFoilGalleryImage(event:MouseEvent):void 
+			public function SelectFoil(event:MouseEvent):void 
 			{
 				var FoilGalleryImage:Image;
 				FoilGalleryImage = event.currentTarget as Image;
 				SelectedFoilImage = FoilGalleryImage;
 				SelectedFoilSource = FoilGalleryImage.source as String;
-			}*/
+				
+				if (SelectedFoilSource.indexOf("BLACK") >= 0)
+				{
+					FoilName = "BlackFoil";
+				}
+				else if (SelectedFoilSource.indexOf("WHITE") >= 0)
+				{
+					FoilName = "WhiteFoil";
+				}
+				else if (SelectedFoilSource.indexOf("BLUE") >= 0)
+				{
+					FoilName = "BlueFoil";
+				}
+				else if (SelectedFoilSource.indexOf("GOLD") >= 0)
+				{
+					FoilName = "GoldFoil";
+				}
+				else if (SelectedFoilSource.indexOf("GREEN") >= 0)
+				{
+					FoilName = "GreenFoil";
+				}
+				else if (SelectedFoilSource.indexOf("PINK") >= 0)
+				{
+					FoilName = "PinkFoil";
+				}
+				else if (SelectedFoilSource.indexOf("RED") >= 0)
+				{
+					FoilName = "RedFoil";
+				}
+				else if (SelectedFoilSource.indexOf("SILVER") >= 0)
+				{
+					FoilName = "SilverFoil";
+				}
+				Alert.show(FoilName);
+			}
 			
 			public function SelectHolesGalleryImage(event:MouseEvent):void 
 			{
@@ -1781,7 +1824,7 @@
 							<s:layout>
 								<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5" gap="0"/>
 							</s:layout>
-							<s:BorderContainer id="MiniPlateOuterContainer" width="100%" height="100%" includeInLayout="true" visible="true"
+							<s:BorderContainer id="MiniPlateOuterContainer" width="100%" height="100%" includeInLayout="false" visible="false"
 											   minWidth="0" minHeight="0"
 											   borderVisible="true" borderWeight="1.5"
 											   cornerRadius="3"
@@ -1813,7 +1856,7 @@
 								<s:layout>
 									<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
 								</s:layout>				
-								<s:Image id="SelectedPlate" includeInLayout="false" visible="false"
+								<s:Image id="MiniPlateImage" includeInLayout="true" visible="true"
 										 width="100%" height="100%" 
 										 horizontalCenter="0" horizontalAlign="center" verticalCenter="0" verticalAlign="middle"
 										 source="{SelectedPlateSource}" fillMode="scale" scaleMode="stretch"
@@ -1861,11 +1904,11 @@
 										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
 									</s:layout>
 									<!-- Text won't center properly so indented here for now -->
-									<s:Label text="{FoilName}"
+									<!--s:Label text="{FoilName}"
 											 horizontalCenter="0" verticalCenter="0"
 											 styleName="MiniPlateText" 
 											 color="{FoilColor}"
-											 buttonMode="true" click="OpenFoilGallery(event)"/>
+											 buttonMode="true" click="OpenFoilGallery(event)"/-->
 								</s:BorderContainer>
 							</s:BorderContainer>
 						</s:BorderContainer>
@@ -1990,7 +2033,7 @@
 												color="gray"
 												alpha=".5"
 												weight=".2"/> 
-										</s:borderStroke> 
+										</s:borderStroke>
 										<s:layout>
 											<s:HorizontalLayout paddingTop="3" paddingBottom="3" paddingLeft="3" paddingRight="3" clipAndEnableScrolling="true"/>
 										</s:layout>
@@ -2006,8 +2049,6 @@
 										</s:BorderContainer>								
 									</s:BorderContainer>
 								</s:BorderContainer>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Black.jpg" 
 										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkBlue.jpg"
@@ -2049,6 +2090,14 @@
 					</s:List>					
 				</s:NavigatorContent>
 				
+				<!--s:NavigatorContent>					
+				<s:Group>
+					<s:layout>
+						<layouts:FlowLayout/>
+					</s:layout>
+				</s:Group>
+				</s:NavigatorContent-->
+				
 				<s:NavigatorContent id="FoilGallery" width="100%" height="100%">				
 					<!--Height and width and padding involve GalleryWindow-->
 					<s:List id="FoilGalleryList" width="100%" height="100%"
@@ -2056,16 +2105,73 @@
 							itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
 							horizontalCenter="0" verticalCenter="0">
 						<s:layout>
-							<s:TileLayout rowHeight="38" columnWidth="275" requestedColumnCount="1" requestedRowCount="6"
-										  columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" verticalGap="3"
-										  paddingTop="10" paddingBottom="10" paddingRight="5" clipAndEnableScrolling="true"/>
+							<layouts:FlowLayout padding="10" horizontalGap="3" verticalGap="6"/>
+							<!--s:TileLayout rowHeight="38" columnWidth="135" requestedColumnCount="2" requestedRowCount="6" orientation="columns"
+										  columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" horizontalGap="1" verticalGap="3"
+										  paddingTop="10" paddingBottom="10" paddingRight="5" clipAndEnableScrolling="true"/-->
 						</s:layout>
 						<s:dataProvider>
 							<s:ArrayList>
-								<!--s:Image width="100%" height="100%" source="assets/foils/BLACK.jpg" 
-										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" source="assets/foils/BLUE.jpg"
-										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/-->
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BLACK.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/WHITE.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BLUE.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/GOLD.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/GREEN.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/PINK.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/RED.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/SILVER.JPG" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectFoil(event); CloseGallery(event);"/>
+								<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
+										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/-->
 							</s:ArrayList>		
 						</s:dataProvider>
 					</s:List>					

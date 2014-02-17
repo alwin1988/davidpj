@@ -112,7 +112,7 @@
 	fontFamily: Arial;
 	fontSize: 20;
 	fontWeight: bold;
-	kerning: true;
+	kerning: off;
 }
 .DirectiveLabel
 {

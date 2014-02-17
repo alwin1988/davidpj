@@ -17,6 +17,9 @@
     <application path="schilder.mxml"/>
     <application path="Schilder5.mxml"/>
     <application path="Schilder6.mxml"/>
+    <application path="Schilder7.mxml"/>
+    <application path="SchilderX.mxml"/>
+    <application path="Schilder8.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

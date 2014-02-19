@@ -81,6 +81,51 @@
 	fontWeight: normal;
 	kerning: false;
 }
+.MiniPlateOuterContainer
+{
+	cornerRadius: 4;
+	backgroundAlpha: .5;
+	borderColor: black;
+	borderAlpha: .2;
+	borderWeight: .025;
+}
+.MiniPlateInnerContainer
+{
+	cornerRadius: 4;
+	backgroundAlpha: 1;
+	borderColor: gray;
+	borderAlpha: .5;
+	borderWeight: .02;
+}
+.MiniPlateCoreContainer
+{
+	cornerRadius: 4;
+	backgroundAlpha: 1;
+	borderColor: black;
+	borderAlpha: .8;
+	borderWeight: .075;
+}
+.GalleryPlate_A 
+{
+	cornerRadius: 4;
+	borderColor: black;
+	borderAlpha: .2;
+	borderWeight: .025;
+}
+.GalleryPlate_B
+{
+	cornerRadius: 4;
+	borderColor: gray;
+	borderAlpha: .5;
+	borderWeight: .2;
+}
+.GalleryPlate_C
+{
+	cornerRadius: 4;
+	borderColor: white;
+	borderAlpha: .8;
+	borderWeight: .075;
+}	
 .CharacterButton
 {
 	fontFamily: GL-Nummernschild-Eng;

@@ -2,8 +2,9 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:layouts="org.flexlayouts.layouts.*"
 			   width="100%" height="100%"
-			   creationComplete="SetDefaults()" xmlns:layouts="org.flexlayouts.layouts.*">
+			   creationComplete="SetDefaults()">
 	
 	<fx:Style source="main.css"/>
 	
@@ -14,12 +15,13 @@
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
 			import mx.utils.ObjectUtil;
+			
 			import spark.components.VGroup;
 			
-			//[Bindable] private var PlateName:String;
-			[Bindable] private var PlateColor:Number;
+			[Bindable] private var PlateName:String;
+			[Bindable] private var PlateColor:uint;
 			[Bindable] private var FoilName:String;
-			[Bindable] private var FoilColor:Number;
+			[Bindable] private var FoilColor:uint;
 			
 			[Bindable] private var CharacterButtonWidth:Number = 26;
 			[Bindable] private var CharacterButtonHeight:Number = 37;
@@ -41,9 +43,9 @@
 			[Bindable] private var SelectedDate3:String;
 			
 			[Bindable] private var SelectedPlateImage:Image;
-			[Bindable] private var SelectedPlateSource:String;
+			[Bindable] private var SelectedPlateImageSource:String;
 			[Bindable] private var SelectedFoilImage:Image;
-			[Bindable] private var SelectedFoilSource:String;
+			[Bindable] private var SelectedFoilImageSource:String;
 			[Bindable] private var SelectedHolesImage:Image;
 			[Bindable] private var SelectedHolesSource:String;
 			[Bindable] private var SelectedFlagImage:Image;
@@ -51,100 +53,46 @@
 			[Bindable] private var SelectedSymbolImage:Image;
 			[Bindable] private var SelectedSymbolSource:String;
 			
-			[Bindable] private var PlateBackgroundIsImage:Boolean;
+			[Bindable] private var PlateIsImage:Boolean;
+			[Bindable] private var FoilIsImage:Boolean;
+			
+			[Bindable] private var Plate_MiniPlatePlateColor:uint;
+			[Bindable] private var Plate_MiniPlateFoilColor:uint;
+			[Bindable] private var Foil_MiniPlatePlateColor:uint;
+			[Bindable] private var Foil_MiniPlateFoilColor:uint;
+			
 			
 			private var StackAction:Array = new Array();
-/*		
-			Constants:
-			
-			SmallPlateHeight (in mm)
-			SmallPlateWidth (in mm)
-			MediumPlateHeight (in mm)
-			MediumPlateWidth (in mm)
-			LargePlateHeight (in mm)
-			LargePlateWidth (in mm)
-			SmallCharacterWidth (in mm)
-			SmallCharacterHeight (in mm)
-			MediumCharacterWidth (in mm)
-			MediumCharacterHeight (in mm)
-			LargeCharacterHeight (in mm)
-			LargeCharacterWidth (in mm)
-			DateHeight (in mm)
-			DatePairWidth (in mm)
-			DatePairLeading (in mm)
-			SymbolHeight (in mm)
-			LargeFlagHeight (in mm)
-			LargeFlagWidth (in mm)
-			SmallFlagHeight (in mm)
-			SmallFlagWidth (in mm)
-			HoleCenterPointOffsetFromEdge (in mm)
-			CupSize (in mm)
-			HolesPriceEUR (float)
-			CupsPriceEUR (float)
-*/
-			
-/*			[Bindable]
-			private var GermanCharacters_Small_AC:ArrayCollection = new ArrayCollection([
-				//In points
-				//For IDs C2, C17, and C24, need to prefix Label with "&#" and suffix with ";" when rendering (e.g., "&#196;")
-				{ID:"C1", Label:"A", FontID:"1", FontSize:"25"},
-				{ID:"C2", Label:"&#196;", FontID:"1", FontSize:"25"},
-				{ID:"C3", Label:"B", FontID:"1", FontSize:"25"},
-				{ID:"C4", Label:"C", FontID:"1", FontSize:"25"},
-				{ID:"C5", Label:"D", FontID:"1", FontSize:"25"},
-				{ID:"C6", Label:"E", FontID:"1", FontSize:"25"},
-				{ID:"C7", Label:"F", FontID:"1", FontSize:"25"},
-				{ID:"C8", Label:"G", FontID:"1", FontSize:"25"},
-				{ID:"C9", Label:"H", FontID:"1", FontSize:"25"},
-				{ID:"C10", Label:"I", FontID:"1", FontSize:"25"},
-				{ID:"C11", Label:"J", FontID:"1", FontSize:"25"},
-				{ID:"C12", Label:"K", FontID:"1", FontSize:"25"},
-				{ID:"C13", Label:"L", FontID:"1", FontSize:"25"},
-				{ID:"C14", Label:"M", FontID:"1", FontSize:"25"},
-				{ID:"C15", Label:"N", FontID:"1", FontSize:"25"},
-				{ID:"C16", Label:"O", FontID:"1", FontSize:"25"},
-				{ID:"C17", Label:"&#214;", FontID:"1", FontSize:"25"},
-				{ID:"C18", Label:"P", FontID:"1", FontSize:"25"},
-				{ID:"C19", Label:"Q", FontID:"1", FontSize:"25"},
-				{ID:"C20", Label:"R", FontID:"1", FontSize:"25"},
-				{ID:"C21", Label:"S", FontID:"1", FontSize:"25"},
-				{ID:"C22", Label:"T", FontID:"1", FontSize:"25"},
-				{ID:"C23", Label:"U", FontID:"1", FontSize:"25"},
-				{ID:"C24", Label:"&#220;", FontID:"1", FontSize:"25"},
-				{ID:"C25", Label:"V", FontID:"1", FontSize:"25"},
-				{ID:"C26", Label:"W", FontID:"1", FontSize:"25"},
-				{ID:"C27", Label:"X", FontID:"1", FontSize:"25"},
-				{ID:"C28", Label:"Y", FontID:"1", FontSize:"25"},
-				{ID:"C29", Label:"Z", FontID:"1", FontSize:"25"},
-				{ID:"C30", Label:"1", FontID:"1", FontSize:"25"},
-				{ID:"C31", Label:"2", FontID:"1", FontSize:"25"},
-				{ID:"C32", Label:"3", FontID:"1", FontSize:"25"},
-				{ID:"C33", Label:"4", FontID:"1", FontSize:"25"},
-				{ID:"C34", Label:"5", FontID:"1", FontSize:"25"},
-				{ID:"C35", Label:"6", FontID:"1", FontSize:"25"},
-				{ID:"C36", Label:"7", FontID:"1", FontSize:"25"},
-				{ID:"C37", Label:"8", FontID:"1", FontSize:"25"},
-				{ID:"C38", Label:"9", FontID:"1", FontSize:"25"},
-				{ID:"C39", Label:"0", FontID:"1", FontSize:"25"},
-				{ID:"C40", Label:"-", FontID:"1", FontSize:"25"},
-				{ID:"C41", Label:".", FontID:"1", FontSize:"25"},
-				{ID:"C42", Label:"?", FontID:"1", FontSize:"25"},
-			]);  */
 			
 			private function SetDefaults():void
 			{
+				Alert.show('SetDefaults');
 				SelectedFlagSource = 'assets/flags/nl.jpg';
 				SelectedSymbolSource = 'assets/symbols/LargePeaceSign.png';
-				SelectedPlateSource = 'assets/plates/DarkYellow.jpg';
+				SelectedPlateImageSource = 'assets/plates/DarkYellow.jpg';
+				SelectedFoilImageSource = 'assets/foils/RedFoilPlate.png';
 				SelectedHolesSource = 'assets/holes/TopCups.jpg';
-//				PlateName = 'Solid Yellow';
-				PlateColor = 0x00ff00;
-				FoilName = 'BlackFoil';
-				FoilColor = 0x00e600;
-				MiniPlateOuterContainer.includeInLayout = false; 
-				MiniPlateOuterContainer.visible = false;
-				MiniPlateImage.includeInLayout = true; 
-				MiniPlateImage.visible = true;
+				Plate_MiniPlateThingContainer.includeInLayout = true; Plate_MiniPlateThingContainer.visible = true;
+				Plate_MiniPlateImageContainer.includeInLayout = false; Plate_MiniPlateImageContainer.visible = false;
+				Foil_MiniPlateThingContainer.includeInLayout = true; Foil_MiniPlateThingContainer.visible = true;
+				Foil_MiniPlateImageContainer.includeInLayout = false; Foil_MiniPlateImageContainer.visible = false;
+				
+				Alert.show('Plate_MiniPlatePlateColor:');
+				Alert.show(String(Plate_MiniPlatePlateColor));
+				Plate_MiniPlatePlateColor = 0x000000; //black
+				Alert.show('Plate_MiniPlateFoilColor:');
+				Alert.show(String(Plate_MiniPlateFoilColor));
+				Plate_MiniPlateFoilColor = 0x000000; //black
+				
+				Alert.show('Foil_MiniPlatePlateColor:');
+				Alert.show(String(Foil_MiniPlatePlateColor));
+				Foil_MiniPlatePlateColor = 0xffffff; //white
+				Alert.show('Foil_MiniPlatePlateColor:');
+				Alert.show(String(Foil_MiniPlatePlateColor));
+				Foil_MiniPlateFoilColor = 0x000000; //black
+				
+				PlateIsImage = false;
+				FoilIsImage = false;
 			}
 			
 			[Embed(source="assets/symbols/LargePeaceSign.png")]
@@ -155,174 +103,100 @@
 			[Bindable]
 			private var SelectedPlateClass:Class;
 			
+// !!!
+			[Embed(source="assets/plates/DarkYellow.jpg")]
+			[Bindable]
+			private var SelectedFoilClass:Class;
+			
 			private function SetDefaultSymbol():void
 			{
 				SelectedSymbolImage = SelectedSymbolClass as Image;
 			}
 			
-/*			private var GermanCharacters_Medium_AC:ArrayCollection = new ArrayCollection([
-				//In points
-				{ID:"Au", Label:"&#196", FontID:"1", FontSize:"50"}
-				//..
-				{ID:"Ou", Label:"&#214", FontID:"1", FontSize:"50"}
-				//..
-				{ID:"Uu", Label:"&#220;", FontID:"1", FontSize:"50"}
-				//..
-			]);
-			
-			private var GermanCharacters_Large_AC:ArrayCollection = new ArrayCollection([
-				//In points
-				{ID:"Au", Label:"&#196", FontID:"1", FontSize:"75"}
-				//..
-				{ID:"Ou", Label:"&#214", FontID:"1", FontSize:"75"}
-				//..
-				{ID:"Uu", Label:"&#220;", FontID:"1", FontSize:"75"}
-					//..
-			]);
-
-			[Bindable]
-			private var Spacers_AC:ArrayCollection = new ArrayCollection([
-				//in mm
-				{Width:"20", Label:""},
-				{Width:"30", Label:""},
-				{Width:"40", Label:""}
-			]);
-*/
-			
-
-/*			
-			[Bindable]
-			private var SmallPlateStyles_AC:ArrayCollection = new ArrayCollection([
-				//Either ColorSpec or PatternFile
-				{ID:"SolidBlue", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var MediumPlateStyles_AC:ArrayCollection = new ArrayCollection([
-				//Either ColorSpec or PatternFile
-				{ID:"SolidRed", Label"Solid red", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var LargePlateStyles_AC:ArrayCollection = new ArrayCollection([
-				//Either ColorSpec or PatternFile
-				{ID:"SolidYellow", Label:"Solid Yellow", ColorSpec:"blue", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var FoilStyles_AC:ArrayCollection = new ArrayCollection([
-				//Either ColorSpec or PatternFile
-				{ID:"SolidBlue", Label:"Solid Blue", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var Stickers_AC:ArrayCollection = new ArrayCollection([
-				{ID:"Dalmation", Label:"Dalmation", Width:"20", Height:"50", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var LargeFlags_AC:ArrayCollection = new ArrayCollection([
-				{ID:"DE", Label:"Germany", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var SmallFlags_AC:ArrayCollection = new ArrayCollection([
-				{ID:"DE", Label:"Germany", PriceEUR:"0.00", Discontinued:false, InStock:true}
-			]);
-			
-			[Bindable]
-			private var DefaultsByCountry_AC:ArrayCollection = new ArrayCollection([
-				{ID:"DE", Label:"Germany", LanguageID:"DE", PlateSizeID:"GL", PlateStyleID:"PlateStyleID",
-					FoilStyleID:"FoilID", Date:"112233", SymbolID:"SymbolID", StickerID:"StickerID", FlagID:"FlagID", 
-					Currency:"EUR"}
-			]);	
-		
-			private function application1_creationCompleteHandler():void {
-				Button_A.addEventListener(MouseEvent.CLICK, AddCharacterAToPlate);
-				Button_Au.addEventListener(MouseEvent.CLICK, AddCharacterAuToPlate);
-				ClearTextButton.addEventListener(MouseEvent.CLICK, ClearPlate);
-				ClearPlateButton.addEventListener(MouseEvent.CLICK, ClearAll);
-				StartOverButton.addEventListener(MouseEvent.CLICK, StartOver);
+			private function SetDefaultPreview():void
+			{
+				SetDefaultPreviewPlate();
+				SetDefaultPreviewFoil();
+				
+				TopLeftHole.visible = true;
+				TopRightHole.visible = true;
+				TopLeftCup.visible = true;
+				TopRightCup.visible = true;
 			}
 			
-			private function ConvertMMtoPixels {
-				//Varies by font family?
+			private function SetDefaultPreviewPlate():void
+			{	
+				if (PlateIsImage == true)
+				{
+					Alert.show('SetDefaultPreviewPlate PlateIsImage=true');
+					PlateThingBorder.includeInLayout = false; PlateThingBorder.visible = false;
+					PlateImageBorder.includeInLayout = true; PlateImageBorder.visible = true;
+					SetDefaultPreviewPlateImage();
+				}
+				else
+				{
+					Alert.show('SetDefaultPreviewPlate PlateIsImage=false');
+					PlateThingBorder.includeInLayout = true; PlateThingBorder.visible = true;
+					PlateImageBorder.includeInLayout = false; PlateImageBorder.visible = false;
+					SetPreviewPlateThing();		
+				}
 			}
 				
-			private function SetPlateSize(event:MouseEvent) {
-				//Change dropdownlist content
-				//Need to retain plate contents, if any
-				//If contents won't fit new plate size, alert and abort 
-				//Recalculate price
+			private function SetDefaultPreviewFoil():void
+				{	
+				if (FoilIsImage == true)
+				{
+					Alert.show('SetDefaultPreviewFoil FoilIsImage=true');
+					SetDefaultPreviewFoilImage();
+				}
+				else
+				{
+					Alert.show('SetDefaultPreviewFoil FoilIsImage=false');
+					SetPreviewFoilThing();		
+				}
 			}
 			
-			private function SetPlateStyle {
-				//Change dropdownlist content
-				//Warn if not in stock
-				//Disallow if discontinued
-				//Recalculate price
-			}
-				
-			private function SetFoilStyle {
-				//Change dropdownlist content
-				//Warn if not in stock
-				//Disallow if discontinued
-				//Recalculate price
-			}
-
-			private function Change1LineTo2Lines(event:MouseEvent) {
-				//If plate size is not large, prompt to change
-				//If character size is not small, prompt to change character size to small
-				//Need to retain plate contents, if any
-				//If contents won't fit new plate size, alert and abort 
-				//Recalculate price
-			}
-			
-			private function Change2LinesTo1Line(event:MouseEvent) {
-				//Prompt to increase character size to medium or large (large if text fits)
-				//Need to retain plate contents, if any
-				//If contents won't fit new plate size, alert and abort 
-				//Recalculate price
+			private function SetPreviewPlate(event:MouseEvent):void
+			{
+				if (PlateIsImage == true)
+				{
+					Alert.show('SetPreviewPlate If PlateIsImage=true');
+					Alert.show('SelectedPlateImage.source:');
+					Alert.show(String(SelectedPlateImage.source));
+					SetPreviewPlateImage();
+				}
+				else
+				{
+					Alert.show('SetPreviewPlate PlateIsImage=false');
+					Alert.show('Plate_MiniPlatePlateColor:');
+					Alert.show(String(Plate_MiniPlatePlateColor));
+					PlateColor = Plate_MiniPlatePlateColor;
+					Alert.show('Plate_MiniPlateFoilColor:');
+					Alert.show(String(Plate_MiniPlateFoilColor));
+					FoilColor = Plate_MiniPlateFoilColor;
+					SetPreviewPlateThing();
+				}
 			}
 			
-			private function SetCharacterSize(event:MouseEvent) {
-				//Prompt to clear text if new-size characters will not fit
-				//Recalculate price
+			private function SetPreviewFoil(event:MouseEvent):void
+			{
+				if (FoilIsImage == true)
+				{
+					Alert.show('SetPreviewFoil FoilIsImage=true');
+					Alert.show('SelectedFoilImage.source:');
+					Alert.show(String(SelectedFoilImage.source));
+					SetPreviewFoilImage();
+				}
+				else
+				{
+					Alert.show('SetPreviewFoil FoilIsImage=false');
+					Alert.show('Foil_MiniPlatePlateColor:');
+					Alert.show(String(Foil_MiniPlateFoilColor));
+					FoilColor = Foil_MiniPlateFoilColor;
+					SetPreviewFoilThing();		
+				}
 			}
 			
-			private function AddCharacterToPlate(event:MouseEvent) {	
-				//Alert if no room to add
-			}
-			
-			private function AddSymbolToPlate(event:MouseEvent) {
-				//Position as specified
-				//Alert if no room to add
-				//Recalculate price
-			}
-			
-			private function AddDatesToPlate(event:MouseEvent) {
-				//Position as specified
-				//Alert if no room to add
-				//Recalculate price
-			}
-			
-			private function AddStickerToPlate {	
-				//Position as specified
-				//Alert if no room
-				//Recalculate price
-			}
-			
-			private function AddFlagToPlate {
-				//Position as specified
-				//Alert if no room
-				//Recalculate price
-			}
-			
-			private function AddHolesAndCupstoPlate {
-				//Position as specified
-				//Recalculate price
-			}
-*/
 			public const CharacterWidthLarge:Number = 90;
 			public const CharacterHeightLarge:Number = 100;
 			
@@ -349,10 +223,6 @@
 			
 			public function OpenHolesGallery(event:MouseEvent):void
 			{
-				/*GalleryWindow.setStyle('paddingTop',-5);
-				GalleryWindow.setStyle('paddingBottom',-5);
-				Galleries.setStyle('paddingTop',-5);
-				Galleries.setStyle('paddingBottom',-5);*/
 				Galleries.selectedChild = HolesGallery;
 				GalleryWindow.visible = true;
 			}
@@ -365,75 +235,118 @@
 			
 			public function OpenSymbolGallery(event:MouseEvent):void
 			{
-				/*GalleryWindow.setStyle('paddingTop',-5);
-				GalleryWindow.setStyle('paddingBottom',-5);
-				Galleries.setStyle('paddingTop',-5);
-				Galleries.setStyle('paddingBottom',-5);*/
 				Galleries.selectedChild = SymbolGallery;
 				GalleryWindow.visible = true;
 			}
 			
 			public function SelectPlateGalleryImage(event:MouseEvent):void 
 			{
-				PlateBackgroundIsImage = true;
-				MiniPlateImage.includeInLayout = true;
-				MiniPlateImage.visible = true;
+				PlateIsImage = true;
+				Plate_MiniPlateThingContainer.includeInLayout = false; Plate_MiniPlateThingContainer.visible = false;
+				Plate_MiniPlateImageContainer.includeInLayout = true; Plate_MiniPlateImageContainer.visible = true;
 				
 				var PlateGalleryImage:Image;
 				PlateGalleryImage = event.currentTarget as Image;
-				SelectedPlateImage = PlateGalleryImage;
-				SelectedPlateSource = PlateGalleryImage.source as String;
-			}
-			
-			public function SelectPlateGalleryThing(event:MouseEvent):void 
-			{
-				PlateBackgroundIsImage = false;
-				MiniPlateOuterContainer.includeInLayout = true;
-				MiniPlateOuterContainer.visible = true;
+				SelectedPlateImage = PlateGalleryImage as Image;
+				SelectedPlateImageSource = PlateGalleryImage.source as String;
 				
-				PlateColor = 0x00ff00;
-				FoilColor = 0x00e600;
+				Alert.show('SelectPlateGalleryImage');
+				Alert.show('PlateGalleryImage.source:');
+				Alert.show(String(PlateGalleryImage.source));
 			}
 			
-			public function SelectFoil(event:MouseEvent):void 
+			public function SelectPlateGalleryThing(event:MouseEvent,PlateName:String):void 
+			{;
+				PlateIsImage = false;
+				Plate_MiniPlateThingContainer.includeInLayout = true; Plate_MiniPlateThingContainer.visible = true;
+				Plate_MiniPlateImageContainer.includeInLayout = false; Plate_MiniPlateImageContainer.visible = false;
+				
+				if (PlateName == 'BlackPlate')
+				{
+					Plate_MiniPlatePlateColor = 0x000000;
+					Plate_MiniPlateFoilColor = 0x000000;
+				}
+				else if (PlateName == 'WhitePlate')
+				{
+					Plate_MiniPlatePlateColor = 0xffffff;
+					Plate_MiniPlateFoilColor = 0xe6e6e6;
+				}
+				else if (PlateName == 'LimeGreenPlate')
+				{
+					Plate_MiniPlatePlateColor = 0x00ff00;
+					Plate_MiniPlateFoilColor = 0x00e600;
+				}
+				
+				Alert.show('SelectPlateGalleryThing');
+				Alert.show('PlateName:');
+				Alert.show(PlateName);
+			}
+			
+			public function SelectFoilGalleryImage(event:MouseEvent):void 
 			{
+				FoilIsImage = true;
 				var FoilGalleryImage:Image;
 				FoilGalleryImage = event.currentTarget as Image;
 				SelectedFoilImage = FoilGalleryImage;
-				SelectedFoilSource = FoilGalleryImage.source as String;
+				SelectedFoilImageSource = FoilGalleryImage.source as String;
 				
-				if (SelectedFoilSource.indexOf("BLACK") >= 0)
+				if (SelectedFoilImageSource.indexOf("Black") >= 0)
 				{
 					FoilName = "BlackFoil";
 				}
-				else if (SelectedFoilSource.indexOf("WHITE") >= 0)
+				else if (SelectedFoilImageSource.indexOf("White") >= 0)
 				{
 					FoilName = "WhiteFoil";
 				}
-				else if (SelectedFoilSource.indexOf("BLUE") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Blue") >= 0)
 				{
 					FoilName = "BlueFoil";
 				}
-				else if (SelectedFoilSource.indexOf("GOLD") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Gold") >= 0)
 				{
 					FoilName = "GoldFoil";
 				}
-				else if (SelectedFoilSource.indexOf("GREEN") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Green") >= 0)
 				{
 					FoilName = "GreenFoil";
 				}
-				else if (SelectedFoilSource.indexOf("PINK") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Pink") >= 0)
 				{
 					FoilName = "PinkFoil";
 				}
-				else if (SelectedFoilSource.indexOf("RED") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Red") >= 0)
 				{
 					FoilName = "RedFoil";
 				}
-				else if (SelectedFoilSource.indexOf("SILVER") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Silver") >= 0)
 				{
 					FoilName = "SilverFoil";
 				}
+				
+				Alert.show('SelectFoilGalleryImage');
+				Alert.show('FoilName:');
+				Alert.show(FoilName);
+			}
+			
+			public function SelectFoilGalleryThing(event:MouseEvent,FoilName:String):void 
+			{
+				FoilIsImage = false;
+				Foil_MiniPlateThingContainer.includeInLayout = true;
+				Foil_MiniPlateThingContainer.visible = true;
+				
+				if (FoilName == 'BlackFoil')
+				{
+					Foil_MiniPlatePlateColor = 0x000000;
+					Foil_MiniPlateFoilColor = 0x000000;
+				}
+				else if (FoilName == 'WhiteFoil')
+				{
+					Foil_MiniPlatePlateColor = 0xffffff;
+					Foil_MiniPlateFoilColor = 0xe6e6e6;
+				}
+				
+				Alert.show('SelectFoilGalleryThing');
+				Alert.show('FoilName');
 				Alert.show(FoilName);
 			}
 			
@@ -461,17 +374,57 @@
 				SelectedSymbolSource = SymbolGalleryImage.source as String;
 			}
 			
-			private function SetPlate():void
+			private function SetPreviewPlateThing():void
 			{
-				PlateContainer.setStyle('backgroundImage',SelectedPlateClass);
+				Alert.show('SetPreviewPlateThing');
+				Alert.show('PlateColor:');
+				Alert.show(String(PlateColor));
+				PreviewContainer.setStyle('backgroundColor',PlateColor);
+				//PlateThingBorder.setStyle('borderColor',FoilColor);
 			}
 			
-			private function SetPlate_(event:MouseEvent):void
+			private function SetPreviewFoilThing():void
 			{
-				PlateContainer.setStyle('backgroundImage',SelectedPlateImage);
+				Alert.show('SetPreviewFoilThing');
+				Alert.show('FoilColor:');
+				Alert.show(String(FoilColor));
+				//PreviewContainer.setStyle('backgroundColor',PlateColor);
+				PlateThingBorder.setStyle('borderColor',FoilColor);
 			}
 			
-			private function SetHoles_(event:MouseEvent):void
+			private function SetPreviewPlateImage():void
+			{
+				Alert.show('SetPreviewPlateImage');
+				Alert.show('SelectedPlateImage.source');
+				Alert.show(String(SelectedPlateImage.source));
+				PreviewContainer.setStyle('backgroundImage',SelectedPlateImage);
+			}
+			
+			private function SetDefaultPreviewPlateImage():void
+			{
+				Alert.show('SetDefaultPreviewPlateImage');
+				Alert.show('SelectedPlateClass:');
+				Alert.show(String(SelectedPlateClass));
+				PreviewContainer.setStyle('backgroundImage',SelectedPlateClass);
+			}
+			
+			private function SetPreviewFoilImage():void
+			{
+				Alert.show('SetPreviewFoilImage');
+				Alert.show('SelectedFoilImage.source:');
+				Alert.show(String(SelectedFoilImage.source));
+				PlateImageBorder.setStyle('backgroundImage',SelectedFoilImage);
+			}
+			
+			private function SetDefaultPreviewFoilImage():void
+			{
+				Alert.show('SetDefaultPreviewFoilImage');
+				Alert.show('SelectedFoilClass:');
+				Alert.show(String(SelectedFoilClass));
+				PlateImageBorder.setStyle('backgroundImage',SelectedFoilClass);
+			}
+			
+			private function SetHoles(event:MouseEvent):void
 			{
 				if (SelectedHolesSource.indexOf("FourCups") >= 0)
 				{
@@ -610,7 +563,7 @@
 				}
 			}
 			
-			public function AddPlateInnerContentContainerChildren():void
+			public function AddPlateElementsContainerChildren():void
 			{
 				LeftFlagBox = new Group;
 				LeftFlagBox.id = 'LeftFlagBox';
@@ -618,7 +571,7 @@
 				LeftFlagBox.height = LargeFlagHeight;
 				LeftFlagBox.includeInLayout = true;
 				LeftFlagBox.visible = true;
-				PlateInnerContentContainer.addElement(LeftFlagBox);
+				PlateElementsContainer.addElement(LeftFlagBox);
 				
 				LeftDatesBox = new VGroup;
 				LeftDatesBox.id = 'LeftDatesBox';
@@ -629,7 +582,7 @@
 				LeftDatesBox.gap = 5;
 				LeftDatesBox.includeInLayout = false;
 				LeftDatesBox.visible = false;
-				PlateInnerContentContainer.addElement(LeftDatesBox);
+				PlateElementsContainer.addElement(LeftDatesBox);
 				
 				LeftSymbolBox = new Group;
 				LeftSymbolBox.id = 'LeftSymbolBox';
@@ -637,7 +590,7 @@
 				LeftSymbolBox.height = SymbolHeight;
 				LeftSymbolBox.includeInLayout = false;
 				LeftSymbolBox.visible = false;
-				PlateInnerContentContainer.addElement(LeftSymbolBox);
+				PlateElementsContainer.addElement(LeftSymbolBox);
 				
 				//var Button1:Button = new Button;
 				CharacterBox1 = new HGroup;
@@ -651,7 +604,7 @@
 				CharacterBox1.includeInLayout = true;
 				CharacterBox1.visible = true;
 				//CharacterBox1.addElement(Button1);
-				PlateInnerContentContainer.addElement(CharacterBox1);
+				PlateElementsContainer.addElement(CharacterBox1);
 				
 				CenterSymbolBox = new Group;
 				CenterSymbolBox.id = 'CenterSymbolBox';
@@ -659,7 +612,7 @@
 				CenterSymbolBox.height = SymbolHeight;
 				CenterSymbolBox.includeInLayout = false;
 				CenterSymbolBox.visible = false;
-				PlateInnerContentContainer.addElement(CenterSymbolBox);
+				PlateElementsContainer.addElement(CenterSymbolBox);
 				
 				CharacterBox2 = new HGroup;
 				CharacterBox2.id = 'CharacterBox2';
@@ -671,7 +624,7 @@
 				CharacterBox2.gap = 0;
 				CharacterBox2.includeInLayout = false;
 				CharacterBox2.visible = false;
-				PlateInnerContentContainer.addElement(CharacterBox2);
+				PlateElementsContainer.addElement(CharacterBox2);
 				
 				CharacterBox3 = new HGroup;
 				CharacterBox3.id = 'CharacterBox3';
@@ -683,7 +636,7 @@
 				CharacterBox3.gap = 0;
 				CharacterBox3.includeInLayout = false;
 				CharacterBox3.visible = false;
-				PlateInnerContentContainer.addElement(CharacterBox3);
+				PlateElementsContainer.addElement(CharacterBox3);
 				
 				RightSymbolBox = new Group;
 				RightSymbolBox.id = 'RightSymbolBox';
@@ -691,7 +644,7 @@
 				RightSymbolBox.height = SymbolHeight;
 				RightSymbolBox.includeInLayout = false;
 				RightSymbolBox.visible = false;
-				PlateInnerContentContainer.addElement(RightSymbolBox);
+				PlateElementsContainer.addElement(RightSymbolBox);
 				
 				RightDatesBox = new VGroup;
 				RightDatesBox.id = 'RightDatesBox';
@@ -702,7 +655,7 @@
 				RightDatesBox.gap = 10;
 				RightDatesBox.includeInLayout = false;
 				RightDatesBox.visible = false;
-				PlateInnerContentContainer.addElement(RightDatesBox);
+				PlateElementsContainer.addElement(RightDatesBox);
 				
 				RightFlagBox = new Group;
 				RightFlagBox.id = 'RightFlagBox';
@@ -710,7 +663,7 @@
 				RightFlagBox.height = LargeFlagHeight;
 				RightFlagBox.includeInLayout = false;
 				RightFlagBox.visible = false;
-				PlateInnerContentContainer.addElement(RightFlagBox);
+				PlateElementsContainer.addElement(RightFlagBox);
 			}
 			
 			public function AddFlagToLeftFlagBox(event:MouseEvent):void {
@@ -741,17 +694,20 @@
 								
 				var D1:Label = new Label;
 				
+				Alert.show('Date1Save:');
 				Alert.show(String(Date1Save));
+				Alert.show('Date2Save:');
 				Alert.show(String(Date2Save));
+				Alert.show('Date3Save:');
 				Alert.show(String(Date3Save));
 				
-				if (Date1Save >= 0 && Date1Save <= 1)
+				if (Date1Save == 0)
 				{
-					D1.text = ' 0';
+					D1.text = '00';
 				}
 				else if (Date1Save >= 1 && Date1Save <= 9)
 				{
-					D1.text = (' ' + String(Date1Save));
+					D1.text = ('0' + String(Date1Save));
 				}
 				else
 				{
@@ -765,13 +721,13 @@
 				
 				var D2:Label = new Label;
 				
-				if (Date2Save >= 0 && Date2Save <= 1)
+				if (Date1Save == 0)
 				{
-					D2.text = ' 0';
+					D2.text = '00';
 				}
 				else if (Date2Save >= 1 && Date2Save <= 9)
 				{
-					D2.text = (' ' + String(Date2Save));
+					D2.text = ('0' + String(Date2Save));
 				}
 				else
 				{
@@ -783,13 +739,13 @@
 				
 				var D3:Label = new Label;
 				
-				if (Date3Save >= 0 && Date3Save <= 1)
+				if (Date1Save == 0)
 				{
-					D3.text = ' 0';
+					D3.text = '00';
 				}
 				else if (Date2Save >= 1 && Date3Save <= 9)
 				{
-					D3.text = (' ' + String(Date3Save));
+					D3.text = ('0' + String(Date3Save));
 				}
 				else
 				{
@@ -799,6 +755,7 @@
 				D3.styleName = 'PlateDates';
 				D3.setStyle('color','black');
 				
+				Alert.show('D1text:');
 				Alert.show(D1.text);
 				plategroup.addElement(D1);
 				plategroup.addElement(D2);
@@ -944,24 +901,268 @@
 				if (StackAction.length > 0)
 				{
 					CenterSymbol = false;
-					PlateInnerContentContainer.removeElementAt(StackAction.length);
+					PlateElementsContainer.removeElementAt(StackAction.length);
 					StackAction.pop();
 				}
 			}
 			
 			public function ClearPlate(event:MouseEvent):void
 			{
-				PlateInnerContentContainer.removeAllElements();
-				AddPlateInnerContentContainerChildren();
+				PlateElementsContainer.removeAllElements();
+				AddPlateElementsContainerChildren();
 			}
 			
 			public function ResetPlate(event:MouseEvent):void
 			{
+				PlateIsImage = false;
+				FoilIsImage = false;
 				SetDefaults();
-				SetPlate();
-				PlateInnerContentContainer.removeAllElements();
-				AddPlateInnerContentContainerChildren();
+				SetPreviewPlateImage();
+				SetPreviewPlateThing();
+				PlateElementsContainer.removeAllElements();
+				AddPlateElementsContainerChildren();
 			}
+			
+			/*		
+			Constants:
+			
+			SmallPlateHeight (in mm)
+			SmallPlateWidth (in mm)
+			MediumPlateHeight (in mm)
+			MediumPlateWidth (in mm)
+			LargePlateHeight (in mm)
+			LargePlateWidth (in mm)
+			SmallCharacterWidth (in mm)
+			SmallCharacterHeight (in mm)
+			MediumCharacterWidth (in mm)
+			MediumCharacterHeight (in mm)
+			LargeCharacterHeight (in mm)
+			LargeCharacterWidth (in mm)
+			DateHeight (in mm)
+			DatePairWidth (in mm)
+			DatePairLeading (in mm)
+			SymbolHeight (in mm)
+			LargeFlagHeight (in mm)
+			LargeFlagWidth (in mm)
+			SmallFlagHeight (in mm)
+			SmallFlagWidth (in mm)
+			HoleCenterPointOffsetFromEdge (in mm)
+			CupSize (in mm)
+			HolesPriceEUR (float)
+			CupsPriceEUR (float)
+			*/
+			
+			/*			[Bindable]
+			private var GermanCharacters_Small_AC:ArrayCollection = new ArrayCollection([
+			//In points
+			//For IDs C2, C17, and C24, need to prefix Label with "&#" and suffix with ";" when rendering (e.g., "&#196;")
+			{ID:"C1", Label:"A", FontID:"1", FontSize:"25"},
+			{ID:"C2", Label:"&#196;", FontID:"1", FontSize:"25"},
+			{ID:"C3", Label:"B", FontID:"1", FontSize:"25"},
+			{ID:"C4", Label:"C", FontID:"1", FontSize:"25"},
+			{ID:"C5", Label:"D", FontID:"1", FontSize:"25"},
+			{ID:"C6", Label:"E", FontID:"1", FontSize:"25"},
+			{ID:"C7", Label:"F", FontID:"1", FontSize:"25"},
+			{ID:"C8", Label:"G", FontID:"1", FontSize:"25"},
+			{ID:"C9", Label:"H", FontID:"1", FontSize:"25"},
+			{ID:"C10", Label:"I", FontID:"1", FontSize:"25"},
+			{ID:"C11", Label:"J", FontID:"1", FontSize:"25"},
+			{ID:"C12", Label:"K", FontID:"1", FontSize:"25"},
+			{ID:"C13", Label:"L", FontID:"1", FontSize:"25"},
+			{ID:"C14", Label:"M", FontID:"1", FontSize:"25"},
+			{ID:"C15", Label:"N", FontID:"1", FontSize:"25"},
+			{ID:"C16", Label:"O", FontID:"1", FontSize:"25"},
+			{ID:"C17", Label:"&#214;", FontID:"1", FontSize:"25"},
+			{ID:"C18", Label:"P", FontID:"1", FontSize:"25"},
+			{ID:"C19", Label:"Q", FontID:"1", FontSize:"25"},
+			{ID:"C20", Label:"R", FontID:"1", FontSize:"25"},
+			{ID:"C21", Label:"S", FontID:"1", FontSize:"25"},
+			{ID:"C22", Label:"T", FontID:"1", FontSize:"25"},
+			{ID:"C23", Label:"U", FontID:"1", FontSize:"25"},
+			{ID:"C24", Label:"&#220;", FontID:"1", FontSize:"25"},
+			{ID:"C25", Label:"V", FontID:"1", FontSize:"25"},
+			{ID:"C26", Label:"W", FontID:"1", FontSize:"25"},
+			{ID:"C27", Label:"X", FontID:"1", FontSize:"25"},
+			{ID:"C28", Label:"Y", FontID:"1", FontSize:"25"},
+			{ID:"C29", Label:"Z", FontID:"1", FontSize:"25"},
+			{ID:"C30", Label:"1", FontID:"1", FontSize:"25"},
+			{ID:"C31", Label:"2", FontID:"1", FontSize:"25"},
+			{ID:"C32", Label:"3", FontID:"1", FontSize:"25"},
+			{ID:"C33", Label:"4", FontID:"1", FontSize:"25"},
+			{ID:"C34", Label:"5", FontID:"1", FontSize:"25"},
+			{ID:"C35", Label:"6", FontID:"1", FontSize:"25"},
+			{ID:"C36", Label:"7", FontID:"1", FontSize:"25"},
+			{ID:"C37", Label:"8", FontID:"1", FontSize:"25"},
+			{ID:"C38", Label:"9", FontID:"1", FontSize:"25"},
+			{ID:"C39", Label:"0", FontID:"1", FontSize:"25"},
+			{ID:"C40", Label:"-", FontID:"1", FontSize:"25"},
+			{ID:"C41", Label:".", FontID:"1", FontSize:"25"},
+			{ID:"C42", Label:"?", FontID:"1", FontSize:"25"},
+			]);  */
+			
+			/*			private var GermanCharacters_Medium_AC:ArrayCollection = new ArrayCollection([
+			//In points
+			{ID:"Au", Label:"&#196", FontID:"1", FontSize:"50"}
+			//..
+			{ID:"Ou", Label:"&#214", FontID:"1", FontSize:"50"}
+			//..
+			{ID:"Uu", Label:"&#220;", FontID:"1", FontSize:"50"}
+			//..
+			]);
+			
+			private var GermanCharacters_Large_AC:ArrayCollection = new ArrayCollection([
+			//In points
+			{ID:"Au", Label:"&#196", FontID:"1", FontSize:"75"}
+			//..
+			{ID:"Ou", Label:"&#214", FontID:"1", FontSize:"75"}
+			//..
+			{ID:"Uu", Label:"&#220;", FontID:"1", FontSize:"75"}
+			//..
+			]);
+			
+			[Bindable]
+			private var Spacers_AC:ArrayCollection = new ArrayCollection([
+			//in mm
+			{Width:"20", Label:""},
+			{Width:"30", Label:""},
+			{Width:"40", Label:""}
+			]);
+			*/
+			
+			
+			/*			
+			[Bindable]
+			private var SmallPlateStyles_AC:ArrayCollection = new ArrayCollection([
+			//Either ColorSpec or PatternFile
+			{ID:"SolidBlue", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var MediumPlateStyles_AC:ArrayCollection = new ArrayCollection([
+			//Either ColorSpec or PatternFile
+			{ID:"SolidRed", Label"Solid red", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var LargePlateStyles_AC:ArrayCollection = new ArrayCollection([
+			//Either ColorSpec or PatternFile
+			{ID:"SolidYellow", Label:"Solid Yellow", ColorSpec:"blue", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var FoilStyles_AC:ArrayCollection = new ArrayCollection([
+			//Either ColorSpec or PatternFile
+			{ID:"SolidBlue", Label:"Solid Blue", ColorSpec:"0000", PatternFile:"blah.png", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var Stickers_AC:ArrayCollection = new ArrayCollection([
+			{ID:"Dalmation", Label:"Dalmation", Width:"20", Height:"50", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var LargeFlags_AC:ArrayCollection = new ArrayCollection([
+			{ID:"DE", Label:"Germany", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var SmallFlags_AC:ArrayCollection = new ArrayCollection([
+			{ID:"DE", Label:"Germany", PriceEUR:"0.00", Discontinued:false, InStock:true}
+			]);
+			
+			[Bindable]
+			private var DefaultsByCountry_AC:ArrayCollection = new ArrayCollection([
+			{ID:"DE", Label:"Germany", LanguageID:"DE", PlateSizeID:"GL", PlateStyleID:"PlateStyleID",
+			FoilStyleID:"FoilID", Date:"112233", SymbolID:"SymbolID", StickerID:"StickerID", FlagID:"FlagID", 
+			Currency:"EUR"}
+			]);	
+			
+			private function application1_creationCompleteHandler():void {
+			Button_A.addEventListener(MouseEvent.CLICK, AddCharacterAToPlate);
+			Button_Au.addEventListener(MouseEvent.CLICK, AddCharacterAuToPlate);
+			ClearTextButton.addEventListener(MouseEvent.CLICK, ClearPlate);
+			ClearPlateButton.addEventListener(MouseEvent.CLICK, ClearAll);
+			StartOverButton.addEventListener(MouseEvent.CLICK, StartOver);
+			}
+			
+			private function ConvertMMtoPixels {
+			//Varies by font family?
+			}
+			
+			private function SetPlateSize(event:MouseEvent) {
+			//Change dropdownlist content
+			//Need to retain plate contents, if any
+			//If contents won't fit new plate size, alert and abort 
+			//Recalculate price
+			}
+			
+			private function SetPlateStyle {
+			//Change dropdownlist content
+			//Warn if not in stock
+			//Disallow if discontinued
+			//Recalculate price
+			}
+			
+			private function SetFoilStyle {
+			//Change dropdownlist content
+			//Warn if not in stock
+			//Disallow if discontinued
+			//Recalculate price
+			}
+			
+			private function Change1LineTo2Lines(event:MouseEvent) {
+			//If plate size is not large, prompt to change
+			//If character size is not small, prompt to change character size to small
+			//Need to retain plate contents, if any
+			//If contents won't fit new plate size, alert and abort 
+			//Recalculate price
+			}
+			
+			private function Change2LinesTo1Line(event:MouseEvent) {
+			//Prompt to increase character size to medium or large (large if text fits)
+			//Need to retain plate contents, if any
+			//If contents won't fit new plate size, alert and abort 
+			//Recalculate price
+			}
+			
+			private function SetCharacterSize(event:MouseEvent) {
+			//Prompt to clear text if new-size characters will not fit
+			//Recalculate price
+			}
+			
+			private function AddCharacterToPlate(event:MouseEvent) {	
+			//Alert if no room to add
+			}
+			
+			private function AddSymbolToPlate(event:MouseEvent) {
+			//Position as specified
+			//Alert if no room to add
+			//Recalculate price
+			}
+			
+			private function AddDatesToPlate(event:MouseEvent) {
+			//Position as specified
+			//Alert if no room to add
+			//Recalculate price
+			}
+			
+			private function AddStickerToPlate {	
+			//Position as specified
+			//Alert if no room
+			//Recalculate price
+			}
+			
+			private function AddFlagToPlate {
+			//Position as specified
+			//Alert if no room
+			//Recalculate price
+			}
+			
+			private function AddHolesAndCupstoPlate {
+			//Position as specified
+			//Recalculate price
+			}
+			*/
 		]]>
 	</fx:Script>
 	
@@ -977,21 +1178,17 @@
 			<s:layout>
 				<s:VerticalLayout paddingTop="10" paddingBottom="4" paddingLeft="10" paddingRight="10" gap="0"/>
 			</s:layout>
-			<!-- Plate container -->
-
-			<s:BorderContainer id="PlateContainer"
-							   depth="1"
-							   width="520" height="113"
-							   minWidth="0" maxHeight="0"
-							   borderVisible="true" borderWeight="2" cornerRadius="8"
-							   backgroundColor="{PlateColor}"
-							   creationComplete="SetPlate()">
+			
+			<!-- Preview container.  Background color or image set via functions -->
+			<s:BorderContainer id="PreviewContainer"
+							   width="520" height="113" borderVisible="true" borderWeight="2" cornerRadius="8" depth="1"
+							   creationComplete="SetDefaultPreview()">
 				<s:layout>
 					<s:BasicLayout/>
 				</s:layout>
 				<!-- Suction cups -->
 				<s:Ellipse id="TopLeftCup"
-						   x="0" y="0" width="19" height="19" visible="true" depth="12">
+						   x="-5" y="-5" width="19" height="19" visible="false" depth="12">
 					<s:fill>
 						<s:SolidColor color="white" alpha=".5"/>
 					</s:fill>
@@ -1000,7 +1197,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="TopRightCup"
-						   x="496" y="0" width="19" height="19" visible="true" depth="12">
+						   x="496" y="0" width="19" height="19" visible="false" depth="12">
 					<s:fill>
 						<s:SolidColor color="white" alpha=".5"/>
 					</s:fill>
@@ -1027,7 +1224,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="BottomLeftCup"
-						   x="0" y="89" width="19" height="19" visible="true" depth="12">
+						   x="0" y="89" width="19" height="19" visible="false" depth="12">
 					<s:fill>
 						<s:SolidColor color="white" alpha=".5"/>
 					</s:fill>
@@ -1036,7 +1233,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="BottomRightCup"
-						   x="496" y="89" width="19" height="19" visible="true" depth="12">
+						   x="496" y="89" width="19" height="19" visible="false" depth="12">
 					<s:fill>
 						<s:SolidColor color="white" alpha=".5"/>
 					</s:fill>
@@ -1044,22 +1241,22 @@
 						<s:SolidColorStroke color="white" alpha="1" weight="1.375"/>
 					</s:stroke>
 				</s:Ellipse>
-				<!-- Plate outer (border) container -->
-				<s:BorderContainer id="PlateOuterContentContainer"
-								   x="1" y="1"
-								   depth="2"
-								   width="514" height="107"
-								   minWidth="0" minHeight="0"
-								   borderVisible="true" borderWeight="5" cornerRadius="8"
-								   borderStyle="inset"
-								   backgroundAlpha="0"
-								   borderColor="{FoilColor}">
+				<!-- Plate outer (border) container.  Border color is set via function. -->
+				<s:BorderContainer id="PlateBorder" 
+								   x="1" y="1" width="514" height="107" borderVisible="false" depth="2">
 					<s:layout>
 						<s:BasicLayout/>
 					</s:layout>
+					<!-- ThingBorder.  Border color is set via function. -->
+					<s:BorderContainer id="PlateThingBorder" x="0" y="0" width="100%" height="100%" includeInLayout="false" visible="false"
+									   borderWeight="5" cornerRadius="8" borderStyle="inset" backgroundAlpha="0"/>
+					<!-- ImageBorder.  Source is set via function. -->
+					<s:Image id="PlateImageBorder" x="0" y="0" width="100%" height="100%" includeInLayout="false" visible="false"
+							 horizontalAlign="center" verticalAlign="top"
+							 fillMode="scale" scaleMode="stretch"/>
 					<!-- Holes -->
 					<s:Ellipse id="TopLeftHole"
-							   x="0" y="0" visible="true" width="8" height="8" depth="11">
+							   x="0" y="0" visible="false" width="8" height="8" depth="11">
 						<s:fill>
 							<s:SolidColor color="white" alpha="1"/>
 						</s:fill>
@@ -1068,7 +1265,7 @@
 						</s:stroke>
 					</s:Ellipse>
 					<s:Ellipse id="TopRightHole"
-							   x="496" y="0" visible="true" width="8" height="8" depth="11">
+							   x="496" y="0" visible="false" width="8" height="8" depth="11">
 						<s:fill>
 							<s:SolidColor color="white" alpha="1"/>
 						</s:fill>
@@ -1095,7 +1292,7 @@
 						</s:stroke>
 					</s:Ellipse>
 					<s:Ellipse id="BottomLeftHole"
-							   x="0" y="89" visible="true" width="8" height="8" depth="11">
+							   x="0" y="89" visible="false" width="8" height="8" depth="11">
 						<s:fill>
 							<s:SolidColor color="white" alpha="1"/>
 						</s:fill>
@@ -1104,7 +1301,7 @@
 						</s:stroke>
 					</s:Ellipse>
 					<s:Ellipse id="BottomRightHole"
-							   x="496" y="89" visible="true" width="8" height="8" depth="11">
+							   x="496" y="89" visible="false" width="8" height="8" depth="11">
 						<s:fill>
 							<s:SolidColor color="white" alpha="1"/>
 						</s:fill>
@@ -1112,14 +1309,14 @@
 							<s:SolidColorStroke color="gray" alpha="1" weight=".25"/>
 						</s:stroke>
 					</s:Ellipse>
-					<!-- Plate content container -->
-					<s:HGroup id="PlateInnerContentContainer"
-							  depth="6"
-							  x="50" y="50"
-							  width="100%" height="100%"
-							  verticalCenter="0" horizontalCenter="0" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-							  color="{PlateColor}"
-							  horizontalAlign="left" verticalAlign="middle" gap="0" clipAndEnableScrolling="true">
+					
+					<!-- Plate content container.  BackgroundColor or image set via functions -->
+					<s:BorderContainer id="PlateElementsContainer"
+									   x="0" y="0" width="505" height="98" backgroundAlpha="0" borderVisible="false" depth="6">
+						<s:layout>
+							<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
+												horizontalAlign="left" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
+						</s:layout>
 						<!--Multiple containers for potential elements, which are hidden and shown as needed-->
 						<s:Group id="LeftFlagBox" width="{LargeFlagWidth}" height="{LargeFlagHeight}" includeInLayout="false" visible="false"/>
 						<s:VGroup id="LeftDatesBox" width="{DatesWidth}" height="{DatesHeight}"
@@ -1139,53 +1336,7 @@
 								  includeInLayout="false" visible="false"/>
 						<s:Group id="RightFlagBox" width="{LargeFlagWidth}" height="{LargeFlagHeight}" includeInLayout="false" visible="false"/>
 						
-						<!-- Flag sticker -->
-						<!--s:Group height="100%" width="38" id="FlagStickerContainer">
-						<s:Image id="FlagSticker"
-						x="0" y="0"
-						depth="4"
-						width="100%" height="100%"
-						fillMode="scale" scaleMode="stretch"
-						source="assets/flags/nl.jpg"/>
-						</s:Group-->
-						<!-- Dates -->
-						<!--s:VGroup id="DatesContainer"
-						x="466" y="0" 
-						paddingTop="6" paddingBottom="6" paddingLeft="3" paddingRight="3"
-						gap="2"
-						width="38" height="100%"
-						minWidth="0" minHeight="0"
-						alpha="0">
-						<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
-						<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
-						<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
-						</s:VGroup-->
-						<!-- Symbol container -->
-						<!--s:BorderContainer id="SymbolContainer"
-						depth="7"
-						width="70" height="100%"
-						minWidth="0" minHeight="0"
-						verticalCenter="0" horizontalCenter="0"
-						backgroundAlpha="0"
-						borderVisible="false" backgroundColor="yellow">
-						<s:layout>
-						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
-						</s:layout-->
-						<!-- Symbols -->
-						<!--s:Image id="Symbol"
-						depth="8"
-						width="70" height="70"
-						verticalCenter="0" horizontalCenter="0"
-						fillMode="scale" scaleMode="stretch"
-						source="assets/redpeacesign.jpg"/>
-						</s:BorderContainer-->
-						<!-- Plate text container-->
-						<!--s:HGroup id="PlateTextContainer" 
-						width="504" height="100%" minWidth="0" minHeight="0"
-						horizontalAlign="center" verticalAlign="middle" gap="-5"
-						clipAndEnableScrolling="true" depth="9"
-						</s:HGroup-->
-					</s:HGroup>
+					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:BorderContainer>
 			
@@ -1279,11 +1430,7 @@
 					<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
 										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
 				</s:layout>
-				<!--s:BorderContainer width="100%" height="18" borderVisible="false">
-				<s:layout>
-				<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
-				paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
-				</s:layout-->
+				
 				<mx:Text text="How many lines of text"
 						 width="145" verticalCenter="0"
 						 styleName="DirectiveLabel"/>
@@ -1662,7 +1809,7 @@
 						</s:BorderContainer>
 					</s:BorderContainer>
 					
-					<!-- Control to set the flag -->
+					<!-- Flag chooser -->
 					<s:BorderContainer width="100%" height="60"
 									   minWidth="0" minHeight="0"
 									   borderVisible="false">
@@ -1677,10 +1824,9 @@
 							</s:layout>
 							<s:Image width="100%" height="100%"
 									 horizontalAlign="center" verticalAlign="top"
-									 horizontalCenter="0" verticalCenter="0" 
-									 fillMode="scale" scaleMode="stretch"
-									 source="{SelectedFlagSource}"
-									 buttonMode="true" click="OpenFlagGallery(event)"/>
+									 source="{SelectedFlagSource}" fillMode="scale" scaleMode="stretch"									 
+									 buttonMode="true" 
+									 click="OpenFlagGallery(event)"/>
 						</s:BorderContainer>
 						<s:Image id="FlagGalleryButton"
 								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
@@ -1705,7 +1851,7 @@
 					</s:BorderContainer>
 				</s:BorderContainer>
 				
-				<!-- Outer container for symbols, stickers, plate style, colors, and holes -->
+				<!-- Outer container for symbols, plate style, foil style, and holes -->
 				<s:BorderContainer width="140.4" height="100%"
 								   minWidth="0" minHeight="0"
 								   borderVisible="false">
@@ -1723,7 +1869,7 @@
 												gap="0"/>
 						</s:layout>
 						
-						<!-- Control to set the symbol -->
+						<!-- Symbol chooser -->
 						<s:BorderContainer width="57" height="63" borderVisible="false">
 							<s:layout>
 								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
@@ -1766,103 +1912,69 @@
 						
 						<s:Spacer width="8"/>
 						
-						<!-- Control to set the sticker -->
-						<!--s:BorderContainer width="41" height="63"
-										   borderVisible="false">
-							<s:layout>
-								<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-												  gap="0" horizontalAlign="center" verticalAlign="middle"/>
-							</s:layout>
-							<s:BorderContainer width="100%" height="57"
-											   minWidth="0" minHeight="0"
-											   borderVisible="true">
-								<s:layout>
-									<s:BasicLayout/>
-								</s:layout>
-								<s:Image id="StickerGalleryImage"
-										 width="100%" height="100%" verticalAlign="top" verticalCenter="0" horizontalAlign="left" horizontalCenter="0" 
-										 fillMode="scale" scaleMode="stretch" source="@Embed('assets/dalmatian.jpg')"
-										 click="OpenSymbolGallery(event)"/>
-							</s:BorderContainer>
-							<s:Image id="StickerGalleryButton"
-									 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
-									 buttonMode="true"
-									 source="assets/down_triangle.png"
-									 click="OpenSymbolGallery(event)"/>
-						</s:BorderContainer>
-						<s:Spacer width="3"/>
-						<s:BorderContainer width="14" height="40" borderVisible="false">
-							<s:layout>
-								<s:VerticalLayout gap="4"/>
-							</s:layout>
-							<s:Button id="yyy_Button" label="L" 
-									  width="14" height="14"
-									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"/>
-							<s:Button id="zzzz_Button" label="C" 
-									  width="14" height="14"
-									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"/>
-							<s:Button id="aaaa_Button" label="R" 
-									  width="14" height="14"
-									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"/>
-						</s:BorderContainer-->
 					</s:BorderContainer>
 					
-					<!-- Outer container for symbols and stickers -->
-					<s:BorderContainer width="140" height="100%"
-									   minWidth="0" minHeight="0"
-									   borderVisible="false">
+					<!-- Outer container for plate, foil, and holes controls -->
+					<s:BorderContainer width="140" height="100%" borderVisible="false">
 						<s:layout>
-							<s:VerticalLayout horizontalAlign="center" verticalAlign="top" 
-											  paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
-											  gap="0"/>
+							<s:VerticalLayout horizontalAlign="center" verticalAlign="top" gap="0"/>
 						</s:layout>
 						
-						<!-- Control to set the plate color -->
-						<s:BorderContainer width="140.4" height="30.51"
-										   minWidth="0" minHeight="0"
-										   borderVisible="true">
+						<!-- Plate chooser -->
+						<s:BorderContainer id="Plate_MiniPlateFrame" width="140.4" height="30.51" 
+										   borderVisible="true" borderColor="black" borderAlpha="1" borderWeight="1"
+										   click="SetPreviewPlate(event)">
 							<s:layout>
-								<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5" gap="0"/>
+								<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5" gap="0" 
+												  verticalAlign="middle" horizontalAlign="center" clipAndEnableScrolling="true"/>
 							</s:layout>
-							<s:BorderContainer id="MiniPlateOuterContainer" width="100%" height="100%" includeInLayout="false" visible="false"
-											   minWidth="0" minHeight="0"
-											   borderVisible="true" borderWeight="1.5"
-											   cornerRadius="3"
-											   backgroundColor="{PlateColor}" backgroundAlpha="1">
+							
+							<s:BorderContainer id="Plate_MiniPlateThingContainer" includeInLayout="false" visible="false"
+											   width="100%" height="{Plate_MiniPlateFrame.height-5}"
+											   cornerRadius="3" borderVisible="true" borderColor="{Plate_MiniPlateFoilColor}" borderAlpha="1" borderWeight="2">
 								<s:layout>
-									<s:BasicLayout/>
+									<s:VerticalLayout paddingTop=".175" paddingBottom=".175" paddingLeft=".175" paddingRight=".175" gap="0" 
+													  verticalAlign="middle" horizontalAlign="center" clipAndEnableScrolling="true"/>
 								</s:layout>
-								<s:Rect x="2.5" y="2.5"
-										width="128.4" height="19.51"
-										radiusX="3" radiusY="3">                              
-									<s:stroke>
-										<s:SolidColorStroke weight="2" color="gray"/>
-									</s:stroke>
-								</s:Rect>
-								<s:BorderContainer id="MiniPlateInnerContainer" x="3" y="3"
-												   width="127.9" height="19.01"
-												   minWidth="0" minHeight="0"
-												   horizontalCenter="0" verticalCenter="0"
-												   borderVisible="false" backgroundAlpha="0"
-												   buttonMode="true" click="OpenPlateGallery(event)"
-												   backgroundColor="{FoilColor}">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
-									</s:layout>
-									<!--mx:Text text="{PlateName}" styleName="NumericStepperDates"/-->
-								</s:BorderContainer>
+								
+								<!--Plate MiniPlate thing-->
+								<s:BorderContainer id="Plate_MiniPlateInnerThingContainer"
+												   width="{Plate_MiniPlateThingContainer.width-4.25}" height="{Plate_MiniPlateThingContainer.height-4}" 
+												   borderWeight=".175" cornerRadius="3" borderColor="white" borderAlpha=".8" 
+												   backgroundColor="{Plate_MiniPlatePlateColor}" backgroundAlpha="1"/>
 							</s:BorderContainer>
-							<s:BorderContainer id="MiniPlateCoreContainer" width="100%" height="100%" borderVisible="false" backgroundColor="{PlateColor}">
+							
+							<s:BorderContainer id="Plate_MiniPlateImageContainer" includeInLayout="false" visible="false"
+											   width="{Plate_MiniPlateFrame.width-2}" height="{Plate_MiniPlateFrame.height-4}"
+											   cornerRadius="3" borderVisible="true" borderColor="black" borderAlpha="1" borderWeight="1">
 								<s:layout>
-									<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
-								</s:layout>				
-								<s:Image id="MiniPlateImage" includeInLayout="true" visible="true"
-										 width="100%" height="100%" 
-										 horizontalCenter="0" horizontalAlign="center" verticalCenter="0" verticalAlign="middle"
-										 source="{SelectedPlateSource}" fillMode="scale" scaleMode="stretch"
-										 buttonMode="true" click="SetPlate_(event)"/>
+									<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0" 
+													  verticalAlign="middle" horizontalAlign="center" clipAndEnableScrolling="true"/>
+								</s:layout>
+								
+								<!--Plate MiniPlate image-->
+								<s:BorderContainer id="Plate_MiniPlateInnerImageContainer"
+												   width="100%" height="100%" cornerRadius="3" borderVisible="false">					   
+									<s:layout>
+										<s:BasicLayout clipAndEnableScrolling="true"/>
+									</s:layout>
+									<s:Image id="Plate_MiniPlateImage" width="100%" height="{Plate_MiniPlateImageContainer.height-3}" depth="1"
+											 horizontalAlign="center" verticalAlign="middle"
+											 source="{SelectedPlateImageSource}" fillMode="scale" scaleMode="stretch"/>
+									<s:Rect id="Plate_MiniPlateImageFrame" width="100%" height="100%" radiusX="3" radiusY="3" depth="2">                          
+										<s:stroke>
+											<s:SolidColorStroke weight="2" color="black" alpha="1"/>
+										</s:stroke>
+										<s:fill>
+											<s:SolidColor alpha="0"/>
+										</s:fill>
+									</s:Rect>
+								</s:BorderContainer>
+								
 							</s:BorderContainer>
+							
 						</s:BorderContainer>
+						
 						<s:Image id="PlateGalleryButton"
 								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
 								 buttonMode="true"
@@ -1871,47 +1983,51 @@
 						
 						<s:Spacer height="1"/>
 						
-						<!-- Control to set the border, symbol, and character color -->
-						<s:BorderContainer width="140.4" height="30.51"
-										   minHeight="0" minWidth="0"
-										   borderVisible="true">
+						<!-- Foil chooser -->
+						<s:BorderContainer id="Foil_MiniPlateContainer" width="140.4" height="30.51"						   
+										   click="SetPreviewFoil(event)">
 							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
-												  paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"/>
+								<s:VerticalLayout paddingTop="2" paddingBottom="4" paddingLeft="2" paddingRight="4" gap="0" 
+												  verticalAlign="middle" horizontalAlign="center" clipAndEnableScrolling="true"/>
 							</s:layout>
-							<s:BorderContainer width="100%" height="100%"
-											   minWidth="0" minHeight="0"
-											   borderVisible="true" borderWeight="1.5"
-											   cornerRadius="3"
-											   backgroundAlpha="0">
+							
+							<!--Foil MiniPlate thing-->
+							<s:BorderContainer id="Foil_MiniPlateThingContainer" includeInLayout="false" visible="false"
+											   width="{Foil_MiniPlateContainer.width-6}" height="{Foil_MiniPlateContainer.height-6}" 
+											   borderWeight="3" cornerRadius="3" borderColor="{Foil_MiniPlateFoilColor}" borderAlpha="1" 
+											   backgroundColor="{Foil_MiniPlatePlateColor}" backgroundAlpha="1">
 								<s:layout>
-									<s:BasicLayout/>
+									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
+													  paddingTop="-2" paddingBottom="-2" paddingLeft="-2" paddingRight="-3"/>
 								</s:layout>
-								<s:Rect x="2.5" y="2.5"
-										width="128.4" height="19.51"
-										radiusX="3" radiusY="3">                              
-									<s:stroke>
-										<s:SolidColorStroke weight="2" color="{FoilColor}"/>
-									</s:stroke>
-								</s:Rect>
-								<!-- Mini-plate text container -->
-								<s:BorderContainer x="3" y="3"
-												   width="127.9" height="19.01"
-												   minWidth="0" minHeight="0"
-												   horizontalCenter="0" verticalCenter="0"
-												   borderVisible="false" backgroundAlpha="0">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
-									</s:layout>
-									<!-- Text won't center properly so indented here for now -->
-									<!--s:Label text="{FoilName}"
-											 horizontalCenter="0" verticalCenter="0"
-											 styleName="MiniPlateText" 
-											 color="{FoilColor}"
-											 buttonMode="true" click="OpenFoilGallery(event)"/-->
+								<s:BorderContainer id="Foil_MiniPlateThingInnerContainer"
+												   width="{Foil_MiniPlateThingContainer.width-4}" height="{Foil_MiniPlateThingContainer.height-4}" cornerRadius="3"
+												   borderWeight=".3" borderColor="white" borderAlpha=".8" 
+												   backgroundColor="white" backgroundAlpha="0">
 								</s:BorderContainer>
 							</s:BorderContainer>
 						</s:BorderContainer>
+						
+						<!--Foil MiniPlate image-->
+						<s:BorderContainer id="Foil_MiniPlateImageContainer" includeInLayout="false" visible="false"
+										   width="{Foil_MiniPlateThingContainer.width-4}" height="{Foil_MiniPlateThingContainer.height-4.5}" 
+										   cornerRadius="3" borderVisible="false">					   
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:Image id="Foil_MiniPlateImage" width="100%" height="100%" depth="1"
+									 horizontalAlign="center" verticalAlign="middle"
+									 source="{SelectedFoilImageSource}" fillMode="scale" scaleMode="stretch"/>
+							<s:Rect id="Foil_MiniPlateImageFrame" width="100%" height="100%" radiusX="3" radiusY="3"  depth="2">                          
+								<s:stroke>
+									<s:SolidColorStroke weight="2.5" color="black" alpha="1"/>
+								</s:stroke>
+								<s:fill>
+									<s:SolidColor alpha="0"/>
+								</s:fill>
+							</s:Rect>
+						</s:BorderContainer>
+						
 						<s:Image id="FoilGalleryButton"
 								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
 								 source="assets/down_triangle.png"
@@ -1919,7 +2035,7 @@
 						
 						<s:Spacer height="1"/>
 						
-						<!-- Control to set the holes -->
+						<!-- Holes chooser -->
 						<s:BorderContainer width="140.4" height="30.51"
 										   minWidth="0" minHeight="0"
 										   borderVisible="true">
@@ -1927,58 +2043,12 @@
 								<s:VerticalLayout paddingTop="1.5" paddingBottom="1.5" paddingLeft="1.5" paddingRight="1.5"
 												  gap="0"/>
 							</s:layout>
-							<!--s:BorderContainer width="100%" height="100%"
-											   minWidth="0" minHeight="0"
-											   borderVisible="true" borderWeight="1.5"
-											   cornerRadius="3"
-											   backgroundAlpha="0">
-								<s:layout>
-									<s:BasicLayout/>
-								</s:layout>
-								<s:Rect x="2.5" y="2.5"
-										width="128.4" height="19.51"
-										radiusX="3" radiusY="3">                              
-									<s:stroke>
-										<s:SolidColorStroke weight="2" color="gray"/>
-									</s:stroke>
-								</s:Rect>
-								<s:Ellipse depth="11"
-										   x="5.5" y="5.5"
-										   width="6" height="6">
-									<s:fill>
-										<s:SolidColor color="white" alpha="1"/>
-									</s:fill>
-									<s:stroke>
-										<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
-									</s:stroke>
-								</s:Ellipse>
-								<s:Ellipse depth="11"
-										   x="123" y="5.5"
-										   width="6" height="6">
-									<s:fill>
-										<s:SolidColor color="white" alpha="1"/>
-									</s:fill>
-									<s:stroke>
-										<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
-									</s:stroke>
-								</s:Ellipse>
-								<s:BorderContainer x="3" y="3"
-												   width="127.9" height="19.01"
-												   minWidth="0" minHeight="0"
-												   horizontalCenter="0" verticalCenter="0"
-												   borderVisible="false" backgroundAlpha="0"
-												   buttonMode="true" click="SetHoles(event)">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
-									</s:layout>
-									<mx:Text text="Holes in corners" styleName="NumericStepperDates"/>
-								</s:BorderContainer>
-							</s:BorderContainer-->
+							
 							<s:Image id="SelectedHoles"
 									 width="100%" height="100%" 
 									 horizontalCenter="0" horizontalAlign="center" verticalCenter="0" verticalAlign="middle"
 									 source="{SelectedHolesSource}" fillMode="scale" scaleMode="stretch"
-									 buttonMode="true" click="SetHoles_(event)"/>
+									 buttonMode="true" click="SetHoles(event)"/>
 						</s:BorderContainer>
 						<s:Image id="HolesGalleryButton"
 								 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
@@ -1986,6 +2056,7 @@
 								 buttonMode="true" click="OpenHolesGallery(event)"/>
 					</s:BorderContainer>
 				</s:BorderContainer>
+				
 			</s:BorderContainer>
 		</s:BorderContainer>
 		
@@ -2012,40 +2083,52 @@
 						</s:layout>
 						<s:dataProvider>
 							<s:ArrayList>
-								<!--PaddingBottom has no effect for these-->
-								<s:BorderContainer id="OP" width="100%" height="100%" cornerRadius="4" borderVisible="true"
-												   backgroundColor="0x00FF00" backgroundAlpha=".5"
-												   click="SelectPlateGalleryThing(event); CloseGallery(event);">
-									<s:borderStroke> 
-										<mx:SolidColorStroke 
-											color="black"
-											alpha=".2"
-											weight=".025"/> 
-									</s:borderStroke> 
+								<s:BorderContainer id="GP_A_Black" width="100%" height="100%"
+												   backgroundColor="0x000000" backgroundAlpha=".5" styleName="GalleryPlate_A"
+												   click="SelectPlateGalleryThing(event,'BlackPlate'); CloseGallery(event);">
 									<s:layout>
 										<s:HorizontalLayout paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1" clipAndEnableScrolling="true"/>
 									</s:layout>
-									<s:BorderContainer id="PB" width="{OP.width-2}" height="{OP.height-2}" cornerRadius="4" borderVisible="true" 
-													   backgroundColor="0x00E600" backgroundAlpha="1"
-													   click="SelectPlateGalleryThing(event); CloseGallery(event);">
-										<s:borderStroke> 
-											<mx:SolidColorStroke 
-												color="gray"
-												alpha=".5"
-												weight=".2"/> 
-										</s:borderStroke>
+									<s:BorderContainer id="GP_B_Black" width="{GP_A_Black.width-2}" height="{GP_A_Black.height-2}"
+													   backgroundColor="0x000000" backgroundAlpha="1" styleName="GalleryPlate_B">
 										<s:layout>
 											<s:HorizontalLayout paddingTop="3" paddingBottom="3" paddingLeft="3" paddingRight="3" clipAndEnableScrolling="true"/>
 										</s:layout>
-										<s:BorderContainer id="IP" width="{PB.width-6}" height="{PB.height-6}" cornerRadius="4" borderVisible="true"
-														   backgroundColor="0x00FF00" backgroundAlpha="1" borderWeight=".025" borderColor="black"
-														   click="SelectPlateGalleryThing(event); CloseGallery(event);">
-											<s:borderStroke> 
-												<mx:SolidColorStroke 
-													color="white"
-													alpha=".8"
-													weight=".075"/> 
-											</s:borderStroke>
+										<s:BorderContainer id="GP_C_Black" width="{GP_B_Black.width-6}" height="{GP_B_Black.height-6}"
+														   backgroundColor="0x000000" backgroundAlpha="1" styleName="GalleryPlate_C">
+										</s:BorderContainer>								
+									</s:BorderContainer>
+								</s:BorderContainer>
+								<s:BorderContainer id="GP_A_White" width="100%" height="100%"
+												   backgroundColor="0xffffff" backgroundAlpha=".5" styleName="GalleryPlate_A"
+												   click="SelectPlateGalleryThing(event,'WhitePlate'); CloseGallery(event);">
+									<s:layout>
+										<s:HorizontalLayout paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1" clipAndEnableScrolling="true"/>
+									</s:layout>
+									<s:BorderContainer id="GP_B_White" width="{GP_A_White.width-2}" height="{GP_A_White.height-2}"
+													   backgroundColor="0xe6e6e6" backgroundAlpha="1" styleName="GalleryPlate_B">
+										<s:layout>
+											<s:HorizontalLayout paddingTop="3" paddingBottom="3" paddingLeft="3" paddingRight="3" clipAndEnableScrolling="true"/>
+										</s:layout>
+										<s:BorderContainer id="GP_C_White" width="{GP_B_White.width-6}" height="{GP_B_White.height-6}"
+														   backgroundColor="0xffffff" backgroundAlpha="1" styleName="GalleryPlate_C">
+										</s:BorderContainer>								
+									</s:BorderContainer>
+								</s:BorderContainer>
+								<s:BorderContainer id="GP_A_LimeGreen" width="100%" height="100%"
+												   backgroundColor="0x00ff00" backgroundAlpha=".5" styleName="GalleryPlate_A"
+												   click="SelectPlateGalleryThing(event,'LimeGreenPlate'); CloseGallery(event);">
+									<s:layout>
+										<s:HorizontalLayout paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1" clipAndEnableScrolling="true"/>
+									</s:layout>
+									<s:BorderContainer id="GP_B_LimeGreen" width="{GP_A_LimeGreen.width-2}" height="{GP_A_LimeGreen.height-2}"
+													   backgroundColor="0x00e600" backgroundAlpha="1" styleName="GalleryPlate_B">
+										<s:layout>
+											<s:HorizontalLayout paddingTop="3" paddingBottom="3" paddingLeft="3" paddingRight="3" clipAndEnableScrolling="true"/>
+										</s:layout>
+										<s:BorderContainer id="GP_C_LimeGreen" width="{GP_B_LimeGreen.width-6}" height="{GP_B_LimeGreen.height-6}"
+														   backgroundColor="0x00ff00" backgroundAlpha="1" styleName="GalleryPlate_C">
+											<!--borderWeight=".025" borderColor="black"-->
 										</s:BorderContainer>								
 									</s:BorderContainer>
 								</s:BorderContainer>
@@ -2092,9 +2175,9 @@
 				
 				<!--s:NavigatorContent>					
 				<s:Group>
-					<s:layout>
-						<layouts:FlowLayout/>
-					</s:layout>
+				<s:layout>
+				<layouts:FlowLayout/>
+				</s:layout>
 				</s:Group>
 				</s:NavigatorContent-->
 				
@@ -2107,71 +2190,83 @@
 						<s:layout>
 							<layouts:FlowLayout padding="10" horizontalGap="3" verticalGap="6"/>
 							<!--s:TileLayout rowHeight="38" columnWidth="135" requestedColumnCount="2" requestedRowCount="6" orientation="columns"
-										  columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" horizontalGap="1" verticalGap="3"
-										  paddingTop="10" paddingBottom="10" paddingRight="5" clipAndEnableScrolling="true"/-->
+							columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" horizontalGap="1" verticalGap="3"
+							paddingTop="10" paddingBottom="10" paddingRight="5" clipAndEnableScrolling="true"/-->
 						</s:layout>
 						<s:dataProvider>
 							<s:ArrayList>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BLACK.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/WHITE.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BLUE.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/GOLD.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/GREEN.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/PINK.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/RED.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/SILVER.JPG" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectFoil(event); CloseGallery(event);"/>
-								<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/BlackWhiteCropped.png" 
-										 click="SelectPlateGalleryImage(event); CloseGallery(event);"/-->
+								<s:BorderContainer width="38" height="36" backgroundColor="black"
+												   click="SelectFoilGalleryThing(event,'BlackFoil'); CloseGallery(event);"/>								
+								<s:BorderContainer id="BlackFoilPlate_OuterContainer" width="220" height="38"
+												   styleName="MiniPlateOuterContainer" backgroundColor="white"
+												   click="SelectFoilGalleryThing(event,'BlackFoil'); CloseGallery(event);">
+									<s:layout>
+										<s:HorizontalLayout paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1" clipAndEnableScrolling="true"/>
+									</s:layout>
+									<s:BorderContainer id="BlackFoilPlate_InnerPlateContainer" 
+													   width="{BlackFoilPlate_InnerPlateContainer.width-2}" height="{BlackFoilPlate_InnerPlateContainer.height-2}" 
+													   styleName="MiniPlateInnerContainer" backgroundColor="black">
+										<s:layout>
+											<s:HorizontalLayout paddingTop="3" paddingBottom="3" paddingLeft="3" paddingRight="3" clipAndEnableScrolling="true"/>
+										</s:layout>
+										<s:BorderContainer id="BlackFoilPlate_CorePlateContainer" 
+														   width="{BlackFoilPlate_CorePlateContainer.width-6}" height="{BlackFoilPlate_CorePlateContainer.height-6}"
+														   styleName="MiniPlateCoreContainer" backgroundColor="white">
+										</s:BorderContainer>
+									</s:BorderContainer>
+								</s:BorderContainer>
+								<s:BorderContainer width="38" height="36" backgroundColor="white"
+												   click="SelectFoilGalleryThing(event,'WhiteFoil'); CloseGallery(event);"/>								
+								<s:BorderContainer id="WhiteFoilPlate_OuterContainer" width="220" height="38"
+												   styleName="MiniPlateOuterContainer" backgroundColor="black"
+												   click="SelectFoilGalleryThing(event,'WhiteFoil'); CloseGallery(event);">
+									<s:layout>
+										<s:HorizontalLayout paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1" clipAndEnableScrolling="true"/>
+									</s:layout>
+									<s:BorderContainer id="WhiteFoilPlate_InnerPlateContainer" 
+													   width="{BlackFoilPlate_InnerPlateContainer.width-2}" height="{BlackFoilPlate_InnerPlateContainer.height-2}" 
+													   styleName="MiniPlateInnerContainer" backgroundColor="white">
+										<s:layout>
+											<s:HorizontalLayout paddingTop="3" paddingBottom="3" paddingLeft="3" paddingRight="3" clipAndEnableScrolling="true"/>
+										</s:layout>
+										<s:BorderContainer id="WhiteFoilPlate_CorePlateContainer" 
+														   width="{BlackFoilPlate_CorePlateContainer.width-6}" height="{BlackFoilPlate_CorePlateContainer.height-6}"
+														   styleName="MiniPlateCoreContainer" backgroundColor="black">
+										</s:BorderContainer>								
+									</s:BorderContainer>
+								</s:BorderContainer>
+								<!--s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlackFoilSwatch.jpg" 
+								click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/BlackFoilPlate.png" 
+								click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/WhiteFoilSwatch.jpg" 
+								click="SelectFoil(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/WhiteFoilPlate.png" 
+								click="SelectFoil(event); CloseGallery(event);"/-->
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilSwatch.jpg" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilPlate.png" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/GoldFoilSwatch.jpg" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/GoldFoilPlate.png" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/GreenFoilSwatch.jpg" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/GreenFoilPlate.png" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/PinkFoilSwatch.jpg" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/PinkFoilPlate.png" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/RedFoilSwatch.jpg" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/RedFoilPlate.png" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/SilverFoilSwatch.jpg" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/SilverFoilPlate.png" 
+										 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 							</s:ArrayList>		
 						</s:dataProvider>
 					</s:List>					
@@ -2191,7 +2286,7 @@
 						<s:dataProvider>
 							<s:ArrayList>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/holes/FourCups.png" 
-								click="SelectHolesGalleryImage(event); CloseGallery(event);"/>
+										 click="SelectHolesGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/holes/TopCups.png" 
 										 click="SelectHolesGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/holes/MiddleCups.png" 
@@ -2209,39 +2304,39 @@
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/holes/NoneNone.jpg" 
 										 click="SelectHolesGalleryImage(event); CloseGallery(event);"/>
 								<!--s:BorderContainer width="100%" height="100%"
-												   borderVisible="true" borderWeight="1.5" cornerRadius="3">
-									<s:layout>
-										<s:BasicLayout/>
-									</s:layout>
-									<s:Rect x="2.5" y="2.5" width="100%" height="100%" radiusX="3" radiusY="3">                              
-										<s:stroke>
-											<s:SolidColorStroke weight="2" color="gray"/>
-										</s:stroke>
-									</s:Rect>
-									<s:Ellipse depth="11" x="5.5" y="5.5" width="6" height="6">
-										<s:fill>
-											<s:SolidColor color="white" alpha="1"/>
-										</s:fill>
-										<s:stroke>
-											<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
-										</s:stroke>
-									</s:Ellipse>
-									<s:Ellipse depth="11" x="18" y="5.5" width="6" height="6">
-										<s:fill>
-											<s:SolidColor color="white" alpha="1"/>
-										</s:fill>
-										<s:stroke>
-											<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
-										</s:stroke>
-									</s:Ellipse>
-									<s:BorderContainer x="3" y="3"
-													   width="100%" height="100%" borderVisible="false" 
-													   horizontalCenter="0" verticalCenter="0">
-										<s:layout>
-											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
-										</s:layout>
-										<mx:Text text="Holes in corners" styleName="NumericStepperDates"/>
-									</s:BorderContainer>
+								borderVisible="true" borderWeight="1.5" cornerRadius="3">
+								<s:layout>
+								<s:BasicLayout/>
+								</s:layout>
+								<s:Rect x="2.5" y="2.5" width="100%" height="100%" radiusX="3" radiusY="3">                              
+								<s:stroke>
+								<s:SolidColorStroke weight="2" color="gray"/>
+								</s:stroke>
+								</s:Rect>
+								<s:Ellipse depth="11" x="5.5" y="5.5" width="6" height="6">
+								<s:fill>
+								<s:SolidColor color="white" alpha="1"/>
+								</s:fill>
+								<s:stroke>
+								<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
+								</s:stroke>
+								</s:Ellipse>
+								<s:Ellipse depth="11" x="18" y="5.5" width="6" height="6">
+								<s:fill>
+								<s:SolidColor color="white" alpha="1"/>
+								</s:fill>
+								<s:stroke>
+								<s:SolidColorStroke color="black" alpha="1" weight=".25"/>
+								</s:stroke>
+								</s:Ellipse>
+								<s:BorderContainer x="3" y="3"
+								width="100%" height="100%" borderVisible="false" 
+								horizontalCenter="0" verticalCenter="0">
+								<s:layout>
+								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+								</s:layout>
+								<mx:Text text="Holes in corners" styleName="NumericStepperDates"/>
+								</s:BorderContainer>
 								</s:BorderContainer-->
 							</s:ArrayList>		
 						</s:dataProvider>
@@ -2280,15 +2375,15 @@
 				
 				<s:NavigatorContent id="SymbolGallery" width="100%" height="100%">
 					<!--fx:Script>
-						<![CDATA[
-							private var Symbols_AC:ArrayList = new ArrayList
-								([
-									{s:"Image", source:"assets/symbols/Audi.png"},
-									{ID:"Audi", source:"assets/symbols/Audi.png", PriceEUR:"0.00", Discontinued:false, InStock:true},
-									{ID:"BartSimpson", imageSource:"assets/symbols/BartSimpson.png", PriceEUR:"0.00", Discontinued:false, InStock:true},
-									{ID:"BeerGlass", imageSource:"assets/symbols/BeerGlass", PriceEUR:"0.00", Discontinued:false, InStock:true}
-								]);
-						]]>
+					<![CDATA[
+					private var Symbols_AC:ArrayList = new ArrayList
+					([
+					{s:"Image", source:"assets/symbols/Audi.png"},
+					{ID:"Audi", source:"assets/symbols/Audi.png", PriceEUR:"0.00", Discontinued:false, InStock:true},
+					{ID:"BartSimpson", imageSource:"assets/symbols/BartSimpson.png", PriceEUR:"0.00", Discontinued:false, InStock:true},
+					{ID:"BeerGlass", imageSource:"assets/symbols/BeerGlass", PriceEUR:"0.00", Discontinued:false, InStock:true}
+					]);
+					]]>
 					</fx:Script-->				
 					<!--Height and width and padding involve GalleryWindow-->
 					<s:List id="SymbolGalleryList" width="100%" height="100%"
@@ -2422,19 +2517,19 @@
 						</s:dataProvider>
 					</s:List>					
 				</s:NavigatorContent>
-
+				
 			</mx:ViewStack>
 			
 		</s:BorderContainer>
 		
 		<s:Group id="DatesContainer"
-		width="38" height="100%"
-		minWidth="0" minHeight="0"
-		alpha="0">
-		<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
-		<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
-		<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
-			</s:Group>
+				 width="38" height="100%"
+				 minWidth="0" minHeight="0"
+				 alpha="0">
+			<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
+			<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
+			<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
+		</s:Group>
 		
 	</s:BorderContainer>
 	

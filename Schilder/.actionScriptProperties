@@ -21,6 +21,8 @@
     <application path="Schilder7.mxml"/>
     <application path="SchilderX.mxml"/>
     <application path="Schilder8.mxml"/>
+    <application path="PlateChooser.mxml"/>
+    <application path="Schilder9.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

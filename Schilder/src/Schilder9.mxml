@@ -19,6 +19,12 @@
 			
 			private var Debugging:Boolean = false;
 			
+			[Bindable] private var LargeCharacterWidth:Number = 35;
+			[Bindable] private var LargeCharacterHeight:Number = 94;		
+// !!!
+			[Bindable] private var CharacterWidthLarge:Number = 40;
+			[Bindable] private var CharacterHeightLarge:Number = 100;
+// !!!		
 			[Bindable] private var PlateName:String;
 			[Bindable] private var PlateColor:uint;
 			[Bindable] private var FoilName:String;
@@ -26,9 +32,6 @@
 			
 			[Bindable] private var CharacterButtonWidth:Number = 26;
 			[Bindable] private var CharacterButtonHeight:Number = 37;
-			
-			[Bindable] private var LargeCharacterWidth:Number = 35;
-			[Bindable] private var LargeCharacterHeight:Number = 94;
 			
 			[Bindable] private var SymbolWidth:Number = 70;
 			[Bindable] private var SymbolHeight:Number = 70;
@@ -62,56 +65,87 @@
 			[Bindable] private var Foil_MiniPlatePlateColor:uint;
 			[Bindable] private var Foil_MiniPlateFoilColor:uint;
 			
-			
 			private var StackAction:Array = new Array();
 			
 			private function SetDefaults():void
 			{
+				PlateIsImage = false;
+				FoilIsImage = false;
+				
+				if (PlateIsImage == true)
+				{
+					Plate_MiniPlateImageContainer.includeInLayout = true; Plate_MiniPlateImageContainer.visible = true;
+					Plate_MiniPlateThingContainer.includeInLayout = false; Plate_MiniPlateThingContainer.visible = false;
+				}
+				if (PlateIsImage == false)
+				{
+					Plate_MiniPlateImageContainer.includeInLayout = false; Plate_MiniPlateImageContainer.visible = false;
+					Plate_MiniPlateThingContainer.includeInLayout = true; Plate_MiniPlateThingContainer.visible = true;
+				}
+				if (FoilIsImage == true)
+				{
+					Foil_MiniPlateImageContainer.includeInLayout = true; Foil_MiniPlateImageContainer.visible = true;
+					Foil_MiniPlateThingContainer.includeInLayout = false; Foil_MiniPlateThingContainer.visible = false;
+				}
+				if (FoilIsImage == false)
+				{
+					Foil_MiniPlateImageContainer.includeInLayout = false; Foil_MiniPlateImageContainer.visible = false;
+					Foil_MiniPlateThingContainer.includeInLayout = true; Foil_MiniPlateThingContainer.visible = true;
+				}
+				
+				PlateColor = 0xffffff; //white
+				FoilColor = 0x000000; //black
+				
 				if(Debugging) Alert.show('SetDefaults');
 				SelectedFlagSource = 'assets/flags/nl.jpg';
 				SelectedSymbolSource = 'assets/symbols/LargePeaceSign.png';
 				SelectedPlateImageSource = 'assets/plates/DarkYellow.jpg';
 				SelectedFoilImageSource = 'assets/foils/RedFoilPlate.png';
 				SelectedHolesSource = 'assets/holes/TopCups.jpg';
-				Plate_MiniPlateThingContainer.includeInLayout = true; Plate_MiniPlateThingContainer.visible = true;
-				Plate_MiniPlateImageContainer.includeInLayout = false; Plate_MiniPlateImageContainer.visible = false;
-				Foil_MiniPlateThingContainer.includeInLayout = true; Foil_MiniPlateThingContainer.visible = true;
-				Foil_MiniPlateImageContainer.includeInLayout = false; Foil_MiniPlateImageContainer.visible = false;
 				
 				if(Debugging) Alert.show('Plate_MiniPlatePlateColor:');
 				if(Debugging) Alert.show(String(Plate_MiniPlatePlateColor));
-				Plate_MiniPlatePlateColor = 0x000000; //black
+				Plate_MiniPlatePlateColor = PlateColor;
 				if(Debugging) Alert.show('Plate_MiniPlateFoilColor:');
 				if(Debugging) Alert.show(String(Plate_MiniPlateFoilColor));
-				Plate_MiniPlateFoilColor = 0x000000; //black
+				Plate_MiniPlateFoilColor = FoilColor;
 				
 				if(Debugging) Alert.show('Foil_MiniPlatePlateColor:');
 				if(Debugging) Alert.show(String(Foil_MiniPlatePlateColor));
-				Foil_MiniPlatePlateColor = 0xffffff; //white
+				Foil_MiniPlatePlateColor = PlateColor;
 				if(Debugging) Alert.show('Foil_MiniPlatePlateColor:');
 				if(Debugging) Alert.show(String(Foil_MiniPlatePlateColor));
-				Foil_MiniPlateFoilColor = 0x000000; //black
-				
-				PlateIsImage = false;
-				FoilIsImage = false;
+				Foil_MiniPlateFoilColor = FoilColor;
 			}
 			
-			[Embed(source="assets/symbols/LargePeaceSign.png")]
-			[Bindable]
-			private var SelectedSymbolClass:Class;
-			
+			//Embed default plate image
 			[Embed(source="assets/plates/DarkYellow.jpg")]
 			[Bindable]
 			private var SelectedPlateClass:Class;
 			
-// !!!
-			[Embed(source="assets/plates/DarkYellow.jpg")]
+			//Embed default foil image
+			[Embed(source="assets/foils/RedFoilPlate.png")]
 			[Bindable]
-			private var SelectedFoilClass:Class;
+			private var SelectedFoilClass:Class;			
+			
+			//Embed default flag image
+			[Embed(source="assets/flags/nl.jpg")]
+			[Bindable]
+			private var SelectedFlagClass:Class;
+			
+			//Embed default symbol image
+			[Embed(source="assets/symbols/LargePeaceSign.png")]
+			[Bindable]
+			private var SelectedSymbolClass:Class;
 			
 			private function SetDefaultSymbol():void
 			{
 				SelectedSymbolImage = SelectedSymbolClass as Image;
+			}
+			
+			private function SetDefaultFlag():void
+			{
+				SelectedFlagImage = SelectedFlagClass as Image;
 			}
 			
 			private function SetDefaultPreview():void
@@ -136,6 +170,7 @@
 				}
 				else
 				{
+PlateColor = 0xffffff;
 					if(Debugging) Alert.show('SetDefaultPreviewPlate PlateIsImage=false');
 					PlateThingBorder.includeInLayout = true; PlateThingBorder.visible = true;
 					PlateImageBorder.includeInLayout = false; PlateImageBorder.visible = false;
@@ -152,6 +187,7 @@
 				}
 				else
 				{
+FoilColor = 0x000000;
 					if(Debugging) Alert.show('SetDefaultPreviewFoil FoilIsImage=false');
 					SetPreviewFoilThing();		
 				}
@@ -197,9 +233,6 @@
 					SetPreviewFoilThing();		
 				}
 			}
-			
-			public const CharacterWidthLarge:Number = 90;
-			public const CharacterHeightLarge:Number = 100;
 			
 			[Bindable] private var CenterSymbol:Boolean = false;
 			[Bindable] private var CharactersAdded:Number = 0;
@@ -570,8 +603,7 @@
 				LeftFlagBox.id = 'LeftFlagBox';
 				LeftFlagBox.width = LargeFlagWidth;
 				LeftFlagBox.height = LargeFlagHeight;
-				LeftFlagBox.includeInLayout = true;
-				LeftFlagBox.visible = true;
+				LeftFlagBox.includeInLayout = false; LeftFlagBox.visible = false;
 				PlateElementsContainer.addElement(LeftFlagBox);
 				
 				LeftDatesBox = new VGroup;
@@ -579,18 +611,16 @@
 				LeftDatesBox.width = DatesWidth;
 				LeftDatesBox.height = DatesHeight;
 				LeftDatesBox.horizontalAlign = 'center';
-				LeftDatesBox.paddingTop = 5;
+				LeftDatesBox.verticalAlign = 'middle'
 				LeftDatesBox.gap = 5;
-				LeftDatesBox.includeInLayout = false;
-				LeftDatesBox.visible = false;
+				LeftDatesBox.includeInLayout = false; LeftDatesBox.visible = false;
 				PlateElementsContainer.addElement(LeftDatesBox);
 				
 				LeftSymbolBox = new Group;
 				LeftSymbolBox.id = 'LeftSymbolBox';
 				LeftSymbolBox.width = SymbolWidth;
 				LeftSymbolBox.height = SymbolHeight;
-				LeftSymbolBox.includeInLayout = false;
-				LeftSymbolBox.visible = false;
+				LeftSymbolBox.includeInLayout = false; LeftSymbolBox.visible = false;
 				PlateElementsContainer.addElement(LeftSymbolBox);
 				
 				//var Button1:Button = new Button;
@@ -602,8 +632,7 @@
 				CharacterBox1.clipAndEnableScrolling=true;
 				CharacterBox1.horizontalAlign = 'middle';
 				CharacterBox1.gap = 0;
-				CharacterBox1.includeInLayout = true;
-				CharacterBox1.visible = true;
+				CharacterBox1.includeInLayout = true; CharacterBox1.visible = true;
 				//CharacterBox1.addElement(Button1);
 				PlateElementsContainer.addElement(CharacterBox1);
 				
@@ -611,8 +640,7 @@
 				CenterSymbolBox.id = 'CenterSymbolBox';
 				CenterSymbolBox.width = SymbolWidth;
 				CenterSymbolBox.height = SymbolHeight;
-				CenterSymbolBox.includeInLayout = false;
-				CenterSymbolBox.visible = false;
+				CenterSymbolBox.includeInLayout = false; CenterSymbolBox.visible = false;
 				PlateElementsContainer.addElement(CenterSymbolBox);
 				
 				CharacterBox2 = new HGroup;
@@ -623,8 +651,7 @@
 				CharacterBox2.clipAndEnableScrolling=true;
 				CharacterBox2.horizontalAlign = 'middle';
 				CharacterBox2.gap = 0;
-				CharacterBox2.includeInLayout = false;
-				CharacterBox2.visible = false;
+				CharacterBox2.includeInLayout = false; CharacterBox2.visible = false;
 				PlateElementsContainer.addElement(CharacterBox2);
 				
 				CharacterBox3 = new HGroup;
@@ -635,16 +662,14 @@
 				CharacterBox3.clipAndEnableScrolling=true;
 				CharacterBox3.horizontalAlign = 'middle';
 				CharacterBox3.gap = 0;
-				CharacterBox3.includeInLayout = false;
-				CharacterBox3.visible = false;
+				CharacterBox3.includeInLayout = false; CharacterBox3.visible = false;
 				PlateElementsContainer.addElement(CharacterBox3);
 				
 				RightSymbolBox = new Group;
 				RightSymbolBox.id = 'RightSymbolBox';
 				RightSymbolBox.width = SymbolWidth;
 				RightSymbolBox.height = SymbolHeight;
-				RightSymbolBox.includeInLayout = false;
-				RightSymbolBox.visible = false;
+				RightSymbolBox.includeInLayout = false; RightSymbolBox.visible = false;
 				PlateElementsContainer.addElement(RightSymbolBox);
 				
 				RightDatesBox = new VGroup;
@@ -652,18 +677,16 @@
 				RightDatesBox.width = DatesWidth;
 				RightDatesBox.height = DatesHeight;
 				RightDatesBox.horizontalAlign = 'center';
-				RightDatesBox.paddingTop = 10;
-				RightDatesBox.gap = 10;
-				RightDatesBox.includeInLayout = false;
-				RightDatesBox.visible = false;
+				RightDatesBox.verticalAlign = 'middle';
+				RightDatesBox.gap = 5;
+				RightDatesBox.includeInLayout = false; RightDatesBox.visible = false;
 				PlateElementsContainer.addElement(RightDatesBox);
 				
 				RightFlagBox = new Group;
 				RightFlagBox.id = 'RightFlagBox';
 				RightFlagBox.width = LargeFlagWidth;
 				RightFlagBox.height = LargeFlagHeight;
-				RightFlagBox.includeInLayout = false;
-				RightFlagBox.visible = false;
+				RightFlagBox.includeInLayout = false; RightFlagBox.visible = false;
 				PlateElementsContainer.addElement(RightFlagBox);
 			}
 			
@@ -673,8 +696,7 @@
 				plateimage.width = LargeFlagWidth;
 				plateimage.height = LargeFlagHeight;
 				
-				LeftFlagBox.includeInLayout=true;
-				LeftFlagBox.visible=true;
+				LeftFlagBox.includeInLayout=true; LeftFlagBox.visible=true;
 				LeftFlagBox.addElement(plateimage);
 				
 				StackAction.push(plateimage);
@@ -682,17 +704,17 @@
 			
 			public function AddDatesToLeftDatesBox(event:MouseEvent):void 
 			{
-				var Date1Save:Number = Date1.value;
-				var Date2Save:Number = Date2.value;
-				var Date3Save:Number = Date3.value;
+				var Date1Save:Number = Date1.value as Number;
+				var Date2Save:Number = Date2.value as Number;
+				var Date3Save:Number = Date3.value as Number;
 				
 				var plategroup:VGroup = new VGroup;
 				plategroup.width = DatesWidth;
 				plategroup.height = DatesHeight;
-				plategroup.paddingTop = 5;
-				plategroup.horizontalAlign = 'justify';
+				plategroup.horizontalAlign = 'center';
+				plategroup.verticalAlign = 'middle';
 				plategroup.gap = 5;
-								
+				
 				var D1:Label = new Label;
 				
 				if(Debugging) Alert.show('Date1Save:');
@@ -706,7 +728,7 @@
 				{
 					D1.text = '00';
 				}
-				else if (Date1Save >= 1 && Date1Save <= 9)
+				else if (Date1Save <= 9)
 				{
 					D1.text = ('0' + String(Date1Save));
 				}
@@ -717,16 +739,17 @@
 				
 				if(Debugging) Alert.show(D1.text);
 				
+				D1.width = 24;
 				D1.styleName = 'PlateDates';
 				D1.setStyle('color','black');
 				
 				var D2:Label = new Label;
 				
-				if (Date1Save == 0)
+				if (Date2Save == 0)
 				{
 					D2.text = '00';
 				}
-				else if (Date2Save >= 1 && Date2Save <= 9)
+				else if (Date2Save <= 9)
 				{
 					D2.text = ('0' + String(Date2Save));
 				}
@@ -735,16 +758,17 @@
 					D2.text = String(Date2Save);
 				}
 				
+				D2.width = 24;
 				D2.styleName = 'PlateDates';
 				D2.setStyle('color','black');
 				
 				var D3:Label = new Label;
 				
-				if (Date1Save == 0)
+				if (Date3Save == 0)
 				{
 					D3.text = '00';
 				}
-				else if (Date2Save >= 1 && Date3Save <= 9)
+				else if (Date3Save <= 9)
 				{
 					D3.text = ('0' + String(Date3Save));
 				}
@@ -753,6 +777,7 @@
 					D3.text = String(Date3Save);
 				}
 				
+				D3.width = 24;
 				D3.styleName = 'PlateDates';
 				D3.setStyle('color','black');
 				
@@ -762,47 +787,109 @@
 				plategroup.addElement(D2);
 				plategroup.addElement(D3);
 								
-				LeftDatesBox.includeInLayout=true;
-				LeftDatesBox.visible=true;
+				LeftDatesBox.includeInLayout=true; LeftDatesBox.visible=true;
 				LeftDatesBox.addElement(plategroup);
-				
-				StackAction.push(plategroup);
 				
 				Date1.value = Date1Save;
 				Date2.value = Date2Save;
 				Date3.value = Date3Save;
+				
+				StackAction.push(plategroup);
 			}
 			
-			public function AddDatesToRightDatesBox(event:MouseEvent):void {
+			public function AddDatesToRightDatesBox(event:MouseEvent):void
+			{
+				var Date1Save:Number = Date1.value as Number;
+				var Date2Save:Number = Date2.value as Number;
+				var Date3Save:Number = Date3.value as Number;
+				
 				var plategroup:VGroup = new VGroup;
 				plategroup.width = DatesWidth;
 				plategroup.height = DatesHeight;
-				plategroup.paddingTop = 10;
 				plategroup.horizontalAlign = 'center';
-				plategroup.gap = 10;
+				plategroup.verticalAlign = 'middle';
+				plategroup.gap = 5;
 				
-				var d1:Label = new Label;
-				d1.text = '11';
-				d1.styleName = 'PlateDates';
-				d1.setStyle('color','black');
-				var d2:Label = new Label;
-				d2.text = '11';
-				d2.styleName = 'PlateDates';
-				d2.setStyle('color','black');
-				var d3:Label = new Label;
-				d3.text = '11';
-				d3.styleName = 'PlateDates';
-				d3.setStyle('color','black');
+				var D1:Label = new Label;
 				
-				plategroup.addElement(d1);
-				plategroup.addElement(d2);
-				plategroup.addElement(d3);
+				if(Debugging) Alert.show('Date1Save:');
+				if(Debugging) Alert.show(String(Date1Save));
+				if(Debugging) Alert.show('Date2Save:');
+				if(Debugging) Alert.show(String(Date2Save));
+				if(Debugging) Alert.show('Date3Save:');
+				if(Debugging) Alert.show(String(Date3Save));
 				
-				RightDatesBox.includeInLayout=true;
-				RightDatesBox.visible=true;
+				if (Date1Save == 0)
+				{
+					D1.text = '00';
+				}
+				else if (Date1Save <= 9)
+				{
+					D1.text = ('0' + String(Date1Save));
+				}
+				else
+				{
+					D1.text = String(Date1Save);
+				}
+				
+				if(Debugging) Alert.show(D1.text);
+				
+				D1.width = 24;
+				D1.styleName = 'PlateDates';
+				D1.setStyle('color','black');
+				
+				var D2:Label = new Label;
+				
+				if (Date2Save == 0)
+				{
+					D2.text = '00';
+				}
+				else if (Date2Save <= 9)
+				{
+					D2.text = ('0' + String(Date2Save));
+				}
+				else
+				{
+					D2.text = String(Date2Save);
+				}
+				
+				D2.width = 24;
+				D2.styleName = 'PlateDates';
+				D2.setStyle('color','black');
+				
+				var D3:Label = new Label;
+				
+				if (Date3Save == 0)
+				{
+					D3.text = '00';
+				}
+				else if (Date3Save <= 9)
+				{
+					D3.text = ('0' + String(Date3Save));
+				}
+				else
+				{
+					D3.text = String(Date3Save);
+				}
+				
+				D3.width = 24;
+				D3.styleName = 'PlateDates';
+				D3.setStyle('color','black');
+				
+				if(Debugging) Alert.show('D1text:');
+				if(Debugging) Alert.show(D1.text);
+				plategroup.addElement(D1);
+				plategroup.addElement(D2);
+				plategroup.addElement(D3);
+				
+				RightDatesBox.includeInLayout=true; RightDatesBox.visible=true;
 				RightDatesBox.addElement(plategroup);
 				
-				StackAction.push();
+				Date1.value = Date1Save;
+				Date2.value = Date2Save;
+				Date3.value = Date3Save;
+				
+				StackAction.push(plategroup);
 			}
 			
 			public function AddFlagToRightFlagBox(event:MouseEvent):void {
@@ -811,8 +898,7 @@
 				plateimage.width = LargeFlagWidth;
 				plateimage.height = LargeFlagHeight;
 				
-				RightFlagBox.includeInLayout=true;
-				RightFlagBox.visible=true;
+				RightFlagBox.includeInLayout=true; RightFlagBox.visible=true;
 				RightFlagBox.addElement(plateimage);
 				
 				StackAction.push();
@@ -837,8 +923,7 @@
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;
 				
-				CenterSymbolBox.includeInLayout=true;
-				CenterSymbolBox.visible=true;
+				CenterSymbolBox.includeInLayout=true; CenterSymbolBox.visible=true;
 				CenterSymbolBox.addElement(plateimage);
 				
 				//Include 2nd character box for characters to the right of the symbol
@@ -855,8 +940,7 @@
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;
 				
-				RightSymbolBox.includeInLayout=true;
-				RightSymbolBox.visible=true;
+				RightSymbolBox.includeInLayout=true; RightSymbolBox.visible=true;
 				RightSymbolBox.addElement(plateimage);
 				
 				StackAction.push();
@@ -869,32 +953,38 @@
 			
 			public function AddCharacterToPlate(event:MouseEvent):void {
 				var keypadbutton:Button = event.target as Button;
-				var platebutton:Button = new Button();
+				var platelabel:Label = new Label;
 				
-				platebutton.width = CharacterWidthLarge;
-				platebutton.height = CharacterHeightLarge;
-				platebutton.label = keypadbutton.label;
-				platebutton.styleName = 'PlateTextLarge';
-				platebutton.setStyle('color', FoilColor);
+				platelabel.width = CharacterWidthLarge;
+				platelabel.height = CharacterHeightLarge;
+				platelabel.text = keypadbutton.label;
+				platelabel.styleName = 'PlateTextLarge';
+// !!!
+				platelabel.setStyle('color', FoilColor);
 				//platebutton.setStyle('skinClass', 'skins.TransparentButtonSkin');
 				
 				CharactersAdded = (CharactersAdded + 1);
 				
-				if (CenterSymbol = false)
+				if (CenterSymbol == false)
 				{
-					CharacterBox1.addElement(platebutton);
+					CharacterBox1.addElement(platelabel);
 				}
 
-				if (CenterSymbol = true && CharactersAdded < 3)
+				else
 				{
-					CharacterBox1.addElement(platebutton);
+					if (CharactersAdded < 6)
+					{
+						CharacterBox1.addElement(platelabel);
+					}
+					else 
+					{
+						CharacterBox2.includeInLayout=true;
+						CharacterBox2.visible=true;
+						CharacterBox2.addElement(platelabel);
+					}
 				}
-				else 
-				{
-					CharacterBox2.includeInLayout=true;
-					CharacterBox2.visible=true;
-					CharacterBox2.addElement(platebutton);
-				}
+				
+				StackAction.push()
 			}
 						
 			public function UndoLastAction(event:MouseEvent):void
@@ -911,6 +1001,7 @@
 			{
 				PlateElementsContainer.removeAllElements();
 				AddPlateElementsContainerChildren();
+				CenterSymbol = false;
 			}
 			
 			public function ResetPlate(event:MouseEvent):void
@@ -922,6 +1013,7 @@
 				SetPreviewPlateThing();
 				PlateElementsContainer.removeAllElements();
 				AddPlateElementsContainerChildren();
+				CenterSymbol = false;
 			}
 			
 			/*		
@@ -1169,12 +1261,12 @@
 	
 	<!-- Outer (basic) container -->
 	<s:BorderContainer id="OuterContainer"
-					   width="540" height="406" horizontalCenter="0" verticalCenter="0" backgroundColor="blue" backgroundAlpha=".2" borderVisible="true">
+					   width="540" height="406" horizontalCenter="0" verticalCenter="0" borderVisible="true">
 		<s:layout>
 			<s:BasicLayout/>
 		</s:layout>
 		<!-- Inner (vertical) container -->
-		<s:BorderContainer id="InnerContainer" backgroundColor="blue" backgroundAlpha=".4"
+		<s:BorderContainer id="InnerContainer"
 						   x="0" y="0" width="{OuterContainer.width-2}" height="{OuterContainer.height-2}" borderVisible="false" depth="2">
 			<s:layout>
 				<s:VerticalLayout paddingTop="10" paddingBottom="4" paddingLeft="10" paddingRight="10" gap="0"/>
@@ -1189,7 +1281,7 @@
 				</s:layout>
 				<!-- Holes -->
 				<s:Ellipse id="TopLeftHole"
-						   x="0" y="0" visible="false" width="8" height="8" depth="11">
+						   x="5" y="5" visible="false" width="8" height="8" depth="11">
 					<s:fill>
 						<s:SolidColor color="white" alpha="1"/>
 					</s:fill>
@@ -1198,7 +1290,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="TopRightHole"
-						   x="496" y="0" visible="false" width="8" height="8" depth="11">
+						   x="501" y="5" visible="false" width="8" height="8" depth="11">
 					<s:fill>
 						<s:SolidColor color="white" alpha="1"/>
 					</s:fill>
@@ -1207,7 +1299,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="MiddleLeftHole"
-						   x="0" y="44.5" visible="false" width="8" height="8" depth="11">
+						   x="5" y="49.5" visible="false" width="8" height="8" depth="11">
 					<s:fill>
 						<s:SolidColor color="white" alpha="1"/>
 					</s:fill>
@@ -1216,7 +1308,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="MiddleRightHole"
-						   x="496" y="44.5" visible="false" width="8" height="8" depth="11">
+						   x="501" y="49.5" visible="false" width="8" height="8" depth="11">
 					<s:fill>
 						<s:SolidColor color="white" alpha="1"/>
 					</s:fill>
@@ -1225,7 +1317,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="BottomLeftHole"
-						   x="0" y="89" visible="false" width="8" height="8" depth="11">
+						   x="5" y="94" visible="false" width="8" height="8" depth="11">
 					<s:fill>
 						<s:SolidColor color="white" alpha="1"/>
 					</s:fill>
@@ -1234,7 +1326,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<s:Ellipse id="BottomRightHole"
-						   x="496" y="89" visible="false" width="8" height="8" depth="11">
+						   x="501" y="94" visible="false" width="8" height="8" depth="11">
 					<s:fill>
 						<s:SolidColor color="white" alpha="1"/>
 					</s:fill>
@@ -1298,7 +1390,7 @@
 					</s:stroke>
 				</s:Ellipse>
 				<!-- Plate outer (border) container.  Border color is set via function. -->
-				<s:BorderContainer id="PlateBorder" 
+				<s:BorderContainer id="PlateBorder"
 								   x="1" y="1" width="514" height="107" borderVisible="false" backgroundAlpha="0" depth="2">
 					<s:layout>
 						<s:BasicLayout/>
@@ -1313,16 +1405,21 @@
 					
 					<!-- Plate elements container.  BackgroundColor or image set via functions -->
 					<s:BorderContainer id="PlateElementsContainer"
-									   x="0" y="0" width="505" height="98" backgroundAlpha="0" borderVisible="false" depth="6">
+									   x="5" y="5" width="505" height="98" backgroundAlpha="0" borderVisible="false" depth="6">
 						<s:layout>
 							<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"
 												horizontalAlign="left" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
 						</s:layout>
 						<!--Multiple containers for potential elements, which are hidden and shown as needed-->
 						<s:Group id="LeftFlagBox" width="{LargeFlagWidth}" height="{LargeFlagHeight}" includeInLayout="false" visible="false"/>
-						<s:VGroup id="LeftDatesBox" width="{DatesWidth}" height="{DatesHeight}"
-								  horizontalAlign="center" paddingTop="5" gap="5"
-								  includeInLayout="false" visible="false"/>
+						<s:VGroup id="LeftDatesBox" width="{DatesWidth}" height="{DatesHeight}" includeInLayout="false" visible="false"
+								  horizontalAlign="center" verticalAlign="middle" kerning="off" clipAndEnableScrolling="true">
+							<!--s:Rect width="100%" height="100%">
+								<s:stroke>
+									<s:SolidColorStroke color="black"/>
+								</s:stroke>
+							</s:Rect-->
+						</s:VGroup>
 						<s:Group id="LeftSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
 						<s:HGroup id="CharacterBox1" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
 								  includeInLayout="true" visible="true"/>
@@ -1332,11 +1429,15 @@
 						<s:HGroup id="CharacterBox3" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
 								  includeInLayout="false" visible="false"/>
 						<s:Group id="RightSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
-						<s:VGroup id="RightDatesBox" width="{DatesWidth}" height="{DatesHeight}"
-								  horizontalAlign="center" paddingTop="10" gap="10"
-								  includeInLayout="false" visible="false"/>
+						<s:VGroup id="RightDatesBox" width="{DatesWidth}" height="{DatesHeight}" includeInLayout="false" visible="false"
+								  horizontalAlign="center" verticalAlign="middle" kerning="off" clipAndEnableScrolling="true">
+							<!--s:Rect width="100%" height="100%">
+								<s:stroke>
+									<s:SolidColorStroke color="black"/>
+								</s:stroke>
+							</s:Rect-->
+						</s:VGroup>
 						<s:Group id="RightFlagBox" width="{LargeFlagWidth}" height="{LargeFlagHeight}" includeInLayout="false" visible="false"/>
-						
 					</s:BorderContainer>
 				</s:BorderContainer>
 			</s:BorderContainer>
@@ -2002,8 +2103,8 @@
 													  paddingTop="-2" paddingBottom="-2" paddingLeft="-2" paddingRight="-3"/>
 								</s:layout>
 								<s:BorderContainer id="Foil_MiniPlateThingInnerContainer"
-												   width="{Foil_MiniPlateThingContainer.width-4}" height="{Foil_MiniPlateThingContainer.height-4}" cornerRadius="3"
-												   borderWeight=".3" borderColor="white" borderAlpha=".8" 
+												   width="{Foil_MiniPlateThingContainer.width-4}" height="{Foil_MiniPlateThingContainer.height-4}"
+												   cornerRadius="3" borderWeight=".3" borderColor="white" borderAlpha=".8" 
 												   backgroundColor="white" backgroundAlpha="0">
 								</s:BorderContainer>
 							</s:BorderContainer>
@@ -2522,15 +2623,6 @@
 			</mx:ViewStack>
 			
 		</s:BorderContainer>
-		
-		<s:Group id="DatesContainer"
-				 width="38" height="100%"
-				 minWidth="0" minHeight="0"
-				 alpha="0">
-			<mx:Text text="2 3" width="36" height="26" styleName="PlateDates" color="red"/>
-			<mx:Text text="0 7" width="36" height="26" styleName="PlateDates" color="red"/>
-			<mx:Text text="1 3" width="36" height="26" styleName="PlateDates" color="red"/>
-		</s:Group>
 		
 	</s:BorderContainer>
 	

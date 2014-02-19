@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			[Bindable] private var Plate_MiniPlatePlateColor:Number = 0x00e600;
+			[Bindable] private var Plate_MiniPlateFoilColor:Number = 0x00e600;
+			[Bindable] private var SelectedPlateImageSource:String = 'assets/plates/DarkYellow.jpg';
+		]]>
+	</fx:Script>
+	
+	<!-- Plate chooser -->
+	<s:BorderContainer id="Plate_MiniPlateOuterContainer" width="140.4" height="30.51">
+		<s:layout>
+			<s:VerticalLayout paddingTop="2" paddingBottom="4" paddingLeft="2" paddingRight="4" gap="0" 
+							  verticalAlign="middle" horizontalAlign="center" clipAndEnableScrolling="true"/>
+		</s:layout>
+		<!--MiniPlate image-->
+		<s:BorderContainer id="Plate_MiniPlateImageContainer" includeInLayout="true" visible="true"
+						   width="{Plate_MiniPlateOuterContainer.width-4}" height="{Plate_MiniPlateOuterContainer.height-4.5}" 
+						   cornerRadius="3" borderVisible="false">					   
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<s:Image id="Plate_MiniPlateImage" width="100%" height="100%" depth="1"
+					 horizontalAlign="center" verticalAlign="middle"
+					 source="{SelectedPlateImageSource}" fillMode="scale" scaleMode="stretch"/>
+			<s:Rect id="Plate_MiniPlateImageFrame" width="100%" height="100%" radiusX="3" radiusY="3"  depth="2">                          
+				<s:stroke>
+					<s:SolidColorStroke weight="2.5" color="black" alpha="1"/>
+				</s:stroke>
+				<s:fill>
+					<s:SolidColor alpha="0"/>
+				</s:fill>
+			</s:Rect>
+		</s:BorderContainer>
+		
+		<!--MiniPlate thing-->
+		<s:BorderContainer id="Plate_MiniPlateInnerThingContainer" includeInLayout="false" visible="false"
+						   width="{Plate_MiniPlateOuterContainer.width-6}" height="{Plate_MiniPlateOuterContainer.height-6}" 
+						   borderWeight="3" cornerRadius="3" borderColor="{Plate_MiniPlateFoilColor}" borderAlpha="1" 
+						   backgroundColor="{Plate_MiniPlatePlateColor}" backgroundAlpha="1">
+			<s:layout>
+				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
+								  paddingTop="-2" paddingBottom="-2" paddingLeft="-2" paddingRight="-3"/>
+			</s:layout>
+			<s:BorderContainer id="Plate_MiniPlateInnerContainer"
+							   width="{Plate_MiniPlateInnerThingContainer.width-4}" height="{Plate_MiniPlateInnerThingContainer.height-4}" cornerRadius="3"
+							   borderWeight=".3" borderColor="white" borderAlpha=".8" 
+							   backgroundColor="{Plate_MiniPlatePlateColor}" backgroundAlpha="0">
+			</s:BorderContainer>
+		</s:BorderContainer>
+	</s:BorderContainer>
+	<!--s:Image id="PlateGalleryButton"
+			 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
+			 buttonMode="true"
+			 source="assets/down_triangle.png"/-->
+	
+</s:Application>

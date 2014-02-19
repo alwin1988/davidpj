@@ -19,28 +19,28 @@
 			
 			private var Debugging:Boolean = false;
 			
-			[Bindable] private var LargeCharacterWidth:Number = 35;
-			[Bindable] private var LargeCharacterHeight:Number = 94;		
+			[Bindable] private var LargeCharacterWidth:int = 35;
+			[Bindable] private var LargeCharacterHeight:int = 94;		
 // !!!
-			[Bindable] private var CharacterWidthLarge:Number = 40;
-			[Bindable] private var CharacterHeightLarge:Number = 100;
+			[Bindable] private var CharacterWidthLarge:int = 40;
+			[Bindable] private var CharacterHeightLarge:int = 100;
 // !!!		
 			[Bindable] private var PlateName:String;
 			[Bindable] private var PlateColor:uint;
 			[Bindable] private var FoilName:String;
 			[Bindable] private var FoilColor:uint;
 			
-			[Bindable] private var CharacterButtonWidth:Number = 26;
-			[Bindable] private var CharacterButtonHeight:Number = 37;
+			[Bindable] private var CharacterButtonWidth:int = 26;
+			[Bindable] private var CharacterButtonHeight:int = 37;
 			
-			[Bindable] private var SymbolWidth:Number = 70;
-			[Bindable] private var SymbolHeight:Number = 70;
+			[Bindable] private var SymbolWidth:int = 70;
+			[Bindable] private var SymbolHeight:int = 70;
 			
-			[Bindable] private var LargeFlagWidth:Number = 45;
-			[Bindable] private var LargeFlagHeight:Number = 97;
+			[Bindable] private var LargeFlagWidth:int = 45;
+			[Bindable] private var LargeFlagHeight:int = 97;
 			
-			[Bindable] private var DatesWidth:Number = 36;
-			[Bindable] private var DatesHeight:Number = 82;
+			[Bindable] private var DatesWidth:int = 36;
+			[Bindable] private var DatesHeight:int = 82;
 			
 			[Bindable] private var SelectedDate1:String;
 			[Bindable] private var SelectedDate2:String;
@@ -65,7 +65,31 @@
 			[Bindable] private var Foil_MiniPlatePlateColor:uint;
 			[Bindable] private var Foil_MiniPlateFoilColor:uint;
 			
+			[Bindable] private var CurrentCharacterOrSymbolBox:String;
+			[Bindable] private var CenterSymbol:Boolean = false;
+			[Bindable] private var CharactersAdded:int = 0;
+			
 			private var StackAction:Array = new Array();
+			
+			//Embed default plate image
+			[Embed(source="assets/plates/DarkYellow.jpg")]
+			[Bindable]
+			private var SelectedPlateClass:Class;
+			
+			//Embed default foil image
+			[Embed(source="assets/foils/RedFoilPlate.png")]
+			[Bindable]
+			private var SelectedFoilClass:Class;			
+			
+			//Embed default flag image
+			[Embed(source="assets/flags/nl.jpg")]
+			[Bindable]
+			private var SelectedFlagClass:Class;
+			
+			//Embed default symbol image
+			[Embed(source="assets/symbols/LargePeaceSign.png")]
+			[Bindable]
+			private var SelectedSymbolClass:Class;
 			
 			private function SetDefaults():void
 			{
@@ -117,26 +141,6 @@
 				if(Debugging) Alert.show(String(Foil_MiniPlatePlateColor));
 				Foil_MiniPlateFoilColor = FoilColor;
 			}
-			
-			//Embed default plate image
-			[Embed(source="assets/plates/DarkYellow.jpg")]
-			[Bindable]
-			private var SelectedPlateClass:Class;
-			
-			//Embed default foil image
-			[Embed(source="assets/foils/RedFoilPlate.png")]
-			[Bindable]
-			private var SelectedFoilClass:Class;			
-			
-			//Embed default flag image
-			[Embed(source="assets/flags/nl.jpg")]
-			[Bindable]
-			private var SelectedFlagClass:Class;
-			
-			//Embed default symbol image
-			[Embed(source="assets/symbols/LargePeaceSign.png")]
-			[Bindable]
-			private var SelectedSymbolClass:Class;
 			
 			private function SetDefaultSymbol():void
 			{
@@ -234,46 +238,43 @@ FoilColor = 0x000000;
 				}
 			}
 			
-			[Bindable] private var CenterSymbol:Boolean = false;
-			[Bindable] private var CharactersAdded:Number = 0;
-			
-			/*public function OpenGallery(event:MouseEvent,GalleryName:String):void 
+			/*private function OpenGallery(event:MouseEvent,GalleryName:String):void 
 			{
 				Galleries.selectedChild == GalleryName;
 				GalleryWindow.visible = true;
 			}*/
 			
-			public function OpenPlateGallery(event:MouseEvent):void
+			private function OpenPlateGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = PlateGallery;
 				GalleryWindow.visible = true;
 			}
 			
-			public function OpenFoilGallery(event:MouseEvent):void
+			private function OpenFoilGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = FoilGallery;
 				GalleryWindow.visible = true;
 			}
 			
-			public function OpenHolesGallery(event:MouseEvent):void
+			private function OpenHolesGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = HolesGallery;
 				GalleryWindow.visible = true;
 			}
 			
-			public function OpenFlagGallery(event:MouseEvent):void
+			private function OpenFlagGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = FlagGallery;
 				GalleryWindow.visible = true;
 			}
 			
-			public function OpenSymbolGallery(event:MouseEvent):void
+			private function OpenSymbolGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = SymbolGallery;
 				GalleryWindow.visible = true;
 			}
 			
-			public function SelectPlateGalleryImage(event:MouseEvent):void 
+			private function SelectPlateGalleryImage(event:MouseEvent):void 
 			{
 				PlateIsImage = true;
 				Plate_MiniPlateThingContainer.includeInLayout = false; Plate_MiniPlateThingContainer.visible = false;
@@ -289,7 +290,7 @@ FoilColor = 0x000000;
 				if(Debugging) Alert.show(String(PlateGalleryImage.source));
 			}
 			
-			public function SelectPlateGalleryThing(event:MouseEvent,PlateName:String):void 
+			private function SelectPlateGalleryThing(event:MouseEvent,PlateName:String):void 
 			{;
 				PlateIsImage = false;
 				Plate_MiniPlateThingContainer.includeInLayout = true; Plate_MiniPlateThingContainer.visible = true;
@@ -316,7 +317,7 @@ FoilColor = 0x000000;
 				if(Debugging) Alert.show(PlateName);
 			}
 			
-			public function SelectFoilGalleryImage(event:MouseEvent):void 
+			private function SelectFoilGalleryImage(event:MouseEvent):void 
 			{
 				FoilIsImage = true;
 				var FoilGalleryImage:Image;
@@ -362,7 +363,7 @@ FoilColor = 0x000000;
 				if(Debugging) Alert.show(FoilName);
 			}
 			
-			public function SelectFoilGalleryThing(event:MouseEvent,FoilName:String):void 
+			private function SelectFoilGalleryThing(event:MouseEvent,FoilName:String):void 
 			{
 				FoilIsImage = false;
 				Foil_MiniPlateThingContainer.includeInLayout = true;
@@ -384,7 +385,7 @@ FoilColor = 0x000000;
 				if(Debugging) Alert.show(FoilName);
 			}
 			
-			public function SelectHolesGalleryImage(event:MouseEvent):void 
+			private function SelectHolesGalleryImage(event:MouseEvent):void 
 			{
 				var HolesGalleryImage:Image;
 				HolesGalleryImage = event.currentTarget as Image;
@@ -392,7 +393,7 @@ FoilColor = 0x000000;
 				SelectedHolesSource = HolesGalleryImage.source as String;
 			}
 			
-			public function SelectFlagGalleryImage(event:MouseEvent):void 
+			private function SelectFlagGalleryImage(event:MouseEvent):void 
 			{
 				var FlagGalleryImage:Image;
 				FlagGalleryImage = event.currentTarget as Image;
@@ -400,7 +401,7 @@ FoilColor = 0x000000;
 				SelectedFlagSource = FlagGalleryImage.source as String;
 			}
 			
-			public function SelectSymbolGalleryImage(event:MouseEvent):void 
+			private function SelectSymbolGalleryImage(event:MouseEvent):void 
 			{
 				var SymbolGalleryImage:Image;
 				SymbolGalleryImage = event.currentTarget as Image;
@@ -597,7 +598,7 @@ FoilColor = 0x000000;
 				}
 			}
 			
-			public function AddPlateElementsContainerChildren():void
+			private function AddPlateElementsContainerChildren():void
 			{
 				LeftFlagBox = new Group;
 				LeftFlagBox.id = 'LeftFlagBox';
@@ -624,17 +625,17 @@ FoilColor = 0x000000;
 				PlateElementsContainer.addElement(LeftSymbolBox);
 				
 				//var Button1:Button = new Button;
-				CharacterBox1 = new HGroup;
-				CharacterBox1.id = 'CharacterBox1';
-				CharacterBox1.width = LargeCharacterWidth;
-				CharacterBox1.percentHeight = 100;
-				CharacterBox1.percentWidth = 100;
-				CharacterBox1.clipAndEnableScrolling=true;
-				CharacterBox1.horizontalAlign = 'middle';
-				CharacterBox1.gap = 0;
-				CharacterBox1.includeInLayout = true; CharacterBox1.visible = true;
-				//CharacterBox1.addElement(Button1);
-				PlateElementsContainer.addElement(CharacterBox1);
+				CharacterOrSymbolBox1 = new HGroup;
+				CharacterOrSymbolBox1.id = 'CharacterOrSymbolBox1';
+				CharacterOrSymbolBox1.width = LargeCharacterWidth;
+				CharacterOrSymbolBox1.percentHeight = 100;
+				CharacterOrSymbolBox1.percentWidth = 100;
+				CharacterOrSymbolBox1.clipAndEnableScrolling=true;
+				CharacterOrSymbolBox1.horizontalAlign = 'middle';
+				CharacterOrSymbolBox1.gap = 0;
+				CharacterOrSymbolBox1.includeInLayout = true; CharacterOrSymbolBox1.visible = true;
+				//CharacterOrSymbolBox1.addElement(Button1);
+				PlateElementsContainer.addElement(CharacterOrSymbolBox1);
 				
 				CenterSymbolBox = new Group;
 				CenterSymbolBox.id = 'CenterSymbolBox';
@@ -643,27 +644,27 @@ FoilColor = 0x000000;
 				CenterSymbolBox.includeInLayout = false; CenterSymbolBox.visible = false;
 				PlateElementsContainer.addElement(CenterSymbolBox);
 				
-				CharacterBox2 = new HGroup;
-				CharacterBox2.id = 'CharacterBox2';
-				CharacterBox2.width = LargeCharacterWidth;
-				CharacterBox2.percentHeight = 100;
-				CharacterBox2.percentWidth = 100;
-				CharacterBox2.clipAndEnableScrolling=true;
-				CharacterBox2.horizontalAlign = 'middle';
-				CharacterBox2.gap = 0;
-				CharacterBox2.includeInLayout = false; CharacterBox2.visible = false;
-				PlateElementsContainer.addElement(CharacterBox2);
+				CharacterOrSymbolBox2 = new HGroup;
+				CharacterOrSymbolBox2.id = 'CharacterOrSymbolBox2';
+				CharacterOrSymbolBox2.width = LargeCharacterWidth;
+				CharacterOrSymbolBox2.percentHeight = 100;
+				CharacterOrSymbolBox2.percentWidth = 100;
+				CharacterOrSymbolBox2.clipAndEnableScrolling=true;
+				CharacterOrSymbolBox2.horizontalAlign = 'middle';
+				CharacterOrSymbolBox2.gap = 0;
+				CharacterOrSymbolBox2.includeInLayout = false; CharacterOrSymbolBox2.visible = false;
+				PlateElementsContainer.addElement(CharacterOrSymbolBox2);
 				
-				CharacterBox3 = new HGroup;
-				CharacterBox3.id = 'CharacterBox3';
-				CharacterBox3.width = LargeCharacterWidth;
-				CharacterBox3.percentHeight = 100;
-				CharacterBox3.percentWidth = 100;
-				CharacterBox3.clipAndEnableScrolling=true;
-				CharacterBox3.horizontalAlign = 'middle';
-				CharacterBox3.gap = 0;
-				CharacterBox3.includeInLayout = false; CharacterBox3.visible = false;
-				PlateElementsContainer.addElement(CharacterBox3);
+				CharacterOrSymbolBox3 = new HGroup;
+				CharacterOrSymbolBox3.id = 'CharacterOrSymbolBox3';
+				CharacterOrSymbolBox3.width = LargeCharacterWidth;
+				CharacterOrSymbolBox3.percentHeight = 100;
+				CharacterOrSymbolBox3.percentWidth = 100;
+				CharacterOrSymbolBox3.clipAndEnableScrolling=true;
+				CharacterOrSymbolBox3.horizontalAlign = 'middle';
+				CharacterOrSymbolBox3.gap = 0;
+				CharacterOrSymbolBox3.includeInLayout = false; CharacterOrSymbolBox3.visible = false;
+				PlateElementsContainer.addElement(CharacterOrSymbolBox3);
 				
 				RightSymbolBox = new Group;
 				RightSymbolBox.id = 'RightSymbolBox';
@@ -690,7 +691,8 @@ FoilColor = 0x000000;
 				PlateElementsContainer.addElement(RightFlagBox);
 			}
 			
-			public function AddFlagToLeftFlagBox(event:MouseEvent):void {
+			private function AddFlagToLeftFlagBox(event:MouseEvent):void 
+			{
 				var plateimage:Image = new Image;
 				plateimage.source = SelectedFlagImage.source;
 				plateimage.width = LargeFlagWidth;
@@ -702,7 +704,7 @@ FoilColor = 0x000000;
 				StackAction.push(plateimage);
 			}
 			
-			public function AddDatesToLeftDatesBox(event:MouseEvent):void 
+			private function AddDatesToLeftDatesBox(event:MouseEvent):void 
 			{
 				var Date1Save:Number = Date1.value as Number;
 				var Date2Save:Number = Date2.value as Number;
@@ -797,7 +799,7 @@ FoilColor = 0x000000;
 				StackAction.push(plategroup);
 			}
 			
-			public function AddDatesToRightDatesBox(event:MouseEvent):void
+			private function AddDatesToRightDatesBox(event:MouseEvent):void
 			{
 				var Date1Save:Number = Date1.value as Number;
 				var Date2Save:Number = Date2.value as Number;
@@ -892,7 +894,8 @@ FoilColor = 0x000000;
 				StackAction.push(plategroup);
 			}
 			
-			public function AddFlagToRightFlagBox(event:MouseEvent):void {
+			private function AddFlagToRightFlagBox(event:MouseEvent):void 
+			{
 				var plateimage:Image = new Image;
 				plateimage.source = SelectedFlagImage.source;
 				plateimage.width = LargeFlagWidth;
@@ -904,7 +907,8 @@ FoilColor = 0x000000;
 				StackAction.push();
 			}
 			
-			public function AddSymbolToLeftSymbolBox(event:MouseEvent):void {
+			private function AddSymbolToLeftSymbolBox(event:MouseEvent):void 
+			{
 				var plateimage:Image = new Image;
 				plateimage.source = SelectedSymbolImage.source;
 				plateimage.width = SymbolWidth;
@@ -917,7 +921,8 @@ FoilColor = 0x000000;
 				StackAction.push();
 			}
 			
-			public function AddSymbolToCenterSymbolBox(event:MouseEvent):void {
+			private function AddSymbolToCenterSymbolBox(event:MouseEvent):void 
+			{
 				var plateimage:Image = new Image;
 				plateimage.source = SelectedSymbolImage.source;
 				plateimage.width = SymbolWidth;
@@ -928,13 +933,14 @@ FoilColor = 0x000000;
 				
 				//Include 2nd character box for characters to the right of the symbol
 				CenterSymbol=true;
-				CharacterBox2.includeInLayout=true;
-				CharacterBox2.visible=true;
+				CharacterOrSymbolBox2.includeInLayout=true;
+				CharacterOrSymbolBox2.visible=true;
 				
 				StackAction.push();
 			}
 			
-			public function AddSymbolToRightSymbolBox(event:MouseEvent):void {
+			private function AddSymbolToRightSymbolBox(event:MouseEvent):void 
+			{
 				var plateimage:Image = new Image;
 				plateimage.source = SelectedSymbolImage.source;
 				plateimage.width = SymbolWidth;
@@ -946,12 +952,35 @@ FoilColor = 0x000000;
 				StackAction.push();
 			}
 			
-			public function CloseGallery(event:MouseEvent):void {
+			private function AddSymbolToCurrentCharacterOrSymbolBox(event:MouseEvent):void
+			{
+				var plateimage:Image = new Image;
+				plateimage.source = SelectedSymbolImage.source;
+				plateimage.width = SymbolWidth;
+				plateimage.height = SymbolHeight;
+				
+				if (CurrentCharacterOrSymbolBox == 'CharacterOrSymbolBox1')
+				{
+					CharacterOrSymbolBox1.addElement(plateimage);
+				}
+				else if (CurrentCharacterOrSymbolBox == 'CharacterOrSymbolBox2')
+				{
+					CharacterOrSymbolBox2.addElement(plateimage);
+				}
+				else if (CurrentCharacterOrSymbolBox == 'CharacterOrSymbolBox3')
+				{
+					CharacterOrSymbolBox3.addElement(plateimage);
+				}
+			}
+			
+			private function CloseGallery(event:MouseEvent):void 
+			{
 				//Galleries.selectedChild = SymbolGallery;
 				GalleryWindow.visible=false;
 			}
 			
-			public function AddCharacterToPlate(event:MouseEvent):void {
+			private function AddCharacterToPlate(event:MouseEvent):void 
+			{
 				var keypadbutton:Button = event.target as Button;
 				var platelabel:Label = new Label;
 				
@@ -967,27 +996,30 @@ FoilColor = 0x000000;
 				
 				if (CenterSymbol == false)
 				{
-					CharacterBox1.addElement(platelabel);
+					CurrentCharacterOrSymbolBox = 'CharacterOrSymbolBox1';
+					CharacterOrSymbolBox1.addElement(platelabel);
 				}
 
 				else
 				{
+// !!!
 					if (CharactersAdded < 6)
 					{
-						CharacterBox1.addElement(platelabel);
+						CharacterOrSymbolBox1.addElement(platelabel);
 					}
 					else 
 					{
-						CharacterBox2.includeInLayout=true;
-						CharacterBox2.visible=true;
-						CharacterBox2.addElement(platelabel);
+						CurrentCharacterOrSymbolBox = 'CharacterOrSymbolBox2';
+						CharacterOrSymbolBox2.includeInLayout=true;
+						CharacterOrSymbolBox2.visible=true;
+						CharacterOrSymbolBox2.addElement(platelabel);
 					}
 				}
 				
 				StackAction.push()
 			}
 						
-			public function UndoLastAction(event:MouseEvent):void
+			private function UndoLastAction(event:MouseEvent):void
 			{
 				if (StackAction.length > 0)
 				{
@@ -997,14 +1029,14 @@ FoilColor = 0x000000;
 				}
 			}
 			
-			public function ClearPlate(event:MouseEvent):void
+			private function ClearPlate(event:MouseEvent):void
 			{
 				PlateElementsContainer.removeAllElements();
 				AddPlateElementsContainerChildren();
 				CenterSymbol = false;
 			}
 			
-			public function ResetPlate(event:MouseEvent):void
+			private function ResetPlate(event:MouseEvent):void
 			{
 				PlateIsImage = false;
 				FoilIsImage = false;
@@ -1421,12 +1453,18 @@ FoilColor = 0x000000;
 							</s:Rect-->
 						</s:VGroup>
 						<s:Group id="LeftSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
-						<s:HGroup id="CharacterBox1" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
-								  includeInLayout="true" visible="true"/>
+						<s:HGroup id="CharacterOrSymbolBox1" width="100%" horizontalAlign="center" gap="0" clipAndEnableScrolling="true" borderColor="blue" borderAlpha=".1"
+								  includeInLayout="true" visible="true">
+						<s:Rect width="100%" height="100%">
+							<s:stroke>
+								<s:SolidColorStroke color="black"/>
+							</s:stroke>
+						</s:Rect>
+							</s:HGroup>
 						<s:Group id="CenterSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
-						<s:HGroup id="CharacterBox2" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
+						<s:HGroup id="CharacterOrSymbolBox2" width="100%" horizontalAlign="center" gap="0" clipAndEnableScrolling="true" borderColor="blue" borderAlpha=".1"
 								  includeInLayout="false" visible="false"/>
-						<s:HGroup id="CharacterBox3" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
+						<s:HGroup id="CharacterOrSymbolBox3" width="100%" horizontalAlign="center" gap="0" clipAndEnableScrolling="true" borderColor="blue" borderAlpha=".1"
 								  includeInLayout="false" visible="false"/>
 						<s:Group id="RightSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
 						<s:VGroup id="RightDatesBox" width="{DatesWidth}" height="{DatesHeight}" includeInLayout="false" visible="false"
@@ -1994,9 +2032,9 @@ FoilColor = 0x000000;
 									 buttonMode="true" click="OpenSymbolGallery(event)"/>
 						</s:BorderContainer>
 						<s:Spacer width="3"/>
-						<s:BorderContainer width="14" height="40" borderVisible="false">
+						<s:BorderContainer width="14" height="59" borderVisible="false">
 							<s:layout>
-								<s:VerticalLayout gap="4"/>
+								<s:VerticalLayout gap="1"/>
 							</s:layout>
 							<s:Button id="AddSymbolToLeftSymbolBoxButton" label="L" 
 									  width="14" height="14"
@@ -2010,6 +2048,10 @@ FoilColor = 0x000000;
 									  width="14" height="14"
 									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"
 									  click="AddSymbolToRightSymbolBox(event)"/>
+							<s:Button id="AddSymbolToCurrentCharacterOrSymbolBoxButton" label="X"
+									  width="14" height="14"
+									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"
+									  click="AddSymbolToCurrentCharacterOrSymbolBox(event)"/>
 						</s:BorderContainer>
 						
 						<s:Spacer width="8"/>

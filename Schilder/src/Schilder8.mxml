@@ -1343,8 +1343,8 @@
 								  horizontalAlign="center" paddingTop="5" gap="5"
 								  includeInLayout="false" visible="false"/>
 						<s:Group id="LeftSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
-						<s:HGroup id="CharacterOrSymbolBox1" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
-								  includeInLayout="true" visible="true"/>
+						<s:HGroup id="CharacterOrSymbolBox1" width="100%" height="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
+									  includeInLayout="true" visible="true"/>
 						<s:Group id="CenterSymbolBox" width="{SymbolWidth}" height="{SymbolHeight}" includeInLayout="false" visible="false"/>
 						<s:HGroup id="CharacterOrSymbolBox2" width="100%" horizontalAlign="left" gap="0" clipAndEnableScrolling="true"
 								  includeInLayout="false" visible="false"/>

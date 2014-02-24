@@ -15,10 +15,15 @@ package utility
 			super();
 		}
 		
-		public function getTextMaskText(imgTxt:Image, txt:String="",fontSize:int=0, fontWeight:String=""):BorderContainer
+		public function getTextMaskText(imgTxt:Image, txt:String="",fontSize:int=0, fontWeight:String="", fontFamily:String=""):BorderContainer
 		{
 			var bdc:BorderContainer = new BorderContainer();
-			bdc.setStyle("borderAlpha",0);
+			bdc.setStyle("borderVisible",false);
+			bdc.setStyle("backgroundAlpha",0);
+			bdc.horizontalCenter = 0;
+			bdc.verticalCenter = 0;
+			bdc.setStyle('horizontalAlign','center')
+			bdc.setStyle('verticalAlign','middle')
 			if (txt != "")
 			{
 				var mxTxt:Text = new Text();
@@ -28,6 +33,8 @@ package utility
 					mxTxt.setStyle("fontSize", fontSize);
 				if (fontWeight!="")
 					mxTxt.setStyle("fontWeight", fontWeight);
+				if (fontFamily!="")
+					mxTxt.setStyle("fontFamily", fontFamily);
 				
 				mxTxt.cacheAsBitmap = true;
 				imgTxt.cacheAsBitmap = true;
@@ -41,7 +48,12 @@ package utility
 		public function getTextMaskImage(imgTxt:Image, imgSrc:Image):BorderContainer
 		{
 			var bdc:BorderContainer = new BorderContainer();
-			bdc.setStyle("borderAlpha",0);
+			bdc.setStyle("borderVisible",false);
+			bdc.setStyle("backgroundAlpha",0);
+			bdc.horizontalCenter = 0;
+			bdc.verticalCenter = 0;
+			bdc.setStyle('horizontalAlign','center')
+			bdc.setStyle('verticalAlign','middle')
 
 			imgTxt.cacheAsBitmap = true;
 			imgSrc.cacheAsBitmap = true;

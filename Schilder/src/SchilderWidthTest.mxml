@@ -16,7 +16,9 @@
 			protected var CS:Boolean = false;
 			//private var NumChildren:uint = Target.numChildren;
 			protected var Index:int = 0;
-			protected var Target:String = 'CSB';
+			protected var CenterSymbol:Boolean = false;
+			protected var CurrentContainer:String;
+			protected var TargetContainer:String;
 			
 			private function SetLineCount(event:MouseEvent,LC:int):void
 			{
@@ -30,8 +32,37 @@
 				}
 			}
 			
+			private function SetTargetContainer():void
+			{
+				if (LineCount == 1)
+				{
+					if (CenterSymbol = 'true')
+					{
+						if (CurrentContainer == '')
+						{
+							if (ElementType == 'C')
+							{
+
+						
+							
+							
+							
+							
+					}
+					TargetContainer = 'CSB1A');
+					{
+					}
+
+						else if (CurrentContainer == 'CSB1A')
+						{
+
+						else if (CurrentContainer == 'CSB
+
+			
 			private function AddElement(event:MouseEvent,ElementType:String):void
 			{
+				SetTargetContainer();
+				
 				var ElementLabel:Label = new Label;
 				var ElementId:String;
 				var parentC:VGroup = new VGroup;
@@ -41,16 +72,7 @@
 				var child1:BorderContainer = new BorderContainer;
 				var child2:BorderContainer = new BorderContainer;
 				
-				if (LineCount = 1)
-				{
-					if (ElementType = 'C')
-					{
-						if (Target = 'CSB')
-						{
-							parent.Id
-						}
-						
-						Target = 'CSB1';
+
 
 
 				ElementId = (Target + String(Index));

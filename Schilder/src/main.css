@@ -146,13 +146,13 @@
 	borderColor: blue;
 	chromeColor: blue;
 }
-.NumericStepperDates
+.NumericStepperDate
 {
 	fontFamily: Arial;
 	fontSize: 11;
 	fontWeight: normal;
 }
-.PlateDates
+.PlateDate
 {
 	fontFamily: Arial;
 	fontSize: 20;

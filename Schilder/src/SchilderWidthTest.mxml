@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import spark.components.Label;
+			import spark.components.VGroup;
+			
+			[bindable] private var vgap:int = 5;
+			protected var LineCount:int;
+			protected var CS:Boolean = false;
+			//private var NumChildren:uint = Target.numChildren;
+			protected var Index:int = 0;
+			protected var Target:String = 'CSB';
+			
+			private function SetLineCount(event:MouseEvent,LC:int):void
+			{
+				if (LC == 1)
+				{
+					LineCount = 1;
+				}
+				else if (LC == 2)
+				{
+					LineCount = 2;
+				}
+			}
+			
+			private function AddElement(event:MouseEvent,ElementType:String):void
+			{
+				var ElementLabel:Label = new Label;
+				var ElementId:String;
+				var parentC:VGroup = new VGroup;
+				var parentS:BorderContainer = new BorderContainer;
+				var parentD:BorderContainer = new BorderContainer;
+				var child:BorderContainer = new BorderContainer;
+				var child1:BorderContainer = new BorderContainer;
+				var child2:BorderContainer = new BorderContainer;
+				
+				if (LineCount = 1)
+				{
+					if (ElementType = 'C')
+					{
+						if (Target = 'CSB')
+						{
+							parent.Id
+						}
+						
+						Target = 'CSB1';
+
+
+				ElementId = (Target + String(Index));
+
+				ElementLabel.text = ElementId;
+				
+				if (ElementType == 'OneLine')
+				{
+					child.id = ElementId;
+					child.width = 50;
+					child.percentHeight = 70;
+					child.setStyle('borderColor','blue');
+					child.addElement(ElementLabel);
+					CSB1.addElement(child);
+				}
+				else if (ElementType == 'TwoLine')
+				{
+					child.id = ElementId;
+					child.width = 50;
+					child.percentHeight = 50;
+					child.setStyle('borderColor','blue');
+					child1.width = child.width;
+					child1.percentHeight = child.percentHeight;
+					child1.setStyle('borderColor','blue');
+					child1.addElement(ElementLabel);
+					Index = (Index + 1);
+					child2.width = child.width;
+					child2.percentHeight = child.percentHeight;
+					child2.setStyle('borderColor','blue');	
+					child2.addElement(ElementLabel);
+					parentC.width = child.width;
+					parentC.percentHeight = 70;
+					parentC.gap = vgap;
+					parentC.addElement(child1);
+					parentC.addElement(child2);
+					CSB1.addElement(parentC);
+				}
+				else if (ElementType == 'BigSymbol')
+				{
+					child.width = 80;
+					child.percentHeight = 100;
+					child.setStyle('borderColor','green');
+					child.addElement(ElementLabel);
+					CSB1.addElement(child);
+				}
+				else if (ElementType == 'TopSymbol')
+				{
+					child.width = 50;
+					child.percentHeight = 50;
+					child.setStyle('borderColor','green');
+					child.setStyle('borderAlpha', .2);
+					child1.width = child.width;
+					child1.percentHeight = child.percentHeight;
+					child1.setStyle('borderColor','green');
+					child1.addElement(ElementLabel);
+					Index = (Index + 1);
+					child2.width = child.width;
+					child2.percentHeight = child.percentHeight;
+					child2.setStyle('borderColor','gray');
+					child2.addElement(ElementLabel);
+					parentC.width = child.width;
+					parentC.percentHeight = 70;
+					parentC.gap = vgap;
+					parentC.addElement(child1);
+					parentC.addElement(child2);
+					CSB1.addElement(parentC);
+				}
+				else if (ElementType == 'BottomSymbol')
+				{
+					child.width = 50;
+					child.percentHeight = 50;
+					child.setStyle('borderColor','green');
+					child.setStyle('borderAlpha', .2);
+					child1.width = child.width;
+					child1.percentHeight = child.percentHeight;
+					child1.setStyle('borderColor','gray');
+					child1.addElement(ElementLabel);
+					Index = (Index + 1);
+					child2.width = child.width;
+					child2.percentHeight = child.percentHeight;
+					child2.setStyle('borderColor','green');
+					child2.addElement(ElementLabel);
+					parentC.width = child.width;
+					parentC.percentHeight = 70;
+					parentC.gap = vgap;
+					parentC.addElement(child1);
+					parentC.addElement(child2);
+					CSB1.addElement(parentC);
+				}
+				else if (ElementType == 'CS')
+				{
+					child.width = 80;
+					child.percentHeight = 100;
+					child.setStyle('borderColor','green');
+					child.addElement(ElementLabel);
+					parentS.id = 'CSB2'
+					parentS.width = child.width;
+					parentS.percentHeight = child.percentHeight;
+					parentS.setStyle('borderColor','yellow');
+					parentD.percentWidth = 100;
+					parentD.percentHeight = 100;
+					parentD.setStyle('borderColor','blue');
+					parentS.addElement(child);
+					CSB.addElement(parentS);
+					CSB.addElement(parentD);
+				}
+				
+				Index = (Index + 1);
+			}
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer width="800" height="200" borderVisible="true">
+		<s:layout>
+			<s:VerticalLayout horizontalAlign="left" gap="20"/>
+		</s:layout>
+		<s:HGroup gap="5">
+			<s:Button label="1 line" click="SetLineCount(event,1)"/>
+			<s:Button label="2 lines" click="SetLineCount(event,2)"/>
+			<s:Spacer width="10"/>
+			<s:Button label="Character" click="AddElement(event,'C')"/>
+			<s:Button label="Top character" click="AddElement(event,'TC')"/>
+			<s:Button label="Bottom character" click="AddElement(event,'BC')"/>
+			<s:Spacer width="5"/>
+			<s:Button label="Symbol" click="AddElement(event,'S')"/>
+			<s:Button label="Top symbol" click="AddElement(event,'TS')"/>
+			<s:Button label="Bottom symbol" click="AddElement(event,'BS')"/>
+			<s:Button label="Symbol" click="AddElement(event,'S')"/>
+			<s:Button label="Top symbol" click="AddElement(event,'TS')"/>
+			<s:Button label="Bottom symbol" click="AddElement(event,'BS')"/>
+		</s:HGroup>
+
+		<s:BorderContainer width="100%" height="100%" borderVisible="true">
+			<s:HGroup id="CSB" 
+					  width="100%" height="100%" paddingTop="10" 
+					  paddingBottom="10" paddingLeft="0" paddingRight="0" gap="1" 
+					  verticalCenter="0" horizontalCenter="0"
+					  horizontalAlign="center" verticalAlign="middle">
+				<s:HGroup id="CSB1" 
+						  width="100%" height="100%"
+						  horizontalAlign="center" verticalAlign="middle" gap="0"
+						  horizontalCenter="0" verticalCenter="0"/>
+			</s:HGroup>
+		</s:BorderContainer>
+	</s:BorderContainer>
+</s:Application>

@@ -55,10 +55,13 @@
 			public static const CharacterButtonHeight:int = 37;
 			//public static const LargeCharacterWidth:int = 35;
 			//public static const LargeCharacterHeight:int = 94;
+			public static const LargeCharacterFontSize:int = 96;			
 			public static const LargeCharacterWidth:int = 40;
-			public static const LargeCharacterHeight:int = 100;			
+			public static const LargeCharacterHeight:int = 100;
+			public static const MediumCharacterFontSize:int = 50;
 			public static const MediumCharacterWidth:int = 20;
-			public static const MediumCharacterHeight:int = 50;			
+			public static const MediumCharacterHeight:int = 50;	
+			public static const SmallCharacterFontSize:int = 30;	
 			public static const SmallCharacterWidth:int = 40;
 			public static const SmallCharacterHeight:int = 100;
 			
@@ -80,6 +83,7 @@
 			[Bindable] private var FoilColor:uint;
 			[Bindable] private var FoilIsImage:Boolean;
 			[Bindable] private var SelectedFoilImage:Object;
+			[Bindable] private var SelectedFoilSwatchImage:Object;
 			[Bindable] private var Foil_MiniPlatePlateColor:uint;
 			[Bindable] private var Foil_MiniPlateFoilColor:uint;
 			
@@ -103,7 +107,8 @@
 			[Bindable] private var SelectedHoles:Object;
 			private var HoleCount:int;
 			private var CupCount:int;
-					
+
+			[Bindable] private var CharacterFontSize:int;
 			[Bindable] private var CharacterSize:String;
 			[Bindable] private var CharacterWidth:int;
 			[Bindable] private var CharacterHeight:int;
@@ -133,7 +138,7 @@
 					if(Debugging) Alert.show(String(PlateHeight));
 
 				SelectedPlateImage = 'assets/plates/DarkYellow.jpg';
-				PlateColor = 0xff0000; // 0xffffff; //white
+				PlateColor = 0xffffff; //white
 				PlateIsImage = false;
 				Plate_MiniPlatePlateColor = PlateColor;
 					if(Debugging) Alert.show('Plate_MiniPlateFoilColor:');
@@ -145,6 +150,7 @@
 				SelectedFoilImage = 'assets/foils/RedFoilPlate.png';
 				FoilColor = 0x000000; //black
 				FoilIsImage = false;
+				SelectedFoilSwatchImage = 'assets/texture/texture.jpg';
 				Foil_MiniPlatePlateColor = PlateColor;
 					if(Debugging) Alert.show('Foil_MiniPlateFoilColor:');
 					if(Debugging) Alert.show(String(Foil_MiniPlateFoilColor));
@@ -163,7 +169,7 @@
 				SelectedFlag = 'assets/flags/DE.jpg';
 				FlagCount = 0;
 				
-				SelectedSymbol = 'assets/symbols/LargePeaceSign.png';
+				SelectedSymbol = 'assets/symbols/LargeHeart.png';
 				SymbolCount = 0;
 				
 				Holes = 'NoHolesNoCups';
@@ -344,16 +350,19 @@
 				{
 					CharacterWidth = LargeCharacterWidth;
 					CharacterHeight = LargeCharacterHeight;
+					CharacterFontSize = LargeCharacterFontSize;
 				}
 				else if (CharacterSize == 'Medium')
 				{
 					CharacterWidth = MediumCharacterWidth;
 					CharacterHeight = MediumCharacterHeight;
+					CharacterFontSize = MediumCharacterFontSize;
 				}
 				else if (CharacterSize == 'Small')
 				{
 					CharacterWidth = SmallCharacterWidth;
 					CharacterHeight = SmallCharacterHeight;
+					CharacterFontSize = SmallCharacterFontSize;
 				}
 			}
 
@@ -520,36 +529,40 @@
 				var FoilGalleryImage:Image;
 				FoilGalleryImage = event.currentTarget as Image;
 				SelectedFoilImage = FoilGalleryImage;
+				var SelectedFoilImageSource:String;
+				SelectedFoilImageSource = FoilGalleryImage.source as String;
 				
-				if (SelectedFoilImage.indexOf("Black") >= 0)
+				SetMiniPlateFoil();
+	
+				if (SelectedFoilImageSource.indexOf("Black") >= 0)
 				{
 					FoilName = "BlackFoil";
 				}
-				else if (SelectedFoilImage.indexOf("White") >= 0)
+				else if (SelectedFoilImageSource.indexOf("White") >= 0)
 				{
 					FoilName = "WhiteFoil";
 				}
-				else if (SelectedFoilImage.indexOf("Blue") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Blue") >= 0)
 				{
 					FoilName = "BlueFoil";
 				}
-				else if (SelectedFoilImage.indexOf("Gold") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Gold") >= 0)
 				{
 					FoilName = "GoldFoil";
 				}
-				else if (SelectedFoilImage.indexOf("Green") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Green") >= 0)
 				{
 					FoilName = "GreenFoil";
 				}
-				else if (SelectedFoilImage.indexOf("Pink") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Pink") >= 0)
 				{
 					FoilName = "PinkFoil";
 				}
-				else if (SelectedFoilImage.indexOf("Red") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Red") >= 0)
 				{
 					FoilName = "RedFoil";
 				}
-				else if (SelectedFoilImage.indexOf("Silver") >= 0)
+				else if (SelectedFoilImageSource.indexOf("Silver") >= 0)
 				{
 					FoilName = "SilverFoil";
 				}
@@ -557,6 +570,9 @@
 				if(Debugging) Alert.show('SelectFoilGalleryImage');
 				if(Debugging) Alert.show('FoilName:');
 				if(Debugging) Alert.show(FoilName);
+				
+				SelectedFoilSwatchImage = ('assets/foils/' + FoilName + 'Swatch.jpg');
+					if(Debugging) Alert.show('Selected foil swatch image' +''+SelectedFoilSwatchImage);
 			}
 			
 			private function SelectFoilGalleryNonImage(event:MouseEvent,FoilName:String):void 
@@ -1135,27 +1151,61 @@
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;
 				
-				var bd:BorderContainer = AddTextureImage(plateimage);
+				if (FoilIsImage == true)
+				{
+					//var bd:BorderContainer = AddTextureImage(plateimage);
+					var bd:BorderContainer = AddTextureImage(plateimage);
+					bd.width = plateimage.width;
+					bd.height = plateimage.height;
+				}
 				
 				if (CurrentBox == 'Box1A')
 				{
 					AdjustBoxWidths('1ASymbol');
-					Box1A.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box1A.addElement(bd);
+					}
+					else
+					{
+						Box1A.addElement(plateimage);
+					}
 				}
 				else if (CurrentBox == 'Box1B')
 				{
 					AdjustBoxWidths('1BSymbol');
-					Box1B.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box1B.addElement(bd);
+					}
+					else
+					{
+						Box1B.addElement(plateimage);
+					}
 				}
 				else if (CurrentBox == 'Box2A')
 				{
 					AdjustBoxWidths('2ASymbol');
-					Box2A.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box2A.addElement(bd);
+					}
+					else
+					{
+						Box2A.addElement(plateimage);
+					}
 				}
 				else if (CurrentBox == 'Box2B')
 				{
 					AdjustBoxWidths('2BSymbol');
-					Box2B.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box2B.addElement(bd);
+					}
+					else
+					{
+						Box2B.addElement(plateimage);
+					}
 				}
 				
 				StackAction.push(bd);
@@ -1170,19 +1220,25 @@
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;
 				
+				var bd:BorderContainer = AddTextureImage(plateimage);
+				bd.width = plateimage.width;
+				bd.height = plateimage.height;
+				
 				if (SymbolBox == 'Left')
 				{
 					AdjustBoxWidths('LeftSymbol');
 					LeftSymbolBox.width = SymbolWidth;
 					LeftSymbolBox.includeInLayout=true; LeftSymbolBox.visible=true;
-					LeftSymbolBox.addElement(plateimage);
+					//LeftSymbolBox.addElement(plateimage);
+					LeftSymbolBox.addElement(bd);
 				}
 				else if (SymbolBox == 'Center')
 				{	
 					AdjustBoxWidths('CenterSymbol');
 					CenterSymbolBox.width = SymbolWidth;
 					CenterSymbolBox.includeInLayout=true; CenterSymbolBox.visible=true;
-					CenterSymbolBox.addElement(plateimage);
+					//CenterSymbolBox.addElement(plateimage);
+					CenterSymbolBox.addElement(bd);
 					CenterSymbol=true;
 				}
 				else if (SymbolBox == 'Right')
@@ -1190,7 +1246,8 @@
 					AdjustBoxWidths('RightSymbol');
 					RightSymbolBox.width = SymbolWidth;
 					RightSymbolBox.includeInLayout=true; RightSymbolBox.visible=true;
-					RightSymbolBox.addElement(plateimage);
+					//RightSymbolBox.addElement(plateimage);
+					RightSymbolBox.addElement(bd);
 				}
 				
 				StackAction.push(plateimage);
@@ -1200,11 +1257,10 @@
 			
 			private function AddTextureText(SelectedCharacter:String):BorderContainer
 			{
-				Alert.show(SelectedCharacter);
 				var img:Image = new Image();
-				img.source = "assets/texture/texture.jpg";
+				img.source = SelectedFoilSwatchImage;
 				var tt:TexturedText = new TexturedText();
-				return tt.getTextMaskText(img,SelectedCharacter,50,"normal","GL-Nummernschild-Eng");
+				return tt.getTextMaskText(img,SelectedCharacter,CharacterFontSize,"normal","GL-Nummernschild-Eng");
 				
 				//fontFamily: GL-Nummernschild-Eng;
 				//fontSize: 96;
@@ -1214,9 +1270,8 @@
 			
 			private function AddTextureImage(symbol:Image):BorderContainer
 			{
-				Alert.show(SelectedCharacter);
 				var img:Image = new Image();
-				img.source = "assets/texture/texture.jpg";
+				img.source = SelectedFoilSwatchImage;
 				var tt:TexturedText = new TexturedText();
 				return tt.getTextMaskImage(img,symbol);
 				
@@ -1231,12 +1286,16 @@
 				var keypadbutton:Button = event.target as Button;
 				var platelabel:Label = new Label;
 				
-				var char:String = keypadbutton.label as String;
-				
-				SelectedCharacter = char;
-				var bd:BorderContainer = AddTextureText(SelectedCharacter);
-				bd.width = CharacterWidth;
-				bd.height = CharacterHeight;
+				if (FoilIsImage == true)
+				{
+					var char:String = keypadbutton.label as String;
+					
+					SelectedCharacter = char;
+									
+					var bd:BorderContainer = AddTextureText(SelectedCharacter);
+					bd.width = CharacterWidth;
+					bd.height = CharacterHeight;
+				}
 				
 				platelabel.width = CharacterWidth;
 				platelabel.height = CharacterHeight;
@@ -1262,23 +1321,47 @@
 				
 				if (CurrentBox == 'Box1A')
 				{
-					//Box1A.addElement(platelabel);
-					Box1A.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box1A.addElement(bd);
+					}
+					else
+					{
+						Box1A.addElement(platelabel);
+					}
 				}
 				else if (CurrentBox == 'Box1B')
 				{
-					//Box1B.addElement(platelabel);
-					Box1A.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box1B.addElement(bd);
+					}
+					else
+					{
+						Box1B.addElement(platelabel);
+					}
 				}
 				else if (CurrentBox == 'Box2A')
 				{
-					//Box2A.addElement(platelabel);
-					Box1A.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box2A.addElement(bd);
+					}
+					else
+					{
+						Box2A.addElement(platelabel);
+					}
 				}
 				else if (CurrentBox == 'Box2B')
 				{
-					//Box2B.addElement(platelabel);
-					Box1A.addElement(bd);
+					if (FoilIsImage == true)
+					{
+						Box2A.addElement(bd);
+					}
+					else
+					{
+						Box2B.addElement(platelabel);
+					}
 				}
 				
 				CharactersAdded = (CharactersAdded + 1);
@@ -1947,7 +2030,7 @@
 								 source="{SelectedFoilImage}" fillMode="scale" scaleMode="stretch"/>
 						
 						<!-- Plate elements container.  BackgroundColor or image set via functions -->
-						<s:BorderContainer id="PlateElementsContainer" borderVisible="true" borderColor="red" 
+						<s:BorderContainer id="PlateElementsContainer" borderVisible="false"
 										   x="5" y="5" width="{PlateBorder.width-10}" height="{PlateBorder.height-10}" backgroundAlpha="0" depth="20"
 										   horizontalCenter="0" verticalCenter="0">
 							<s:layout>
@@ -1963,14 +2046,14 @@
 							<s:HGroup id="LeftSymbolBox" 
 									  width="0" height="100%" horizontalAlign="center" verticalAlign="middle" includeInLayout="false" visible="false"/>
 							
-							<s:BorderContainer id="Box1" borderColor="green" borderVisible="true" backgroundAlpha="0"
-											   width="{PlateElementsContainer.width}" height="100%" includeInLayout="true" visible="true" 
+							<s:BorderContainer id="Box1" backgroundAlpha="0"
+											   width="100%" height="100%" borderVisible="false" includeInLayout="true" visible="true" 
 											   horizontalCenter="0" verticalCenter="0">
 								<s:layout>
 									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5" clipAndEnableScrolling="true"/>
 								</s:layout>
 								<s:BorderContainer id="Box1A"
-										  width="100%" height="100%" horizontalCenter="0" verticalCenter="0"  backgroundAlpha="0" includeInLayout="true" visible="true">
+										  width="100%" height="100%" horizontalCenter="0" verticalCenter="0" borderVisible="false" backgroundAlpha="0" includeInLayout="true" visible="true">
 									<s:layout>
 										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true" />
 									</s:layout>
@@ -2761,26 +2844,26 @@
 												   backgroundColor="white" backgroundAlpha="0">
 								</s:BorderContainer>
 							</s:BorderContainer>
-						</s:BorderContainer>
 						
-						<!--Foil MiniPlate image-->
-						<s:BorderContainer id="Foil_MiniPlateImageContainer" includeInLayout="false" visible="false"
-										   width="{Foil_MiniPlateNonImageContainer.width-4}" height="{Foil_MiniPlateNonImageContainer.height-4.5}" 
-										   cornerRadius="3" borderVisible="false">					   
-							<s:layout>
-								<s:BasicLayout/>
-							</s:layout>
-							<s:Image id="Foil_MiniPlateImage" width="100%" height="100%" depth="1"
-									 horizontalAlign="center" verticalAlign="middle"
-									 source="{SelectedFoilImage}" fillMode="scale" scaleMode="stretch"/>
-							<s:Rect id="Foil_MiniPlateImageFrame" width="100%" height="100%" radiusX="3" radiusY="3"  depth="2">                          
-								<s:stroke>
-									<s:SolidColorStroke weight="2.5" color="black" alpha="1"/>
-								</s:stroke>
-								<s:fill>
-									<s:SolidColor alpha="0"/>
-								</s:fill>
-							</s:Rect>
+							<!--Foil MiniPlate image-->
+							<s:BorderContainer id="Foil_MiniPlateImageContainer" includeInLayout="false" visible="false"
+											   width="{Foil_MiniPlateNonImageContainer.width-4}" height="{Foil_MiniPlateNonImageContainer.height-4.5}" 
+											   cornerRadius="3" borderVisible="false">					   
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:Image id="Foil_MiniPlateImage" width="100%" height="100%" depth="1"
+										 horizontalAlign="center" verticalAlign="middle"
+										 source="{SelectedFoilImage}" fillMode="scale" scaleMode="stretch"/>
+								<s:Rect id="Foil_MiniPlateImageFrame" width="100%" height="100%" radiusX="3" radiusY="3"  depth="2">                          
+									<s:stroke>
+										<s:SolidColorStroke weight="2.5" color="black" alpha="1"/>
+									</s:stroke>
+									<s:fill>
+										<s:SolidColor alpha="0"/>
+									</s:fill>
+								</s:Rect>
+							</s:BorderContainer>
 						</s:BorderContainer>
 						
 						<s:Image id="FoilGalleryButton"
@@ -3119,7 +3202,7 @@
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/BG.jpg" 
 										 click="SelectFlagGalleryImage(event,'Bulgaria'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/BIH.jpg" 
-										 click="SelectFlagGalleryImage(event,'BIH ???'); CloseGallery(event);"/>
+										 click="SelectFlagGalleryImage(event,'Bosnia'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/CZ.jpg" 
 										 click="SelectFlagGalleryImage(event,'Czech Republic'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/D.jpg" 
@@ -3127,7 +3210,7 @@
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/DK.jpg" 
 										 click="SelectFlagGalleryImage(event,'Denmark'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/E.jpg" 
-										 click="SelectFlagGalleryImage(event,'E ???'); CloseGallery(event);"/>
+										 click="SelectFlagGalleryImage(event,'Spain'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/EST.jpg" 
 										 click="SelectFlagGalleryImage(event,'Estonia'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/F.jpg" 
@@ -3155,7 +3238,7 @@
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/RO.jpg" 
 										 click="SelectFlagGalleryImage(event,'Romania'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/S.jpg" 
-										 click="SelectFlagGalleryImage(event,'Spain'); CloseGallery(event);"/>
+										 click="SelectFlagGalleryImage(event,'Sweden'); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/flags/SK.jpg" 
 										 click="SelectFlagGalleryImage(event,'Slovakia'); CloseGallery(event);"/>
 							</s:ArrayList>		

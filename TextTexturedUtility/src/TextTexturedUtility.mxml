@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Text;
+			import mx.events.FlexEvent;
+			
+			import spark.components.BorderContainer;
+			import spark.components.Image;
+			
+			import utility.TexturedText;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				var tt:TexturedText = new TexturedText();
+				var imgText1:Image = new Image();
+				imgText1.source = "texture.jpg";
+				var bdc1:BorderContainer = tt.getTextMaskText(imgText1,"abc",50);
+				bdc1.x=10;
+				bdc1.y=10
+				this.addElement(bdc1);
+				
+				
+				var img2:Image = new Image();
+				var imgText2:Image = new Image();
+				imgText2.source = "texture.jpg";
+				img2.source = "peacesign.png"
+				var bdc2:BorderContainer = tt.getTextMaskImage(imgText2,img2);
+				bdc2.x=200;
+				bdc2.y=200;
+				this.addElement(bdc2);
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+	</fx:Declarations>
+</s:Application>

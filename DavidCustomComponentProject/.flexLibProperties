@@ -7,6 +7,9 @@
     <classEntry path="components.MultiChoiceComponent"/>
     <classEntry path="components.MultiLabelComponent"/>
     <classEntry path="components.MultiLabelComponent1"/>
+    <classEntry path="components.CustomTextMask"/>
+    <classEntry path="components.TexturedText_backup"/>
+    <classEntry path="utility.TexturedText"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

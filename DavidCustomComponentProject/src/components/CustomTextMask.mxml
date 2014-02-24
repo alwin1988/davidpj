@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx" creationComplete="bordercontainer1_creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+			
+		<![CDATA[
+			import mx.events.FlexEvent;
+			[Bindable]
+			public var containerWidth:Number=64;
+			[Bindable]
+			public var containerHeight:Number=64;
+			[Bindable]
+			public var imageWidth:Number=64;
+			[Bindable]
+			public var imageHeight:Number=64;
+			[Bindable]	
+			public var imageSource:Object="texture.jpg";
+			[Bindable]
+			public var textFontSize:Number;
+			[Bindable]
+			public var textFontWeight:String;
+			[Bindable]	
+			public var textLabel:String="L";
+			[Bindable] [Embed("assets/texture.jpg")]
+			public var TEXTURE:Class;
+			
+			protected function bordercontainer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				img.mask=txt;
+			}
+			
+		]]>
+
+	</fx:Script>
+	<s:Image id="img" width="{imageWidth}" height="{imageHeight}" cacheAsBitmap="true"
+			 source="{TEXTURE}"/>
+	<mx:Text id="txt" cacheAsBitmap="true" fontSize="48" fontWeight="bold" text="{textLabel}" />
+</s:BorderContainer>

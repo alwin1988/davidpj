@@ -26,6 +26,8 @@
     <application path="Schilder9.mxml"/>
     <application path="Schilder10.mxml"/>
     <application path="SchilderWidthTest.mxml"/>
+    <application path="SchilderWidthTest2.mxml"/>
+    <application path="SchilderWidthTest3.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

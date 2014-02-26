@@ -6,6 +6,7 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
+	<!--Remarks:
 	1. If 1 line and CS=false, blue 1A
 	
 	2. If 1 line and CS=true and 1A is empty, resize, unhide 2 and 2A, blue 2A, make 1A the target, show right button which when pressed makes 2A the target, 
@@ -35,6 +36,11 @@
 	If 2 lines and no CS and no chars, blue all four and give down button 
 	If 2 lines and CS and chars in 1A, give 
 	
+	Rainbow foil with 2 lines:  need to have a different texture for line 1 and line 2 which match up
+	
+	WHY DO WE NEED TO PASS THE EVENT TYPE?
+	-->
+	
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
@@ -45,24 +51,41 @@
 			protected var LineCount:int;
 			protected var CS:Boolean = false;
 			//private var NumChildren:uint = Target.numChildren;
+			protected var ElementType:String;
 			protected var Index:int = 0;
 			protected var CenterSymbol:Boolean = false;
 			protected var CurrentContainer:String;
 			protected var CurrentContainerIsFull:Boolean;
 			protected var TargetContainer:String;
-			protected var CS1ARunningLength:int = 0;
-			protected var CS1BRunningLength:int = 0;
-			protected var CS2ARunningLength:int = 0;
-			protected var CS2BRunningLength:int = 0;
+			protected var OutlineColor:uint = 0x00ced1;
+			protected var CoS1A_RunningLength:int = 0;
+			protected var CoS1B_RunningLength:int = 0;
+			protected var CoS2A_RunningLength:int = 0;
+			protected var CoS2B_RunningLength:int = 0;
+			
+			protected var CoS2_Exists:Boolean = false;
 			
 			private function SetLineCount(event:MouseEvent,LC:int):void
 			{
 				if (LC == 1)
 				{
+					CoS1B.includeInLayout = false; CoS1B.visible = false;
+					if (CoS2_Exists == true)
+					{
+						CoS2B.includeInLayout = false; CoS2B.visible = false;
+					}
 					LineCount = 1;
 				}
 				else if (LC == 2)
 				{
+					CoS1B.includeInLayout = true; CoS1B.visible = true;
+					if (CoS2_Exists == true)
+					{
+						if (CoS2A.includeInLayout = true && Cos2A.visible = true)
+						{
+							CoS2B.includeInLayout = true; CoS2B.visible = true;
+						}
+					}
 					LineCount = 2;
 				}
 			}
@@ -77,7 +100,13 @@
 			SS = Small Symbol
 			LC = Character
 			*/
-			private function SetTargetCoSContainer(ElementType:String):void
+			
+			private function TrimCurrentAndSetTargetContainer(CurrentContainer,TargetContainer):void
+			{
+				
+			}
+			
+			private function DetermineTargetCoSContainer(ElementType):void
 			{
 				if (CurrentContainerIsFull == true)
 				{
@@ -91,11 +120,11 @@
 				
 /*				if (ElementType = 'CS' && CenterSymbol == false)				
 				{	
-					if (LineCount == 1 && CurrentContainer == 'CS1A')
+					if (LineCount == 1 && CurrentContainer == 'CoS1A')
 					{
 						TargetContainer = 'CoS2A';
 					}	
-					else if (LineCount == 2 && CurrentContainer == 'CS1B')
+					else if (LineCount == 2 && CurrentContainer == 'CoS1B')
 					{
 						TargetContainer = 'CoS2A'; 
 					}
@@ -124,9 +153,11 @@
 				}
 			}
 			
-			private function AddElement(event:MouseEvent,ElementType:String):void
+			private function AddElement(ElementType):void
 			{
-				SetTargetCoSContainer(ElementType);
+				//We know current container so don't need to make it a parm
+				
+				DetermineTargetCoSContainer(ElementType);
 				
 				var ElementLabel:Label = new Label;
 				var ElementId:String;
@@ -141,30 +172,27 @@
 
 				ElementLabel.text = ElementId;
 				
-				if (CurrentContainer == '' && TargetContainer == 'CS1A')
+				if (CurrentContainer == '' && TargetContainer == 'CoS1A')
 				{
-					//Target CS1A
+					//Target CoS1A
 				}
-				else if (CurrentContainer == 'CS1A' && TargetContainer == 'CS1B');
+				else if (CurrentContainer == 'CoS1A' && TargetContainer == 'CoS1B')
 				{
-					//Unhide CS1B;
+					//Unhide CoS1B;
 				}
-				else if (CurrentContainer == 'CS1B' && TargetContainer == 'CS2A');
+				else if (CurrentContainer == 'CoS1B' && TargetContainer == 'CoS2A')
 				{
-					//Unhide CS2
-					//Unhide CS2A
+					//Unhide CoS2
+					//Unhide CoS2A
 				}
-				else if (CurrentContainer == 'CS2A' && TargetContainer == 'CS2B');
+				else if (CurrentContainer == 'CoS2A' && TargetContainer == 'CoS2B')
 				{
-					//Unhide CS2B
+					//Unhide CoS2B
 				}
 				else if (CurrentContainer == TargetContainer)
 				{
 					//Don't need to create parent
 				}
-				
-				
-				
 				
 				if (ElementType == 'LS')
 				{
@@ -173,7 +201,7 @@
 					child.percentHeight = 70;
 					child.setStyle('borderColor','blue');
 					child.addElement(ElementLabel);
-					TargetContainer.addElement(child);
+					CoS1.addElement(child);
 				}
 				else if (ElementType == 'TwoLine')
 				{
@@ -195,7 +223,7 @@
 					parentC.gap = vgap;
 					parentC.addElement(child1);
 					parentC.addElement(child2);
-					CSB1.addElement(parentC);
+					CoS1.addElement(parentC);
 				}
 				else if (ElementType == 'BigSymbol')
 				{
@@ -203,7 +231,7 @@
 					child.percentHeight = 100;
 					child.setStyle('borderColor','green');
 					child.addElement(ElementLabel);
-					CSB1.addElement(child);
+					CoS1.addElement(child);
 				}
 				else if (ElementType == 'TopSymbol')
 				{
@@ -225,7 +253,7 @@
 					parentC.gap = vgap;
 					parentC.addElement(child1);
 					parentC.addElement(child2);
-					CSB1.addElement(parentC);
+					CoS1.addElement(parentC);
 				}
 				else if (ElementType == 'BottomSymbol')
 				{
@@ -247,7 +275,7 @@
 					parentC.gap = vgap;
 					parentC.addElement(child1);
 					parentC.addElement(child2);
-					CSB1.addElement(parentC);
+					CoS1.addElement(parentC);
 				}
 				else if (ElementType == 'CS')
 				{
@@ -255,7 +283,7 @@
 					child.percentHeight = 100;
 					child.setStyle('borderColor','green');
 					child.addElement(ElementLabel);
-					parentS.id = 'CSB2'
+					parentS.id = 'CoS2'
 					parentS.width = child.width;
 					parentS.percentHeight = child.percentHeight;
 					parentS.setStyle('borderColor','yellow');
@@ -263,8 +291,8 @@
 					parentD.percentHeight = 100;
 					parentD.setStyle('borderColor','blue');
 					parentS.addElement(child);
-					CSB.addElement(parentS);
-					CSB.addElement(parentD);
+					CoS.addElement(parentS);
+					CoS.addElement(parentD);
 				}
 				
 				Index = (Index + 1);
@@ -272,27 +300,28 @@
 		]]>
 	</fx:Script>
 	
-	<s:BorderContainer width="100" height="200" borderVisible="true">
+	<s:BorderContainer width="1000" height="200" borderVisible="true">
 		<s:layout>
-			<s:VerticalLayout horizontalAlign="left" gap="20"/>
+			<s:BasicLayout/>
 		</s:layout>
-		<s:HGroup gap="5">
+		
+		<s:HGroup gap="5" depth="1">
 			<s:Button label="1 line" click="SetLineCount(event,1)"/>
 			<s:Button label="2 lines" click="SetLineCount(event,2)"/>
 			<s:Spacer width="10"/>
-			<s:Button label="Character" click="AddElement(event,'C')"/>
-			<s:Button label="Top character" click="AddElement(event,'TC')"/>
-			<s:Button label="Bottom character" click="AddElement(event,'BC')"/>
+			<s:Button label="Character" click="AddElement('TC')"/>
+			<s:Button label="Top character" click="AddElement('TC')"/>
+			<s:Button label="Bottom character" click="AddElement('BC')"/>
 			<s:Spacer width="5"/>
-			<s:Button label="Symbol" click="AddElement(event,'S')"/>
-			<s:Button label="Top symbol" click="AddElement(event,'TS')"/>
-			<s:Button label="Bottom symbol" click="AddElement(event,'BS')"/>
-			<s:Button label="Symbol" click="AddElement(event,'S')"/>
-			<s:Button label="Top symbol" click="AddElement(event,'TS')"/>
-			<s:Button label="Bottom symbol" click="AddElement(event,'BS')"/>
+			<s:Button label="Symbol" click="AddElement('S')"/>
+			<s:Button label="Top symbol" click="AddElement('TS')"/>
+			<s:Button label="Bottom symbol" click="AddElement('BS')"/>
+			<s:Button label="Symbol" click="AddElement('S')"/>
+			<s:Button label="Top symbol" click="AddElement('TS')"/>
+			<s:Button label="Bottom symbol" click="AddElement('BS')"/>
 		</s:HGroup>
 		
-		<s:BorderContainer id="C"
+		<s:BorderContainer id="C" depth="2"
 						   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" visible="true" includeInLayout="true">
 			<s:layout>
 				<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" 
@@ -310,37 +339,50 @@
 							<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5" clipAndEnableScrolling="true"/>
 						</s:layout>
 						<s:BorderContainer id="CoS1A"
-										   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" borderColor="blue" visible="true" includeInLayout="true">
+										   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" borderColor="{OutlineColor}" visible="true" includeInLayout="true">
 							<s:layout>
 								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
 							</s:layout>
 						</s:BorderContainer>
 						<s:BorderContainer id="CoS1B"
-										   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" borderColor="blue" visible="true" includeInLayout="true">
+										   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" borderColor="{OutlineColor}" visible="true" includeInLayout="true">
 							<s:layout>
 								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
 							</s:layout>
 						</s:BorderContainer>
 					</s:BorderContainer>
-					<!--s:BorderContainer id="CoS2" borderColor="green"
-									   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" visible="true" includeInLayout="true">
-						<s:layout>
-							<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5" clipAndEnableScrolling="true"/>
-						</s:layout>
-						<s:BorderContainer id="CoS2A"
-										   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" borderColor="blue" visible="true" includeInLayout="true">
-							<s:layout>
-								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
-							</s:layout>
-						</s:BorderContainer>
-						<s:BorderContainer id="CoS2B"
-										   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" borderColor="blue" visible="true" includeInLayout="true">
-							<s:layout>
-								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
-							</s:layout>
-						</s:BorderContainer>
-					</s:BorderContainer-->
 				</s:BorderContainer>
+		</s:BorderContainer>
+		
+		<s:BorderContainer id="Outlines" depth="3">
+			<s:Rect id="Box1AOutline"
+					x="{CoS1A.x}" y="{CoS1A.y}" width="{CoS1A.width}" height="{CoS1A.height}" alpha="0"
+					horizontalCenter="0" verticalCenter="0" visible="true" depth="14">
+				<s:stroke>
+					<s:SolidColorStroke color="{OutlineColor}" weight="1"/>
+				</s:stroke>
+			</s:Rect>
+			<s:Rect id="CoS1BOutline"
+					x="{CoS1B.x}" y="{CoS1B.y}" width="{CoS1B.width}" height="{CoS1B.height}" 
+					horizontalCenter="0" verticalCenter="0" visible="{CoS1B.visible}" depth="14">
+				<s:stroke>
+					<s:SolidColorStroke color="{OutlineColor}" weight="1"/>
+				</s:stroke>
+			</s:Rect>
+			<s:Rect id="CoS2AOutline"
+					x="{CoS2A.x}" y="{CoS2A.y}" width="{CoS2A.width}" height="{CoS2A.height}" visible="false"
+					horizontalCenter="0" verticalCenter="0" depth="14">
+				<s:stroke>
+					<s:SolidColorStroke color="{OutlineColor}" weight="1"/>
+				</s:stroke>
+			</s:Rect>
+			<s:Rect id="CoS2BOutline"
+					x="{CoS2B.x}" y="{CoS2B.y}" width="{CoS2B.width}" height="{CoS2B.height}" 
+					horizontalCenter="0" verticalCenter="0" visible="{CoS2B.visible}" depth="14">
+				<s:stroke>
+					<s:SolidColorStroke color="{OutlineColor}" weight="1"/>
+				</s:stroke>
+			</s:Rect>
 		</s:BorderContainer>
 		
 	</s:BorderContainer>

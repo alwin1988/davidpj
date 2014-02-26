@@ -2386,7 +2386,7 @@
 					<mx:Text text="Date, symbols, colors, and holes"
 							 width="191.4" verticalCenter="0" horizontalCenter="114"
 							 leading="0" textAlign="center"
-							 styleName="DirectiveLabel"/>					
+							 styleName="DirectiveLabel"/>
 				</s:HGroup>
 			</s:BorderContainer>
 			
@@ -3374,7 +3374,9 @@
 							<s:ArrayList>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Audi.png" 
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="70%" height="70%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BartSimpson.png"
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BartSimpson.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Basketball.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BeerGlass.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -3382,17 +3384,19 @@
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BettyBoop.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="90%" height="90%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bird.png"
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bird.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BMW.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Boat.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bowling.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="50%" height="50%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bus.png"
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bus.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cannabis.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="50%" height="50%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cat.png"
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cat.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Crown.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -3408,6 +3412,8 @@
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/EuroSign.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TinyEuroSign.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FerrisWheel.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Football.png"
@@ -3416,15 +3422,21 @@
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FormulaOne.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Frame.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Helicopter.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/HelloKitty.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Hockey.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Horse.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Horseshoe.png"
-										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>								
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>				
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargeHeart.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallHeart.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargePeaceSign.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -3444,6 +3456,10 @@
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle2.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Mouse.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MusicalNotes.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Opel.png"
@@ -3458,15 +3474,17 @@
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Playboy.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Rabbit.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Rings.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Scania.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SantaClaus.png"
+										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SEAT.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Skull&amp;Crossbones.png"
-										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallHeart.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmileyFace.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>

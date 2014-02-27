@@ -1,0 +1,261 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace component "component.*";
+@namespace components "com.shinynet.shinylib.components.*";
+@namespace pages "david.pages.*";
+
+.MagSoftBlue {
+	color: #c1dad6;
+}
+
+.MagSoftOrange {
+	color: #315b7e;
+}
+
+.BackgroundBlue {
+	backgroundColor: #004f6c;
+}
+
+.ClientTitleText {
+	fontFamily: 'Arial Black';
+	fontSize: 24;
+	fontWeight: normal;
+	color: white; 
+}
+
+.ClientLabelLight {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: #c1dad6;
+	kerning: true;
+}
+
+.ClientLabelDark {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.LoginSatus {
+	fontFamily: 'Arial Black';
+	fontSize: 11.5;
+	fontWeight: normal;
+	alpha: .9;
+}
+
+.LaunchButton {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+}
+.AlertNotifyMiniButton {
+	fontFamily: 'Arial';
+	fontSize: 8;
+	fontWeight: normal;
+	color: white;
+	emphasized: true;
+}
+
+.DashBoardButton {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 10;
+	fontWeight: normal;
+	color: black;
+	chromeColor: white;
+	kerning: true;
+}
+
+.SearchBox {
+	borderColor: #e3784e;
+	backgroundColor: #c1dad6;
+}
+
+.SearchBoxLabel {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 13;
+	fontWeight: normal;
+	kerning: true;
+}
+
+.DropDownListText {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11.5;
+	fontWeight: normal;
+	kerning: true;
+	rollOverColor: #c0c0c0;
+}
+
+.Gutter {
+	backgroundColor: #004f6c;
+	backgroundAlpha: .08;
+}
+
+.GutterOverlay {
+	backgroundColor: #004f6c;
+	backgroundAlpha: .16;
+}
+
+.MenuHeader {
+	borderColor: #004f6c;
+	backgroundColor: #004f6c;
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 13;
+	fontWeight: bold;
+	color: white;
+	kerning: true;
+}
+
+.MenuBody {
+	borderColor: #004f6c;
+	backgroundColor: #c1dad6;
+	fontFamily: 'Arial Black';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+	rollOverColor: #e3784e;
+}
+
+.MenuBodyHeading {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.WM_PanelHeader {
+	backgroundColor: #c1dad6;
+	chromeColor: #004F6C;
+	color: white;
+}
+
+.WM_PanelBody {
+	fontFamily: 'Franklin Gothic Medium';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+	contentBackgroundColor: #c1dad6;
+	chromeColor: #004f6c;
+}
+
+.TabText {
+	fontFamily: 'Arial Black';
+	fontSize: 11;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.ControlButtonText {
+	fontFamily: 'Arial Black';
+	fontSize: 12;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
+.TitleWindowTitleText {
+	fontFamily: 'Arial';
+	fontSize: 12;
+	fontWeight: bold;
+	color: black;
+	kerning: true;
+}
+
+.DataGridHeader {
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+	color: black;
+	headerColors: white, white;
+	horizontalGridLinesColor: #a9a9a9;
+	vertialGridLinesColor: #767676;
+}
+
+.DataGridBody {
+	fontFamily: Arial;
+	fontSize: 10.5;
+	fontWeight: normal;
+	color: black;
+	horizontalGridLinesColor: #a9a9a9;
+	vertialGridLinesColor: #767676;
+}
+	
+.InsertButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: #0033cc;
+}
+
+.InsertPopUpButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundAlpha: 1;
+	backgroundColor: white;
+	borderStyle: none;
+	color: white;
+	alternatingItemColors :#0033cc, #0033cc;
+	chromeColor: #0033cc;
+	rollOverColor: white;
+	textAlign: left;
+}
+
+.DeleteButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: #ff3300;
+}
+
+.DeletePopUpButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundAlpha: 1;
+	backgroundColor: white;
+	borderStyle: none;
+	color: white;
+	alternatingItemColors: #ff3300, #ff3300;
+	chromeColor: #ff3300;
+	rollOverColor: white;
+	textAlign: left;
+}
+
+.SaveButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	color: white;
+	chromeColor: #339933;
+}
+
+.SavePopUpButton {
+	fontFamily: Arial;
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundAlpha: 1;
+	backgroundColor: white;
+	borderStyle: none;
+	color: white;
+	alternatingItemColors: #339933, #339933;
+	chromeColor: #339933;
+	rollOverColor: white;
+	textAlign: left;
+}
+
+.CompletionBarLabel {
+	fontFamily: Arial;
+	fontSize: 9;
+	fontWeight: normal;
+	color: white;
+}

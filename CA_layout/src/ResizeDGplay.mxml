@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<s:Sequence id="R1">
+			<s:Parallel>
+				<s:Resize target="{DG}" widthFrom="{DG.width}" widthTo="{FWidth}" duration="400"/>
+				<s:Resize target="{C0}" widthFrom="{C0.width}" widthTo="{HWidth}" duration="400"/>
+				<s:Resize target="{C1}" widthFrom="{C1.width}" widthTo="{QWidth}" duration="400"/>
+				<s:Resize target="{C2}" widthFrom="{C2.width}" widthTo="{QWidth}" duration="400"/>
+			</s:Parallel>
+		</s:Sequence>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			[Bindable] private var FWidth:int = 1000;
+			[Bindable] private var HWidth:int = 500;
+			[Bindable] private var QWidth:int = 250;
+			[Bindable] private var EWidth:int = 125;
+		]]>
+	</fx:Script>
+	
+	<s:VGroup gap="20">
+		<s:HGroup>
+			
+			<s:Button label="widen"
+					  click="
+					  DG.horizontalScrollPolicy='on';
+					  DG.width=FWidth;
+					  C0.width=HWidth;
+					  C1.width=QWidth;
+					  C2.width=QWidth;
+					  DG.horizontalScrollPolicy='off';
+					  "/>
+			<s:Button label="narrow"
+					  click="
+					  DG.horizontalScrollPolicy='on';
+					  DG.width=HWidth;
+					  C0.width=QWidth;
+					  C1.width=EWidth;
+					  C2.width=EWidth;
+					  DG.horizontalScrollPolicy='off';
+					  "/>
+			<s:Button label="resize"
+					  click="
+					  DG.horizontalScrollPolicy='on';
+					  R1.play();
+					  DG.horizontalScrollPolicy='off';
+					  "/>
+		</s:HGroup>
+		
+		<s:Group width="100%" height="100%">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<mx:AdvancedDataGrid id="DG" width="{HWidth}">
+				<mx:columns>
+					<mx:AdvancedDataGridColumn id="C0" width="{(DG.width-DG.width)+QWidth}"/>
+					<mx:AdvancedDataGridColumn id="C1" width="{(DG.width-DG.width)+EWidth}"/>
+					<mx:AdvancedDataGridColumn id="C2" width="{(DG.width-DG.width)+EWidth}"/>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
+		</s:Group>
+		
+		<s:Button click="DG2.width=FWidth"/>
+		<s:Button click="DG2.width=HWidth"/>
+		
+		<s:HGroup width="{FWidth}" height="100%">
+			<s:Group width="{HWidth}" height="100%">
+				<s:layout>
+					<s:BasicLayout clipAndEnableScrolling="true"/>
+				</s:layout>
+				<mx:AdvancedDataGrid id="DG2" width="{HWidth}">
+					<mx:columns>
+						<mx:AdvancedDataGridColumn id="D0" width="{(DG2.width-DG2.width)+QWidth}"/>
+						<mx:AdvancedDataGridColumn id="D1" width="{(DG2.width-DG2.width)+EWidth}"/>
+						<mx:AdvancedDataGridColumn id="D2" width="{(DG2.width-DG2.width)+EWidth}"/>
+					</mx:columns>
+				</mx:AdvancedDataGrid>
+			</s:Group>
+			
+			<s:Group width="{HWidth}"/>
+		</s:HGroup>
+		
+	</s:VGroup>
+	
+</s:Application>

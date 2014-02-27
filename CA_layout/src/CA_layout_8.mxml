@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:component="component.*"
+			   width="100%" height="100%">
+	
+	<!--Remarks:
+	- Use Spark controls where possible
+	- Use percentage widths and heights where possible to facilitate browser resizing
+	- Use item renderers instead of item editors where possible
+	- Use event.currentTarget instead of event.target
+	- Use arraycollections instead of XML where possible
+	- Fixed datagrid column widths are accomplished via (dg.width-dg.width)+col.width
+	-->
+	
+	<fx:Style source="Styles.css"/>
+		
+	<fx:Declarations>
+		<s:Fade id="FadePM_ShadeOn" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadePM_ShadeOff" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeSM_ShadeOn" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeSM_ShadeOff" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeDD_ShadeOn" target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeDD_ShadeOff" target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+		
+		<s:Fade id="FadeBB1Off" target="{BB_1_HG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>		
+		<s:Fade id="FadeBB1On" target="{BB_1_HG}" alphaFrom="0" alphaTo="1" duration="{FadeDuration}"/>
+		<s:Fade id="FadeBB2Off" target="{D2_HG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+		<s:Fade id="FadeBB2On" target="{D2_HG}" alphaFrom="0" alphaTo="1" duration="{FadeDuration}"/>
+		
+		<s:Resize id="ResizeD2Up" target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="24" duration="{ResizeDuration}"/>
+		<s:Resize id="ResizeD2Down" target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="0" duration="{ResizeDuration}"/>
+		<s:Resize id="ResizeVMIn" target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{M_Box.width}" duration="{ResizeDuration}"/>
+		<s:Resize id="ResizeVMOut" target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{HalfWidth}" duration="{ResizeDuration}"/>
+		<s:Resize id="ExpandVM" target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{FullWidth}" duration="{ResizeDuration}"/>
+		<s:Resize id="ContractVM" target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{M_Box.width}" duration="{ResizeDuration}"/>
+		<s:Resize id="ResizeMBoxToZero" target="{M_Box}" widthFrom="{M_Box.width}" widthTo="0" duration="400"/>
+		<s:Resize id="ResizeMBoxToHalf" target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}" duration="400"/>
+		
+		<s:Animate id="SlideSMIn" target="{SM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent}"/>
+		</s:Animate>
+		<s:Animate id="SlideSMOut" target="{SM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{D_Box.x}"/>
+		</s:Animate>
+		<s:Animate id="SlideTMIn" target="{TM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{TM_Box.x}" valueTo="{M_Box.x+TM_Indent}"/>
+		</s:Animate>
+		<s:Animate id="SlideTMOut" target="{TM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{TM_Box.x}" valueTo="{D_Box.x}"/>
+		</s:Animate>
+		<s:Animate id="SlideRMIn" target="{RM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="SlideRMOut" target="{RM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
+		</s:Animate>
+		<s:Animate id="SlideVMIn" target="{VM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{VM_Box.x}" valueTo="{M_Box.x}"/>
+		</s:Animate>
+		<s:Animate id="SlideVMOut" target="{VM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{VM_Box.x}" valueTo="{-HalfWidth}"/>
+		</s:Animate>
+		
+		<s:Sequence id="Do_RM_In">
+			<s:Parallel>
+				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{BB_1_HG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+				<s:Animate target="{RM_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+				</s:Animate>
+			</s:Parallel>
+			<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="24" duration="250"/>
+			<s:Parallel duration="500">
+				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="19"/>
+				<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="19"/>
+				<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="19"/>
+				<s:Fade target="{D2_HG}" alphaFrom="0" alphaTo="1"/>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="Do_RM_Out">
+			<s:Parallel duration="500">
+				<s:Fade target="{D2_HG}" alphaFrom="1" alphaTo="0"/>
+				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="0"/>
+				<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="0"/>
+				<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="0"/>
+			</s:Parallel>
+			<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="0" duration="250"/>
+			<s:Parallel>
+				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+				<s:Animate target="{RM_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
+				</s:Animate>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="Do_SM_In_RM_In">
+			<s:Parallel>
+				<s:Fade target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+				<s:Animate target="{SM_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent}"/>
+				</s:Animate>
+				<s:Animate target="{RM_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+				</s:Animate>
+			</s:Parallel>
+			<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="24" duration="250"/>
+			<s:Parallel duration="500">
+				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="19"/>
+				<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="19"/>
+				<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="19"/>
+				<s:Fade target="{D2_HG}" alphaFrom="0" alphaTo="1"/>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="Do_SM_Out_RM_Out">
+			<s:Parallel duration="500">
+				<s:Fade target="{D2_HG}" alphaFrom="1" alphaTo="0"/>
+				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="0"/>
+				<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="0"/>
+				<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="0"/>
+			</s:Parallel>
+			<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="0" duration="250"/>
+			<s:Parallel>
+				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{BB_1_HG}" alphaFrom="0" alphaTo="1" duration="{FadeDuration}"/>
+				<s:Animate target="{RM_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
+				</s:Animate>
+				<s:Animate target="{SM_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{D_Box.x}"/>
+				</s:Animate>
+				<s:Fade target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="Do_Expand_VM">
+			<s:Parallel>
+				<s:Resize target="{D_Box}" widthFrom="{D_Box.width}" widthTo="0" duration="400"/>
+				<s:Resize target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{FullWidth}" duration="400"/>
+			</s:Parallel>
+		</s:Sequence>
+		<s:Sequence id="Do_Contract_VM">
+			<s:Parallel>
+				<s:Resize target="{D_Box}" widthFrom="{D_Box.width}" widthTo="{HalfWidth}" duration="400"/>
+				<s:Resize target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{HalfWidth}" duration="400"/>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="SlideRMLeft" duration="600">
+			<s:Parallel>
+				<s:Resize target="{D_Box}" widthFrom="{D_Box.width}" widthTo="{FullWidth}"/>
+				<s:Resize target="{M_Box}" widthFrom="{M_Box.width}" widthTo="0"/>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="SlideRMRight" duration="600" effectEnd="Post_SlideRMRight()">
+			<!-- Assumes M_Box started as halfwidth -->
+			<s:Parallel>
+				<s:Resize target="{D_Box}" widthFrom="{D_Box.width}" widthTo="{HalfWidth}"/>
+				<s:Resize target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}"/>
+			</s:Parallel>
+		</s:Sequence>
+		
+		<fx:XML id="woid_1">
+			<form>
+				<formdef>
+					<FieldName1 FieldControl="TextInput" Label="Form1Label1" Required="true"></FieldName1>
+					<FieldName2 FieldControl="TextInput" Label="Form1Label2" Required="true"></FieldName2>
+					<FieldName3 FieldControl="TextInput" Label="Form1Label3" Required="false"></FieldName3>
+				</formdef>
+			</form>
+		</fx:XML>
+		<fx:XML id="woid_2">
+			<form>
+				<formdef>
+					<FieldName1 FieldControl="TextInput" Label="Form2Label1" Required="false"></FieldName1>
+					<FieldName2 FieldControl="TextInput" Label="Form2Label2" Required="true"></FieldName2>
+					<FieldName3 FieldControl="TextInput" Label="Form2Label3" Required="true"></FieldName3>
+				</formdef>
+			</form>
+		</fx:XML>
+		<fx:XML id="woid_3">
+			<form>
+				<formdef>
+					<FieldName1 FieldControl="TextInput" Label="Form3Label1" Required="true"></FieldName1>
+					<FieldName2 FieldControl="TextInput" Label="Form3Label2" Required="false"></FieldName2>
+					<FieldName3 FieldControl="TextInput" Label="Form3Label3" Required="true"></FieldName3>
+				</formdef>
+			</form>
+		</fx:XML>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.*;
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.core.Container;
+			import mx.effects.AnimateProperty;
+			import mx.events.CloseEvent;
+			import mx.events.DragEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			import mx.events.MenuEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.effects.Animate;
+			import spark.events.IndexChangeEvent;
+
+			[Bindable] private var PM_View:Boolean;
+			[Bindable] private var SM_View:Boolean;
+			[Bindable] private var TM_View:Boolean;
+			[Bindable] private var RM_View:Boolean;
+			[Bindable] private var XM_View:Boolean;
+			[Bindable] private var VM_View:Boolean;
+						
+			[Bindable] private var FullWidth:Number = 1162;
+			[Bindable] private var HalfWidth:Number = (FullWidth/2);
+			[Bindable] private var QuarterWidth:Number = (FullWidth/4);
+			[Bindable] private var MidPoint:Number;
+			[Bindable] private var FullHeight:Number = 400;
+			[Bindable] private var FullHeightPct:Number = 80;
+			
+			[Bindable] private var DGID:String;
+			[Bindable] private var DGHeaderHeight:Number = 22;
+			[Bindable] private var DGRowHeight:Number = 20;
+			
+			[Bindable] private var Indent1:Number = 15;
+			[Bindable] private var Indent2:Number = 30;
+			[Bindable] private var Indent:Number;
+			[Bindable] private var SM_Indent:Number = Indent1;
+			[Bindable] private var TM_Indent:Number = Indent2;
+			[Bindable] private var SlideDuration:Number = 800;
+			[Bindable] private var FadeDuration:Number = (SlideDuration*1.5);
+			[Bindable] private var ResizeDuration:Number = (SlideDuration/2);
+			
+			[Bindable] private var NonShadeAlpha:Number = 1;
+			[Bindable] private var FinalShadeAlpha:Number=.3;
+			[Bindable] private var PM_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var SM_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var DD_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var PM_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var SM_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var DD_ShadeFinalAlpha:Number = .3;
+			
+			[Bindable] private var PM_Depth:Number = 1;
+			[Bindable] private var PM_Shade_Depth:Number = 2;
+			[Bindable] private var SM_Depth:Number = 3;
+			[Bindable] private var SM_Shade_Depth:Number = 4;
+			[Bindable] private var VM_Depth:Number = 6;
+			[Bindable] private var TM_Depth:Number = 7;
+			
+			[Bindable] private var DD_Depth:Number = 1;
+			[Bindable] private var DD_Shade_Depth:Number = 2;
+			[Bindable] private var RM_Depth:Number = 0;
+			
+			private var CategoryGroup:String //1 letter
+			private var Category:String //2 letters
+			private var CategoryView:String //3 letters
+			private var LastCategory:String
+			
+			private var Layout:String;
+			
+			private function SetLayout(Layout:String):void
+			{
+				if (Layout == 'FullMaster')
+				{
+					B0.setStyle('horizontalGap', 0);
+					M_Box.percentWidth = 100;
+					D_Box.percentWidth = 0;
+					D_Box.includeInLayout = false;
+					D_Box.visible = false;
+				}
+				else if (Layout == 'MasterDetail')
+				{
+					B0.setStyle('horizontalGap', 0);
+					M_Box.percentWidth = 100;
+					D_Box.percentWidth = 100;
+					D_Box.includeInLayout = true;
+					D_Box.visible = true;
+					SD_Box.includeInLayout = false; 
+					SD_Box.visible = false;
+					DD_HBox.setStyle('horizontalGap',0);
+				}
+				else if (Layout == 'MasterSplitDetail')
+				{
+					B0.setStyle('horizontalGap', 0);
+					M_Box.percentWidth = 100;
+					D_Box.percentWidth = 100;
+					D_Box.includeInLayout = true;
+					D_Box.visible = true;
+					SD_Box.includeInLayout = true;
+					SD_Box.visible = true;
+					DD_HBox.setStyle('horizontalGap',0);
+				}
+				else if (Layout == 'GappedMasterDetail')
+				{
+					B0.setStyle('horizontalGap', 10);
+					M_Box.percentWidth = 100;
+					D_Box.percentWidth = 100;
+					D_Box.includeInLayout = true;
+					D_Box.visible = true;
+					DD_HBox.setStyle('horizontalGap',0);
+				}
+				else if (Layout == 'MasterGappedDetail')
+				{
+					B0.setStyle('horizontalGap',0);
+					M_Box.percentWidth = 100;
+					D_Box.percentWidth = 100;
+					D_Box.includeInLayout = true;
+					D_Box.visible = true;
+					DD_HBox.setStyle('horizontalGap',10);
+				}
+				else if (Layout == 'GappedMasterGappedDetail')
+				{
+					B0.setStyle('horizontalGap', 10);
+					M_Box.percentWidth = 100;
+					D_Box.percentWidth = 100;
+					D_Box.includeInLayout = true;
+					D_Box.visible = true;
+					DD_HBox.setStyle('horizontalGap',10);
+				}
+				
+				MidPoint = ((FullWidth/2)-(B0.getStyle('horizontalGap')/2));
+			}
+				
+/*			private function TM_View():void
+			{
+				PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
+					
+				if (SM_View==true)
+				{
+					PM_Indent=Indent1;
+				}
+				else
+				{
+					SM_ShadeFinalAlpha=FinalShadeAlpha;
+				}
+			if (SM_View=false)
+				{
+					SM_Indent=Indent1;
+					TM_Indent=Indent2;
+					PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
+					SM_Shade.includeInLayout=true; SM_Shade.visible=true; 
+					SM_ShadeFinalAlpha=FinalShadeAlpha;
+					PM_ShadeFinalAlpha=(FinalShadeAlpha/2);
+				}
+				if (TM_View==true)
+				{
+					TM_Indent=Indent1;
+					PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
+					PM_ShadeFinalAlpha=FinalShadeAlpha
+					SM_Shade.includeInLayout=false; SM_Shade.visible=false; ;
+				}	
+				if (TM_View==false)
+				{
+					SM_Indent=0;
+					TM_Indent=0;
+					PM_Shade.includeInLayout=false; PM_Shade.visible=false; 
+					SM_Shade.includeInLayout=false; SM_Shade.visible=false; 
+				}
+			}   */
+			
+			protected function ClearAll():void 
+			{
+/*				m_VS.includeInLayout = false; m_VS.visible = false;
+				SM_VS.includeInLayout = false; SM_VS.visible = false;
+				CM_VS.includeInLayout = false; CM_VS.visible = false;*/
+				ClearDetail();
+			}
+			
+			protected function ClearMaster():void
+			{
+/*				m_VS.includeInLayout = false; m_VS.visible = false;
+				SM_VS.includeInLayout = false; SM_VS.visible = false;
+				CM_VS.includeInLayout = false; CM_VS.visible = false;*/
+			}
+			
+			protected function ClearDetail():void
+			{
+/*				A_d_VS.includeInLayout = false; A_d_VS.visible = false;
+				F_d_VS.includeInLayout = false; F_d_VS.visible = false;
+				W_d_VS.includeInLayout = false; W_d_VS.visible = false;
+				SD_VS.includeInLayout = false; SD_VS.visible = false;*/
+			}
+			
+			protected function CategoryMenuChangeHandler(event:ListEvent):void
+			{
+				var CategoryItem:Object = event.target.selectedItem as Object;
+				
+				Category = CategoryItem.Alias;
+				CategoryGroup = CategoryItem.Alias.substring(0, 1);
+				CategoryView = "ID";
+				
+				SetCAView(Category, CategoryView);
+				
+				//Save last-used category to var to detect change of category
+				LastCategory = Category;
+			}
+			
+			protected function TabBarChangeHandler(event:IndexChangeEvent):void
+			{
+				var TB_Value:Object = event.target.selectedItem as Object;
+				
+				var TabValue:String = TB_Value.Data;
+				
+				//*** This is defective ? ***
+				//If category changes, select first tabbar tab
+				if (Category != LastCategory)
+				{
+					//					TB.selectedIndex = 0;
+				}
+				
+				if (Category == "AU" && TabValue == "ID") //User ID
+				{
+					CategoryView = "ID";
+				}
+				else if (Category == "AU" && TabValue == "P1") //Properties...
+				{
+					CategoryView = "P1";
+				}
+				else if (Category == "AU" && TabValue == "CO") //Companies
+				{
+					CategoryView = "CO";
+				}
+				else if (Category == "AU" && TabValue == "AC") //Access controls
+				{
+					CategoryView = "AC";
+				}
+				else if (Category == "FF" && TabValue == "FormUsage1") 
+				{
+					CategoryView = "FormUsage1";
+				}
+				else if (Category == "FF" && TabValue == "FormUsage2") 
+				{
+					CategoryView = "FormUsage2";
+				}
+				else if (Category == "FF" && TabValue == "Fieldsets") 
+				{
+					CategoryView = "Fieldsets";
+				}
+				if (Category == "WO" && TabValue == "ListForms|Preview")
+				{
+					CategoryView = "W1";
+				}
+				if (Category == "WO" && TabValue == "ListForms|Properties")
+				{
+					CategoryView = "W2";
+				}
+				if (Category == "WO" && TabValue == "ListForms|FormFields")
+				{
+					CategoryView = "W3";
+				}
+				if (Category == "WO" && TabValue == "CRUD")
+				{
+					CategoryView = "W4";
+				}
+				if (Category == "WO" && TabValue == "ListFormFields|Preview")
+				{
+					CategoryView = "W5";
+				}
+				if (Category == "WO" && TabValue == "PreviewFormViewer")
+				{
+					CategoryView = "W6";
+				}
+				else if (Category == "WP" && TabValue == "CRUD") 
+				{
+					CategoryView = "CRUD";
+				}			
+				else if (Category == "WP" && TabValue == "Forms") 
+				{
+					CategoryView = "Forms";
+				}
+				else if (Category == "WP" && TabValue == "Steps") 
+				{
+					CategoryView = "Steps";
+				}
+				else if (Category == "WP" && TabValue == "Tasks") 
+				{
+					CategoryView = "Tasks";
+				}
+				else if (Category == "WP" && TabValue == "Actions") 
+				{
+					CategoryView = "Actions";
+				}
+				
+				SetCAView(Category, CategoryView);
+			}
+			
+			protected function SetCAView(Category:String, CategoryView:String):void
+			{
+				if (CategoryGroup == "A")
+				{
+					//Account Management
+					TB.visible = true;
+				}
+				if (Category == "AX")
+				{
+					//Blank the stage
+					ClearAll();
+				}
+				if (Category == "AU")
+				{
+//					TB.dataProvider = AU_TB_AC;
+					DG_TW.title = 'Users';
+					//AU_m_view.includeInLayout=true; AU_m_view.visible=true; m_VS.selectedChild=AU_m_view;
+				}
+				if (Category == "AU" && CategoryView == "ID")
+				{
+					ClearAll();
+					
+					Layout = 'FullMaster';
+					
+/*					BX_HD.setStyle('horizontalGap',0);
+					
+					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
+					PM_BX_HD.setStyle('horizontalGap',0);
+					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
+					AU_m_DG_propertiesA.visible=true;
+					AU_m_DG_propertiesB.visible=false;
+					AU_m_DG_propertiesC.visible=false;
+					SetColumnWidths_AU_m_DG();
+					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					
+					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false; 
+					CM_VS.includeInLayout=false; CM_VS.visible=false;
+					
+					PD_BX_SC.includeInLayout=false; PD_BX_SC.visible=false;
+					A_d_VS.includeInLayout=false; A_d_VS.visible=false;*/
+				}
+				if (Category == "AU" && CategoryView == "P1")
+				{
+					ClearAll();
+					
+/*					BX_HD.setStyle('horizontalGap',0);
+					
+					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
+					PM_BX_HD.setStyle('horizontalGap',0);
+					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
+					AU_m_DG_propertiesA.visible=false;
+					AU_m_DG_propertiesB.visible=true;
+					AU_m_DG_propertiesC.visible=false;
+					SetColumnWidths_AU_m_DG();
+					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					
+					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false; 
+					CM_VS.includeInLayout=false; CM_VS.visible=false;
+					
+					PD_BX_SC.includeInLayout=false; PD_BX_SC.visible=false;
+					A_d_VS.includeInLayout=false; A_d_VS.visible=false;*/
+				}
+				if (Category == "AU" && CategoryView == "CO")
+				{	
+					ClearAll();
+					
+/*					BX_HD.setStyle('horizontalGap',0);
+					
+					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
+					PM_BX_HD.setStyle('horizontalGap',0);
+					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
+					AU_m_DG_propertiesA.visible=false;
+					AU_m_DG_propertiesB.visible=false;
+					AU_m_DG_propertiesC.visible=true;
+					SetColumnWidths_AU_m_DG();
+					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					
+					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false; 
+					CM_VS.includeInLayout=false; CM_VS.visible=false;
+					
+					PD_BX_SC.includeInLayout=false; PD_BX_SC.visible=false;
+					A_d_VS.includeInLayout=false; A_d_VS.visible=false;*/
+				}
+				if (Category == "AU" && CategoryView == "AC")
+				{
+					ClearAll();
+					
+/*					BX_HD.setStyle('horizontalGap',0); */
+					
+					/*PM_BX_SC.x=0; PM_BX_SC.depth=2;
+					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=50;
+					PM_BX_HD.setStyle('horizontalGap',0);
+					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
+					AU_m_DG_propertiesA.visible=false;
+					AU_m_DG_propertiesB.visible=false;
+					AU_m_DG_propertiesC.visible=false;
+					SetColumnWidths_AU_m_DG();
+					
+/*					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false;
+					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					
+					CM_BX_SC.includeInLayout=false; CM_BX_SC.visible=false;
+					CM_VS.includeInLayout=false; CM_VS.visible=false;
+					
+					PD_BX_SC.x=0; PD_BX_SC.y=0; PD_BX_SC.depth=4;
+					PD_BX_SC.includeInLayout=true; PD_BX_SC.visible=true; PD_BX_SC.percentWidth=50;
+					PD_BX_HD.setStyle('horizontalGap',0);
+					A_d_VS.includeInLayout=true; A_d_VS.visible=true; A_d_VS.selectedChild=AU_AC_view;
+					SetColumnWidths_A_AC0_DG();
+					//Only reset the datagrid for the first section here; reset the other section datagrids via each datagrid creationcomplete
+					SetColumnWidths_A_AC1_DG();
+					
+					SD_BX_SC.includeInLayout=false; SD_BX_SC.visible=false;
+					SD_VS.includeInLayout=false; SD_VS.visible=false;*/
+				}
+//...
+			}
+			
+			[Bindable]
+			private var Dummy_TB_AC:ArrayCollection = new ArrayCollection
+				([
+					{Label:"Tab1", Data:"Tab1"}, 
+					{Label:"Tab2", Data:"Tab2"}, 
+					{Label:"Tab3", Data:"Tab3"},
+					{Label:"Tab4", Data:"Tab4"},
+					{Label:"Tab5", Data:"Tab5"},
+					{Label:"Tab6", Data:"Tab6"}
+				]);
+			
+			[Bindable]
+			private var WP_TB_AC:ArrayCollection = new ArrayCollection
+				([
+					{Label:"Properties", Data:"Properties"}, 
+					{Label:"Transitions", Data:"Transitions"}, 
+					{Label:"Events", Data:"Events"},
+					{Label:"Schedules", Data:"Schedules"}, 
+					{Label:"Access Controls", Data:"AccessControls"},
+					{Label:"", Data:""}
+				]);
+			
+			[Bindable]
+			private var DummyTab_TB_AC:ArrayCollection = new ArrayCollection
+				([
+					{Label:"", Data:""},
+					{Label:"", Data:""}
+				]);
+			
+			[Bindable]
+			private var WP_Components_DD_AC:ArrayCollection = new ArrayCollection
+				([
+					{Label:"Paths", Data:"P"}, 
+					{Label:"Chains", Data:"C"}, 
+					{Label:"Forms", Data:"F"}, 
+					{Label:"Queries", Data:"Q"}, 
+					{Label:"Scripts", Data:"S"},
+					{Label:"Notifications", Data:"N"},
+					{Label:"Messages", Data:"M"}
+				]);
+			
+			private function Post_SlideRMRight():void
+			{
+				RM_Box.percentWidth=100;
+				RM_DG.percentWidth=100;
+				RMC1.visible = false;
+				RMC2.visible = false;
+				RM_DG.horizontalScrollPolicy='on';
+				RMC0.width=RM_DG.width;
+				RMC1.width=0;
+				RMC2.width=0;
+				RM_DG.horizontalScrollPolicy='off';
+				D1_Box.clipAndEnableScrolling=true;
+			}
+		]]>
+	</fx:Script>
+	
+	<!--Master container-->
+	<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false" styleName="Gutter">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+			
+			<!--Category chooser, buttons, and tabbar -->
+			<s:BorderContainer id="CategoryChooser" width="100%" height="100%" borderVisible="false" styleName="Gutter">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="0"/>
+				</s:layout>
+				<s:Spacer width="10"/>
+				<s:BorderContainer id="CategoryList" width="170" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" styleName="MenuHeader" verticalCenter="0">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0" verticalAlign="middle"/>
+						</s:layout>
+						<s:Label text="Choose category:" 
+								 styleName="MenuHeader"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="170" height="100%" borderVisible="true" borderWeight="2" styleName="MenuBody">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0"/>
+						</s:layout>
+						<fx:Script>
+							<![CDATA[
+								[Bindable]
+								private var Categories_AC:ArrayCollection = new ArrayCollection(
+									[
+										{Category:"Accounts", Alias:"AX", children: [
+											{Category:"Users", Alias:"AU"},
+											{Category:"Groups", Alias:"AG"},
+											{Category:"Roles", Alias:"AR"}
+										]},
+										{Category:"Document Management", Alias:"DX", children: [
+											{Category:"Document Types", Alias:"DT"}
+										]},
+										{Category:"Fieldsets / Fields", Alias:"FF"},
+										{Category:"Folders", Alias:"FD"},
+										{Category:"Work Management", Alias:"WX", children: [
+											{Category:"Procedures / Plans", Alias:"WP"},
+											{Category:"Steps Types / Steps", Alias:"WS"},
+											{Category:"Task Types / Tasks", Alias:"WT"},
+											{Category:"Action Types / Actions", Alias:"WA"},
+											{Category:"Forms", Alias:"WO"},
+											{Category:"Queries", Alias:"WQ"},
+											{Category:"Scripts", Alias:"WC"},
+											{Category:"Events", Alias:"WE"},
+											{Category:"Messages", Alias:"WM"}
+										]},
+										{Category:"Jobs", Alias:"J"},
+										{Category:"System", Alias:"S"}
+									]);	
+							]]>
+						</fx:Script>
+						<mx:Tree id="CategoryMenu" width="159" height="100%" rowHeight="{DGRowHeight}" borderVisible="false"
+								 styleName="MenuBody" contentBackgroundAlpha=".0"
+								 indentation="7" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+								 dataProvider="{Categories_AC}" labelField="Category"
+								 change="CategoryMenuChangeHandler(event);"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				<s:Spacer width="10"/>
+				
+				<!--Start control buttons, tabbar, and datagrid stack-->
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" gap="0" horizontalAlign="right"/>
+					</s:layout>
+					
+					<s:Spacer height="20"/>
+					<s:VGroup width="100%">
+						<s:HGroup>
+							<s:Button label = "FM" click="SetLayout('FullMaster')"/>
+							<s:Button label = "MD" click="SetLayout('MasterDetail')"/>
+							<s:Button label = "MSD" click="SetLayout('MasterSplitDetail')"/>
+							<s:Button label = "GMD" click="SetLayout('GappedMasterDetail')"/>
+							<s:Button label = "MGD" click="SetLayout('MasterGappedDetail')"/>
+							<s:Button label = "GMGD" click="SetLayout('GappedMasterGappedDetail')"/>
+							<s:Button label="SMin" click="
+									  SM_View=true;
+									  FadePM_ShadeOn.play();
+									  FadeBB1Off.play();
+									  SlideSMIn.play();
+									  "/>
+							<s:Button label="SMout" click="
+									  SM_View=false;
+									  SlideSMOut.play();
+									  FadeBB1On.play();
+									  FadePM_ShadeOff.play();
+									  "/>
+							<s:Button label="TMin" click="
+									  TM_View=true;
+									  TM_Box.height=M_Box.height;
+									  FadeSM_ShadeOn.play();
+									  SlideTMIn.play();
+									  "/>
+							<s:Button label="TMout" click="
+									  TM_View=false;
+									  SlideTMOut.play();
+									  FadeSM_ShadeOff.play();
+									  "/>
+							<s:Button label="RMin" click="
+									  RM_View=true;
+									  D2_Box.includeInLayout=true; D2_Box.visible=true;
+									  Do_RM_In.play();
+									  "/>
+							<s:Button label="RMout" click="
+									  RM_View=false;
+									  Do_RM_Out.play();
+									  //D2_Box.includeInLayout=false; D2_Box.visible=false;
+									  "/>
+						</s:HGroup>
+						<s:HGroup>
+							<s:Button label="SMRMIn" click="
+									  XM_View=true;
+									  Do_SM_In_RM_In.play();
+									  "/>
+							<s:Button label="SMRMOut" click="
+									  XM_View=false;
+									  Do_SM_Out_RM_Out.play();
+									  "/>
+							<s:Button label="VMin" click="
+									  VM_View=true;
+									  FadePM_ShadeOn.play();
+									  FadeBB1Off.play();
+									  ResizeVMIn.play();
+									  SlideVMIn.play();
+									  FadeBB2On.play();
+									  "/>
+							<s:Button label="VMout" click="
+									  VM_View=false;
+									  FadeBB1Off.play();
+									  SlideVMOut.play();
+									  ResizeVMOut.play();
+									  FadeBB1On.play();
+									  FadePM_ShadeOff.play();
+									  "/>
+							<s:Button label="Expand VM" click="
+									  VM_View=true;
+									  Do_Expand_VM.play();
+									  "/>
+							<s:Button label="Contract VM" click="
+									  VM_View=false;
+									  //SetLayout('MasterDetail')
+									  Do_Contract_VM.play();
+									  //ContractVM.play();
+									  FadeDD_ShadeOff.play();
+									  FadePM_ShadeOn.play();
+									  "/>
+							<s:Button label="Slide RM left" click="
+//This does not achieve the desired effect, which is to fade-in-shade the current M and slide RM over it.  To do that, maybe re-depth RM
+//to the same depth as PM and resize it, also shade
+									  RM_Depth = 10;
+									  D1_Box.clipAndEnableScrolling=false;
+									  RM_Box.width=FullWidth;
+									  RM_DG.width=FullWidth;
+									  RM_DG.horizontalScrollPolicy='on';
+									  RMC1.visible = true;
+									  RMC2.visible = true;
+									  RMC0.width=(RM_DG.width-RM_DG.width)+HalfWidth;
+									  RMC1.width=(RM_DG.width-RM_DG.width)+QuarterWidth;
+									  RMC2.width=(RM_DG.width-RM_DG.width)+QuarterWidth;
+									  RM_DG.horizontalScrollPolicy='off';
+							/*		  
+									  
+									  M_Box.width=0;
+									  D_Box.percentWidth=100;
+									  
+									  RM_Box.width = FullWidth; */
+									  
+									  //SlideRMLeft.play();
+									  //RM_Box.x = -HalfWidth;
+									  //RM_Box.width = FullWidth;
+									  D1_Box.clipAndEnableScrolling=true;
+									  "/>
+							<s:Button label="Slide RM right" click="
+									  D1_Box.clipAndEnableScrolling=false;
+									  SlideRMRight.play();
+									  //The rest of this  is in a post-effect function									  
+									  "/>
+						</s:HGroup>
+					</s:VGroup>
+					
+					<!--Control buttons and tab bar-->
+					<s:BorderContainer width="100%" height="24" borderVisible="false" styleName="GutterOverlay">
+						<s:layout>
+							<s:HorizontalLayout gap="0" horizontalAlign="left" verticalAlign="bottom" clipAndEnableScrolling="true"/>
+						</s:layout>
+						
+						<s:VGroup id="BB_1_VG" width="50%" height="100%" paddingTop="0" verticalAlign="top">
+							<s:HGroup id="BB_1_HG" width="100%" height="100%" horizontalAlign="left" paddingTop="0" verticalAlign="top" styleName="Gutter">
+								<fx:Script>
+									<![CDATA[
+										[Bindable] private var Create_PB_1_AC:ArrayCollection = new ArrayCollection(
+											[
+												{Label:"Create new", Data:""}, 
+												{Label:"Create based on existing", Data:""}, 
+												{Label:"Create synched with existing", Data:""},
+												{Label:"Create based on profile", Data:""},
+												{Label:"Create based on template", Data:""},
+												{Label:"Create using Wizard", Data:""}
+											]);
+										
+										private var Create_PB_1_Menu:Menu;
+										
+										private function Create_PB_1_Init():void 
+										{
+											Create_PB_1_Menu = new Menu();
+											Create_PB_1_Menu.dataProvider = Create_PB_1_AC;
+											Create_PB_1_Menu.labelField = 'Label';
+											Create_PB_1.addEventListener("itemClick", Create_PB_1_ChangeHandler);
+											Create_PB_1.popUp = Create_PB_1_Menu;
+										}
+										
+										private function Create_PB_1_ChangeHandler(event:MenuEvent):void 
+										{
+											var Create_PB_1_Label:String = event.label;
+											Create_PB_1.label = Create_PB_1_Label;
+											Create_PB_1.close();
+										}
+										
+										private function Create_PB_1_MouseOverHandler(event:MouseEvent):void
+										{
+											Create_PB_1.setStyle('color','white');
+										}
+									]]>
+								</fx:Script>
+								<mx:PopUpButton id="Create_PB_1" label="Create new"
+												width="180" height="19" labelPlacement="left" styleName="InsertPopUpButton"
+												creationComplete="Create_PB_1_Init()"
+												mouseOver="Create_PB_1_MouseOverHandler(event)"/>
+								<s:Button label="Delete" width="180" height="19" styleName="DeleteButton"/>
+								<s:Spacer width="100%"/>
+								<s:Button label="Save" width="180" height="19" styleName="SaveButton"/>
+								<s:Spacer width="100%"/>
+							</s:HGroup>
+						</s:VGroup>
+						<s:Group width="500" height="24">
+							<s:layout>
+								<s:BasicLayout/>
+							</s:layout>
+							<s:TabBar id="TB"
+									  width="100%" height="24" depth="2"
+									  dataProvider="{WP_TB_AC}" styleName="TabText" labelField="Label"
+									  change="TabBarChangeHandler(event)"/>
+							<s:TabBar id="LastTab_TB"
+									  x="{TB.width-((TB.width/WP_TB_AC.length)*2)}" width="{(TB.width/WP_TB_AC.length)*2}" height="{TB.height}" 
+									  alpha="1" enabled="true" depth="1" 
+									  dataProvider="{DummyTab_TB_AC}" labelField="Label" styleName="TabText"/>
+							<s:DropDownList id="TB_DD"
+											x="{LastTab_TB.x+(LastTab_TB.width/2)}" y="2" width="{(LastTab_TB.width/2)-2}" height="{TB.height-4}" 
+											alpha="1" dropShadowVisible="false" depth="3"							
+											dataProvider="{WP_Components_DD_AC}" labelField="Label" prompt="Components" styleName="TabText"/>
+						</s:Group>
+					</s:BorderContainer>
+					
+					<!-- Title window container for all datagrids -->
+					<component:CustomTitleWindow id="DG_TW" title=""
+												 width="100%" height="100%" headerHeight="{DGHeaderHeight}" borderVisible="true" dropShadowVisible="false"
+												 styleName="TitleWindowTitleText" skinClass="skin.CustomTitleWindowSkin">
+						<mx:HDividedBox id="B0" width="100%" height="100%" horizontalGap="0" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
+							
+							<!--Stage left-->
+							<!--All children are groups with x/y and alpha and depth-->
+							<s:BorderContainer id="M_Box" width="100%" height="100%" borderVisible="false"> <!--Don't set alpha on this but rather its children-->
+								<s:layout>
+									<s:BasicLayout clipAndEnableScrolling="true"/>
+								</s:layout>
+								<s:Group id="PM_Box" x="0" y="0" width="{M_Box.width}" height="100%" alpha="{NonShadeAlpha}" depth="{PM_Depth}">
+									<mx:Canvas width="100%" height="100%" borderVisible="false">
+										<s:VGroup y="0" width="100%" height="100%">
+											<mx:AdvancedDataGrid width="{PM_Box.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn width="{PM_Box.width}" headerText="PM - Primary master" editable="true"/>
+												</mx:columns>
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</mx:Canvas>
+								</s:Group>
+								<s:Group id="SM_Box" x="{D_Box.x}" y="0" width="{M_Box.width-SM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{SM_Depth}" includeInLayout="true" visible="true">
+									<mx:Canvas width="100%" height="100%" borderColor="blue">
+										<s:VGroup width="100%" height="100%">
+											<mx:AdvancedDataGrid id="SM_DG" width="100%" height="100%" rowCount="10" editable="true">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn width="{SM_DG.width}" headerText="SM - Secondary master" editable="true"/>
+												</mx:columns>
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</mx:Canvas>
+								</s:Group>
+								<!--Setting TM_Box.x to D_Box.x makes it vanish on B0 grip move so set it to a value that is off left stage-->
+								<!--TM is hidden under D even though it has a high depth because D is not Spark and doesn't follow depth-->
+								<s:Group id="TM_Box" x="{D_Box.x}" width="{M_Box.width-TM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{TM_Depth}" includeInLayout="true" visible="true">
+									<mx:Canvas width="100%" height="100%" borderColor="blue">
+										<s:VGroup width="100%" height="100%">
+											<mx:AdvancedDataGrid id="TM_DG" width="100%" height="100%" rowCount="10" editable="true">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn width="{TM_DG.width}" headerText="TM - Tiertary master"/>
+												</mx:columns>
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</mx:Canvas>
+								</s:Group>
+								<s:Group id="VM_Box" x="0" y="0" width="{-HalfWidth}" height="100%" alpha="{NonShadeAlpha}" depth="{VM_Depth}" includeInLayout="true" visible="true">
+									<mx:Canvas width="100%" height="100%" borderColor="green">
+										<s:VGroup width="100%" height="100%">
+											<mx:AdvancedDataGrid id="VM_DG" width="100%" height="100%" depth="1"
+																 rowCount="100" verticalScrollPolicy="on" editable="true">
+												<mx:columns>
+													<mx:AdvancedDataGridColumn width="{VM_DG.width}" headerText="VM - Visiting master" editable="false"/>
+												</mx:columns>
+											</mx:AdvancedDataGrid>
+										</s:VGroup>
+									</mx:Canvas>
+								</s:Group>
+								<s:Group id="PM_Shade" x="{PM_Box.x}" y="{PM_Box.y}" width="{PM_Box.width}" height="{PM_Box.height}" alpha="0" depth="{PM_Shade_Depth}" includeInLayout="false" visible="false">
+									<s:Rect width="100%" height="100%">
+										<s:fill>
+											<s:SolidColor color="black"/>
+										</s:fill>
+									</s:Rect>
+								</s:Group>
+								<s:Group id="SM_Shade" x="{SM_Box.x}" y="{SM_Box.y}" width="{SM_Box.width}" height="{SM_Box.height}" alpha="0" depth="{SM_Shade_Depth}" includeInLayout="false" visible="false">
+									<s:Rect width="100%" height="100%">
+										<s:fill>
+											<s:SolidColor color="black"/>
+										</s:fill>
+									</s:Rect>
+								</s:Group>
+							</s:BorderContainer>
+							
+							<!--Stage right-->
+							<!--Depth has no effect for non-Spark-->				
+							<s:VGroup id="D_Box" width="100%" height="100%" gap="0" visible="false" includeInLayout="false">
+								<s:Group id="D1_Box" width="100%" height="100%">
+									<s:layout>
+										<s:BasicLayout clipAndEnableScrolling="false"/>
+									</s:layout>
+									<!--If use a calculated value for x or M_Box.x, it does not work properly or throws errors-->
+									<s:Group id="RM_Box" x="{-HalfWidth}" width="100%" height="100%" alpha="{NonShadeAlpha}" depth="{RM_Depth}" includeInLayout="true" visible="true">
+										<mx:Canvas width="100%" height="100%">
+											<s:VGroup width="100%" height="100%">
+												<mx:AdvancedDataGrid id="RM_DG" width="100%" height="100%" rowCount="10" editable="true">
+													<mx:columns>
+														<mx:AdvancedDataGridColumn id="RMC0" width="{RM_DG.width}" headerText="RM - Reference master"/>
+														<mx:AdvancedDataGridColumn id="RMC1" width="0" visible="false"/>
+														<mx:AdvancedDataGridColumn id="RMC2" width="0" visible="false"/>
+													</mx:columns>
+												</mx:AdvancedDataGrid>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:Group>
+									<s:Group id="DD_Box" x="0" width="100%" height="100%" alpha="{NonShadeAlpha}" depth="{DD_Depth}" includeInLayout="true" visible="true">
+										<mx:HDividedBox id="DD_HBox" width="100%" height="100%" horizontalGap="0">
+											<mx:Canvas id="PD_Box" width="100%" height="100%">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="PD_DG" width="100%" height="100%" rowCount="10">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{PD_DG.width}" headerText="PD - Primary Detail"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+											<mx:Canvas id="SD_Box" width="100%" height="100%">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="SD_DG" width="100%" height="100%" rowCount="10">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{SD_DG.width}" headerText="SD - Secondary Detail"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</mx:HDividedBox>
+									</s:Group>
+									<s:Group id="DD_Shade" x="{DD_Box.x}" y="{DD_Box.y}" width="{DD_Box.width}" height="{DD_Box.height}" alpha="0" depth="{DD_Shade_Depth}" includeInLayout="true" visible="true">
+										<s:Rect width="100%" height="100%">
+											<s:fill>
+												<s:SolidColor color="black"/>
+											</s:fill>
+										</s:Rect>
+									</s:Group>
+								</s:Group>							
+								<s:VGroup id="D2_Box" width="100%" height="0" verticalAlign="middle" paddingTop="5" paddingBottom="5" gap="0" includeInLayout="false" visible="false">
+									<s:HGroup id="D2_HG" width="100%" height="100%" horizontalAlign="left" verticalAlign="top" styleName="Gutter">
+										<fx:Script>
+											<![CDATA[
+												private var Create_PB_2_AC:ArrayCollection = new ArrayCollection
+													([
+														{Label:"Create new", Data:""}, 
+														{Label:"Create based on existing", Data:""}, 
+														{Label:"Create synched with existing", Data:""},
+														{Label:"Create based on profile", Data:""},
+														{Label:"Create based on template", Data:""},
+														{Label:"Create using Wizard", Data:""}
+													]);
+											
+												private var Create_PB_2_Menu:Menu;
+											
+												private function Create_PB_2_Init():void {
+													Create_PB_2_Menu = new Menu();  
+													Create_PB_2_Menu.dataProvider = Create_PB_2_AC;
+													Create_PB_2_Menu.labelField = 'Label';
+													Create_PB_2.addEventListener("itemClick", Create_PB_2_ChangeHandler);
+													Create_PB_2.popUp = Create_PB_2_Menu;
+												}
+											
+												private function Create_PB_2_ChangeHandler(event:MenuEvent):void {
+													var Create_PB_2_Label:String = event.label;
+													Create_PB_2.label = Create_PB_2_Label;
+													Create_PB_2.close();
+												}
+											
+												private function Create_PB_2_MouseOverHandler(event:MouseEvent):void
+												{
+													Create_PB_2.setStyle('color','white');
+												}
+											]]>
+										</fx:Script>
+										<mx:PopUpButton id="Create_PB_2" label="Create new"
+														width="180" height="0" labelPlacement="left" styleName="InsertPopUpButton"
+														creationComplete="Create_PB_2_Init()"
+														mouseOver="Create_PB_2_MouseOverHandler(event)"/>		
+										<s:Button id="BB_2_DeleteButton" 
+												  label="Delete" width="180" height="0" styleName="DeleteButton"/>
+										<s:Spacer width="100%"/>
+										<s:Button id="BB_2_SaveButton"
+												  label="Save" width="180" height="0" styleName="SaveButton"/>
+										<s:Spacer width="100%"/>
+									</s:HGroup>									
+								</s:VGroup>
+							</s:VGroup>
+						</mx:HDividedBox>		
+					</component:CustomTitleWindow>
+					
+				<!--End control buttons, tabbar, and datagrids -->
+				</s:BorderContainer>
+				
+				<!--s:BorderContainer width="20" height="100%" horizontalCenter="0" verticalCenter="0" backgroundColor="red"/-->
+				
+				<s:Rect width="5" height="100%">
+					<s:stroke>
+						<s:SolidColorStroke color="red"/>
+					</s:stroke>
+					<s:fill>
+						<s:SolidColor color="red" alpha="0"/>
+					</s:fill>
+				</s:Rect>
+				
+			<!--End category chooser-->
+			</s:BorderContainer>
+			
+		<!--End stage-->
+		</s:BorderContainer>
+		
+	<!--End Master container-->
+	</s:BorderContainer>
+	
+</s:Application>

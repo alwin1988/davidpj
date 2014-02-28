@@ -174,3 +174,10 @@
 	fontWeight: bold;
 	text-decoration: underline;
 }
+.DisplayPrice
+{
+	color: white;
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+}

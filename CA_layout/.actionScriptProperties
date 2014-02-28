@@ -10,23 +10,25 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="3" linkType="1" path="/DavidCustomComponentProject/bin/DavidCustomComponentProject.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="CA_layout_10.mxml"/>
     <application path="CA_layout_7.mxml"/>
+    <application path="CA_layout_9_buildup.mxml"/>
     <application path="CA_layout_8.mxml"/>
     <application path="component/NewTaskComponent.mxml"/>
     <application path="CA_layout_4.mxml"/>
     <application path="CA_layout_2.mxml"/>
-    <application path="DepthTest.mxml"/>
     <application path="CA_layout_NewTask.mxml"/>
+    <application path="DepthTest.mxml"/>
     <application path="CA_layout_5.mxml"/>
-    <application path="CA_layout_9.mxml"/>
     <application path="ResizeDGplay.mxml"/>
+    <application path="CA_layout_9.mxml"/>
     <application path="CA_layout_6.mxml"/>
     <application path="CA_layout_3.mxml"/>
-    <application path="CA_layout_10.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

@@ -211,7 +211,7 @@
 			
 			import spark.effects.Animate;
 			import spark.events.IndexChangeEvent;
-			
+
 			public const FullWidth:Number = 1162;
 			public const HalfWidth:Number = (FullWidth / 2);
 			public const QuarterWidth:Number = (FullWidth / 4);
@@ -230,13 +230,6 @@
 			public const DBW:Number = DeleteButtonWidth;
 			
 			[Bindable] private var MidPoint:Number = HalfWidth;
-
-			[Bindable] private var PM_View:Boolean;
-			[Bindable] private var SM_View:Boolean;
-			[Bindable] private var TM_View:Boolean;
-			[Bindable] private var CM_View:Boolean;
-			[Bindable] private var XM_View:Boolean;
-			[Bindable] private var VM_View:Boolean;
 			
 			[Bindable] private var Indent1:Number = 15;
 			[Bindable] private var Indent2:Number = 30;
@@ -271,6 +264,12 @@
 			private var CategoryView:String //3 letters
 			private var LastCategory:String
 			
+			[Bindable] private var PM_View:Boolean;
+			[Bindable] private var SM_View:Boolean;
+			[Bindable] private var TM_View:Boolean;
+			[Bindable] private var CM_View:Boolean;
+			[Bindable] private var XM_View:Boolean;
+			[Bindable] private var VM_View:Boolean;
 			private var Layout:String;
 			
 			private function SetLayout(Layout:String):void
@@ -628,42 +627,12 @@
 					{Label:"Tab6", Data:"Tab6"}
 				]);
 			
-			[Bindable]
-			private var WP_TB_AC:ArrayCollection = new ArrayCollection
-				([
-					{Label:"Properties", Data:"Properties"}, 
-					{Label:"Transitions", Data:"Transitions"}, 
-					{Label:"Events", Data:"Events"},
-					{Label:"Schedules", Data:"Schedules"}, 
-					{Label:"Access Controls", Data:"AccessControls"},
-					{Label:"", Data:""}
-				]);
-			
-			[Bindable]
-			private var DummyTab_TB_AC:ArrayCollection = new ArrayCollection
-				([
-					{Label:"", Data:""},
-					{Label:"", Data:""}
-				]);
-			
-			[Bindable]
-			private var WP_Components_DD_AC:ArrayCollection = new ArrayCollection
-				([
-					{Label:"Paths", Data:"P"}, 
-					{Label:"Chains", Data:"C"}, 
-					{Label:"Forms", Data:"F"}, 
-					{Label:"Queries", Data:"Q"}, 
-					{Label:"Scripts", Data:"S"},
-					{Label:"Notifications", Data:"N"},
-					{Label:"Messages", Data:"M"}
-				]);
-			
 			private function Post_SlideCMRight():void
 			{
 				CM_Box.percentWidth=100;
-//				CM_DG.percentWidth=100;
-				//CM_DG_propertiesA.visible=false;
-				CM_DG_SetColumnWidths();
+				CM_1_DG.percentWidth=100;
+				CM_1_DG_propertiesA.visible = false;
+				CM_1_DG_SetColumnWidths();
 				D1_Box.clipAndEnableScrolling=true;
 			}
 		]]>
@@ -684,7 +653,7 @@
 			<!--Category chooser, buttons, and tabbar -->
 			<s:BorderContainer id="CategoryChooser" width="100%" height="100%" borderVisible="false" styleName="Gutter">
 				<s:layout>
-					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="0" gap="0"/>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="0"/>
 				</s:layout>
 				<s:Spacer width="10"/>
 				<s:BorderContainer id="CategoryList" width="170" height="100%" borderVisible="false">
@@ -794,6 +763,7 @@
 						<s:HGroup>
 							<s:Button label="SMCMIn" click="
 									  XM_View=true;
+									  CM_VS.selectedChild=CM_1;
 									  Do_SM_In_CM_In.play();
 									  "/>
 							<s:Button label="SMCMOut" click="
@@ -831,11 +801,12 @@
 <!--This does not achieve the desired effect, which is to fade-in-shade the current M and slide CM over it.  To do that, maybe re-depth CM
 //to the same depth as PM and resize it, also shade-->
 							<s:Button label="Slide CM left" click="
+									  CM_VS.selectedChild=CM_1;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CM_Box.width=FullWidth;
-//									  CM_DG.width=FullWidth;								  
-									  //CM_DG_propertiesA.visible=true;									  
-									  CM_DG_SetColumnWidths;
+									  CM_1_DG.width=FullWidth;
+									  CM_1_DG_propertiesA.visible = true;
+									  CM_1_DG_SetColumnWidths();
 									  SlideCMLeft.play();
 									  D1_Box.clipAndEnableScrolling=true;
 									  "/>
@@ -846,6 +817,7 @@
 									  "/>
 						</s:HGroup>
 					</s:VGroup>
+					<s:Spacer height="20"/>
 					
 					<!--Control buttons and tab bar-->
 					<s:BorderContainer width="100%" height="24" borderVisible="false" styleName="GutterOverlay">
@@ -853,8 +825,8 @@
 							<s:HorizontalLayout gap="0" horizontalAlign="left" verticalAlign="bottom" clipAndEnableScrolling="true"/>
 						</s:layout>
 						
-						<s:VGroup id="BB_1_VG" width="50%" height="100%" paddingTop="0" verticalAlign="top">
-							<s:HGroup id="BB_1_HG" width="100%" height="100%" horizontalAlign="left" paddingTop="0" verticalAlign="top" styleName="Gutter">
+						<s:VGroup id="BB_1_VG" width="100%" height="100%" paddingTop="0" verticalAlign="top">
+							<s:HGroup id="BB_1_HG" width="{HalfWidth}" height="100%" horizontalAlign="left" paddingTop="0" verticalAlign="top" styleName="Gutter">
 								<fx:Script>
 									<![CDATA[
 										[Bindable] private var Create_PB_1_AC:ArrayCollection = new ArrayCollection(
@@ -901,23 +873,44 @@
 								<s:Spacer width="100%"/>
 							</s:HGroup>
 						</s:VGroup>
-						<s:Group width="500" height="24">
-							<s:layout>
-								<s:BasicLayout/>
-							</s:layout>
+						
+						<s:HGroup width="{HalfWidth}" height="24" gap="0">
+							<fx:Script>
+								<![CDATA[
+									[Bindable] private var WP_TB_AC:ArrayCollection = new ArrayCollection
+										([
+											{Label:"Properties", Data:"Properties"}, 
+											{Label:"Transitions", Data:"Transitions"}, 
+											{Label:"Events", Data:"Events"},
+											{Label:"Schedules", Data:"Schedules"}, 
+											{Label:"Access Controls", Data:"AccessControls"}
+										]);
+									
+									[Bindable] private var LastTab_TB_AC:ArrayCollection = new ArrayCollection
+										([
+											{Label:"", Data:""},
+										]);
+								]]>
+							</fx:Script>
 							<s:TabBar id="TB"
-									  width="100%" height="24" depth="2"
-									  dataProvider="{WP_TB_AC}" styleName="TabText" labelField="Label"
-									  change="TabBarChangeHandler(event)"/>
-							<s:TabBar id="LastTab_TB"
-									  x="{TB.width-((TB.width/WP_TB_AC.length)*2)}" width="{(TB.width/WP_TB_AC.length)*2}" height="{TB.height}" 
-									  alpha="1" enabled="true" depth="1" 
-									  dataProvider="{DummyTab_TB_AC}" labelField="Label" styleName="TabText"/>
-							<s:DropDownList id="TB_DD"
-											x="{LastTab_TB.x+(LastTab_TB.width/2)}" y="2" width="{(LastTab_TB.width/2)-2}" height="{TB.height-4}" 
-											alpha="1" dropShadowVisible="false" depth="3"							
-											dataProvider="{WP_Components_DD_AC}" labelField="Label" prompt="Components" styleName="TabText"/>
-						</s:Group>
+									  height="24" maxWidth="{(HalfWidth-LastTab.width)}" horizontalCenter="0" verticalCenter="0" depth="2"
+									  styleName="TabText" labelField="Label"
+									  dataProvider="{WP_TB_AC}" 
+									  change="TabBarChangeHandler(event)">
+								<s:layout>
+									<s:HorizontalLayout variableColumnWidth="true" gap="-1"/>
+								</s:layout>
+							</s:TabBar>
+							<s:Group>
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:TabBar id="LastTab" x="0" y="0" width="120" height="{TB.height}" depth="1"
+										  dataProvider="{LastTab_TB_AC}"/>
+								<s:DropDownList id="TB_DD" x="2" y="2" width="{LastTab.width-4}" height="{(LastTab.height)-4}" dropShadowVisible="false" depth="2"							
+												dataProvider="{WP_Components_DD_AC}" labelField="Label" prompt="Components" styleName="TabText"/>
+							</s:Group>
+						</s:HGroup>
 					</s:BorderContainer>
 					
 					<!-- Title window container for all datagrids -->
@@ -934,7 +927,7 @@
 								</s:layout>
 								<s:Group id="PM_Box" x="0" y="0" width="{M_Box.width}" height="100%" alpha="{NonShadeAlpha}" depth="{PM_Depth}">
 									<mx:Canvas width="100%" height="100%" borderVisible="false">
-										<s:VGroup y="0" width="100%" height="100%" clipAndEnableScrolling="true">
+										<s:VGroup y="0" width="100%" height="100%">
 											<mx:AdvancedDataGrid width="{PM_Box.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
 												<mx:columns>
 													<mx:AdvancedDataGridColumn width="{PM_Box.width}" headerText="PM - Primary master" editable="true"/>
@@ -943,25 +936,30 @@
 										</s:VGroup>
 									</mx:Canvas>
 								</s:Group>
-								<s:Group id="SM_Box" x="{D_Box.x}" y="0" width="{M_Box.width-SM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{SM_Depth}" includeInLayout="true" visible="true">
-									<mx:Canvas width="100%" height="100%" borderColor="blue">
-										<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true">
-											<mx:AdvancedDataGrid id="SM_DG" width="100%" height="100%" rowCount="10" editable="true">
-												<mx:columns>
-													<mx:AdvancedDataGridColumn width="{SM_DG.width}" headerText="SM - Secondary master" editable="true"/>
-												</mx:columns>
-											</mx:AdvancedDataGrid>
-										</s:VGroup>
-									</mx:Canvas>
+								<s:Group id="SM_Box" 
+										 x="{D_Box.x}" y="0" width="{M_Box.width-SM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{SM_Depth}" includeInLayout="true" visible="true">
+									<mx:ViewStack id="SM_VS" width="100%" height="100%">
+										<s:NavigatorContent id="SM_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="SM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{SM_0_DG.width}" headerText="SM - Secondary master" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
 								</s:Group>
 								<!--Setting TM_Box.x to D_Box.x makes it vanish on B0 grip move so set it to a value that is off left stage-->
 								<!--TM is hidden under D even though it has a high depth because D is not Spark and doesn't follow depth-->
 								<s:Group id="TM_Box" x="{D_Box.x}" width="{M_Box.width-TM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{TM_Depth}" includeInLayout="true" visible="true">
 									<mx:Canvas width="100%" height="100%" borderColor="blue">
-										<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true">
-											<mx:AdvancedDataGrid id="TM_DG" width="100%" height="100%" rowCount="10" editable="true">
+										<s:VGroup width="100%" height="100%">
+											<mx:AdvancedDataGrid id="TM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
 												<mx:columns>
-													<mx:AdvancedDataGridColumn width="{TM_DG.width}" headerText="TM - Tiertary master"/>
+													<mx:AdvancedDataGridColumn width="{TM_0_DG.width}" headerText="TM - Tiertary master"/>
 												</mx:columns>
 											</mx:AdvancedDataGrid>
 										</s:VGroup>
@@ -969,11 +967,11 @@
 								</s:Group>
 								<s:Group id="VM_Box" x="0" y="0" width="{-HalfWidth}" height="100%" alpha="{NonShadeAlpha}" depth="{VM_Depth}" includeInLayout="true" visible="true">
 									<mx:Canvas width="100%" height="100%" borderColor="green">
-										<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true">
-											<mx:AdvancedDataGrid id="VM_DG" width="100%" height="100%" depth="1"
+										<s:VGroup width="100%" height="100%">
+											<mx:AdvancedDataGrid id="VM_0_DG" width="100%" height="100%" depth="1"
 																 rowCount="100" verticalScrollPolicy="on" editable="true">
 												<mx:columns>
-													<mx:AdvancedDataGridColumn width="{VM_DG.width}" headerText="VM - Visiting master" editable="false"/>
+													<mx:AdvancedDataGridColumn width="{VM_0_DG.width}" headerText="VM - Visiting master" editable="false"/>
 												</mx:columns>
 											</mx:AdvancedDataGrid>
 										</s:VGroup>
@@ -996,85 +994,171 @@
 							</s:BorderContainer>
 							
 							<!--Stage right-->
-							<!--Depth has no effect for non-Spark-->		
-							<s:VGroup id="D_Box" width="100%" height="100%" clipAndEnableScrolling="true" visible="false" includeInLayout="false">
+							<!--Depth has no effect for non-Spark-->				
+							<s:VGroup id="D_Box" width="100%" height="100%" gap="0" visible="false" includeInLayout="false">
 								<s:Group id="D1_Box" width="200%" height="100%">
 									<s:layout>
 										<s:BasicLayout clipAndEnableScrolling="true"/>
 									</s:layout>
 									<!--If use a calculated value for x or M_Box.x, it does not work properly or throws errors-->
 									<s:Group id="CM_Box" x="{MidPoint}" width="100%" height="100%" alpha="{NonShadeAlpha}" depth="{CM_Depth}" includeInLayout="true" visible="true">
-										<mx:Canvas width="100%" height="100%">
-											<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true">
-												<fx:Script>
-													<![CDATA[
-														[Bindable]private var CM_DG_AC:ArrayCollection = new ArrayCollection(
-															[
-																{EntityType:"Form", UID:"1", Name:"Form1Name", Description:"Form1Description", Disposition:"Enabled", checked:false},
-																{EntityType:"Form", UID:"2", Name:"Form2Name", Description:"Form2Description", Disposition:"Enabled", checked:false},
-																{EntityType:"Form", UID:"3", Name:"Form3Name", Description:"Form3Description", Disposition:"Enabled", checked:false}
-															]);
+										<mx:ViewStack id="CM_VS" width="100%" height="100%">
+											<s:NavigatorContent id="CM_0" width="100%" height="100%">
+												<mx:Canvas width="100%" height="100%" borderColor="blue">
+													<s:VGroup width="100%" height="100%">
+														<mx:AdvancedDataGrid id="CM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
+															<mx:columns>
+																<mx:AdvancedDataGridColumn width="{CM_0_DG.width}" headerText="CM - Component master" editable="true"/>
+															</mx:columns>
+														</mx:AdvancedDataGrid>
+													</s:VGroup>
+												</mx:Canvas>
+											</s:NavigatorContent>
+											<s:NavigatorContent id="CM_1" width="100%" height="100%">
+												<mx:Canvas width="100%" height="100%">
+													<s:VGroup width="100%" height="100%">
+														<fx:Script>
+															<![CDATA[
+																[Bindable] private var WP_Components_DD_AC:ArrayCollection = new ArrayCollection
+																	([
+																		{Label:"Paths", Data:"P"}, 
+																		{Label:"Chains", Data:"C"}, 
+																		{Label:"Forms", Data:"F"}, 
+																		{Label:"Queries", Data:"Q"}, 
+																		{Label:"Scripts", Data:"S"},
+																		{Label:"Notifications", Data:"N"},
+																		{Label:"Messages", Data:"M"}
+																	]);
+																
+																private function CM_1_DG_SetColumnWidths():void
+																{
+																	CM_1_DG.horizontalScrollPolicy='on';
+																	CM_1_DG_Checkbox.width=(CM_1_DG.width-CM_1_DG.width)+CBW;
+																	CM_1_DG_Information.width=(CM_1_DG.width-CM_1_DG.width)+IBW;
+																	CM_1_DG_Disposition.width=(CM_1_DG.width-CM_1_DG.width)+DTW;
+																	CM_1_DG_Name.width=180;
+																	//CM_1_DG_Description.width=331;
+																	CM_1_DG_propertiesA1.width = QuarterWidth;
+																	CM_1_DG_propertiesA2.width = QuarterWidth;
+																	CM_1_DG_propertiesA3.width = QuarterWidth;
+																	CM_1_DG_propertiesA4.width = QuarterWidth;
+																	CM_1_DG_propertiesB1.width = QuarterWidth;
+																	CM_1_DG_propertiesB2.width = QuarterWidth;
+																	CM_1_DG_propertiesB3.width = QuarterWidth;
+																	CM_1_DG_propertiesB4.width = QuarterWidth;
+																	CM_1_DG_propertiesC1.width = QuarterWidth;
+																	CM_1_DG_propertiesC2.width = QuarterWidth;
+																	CM_1_DG_propertiesC3.width = QuarterWidth;
+																	CM_1_DG_propertiesC4.width = QuarterWidth;
+																	CM_1_DG_Delete.width=(CM_1_DG.width-CM_1_DG.width)+DBW;
+																	CM_1_DG.horizontalScrollPolicy='off';
+																}
+																
+																[Bindable] private var CM_1_DG_AC:ArrayCollection = new ArrayCollection(
+																	[
+																		{EntityType:"Form", UID:"1", Name:"Form1Name", Description:"Form1Description",
+																			Disposition:"Enabled", checked:false},
+																		{EntityType:"Form", UID:"2", Name:"Form2Name", Description:"Form2Description",
+																			Disposition:"Enabled", checked:false},
+																		{EntityType:"Form", UID:"3", Name:"Form3Name", Description:"Form3Description",
+																			Disposition:"Enabled", checked:false}
+																	]);
+															]]>
+														</fx:Script>
 														
-														private function CM_DG_SetColumnWidths():void
-														{
-											//				CM_DG.horizontalScrollPolicy="on";
-											//				CM_DG_Checkbox.width=(CM_DG.width-CM_DG.width)+CBW;
-											//				CM_DG_Information.width=(CM_DG.width-CM_DG.width)+IBW;
-											//				CM_DG_Disposition.width=(CM_DG.width-CM_DG.width)+DTW;
-											//				CM_DG_Name.width=180;
-															//CM_DG_Description.width=331;
-											//				CM_DG.horizontalScrollPolicy="off";
-														}
-													]]>
-												</fx:Script>
-												<!--mx:AdvancedDataGrid id="CM_DG" visible="false"
-																	 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
-																	 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" minColumnWidth="0"
-																	 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
-																	 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-																	 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
-																	 draggableColumns="true" resizableColumns="true" sortableColumns="false"
-																	 doubleClickEnabled="false" sortExpertMode="true" 
-																	 allowMultipleSelection="true" editable="true"
-																	 creationComplete="CM_DG_SetColumnWidths()"
-																	 dataProvider="{CM_DG_AC}">
-													<mx:groupedColumns>
-														<mx:AdvancedDataGridColumnGroup headerText="..." textAlign="left" color="red">
-															<mx:AdvancedDataGridColumn id="CM_DG_Checkbox"
-																					   headerText="" dataField="checked" textAlign="center"
-																					   draggable="false" resizable="false" sortable="false" editable="false"
-																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
-																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
-																					   rendererIsEditor="false"/>
-															<mx:AdvancedDataGridColumn id="CM_DG_Information"
-																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
-																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
-															<mx:AdvancedDataGridColumn id="CM_DG_Disposition"
-																					   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
-																					   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
-														</mx:AdvancedDataGridColumnGroup>
-														<mx:AdvancedDataGridColumnGroup id="CM_DG_identification" headerText="Form Types" textAlign="center">
-															<mx:AdvancedDataGridColumn id="CM_DG_Name"
-																					   headerText="Name" dataField="Name"/>
-															<mx:AdvancedDataGridColumn id="CM_DG_Description"
-																					   headerText="Description" dataField="Description"
-																					   editable="true"/>
-														</mx:AdvancedDataGridColumnGroup>
-														<mx:AdvancedDataGridColumnGroup id="CM_DG_propertiesA" headerText="PropertiesA" width="0" visible="false"/>
-														<mx:AdvancedDataGridColumnGroup id="CM_DG_propertiesB" headerText="PropertiesB" width="0" visible="false"/>
-														<mx:AdvancedDataGridColumnGroup id="CM_DG_propertiesC" headerText="PropertiesC" width="0" visible="false"/>
-														<mx:AdvancedDataGridColumn id="CM_DG_Delete" 
-																				   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
-																				   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
-													</mx:groupedColumns>
-												</mx:AdvancedDataGrid-->
-											</s:VGroup>
-										</mx:Canvas>
+														<s:Group width="100%" height="100%">
+															<s:layout>
+																<s:BasicLayout clipAndEnableScrolling="true"/>
+															</s:layout>
+															<mx:AdvancedDataGrid id="CM_1_DG" depth="1"
+																				 x="0" y="0" width="100%" height="100%" verticalCenter="0"
+																				 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}"
+																				 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+																				 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+																				 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+																				 draggableColumns="true" resizableColumns="true" sortableColumns="false"
+																				 doubleClickEnabled="false" sortExpertMode="true" 
+																				 allowMultipleSelection="true" editable="true"
+																				 dataProvider="{CM_1_DG_AC}"
+																				 creationComplete="CM_1_DG_SetColumnWidths()"
+																				 resize="CM_1_DG_SetColumnWidths()">
+																<mx:groupedColumns>
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumn id="CM_1_DG_Checkbox"
+																								   dataField="checked"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+																								   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																								   rendererIsEditor="false"/>
+																		<mx:AdvancedDataGridColumn id="CM_1_DG_Information"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+																								   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		<mx:AdvancedDataGridColumn id="CM_1_DG_Disposition"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   dataField="Disposition"
+																								   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+																								   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+																		<mx:AdvancedDataGridColumnGroup headerText="Identification">
+																			<mx:AdvancedDataGridColumn id="CM_1_DG_Name"
+																									   headerText="Name" dataField="Name"/>
+																			<mx:AdvancedDataGridColumn id="CM_1_DG_Description"
+																									   headerText="Description" dataField="Description"
+																									   editable="true"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup headerText="Forms for ||||||||||||||||||||||||">
+																			<mx:AdvancedDataGridColumnGroup headerText="PROPSA | PROPSB | PROPSC">
+																				<mx:AdvancedDataGridColumnGroup id="CM_1_DG_propertiesA" headerText="Properties A" visible="false">
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesA1"
+																											   headerText="Property A1" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesA2"
+																											   headerText="Property A2" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesA3"
+																											   headerText="Property A3" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesA4"
+																											   headerText="Property A4" visible="false"/>
+																				</mx:AdvancedDataGridColumnGroup>	
+																				<mx:AdvancedDataGridColumnGroup id="CM_1_DG_propertiesB" headerText="Properties B" visible="false">
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesB1"
+																											   headerText="Property B1" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesB2"
+																											   headerText="Property B2" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesB3"
+																											   headerText="Property B3" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesB4"
+																											   headerText="Property B4" visible="false"/>
+																				</mx:AdvancedDataGridColumnGroup>	
+																				<mx:AdvancedDataGridColumnGroup id="CM_1_DG_propertiesC" headerText="Properties C" visible="false">
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesC1" 
+																											   headerText="Property C1" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesC2" 
+																											   headerText="Property C2" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesC3"
+																											   headerText="Property C3" visible="false"/>
+																					<mx:AdvancedDataGridColumn id="CM_1_DG_propertiesC4"
+																											   headerText="Property C4" visible="false"/>
+																				</mx:AdvancedDataGridColumnGroup>	
+																				<mx:AdvancedDataGridColumn id="CM_1_DG_Delete" 
+																										   draggable="false" resizable="false" sortable="false" editable="false"
+																										   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
+																										   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+																			</mx:AdvancedDataGridColumnGroup>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:groupedColumns>
+															</mx:AdvancedDataGrid>
+															
+															<mx:VRule x="{MidPoint}" y="{CM_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+														</s:Group>
+													</s:VGroup>
+												</mx:Canvas>
+											</s:NavigatorContent>
+										</mx:ViewStack>
 									</s:Group>
 									<s:Group id="DD_Box" x="0" width="100%" height="100%" alpha="{NonShadeAlpha}" depth="{DD_Depth}" includeInLayout="true" visible="true">
 										<mx:HDividedBox id="DD_HBox" width="100%" height="100%" horizontalGap="0">
 											<mx:Canvas id="PD_Box" width="100%" height="100%">
-												<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true">
+												<s:VGroup width="100%" height="100%">
 													<mx:AdvancedDataGrid id="PD_DG" width="100%" height="100%" rowCount="10">
 														<mx:columns>
 															<mx:AdvancedDataGridColumn width="{PD_DG.width}" headerText="PD - Primary Detail"/>
@@ -1083,7 +1167,7 @@
 												</s:VGroup>
 											</mx:Canvas>
 											<mx:Canvas id="SD_Box" width="100%" height="100%">
-												<s:VGroup width="100%" height="100%" clipAndEnableScrolling="true">
+												<s:VGroup width="100%" height="100%">
 													<mx:AdvancedDataGrid id="SD_DG" width="100%" height="100%" rowCount="10">
 														<mx:columns>
 															<mx:AdvancedDataGridColumn width="{SD_DG.width}" headerText="SD - Secondary Detail"/>
@@ -1101,8 +1185,7 @@
 										</s:Rect>
 									</s:Group>
 								</s:Group>							
-								<s:VGroup id="D2_Box" width="100%" height="0" verticalAlign="middle" includeInLayout="false" visible="false"
-										  paddingTop="5" paddingBottom="5" gap="0" clipAndEnableScrolling="true">
+								<s:VGroup id="D2_Box" width="100%" height="0" verticalAlign="middle" paddingTop="5" paddingBottom="5" gap="0" includeInLayout="false" visible="false">
 									<s:HGroup id="D2_HG" width="100%" height="100%" horizontalAlign="left" verticalAlign="top" styleName="Gutter">
 										<fx:Script>
 											<![CDATA[
@@ -1157,16 +1240,14 @@
 				<!--End control buttons, tabbar, and datagrids -->
 				</s:BorderContainer>
 				
-				<!--s:BorderContainer width="20" height="100%" horizontalCenter="0" verticalCenter="0" backgroundColor="red"/-->
-				
-				<s:Rect width="15" height="100%">
+				<!--s:Rect width="15" height="100%">
 					<s:stroke>
 						<s:SolidColorStroke color="red"/>
 					</s:stroke>
 					<s:fill>
 						<s:SolidColor color="black" alpha="0"/>
 					</s:fill>
-				</s:Rect>
+				</s:Rect-->
 				
 			<!--End category chooser-->
 			</s:BorderContainer>

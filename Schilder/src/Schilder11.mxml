@@ -17,6 +17,8 @@
 		<s:ArrayCollection id="ar1">
 			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Black.jpg" 
 					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/White.jpg" 
+					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkBlue.jpg"
 					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkGreen.jpg" 
@@ -49,7 +51,13 @@
 					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Space.jpg"
 					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/White.jpg" 
+			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Bayern.png" 
+					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+			<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GermanFlagColors.png" 
+					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+			<s:Image width="33.3%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/HouseWhite.png" 
+					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+			<s:Image width="33.3%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/HouseBlue.png" 
 					 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 		</s:ArrayCollection>
 		
@@ -122,8 +130,9 @@
 	</fx:Declarations>	
 	<fx:Script>
 		<![CDATA[
-// !!
-			private var SymbolSize:String = 'Large';
+// !					
+			[Bindable] private var PlateReduction:Number = .24; //% reduction from actual plate size to radio button'ed plates
+			private var SymbolSize:String = 'Tall';
 			
 			import utility.TexturedText;
 			private var Debugging:Boolean = false;
@@ -140,14 +149,14 @@
 			import spark.layouts.supportClasses.LayoutBase;
 			
 			//Non-Preview constants
-			public static const LargePlateWidth:int = 520;
-			public static const LargePlateHeight:int = 113;			
-			public static const MediumPlateWidth:int = 400;
-			public static const MediumPlateHeight:int = 113;	
-			public static const SmallPlateWidth:int = 300;
-			public static const SmallPlateHeight:int = 90;
-			public static const TinyPlateWidth:int = 200;
-			public static const TinyPlateHeight:int = 50;
+			public static const LargePlateWidth:uint = 520;
+			public static const LargePlateHeight:uint = 113;			
+			public static const MediumPlateWidth:uint = 400;
+			public static const MediumPlateHeight:uint = 113;	
+			public static const SmallPlateWidth:uint = 300;
+			public static const SmallPlateHeight:uint = 90;
+			public static const HousePlateWidth:uint = 173;
+			public static const HousePlateHeight:uint = 113;
 			
 			public static const DateWidth:int = 36;
 			public static const DateHeight:int = 82;
@@ -216,7 +225,7 @@
 			
 			[Bindable] private var SelectedSymbol:Object;
 //			[Bindable] private var SymbolSize:String;
-			[Bindable] private var CenterSymbol:Boolean = false;
+			[Bindable] private var CenterSymbol:Boolean = false; //true means there is a center symbol
 			private var SymbolCount:int;
 			
 			[Bindable] private var Holes:String;
@@ -231,17 +240,21 @@
 			
 			[Bindable] public var SelectedCharacter:String;
 			private var ElementType:String;
+			[Bindable] private var SwitchButtonImage:Object;
 			[Bindable] private var SwitchButtonVisible:Boolean;
 			[Bindable] private var vgap:int = 5;
 			
 			private var CharactersAdded:int = 0;
 			private var X1_LineCount:int;
 			private var X2_LineCount:int;
+			private var LeftLoad:int;
+			private var RightLoad:int;
 			private var CurrentLine:String;
-			private var CurrentBox:String;
 			private var CurrentBoxColor:uint;
+			private var CurrentBox:String;
 			private var TargetBox:String;
 			private var LastBox:String;
+			private var NextBox:String;
 			
 			private var X1A_Index:int = 1;
 			private var X1B_Index:int = 1;
@@ -266,7 +279,7 @@
 			private function init2():void
 			{
 				HideShow();
-				SetSwitch();
+				SetNextBoxAndSwitchButtonImage();
 				Outlines();
 			}
 
@@ -335,7 +348,7 @@
 
 				SelectedFoilImage = 'assets/foils/RedFoilPlate.png';
 				FoilColor = 0x000000; //black
-				FoilIsImage = false;
+FoilIsImage = true;
 				SelectedFoilSwatchImage = 'assets/texture/texture.jpg';
 				Foil_MiniPlatePlateColor = PlateColor;
 					if(Debugging) Alert.show('Foil_MiniPlateFoilColor:');
@@ -369,6 +382,8 @@
 				if(Debugging) Alert.show(String(CharacterWidth));
 				if(Debugging) Alert.show(String(CharacterHeight));
 				
+				LeftLoad = 0;
+				RightLoad = 0;
 				X1_LineCount = 1;
 				X2_LineCount = 1;
 				CurrentLine = 'Line 1';
@@ -405,13 +420,13 @@
 					PlateWidth = SmallPlateWidth;
 					PlateHeight = SmallPlateHeight;
 				}
-				else if (PlateSize == 'Tiny')
+				else if (PlateSize == 'House')
 				{
 					PreviewFrame.setStyle('borderVisible',false);
 					PreviewFrame.setStyle('borderWeight',1);
 					PreviewFrame.setStyle('cornerRadius',0);
-					PlateWidth = TinyPlateWidth;
-					PlateHeight = TinyPlateHeight;
+					PlateWidth = HousePlateWidth;
+					PlateHeight = HousePlateHeight;
 				}
 				
 				CalculatePrice();
@@ -442,7 +457,7 @@
 					SymbolChooser.enabled = false;
 					LinesChooser.enabled = false;
 				}
-				else if (PlateSize == 'Tiny')
+				else if (PlateSize == 'House')
 				{
 					DateChooser.enabled = false;
 					FlagChooser.enabled = false;
@@ -525,7 +540,7 @@
 				{
 					CharacterSize = 'Medium';
 				}
-				else if (PlateSize == 'Small' || PlateSize == 'Tiny')
+				else if (PlateSize == 'Small' || PlateSize == 'House')
 				{
 					CharacterSize = 'Small';
 				}
@@ -1147,7 +1162,6 @@
 				D1.width = 24;
 				D1.styleName = 'PlateDate';
 				D1.setStyle('color','black');
-				D1.setStyle('backgroundAlpha',0);
 				
 				var D2:Label = new Label;
 				
@@ -1167,7 +1181,6 @@
 				D2.width = 24;
 				D2.styleName = 'PlateDate';
 				D2.setStyle('color','black');
-				D2.setStyle('backgroundAlpha',0);
 				
 				var D3:Label = new Label;
 				
@@ -1187,7 +1200,6 @@
 				D3.width = 24;
 				D3.styleName = 'PlateDate';
 				D3.setStyle('color','black');
-				D3.setStyle('backgroundAlpha',0);
 				
 				if(Debugging) Alert.show('D1text:');
 				if(Debugging) Alert.show(D1.text);
@@ -1195,17 +1207,36 @@
 				plategroup.addElement(D2);
 				plategroup.addElement(D3);
 				
+				Alert.show(D1.text);
+				
 				if (ElementType == 'LD')
 				{
+					Alert.show(String(LeftDateBox.numElements));
+					//Remove any existing left date
+					if (LeftDateBox.numElements > 0)
+					{
+						LeftDateBox.removeElementAt(numElements-1);
+					}
+					
 					LeftDateBox.width=DateWidth; 
-					LeftDateBox.includeInLayout=true; LeftDateBox.visible=true;
+					LeftDateBox.includeInLayout=true;
 					LeftDateBox.addElement(plategroup);
+					
+					AdjustBoxWidths('LeftDate','+');
 				}
 				else if (ElementType == 'RD')
 				{
+					//Remove any existing right date
+					if (RightDateBox.numElements > 0)
+					{
+						RightDateBox.removeElementAt(numElements-1);
+					}
+					
 					RightDateBox.width=DateWidth;
-					RightDateBox.includeInLayout=true; RightDateBox.visible=true;
+					RightDateBox.includeInLayout=true;
 					RightDateBox.addElement(plategroup);
+					
+					AdjustBoxWidths('RightDate','+');
 				}
 				
 				Date1.value = Date1Save;
@@ -1215,6 +1246,8 @@
 				StackAction.push(plategroup);
 				
 				DateCount = (DateCount + 1);
+				
+				HideShow();
 				
 				CalculatePrice();
 			}
@@ -1228,15 +1261,31 @@
 				
 				if (FlagBox == 'Left')
 				{
+					//Remove any existing left flag
+					if (LeftFlagBox.numElements > 0)
+					{
+						LeftFlagBox.removeElementAt(numElements-1);
+					}
+					
 					LeftFlagBox.width = FlagWidth;
 					LeftFlagBox.includeInLayout=true; LeftFlagBox.visible=true;
 					LeftFlagBox.addElement(plateimage);
+					
+					AdjustBoxWidths('LeftFlag','+');
 				}
 				else if (FlagBox == 'Right')
 				{
+					//Remove any existing right flag
+					if (RightFlagBox.numElements > 0)
+					{
+						RightFlagBox.removeElementAt(numElements-1);
+					}
+					
 					RightFlagBox.width = FlagWidth;
 					RightFlagBox.includeInLayout=true; RightFlagBox.visible=true;
 					RightFlagBox.addElement(plateimage);
+					
+					AdjustBoxWidths('RightFlag','+');
 				}
 
 				StackAction.push(plateimage);
@@ -1248,13 +1297,13 @@
 			
 			private function HideShow():void
 			{
-				if (X0.includeInLayout == false)
+				if (CenterSymbolBox.includeInLayout == false)
 				{
-					X0.visible = false;
+					CenterSymbolBox.visible = false;
 				}
-				if (X0.includeInLayout == true)
+				if (CenterSymbolBox.includeInLayout == true)
 				{
-					X0.visible = true;
+					CenterSymbolBox.visible = true;
 				}
 				if (X1.includeInLayout == false)
 				{
@@ -1305,7 +1354,7 @@
 					X2B.visible = true;
 				}
 				
-				if (X1B.includeInLayout == false && X2.includeInLayout == false)
+		/*		if (X1B.includeInLayout == false && X2.includeInLayout == false)
 				{
 					SwitchButtonVisible = false;
 				}
@@ -1314,7 +1363,7 @@
 					SwitchButtonVisible = true;
 				}
 				
-				Outlines();
+				Outlines();  */
 			}
 
 			private function Outlines():void
@@ -1368,76 +1417,7 @@
 				//fontWeight: normal;
 				//kerning: true;
 			}
-			
-		/*	private function AddSymbolToCurrentBox(event:MouseEvent):void
-			{
-				var plateimage:Image = new Image;
-				plateimage = SelectedSymbol as Image;
-				plateimage.width = SymbolWidth;
-				plateimage.height = SymbolHeight;
-				
-				if (FoilIsImage == true)
-				{
-					//var bd:BorderContainer = AddTextureImage(plateimage);
-					var bd:BorderContainer = AddTextureImage(plateimage);
-					bd.width = plateimage.width;
-					bd.height = plateimage.height;
-				}
-				
-				if (CurrentBox == 'X1A')
-				{
-					AdjustBoxWidths('1ASymbol');
-					if (FoilIsImage == true)
-					{
-						X1A.addElement(bd);
-					}
-					else
-					{
-						X1A.addElement(plateimage);
-					}
-				}
-				else if (CurrentBox == 'X1B')
-				{
-					AdjustBoxWidths('1BSymbol');
-					if (FoilIsImage == true)
-					{
-						X1B.addElement(bd);
-					}
-					else
-					{
-						X1B.addElement(plateimage);
-					}
-				}
-				else if (CurrentBox == 'X2A')
-				{
-					AdjustBoxWidths('2ASymbol');
-					if (FoilIsImage == true)
-					{
-						X2A.addElement(bd);
-					}
-					else
-					{
-						X2A.addElement(plateimage);
-					}
-				}
-				else if (CurrentBox == 'X2B')
-				{
-					AdjustBoxWidths('2BSymbol');
-					if (FoilIsImage == true)
-					{
-						X2B.addElement(bd);
-					}
-					else
-					{
-						X2B.addElement(plateimage);
-					}
-				}
-				
-				StackAction.push(bd);
-				
-				SymbolCount = (SymbolCount + 1);
-			}	*/
-			
+						
 			/*Element types:
 			Flag gets sized based on plate size
 			LF = Left Flag
@@ -1476,7 +1456,7 @@
 				AddElementToPreview(ElementType);
 			}
 			
-			private function AddSymbolToPlate(event:MouseEvent):void
+/*			private function AddSymbolToPlate(event:MouseEvent):void
 			{
 				var plateimage:Image = new Image;
 				
@@ -1491,9 +1471,79 @@
 					ElementType = 'SS';
 				}
 				
-				AddElementToPreview(ElementType);
+				AddSymbolToCurrentBox();
+			}	*/
+			
+			private function AddSymbolToCurrentBox(event:MouseEvent):void
+			{
+				var plateimage:Image = new Image;
+				plateimage.source = SelectedSymbol;
+				plateimage.width = SymbolWidth;
+				plateimage.height = SymbolHeight;
+				
+				if (FoilIsImage == true)
+				{
+					var bd:BorderContainer = AddTextureImage(plateimage);
+					bd.width = plateimage.width;
+					bd.height = plateimage.height;
+				}
+				
+				if (CurrentBox == 'X1A')
+				{
+					AdjustBoxWidths('1ASymbol','+');
+					if (FoilIsImage == true)
+					{
+						X1A.addElement(bd);
+					}
+					else
+					{
+						X1A.addElement(plateimage);
+					}
+				}
+				else if (CurrentBox == 'X1B')
+				{
+					AdjustBoxWidths('1BSymbol','+');
+					if (FoilIsImage == true)
+					{
+						X1B.addElement(bd);
+					}
+					else
+					{
+						X1B.addElement(plateimage);
+					}
+				}
+				else if (CurrentBox == 'X2A')
+				{
+					AdjustBoxWidths('2ASymbol','+');
+					if (FoilIsImage == true)
+					{
+						X2A.addElement(bd);
+					}
+					else
+					{
+						X2A.addElement(plateimage);
+					}
+				}
+				else if (CurrentBox == 'X2B')
+				{
+					AdjustBoxWidths('2BSymbol','+');
+					if (FoilIsImage == true)
+					{
+						X2B.addElement(bd);
+					}
+					else
+					{
+						X2B.addElement(plateimage);
+					}
+				}
+
+			HideShow();
+				
+			//	StackAction.push(bd);
+				
+				SymbolCount = (SymbolCount + 1);
 			}
-																					 
+															 
 			private function AddElementToPreview(ElementType:String):void
 			{
 				//We know current Box so don't need to make it a parm
@@ -1557,64 +1607,9 @@
 					parent.setStyle('paddingTop',5);
 					parent.setStyle('paddingBottom',5);
 					parent.setStyle('borderColor','yellow');
-					
-					if (ElementType == 'CS')
-					{
-						TargetBox = 'X0';
-					}
-					else
-					{
-						TargetBox = CurrentBox;
-					}
 				}
-				
-				
-				if (TargetBox == 'X0')
-				{
-					X0.includeInLayout = true;
-					
-					//Replace any existing center symbol					
-					if (X0.numElements > 0)
-					{
-						X0.removeElementAt(numElements-1);
-					}
-					
-					ElementId = (TargetBox);
-					
-					if (ElementType == 'SC' || ElementType == 'MC' || ElementType == 'LC')
-					{
-						ElementLabel.text = SelectedCharacter;
-					}
-					else
-					{
-						ElementLabel.text = ElementId;
-					}
-					
-					child.addElement(ElementLabel);
-					
-					parent.addElement(child);
-					
-					X0.addElement(parent);
-					
-					X2.includeInLayout = true;
-					X2A.includeInLayout = true;
-					
-					if (X2_LineCount == 2)
-					{
-						X2B.includeInLayout = true; X2B.visible = true;
-					}
-					
-					//Set current box to X2 if X1 is non-empty
-					if (X1A.numElements == 0)
-					{
-						CurrentBox = 'X1A';
-					}
-					else
-					{
-						CurrentBox = 'X2A';	
-					}
-				}		
-				else if (TargetBox == 'X1A')
+			
+				if (TargetBox == 'X1A')
 				{
 					X1.includeInLayout = true; 
 					X1A.includeInLayout = true;
@@ -1668,9 +1663,6 @@
 				}
 				else if (TargetBox == 'X2A')
 				{
-					X2.includeInLayout = true;
-					X2A.includeInLayout = true;
-					
 					ElementId = (TargetBox + String(X2A_Index));
 					
 					if (ElementType == 'SC' || ElementType == 'MC' || ElementType == 'LC')
@@ -1693,10 +1685,7 @@
 					CurrentBox = 'X2A';
 				}
 				else if (TargetBox == 'X2B')
-				{
-					X2.includeInLayout = true;
-					X2B.includeInLayout = true;
-					
+				{	
 					ElementId = (TargetBox + String(X2B_Index));
 					
 					ElementLabel.text = ElementId;
@@ -1740,26 +1729,90 @@
 				
 				if (SymbolBox == 'Left')
 				{
+					//Remove any existing left symbol
+					if (LeftSymbolBox.numElements > 0)
+					{
+						LeftSymbolBox.removeElementAt(numElements-1);
+					}
+					
 					LeftSymbolBox.width = SymbolWidth;
 					LeftSymbolBox.includeInLayout=true; LeftSymbolBox.visible=true;
-					//LeftSymbolBox.addElement(plateimage);
-					LeftSymbolBox.addElement(bd);
+					
+					if (FoilIsImage == true)
+					{
+						LeftSymbolBox.addElement(bd);
+					}
+					else
+					{
+						LeftSymbolBox.addElement(plateimage);
+					}
+					
+					AdjustBoxWidths('LeftSymbol','+');
 				}
-			/*	else if (SymbolBox == 'Center')
-				{	
-					AdjustBoxWidths('CenterSymbol');
+				else if (SymbolBox == 'Center')
+				{
+					//Remove any existing center symbol					
+					if (CenterSymbolBox.numElements > 0)
+					{
+						CenterSymbolBox.removeElementAt(numElements-1);
+					}
+// ! move this
+					if (X2.includeInLayout == false)
+					{
+						X2.includeInLayout = true;
+						X2A.includeInLayout = true;
+						
+						if (X2_LineCount == 2)
+						{
+							X2B.includeInLayout = true;
+						}
+					}
+					
+					CenterSymbol=true;
+				
 					CenterSymbolBox.width = SymbolWidth;
-					CenterSymbolBox.includeInLayout=true; CenterSymbolBox.visible=true;
-					//CenterSymbolBox.addElement(plateimage);
-					CenterSymbolBox.addElement(bd);
-					CenterSymbol=true;	
-				}	*/
+					
+					AdjustBoxWidths('CenterSymbol','+');
+					
+					CenterSymbolBox.includeInLayout=true;
+// ! move this					
+					if (X1A.numElements > 0 || X1B.numElements > 0)
+					{
+						SetNextBoxAndSwitchButtonImage();
+					}
+
+					if (FoilIsImage == true)
+					{
+						CenterSymbolBox.addElement(bd);
+					}
+					else
+					{
+						CenterSymbolBox.addElement(plateimage);
+					}
+					
+					HideShow();
+				}
 				else if (SymbolBox == 'Right')
 				{
+					//Remove any existing right symbol
+					if (RightSymbolBox.numElements > 0)
+					{
+						RightSymbolBox.removeElementAt(numElements-1);
+					}
+					
 					RightSymbolBox.width = SymbolWidth;
 					RightSymbolBox.includeInLayout=true; RightSymbolBox.visible=true;
-					//RightSymbolBox.addElement(plateimage);
-					RightSymbolBox.addElement(bd);
+					
+					if (FoilIsImage == true)
+					{
+						RightSymbolBox.addElement(bd);
+					}
+					else
+					{
+						RightSymbolBox.addElement(plateimage);
+					}
+					
+					AdjustBoxWidths('RightSymbol','+');
 				}
 				
 				StackAction.push(plateimage);
@@ -1868,77 +1921,83 @@
 				StackAction.push()
 			}	*/
 			
-/* obsolete		private function AdjustBoxWidths(Context:String):void
+			private function AdjustBoxWidths(Context:String,AorD:String):void
 			{
-				if (CenterSymbol == false)
+				if (AorD == '+')
 				{
 					if (Context == 'LeftFlag')
 					{
-						X1.width = (X1.width - FlagWidth);
+						LeftLoad = (LeftLoad + FlagWidth);
 					}
 					else if (Context == 'RightFlag')
 					{
-						X1.width = (X1.width - FlagWidth);
+						RightLoad = (RightLoad + FlagWidth);
 					}
 					else if (Context == 'LeftDate')
 					{
-						X1.width = (X1.width - DateWidth);
+						LeftLoad = (LeftLoad + DateWidth);
 					}
 					else if (Context == 'RightDate')
 					{
-						X1.width = (X1.width - DateWidth);
+						RightLoad = (RightLoad + DateWidth);
 					}
 					else if (Context == 'LeftSymbol')
 					{
-						X1.width = (X1.width - SymbolWidth);
+						LeftLoad = (LeftLoad + SymbolWidth);
 					}
 					else if (Context == 'RightSymbol')
 					{
-						X1.width = (X1.width - SymbolWidth);
+						RightLoad = (RightLoad + SymbolWidth);
 					}
-					else if (Context == '1ASymbol')
+					else if (Context == 'CenterSymbol')
 					{
-						X1.width = (X1.width - SymbolWidth);
-					}
-					else if (Context == '1ASymbol')
-					{
-						X1.width = (X1.width - SymbolWidth);
+						LeftLoad = (LeftLoad + (SymbolWidth/2));
+						RightLoad = (RightLoad + (SymbolWidth/2));
 					}
 				}
-				else if (CenterSymbol == true)
+				else if (AorD == '-')
 				{
-					if ((CurrentBox.indexOf('1') >= 0) && (X2.width = 0))
-					{
-						X1.width = ((PlateElementsContainer.width / 2) - (SymbolWidth / 2));
-						X2.width = ((PlateElementsContainer.width / 2) - (SymbolWidth / 2));
-					}
-						
 					if (Context == 'LeftFlag')
 					{
-						X1.width = (X1.width - FlagWidth);
+						LeftLoad = (LeftLoad - FlagWidth);
 					}
 					else if (Context == 'RightFlag')
 					{
-						X2.width = (X2.width - FlagWidth);
+						RightLoad = (RightLoad - FlagWidth);
 					}
 					else if (Context == 'LeftDate')
 					{
-						X1.width = (X1.width - DateWidth);
+						LeftLoad = (LeftLoad - DateWidth);
 					}
 					else if (Context == 'RightDate')
 					{
-						X2.width = (X2.width - DateWidth);
+						RightLoad = (RightLoad - DateWidth);
 					}
 					else if (Context == 'LeftSymbol')
 					{
-						X1.width = (X1.width - SymbolWidth);
+						LeftLoad = (LeftLoad - SymbolWidth);
 					}
 					else if (Context == 'RightSymbol')
 					{
-						X2.width = (X2.width - SymbolWidth);
+						RightLoad = (RightLoad - SymbolWidth);
+					}
+					else if (Context == 'CenterSymbol')
+					{
+					//	LeftLoad = (LeftLoad - (SymbolWidth/2));
+					//	RightLoad = (RightLoad - (SymbolWidth/2));
 					}
 				}
-			}	*/
+				
+				if (X2.includeInLayout == true)
+				{
+					X1.width = ((PlateElementsContainer.width/2) - LeftLoad);
+					X2.width = ((PlateElementsContainer.width/2) - RightLoad);
+				}
+				else
+				{
+					X1.width = (PlateElementsContainer.width- LeftLoad - RightLoad);
+				}
+			}
 			
 			private function SetLineCount(RequestedLineCount:int):void
 			{
@@ -1970,15 +2029,12 @@
 				{
 					if (CurrentBox == 'X1A' || CurrentBox == 'X1B')
 					{
-						X1A.includeInLayout = true;
-						X1B.includeInLayout = true;
+						X2B.includeInLayout;
 						X1_LineCount = 2;
 					}
 					else if (CurrentBox == 'X2A' || CurrentBox == 'X2B')
 					{
-						X2.includeInLayout = true;
-						X2A.includeInLayout = true;
-						X2B.includeInLayout = true;
+						X2A.includeInLayout;
 						X2_LineCount = 2;
 					}
 				}
@@ -1987,135 +2043,123 @@
 				Outlines();
 			}
 			
-			private function SetSwitch():void
+			// check for fullness?
+			// ! Propagate calls to this in place of ad-hoc
+			private function SetNextBoxAndSwitchButtonImage():void
 			{
-			/*	if (CurrentBox == 'X1A')
-				{	  
-					if (X1B.includeInLayout == true)
-					{
-						ArrowX1A_X1B.play();
-					}
-					else if (X2A.includeInLayout == true)
-					{
-						ArrowX1A_X2A.play();
-					}
-					else if (X2B.includeInLayout == true)
-					{
-						ArrowX1A_X2B.play();
-					}
-				}
-				else if (CurrentBox == 'X1B')
-				{
-					if (X2A.includeInLayout == true)
-					{
-						ArrowX1B_X2A.play();
-					}
-					else if (X2B.includeInLayout == true)
-					{
-						ArrowX1B_X2B.play();
-					}
-					else if (X1A.includeInLayout == true)
-					{
-						ArrowX1B_X1A.play();
-					}
-				}
-				else if (CurrentBox == 'X2A')
-				{
-					if (X2B.includeInLayout == true)
-					{
-						ArrowX2A_X2B.play();
-					}
-					else if (X1A.includeInLayout == true)
-					{
-						ArrowX2A_X1A.play();
-					}
-					else if (X1B.includeInLayout == true)
-					{
-						ArrowX2A_X1B.play();
-					}
-				}
-				else if (CurrentBox == 'X2B')
-				{
-					if (X1A.includeInLayout == true)
-					{
-						ArrowX2B_X1A.play();
-					}
-					else if (X1B.includeInLayout == true)
-					{
-						ArrowX2B_X1B.play();
-					}
-					else if (X2A.includeInLayout == true)
-					{
-						ArrowX2B_X2A.play();
-					}
-				}	*/
-			}
-			
-			private function Switch():void
-			{
+SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 				if (CurrentBox == 'X1A')
-				{	  
-					if (X1B.includeInLayout == true)
+				{
+					if (CenterSymbol == false)
 					{
-						CurrentBox = 'X1B';
+						if (X1_LineCount == 2)
+						{
+							NextBox = 'X1B';
+							SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
+							SwitchButtonVisible = true;
+						}
+						else
+						{
+							NextBox = CurrentBox;
+							SwitchButtonImage = '';
+							SwitchButtonVisible = false;
+						}
 					}
-					else if (X2A.includeInLayout == true)
+					else
 					{
-						CurrentBox = 'X2A';
+						NextBox = 'X2A';
+
+						if (X1_LineCount == 1 && X2_LineCount == 1)
+						{
+							SwitchButtonImage = 'assets/switch/CX1_NX2.jpg';
+						}
+						else if (X1_LineCount == 1 && X2_LineCount == 2)
+						{
+							SwitchButtonImage = 'assets/switch/CX1A_NX2A.jpg';
+						}
+						else if (X1_LineCount == 2 && X2_LineCount == 1)
+						{
+							SwitchButtonImage = 'assets/switch/CX1A_NX2.jpg';
+						}
+						else if (X1_LineCount == 2 && X2_LineCount == 1)
+						{
+							SwitchButtonImage = 'assets/switch/CX1A_NX2A.jpg';
+						}			
 					}
-					else if (X2B.includeInLayout == true)
-					{
-						CurrentBox = 'X2B';
-					}
+					
+					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X1B')
 				{
-					if (X2A.includeInLayout == true)
+					NextBox = 'X1A.jpg';
+
+					if (CenterSymbol == false)
 					{
-						CurrentBox = 'X2A';
+						if (X1_LineCount == 2)
+						{
+						SwitchButtonImage = 'assets/switch/SPAN_CX1B_NX1A.jpg';
+						}
 					}
-					else if (X2B.includeInLayout == true)
+					else
 					{
-						CurrentBox = 'X2B';
+						if (X1_LineCount == 2 && X2_LineCount == 1)
+						{
+							SwitchButtonImage = 'assets/switch/CX1B_NX1A_SPAN.jpg';
+						}
+						else if (X1_LineCount == 2 && X2_LineCount == 2)
+						{
+							SwitchButtonImage = 'assets/switch/CX1B_NX1A.jpg';
+						}
 					}
-					else if (X1A.includeInLayout == true)
-					{
-						CurrentBox = 'X1A';
-					}
+					
+					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X2A')
 				{
-					if (X2B.includeInLayout == true)
+					if (X1_LineCount == 1 && X2_LineCount == 1)
 					{
-						CurrentBox = 'X2B';
+						NextBox = 'X1A';
+						SwitchButtonImage = 'assets/switch/CX2_NX1.jpg';
 					}
-					else if (X1A.includeInLayout == true)
+					else if (X1_LineCount == 2 && X1_LineCount == 1)
 					{
-						CurrentBox = 'X1A';
+						NextBox = 'X1B';
+						SwitchButtonImage = 'assets/switch/CX2_NX1B.jpg';
 					}
-					else if (X1B.includeInLayout == true)
+					else if (X1_LineCount == 1 && X2_LineCount == 2)
 					{
-						CurrentBox = 'X1B';
+						NextBox = 'X2B';
+						SwitchButtonImage = 'assets/switch/CX2A_NX2B_SPAN.jpg';
 					}
+					else if (X1_LineCount == 2 && X2_LineCount == 2)
+					{
+						NextBox = 'X2B';
+						SwitchButtonImage = 'assets/switch/CX2A_NX2B.jpg';
+					}
+					
+					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X2B')
 				{
-					if (X1A.includeInLayout == true)
+					if (X1_LineCount == 1 && X2_LineCount == 2)
 					{
-						CurrentBox = 'X1A';
+						NextBox = 'X1A';
+						SwitchButtonImage = 'assets/switch/CX2B_NX1.jpg';
 					}
-					else if (X1B.includeInLayout == true)
+					else if (X1_LineCount == 2 && X2_LineCount == 2)
 					{
-						CurrentBox = 'X1B';
+						NextBox = 'X1B';
+						SwitchButtonImage = 'assets/switch/CX2B_NX1B.jpg';
 					}
-					else if (X2A.includeInLayout == true)
-					{
-						CurrentBox = 'X2A';
-					}
+					
+					SwitchButtonVisible = true;
 				}
+
+				CurrentBox = NextBox;
 				
 				Outlines();
-				SetSwitch();
+				
+				SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 			}
 		
 		/*	private function ChangeLineCount(event:MouseEvent,RequestedLineCount:int):void
@@ -2215,6 +2259,7 @@
 			
 			private function UndoLastAction():void
 			{
+// ! Need to AdjustBoxWidths
 				if (StackAction.length > 0)
 				{
 					CharactersAdded = (CharactersAdded - 1);
@@ -2283,6 +2328,9 @@
 
 				CharactersAdded = 0;
 				CenterSymbol = false;
+				
+				LeftLoad = 0;
+				RightLoad = 0;
 			}
 			
 			private function StartOver():void
@@ -2789,21 +2837,21 @@
 									</s:layout>
 								</s:BorderContainer>
 									
-								<s:BorderContainer id="X1" borderColor="blue"
-												   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true">
+								<s:BorderContainer id="X1" borderColor="blue" 
+												   width="{PlateElementsContainer.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true">
 									<s:layout>
 										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"	  
 														  paddingTop="10" paddingBottom="10"/>
 									</s:layout>
-									<s:BorderContainer id="X1A"
-													   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
+									<s:BorderContainer id="X1A" 
+													   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
 													   borderColor="{OutlineColor}" borderAlpha=".25">
 										<s:layout>
 											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
 										</s:layout>
 									</s:BorderContainer>
 									<s:BorderContainer id="X1B"
-													   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
+													   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
 													   borderColor="{OutlineColor}" borderAlpha=".25">
 										<s:layout>
 											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
@@ -2812,8 +2860,8 @@
 								</s:BorderContainer>
 								
 								<!--No width set.  Let the symbol dictate the width-->
-								<s:BorderContainer id="X0" borderColor="green"
-												   height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false">
+								<s:BorderContainer id="CenterSymbolBox" borderColor="green"
+												   height="100%" verticalCenter="0" horizontalCenter="-45" includeInLayout="false" visible="false">
 									<s:layout>
 										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5" clipAndEnableScrolling="true"
 														  paddingTop="5" paddingBottom="5"/>
@@ -2821,20 +2869,20 @@
 								</s:BorderContainer>
 								
 								<s:BorderContainer id="X2" borderColor="blue"
-												   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" >
+												   width="0" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" >
 									<s:layout>
 										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
 														  paddingTop="10" paddingBottom="10"/>
 									</s:layout>
 									<s:BorderContainer id="X2A"
-													   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
+													   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
 													   borderColor="{OutlineColor}" borderAlpha=".25">
 										<s:layout>
 											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
 										</s:layout>
 									</s:BorderContainer>
 									<s:BorderContainer id="X2B"
-													   width="100%" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+													   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
 													   borderColor="{OutlineColor}" borderAlpha=".25">
 										<s:layout>
 											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"
@@ -2938,65 +2986,65 @@
 										  gap="0"/>
 					</s:layout>
 					<s:Label text="Plate"
-							 width="100%" height="14" verticalCenter="0"
+							 width="30" height="14" verticalCenter="0"
 							 styleName="DirectiveLabel"/>
 					<s:Label text="size"
-							 width="100%" height="14" verticalCenter="0"
+							 width="30" height="14" verticalCenter="0"
 							 styleName="DirectiveLabel"/>
 				</s:BorderContainer>
 				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"
 							   selected="true"
 							   click="ChangePlateSize(event,'Large')"/>
-				<s:BorderContainer width="156" height="33.9" borderVisible="true" cornerRadius="6">
+				<s:BorderContainer width="{LargePlateWidth*PlateReduction}" height="{LargePlateHeight*PlateReduction}" borderVisible="true" cornerRadius="6">
 					<s:layout>
 						<s:HorizontalLayout  horizontalAlign="center" verticalAlign="middle"/>
 					</s:layout>
-					<mx:Text text="520mm x 113mm"
+					<mx:Text text="52cm x 11.3cm"
 							 verticalCenter="0"
 							 fontFamily="Arial Narrow" fontSize="11"/>
 				</s:BorderContainer>
 				<s:Spacer width="100%"/>
 				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"
 							   click="ChangePlateSize(event,'Medium')"/>
-				<s:BorderContainer width="120" height="33.9" borderVisible="true" cornerRadius="6">
+				<s:BorderContainer width="{MediumPlateWidth*PlateReduction}" height="{MediumPlateHeight*PlateReduction}" borderVisible="true" cornerRadius="6">
 					<s:layout>
 						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
 					</s:layout>
-					<mx:Text text="400mm x 113mm"
+					<mx:Text text="40cm x 11.3cm"
 							 verticalCenter="0"
 							 fontFamily="Arial Narrow" fontSize="11"/>
 				</s:BorderContainer>
 				<s:Spacer width="100%"/>
 				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"
 							   click="ChangePlateSize(event,'Small')"/>
-				<s:BorderContainer width="78" height="22.5" borderVisible="true" cornerRadius="5">
+				<s:BorderContainer width="{SmallPlateWidth*PlateReduction}" height="{SmallPlateHeight*PlateReduction}" borderVisible="true" cornerRadius="5">
 					<s:layout>
 						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
 					</s:layout>
-					<mx:Text text="290mm x 75mm"
+					<mx:Text text="29cm x 7.5cm"
 							 verticalCenter="0"
 							 fontFamily="Arial Narrow" fontSize="11"/>
 				</s:BorderContainer>
 				<s:Spacer width="100%"/>
 				<s:RadioButton groupName="PlateSize" width="15" symbolColor="blue"
-							   click="ChangePlateSize(event,'Tiny')"/>
-				<s:BorderContainer width="78" height="22.5" borderVisible="true" cornerRadius="5">
+							   click="ChangePlateSize(event,'House')"/>
+				<s:BorderContainer width="{HousePlateLabel.width}" height="100%" borderVisible="false">
 					<s:layout>
-						<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+						<s:BasicLayout clipAndEnableScrolling="true"/>
 					</s:layout>
-					<mx:Text text="???mm x ???mm"
-							 verticalCenter="0"
+					<s:BorderContainer x="0" y="2" width="{HousePlateWidth*PlateReduction}" height="{HousePlateHeight*PlateReduction}" cornerRadius="3" depth="1"/>
+					<s:Label id="HousePlateLabel" text="17.3cm x 11.3cm"
+							 x="0" width="60" verticalCenter="0" depth="2" 
 							 fontFamily="Arial Narrow" fontSize="11"/>
 				</s:BorderContainer>
 			</s:BorderContainer>
 			
-			<s:Spacer height="2"/>
+			<s:Spacer height="1"/>
 			
 			<!-- Controls to choose orientation et al -->
-			<s:BorderContainer width="100%" height="24" borderVisible="false">
+			<s:BorderContainer width="50%" height="24" borderVisible="false">
 				<s:layout>
-					<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"
-										paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0"/>				
+					<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"/>				
 				</s:layout>
 				
 				<s:HGroup id="LinesChooser" width="100%" height="19" verticalAlign="baseline">
@@ -3016,17 +3064,44 @@
 					<mx:Text text="2 lines"
 							 width="36" verticalCenter="0"
 							 fontFamily="Arial" fontSize="11"/>
-					<s:Spacer width="4"/>
 				</s:HGroup>
 					
-				<!--Switch button visibility is toggled via function-->
-				<s:BorderContainer id="SwitchButton" width="105" height="18" horizontalCenter="13" verticalCenter="0" chromeColor="gray" borderColor="blue"
-								   useHandCursor="true" buttonMode="true" visible="{SwitchButtonVisible}" click="Switch()">
+				<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+						 source="{SwitchButtonImage}"/>
+				
+				<!--Switch button image is set and visibility is toggled via function-->
+				<!--s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="{SwitchButtonVisible}" 
+								   chromeColor="gray" borderColor="black" cornerRadius="3" 
+								   useHandCursor="true" buttonMode="true" 
+								   click="SetNextBoxAndSwitchButtonImage()">
 					<s:layout>
-						<s:VerticalLayout horizontalAlign="center" verticalAlign="top" clipAndEnableScrolling="true"/>
+						<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+										  paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2"/>
 					</s:layout>
-					<!--s:Image id="Arrow" width="100%" height="100%" source="{ArrowImage}"/-->
-				</s:BorderContainer>
+					<s:BorderContainer width="100%" height="100%" borderVisible="true" borderWeight=".5">
+						<s:layout>
+							<s:HorizontalLayout clipAndEnableScrolling="false"/>
+						</s:layout>
+						<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+								 source="{SwitchButtonImage}"/>
+					<!/s:BorderContainer>
+				</s:BorderContainer-->
+				
+				<!--Switch button image is set and visibility is toggled via function-->
+				<!--s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="13" verticalCenter="0"
+								   chromeColor="gray" borderColor="black" cornerRadius="3"
+								   useHandCursor="true" buttonMode="true" visible="{SwitchButtonVisible}" click="SetNextBoxAndSwitchButtonImage()">
+					<s:layout>
+						<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+										  paddingTop="4" paddingBottom="4" paddingLeft="4" paddingRight="4"/>
+					</s:layout>
+					<s:BorderContainer width="100%" height="100%" borderVisible="true" borderWeight=".5">
+						<s:layout>
+							<s:HorizontalLayout clipAndEnableScrolling="true"/>
+						</s:layout>
+						<s:Image fillMode="scale" scaleMode="stretch" source="{SwitchButtonImage}"/>
+					</s:BorderContainer> 
+				</s:BorderContainer-->
 				<!--s:HGroup id="SwitchButton" width="100" visible="{SwitchVisible}">
 					<mx:Text text="Switch:"
 							 fontFamily="Arial" fontSize="11" fontWeight="bold"/>
@@ -3043,6 +3118,8 @@
 							 styleName="DirectiveLabel"/>
 				</s:HGroup>
 			</s:BorderContainer>
+			
+			<s:Spacer height="4"/>
 			
 			<!-- Outer container for plate content controls -->
 			<s:BorderContainer width="100%" height="196" 
@@ -3473,7 +3550,7 @@
 								<s:Image id="SelectedSymbolImage"
 										 width="100%" height="100%" horizontalCenter="0" verticalCenter="0" horizontalAlign="center" verticalAlign="middle"
 										 source="{SelectedSymbol}" fillMode="scale"
-										 buttonMode="true" click="AddSymbolToPlate(event)"/>
+										 buttonMode="true" click="AddSymbolToCurrentBox(event)"/>
 							</s:BorderContainer>
 							<s:Image id="SymbolGalleryButton"
 									 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
@@ -3488,12 +3565,12 @@
 							<s:Button id="AddSymbolToCurrentBoxButton" label="X"
 									  width="14" height="14"
 									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"
-									  click="AddSymbolToPlate(event)"/>
+									  click="AddSymbolToCurrentBox(event)"/>
 							<s:Button id="AddSymbolToLeftSymbolBoxButton" label="L" 
 									  width="14" height="14"
 									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"
 									  click="AddSymbolToSymbolBox(event,'Left')"/>
-							<s:Button id="AddSymbolToCenterSymbolBoxButton" label="C" 
+							<s:Button id="AddSymbolToCenterSymbolBox" label="C" 
 									  width="14" height="14"
 									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"
 									  click="AddSymbolToSymbolBox(event,'Center')"/>
@@ -3680,8 +3757,10 @@
 							horizontalCenter="0" verticalCenter="0">
 						<s:layout>
 							<s:TileLayout rowHeight="38" columnWidth="275" requestedColumnCount="1" requestedRowCount="6"
-										  columnAlign="justifyUsingGap" rowAlign="justifyUsingGap" verticalGap="3"
-										  paddingTop="10" paddingBottom="10" paddingRight="5" clipAndEnableScrolling="true"/>
+										  columnAlign="justifyUsingWidth" rowAlign="justifyUsingGap" verticalGap="3"
+										  paddingTop="10" paddingBottom="10" paddingLeft="0" paddingRight="5"
+										  horizontalAlign="center" verticalAlign="middle"
+										  clipAndEnableScrolling="true"/>
 						</s:layout>
 						<s:dataProvider>
 							<s:ArrayList>
@@ -3733,6 +3812,8 @@
 										</s:BorderContainer>								
 									</s:BorderContainer>
 								</s:BorderContainer>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/White.jpg" 
+										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Black.jpg" 
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkBlue.jpg"
@@ -3743,8 +3824,8 @@
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterBlue.jpg" 
 										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterGold.jpg"
-										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
+								<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterGold.jpg"
+										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/-->
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterGreen.jpg" 
 										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterRed.jpg"
@@ -3753,8 +3834,8 @@
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Pink.jpg"
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Rainbow.jpg" 
-										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+								<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Rainbow.jpg" 
+										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/-->
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Raindrops.jpg"
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Red.jpg"
@@ -3767,8 +3848,14 @@
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Space.jpg"
 										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/White.jpg" 
-										 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Bayern.jpg" 
+										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
+								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GermanFlagColors.jpg" 
+										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
+								<s:Image width="33.3%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/HouseWhite.jpg" 
+										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
+								<s:Image width="33.3%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/HouseBlue.jpg" 
+										 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
 							</s:ArrayList>
 						</s:dataProvider>
 					</s:List>					
@@ -4066,7 +4153,7 @@
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/EuroSign.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-								<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TinyEuroSign.png"
+								<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallEuroSign.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 								<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FerrisWheel.png"
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>

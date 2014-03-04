@@ -1215,8 +1215,9 @@ FoilIsImage = true;
 					//Remove any existing left date
 					if (LeftDateBox.numElements > 0)
 					{
-						LeftDateBox.removeElementAt(numElements-1);
+						LeftDateBox.removeAllElements;
 					}
+					Alert.show(String(LeftDateBox.numElements));
 					
 					LeftDateBox.width=DateWidth; 
 					LeftDateBox.includeInLayout=true;

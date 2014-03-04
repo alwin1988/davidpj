@@ -245,6 +245,8 @@
 			
 			import mx.core.UIComponent;
 			
+			import spark.core.IGraphicElement;
+			
 			import utility.TexturedText;
 			private var Debugging:Boolean = false;
 			
@@ -362,6 +364,10 @@
 			{
 				//FoilGalleryList.dataProvider = ac;
 				PlateGalleryList.dataProvider = ar1;
+				
+				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
+				SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
+					SelectedSymbolBC.visible = true;
 			}
 
 			protected function updateFoilToSymbol():void
@@ -845,6 +851,8 @@
 					//bc.percentHeight = 100;
 					//bc.percentWidth = 100;
 					Foil_MiniPlateFrame.addElement(img);
+					var img:Image = bc.getElementAt(0) as Image;
+					SelectedFoilSwatchImage = img.source;
 				}
 				/*
 				FoilIsImage = true;
@@ -950,6 +958,7 @@
 					//SelectedSymbolBC = event.currentTarget as BorderContainer
 					SelectedSymbolBC.removeAllElements();
 					SelectedSymbolBC.addElement(event.currentTarget as BorderContainer);
+					SelectedSymbol = drawUISnapShot(event.currentTarget as BorderContainer);
 				}
 				else
 				{
@@ -1466,69 +1475,104 @@
 			
 			private function AddSymbolToCurrentBox(event:MouseEvent):void
 			{
-				var plateimage:Image = new Image;
-				plateimage = SelectedSymbol as Image;
-				plateimage.width = SymbolWidth;
-				plateimage.height = SymbolHeight;
+				//var plateimage:BorderContainer = new BorderContainer;
+				//plateimage = SelectedSymbolBC as BorderContainer;
+				
+				/*
+				imgTmp = symbolList.getItemAt(i) as Image;
+				SelectedFoilSwatchImage;
+				imgTxt = new Image();
+				imgTxt.source = String(SelectedFoilSwatchImage);
+				imgTxt.width = imgTmp.width;
+				imgTxt.height = imgTmp.height;
+				imgTxt.fillMode = imgTmp.fillMode;
+				imgTxt.scaleMode = imgTmp.scaleMode;
+				var bd:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
+				*/
+				trace(SelectedSymbolBC.numElements);
+				var bdTmp:BorderContainer = SelectedSymbolBC.getElementAt(0) as BorderContainer;
+				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
+				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
+				
+				var imgTxt:Image = new Image;
+				imgTxt.source = imgTxt1.source;
+				imgTxt.width = SymbolWidth;
+				imgTxt.height = SymbolHeight;
+				imgTxt.fillMode = imgTxt1.fillMode;
+				imgTxt.scaleMode = imgTxt1.scaleMode;
+				
+				var imgTmp:Image = new Image;
+				imgTmp.source = imgTmp1.source;
+				imgTmp.width = SymbolWidth;
+				imgTmp.height = SymbolHeight;
+				imgTmp.fillMode = imgTmp1.fillMode;
+				imgTmp.scaleMode = imgTmp1.scaleMode;
+				
+				var tt:TexturedText = new TexturedText();
+				var plateimage:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
+				
+				//plateimage.width = SymbolWidth;
+				//plateimage.height = SymbolHeight;
 				
 				if (FoilIsImage == true)
 				{
 					//var bd:BorderContainer = AddTextureImage(plateimage);
-					var bd:BorderContainer = AddTextureImage(plateimage);
-					bd.width = plateimage.width;
-					bd.height = plateimage.height;
+					//var bd:BorderContainer = AddTextureImage(plateimage);
+					//bd.width = plateimage.width;
+					//bd.height = plateimage.height;
 				}
 				
 				if (CurrentBox == 'Box1A')
 				{
-					AdjustBoxWidths('1ASymbol');
-					if (FoilIsImage == true)
-					{
-						Box1A.addElement(bd);
-					}
-					else
-					{
+					//AdjustBoxWidths('1ASymbol');
+					//if (FoilIsImage == true)
+					//{
+					//	Box1A.addElement(bd);
+					//}
+					//else
+					//{
 						Box1A.addElement(plateimage);
-					}
+					//}
 				}
 				else if (CurrentBox == 'Box1B')
 				{
-					AdjustBoxWidths('1BSymbol');
-					if (FoilIsImage == true)
-					{
-						Box1B.addElement(bd);
-					}
-					else
-					{
+					//AdjustBoxWidths('1BSymbol');
+					//if (FoilIsImage == true)
+					//{
+					//	Box1B.addElement(bd);
+					//}
+					//else
+					//{
 						Box1B.addElement(plateimage);
-					}
+					//}
 				}
 				else if (CurrentBox == 'Box2A')
 				{
 					AdjustBoxWidths('2ASymbol');
-					if (FoilIsImage == true)
-					{
-						Box2A.addElement(bd);
-					}
-					else
-					{
+					//if (FoilIsImage == true)
+					//{
+					//	Box2A.addElement(bd);
+					//}
+					//else
+					//{
 						Box2A.addElement(plateimage);
-					}
+					//}
 				}
 				else if (CurrentBox == 'Box2B')
 				{
 					AdjustBoxWidths('2BSymbol');
-					if (FoilIsImage == true)
-					{
-						Box2B.addElement(bd);
-					}
-					else
-					{
+					//if (FoilIsImage == true)
+					//{
+					//	Box2B.addElement(bd);
+					//}
+					//else
+					//{
 						Box2B.addElement(plateimage);
-					}
+					//}
 				}
 				
-				StackAction.push(bd);
+				//StackAction.push(bd);
+				StackAction.push(plateimage);
 				
 				SymbolCount = (SymbolCount + 1);
 			}

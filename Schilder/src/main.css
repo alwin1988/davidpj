@@ -8,7 +8,7 @@
 	font-family: GL-Nummernschild-Eng;
 	fontStyle: normal; 
 	fontWeight: bold;
-	embed-as-cff: false;
+	embed-as-cff: true;
 }
 
 @font-face
@@ -17,7 +17,7 @@
 	font-family: GL-Nummernschild-Eng;
 	fontStyle: bold; 
 	fontWeight: bold;
-	embed-as-cff: false;
+	embed-as-cff: true;
 }
 
 @font-face
@@ -26,7 +26,7 @@
 	font-family: GL-Nummernschild-Mtl;
 	fontStyle: normal; 
 	fontWeight: bold;
-	embed-as-cff: false;
+	embed-as-cff: true;
 }
 
 @font-face
@@ -35,7 +35,7 @@
 	font-family: GL-Nummernschild-Mtl;
 	fontStyle: bold; 
 	fontWeight: bold;
-	embed-as-cff: false;
+	embed-as-cff: true;
 }
 
 .GL-Nummernschild-Eng

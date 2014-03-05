@@ -296,17 +296,15 @@
 			
 			public static const CharacterButtonWidth:int = 26;
 			public static const CharacterButtonHeight:int = 37;
-			//public static const LargeCharacterWidth:int = 35;
-			//public static const LargeCharacterHeight:int = 94;
-			public static const LargeCharacterFontSize:int = 96;			
-			public static const LargeCharacterWidth:int = 40;
-			public static const LargeCharacterHeight:int = 100;
-			public static const MediumCharacterFontSize:int = 50;
-			public static const MediumCharacterWidth:int = 20;
-			public static const MediumCharacterHeight:int = 50;	
-			public static const SmallCharacterFontSize:int = 30;	
-			public static const SmallCharacterWidth:int = 40;
-			public static const SmallCharacterHeight:int = 100;
+			public static const LargeCharacterWidth:int = 57;
+			public static const LargeCharacterHeight:int = 77.5;
+	//		public static const LargeCharacterFontSize:int = 96;
+			public static const MediumCharacterWidth:int = 31;
+			public static const MediumCharacterHeight:int = 58;
+	//		public static const MediumCharacterFontSize:int = 31;
+			public static const SmallCharacterWidth:int = 30;
+			public static const SmallCharacterHeight:int = 42;
+	//		public static const SmallCharacterFontSize:int = 30;
 			
 			[Embed(source="assets/down_triangle.png")]
 			public static const DownTriangle:Class;
@@ -389,8 +387,6 @@
 					
 			private var StackAction:Array = new Array();
 			
-private var SelectedFoilImageSnapshot:Image;
-			
 			private function init2():void
 			{
 				HideShow();
@@ -419,15 +415,16 @@ private var SelectedFoilImageSnapshot:Image;
 				SelectedSymbolBC.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
 				SelectedSymbolBC.visible = true;
 				
-
-/*!!			Foil_MiniPlateFrame.removeAllElements();
+				/*
+				Foil_MiniPlateFrame.removeAllElements();
 				var bc:BorderContainer = (event.currentTarget as BorderContainer);
 				var img:Image = drawUISnapShot(bc);
 				img.percentHeight = 100;
 				img.percentWidth = 100;
 				Foil_MiniPlateFrame.addElement(img);
 				var img:Image = bc.getElementAt(0) as Image;
-				SelectedFoilSwatchImage = img.source;	*/
+				SelectedFoilSwatchImage = img.source;
+				*/
 			
 				var imgSrc:Image = new Image();
 				imgSrc.source = SelectedFoilImage;
@@ -452,11 +449,9 @@ private var SelectedFoilImageSnapshot:Image;
 				var img:Image = drawUISnapShot(bd);
 				img.percentHeight = 100;
 				img.percentWidth = 100;
-//!!			Foil_MiniPlateFrame.addElement(imgSrc);
+		//		Foil_MiniPlateFrame.addElement(imgSrc);
 				//var img:Image = bd.getElementAt(0) as Image;
 				//SelectedFoilSwatchImage = img.source;
-				
-SelectedFoilImageSnapshot = img as Image;
 			}
 			
 			protected function updateFoilToSymbol():void
@@ -759,12 +754,12 @@ FoilIsImage = true;
 				if (FoilIsImage == true)
 				{
 					Foil_MiniPlateImageContainer.includeInLayout = true; Foil_MiniPlateImageContainer.visible = true;
-					Foil_MiniPlateNonImageContainer.includeInLayout = false; Foil_MiniPlateNonImageContainer.visible = false;
+//					Foil_MiniPlateNonImageContainer.includeInLayout = false; Foil_MiniPlateNonImageContainer.visible = false;
 				}
 				else if (FoilIsImage == false)
 				{
 					Foil_MiniPlateImageContainer.includeInLayout = false; Foil_MiniPlateImageContainer.visible = false;
-					Foil_MiniPlateNonImageContainer.includeInLayout = true; Foil_MiniPlateNonImageContainer.visible = true;
+//					Foil_MiniPlateNonImageContainer.includeInLayout = true; Foil_MiniPlateNonImageContainer.visible = true;
 				}
 			}
 			
@@ -822,19 +817,19 @@ FoilIsImage = true;
 				{
 					CharacterWidth = LargeCharacterWidth;
 					CharacterHeight = LargeCharacterHeight;
-					CharacterFontSize = LargeCharacterFontSize;
+//					CharacterFontSize = LargeCharacterFontSize;
 				}
 				else if (CharacterSize == 'Medium')
 				{
 					CharacterWidth = MediumCharacterWidth;
 					CharacterHeight = MediumCharacterHeight;
-					CharacterFontSize = MediumCharacterFontSize;
+//					CharacterFontSize = MediumCharacterFontSize;
 				}
 				else if (CharacterSize == 'Small')
 				{
 					CharacterWidth = SmallCharacterWidth;
 					CharacterHeight = SmallCharacterHeight;
-					CharacterFontSize = SmallCharacterFontSize;
+//					CharacterFontSize = SmallCharacterFontSize;
 				}
 			}
 
@@ -885,13 +880,7 @@ FoilIsImage = true;
 						FoilColor = Foil_MiniPlateFoilColor;
 					PreviewFoilImage.includeInLayout = false; PreviewFoilImage.visible = false;
 					PlateNonImageBorder.setStyle('borderColor',FoilColor);	
-				}
-
-PlateImageBorder.source = SelectedFoilImageSnapshot;
-PreviewFoilImage.source = SelectedFoilImageSnapshot;
-PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
-
-				
+				}				
 			}
 			
 			/*private function OpenGallery(event:MouseEvent,GalleryName:String):void 
@@ -980,9 +969,9 @@ PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
 			
 			private function SelectFoilGalleryImage(event:MouseEvent):void 
 			{
-//!!			if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
+			if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
-//!!				Foil_MiniPlateFrame.removeAllElements();
+					Foil_MiniPlateFrame.removeAllElements();
 					var bc:BorderContainer = (event.currentTarget as BorderContainer);
 					var img:Image = drawUISnapShot(bc);
 					img.percentHeight = 100;
@@ -995,7 +984,7 @@ PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
 					//img2.percentWidth = 100;
 					//bc.percentHeight = 100;
 					//bc.percentWidth = 100;
-//!!				Foil_MiniPlateFrame.addElement(img);
+					Foil_MiniPlateFrame.addElement(img);
 					var img:Image = bc.getElementAt(0) as Image;
 					SelectedFoilSwatchImage = img.source;
 					FoilIsImage = true;
@@ -2191,19 +2180,6 @@ PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
 															 
 			private function AddCharacterToPlate(event:MouseEvent):void
 			{					
-				if (CharacterSize == 'Large')
-				{
-					ElementType = 'LC';
-				}
-				else if (CharacterSize == 'Medium')
-				{
-					ElementType = 'MC';
-				}
-				else if (CharacterSize == 'Small')
-				{
-					ElementType = 'SC';
-				}
-				
 				var keypadbutton:Button = event.target as Button;
 				var platelabel:Label = new Label;
 				
@@ -2221,64 +2197,40 @@ PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
 				var parent:VGroup = new VGroup;
 				var child:BorderContainer = new BorderContainer;
 				
-				if (ElementType == 'SC' || ElementType == 'MC' || ElementType == 'LC')
+				if (CharacterSize == 'Small')
 				{
-					//Child has no ID
-					if (ElementType == 'SC')
-					{
-						platelabel.width = SmallCharacterWidth;
-						platelabel.height = SmallCharacterHeight;
-						platelabel.styleName = 'PlateCharacterSmall';
-					}
-					else if (ElementType == 'MC')
-					{
-						platelabel.width = MediumCharacterWidth;
-						platelabel.height = MediumCharacterHeight;
-						platelabel.styleName = 'PlateCharacterMedium';
-					}
-					else if (ElementType == 'LC')
-					{
-						platelabel.width = LargeCharacterWidth;
-						platelabel.height = LargeCharacterHeight;
-						platelabel.styleName = 'PlateCharacterLarge';
-					}
-					
-					platelabel.text = keypadbutton.label;
-					platelabel.setStyle('color', FoilColor);
-					
-					child.width = platelabel.width;
-					child.height = platelabel.height;
-					child.setStyle('borderColor','blue');
-					child.setStyle('backgroundAlpha',0);
-					
-					//Parent ID is assigned later
-					parent.width = child.width;
-					parent.percentHeight = 100;
-					parent.setStyle('borderColor','yellow');
-					parent.setStyle('backgroundAlpha',0);
-					
-					TargetBox = CurrentBox;
-				}			
-				else if (ElementType == 'SS' || ElementType == 'TS' || ElementType == 'CS')
-				{
-					if (ElementType == 'SS')
-					{
-						child.width = ShortSymbolWidth;
-						child.height = ShortSymbolHeight;
-					}
-					else if (ElementType == 'TS')
-					{
-						child.width = TallSymbolWidth;
-						child.height = TallSymbolHeight;
-					}
-					child.setStyle('borderColor','green');
-					
-					parent.width = child.width;
-					parent.percentHeight = 100;
-					parent.setStyle('paddingTop',5);
-					parent.setStyle('paddingBottom',5);
-					parent.setStyle('borderColor','yellow');
+					platelabel.width = SmallCharacterWidth;
+					platelabel.height = SmallCharacterHeight;
+					platelabel.styleName = 'PlateCharacterSmall';
 				}
+				else if (CharacterSize == 'Medium')
+				{
+					platelabel.width = MediumCharacterWidth;
+					platelabel.height = MediumCharacterHeight;
+					platelabel.styleName = 'PlateCharacterMedium';
+				}
+				else if (CharacterSize == 'Large')
+				{
+					platelabel.width = LargeCharacterWidth;
+					platelabel.height = LargeCharacterHeight;
+					platelabel.styleName = 'PlateCharacterLarge';
+				}
+					
+				platelabel.text = keypadbutton.label;
+				platelabel.setStyle('color', FoilColor);
+				
+				child.width = platelabel.width;
+				child.height = platelabel.height;
+				child.setStyle('borderColor','blue');
+				child.setStyle('backgroundAlpha',0);
+				
+				//Parent ID is assigned later
+				parent.width = child.width;
+				parent.percentHeight = 100;
+				parent.setStyle('borderColor','yellow');
+				parent.setStyle('backgroundAlpha',0);
+				
+				TargetBox = CurrentBox;
 			
 				if (TargetBox == 'X1A')
 				{
@@ -2361,7 +2313,26 @@ PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
 				var bd:BorderContainer = AddTextureImage(plateimage);
 				bd.width = plateimage.width;
 				bd.height = plateimage.height;
-				
+
+/*
+				if (SymbolSize == 'Tall')
+				{
+					child.width = ShortSymbolWidth;
+					child.height = ShortSymbolHeight;
+				}
+				else if (SymbolSize == 'Short')
+				{
+					child.width = TallSymbolWidth;
+					child.height = TallSymbolHeight;
+				}
+				child.setStyle('borderColor','green');
+					
+				parent.width = child.width;
+				parent.percentHeight = 100;
+				parent.setStyle('paddingTop',5);
+				parent.setStyle('paddingBottom',5);
+				parent.setStyle('borderColor','yellow');
+*/
 				if (SymbolBox == 'Left')
 				{
 					//Remove any existing left symbol
@@ -2473,95 +2444,7 @@ PreviewFoilImage.includeInLayout = true; PreviewFoilImage.visible = true;
 				//fontWeight: normal;
 				//kerning: true;
 			}
-			
-/*			private function AddCharacterToPlate(event:MouseEvent):void
-			{
-				var keypadbutton:Button = event.target as Button;
-				var platelabel:Label = new Label;
-				
-				if (FoilIsImage == true)
-				{
-					var char:String = keypadbutton.label as String;
-					
-					SelectedCharacter = char;
-									
-					var bd:BorderContainer = AddTextureText(SelectedCharacter);
-					bd.width = CharacterWidth;
-					bd.height = CharacterHeight;
-				}
-				
-				platelabel.width = CharacterWidth;
-				platelabel.height = CharacterHeight;
-				platelabel.text = keypadbutton.label;
-				
-				if (CharacterSize == 'Large')
-				{
-					platelabel.styleName = 'PlateCharacterLarge';
-				}
-				else if (CharacterSize == 'Medium')
-				{
-					platelabel.styleName = 'PlateCharacterMedium';
-				}
-				else if (CharacterSize == 'Small')
-				{
-//					platelabel.styleName = 'PlateCharacterSmall';
-				}			
-// !!!
-				platelabel.setStyle('color', FoilColor);
-				//platebutton.setStyle('skinClass', 'skins.TransparentButtonSkin');
-				
-				//ChangeCurrentBox();
-				
-				if (CurrentBox == 'X1A')
-				{
-					if (FoilIsImage == true)
-					{
-						X1A.addElement(bd);
-					}
-					else
-					{
-						X1A.addElement(platelabel);
-					}
-				}
-				else if (CurrentBox == 'X1B')
-				{
-					if (FoilIsImage == true)
-					{
-						X1B.addElement(bd);
-					}
-					else
-					{
-						X1B.addElement(platelabel);
-					}
-				}
-				else if (CurrentBox == 'X2A')
-				{
-					if (FoilIsImage == true)
-					{
-						X2A.addElement(bd);
-					}
-					else
-					{
-						X2A.addElement(platelabel);
-					}
-				}
-				else if (CurrentBox == 'X2B')
-				{
-					if (FoilIsImage == true)
-					{
-						X2A.addElement(bd);
-					}
-					else
-					{
-						X2B.addElement(platelabel);
-					}
-				}
-				
-				CharactersAdded = (CharactersAdded + 1);
-				
-				StackAction.push()
-			}	*/
-			
+						
 			private function AdjustBoxWidths(Context:String,AorD:String):void
 			{
 				if (AorD == '+')
@@ -4295,48 +4178,33 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 						<s:Spacer height="1"/>
 						
 						<!-- Foil chooser -->
-						<s:BorderContainer id="Foil_MiniPlateContainer" width="140.4" height="30.51"						   
+						<s:BorderContainer id="Foil_MiniPlateFrame" width="140.4" height="30.51" horizontalCenter="0" verticalCenter="0" borderVisible="true"					   
 										   click="SetPreviewFoil()">
 							<s:layout>
-								<s:VerticalLayout paddingTop="2" paddingBottom="4" paddingLeft="2" paddingRight="4" gap="0" 
-												  verticalAlign="middle" horizontalAlign="center" clipAndEnableScrolling="true"/>
+								<s:VerticalLayout paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2" gap="0" 
+												  horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>
 							</s:layout>
 							
 							<!--Foil MiniPlate NonImage-->
-							<s:BorderContainer id="Foil_MiniPlateNonImageContainer" includeInLayout="false" visible="false"
-											   width="{Foil_MiniPlateContainer.width-6}" height="{Foil_MiniPlateContainer.height-6}" 
-											   borderWeight="3" cornerRadius="3" borderColor="{Foil_MiniPlateFoilColor}" borderAlpha="1" 
-											   backgroundColor="{Foil_MiniPlatePlateColor}" backgroundAlpha="1">
+							<!--s:BorderContainer id="Foil_MiniPlateNonImageContainer"
+											   width="100%" height="{Foil_MiniPlateFrame.height-6}" 
+											   horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderWeight="2.5" cornerRadius="3" borderColor="{Foil_MiniPlateFoilColor}">
+							</s:BorderContainer-->
+							
+							<!--Foil MiniPlate image-->
+							<s:BorderContainer id="Foil_MiniPlateImageContainer"
+											   width="100%" height="{Foil_MiniPlateFrame.height-6}" includeInLayout="{FoilIsImage}" visible="{FoilIsImage}"
+											   horizontalCenter="0" verticalCenter="0" cornerRadius="3" borderWeight="1">			   
 								<s:layout>
-									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"
-													  paddingTop="-2" paddingBottom="-2" paddingLeft="-2" paddingRight="-3"/>
+									<s:HorizontalLayout clipAndEnableScrolling="true"/>
 								</s:layout>
-								<s:BorderContainer id="Foil_MiniPlateNonImageInnerContainer"
-												   width="{Foil_MiniPlateNonImageContainer.width-4}" height="{Foil_MiniPlateNonImageContainer.height-4}"
-												   cornerRadius="3" borderWeight=".3" borderColor="white" borderAlpha=".8" 
-												   backgroundColor="white" backgroundAlpha="0">
-								</s:BorderContainer>
+								<s:Image id="Foil_MiniPlateImage" 
+										 width="100%" height="100%" horizontalCenter="0" verticalCenter="0" depth="1"
+										 horizontalAlign="center" verticalAlign="middle"
+										 source="{SelectedFoilImage}" fillMode="scale" scaleMode="stretch">
+								</s:Image>
 							</s:BorderContainer>
-						</s:BorderContainer>
-						
-						<!--Foil MiniPlate image-->
-						<s:BorderContainer id="Foil_MiniPlateImageContainer" includeInLayout="false" visible="false"
-										   width="{Foil_MiniPlateNonImageContainer.width-4}" height="{Foil_MiniPlateNonImageContainer.height-4.5}" 
-										   cornerRadius="3" borderVisible="false">					   
-							<s:layout>
-								<s:BasicLayout/>
-							</s:layout>
-							<s:Image id="Foil_MiniPlateImage" width="100%" height="100%" depth="1"
-									 horizontalAlign="center" verticalAlign="middle"
-									 source="{SelectedFoilImage}" fillMode="scale" scaleMode="stretch"/>
-							<s:Rect id="Foil_MiniPlateImageFrame" width="100%" height="100%" radiusX="3" radiusY="3"  depth="2">                          
-								<s:stroke>
-									<s:SolidColorStroke weight="2.5" color="black" alpha="1"/>
-								</s:stroke>
-								<s:fill>
-									<s:SolidColor alpha="0"/>
-								</s:fill>
-							</s:Rect>
 						</s:BorderContainer>
 						
 						<s:Image id="FoilGalleryButton"

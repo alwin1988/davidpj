@@ -252,7 +252,6 @@
 			import utility.TexturedText;
 			
 			[Bindable] private var PlateReduction:Number = .24; //% reduction from actual plate size to radio button'ed plates
-			private var SymbolSize:String = 'Tall';
 			
 			private var Debugging:Boolean = false;
 			
@@ -341,9 +340,10 @@
 			private var FlagCount:uint;
 			
 			[Bindable] private var SelectedSymbol:Object;
-//			[Bindable] private var SymbolSize:String;
+			[Bindable] private var SymbolSize:String;
 			[Bindable] private var CenterSymbol:Boolean = false; //true means there is a center symbol
-			private var SymbolCount:int;
+			private var TallSymbolCount:int;
+			private var ShortSymbolCount:int;
 			
 			[Bindable] private var Holes:String;
 			[Bindable] private var SelectedHoles:Object;
@@ -631,7 +631,8 @@ FoilIsImage = true;
 				FlagCount = 0;
 				
 				SelectedSymbol = 'assets/symbols/LargeHeart.png';
-				SymbolCount = 0;
+				TallSymbolCount = 0;
+				ShortSymbolCount = 0;
 				
 				Holes = 'NoneNone';
 				SelectedHoles = 'assets/holes/NoneNone.jpg';
@@ -1100,6 +1101,26 @@ FoilIsImage = true;
 					SymbolGalleryImage = event.currentTarget as Image;
 					SelectedSymbol = SymbolGalleryImage;
 				}
+				
+				var SelectedSymbolSource:String;
+				SelectedSymbolSource = SymbolGalleryImage.source as String;			
+				
+				if (SelectedSymbolSource.indexOf("SmallEuroSign") >= 0)
+				{
+					SymbolSize = 'Short'
+				}
+				else if (SelectedSymbolSource.indexOf("TinyEuroSign") >= 0)
+				{
+					SymbolSize = 'Short';
+				}
+				else if (SelectedSymbolSource.indexOf("SmallTelephone") >= 0)
+				{
+					SymbolSize = 'Short';
+				}
+				else
+				{
+					SymbolSize = 'Tall';
+				}				
 			}
 			
 			private function OpenHolesGallery(event:MouseEvent):void
@@ -2049,40 +2070,6 @@ FoilIsImage = true;
 				//fontWeight: normal;
 				//kerning: true;
 			}
-						
-			/*Element types:
-			Flag gets sized based on plate size
-			LF = Right Flag
-			LD = Left Date
-			LS = Left Symbol
-			LC = Large Character
-			MC = Medium Character
-			SC = Small Character
-			TS = Tall Symbol
-			SS = Short Symbol
-			CS = Center symbol (tall) ... or do we need to accommodate short as well?  If no, give error when user attempts or handle it as large
-			RS = Right Symbol
-			RD = Right Date
-			RF = Right Flag
-			*/
-			
-/*			private function AddSymbolToPlate(event:MouseEvent):void
-			{
-				var plateimage:Image = new Image;
-				
-				SelectedSymbol = plateimage as Image;
-				
-				if (SymbolSize == 'Tall')
-				{
-					ElementType = 'TS';
-				}
-				else if (SymbolSize == 'Short')
-				{
-					ElementType = 'SS';
-				}
-				
-				AddSymbolToCurrentBox();
-			}	*/
 			
 			private function AddSymbolToCurrentBox(event:MouseEvent):void
 			{
@@ -2170,12 +2157,19 @@ FoilIsImage = true;
 						X2B.addElement(plateimage);
 					//}
 				}
-
-			HideShow();
 				
-			//	StackAction.push(bd);
+				HideShow();
 				
-				SymbolCount = (SymbolCount + 1);
+				//	StackAction.push(bd);
+				
+				if (SymbolSize == 'Tall')
+				{
+					TallSymbolCount == (TallSymbolCount + 1);
+				}
+				else if (SymbolSize == 'Short')
+				{
+					ShortSymbolCount == (ShortSymbolCount + 1);
+				}
 			}
 															 
 			private function AddCharacterToPlate(event:MouseEvent):void
@@ -2226,6 +2220,7 @@ FoilIsImage = true;
 				
 				//Parent ID is assigned later
 				parent.width = child.width;
+				parent.height = child.height;
 				parent.percentHeight = 100;
 				parent.setStyle('borderColor','yellow');
 				parent.setStyle('backgroundAlpha',0);
@@ -2344,7 +2339,7 @@ FoilIsImage = true;
 					}
 					
 					LeftSymbolBox.width = SymbolWidth;
-					LeftSymbolBox.includeInLayout=true; LeftSymbolBox.visible=true;
+					LeftSymbolBox.includeInLayout=true;
 					
 					//if (FoilIsImage == true)
 					//{
@@ -2399,8 +2394,6 @@ FoilIsImage = true;
 					//{
 						CenterSymbolBox.addElement(bd);
 					//}
-					
-					HideShow();
 				}
 				else if (SymbolBox == 'Right')
 				{
@@ -2413,7 +2406,7 @@ FoilIsImage = true;
 					}
 					
 					RightSymbolBox.width = SymbolWidth;
-					RightSymbolBox.includeInLayout=true; RightSymbolBox.visible=true;
+					RightSymbolBox.includeInLayout=true;
 					
 					//if (FoilIsImage == true)
 					//{
@@ -2427,9 +2420,18 @@ FoilIsImage = true;
 					AdjustBoxWidths('RightSymbol','+');
 				}
 				
+				HideShow();
+				
 				StackAction.push(plateimage);
 				
-				SymbolCount = (SymbolCount + 1);
+				if (SymbolSize == 'Tall')
+				{
+					TallSymbolCount = (TallSymbolCount + 1);
+				}
+				else if (SymbolSize == 'Short')
+				{
+					ShortSymbolCount = (ShortSymbolCount + 1);
+				}
 			}
 			
 			private function AddTextureText(SelectedCharacter:String):BorderContainer
@@ -2797,20 +2799,24 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 				if (LeftFlagBox.numElements > 0)
 				{
 					LeftFlagBox.removeAllElements();
+					
+					FlagCount = (FlagCount - 1);
 				}
-				LeftFlagBox.width=0; LeftFlagBox.includeInLayout= false; LeftFlagBox.visible=false;
+				LeftFlagBox.width=0; LeftFlagBox.includeInLayout= false;
 				
 				if (LeftDateBox.numElements > 0)
 				{
 					LeftDateBox.removeAllElements();
+					
+					DateCount = (DateCount - 1);
 				}
-				LeftDateBox.width=0; LeftDateBox.includeInLayout= false; LeftDateBox.visible=false;
+				LeftDateBox.width=0; LeftDateBox.includeInLayout= false;
 				
 				if (LeftSymbolBox.numElements > 0)
 				{
 					LeftSymbolBox.removeAllElements();
 				}
-				LeftSymbolBox.width=0; LeftSymbolBox.includeInLayout= false; LeftSymbolBox.visible=false;
+				LeftSymbolBox.width=0; LeftSymbolBox.includeInLayout= false;
 				
 				if (X1A.numElements > 0)
 				{
@@ -2835,26 +2841,33 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 				if (RightFlagBox.numElements > 0)
 				{
 					RightFlagBox.removeAllElements();
+					
+					FlagCount = (FlagCount - 1);
 				}
-				RightFlagBox.width=0; RightFlagBox.includeInLayout= false; RightFlagBox.visible=false;
+				RightFlagBox.width=0; RightFlagBox.includeInLayout= false;
 				
 				if (RightDateBox.numElements > 0)
 				{
 					RightDateBox.removeAllElements();
+					
+					DateCount = (DateCount - 1);
 				}
-				RightDateBox.width=0; RightDateBox.includeInLayout= false; RightDateBox.visible=false;
+				RightDateBox.width=0; RightDateBox.includeInLayout= false;
 				
 				if (RightSymbolBox.numElements > 0)
 				{
 					RightSymbolBox.removeAllElements();
 				}
-				RightSymbolBox.width=0; RightSymbolBox.includeInLayout= false; RightSymbolBox.visible=false;
+				RightSymbolBox.width=0; RightSymbolBox.includeInLayout= false;
 
 				CharactersAdded = 0;
 				CenterSymbol = false;
 				
 				LeftLoad = 0;
 				RightLoad = 0;
+				
+				HideShow();
+				CalculatePrice();
 			}
 			
 			private function StartOver():void

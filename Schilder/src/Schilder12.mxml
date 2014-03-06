@@ -2173,7 +2173,7 @@ FoilIsImage = true;
 			}
 															 
 			private function AddCharacterToPlate(event:MouseEvent):void
-			{					
+			{
 				var keypadbutton:Button = event.target as Button;
 				var platelabel:Label = new Label;
 				
@@ -2187,43 +2187,61 @@ FoilIsImage = true;
 					bd.width = CharacterWidth;
 					bd.height = CharacterHeight;
 				}
-						
-				var parent:VGroup = new VGroup;
-				var child:BorderContainer = new BorderContainer;
+				
+				// Do not set width or height on platelabel
+				platelabel.text = keypadbutton.label as String;
+				//platelabel.setStyle('color', FoilColor);
+				platelabel.horizontalCenter = 0;
+				platelabel.verticalCenter = 0;
+				
+				var bclayout:BasicLayout = new BasicLayout();
+				bclayout.clipAndEnableScrolling = true;
+				
+				var bc:BorderContainer = new BorderContainer();
+				bc.setStyle('borderColor',OutlineColor);
+				bc.setStyle('backgroundAlpha',0);
+				bc.verticalCenter = -44; //Compensate for problem font
+				bc.horizontalCenter = 0;
+				bc.layout = bclayout;
+				
+				/* It only works with BasicLayout		
+				var bclayout:HorizontalLayout = new HorizontalLayout();
+				//bclayout.clipAndEnableScrolling = true;
+				bclayout.gap = 0;
+				bclayout.horizontalAlign = 'center';
+				bclayout.verticalAlign = 'bottom';
+				bclayout.paddingTop = 0;
+				bclayout.paddingBottom = 0;
+				bclayout.paddingLeft = 0;
+				bclayout.paddingBottom = 0;
+				bclayout.clipAndEnableScrolling = true;
+				
+				var bc:BorderContainer = new BorderContainer();
+				bc.setStyle('borderColor','blue');
+				bc.setStyle('backgroundAlpha',0);
+				bc.verticalCenter = 0;
+				bc.horizontalCenter = 0;
+				bc.layout = bclayout;
+				*/
 				
 				if (CharacterSize == 'Small')
 				{
-					platelabel.width = SmallCharacterWidth;
-					platelabel.height = SmallCharacterHeight;
+					bc.width = SmallCharacterWidth;
+					bc.height = SmallCharacterHeight;
 					platelabel.styleName = 'PlateCharacterSmall';
 				}
 				else if (CharacterSize == 'Medium')
 				{
-					platelabel.width = MediumCharacterWidth;
-					platelabel.height = MediumCharacterHeight;
+					bc.width = MediumCharacterWidth;
+					bc.height = MediumCharacterHeight;
 					platelabel.styleName = 'PlateCharacterMedium';
 				}
 				else if (CharacterSize == 'Large')
 				{
-					platelabel.width = LargeCharacterWidth;
-					platelabel.height = LargeCharacterHeight;
+					bc.width = LargeCharacterWidth;
+					bc.height = LargeCharacterHeight;
 					platelabel.styleName = 'PlateCharacterLarge';
-				}
-					
-				platelabel.text = keypadbutton.label;
-				platelabel.setStyle('color', FoilColor);
-				
-				child.width = platelabel.width;
-				child.height = platelabel.height;
-				child.setStyle('borderColor','blue');
-				child.setStyle('backgroundAlpha',0);
-				
-				//Parent ID is assigned later
-				parent.width = child.width;
-				parent.height = child.height;
-				parent.percentHeight = 100;
-				parent.setStyle('borderColor','yellow');
-				parent.setStyle('backgroundAlpha',0);
+				}		
 				
 				TargetBox = CurrentBox;
 			
@@ -2232,13 +2250,13 @@ FoilIsImage = true;
 					X1.includeInLayout = true; 
 					X1A.includeInLayout = true;
 					
-					child.id = (TargetBox + String(X1A_Index));
+					bc.id = (TargetBox + String(X1A_Index));
 					
-					child.addElement(platelabel);
+					bc.addElement(platelabel);
 					
-					parent.addElement(child);
+					bc.addElement(platelabel);
 					
-					X1A.addElement(parent);
+					X1A.addElement(bc);
 					
 					X1A_Index = (X1A_Index + 1);
 					
@@ -2249,13 +2267,11 @@ FoilIsImage = true;
 					X1.includeInLayout = true;
 					X1B.includeInLayout = true;
 					
-					child.id = (TargetBox + String(X1B_Index));
+					bc.id = (TargetBox + String(X1B_Index));
 					
-					child.addElement(platelabel);
+					bc.addElement(platelabel);
 					
-					parent.addElement(child);
-					
-					X1B.addElement(parent);
+					X1B.addElement(bc);
 					
 					X1B_Index = (X1B_Index + 1);
 					
@@ -2263,13 +2279,11 @@ FoilIsImage = true;
 				}
 				else if (TargetBox == 'X2A')
 				{
-					child.id = (TargetBox + String(X2A_Index));
+					bc.id = (TargetBox + String(X2A_Index));
 					
-					child.addElement(platelabel);
+					bc.addElement(platelabel);
 					
-					parent.addElement(child);
-					
-					X2A.addElement(parent);
+					X2A.addElement(bc);
 					
 					X2A_Index = (X2A_Index + 1);
 					
@@ -2277,17 +2291,15 @@ FoilIsImage = true;
 				}
 				else if (TargetBox == 'X2B')
 				{	
-					child.id = (TargetBox + String(X2B_Index));
+					bc.id = (TargetBox + String(X2B_Index));
 					
-					child.addElement(platelabel);
+					bc.addElement(platelabel);
 					
-					parent.addElement(child);
-					
-					X1A.addElement(parent);
+					X1A.addElement(bc);
 					
 					X2B_Index = (X2B_Index + 1);
 					
-					CurrentBox = 'X2B';
+					CurrentBox = 'X2B';	
 				}
 				
 				LastBox = CurrentBox;
@@ -3351,8 +3363,8 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 												   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
 												   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
 									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"
-															paddingTop="0" paddingBottom="0"/>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+															paddingTop="0" paddingBottom="0" gap="0"/>
 									</s:layout>
 								</s:BorderContainer>
 								
@@ -3368,8 +3380,8 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 												   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
 												   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
 									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"
-															paddingTop="0" paddingBottom="0"/>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+															paddingTop="0" paddingBottom="0" gap="0"/>
 									</s:layout>
 								</s:BorderContainer>
 									
@@ -3377,20 +3389,20 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 												   width="{PlateElementsContainer.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true">
 									<s:layout>
 										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"	  
-														  paddingTop="10" paddingBottom="10"/>
+														  paddingTop="0" paddingBottom="0"/>
 									</s:layout>
 									<s:BorderContainer id="X1A" 
 													   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
 													   borderColor="{OutlineColor}" borderAlpha=".25" backgroundAlpha="0">
 										<s:layout>
-											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
+											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
 										</s:layout>
 									</s:BorderContainer>
 									<s:BorderContainer id="X1B"
 													   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
 													   borderColor="{OutlineColor}" borderAlpha=".25" backgroundAlpha="0">
 										<s:layout>
-											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
+											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
 										</s:layout>
 									</s:BorderContainer>
 								</s:BorderContainer>
@@ -3399,7 +3411,7 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 								<s:BorderContainer id="CenterSymbolBox" borderColor="green"
 												   height="100%" verticalCenter="0" horizontalCenter="0" backgroundAlpha="0" includeInLayout="false" visible="false">
 									<s:layout>
-										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="5" clipAndEnableScrolling="true"
+										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
 														  paddingTop="5" paddingBottom="5"/>
 									</s:layout>
 								</s:BorderContainer>
@@ -3408,20 +3420,20 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 												   width="0" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" >
 									<s:layout>
 										<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
-														  paddingTop="10" paddingBottom="10"/>
+														  paddingTop="0" paddingBottom="0"/>
 									</s:layout>
 									<s:BorderContainer id="X2A"
 													   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
 													   borderColor="{OutlineColor}" borderAlpha=".25" backgroundAlpha="0">
 										<s:layout>
-											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"/>
+											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
 										</s:layout>
 									</s:BorderContainer>
 									<s:BorderContainer id="X2B"
 													   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
 													   borderColor="{OutlineColor}" borderAlpha=".25" backgroundAlpha="0">
 										<s:layout>
-											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"
+											<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
 																paddingTop="10" paddingBottom="10"/>
 										</s:layout>
 									</s:BorderContainer>
@@ -3431,7 +3443,7 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 												   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
 												   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
 									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
 															paddingTop="0" paddingBottom="0"/>
 									</s:layout>
 								</s:BorderContainer>
@@ -3448,7 +3460,7 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 												   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
 												   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
 									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="1" clipAndEnableScrolling="true"
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
 															paddingTop="0" paddingBottom="0"/>
 									</s:layout>
 								<!--/s:BorderContainer-->

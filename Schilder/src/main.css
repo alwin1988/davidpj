@@ -8,16 +8,17 @@
 	font-family: "GL-Nummernschild-Eng";
 	fontStyle: normal;
 	fontWeight: normal;
-	embed-as-cffCFF: true;
+	embed-as-cff: true;
 }
 
+/*
 @font-face
 {
 	src: url("assets/GL-Nummernschild-Eng.otf");
 	font-family: "GL-Nummernschild-Eng";
 	fontStyle: bold; 
 	fontWeight: bold;
-	embed-as-cff: true;
+	embed-as-cff: false;
 }
 
 @font-face
@@ -37,6 +38,7 @@
 	fontWeight: bold;
 	embed-as-cff: false;
 }
+*/
 
 .GL-Nummernschild-Eng
 {
@@ -53,7 +55,7 @@
 .PlateCharacterSmall
 {
 	fontFamily: GL-Nummernschild-Eng;
-	fontSize: 30;
+	fontSize: 66;
 	fontWeight: normal;
 	kerning: true;
 }
@@ -61,7 +63,7 @@
 .PlateCharacterMedium
 {
 	fontFamily: GL-Nummernschild-Eng;
-	fontSize: 50;
+	fontSize: 94;
 	fontWeight: normal;
 	kerning: true;
 }
@@ -69,7 +71,7 @@
 .PlateCharacterLarge
 {
 	fontFamily: GL-Nummernschild-Eng;
-	fontSize: 96;
+	fontSize: 126;
 	fontWeight: normal;
 	kerning: true;
 }

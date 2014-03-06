@@ -22,6 +22,9 @@
 	
 
 	<!-- Outer container -->
+	<mx:Box>
+		
+	</mx:Box>
 	<s:BorderContainer width="540" height="406"
 					   minWidth="0" minHeight="0"
 					   horizontalCenter="0" verticalCenter="0">

@@ -698,7 +698,7 @@ FoilColor = 0x000000;
 				LeftFlagBox.includeInLayout = false; LeftFlagBox.visible = false;
 				PlateElementsContainer.addElement(LeftFlagBox);
 				
-				LeftDatesBox = new VGroup;
+		/*		LeftDatesBox = new VGroup;
 				LeftDatesBox.id = 'LeftDatesBox';
 				LeftDatesBox.width = DatesWidth;
 				LeftDatesBox.height = DatesHeight;
@@ -706,7 +706,7 @@ FoilColor = 0x000000;
 				LeftDatesBox.verticalAlign = 'middle';
 				LeftDatesBox.setStyle('kerning',false);
 				LeftDatesBox.includeInLayout = false; LeftDatesBox.visible = false;
-				PlateElementsContainer.addElement(LeftDatesBox);
+				PlateElementsContainer.addElement(LeftDatesBox);	*/
 				
 				LeftSymbolBox = new HGroup;
 				LeftSymbolBox.id = 'LeftSymbolBox';
@@ -1709,14 +1709,26 @@ FoilColor = 0x000000;
 						</s:layout>
 						<!--Multiple containers for potential elements, which are hidden and shown as needed-->
 						<s:HGroup id="LeftFlagBox" width="{FlagWidth}" height="100%" horizontalAlign="center" verticalAlign="middle" includeInLayout="false" visible="false"/>
-						<s:VGroup id="LeftDatesBox" width="{DatesWidth}" height="100%" includeInLayout="false" visible="false"
-								  horizontalAlign="center" verticalAlign="middle" kerning="off" clipAndEnableScrolling="true">
+						<!--s:BorderContainer id="LeftDatesBox" width="{DatesWidth}" height="100%" kerning="off" includeInLayout="false" visible="false">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>
+							</s:layout>
+						</s:BorderContainer-->
+						<s:BorderContainer id="LeftDatesBox"
+										   width="{DatesWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderColor="red" borderAlpha=".25" backgroundAlpha="0" kerning="off">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
+							</s:layout>
+						</s:BorderContainer>
+						<!--s:VGroup id="LeftDatesBox" width="{DatesWidth}" height="100%" includeInLayout="false" visible="false"
+								  horizontalAlign="center" verticalAlign="middle" kerning="off" clipAndEnableScrolling="true"-->
 							<!--s:Rect width="100%" height="100%">
 								<s:stroke>
 									<s:SolidColorStroke color="black"/>
 								</s:stroke>
 							</s:Rect-->
-						</s:VGroup>
+						<!--/s:VGroup-->
 						<s:HGroup id="LeftSymbolBox" width="{SymbolWidth}" height="100%" horizontalAlign="center" verticalAlign="middle" includeInLayout="false" visible="false"/>
 						<s:VGroup id="CharacterOrSymbolBox1" width="100%" height="100%" horizontalAlign="center" verticalAlign="middle" horizontalCenter="0" gap="10"
 								  clipAndEnableScrolling="true" includeInLayout="true" visible="true">

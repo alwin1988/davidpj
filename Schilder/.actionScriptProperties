@@ -16,19 +16,20 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="schilder.mxml"/>
-    <application path="Schilder5.mxml"/>
+    <application path="Schilder12.mxml"/>
     <application path="Schilder6.mxml"/>
     <application path="Schilder7.mxml"/>
-    <application path="SchilderX.mxml"/>
-    <application path="Schilder8.mxml"/>
+    <application path="Schilder11_old.mxml"/>
+    <application path="SchilderWidthTest3.mxml"/>
     <application path="PlateChooser.mxml"/>
+    <application path="Schilder8.mxml"/>
+    <application path="Schilder5.mxml"/>
+    <application path="SchilderX.mxml"/>
+    <application path="SchilderWidthTest.mxml"/>
     <application path="Schilder9.mxml"/>
     <application path="Schilder10.mxml"/>
-    <application path="SchilderWidthTest.mxml"/>
+    <application path="schilder.mxml"/>
     <application path="SchilderWidthTest2.mxml"/>
-    <application path="SchilderWidthTest3.mxml"/>
-    <application path="Schilder11.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

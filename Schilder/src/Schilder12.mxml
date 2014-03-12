@@ -120,7 +120,7 @@
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 		</s:ArrayCollection>
 		
-		<s:ArrayCollection id="symbolList">
+		<s:ArrayCollection id="symbolList1">
 			<s:Image width="38" height="38" fillMode="scale" scaleMode="stretch" source="assets/symbols/Audi.png" 
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="38" height="38" fillMode="scale" scaleMode="stretch" source="assets/symbols/BartSimpson.png"
@@ -239,6 +239,243 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>			
 		</s:ArrayCollection>
 
+		<s:ArrayCollection id="symbolList">  <!--Only unlicensed symbols-->
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Basketball.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="27.36" height="27.36" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BeerGlass.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Bird.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Boat.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Bowling.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="98%" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Bus.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="24.7" height="24.7" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Cannabis.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="23.94" height="23.94" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Cat.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Crown.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/DartBoard.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="25.84" height="25.84" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Dog.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Dolphin.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Dragon.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="26.6" height="26.6" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Elephant.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/EuroSign.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="11.02" height="11.02" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallEuroSign.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/FerrisWheel.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.42" height="22.42" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Football.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Frame.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Helicopter.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Hockey.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="25.84" height="25.84" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Horse.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Horseshoe.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>				
+			<s:Image width="26.6" height="26.6" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LargeHeart.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallHeart.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/PeaceSign.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBolt.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="35.72" height="35.72" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Left.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="35.72" height="35.72" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Right.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/MiddleFinger.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Motorcycle.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Motorcycle2.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="32.3" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Mouse.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="27.74" height="27.74" fillMode="scale" scaleMode="letterbox" source="assets/symbols/MusicalNotes.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="17.48" height="17.48" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Pacifier.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="24.7" height="24.7" fillMode="scale" scaleMode="letterbox" source="assets/symbols/PalmTree.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Pistol.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Rabbit.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Rings.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SantaClaus.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Skull&amp;Crossbones.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmileyFace.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Soccer.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="17.48" height="17.48" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Star.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Telephone.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="26.6" height="26.6" fillMode="scale" scaleMode="letterbox" source="assets/symbols/TennisRacket.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Tractor.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Turkey.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Windsurfer.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		</s:ArrayCollection>
+		
+		<s:ArrayCollection id="fullsymbolList">  <!--Including licensed symbols-->
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Audi.png" 
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BartSimpson.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Basketball.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="27.36" height="27.36" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BeerGlass.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BerlinBears.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BettyBoop.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Bird.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BMW.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Boat.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Bowling.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="98%" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Bus.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="24.7" height="24.7" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Cannabis.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="23.94" height="23.94" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Cat.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Crown.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/DartBoard.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="25.84" height="25.84" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Dog.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Dolphin.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Dragon.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="26.6" height="26.6" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Elephant.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/EuroSign.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="11.02" height="11.02" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallEuroSign.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/FerrisWheel.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.42" height="22.42" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Football.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Ford.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/FormulaOne.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Frame.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Helicopter.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/HelloKitty.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Hockey.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="25.84" height="25.84" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Horse.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Horseshoe.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>				
+			<s:Image width="26.6" height="26.6" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LargeHeart.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallHeart.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/PeaceSign.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBolt.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="35.72" height="35.72" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Left.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="35.72" height="35.72" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Right.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/MAN.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Mercedes.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="22.8" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/MiddleFinger.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Motorcycle.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Motorcycle2.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="32.3" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Mouse.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="27.74" height="27.74" fillMode="scale" scaleMode="letterbox" source="assets/symbols/MusicalNotes.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Opel.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="17.48" height="17.48" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Pacifier.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="24.7" height="24.7" fillMode="scale" scaleMode="letterbox" source="assets/symbols/PalmTree.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Peugot.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Pistol.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Playboy.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Rabbit.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Rings.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Scania.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SantaClaus.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SEAT.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Skull&amp;Crossbones.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmileyFace.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="30.4" height="30.4" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Soccer.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SpongeBob.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="17.48" height="17.48" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Star.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Telephone.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="26.6" height="26.6" fillMode="scale" scaleMode="letterbox" source="assets/symbols/TennisRacket.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Tractor.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="20.9" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Turkey.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Volkswagen.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Windsurfer.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/WinnieThePooh.png"
+					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		</s:ArrayCollection>
 	</fx:Declarations>	
 	<fx:Script>
 		<![CDATA[
@@ -462,8 +699,11 @@
 				ac = new ArrayCollection();
 				var tt:TexturedText = new TexturedText();
 				for (var i:int=0; i < symbolList.length; i++)
+				//for (var i:int=0; i < arrayListSymbols.length; i++)
 				{
+					arrayListSymbols;
 					imgTmp = symbolList.getItemAt(i) as Image;
+					//imgTmp = arrayListSymbols.getItemAt(i) as Image;
 					SelectedFoilSwatchImage;
 					imgTxt = new Image();
 					imgTxt.source = String(SelectedFoilSwatchImage);
@@ -1092,7 +1332,7 @@
 			private function SelectSymbolGalleryImage(event:MouseEvent):void 
 			{
 				var SymbolGalleryImage:Image;
-				
+				var SelectedSymbolSource:String;
 				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
 					//SelectedSymbol = event.currentTarget;
@@ -1103,29 +1343,34 @@
 				}
 				else
 				{
+					SelectedSymbolSource = SymbolGalleryImage.source as String;		
 					SymbolGalleryImage = event.currentTarget as Image;
 					SelectedSymbol = SymbolGalleryImage;
 				}
 				
-				var SelectedSymbolSource:String;
-				SelectedSymbolSource = SymbolGalleryImage.source as String;			
-				
-				if (SelectedSymbolSource.indexOf("SmallEuroSign") >= 0)
+				if (SelectedSymbolSource != null)
 				{
-					SymbolSize = 'Short'
-				}
-				else if (SelectedSymbolSource.indexOf("TinyEuroSign") >= 0)
-				{
-					SymbolSize = 'Short';
-				}
-				else if (SelectedSymbolSource.indexOf("SmallTelephone") >= 0)
-				{
-					SymbolSize = 'Short';
+					if (SelectedSymbolSource.indexOf("SmallEuroSign") >= 0)
+					{
+						SymbolSize = 'Short'
+					}
+					else if (SelectedSymbolSource.indexOf("TinyEuroSign") >= 0)
+					{
+						SymbolSize = 'Short';
+					}
+					else if (SelectedSymbolSource.indexOf("SmallTelephone") >= 0)
+					{
+						SymbolSize = 'Short';
+					}
+					else
+					{
+						SymbolSize = 'Tall';
+					}
 				}
 				else
 				{
 					SymbolSize = 'Tall';
-				}				
+				}
 			}
 			
 			private function OpenHolesGallery(event:MouseEvent):void
@@ -2088,13 +2333,6 @@
 				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
 				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
 				
-				var imgTxt:Image = new Image;
-				imgTxt.source = imgTxt1.source;
-				imgTxt.width = SymbolWidth;
-				imgTxt.height = SymbolHeight;
-				imgTxt.fillMode = imgTxt1.fillMode;
-				imgTxt.scaleMode = imgTxt1.scaleMode;
-				
 				var imgTmp:Image = new Image;
 				imgTmp.source = imgTmp1.source;
 				imgTmp.width = SymbolWidth;
@@ -2102,10 +2340,31 @@
 				imgTmp.fillMode = imgTmp1.fillMode;
 				imgTmp.scaleMode = imgTmp1.scaleMode;
 				
+				for (var i:int=0; i < symbolList.length; i++)
+				{
+					var img:Image = symbolList.getItemAt(i) as Image;
+					
+					if (img.source == imgTmp.source)
+					{
+						imgTmp = new Image();
+						imgTmp.source = img.source;
+						imgTmp.width = img.width * 2.1;
+						imgTmp.height = img.height * 2.1;
+						break;
+					}
+				}
+				
+				var imgTxt:Image = new Image;
+				imgTxt.source = imgTxt1.source;
+				imgTxt.width = imgTmp.width;
+				imgTxt.height = imgTmp.height;
+				//imgTxt.fillMode = imgTxt1.fillMode;
+				//imgTxt.scaleMode = imgTxt1.scaleMode;
+				
 				var tt:TexturedText = new TexturedText();
 				var plateimage:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
-				plateimage.width=SymbolWidth;
-				plateimage.height=SymbolHeight;
+				plateimage.width=imgTxt.width;
+				plateimage.height=imgTxt.height;
 				
 				//if (FoilIsImage == true)
 				//{
@@ -4674,7 +4933,7 @@ SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 										  horizontalAlign="center" verticalAlign="middle" paddingTop="5" paddingBottom="5" paddingRight="5" clipAndEnableScrolling="true"/>
 						</s:layout>
 						<s:dataProvider>
-							<s:ArrayList>
+							<s:ArrayList id="arrayListSymbols">
 								<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Audi.png" 
 										 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/-->
 								<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="letterbox" source="assets/symbols/BartSimpson.png"

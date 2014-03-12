@@ -611,7 +611,7 @@
 
 				SelectedFoilImage = 'assets/foils/RedFoilPlate.png';
 				FoilColor = 0x000000; //black
-FoilIsImage = true;
+				FoilIsImage = true;
 				SelectedFoilSwatchImage = 'assets/texture/texture.jpg';
 				Foil_MiniPlatePlateColor = PlateColor;
 					if(Debugging) Alert.show('Foil_MiniPlateFoilColor:');
@@ -970,7 +970,12 @@ FoilIsImage = true;
 			
 			private function SelectFoilGalleryImage(event:MouseEvent):void 
 			{
-			if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
+			if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::Image")
+			{
+				trace("");
+				SelectedFoilSwatchImage = event.currentTarget.source;
+			}
+			else if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
 					Foil_MiniPlateFrame.removeAllElements();
 					var bc:BorderContainer = (event.currentTarget as BorderContainer);
@@ -2176,16 +2181,17 @@ FoilIsImage = true;
 			{
 				var keypadbutton:Button = event.target as Button;
 				var platelabel:Label = new Label;
+				var img:Image = new Image();
 				
 				if (FoilIsImage == true)
 				{
-					var char:String = keypadbutton.label as String;
+					//var char:String = keypadbutton.label as String;
 					
-					SelectedCharacter = char;
+					//SelectedCharacter = char;
 					
-					var bd:BorderContainer = AddTextureText(SelectedCharacter);
-					bd.width = CharacterWidth;
-					bd.height = CharacterHeight;
+					//var bd:BorderContainer = AddTextureText(SelectedCharacter);
+					//bd.width = CharacterWidth;
+					//bd.height = CharacterHeight;
 				}
 				
 				// Do not set width or height on platelabel
@@ -2226,18 +2232,43 @@ FoilIsImage = true;
 				
 				if (CharacterSize == 'Small')
 				{
+					if (FoilIsImage == true)
+					{
+						SelectedFoilSwatchImage;
+						img = new Image();
+						img.source = "assets/foilsCharacter/RedFoilSwatch30*42.jpg";
+						img.width = SmallCharacterWidth;
+						img.height = SmallCharacterHeight;	
+					}
 					bc.width = SmallCharacterWidth;
 					bc.height = SmallCharacterHeight;
 					platelabel.styleName = 'PlateCharacterSmall';
 				}
 				else if (CharacterSize == 'Medium')
 				{
+					if (FoilIsImage == true)
+					{
+						SelectedFoilSwatchImage;
+						img = new Image();
+						img.source = "assets/foilsCharacter/RedFoilSwatch31*58.jpg";
+						img.width = MediumCharacterWidth;
+						img.height = MediumCharacterHeight;	
+					}
+					
 					bc.width = MediumCharacterWidth;
 					bc.height = MediumCharacterHeight;
 					platelabel.styleName = 'PlateCharacterMedium';
 				}
 				else if (CharacterSize == 'Large')
 				{
+					if (FoilIsImage == true)
+					{
+						SelectedFoilSwatchImage;
+						img = new Image();
+						img.source = "assets/foilsCharacter/RedFoilSwatch57*77.5.jpg";
+						img.width = LargeCharacterWidth;
+						img.height = LargeCharacterHeight;	
+					}
 					bc.width = LargeCharacterWidth;
 					bc.height = LargeCharacterHeight;
 					platelabel.styleName = 'PlateCharacterLarge';
@@ -2247,6 +2278,13 @@ FoilIsImage = true;
 			
 				if (TargetBox == 'X1A')
 				{
+					if (FoilIsImage == true)
+					{
+						img.cacheAsBitmap = true;
+						platelabel.cacheAsBitmap = true;
+						img.mask = platelabel;
+					}
+					
 					X1.includeInLayout = true; 
 					X1A.includeInLayout = true;
 					
@@ -2254,7 +2292,7 @@ FoilIsImage = true;
 					
 					bc.addElement(platelabel);
 					
-					bc.addElement(platelabel);
+					bc.addElement(img);
 					
 					X1A.addElement(bc);
 					

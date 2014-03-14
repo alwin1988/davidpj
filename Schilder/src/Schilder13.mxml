@@ -6,7 +6,7 @@
 			   xmlns:component="component.*"
 			   xmlns:ns1="flexScript.*"
 			   width="100%" height="100%"
-			   creationComplete="SetDefaults();init2();">
+			   creationComplete="SetDefaults(); init2();">
 	
 	<fx:Style source="main.css"/>
 	<fx:Declarations>		
@@ -495,9 +495,11 @@
 				
 				Outlines();
 			}
-
-			public function init():void
-			{				
+			
+			private function AddBorderToPreviewAndFoilMiniPlate():void
+			{
+				FoilGalleryList.dataProvider = ac;
+				
 				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
 				//SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
 				var tt:TexturedText = new TexturedText();
@@ -526,6 +528,64 @@
 				*/
 				
 				var imgSrc:Image = new Image();
+				imgSrc.source = SelectedFoilImage;
+				imgSrc.width = 220;
+				imgSrc.height = 38;
+				imgSrc.fillMode = "scale";
+				imgSrc.scaleMode = "stretch";
+				
+				var imgTmp2:Image = new Image();
+				imgTmp2.source = "assets/foils/RedFoilSwatch.png";
+				imgTmp2.width = imgSrc.width;
+				imgTmp2.height = imgSrc.height;
+				imgTmp2.fillMode = "scale";
+				imgTmp2.scaleMode = "stretch";
+				
+				var bd:BorderContainer = tt.getTextMaskImage(imgTmp2, imgSrc);
+				bd.addEventListener(MouseEvent.CLICK, SelectFoilGalleryImage);
+				bd.addEventListener(MouseEvent.CLICK, CloseGallery);
+				bd.width = imgSrc.width;
+				bd.height = imgSrc.height;
+				
+				var img:Image = drawUISnapShot(bd);
+				img.percentHeight = 100;
+				img.percentWidth = 100;
+				//		Foil_MiniPlateFrame.addElement(imgSrc);
+				//var img:Image = bd.getElementAt(0) as Image;
+				//SelectedFoilSwatchImage = img.source;
+			}
+			
+
+		/*	private function init():void
+			{				
+				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
+				//SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
+				var tt:TexturedText = new TexturedText();
+				var imgTxt:Image = new Image();
+				imgTxt.source = SelectedFoilSwatchImage;
+				imgTxt.width = 38;
+				imgTxt.height = 38;
+				
+				var imgTmp:Image = new Image();
+				imgTmp.source = SelectedSymbol
+				imgTmp.width = 38;
+				imgTmp.height = 38;
+				
+				SelectedSymbolBC.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
+				SelectedSymbolBC.visible = true;
+				
+			
+				Foil_MiniPlateFrame.removeAllElements();
+				var bc:BorderContainer = (event.currentTarget as BorderContainer);
+				var img:Image = drawUISnapShot(bc);
+				img.percentHeight = 100;
+				img.percentWidth = 100;
+				Foil_MiniPlateFrame.addElement(img);
+				var img:Image = bc.getElementAt(0) as Image;
+				SelectedFoilSwatchImage = img.source;
+
+			
+				var imgSrc:Image = new Image();
 				imgSrc.source = SelectedFoilBorderImage;
 				imgSrc.width = SelectedFoilBorderImage.width;
 				imgSrc.height = SelectedFoilBorderImage.height;
@@ -552,8 +612,7 @@
 				
 				Foil_MiniPlateImageContainer.addElement(img);
 				PreviewBorderImageContainer.addElement(img);
-			}
-			
+			}	*/
 			
 			private function init2():void
 			{
@@ -562,7 +621,7 @@
 				Outlines();
 			}
 			
-			private function updateFoilToSymbol():void
+			private function TextureSymbolGallery():void
 			{
 				var imgTxt:Image;
 				var imgTmp:Image;
@@ -589,7 +648,7 @@
 				SymbolGalleryList.dataProvider = ac;
 			}
 			
-			private function updateFoilToPlateBorder():void
+			private function TextureFoilGallery():void
 			{
 				// TODO Auto-generated method stub
 				trace("change");
@@ -652,9 +711,9 @@
 				//4:symbol
 				//0:plate color
 				if (event.newIndex == 1)
-					updateFoilToPlateBorder();
+					TextureFoilGallery();
 				else if (event.newIndex == 4)
-					updateFoilToSymbol();
+					TextureSymbolGallery();
 			}
 			
 			/*	protected function Galleries_changeHandler(event:IndexChangedEvent):void
@@ -893,6 +952,8 @@
 					PreviewPlateImageContainer.includeInLayout = false; PreviewPlateImageContainer.visible = false;
 					PreviewPlateNonImageContainer.includeInLayout = true; PreviewPlateNonImageContainer.visible = true;	
 				}
+				
+				AddBorderToPreviewAndFoilMiniPlate();
 			}
 			
 			/*private function OpenGallery(event:MouseEvent,GalleryName:String):void 

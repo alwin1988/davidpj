@@ -45,6 +45,143 @@
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 		</s:ArrayCollection>
 		
+		<!--s:ArrayCollection id="Symbols%_AC">
+		<s:Image width="75%" height="75%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Audi.png" 
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BartSimpson.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Basketball.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="50%" height="50%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BeerGlass.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BerlinBears.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BettyBoop.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bird.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BMW.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Boat.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bowling.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bus.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cannabis.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cat.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Crown.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/DartBoard.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Dog.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Dolphin.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Dragon.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Elephant.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/EuroSign.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TinyEuroSign.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FerrisWheel.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Football.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Ford.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FormulaOne.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Frame.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Helicopter.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/HelloKitty.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Hockey.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Horse.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Horseshoe.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>				
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargeHeart.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallHeart.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargePeaceSign.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Lightning.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LKW_Left.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LKW_Right.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MAN.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Mercedes.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MiddleFinger.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Moon&amp;Star.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle2.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Mouse.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MusicalNotes.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Opel.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Pacifier.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/PalmTree.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Peugot.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Pistol.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Playboy.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Rabbit.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Rings.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Scania.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SantaClaus.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SEAT.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Skull&amp;Crossbones.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmileyFace.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Soccer.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SpongeBob.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Star.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Telephone.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TennisRacket.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Tractor.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Volkswagen.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Windsurfer.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/WinnieThePooh.png"
+		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
+		</s:ArrayCollection-->
+		
 		<s:ArrayCollection id="Symbols_AC">  <!--Only unlicensed symbols-->
 			<s:Image width="38" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Basketball.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -392,7 +529,6 @@
 			private var FlagCountry:String;
 			private var FlagCount:uint;
 			
-			[Bindable] private var DefaultSymbol:Object;
 			[Bindable] private var SelectedSymbol:Object;
 			[Bindable] private var SymbolSize:String;
 			[Bindable] private var CenterSymbol:Boolean = false; //true means there is a center symbol
@@ -454,7 +590,7 @@
 				
 				SelectedFoilBorderImage = 'assets/foils/BlackFoilPlate.png';
 				SelectedFoilSwatchImage = 'assets/foils/BlackFoilSwatch.jpg';
-
+				
 				Date1ToolTip="Click on the arrows to set the 2-digit day of the month." +
 					"Once the day, month, and year have been set, click the 'L' or 'R' button to place the date";
 				Date2ToolTip="Click on the arrows to set the 2-digit month of the year." +
@@ -469,8 +605,7 @@
 				SelectedFlag = 'assets/flags/D.jpg';
 				FlagCount = 0;
 				
-				DefaultSymbol = 'assets/symbols/LargeHeart.png';
-				SelectedSymbol = DefaultSymbol;
+				SelectedSymbol = 'assets/symbols/LargeHeart.png';
 				TallSymbolCount = 0;
 				ShortSymbolCount = 0;
 				
@@ -496,10 +631,8 @@
 				Outlines();
 			}
 			
-			private function AddBorderToPreviewAndFoilMiniPlate():void
-			{
-				FoilGalleryList.dataProvider = ac;
-				
+			public function init():void
+			{				
 				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
 				//SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
 				var tt:TexturedText = new TexturedText();
@@ -528,64 +661,6 @@
 				*/
 				
 				var imgSrc:Image = new Image();
-				imgSrc.source = SelectedFoilImage;
-				imgSrc.width = 220;
-				imgSrc.height = 38;
-				imgSrc.fillMode = "scale";
-				imgSrc.scaleMode = "stretch";
-				
-				var imgTmp2:Image = new Image();
-				imgTmp2.source = "assets/foils/RedFoilSwatch.png";
-				imgTmp2.width = imgSrc.width;
-				imgTmp2.height = imgSrc.height;
-				imgTmp2.fillMode = "scale";
-				imgTmp2.scaleMode = "stretch";
-				
-				var bd:BorderContainer = tt.getTextMaskImage(imgTmp2, imgSrc);
-				bd.addEventListener(MouseEvent.CLICK, SelectFoilGalleryImage);
-				bd.addEventListener(MouseEvent.CLICK, CloseGallery);
-				bd.width = imgSrc.width;
-				bd.height = imgSrc.height;
-				
-				var img:Image = drawUISnapShot(bd);
-				img.percentHeight = 100;
-				img.percentWidth = 100;
-				//		Foil_MiniPlateFrame.addElement(imgSrc);
-				//var img:Image = bd.getElementAt(0) as Image;
-				//SelectedFoilSwatchImage = img.source;
-			}
-			
-
-		/*	private function init():void
-			{				
-				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
-				//SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
-				var tt:TexturedText = new TexturedText();
-				var imgTxt:Image = new Image();
-				imgTxt.source = SelectedFoilSwatchImage;
-				imgTxt.width = 38;
-				imgTxt.height = 38;
-				
-				var imgTmp:Image = new Image();
-				imgTmp.source = SelectedSymbol
-				imgTmp.width = 38;
-				imgTmp.height = 38;
-				
-				SelectedSymbolBC.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
-				SelectedSymbolBC.visible = true;
-				
-			
-				Foil_MiniPlateFrame.removeAllElements();
-				var bc:BorderContainer = (event.currentTarget as BorderContainer);
-				var img:Image = drawUISnapShot(bc);
-				img.percentHeight = 100;
-				img.percentWidth = 100;
-				Foil_MiniPlateFrame.addElement(img);
-				var img:Image = bc.getElementAt(0) as Image;
-				SelectedFoilSwatchImage = img.source;
-
-			
-				var imgSrc:Image = new Image();
 				imgSrc.source = SelectedFoilBorderImage;
 				imgSrc.width = SelectedFoilBorderImage.width;
 				imgSrc.height = SelectedFoilBorderImage.height;
@@ -612,7 +687,8 @@
 				
 				Foil_MiniPlateImageContainer.addElement(img);
 				PreviewBorderImageContainer.addElement(img);
-			}	*/
+			}
+			
 			
 			private function init2():void
 			{
@@ -763,7 +839,7 @@
 			}
 			FoilGalleryList.dataProvider = foillist;
 			} */
-						
+			
 			private function SetPlateSize():void
 			{
 				if (PlateSize == 'Large')
@@ -952,8 +1028,6 @@
 					PreviewPlateImageContainer.includeInLayout = false; PreviewPlateImageContainer.visible = false;
 					PreviewPlateNonImageContainer.includeInLayout = true; PreviewPlateNonImageContainer.visible = true;	
 				}
-				
-				AddBorderToPreviewAndFoilMiniPlate();
 			}
 			
 			/*private function OpenGallery(event:MouseEvent,GalleryName:String):void 
@@ -1028,21 +1102,32 @@
 				invalidateDisplayList();
 				return img;
 			}
-
+			
 			private function SelectFoilGalleryImage(event:MouseEvent):void 
 			{
-				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
+				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::Image")
+				{
+					trace("");
+					SelectedFoilSwatchImage = event.currentTarget.source;
+				}
+				else if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
 					Foil_MiniPlateImageContainer.removeAllElements();
 					PreviewBorderImageContainer.removeAllElements();
 					
 					var bc:BorderContainer = (event.currentTarget as BorderContainer);
-					bc.percentWidth = 100;
-					bc.percentHeight = 100;
-					bc.setStyle('backgroundAlpha',0);
+					//	bc.setStyle('backgroundAlpha',0);
+					
 					var img:Image = drawUISnapShot(bc);
-					img.percentWidth = 100;
-					img.percentHeight = 100;
+					img.percentHeight = 105;
+					img.percentWidth = 105;
+					
+					var img2:Image = drawUISnapShot(bc);
+					img2.width = PlateOuterWidth;
+					img2.height = PlateOuterHeight;
+					img2.fillMode = 'scale';
+					img2.scaleMode = 'stretch';
+					
 					//var img1:Image = bc.getElementAt(0) as Image;
 					//var img2:Image = bc.getElementAt(1) as Image;
 					//img1.percentHeight = 100;
@@ -1052,15 +1137,14 @@
 					//bc.percentHeight = 100;
 					//bc.percentWidth = 100;
 					
-					bc.addElement(img);
-					
-					Foil_MiniPlateImageContainer.addElement(bc);
-					PreviewBorderImageContainer.addElement(bc);
+					Foil_MiniPlateImageContainer.addElement(img);
+					PreviewBorderImageContainer.addElement(img2);
 					
 					var img:Image = bc.getElementAt(0) as Image;
 					SelectedFoilSwatchImage = img.source;
 				}
 				/*
+				FoilIsImage = true;
 				SetMiniPlateFoil();
 				var FoilGalleryImage:Image;
 				FoilGalleryImage = event.currentTarget as Image;
@@ -1109,7 +1193,7 @@
 				if(Debugging) Alert.show('Selected foil swatch image' +''+SelectedFoilSwatchImage);
 				*/
 			}
-						
+			
 			private function OpenFlagGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = FlagGallery;
@@ -2158,25 +2242,25 @@
 				if (CurrentBox == 'X1A')
 				{
 					AdjustBoxWidths('1ASymbol','+');
-
+					
 					X1A.addElement(plateimage);
 				}
 				else if (CurrentBox == 'X1B')
 				{
 					AdjustBoxWidths('1BSymbol','+');
-
+					
 					X1B.addElement(plateimage);
 				}
 				else if (CurrentBox == 'X2A')
 				{
 					AdjustBoxWidths('2ASymbol','+');
-
+					
 					X2A.addElement(plateimage);
 				}
 				else if (CurrentBox == 'X2B')
 				{
 					AdjustBoxWidths('2BSymbol','+');
-
+					
 					X2B.addElement(plateimage);
 				}
 				
@@ -2330,7 +2414,7 @@
 			
 			private function AddSymbolToSymbolBox(event:MouseEvent,SymbolBox:String):void 
 			{
-			/*	var plateimage:Image = new Image;
+				/*	var plateimage:Image = new Image;
 				plateimage.source = SelectedSymbol;
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;
@@ -2395,7 +2479,7 @@
 					LeftSymbolBox.width = SymbolWidth;
 					LeftSymbolBox.includeInLayout=true;
 					
-				//	LeftSymbolBox.addElement(bd);
+					//	LeftSymbolBox.addElement(bd);
 					LeftSymbolBox.addElement(plateimage);
 					
 					AdjustBoxWidths('LeftSymbol','+');
@@ -2436,7 +2520,7 @@
 						SetNextBoxAndSwitchButtonImage();
 					}
 					
-				//	CenterSymbolBox.addElement(bd);
+					//	CenterSymbolBox.addElement(bd);
 					CenterSymbolBox.addElement(plateimage);
 				}
 				else if (SymbolBox == 'Right')
@@ -2452,7 +2536,7 @@
 					RightSymbolBox.width = SymbolWidth;
 					RightSymbolBox.includeInLayout=true;
 					
-				//	RightSymbolBox.addElement(bd);
+					//	RightSymbolBox.addElement(bd);
 					RightSymbolBox.addElement(plateimage);
 					
 					AdjustBoxWidths('RightSymbol','+');
@@ -3213,7 +3297,7 @@
 			
 			<!--Preview frame (fixed-sized for large plate)-->
 			<s:BorderContainer id="PreviewFrame"
-							   width="{LargePlateOuterWidth}" height="{LargePlateOuterHeight}" borderVisible="true" depth="1">
+							   width="{LargePlateOuterWidth}" height="{LargePlateOuterHeight}" borderVisible="false" depth="1">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>
 				</s:layout>
@@ -3225,7 +3309,7 @@
 					<s:layout>
 						<s:BasicLayout clipAndEnableScrolling="true"/>
 					</s:layout>
-										
+					
 					<!-- Holes -->
 					<s:Ellipse id="TopLeftHole"
 							   x="5" y="5" visible="false" width="8" height="8" depth="11">
@@ -3354,22 +3438,15 @@
 					
 					<!-- Plate outer (border) container which is bordered and transparent, with invisible border if plate is full size.  Border color is set via function. -->
 					<s:BorderContainer id="PlateBorder" depth="4"
-									   x="{(((PlateOuterWidth-PlateInnerWidth)/2)-2)}" y="{(((PlateOuterHeight-PlateInnerHeight)/2)-2)}" 
-									   visible="{PreviewPlateNonImageContainer.visible}" includeInLayout="{PreviewPlateNonImageContainer.includeInLayout}"
-									   width="{PlateInnerWidth}" height="{PlateInnerHeight}" borderVisible="true" backgroundAlpha="0"
-									   cornerRadius="8" borderColor="white">
+									   x="0" y="0" width="100%" height="100%" borderVisible="false" backgroundAlpha="0">
 						<s:layout>
 							<s:BasicLayout/>
 						</s:layout>
-
+						
 						<s:BorderContainer id="PreviewBorderImageContainer"
 										   x="0" y="0" width="100%" height="100%" borderVisible="false" backgroundAlpha="0">
 							<s:layout>
-								<s:HorizontalLayout paddingTop="{((PlateOuterWidth-PlateInnerWidth)/4)}"
-													paddingBottom="{((PlateOuterWidth-PlateInnerWidth)/4)}"
-													paddingLeft="{((PlateOuterHeight-PlateInnerHeight)/4)}"
-													paddingRight="{((PlateOuterHeight-PlateInnerHeight)/4)}"
-													clipAndEnableScrolling="true"/>
+								<s:HorizontalLayout clipAndEnableScrolling="true"/>
 							</s:layout>
 							<s:Image id="PlateBorderImage"
 									 width="100%" height="100%"
@@ -3377,9 +3454,10 @@
 						</s:BorderContainer>
 						
 						<!-- Plate elements container.  BackgroundColor or image set via functions -->
-						<s:BorderContainer id="PlateElementsContainer"
-										   x="5" y="5" width="{PlateBorder.width-10}" height="{PlateBorder.height-10}" depth="20"
-										   horizontalCenter="0" verticalCenter="0" borderVisible="false" backgroundAlpha="0">
+						<s:BorderContainer id="PlateElementsContainer" borderColor="red"
+										   x="{((PlateOuterWidth-PlateInnerWidth)/2)}" y="{((PlateOuterHeight-PlateInnerHeight)/2)}" 
+										   width="{PlateInnerWidth}" height="{PlateInnerHeight}" depth="20"
+										   horizontalCenter="0" verticalCenter="0" borderVisible="true" backgroundAlpha="0">
 							<s:layout>
 								<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"
 													horizontalAlign="left" verticalAlign="middle" clipAndEnableScrolling="true"/>
@@ -4134,7 +4212,12 @@
 								</s:layout>	
 								<s:BorderContainer id="SelectedSymbolBC"
 												   width="100%" height="100%" horizontalCenter="0" verticalCenter="0"
-												   buttonMode="true" click="AddSymbolToCurrentBox(event)" borderVisible="false"/>
+												   buttonMode="true" borderVisible="false">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
+									</s:layout>
+									<s:Image width="100%" height="100%" source="{SelectedSymbol}"/>
+								</s:BorderContainer>
 							</s:BorderContainer>
 							<s:Image id="SymbolGalleryButton"
 									 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 

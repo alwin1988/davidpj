@@ -9,7 +9,7 @@
 			   creationComplete="SetDefaults(); init2();">
 	
 	<fx:Style source="main.css"/>
-	<fx:Declarations>		
+	<fx:Declarations>
 		<s:ArrayCollection id="Foils_AC">
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlackFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
@@ -84,9 +84,9 @@
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Elephant.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/EuroSign.png"
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargeEuroSign.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TinyEuroSign.png"
+		<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallEuroSign.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FerrisWheel.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -112,9 +112,9 @@
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallHeart.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargePeaceSign.png"
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/PeaceSign.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Lightning.png"
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LightningBolt.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LKW_Left.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -126,7 +126,7 @@
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MiddleFinger.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Moon&amp;Star.png"
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Turkey.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -168,7 +168,7 @@
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Star.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Telephone.png"
+		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallTelephone.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TennisRacket.png"
 		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -233,7 +233,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallHeart.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBolt.png"
+			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBoltBolt.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="35.72" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Left.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -271,7 +271,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="17.48" height="15.2" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Star.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Telephone.png"
+			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallTelephone.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="26.6" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/TennisRacket.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -350,7 +350,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallHeart.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBolt.png"
+			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBoltBolt.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="35.72" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Left.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -404,7 +404,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="17.48" height="15.2" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Star.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Telephone.png"
+			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallTelephone.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="26.6" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/TennisRacket.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -547,8 +547,6 @@
 			
 			[Bindable] public var SelectedCharacter:String;
 			private var ElementType:String;
-			[Bindable] private var SwitchButtonImage:Object;
-			[Bindable] private var SwitchButtonVisible:Boolean;
 			[Bindable] private var vgap:int = 5;
 			
 			private var CharactersAdded:int = 0;
@@ -620,21 +618,20 @@
 				LeftLoad = 0;
 				RightLoad = 0;
 				X1_LineCount = 1;
-				X2_LineCount = 1;
+				X2_LineCount = 0;
 				CurrentLine = 'Line 1';
 				CurrentBox = 'X1A';
-				CurrentBoxColor = 0xffff00;
-				SwitchButtonVisible = false;
-				OutlineColor = 0x00ced1;
+				CurrentBoxColor = 0xff0000; //yellow = 0xffff00
+				OutlineColor = 0x00ced1; //sky blue
 				CurrentOutlineAlpha = 1;
 				
 				Outlines();
 			}
 			
-			public function init():void
+		/*	public function init():void
 			{				
-				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
-				//SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
+				//SelectedSymbolFrame = symbolList.getItemAt(0) as BorderContainer;
+				//SelectedSymbolFrame.addElement(symbolList.getItemAt(0) as Image);
 				var tt:TexturedText = new TexturedText();
 				var imgTxt:Image = new Image();
 				imgTxt.source = SelectedFoilSwatchImage;
@@ -646,8 +643,8 @@
 				imgTmp.width = 38;
 				imgTmp.height = 38;
 				
-				SelectedSymbolBC.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
-				SelectedSymbolBC.visible = true;
+				SelectedSymbolFrame.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
+				SelectedSymbolFrame.visible = true;	*/
 				
 				/*
 				Foil_MiniPlateFrame.removeAllElements();
@@ -660,7 +657,7 @@
 				SelectedFoilSwatchImage = img.source;
 				*/
 				
-				var imgSrc:Image = new Image();
+			/*	var imgSrc:Image = new Image();
 				imgSrc.source = SelectedFoilBorderImage;
 				imgSrc.width = SelectedFoilBorderImage.width;
 				imgSrc.height = SelectedFoilBorderImage.height;
@@ -687,13 +684,24 @@
 				
 				Foil_MiniPlateImageContainer.addElement(img);
 				PreviewBorderImageContainer.addElement(img);
-			}
+			}	*/
 			
 			
 			private function init2():void
 			{
+				var img:Image = new Image();
+				img.source = SelectedSymbol;
+				img.height = 26.6;
+				img.width = 22.8;
+				var bc:BorderContainer = new BorderContainer();
+				bc.setStyle('borderVisible',false);
+				bc.addElement(img as Image);
+				SelectedSymbolFrame.addElement(bc);
+				
 				HideShow();
+				
 				SetNextBoxAndSwitchButtonImage();
+				
 				Outlines();
 			}
 			
@@ -1116,7 +1124,7 @@
 					PreviewBorderImageContainer.removeAllElements();
 					
 					var bc:BorderContainer = (event.currentTarget as BorderContainer);
-					//	bc.setStyle('backgroundAlpha',0);
+					bc.setStyle('backgroundAlpha',0);	//Required for transparency of plate border
 					
 					var img:Image = drawUISnapShot(bc);
 					img.percentHeight = 105;
@@ -1218,31 +1226,27 @@
 			
 			private function SelectSymbolGalleryImage(event:MouseEvent):void 
 			{
-				var SymbolGalleryImage:Image;
+				SelectedSymbolFrame.removeAllElements();
 				
 				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
-					//SelectedSymbol = event.currentTarget;
-					//SelectedSymbolBC = event.currentTarget as BorderContainer
-					SelectedSymbolBC.removeAllElements();
-					SelectedSymbolBC.setStyle('backgroundAlpha',0);
-					SelectedSymbolBC.addElement(event.currentTarget as BorderContainer);
+					SelectedSymbolFrame.addElement(event.currentTarget as BorderContainer);
 					SelectedSymbol = drawUISnapShot(event.currentTarget as BorderContainer);
 				}
 				else
 				{
-					SymbolGalleryImage = event.currentTarget as Image;
-					SelectedSymbol = SymbolGalleryImage;
+					var img:Image = new Image();
+					img = event.currentTarget as Image;
+					var bc:BorderContainer = new BorderContainer();
+					bc.setStyle('borderVisible',false);
+					bc.addElement(event.currentTarget as Image);
+					SelectedSymbolFrame.addElement(bc);
 				}
 				
 				var SelectedSymbolSource:String;
-				SelectedSymbolSource = SymbolGalleryImage.source as String;			
+				SelectedSymbolSource = img.source as String;			
 				
 				if (SelectedSymbolSource.indexOf("SmallEuroSign") >= 0)
-				{
-					SymbolSize = 'Short'
-				}
-				else if (SelectedSymbolSource.indexOf("TinyEuroSign") >= 0)
 				{
 					SymbolSize = 'Short';
 				}
@@ -1307,19 +1311,10 @@
 				{
 					Holes = 'NoneNone';
 				}
+				
+				SetPreviewHoles();
 			}
 			
-			private function CloseGallery(event:MouseEvent):void 
-			{
-				//Galleries.selectedChild = SymbolGallery;
-				GalleryWindow.visible=false;
-			}
-			
-			private function CloseGallery_():void 
-			{
-				//Galleries.selectedChild = SymbolGallery;
-				GalleryWindow.visible=false;
-			}
 			
 			private function SetPreviewHoles():void
 			{
@@ -1478,6 +1473,18 @@
 				}
 				
 				CalculatePrice();
+			}
+			
+			private function CloseGallery(event:MouseEvent):void 
+			{
+				//Galleries.selectedChild = SymbolGallery;
+				GalleryWindow.visible=false;
+			}
+			
+			private function CloseGallery_():void 
+			{
+				//Galleries.selectedChild = SymbolGallery;
+				GalleryWindow.visible=false;
 			}
 			
 			/*	private function AddCreatePlateElementsContainerChildren():void
@@ -1992,7 +1999,7 @@
 					}
 					
 					LeftFlagBox.width = FlagWidth;
-					LeftFlagBox.includeInLayout=true; LeftFlagBox.visible=true;
+					LeftFlagBox.includeInLayout=true;
 					LeftFlagBox.addElement(plateimage);
 					
 					AdjustBoxWidths('LeftFlag','+');
@@ -2008,11 +2015,13 @@
 					}
 					
 					RightFlagBox.width = FlagWidth;
-					RightFlagBox.includeInLayout=true; RightFlagBox.visible=true;
+					RightFlagBox.includeInLayout=true;
 					RightFlagBox.addElement(plateimage);
 					
 					AdjustBoxWidths('RightFlag','+');
 				}
+				
+				HideShow();
 				
 				StackAction.push(plateimage);
 				
@@ -2086,24 +2095,6 @@
 					CenterSymbolBox.visible = true;
 				}
 				
-				if (X1.includeInLayout == false)
-				{
-					X1.visible = false;
-				}
-				else if (X1.includeInLayout == true)
-				{
-					X1.visible = true;
-				}
-				
-				if (X1A.includeInLayout == false)
-				{
-					X1A.visible = false;
-				}
-				else if (X1A.includeInLayout == true)
-				{
-					X1A.visible = true;
-				}
-				
 				if (X1B.includeInLayout == false)
 				{
 					X1B.visible = false;
@@ -2140,50 +2131,49 @@
 					X2B.visible = true;
 				}
 				
-				/*		if (X1B.includeInLayout == false && X2.includeInLayout == false)
-				{
-				SwitchButtonVisible = false;
-				}
-				else
-				{
-				SwitchButtonVisible = true;
-				}
-				
-				Outlines();  */
+				Outlines();
 			}
 			
 			private function Outlines():void
-			{
+			{				
+				X1A.setStyle('borderVisible',true);
+				X2A.setStyle('borderVisible',true);
+				X1B.setStyle('borderVisible',true);
+				X2B.setStyle('borderVisible',true);
 				X1A.setStyle('borderAlpha',.25);
 				X1B.setStyle('borderAlpha',.25);
 				X2A.setStyle('borderAlpha',.25);
 				X2B.setStyle('borderAlpha',.25);
-				X1A.setStyle('backgroundColor',0xffffff);
-				X1B.setStyle('backgroundColor',0xffffff);
-				X2A.setStyle('backgroundColor',0xffffff);
-				X2B.setStyle('backgroundColor',0xffffff);
+			//	X1A.setStyle('backgroundColor',0xffffff);
+			//	X1B.setStyle('backgroundColor',0xffffff);
+			//	X2A.setStyle('backgroundColor',0xffffff);
+			//	X2B.setStyle('backgroundColor',0xffffff);
 				
 				if (CurrentBox == 'X1A')
 				{
-					X1A.setStyle('borderAlpha',1);
+					X1A.setStyle('borderVisible',true);
+					X1A.setStyle('borderAlpha',CurrentOutlineAlpha);
 					X1A.setStyle('borderColor',OutlineColor);
 					X1A.setStyle('backgroundColor',CurrentBoxColor);
 				}
 				else if (CurrentBox == 'X1B')
 				{
-					X1B.setStyle('borderAlpha',1);
+					X1B.setStyle('borderVisible',true);
+					X1B.setStyle('borderAlpha',CurrentOutlineAlpha);
 					X1B.setStyle('borderColor',OutlineColor);
 					X1B.setStyle('backgroundColor',CurrentBoxColor);
 				}
 				else if (CurrentBox == 'X2A')
 				{
-					X2A.setStyle('borderAlpha',1);
+					X2A.setStyle('borderVisible',true);
+					X2A.setStyle('borderAlpha',CurrentOutlineAlpha);
 					X2A.setStyle('borderColor',OutlineColor);
 					X2A.setStyle('backgroundColor',CurrentBoxColor);
 				}
 				else if (CurrentBox == 'X2B')
 				{
-					X2B.setStyle('borderAlpha',1);
+					X2B.setStyle('borderVisible',true);
+					X2B.setStyle('borderAlpha',CurrentOutlineAlpha);
 					X2B.setStyle('borderColor',OutlineColor);
 					X2B.setStyle('backgroundColor',CurrentBoxColor);
 				}
@@ -2211,8 +2201,8 @@
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;	*/
 				
-				trace(SelectedSymbolBC.numElements);
-				var bdTmp:BorderContainer = SelectedSymbolBC.getElementAt(0) as BorderContainer;
+				trace(SelectedSymbolFrame.numElements);
+				var bdTmp:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
 				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
 				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
 				
@@ -2348,13 +2338,8 @@
 				TargetBox = CurrentBox;
 				
 				if (TargetBox == 'X1A')
-				{
-					X1.includeInLayout = true; 
-					X1A.includeInLayout = true;
-					
+				{					
 					bc.id = (TargetBox + String(X1A_Index));
-					
-					bc.addElement(platelabel);
 					
 					bc.addElement(platelabel);
 					
@@ -2366,9 +2351,6 @@
 				}
 				else if (TargetBox == 'X1B')
 				{
-					X1.includeInLayout = true;
-					X1B.includeInLayout = true;
-					
 					bc.id = (TargetBox + String(X1B_Index));
 					
 					bc.addElement(platelabel);
@@ -2397,7 +2379,7 @@
 					
 					bc.addElement(platelabel);
 					
-					X1A.addElement(bc);
+					X2B.addElement(bc);
 					
 					X2B_Index = (X2B_Index + 1);
 					
@@ -2423,8 +2405,8 @@
 				bd.width = plateimage.width;
 				bd.height = plateimage.height;	*/
 				
-				trace(SelectedSymbolBC.numElements);
-				var bdTmp:BorderContainer = SelectedSymbolBC.getElementAt(0) as BorderContainer;
+				trace(SelectedSymbolFrame.numElements);
+				var bdTmp:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
 				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
 				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
 				
@@ -2515,8 +2497,9 @@
 					
 					CenterSymbolBox.includeInLayout=true;
 					
-					if (X1A.numElements > 0 || X1B.numElements > 0)
+					if (X1A.numElements == 0 && X1B.numElements == 0)
 					{
+						CurrentBox = 'X1A'
 						SetNextBoxAndSwitchButtonImage();
 					}
 					
@@ -2695,128 +2678,138 @@
 			// ! Propagate calls to this in place of ad-hoc
 			private function SetNextBoxAndSwitchButtonImage():void
 			{
-				SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 				if (CurrentBox == 'X1A')
 				{
 					if (CenterSymbol == false)
 					{
+						if (X1_LineCount == 1)
+						{
+							NextBox = CurrentBox; 
+							
+							//SwitchButtonImage = '';							
+							SwitchButton.visible = false;
+						}
 						if (X1_LineCount == 2)
 						{
 							NextBox = 'X1B';
-							SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
-							SwitchButtonVisible = true;
-						}
-						else
-						{
-							NextBox = CurrentBox;
-							SwitchButtonImage = '';
-							SwitchButtonVisible = false;
+							
+							SwitchButtonImage.source = 'assets/switch/SPAN_CX1A_NX1B.jpg'					
+							SwitchButton.visible = true;
 						}
 					}
-					else
+					else if (CenterSymbol == true)
 					{
 						NextBox = 'X2A';
 						
 						if (X1_LineCount == 1 && X2_LineCount == 1)
 						{
-							SwitchButtonImage = 'assets/switch/CX1_NX2.jpg';
+							SwitchButtonImage.source = 'assets/switch/CX1_NX2.jpg'
 						}
 						else if (X1_LineCount == 1 && X2_LineCount == 2)
 						{
-							SwitchButtonImage = 'assets/switch/CX1A_NX2A.jpg';
+							SwitchButtonImage.source = 'assets/switch/CX1A_NX2A.jpg'
 						}
 						else if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
-							SwitchButtonImage = 'assets/switch/CX1A_NX2.jpg';
+							SwitchButtonImage.source = 'assets/switch/CX1A_NX2.jpg'
 						}
 						else if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
-							SwitchButtonImage = 'assets/switch/CX1A_NX2A.jpg';
-						}			
+							SwitchButtonImage.source = 'assets/switch/CX1A_NX2A.jpg'
+						}
+						
+						SwitchButton.visible = true;
+						
+						if (X1_LineCount == 1 && X1A.numElements > 0)
+						{
+							CurrentBox = NextBox;
+						}
+						else if (X1_LineCount == 2 && X1A.numElements > 0 && X1B.numElements > 0)
+						{
+							CurrentBox = NextBox;
+						}
+						else
+						{
+							CurrentBox = CurrentBox;
+						}
 					}
-					
-					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X1B')
 				{
-					NextBox = 'X1A.jpg';
+					NextBox = 'X1A';
 					
 					if (CenterSymbol == false)
 					{
 						if (X1_LineCount == 2)
 						{
-							SwitchButtonImage = 'assets/switch/SPAN_CX1B_NX1A.jpg';
+							SwitchButtonImage.source = 'assets/switch/SPAN_CX1B_NX1A.jpg'
 						}
 					}
 					else
 					{
 						if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
-							SwitchButtonImage = 'assets/switch/CX1B_NX1A_SPAN.jpg';
+							SwitchButtonImage.source = 'assets/switch/CX1B_NX1A_SPAN.jpg'
 						}
 						else if (X1_LineCount == 2 && X2_LineCount == 2)
 						{
-							SwitchButtonImage = 'assets/switch/CX1B_NX1A.jpg';
+							SwitchButtonImage.source = 'assets/switch/CX1B_NX1A.jpg'
 						}
 					}
 					
-					SwitchButtonVisible = true;
+					SwitchButton.visible = true;
 				}
 				else if (CurrentBox == 'X2A')
 				{
 					if (X1_LineCount == 1 && X2_LineCount == 1)
 					{
 						NextBox = 'X1A';
-						SwitchButtonImage = 'assets/switch/CX2_NX1.jpg';
+						SwitchButtonImage.source = 'assets/switch/CX2_NX1.jpg'
 					}
 					else if (X1_LineCount == 2 && X1_LineCount == 1)
 					{
 						NextBox = 'X1B';
-						SwitchButtonImage = 'assets/switch/CX2_NX1B.jpg';
+						SwitchButtonImage.source = 'assets/switch/CX2_NX1B.jpg'
 					}
 					else if (X1_LineCount == 1 && X2_LineCount == 2)
 					{
 						NextBox = 'X2B';
-						SwitchButtonImage = 'assets/switch/CX2A_NX2B_SPAN.jpg';
+						SwitchButtonImage.source = 'assets/switch/CX2A_NX2B_SPAN.jpg'
 					}
 					else if (X1_LineCount == 2 && X2_LineCount == 2)
 					{
 						NextBox = 'X2B';
-						SwitchButtonImage = 'assets/switch/CX2A_NX2B.jpg';
+						SwitchButtonImage.source = 'assets/switch/CX2A_NX2B.jpg'
 					}
 					
-					SwitchButtonVisible = true;
+					SwitchButton.visible = true;
 				}
 				else if (CurrentBox == 'X2B')
 				{
 					if (X1_LineCount == 1 && X2_LineCount == 2)
 					{
 						NextBox = 'X1A';
-						SwitchButtonImage = 'assets/switch/CX2B_NX1.jpg';
+						SwitchButtonImage.source = 'assets/switch/CX2B_NX1.jpg'
 					}
 					else if (X1_LineCount == 2 && X2_LineCount == 2)
 					{
 						NextBox = 'X1B';
-						SwitchButtonImage = 'assets/switch/CX2B_NX1B.jpg';
+						SwitchButtonImage.source = 'assets/switch/CX2B_NX1B.jpg'
 					}
 					
-					SwitchButtonVisible = true;
+					SwitchButton.visible = true;
 				}
 				
-				CurrentBox = NextBox;
-				
 				Outlines();
-				
-				SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 			}
 			
-			/*	private function ChangeLineCount(event:MouseEvent,RequestedLineCount:int):void
+		/*	private function ChangeLineCount(event:MouseEvent,RequestedLineCount:int):void
 			{
 			if (RequestedLineCount == 2 && TwoLines == false)
 			{
 			TwoLines = true;
 			
-			// !!					SwitchButton.visible = true;
+				SwitchButton.visible = true;
 			
 			if (CharacterSize == 'Large')
 			{
@@ -2827,7 +2820,7 @@
 			{
 			TwoLines = false;
 			
-			// !!				SwitchButton.visible = false;
+				SwitchButton.visible = false;
 			}
 			
 			SetCharacterDimensions();
@@ -3297,135 +3290,24 @@
 			
 			<!--Preview frame (fixed-sized for large plate)-->
 			<s:BorderContainer id="PreviewFrame"
-							   width="{LargePlateOuterWidth}" height="{LargePlateOuterHeight}" borderVisible="false" depth="1">
+							   width="{PlateOuterWidth}" height="{PlateOuterHeight}" borderVisible="false" depth="1">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>
 				</s:layout>
 				
 				<!-- Preview container.  Background color or image set via functions -->
 				<s:BorderContainer id="PreviewContainer"
-								   width="{PlateOuterWidth}" height="{PlateOuterHeight}" horizontalCenter="0" verticalCenter="0" color="red"
+								   width="{PlateOuterWidth}" height="{PlateOuterHeight}" horizontalCenter="0" verticalCenter="0"
 								   borderVisible="true" borderWeight="2" cornerRadius="8">
 					<s:layout>
 						<s:BasicLayout clipAndEnableScrolling="true"/>
 					</s:layout>
-					
-					<!-- Holes -->
-					<s:Ellipse id="TopLeftHole"
-							   x="5" y="5" visible="false" width="8" height="8" depth="11">
-						<s:fill>
-							<s:SolidColor color="white"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="gray" weight=".25"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="TopRightHole"
-							   x="501" y="5" visible="false" width="8" height="8" depth="11">
-						<s:fill>
-							<s:SolidColor color="white"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="gray" weight=".25"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="MiddleLeftHole"
-							   x="5" y="49.5" visible="false" width="8" height="8" depth="11">
-						<s:fill>
-							<s:SolidColor color="white"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="gray" weight=".25"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="MiddleRightHole"
-							   x="501" y="49.5" visible="false" width="8" height="8" depth="11">
-						<s:fill>
-							<s:SolidColor color="white"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="gray" weight=".25"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="BottomLeftHole"
-							   x="5" y="94" visible="false" width="8" height="8" depth="11">
-						<s:fill>
-							<s:SolidColor color="white"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="gray" weight=".25"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="BottomRightHole"
-							   x="501" y="94" visible="false" width="8" height="8" depth="11">
-						<s:fill>
-							<s:SolidColor color="white"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="gray" weight=".25"/>
-						</s:stroke>
-					</s:Ellipse>
-					<!-- Suction cups -->
-					<s:Ellipse id="TopLeftCup"
-							   x="0" y="0" width="19" height="19" visible="false" depth="12">
-						<s:fill>
-							<s:SolidColor color="white" alpha=".5"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="white" weight="1.375"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="TopRightCup"
-							   x="496" y="0" width="19" height="19" visible="false" depth="12">
-						<s:fill>
-							<s:SolidColor color="white" alpha=".5"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="white" weight="1.375"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="MiddleLeftCup"
-							   x="0" y="44.5" width="19" height="19" visible="false" depth="12">
-						<s:fill>
-							<s:SolidColor color="white" alpha=".5"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="white" weight="1.375"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="MiddleRightCup"
-							   x="496" y="44.5" width="19" height="19" visible="false" depth="12">
-						<s:fill>
-							<s:SolidColor color="white" alpha=".5"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="white" weight="1.375"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="BottomLeftCup"
-							   x="0" y="89" width="19" height="19" visible="false" depth="12">
-						<s:fill>
-							<s:SolidColor color="white" alpha=".5"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="white" weight="1.375"/>
-						</s:stroke>
-					</s:Ellipse>
-					<s:Ellipse id="BottomRightCup"
-							   x="496" y="89" width="19" height="19" visible="false" depth="12">
-						<s:fill>
-							<s:SolidColor color="white" alpha=".5"/>
-						</s:fill>
-						<s:stroke>
-							<s:SolidColorStroke color="white" weight="1.375"/>
-						</s:stroke>
-					</s:Ellipse>
-					
-					<s:BorderContainer id="PreviewPlateNonImageContainer" depth="3" includeInLayout="false" visible="false" borderColor="green"
+									
+					<s:BorderContainer id="PreviewPlateNonImageContainer" depth="1" includeInLayout="false" visible="false"
 									   width="{PlateOuterWidth}" height="{PlateOuterHeight}"
 									   cornerRadius="7" backgroundColor="{PlateColor}" backgroundAlpha="1">
 					</s:BorderContainer>
-					<s:BorderContainer id="PreviewPlateImageContainer" depth="3" includeInLayout="false" visible="false" borderColor="green"
+					<s:BorderContainer id="PreviewPlateImageContainer" depth="1" includeInLayout="false" visible="false"
 									   width="{PlateOuterWidth}" height="{PlateOuterHeight}" borderVisible="false" 
 									   horizontalCenter="0" verticalCenter="0">
 						<s:layout>
@@ -3435,15 +3317,15 @@
 								 x="0" y="0" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"
 								 source="{SelectedPlateImage}" fillMode="scale" scaleMode="stretch"/>
 					</s:BorderContainer>
-					
+						
 					<!-- Plate outer (border) container which is bordered and transparent, with invisible border if plate is full size.  Border color is set via function. -->
-					<s:BorderContainer id="PlateBorder" depth="4"
+					<s:BorderContainer id="PlateBorder" depth="5"
 									   x="0" y="0" width="100%" height="100%" borderVisible="false" backgroundAlpha="0">
 						<s:layout>
 							<s:BasicLayout/>
 						</s:layout>
 						
-						<s:BorderContainer id="PreviewBorderImageContainer"
+						<s:BorderContainer id="PreviewBorderImageContainer" visible="true" includeInLayout="true" depth="1"
 										   x="0" y="0" width="100%" height="100%" borderVisible="false" backgroundAlpha="0">
 							<s:layout>
 								<s:HorizontalLayout clipAndEnableScrolling="true"/>
@@ -3452,128 +3334,247 @@
 									 width="100%" height="100%"
 									 fillMode="scale" scaleMode="stretch" source="{SelectedFoilBorderImage}"/>
 						</s:BorderContainer>
+					</s:BorderContainer>
+					
+					<!-- Plate elements container.  BackgroundColor or image set via functions -->
+					<s:BorderContainer id="PlateElementsContainer" depth="6"
+									   x="{((PlateOuterWidth-PlateInnerWidth)/2)}" y="{((PlateOuterHeight-PlateInnerHeight)/2)}" 
+									   width="{PlateInnerWidth-4}" height="{PlateInnerHeight}"
+									   horizontalCenter="0" verticalCenter="0" borderVisible="false" backgroundAlpha="0">
+						<s:layout>
+							<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"
+												horizontalAlign="left" verticalAlign="middle" clipAndEnableScrolling="true"/>
+						</s:layout>
 						
-						<!-- Plate elements container.  BackgroundColor or image set via functions -->
-						<s:BorderContainer id="PlateElementsContainer" borderColor="red"
-										   x="{((PlateOuterWidth-PlateInnerWidth)/2)}" y="{((PlateOuterHeight-PlateInnerHeight)/2)}" 
-										   width="{PlateInnerWidth}" height="{PlateInnerHeight}" depth="20"
-										   horizontalCenter="0" verticalCenter="0" borderVisible="true" backgroundAlpha="0">
+						<!--Multiple containers for potential elements, which are hidden and shown as needed.  Widths are reset by functions"-->
+						<s:BorderContainer id="LeftFlagBox"
+										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0">
 							<s:layout>
-								<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"
-													horizontalAlign="left" verticalAlign="middle" clipAndEnableScrolling="true"/>
+								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+													paddingTop="0" paddingBottom="0" gap="0"/>
 							</s:layout>
-							
-							<!--Multiple containers for potential elements, which are hidden and shown as needed.  Widths are reset by functions"-->
-							<s:BorderContainer id="LeftFlagBox"
-											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
-								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-														paddingTop="0" paddingBottom="0" gap="0"/>
-								</s:layout>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="LeftDateBox"
-											   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-											   borderColor="red" borderAlpha=".25" backgroundAlpha="0" kerning="off">
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
-								</s:layout>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="LeftSymbolBox"
-											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
-								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-														paddingTop="0" paddingBottom="0" gap="0"/>
-								</s:layout>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="X1"
-											   width="{PlateElementsContainer.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
-											   borderVisible="false" backgroundAlpha="0">
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"	  
-													  paddingTop="0" paddingBottom="0"/>
-								</s:layout>
-								<s:BorderContainer id="X1A" 
-												   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
-												   borderVisible="false" backgroundAlpha="0">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
-									</s:layout>
-								</s:BorderContainer>
-								<s:BorderContainer id="X1B"
-												   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
-												   borderVisible="false" backgroundAlpha="0">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
-									</s:layout>
-								</s:BorderContainer>
-							</s:BorderContainer>
-							
-							<!--No width set.  Let the symbol dictate the width-->
-							<s:BorderContainer id="CenterSymbolBox" borderColor="green"
-											   height="100%" verticalCenter="0" horizontalCenter="0" backgroundAlpha="0" includeInLayout="false" visible="false">
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
-													  paddingTop="5" paddingBottom="5"/>
-								</s:layout>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="X2"
-											   width="0" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
-											   borderVisible="false" backgroundAlpha="0">
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
-													  paddingTop="0" paddingBottom="0"/>
-								</s:layout>
-								<s:BorderContainer id="X2A"
-												   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
-												   borderVisible="false" backgroundAlpha="0">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
-									</s:layout>
-								</s:BorderContainer>
-								<s:BorderContainer id="X2B"
-												   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
-												   borderVisible="false" backgroundAlpha="0">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
-															paddingTop="10" paddingBottom="10"/>
-									</s:layout>
-								</s:BorderContainer>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="RightSymbolBox"
-											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
-								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
-														paddingTop="0" paddingBottom="0"/>
-								</s:layout>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="RightDateBox"
-											   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-											   borderColor="red" borderAlpha=".25" backgroundAlpha="0" kerning="off">
-								<s:layout>
-									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
-								</s:layout>
-							</s:BorderContainer>
-							
-							<s:BorderContainer id="RightFlagBox"
-											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
-								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
-														paddingTop="0" paddingBottom="0"/>
-								</s:layout>
-								<!--/s:BorderContainer-->
-							</s:BorderContainer>							
-							
 						</s:BorderContainer>
+						
+						<s:BorderContainer id="LeftDateBox"
+										   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0" kerning="off">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
+							</s:layout>
+						</s:BorderContainer>
+						
+						<s:BorderContainer id="LeftSymbolBox"
+										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+													paddingTop="0" paddingBottom="0" gap="0"/>
+							</s:layout>
+						</s:BorderContainer>
+						
+						<s:BorderContainer id="X1"
+										   width="{PlateElementsContainer.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
+										   borderVisible="false" backgroundAlpha="0">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
+												  paddingTop="5" paddingBottom="5"/>
+							</s:layout>
+							<s:BorderContainer id="X1A"
+											   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true" 
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+								</s:layout>
+							</s:BorderContainer>
+							<s:BorderContainer id="X1B"
+											   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
+														paddingTop="10" paddingBottom="10"/>
+								</s:layout>
+							</s:BorderContainer>
+						</s:BorderContainer>
+						
+						<!--No width set.  Let the symbol dictate the width-->
+						<s:BorderContainer id="CenterSymbolBox"
+										   height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
+												  paddingTop="5" paddingBottom="5"/>
+							</s:layout>
+						</s:BorderContainer>
+						
+						<s:BorderContainer id="X2"
+										   width="0" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
+												  paddingTop="5" paddingBottom="5"/>
+							</s:layout>
+							<s:BorderContainer id="X2A"
+											   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+								</s:layout>
+							</s:BorderContainer>
+							<s:BorderContainer id="X2B"
+											   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
+														paddingTop="10" paddingBottom="10"/>
+								</s:layout>
+							</s:BorderContainer>
+						</s:BorderContainer>
+						
+						<s:BorderContainer id="RightSymbolBox"
+										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
+													paddingTop="0" paddingBottom="0"/>
+							</s:layout>
+						</s:BorderContainer>
+						
+						<s:BorderContainer id="RightDateBox"
+										   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0" kerning="off">
+							<s:layout>
+								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
+							</s:layout>
+						</s:BorderContainer>
+						
+						<s:BorderContainer id="RightFlagBox"
+										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+										   borderVisible="false" backgroundAlpha="0">
+							<s:layout>
+								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
+													paddingTop="0" paddingBottom="0"/>
+							</s:layout>
+						</s:BorderContainer>
+					</s:BorderContainer>
+
+					<!-- Holes -->
+					<s:BorderContainer id="HolesPreview"
+									   x="{((PlateOuterWidth-PlateInnerWidth)/2)}" y="{((PlateOuterHeight-PlateInnerHeight)/2)}"
+									   width="{PlateInnerWidth}" height="{PlateInnerHeight}" horizontalCenter="0" verticalCenter="0"
+									   borderVisible="false" backgroundAlpha="0" depth="10">
+						<s:layout>
+							<s:BasicLayout clipAndEnableScrolling="true"/>
+						</s:layout>
+						<s:Ellipse id="TopLeftHole"
+								   x="5" y="5" visible="false" width="8" height="8" depth="1">
+							<s:fill>
+								<s:SolidColor color="white"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="gray" weight=".25"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="TopRightHole"
+								   x="501" y="5" visible="false" width="8" height="8" depth="1">
+							<s:fill>
+								<s:SolidColor color="white"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="gray" weight=".25"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="MiddleLeftHole"
+								   x="5" y="49.5" visible="false" width="8" height="8" depth="1">
+							<s:fill>
+								<s:SolidColor color="white"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="gray" weight=".25"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="MiddleRightHole"
+								   x="501" y="49.5" visible="false" width="8" height="8" depth="1">
+							<s:fill>
+								<s:SolidColor color="white"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="gray" weight=".25"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="BottomLeftHole"
+								   x="5" y="94" visible="false" width="8" height="8" depth="1">
+							<s:fill>
+								<s:SolidColor color="white"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="gray" weight=".25"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="BottomRightHole"
+								   x="501" y="94" visible="false" width="8" height="8" depth="1">
+							<s:fill>
+								<s:SolidColor color="white"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="gray" weight=".25"/>
+							</s:stroke>
+						</s:Ellipse>
+						<!-- Suction cups -->
+						<s:Ellipse id="TopLeftCup"
+								   x="0" y="0" width="19" height="19" visible="false" depth="2">
+							<s:fill>
+								<s:SolidColor color="white" alpha=".5"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="white" weight="1.375"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="TopRightCup"
+								   x="496" y="0" width="19" height="19" visible="false" depth="2">
+							<s:fill>
+								<s:SolidColor color="white" alpha=".5"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="white" weight="1.375"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="MiddleLeftCup"
+								   x="0" y="44.5" width="19" height="19" visible="false" depth="2">
+							<s:fill>
+								<s:SolidColor color="white" alpha=".5"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="white" weight="1.375"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="MiddleRightCup"
+								   x="496" y="44.5" width="19" height="19" visible="false" depth="2">
+							<s:fill>
+								<s:SolidColor color="white" alpha=".5"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="white" weight="1.375"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="BottomLeftCup"
+								   x="0" y="89" width="19" height="19" visible="false" depth="2">
+							<s:fill>
+								<s:SolidColor color="white" alpha=".5"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="white" weight="1.375"/>
+							</s:stroke>
+						</s:Ellipse>
+						<s:Ellipse id="BottomRightCup"
+								   x="496" y="89" width="19" height="19" visible="false" depth="2">
+							<s:fill>
+								<s:SolidColor color="white" alpha=".5"/>
+							</s:fill>
+							<s:stroke>
+								<s:SolidColorStroke color="white" weight="1.375"/>
+							</s:stroke>
+						</s:Ellipse>
 					</s:BorderContainer>
 					
 				</s:BorderContainer>
@@ -3720,26 +3721,26 @@
 							 fontFamily="Arial" fontSize="11"/>
 				</s:HGroup>
 				
-				<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
-						 source="{SwitchButtonImage}"/>
+				<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+						 source="{SwitchButtonImage}"/-->
 				
 				<!--Switch button image is set and visibility is toggled via function-->
-				<!--s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="{SwitchButtonVisible}" 
-				chromeColor="gray" borderColor="black" cornerRadius="3" 
-				useHandCursor="true" buttonMode="true" 
-				click="SetNextBoxAndSwitchButtonImage()">
-				<s:layout>
-				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-				paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2"/>
-				</s:layout>
-				<s:BorderContainer width="100%" height="100%" borderVisible="true" borderWeight=".5">
-				<s:layout>
-				<s:HorizontalLayout clipAndEnableScrolling="false"/>
-				</s:layout>
-				<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
-				source="{SwitchButtonImage}"/>
-				<!/s:BorderContainer>
-				</s:BorderContainer-->
+				<s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="false" includeInLayout="true"
+								   chromeColor="gray" borderColor="black" cornerRadius="3" 
+								   useHandCursor="true" buttonMode="true" 
+								   click="SetNextBoxAndSwitchButtonImage()">
+					<s:layout>
+						<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+										  paddingTop="1" paddingBottom="2" paddingLeft="2" paddingRight="2"/>
+					</s:layout>
+					<s:BorderContainer width="100%" height="15" borderVisible="true" borderWeight=".5">
+						<s:layout>
+							<s:HorizontalLayout clipAndEnableScrolling="false"/>
+						</s:layout>
+						<s:Image id="SwitchButtonImage" width="100%" height="100%" 
+								 source="" fillMode="scale" scaleMode="stretch"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
 				
 				<!--Switch button image is set and visibility is toggled via function-->
 				<!--s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="13" verticalCenter="0"
@@ -4144,11 +4145,12 @@
 					<s:BorderContainer id="FlagChooser"
 									   width="100%" height="60" borderVisible="false"
 									   toolTip="Click on the flag to open the flag gallery to select the flag.  Then click on the 'L' or 'R' button to place the flag"
-									   buttonMode="true" click="OpenFlagGallery(event)">
+									   buttonMode="true">
 						<s:layout>
 							<s:VerticalLayout gap="0" horizontalAlign="center" verticalAlign="top"/>
 						</s:layout>
-						<s:BorderContainer width="30" height="60" borderVisible="true">
+						<s:BorderContainer width="30" height="60" borderVisible="true"
+										   buttonMode="true" click="OpenFlagGallery(event)">
 							<s:layout>
 								<s:BasicLayout/>
 							</s:layout>
@@ -4210,13 +4212,13 @@
 								<s:layout>
 									<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
 								</s:layout>	
-								<s:BorderContainer id="SelectedSymbolBC"
+								<s:BorderContainer id="SelectedSymbolFrame"
 												   width="100%" height="100%" horizontalCenter="0" verticalCenter="0"
-												   buttonMode="true" borderVisible="false">
+												   buttonMode="true" borderVisible="false" backgroundAlpha="0">
 									<s:layout>
 										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
 									</s:layout>
-									<s:Image width="100%" height="100%" source="{SelectedSymbol}"/>
+									<!--s:Image width="100%" height="100%" source="{SelectedSymbol}"/-->
 								</s:BorderContainer>
 							</s:BorderContainer>
 							<s:Image id="SymbolGalleryButton"

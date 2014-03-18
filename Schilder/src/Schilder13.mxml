@@ -6,10 +6,10 @@
 			   xmlns:component="component.*"
 			   xmlns:ns1="flexScript.*"
 			   width="100%" height="100%"
-			   creationComplete="SetDefaults(); init2();">
+			   creationComplete="SetDefaults();init2();">
 	
 	<fx:Style source="main.css"/>
-	<fx:Declarations>
+	<fx:Declarations>		
 		<s:ArrayCollection id="Foils_AC">
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlackFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
@@ -44,143 +44,6 @@
 			<s:Image width="220" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/SilverFoilPlate.png" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 		</s:ArrayCollection>
-		
-		<!--s:ArrayCollection id="Symbols%_AC">
-		<s:Image width="75%" height="75%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Audi.png" 
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BartSimpson.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Basketball.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="50%" height="50%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BeerGlass.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BerlinBears.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BettyBoop.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bird.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/BMW.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Boat.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bowling.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Bus.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cannabis.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Cat.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Crown.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/DartBoard.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Dog.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Dolphin.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Dragon.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Elephant.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargeEuroSign.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="30%" height="30%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallEuroSign.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FerrisWheel.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Football.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Ford.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/FormulaOne.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Frame.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Helicopter.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/HelloKitty.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Hockey.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Horse.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Horseshoe.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>				
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LargeHeart.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallHeart.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/PeaceSign.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LightningBolt.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LKW_Left.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/LKW_Right.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MAN.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Mercedes.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MiddleFinger.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Turkey.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Motorcycle2.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Mouse.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/MusicalNotes.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Opel.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Pacifier.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/PalmTree.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Peugot.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Pistol.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Playboy.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Rabbit.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Rings.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Scania.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SantaClaus.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SEAT.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Skull&amp;Crossbones.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmileyFace.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Soccer.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SpongeBob.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Star.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/SmallTelephone.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/TennisRacket.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Tractor.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Volkswagen.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/Windsurfer.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/symbols/WinnieThePooh.png"
-		click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-		</s:ArrayCollection-->
 		
 		<s:ArrayCollection id="Symbols_AC">  <!--Only unlicensed symbols-->
 			<s:Image width="38" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Basketball.png"
@@ -233,7 +96,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallHeart.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBoltBolt.png"
+			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBolt.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="35.72" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Left.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -271,7 +134,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="17.48" height="15.2" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Star.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallTelephone.png"
+			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Telephone.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="26.6" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/TennisRacket.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -350,7 +213,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallHeart.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBoltBolt.png"
+			<s:Image width="22.8" height="20.9" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LightningBolt.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="35.72" height="32.3" fillMode="scale" scaleMode="letterbox" source="assets/symbols/LKW_Left.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -404,7 +267,7 @@
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="17.48" height="15.2" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Star.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/SmallTelephone.png"
+			<s:Image width="20.9" height="19" fillMode="scale" scaleMode="letterbox" source="assets/symbols/Telephone.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="26.6" height="22.8" fillMode="scale" scaleMode="letterbox" source="assets/symbols/TennisRacket.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
@@ -423,8 +286,9 @@
 	</fx:Declarations>	
 	<fx:Script>
 		<![CDATA[
-			// !		
 			import flash.utils.getQualifiedClassName;
+			
+			import flashx.textLayout.operations.RedoOperation;
 			
 			import mx.core.UIComponent;
 			
@@ -497,45 +361,6 @@
 			[Embed(source="assets/down_triangle.png")]
 			public static const DownTriangle:Class;
 			
-			[Embed(source="assets/switch/CX1_NX2.png")]
-			public static const CX1_NX2:Class;
-			
-			[Embed(source="assets/switch/CX1A_NX2.png")]
-			public static const CX1A_NX2:Class;
-			
-			[Embed(source="assets/switch/CX1A_NX2A.png")]
-			public static const CX1A_NX2A:Class;
-			
-			[Embed(source="assets/switch/SPAN_CX1A_NX1B.png")]
-			public static const CX1A_NX1B:Class;
-			
-			[Embed(source="assets/switch/CX1B_NX1A.png")]
-			public static const CX1B_NX1A:Class;
-			
-			[Embed(source="assets/switch/CX1B_NX1A_SPAN.png")]
-			public static const CX1B_NX1A_SPAN:Class;
-			
-			[Embed(source="assets/switch/SPAN_CX1B_NX1A.png")]
-			public static const SPAN_CX1B_NX1A:Class;
-			
-			[Embed(source="assets/switch/CX2_NX1.png")]
-			public static const CX2_NX1:Class;
-			
-			[Embed(source="assets/switch/CX2_NX1B.png")]
-			public static const CX2_NX1B:Class;
-			
-			[Embed(source="assets/switch/CX2A_NX2B.png")]
-			public static const CX2A_NX2B:Class;
-			
-			[Embed(source="assets/switch/CX2A_NX2B_SPAN.png")]
-			public static const CX2A_NX2B_SPAN:Class;
-			
-			[Embed(source="assets/switch/CX2B_NX1.png")]
-			public static const CX2B_NX1:Class;
-			
-			[Embed(source="assets/switch/CX2B_NX1B.png")]
-			public static const CX2B_NX1B:Class;
-			
 			[Bindable] private var PlateSize:String;
 			[Bindable] private var PlateOuterWidth:uint;
 			[Bindable] private var PlateOuterHeight:uint;
@@ -547,8 +372,7 @@
 			[Bindable] private var SelectedPlateImage:Object;
 			private var PlateIsMetallic:Boolean;
 			
-			[Bindable] private var CurrentFoilName:String;
-			[Bindable] private var LastFoilName:String;
+			[Bindable] private var FoilName:String;
 			[Bindable] private var SelectedFoilBorderImage:Object;
 			[Bindable] private var SelectedFoilSwatchImage:Object;
 			
@@ -569,6 +393,7 @@
 			private var FlagCountry:String;
 			private var FlagCount:uint;
 			
+			[Bindable] private var DefaultSymbol:Object;
 			[Bindable] private var SelectedSymbol:Object;
 			[Bindable] private var SymbolSize:String;
 			[Bindable] private var CenterSymbol:Boolean = false; //true means there is a center symbol
@@ -587,6 +412,8 @@
 			
 			[Bindable] public var SelectedCharacter:String;
 			private var ElementType:String;
+			[Bindable] private var SwitchButtonImage:Object;
+			[Bindable] private var SwitchButtonVisible:Boolean;
 			[Bindable] private var vgap:int = 5;
 			
 			private var CharactersAdded:int = 0;
@@ -612,6 +439,7 @@
 			[Bindable] private var Price:int;
 			[Bindable] private var DisplayPrice:String;
 			[Bindable] private var ac:ArrayCollection;
+			[Bindable] private var reference:ArrayCollection;
 			
 			private var StackAction:Array = new Array();
 			
@@ -626,10 +454,9 @@
 				SetMiniPlatePlate();
 				SetPreviewPlate();
 				
-				LastFoilName = 'BlackFoil';
 				SelectedFoilBorderImage = 'assets/foils/BlackFoilPlate.png';
 				SelectedFoilSwatchImage = 'assets/foils/BlackFoilSwatch.jpg';
-				
+
 				Date1ToolTip="Click on the arrows to set the 2-digit day of the month." +
 					"Once the day, month, and year have been set, click the 'L' or 'R' button to place the date";
 				Date2ToolTip="Click on the arrows to set the 2-digit month of the year." +
@@ -644,7 +471,8 @@
 				SelectedFlag = 'assets/flags/D.jpg';
 				FlagCount = 0;
 				
-				SelectedSymbol = 'assets/symbols/LargeHeart.png';
+				DefaultSymbol = 'assets/symbols/LargeHeart.png';
+				SelectedSymbol = DefaultSymbol;
 				TallSymbolCount = 0;
 				ShortSymbolCount = 0;
 				
@@ -659,20 +487,22 @@
 				LeftLoad = 0;
 				RightLoad = 0;
 				X1_LineCount = 1;
-				X2_LineCount = 0;
+				X2_LineCount = 1;
 				CurrentLine = 'Line 1';
 				CurrentBox = 'X1A';
-				CurrentBoxColor = 0xff0000; //yellow = 0xffff00
-				OutlineColor = 0x00ced1; //sky blue
+				CurrentBoxColor = 0xffff00;
+				SwitchButtonVisible = false;
+				OutlineColor = 0x00ced1;
 				CurrentOutlineAlpha = 1;
 				
 				Outlines();
 			}
-			
-		/*	public function init():void
+
+			public function init():void
 			{				
-				//SelectedSymbolFrame = symbolList.getItemAt(0) as BorderContainer;
-				//SelectedSymbolFrame.addElement(symbolList.getItemAt(0) as Image);
+				//SelectedSymbolBC = symbolList.getItemAt(0) as BorderContainer;
+				//SelectedSymbolBC.addElement(symbolList.getItemAt(0) as Image);
+				reference = new ArrayCollection();
 				var tt:TexturedText = new TexturedText();
 				var imgTxt:Image = new Image();
 				imgTxt.source = SelectedFoilSwatchImage;
@@ -684,8 +514,8 @@
 				imgTmp.width = 38;
 				imgTmp.height = 38;
 				
-				SelectedSymbolFrame.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
-				SelectedSymbolFrame.visible = true;	*/
+				SelectedSymbolBC.addElement(tt.getTextMaskImage(imgTxt, imgTmp));	
+				SelectedSymbolBC.visible = true;
 				
 				/*
 				Foil_MiniPlateFrame.removeAllElements();
@@ -698,7 +528,7 @@
 				SelectedFoilSwatchImage = img.source;
 				*/
 				
-			/*	var imgSrc:Image = new Image();
+				var imgSrc:Image = new Image();
 				imgSrc.source = SelectedFoilBorderImage;
 				imgSrc.width = SelectedFoilBorderImage.width;
 				imgSrc.height = SelectedFoilBorderImage.height;
@@ -725,63 +555,50 @@
 				
 				Foil_MiniPlateImageContainer.addElement(img);
 				PreviewBorderImageContainer.addElement(img);
-			}	*/
+			}
 			
 			
 			private function init2():void
 			{
-				var img:Image = new Image();
-				img.source = SelectedSymbol;
-				img.height = 26.6;
-				img.width = 22.8;
-				var bc:BorderContainer = new BorderContainer();
-				bc.setStyle('borderVisible',false);
-				bc.addElement(img as Image);
-				SelectedSymbolFrame.addElement(bc);
-				
+				reference = new ArrayCollection();
 				HideShow();
-				
 				SetNextBoxAndSwitchButtonImage();
-				
 				Outlines();
 			}
 			
-			private function TextureSymbolGallery():void
+			private function updateCharTexture():void
 			{
-				if (CurrentFoilName != LastFoilName)
-				{
-					var imgTxt:Image;
-					var imgTmp:Image;
-					var imgSrc:Image;
-					ac = new ArrayCollection();
-					id = 'TexturedSymbols_AC';
-					var tt:TexturedText = new TexturedText();
 				
-					for (var i:int=0; i < Symbols_AC.length; i++)
-					{
-						imgTmp = Symbols_AC.getItemAt(i) as Image;				
-						SelectedFoilSwatchImage;
-						imgTxt = new Image();
-						imgTxt.source = String(SelectedFoilSwatchImage);
-						imgTxt.width = imgTmp.width;
-						imgTxt.height = imgTmp.height;
-						imgTxt.fillMode = imgTmp.fillMode;
-						imgTxt.scaleMode = imgTmp.scaleMode;
-						var bd:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
-						bd.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
-						bd.addEventListener(MouseEvent.CLICK, CloseGallery);
-						ac.addItem(bd);
-					}
-				
-					SymbolGalleryList.dataProvider = ac;
-				}
-				else
-				{
-					SymbolGalleryList.dataProvider = Symbols_AC;
-				}
 			}
 			
-			private function TextureFoilGallery():void
+			private function updateFoilToSymbol():void
+			{
+				var imgTxt:Image;
+				var imgTmp:Image;
+				var imgSrc:Image;
+				ac = new ArrayCollection();
+				var tt:TexturedText = new TexturedText();
+				
+				for (var i:int=0; i < Symbols_AC.length; i++)
+				{
+					imgTmp = Symbols_AC.getItemAt(i) as Image;				
+					SelectedFoilSwatchImage;
+					imgTxt = new Image();
+					imgTxt.source = String(SelectedFoilSwatchImage);
+					imgTxt.width = imgTmp.width;
+					imgTxt.height = imgTmp.height;
+					imgTxt.fillMode = imgTmp.fillMode;
+					imgTxt.scaleMode = imgTmp.scaleMode;
+					var bd:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
+					bd.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
+					bd.addEventListener(MouseEvent.CLICK, CloseGallery);
+					ac.addItem(bd);
+				}
+				
+				SymbolGalleryList.dataProvider = ac;
+			}
+			
+			private function updateFoilToPlateBorder():void
 			{
 				// TODO Auto-generated method stub
 				trace("change");
@@ -844,9 +661,12 @@
 				//4:symbol
 				//0:plate color
 				if (event.newIndex == 1)
-					TextureFoilGallery();
+					updateFoilToPlateBorder();
 				else if (event.newIndex == 4)
-					TextureSymbolGallery();
+				{
+					updateFoilToSymbol();
+					updateCharTexture();
+				}	
 			}
 			
 			/*	protected function Galleries_changeHandler(event:IndexChangedEvent):void
@@ -896,7 +716,7 @@
 			}
 			FoilGalleryList.dataProvider = foillist;
 			} */
-			
+						
 			private function SetPlateSize():void
 			{
 				if (PlateSize == 'Large')
@@ -1109,15 +929,15 @@
 				var PlateGalleryImage:Image;
 				PlateGalleryImage = event.currentTarget as Image;
 				SelectedPlateImage = PlateGalleryImage as Image;
-				var SelectedPlateImageSource:String = PlateGalleryImage.source as String;
 				
-				if (SelectedPlateImageSource.indexOf("solid") >= 0)
+				//!! Wrong place to set this
+				if (IsMetallic == true)
 				{
-					PlateIsMetallic = false;
+					PlateIsMetallic = true;
 				}
 				else
 				{
-					PlateIsMetallic = true;
+					PlateIsMetallic = false;
 				}
 			}
 			
@@ -1159,88 +979,110 @@
 				invalidateDisplayList();
 				return img;
 			}
-			
+
 			private function SelectFoilGalleryImage(event:MouseEvent):void 
 			{
-				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::Image")
-				{
-					trace("");
-					SelectedFoilSwatchImage = event.currentTarget.source;
-				}
-				else if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
+				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
 					Foil_MiniPlateImageContainer.removeAllElements();
 					PreviewBorderImageContainer.removeAllElements();
 					
 					var bc:BorderContainer = (event.currentTarget as BorderContainer);
-					bc.setStyle('backgroundAlpha',0);	//Required for transparency of plate border
-					
+					bc.percentWidth = 100;
+					bc.percentHeight = 100;
+					bc.setStyle('backgroundAlpha',0);
 					var img:Image = drawUISnapShot(bc);
-					img.percentHeight = 105;
-					img.percentWidth = 105;
+					img.percentWidth = 100;
+					img.percentHeight = 100;
+					//var img1:Image = bc.getElementAt(0) as Image;
+					//var img2:Image = bc.getElementAt(1) as Image;
+					//img1.percentHeight = 100;
+					//img1.percentWidth = 100;
+					//img2.percentHeight = 100;
+					//img2.percentWidth = 100;
+					//bc.percentHeight = 100;
+					//bc.percentWidth = 100;
 					
-					var img2:Image = drawUISnapShot(bc);
-					img2.width = PlateOuterWidth;
-					img2.height = PlateOuterHeight;
-					img2.fillMode = 'scale';
-					img2.scaleMode = 'stretch';
+					bc.addElement(img);
 					
-					Foil_MiniPlateImageContainer.addElement(img);
-					PreviewBorderImageContainer.addElement(img2);
+					Foil_MiniPlateImageContainer.addElement(bc);
+					PreviewBorderImageContainer.addElement(bc);
 					
-					var img:Image = bc.getElementAt(0) as Image;
-					SelectedFoilSwatchImage = img.source;
-					var SelectedFoilImageSource:String = SelectedFoilSwatchImage.source as String;
+					var img1:Image = bc.getElementAt(0) as Image;
+					SelectedFoilSwatchImage = img1.source;
+					
+					for (var i:int=0; i < reference.length; i++)
+					{
+						var imgTmp:Image = reference.getItemAt(i) as Image;
+						trace(imgTmp.source);
+						var array1:Array = String(imgTmp.source).split("_");
+						var array2:Array = String(SelectedFoilSwatchImage).split(".");
+						
+						if (array1.length > 1)
+						{
+							trace(String(array2[0]) + "_" + String(array1[1]));
+							imgTmp.source = String(array2[0]) + "_" + String(array1[1]);
+						}
+						else if (array1.length == 1)
+						{
+							imgTmp.source = String(SelectedFoilSwatchImage);
+						}
+						else
+						{
+							
+						}
+					}
 				}
+				/*
+				SetMiniPlateFoil();
+				var FoilGalleryImage:Image;
+				FoilGalleryImage = event.currentTarget as Image;
+				SelectedFoilImage = FoilGalleryImage;
+				var SelectedFoilImageSource:String;
+				SelectedFoilImageSource = FoilGalleryImage.source as String;
 				
-				var FoilName:String;
-
 				if (SelectedFoilImageSource.indexOf("Black") >= 0)
 				{
-					FoilName = "BlackFoil";
+				FoilName = "BlackFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("White") >= 0)
 				{
-					FoilName = "WhiteFoil";
+				FoilName = "WhiteFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("Blue") >= 0)
 				{
-					FoilName = "BlueFoil";
+				FoilName = "BlueFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("Gold") >= 0)
 				{
-					FoilName = "GoldFoil";
+				FoilName = "GoldFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("Green") >= 0)
 				{
-					FoilName = "GreenFoil";
+				FoilName = "GreenFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("Pink") >= 0)
 				{
-					FoilName = "PinkFoil";
+				FoilName = "PinkFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("Red") >= 0)
 				{
-					FoilName = "RedFoil";
+				FoilName = "RedFoil";
 				}
 				else if (SelectedFoilImageSource.indexOf("Silver") >= 0)
 				{
-					FoilName = "SilverFoil";
-				}
-				else if (SelectedFoilImageSource.indexOf("Rainbow") >= 0)
-				{
-					FoilName = "RainbowFoil";
+				FoilName = "SilverFoil";
 				}
 				
-				//SelectedFoilSwatchImage = ('assets/foils/' + FoilName + 'Swatch.jpg');
+				if(Debugging) Alert.show('SelectFoilGalleryImage');
+				if(Debugging) Alert.show('FoilName:');
+				if(Debugging) Alert.show(FoilName);
 				
-				if (FoilName != LastFoilName)
-				{
-					CurrentFoilName = FoilName;
-				}
+				SelectedFoilSwatchImage = ('assets/foils/' + FoilName + 'Swatch.jpg');
+				if(Debugging) Alert.show('Selected foil swatch image' +''+SelectedFoilSwatchImage);
+				*/
 			}
-
-			
+						
 			private function OpenFlagGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = FlagGallery;
@@ -1265,38 +1107,50 @@
 			
 			private function SelectSymbolGalleryImage(event:MouseEvent):void 
 			{
-				SelectedSymbolFrame.removeAllElements();
+				var SymbolGalleryImage:Image;
 				
 				if(flash.utils.getQualifiedClassName(event.currentTarget) == "spark.components::BorderContainer")
 				{
-					SelectedSymbolFrame.addElement(event.currentTarget as BorderContainer);
+					//SelectedSymbol = event.currentTarget;
+					//SelectedSymbolBC = event.currentTarget as BorderContainer
+					SelectedSymbolBC.removeAllElements();
+					SelectedSymbolBC.setStyle('backgroundAlpha',0);
+					SelectedSymbolBC.addElement(event.currentTarget as BorderContainer);
 					SelectedSymbol = drawUISnapShot(event.currentTarget as BorderContainer);
 				}
 				else
 				{
-					var img:Image = new Image();
-					img = event.currentTarget as Image;
-					var bc:BorderContainer = new BorderContainer();
-					bc.setStyle('borderVisible',false);
-					bc.addElement(event.currentTarget as Image);
-					SelectedSymbolFrame.addElement(bc);
+					SymbolGalleryImage = event.currentTarget as Image;
+					SelectedSymbol = SymbolGalleryImage;
 				}
 				
 				var SelectedSymbolSource:String;
-				SelectedSymbolSource = img.source as String;			
 				
-				if (SelectedSymbolSource.indexOf("SmallEuroSign") >= 0)
+				if ( SymbolGalleryImage != null)
 				{
-					SymbolSize = 'Short';
-				}
-				else if (SelectedSymbolSource.indexOf("SmallTelephone") >= 0)
-				{
-					SymbolSize = 'Short';
+					SelectedSymbolSource = SymbolGalleryImage.source as String;			
+					
+					if (SelectedSymbolSource.indexOf("SmallEuroSign") >= 0)
+					{
+						SymbolSize = 'Short'
+					}
+					else if (SelectedSymbolSource.indexOf("TinyEuroSign") >= 0)
+					{
+						SymbolSize = 'Short';
+					}
+					else if (SelectedSymbolSource.indexOf("SmallTelephone") >= 0)
+					{
+						SymbolSize = 'Short';
+					}
+					else
+					{
+						SymbolSize = 'Tall';
+					}	
 				}
 				else
 				{
 					SymbolSize = 'Tall';
-				}				
+				}
 			}
 			
 			private function OpenHolesGallery(event:MouseEvent):void
@@ -1350,10 +1204,19 @@
 				{
 					Holes = 'NoneNone';
 				}
-				
-				SetPreviewHoles();
 			}
 			
+			private function CloseGallery(event:MouseEvent):void 
+			{
+				//Galleries.selectedChild = SymbolGallery;
+				GalleryWindow.visible=false;
+			}
+			
+			private function CloseGallery_():void 
+			{
+				//Galleries.selectedChild = SymbolGallery;
+				GalleryWindow.visible=false;
+			}
 			
 			private function SetPreviewHoles():void
 			{
@@ -1514,18 +1377,6 @@
 				CalculatePrice();
 			}
 			
-			private function CloseGallery(event:MouseEvent):void 
-			{
-				//Galleries.selectedChild = SymbolGallery;
-				GalleryWindow.visible=false;
-			}
-			
-			private function CloseGallery_():void 
-			{
-				//Galleries.selectedChild = SymbolGallery;
-				GalleryWindow.visible=false;
-			}
-			
 			/*	private function AddCreatePlateElementsContainerChildren():void
 			{
 			LeftFlagBox = new HGroup;
@@ -1632,6 +1483,7 @@
 			
 			private function AddDateToDateBox(ElementType:String):void
 			{
+				var a:Array = String(SelectedFoilSwatchImage).split(".");				
 				var Date1Save:Number = Date1.value as Number;
 				var Date2Save:Number = Date2.value as Number;
 				var Date3Save:Number = Date3.value as Number;
@@ -1651,6 +1503,8 @@
 				plategroup.gap = 5;
 				
 				var D1:Label = new Label;
+				D1.verticalCenter = 0;
+				D1.horizontalCenter = 0;
 				
 				if (Date1Save == 0)
 				{
@@ -1667,11 +1521,13 @@
 				
 				if(Debugging) Alert.show(D1.text);
 				
-				D1.width = 24;
+				//D1.width = 24;
 				D1.styleName = 'PlateDates';
 				D1.setStyle('color','black');
 				
 				var D2:Label = new Label;
+				D2.verticalCenter = 0;
+				D2.horizontalCenter = 0;
 				
 				if (Date2Save == 0)
 				{
@@ -1686,11 +1542,13 @@
 					D2.text = String(Date2Save);
 				}
 				
-				D2.width = 24;
+				//D2.width = 24;
 				D2.styleName = 'PlateDates';
 				D2.setStyle('color','black');
 				
 				var D3:Label = new Label;
+				D3.verticalCenter = 0;
+				D3.horizontalCenter = 0;
 				
 				if (Date3Save == 0)
 				{
@@ -1705,13 +1563,73 @@
 					D3.text = String(Date3Save);
 				}
 				
-				D3.width = 24;
+				//D3.width = 24;
 				D3.styleName = 'PlateDates';
 				D3.setStyle('color','black');
 				
-				plategroup.addElement(D1);
-				plategroup.addElement(D2);
-				plategroup.addElement(D3);
+				var imgD1:Image = new Image();
+				//imgD1.source = String(a[0]) + "_S.jpg";
+				imgD1.source = String(a[0]) + "_24.jpg";			
+				reference.addItem(imgD1);
+				imgD1.width = 24;
+				imgD1.height = 24;	
+				
+				var imgD2:Image = new Image();
+				imgD2.source = String(a[0]) + "_24.jpg";
+				reference.addItem(imgD2);
+				imgD2.width = 24;
+				imgD2.height = 24;	
+				
+				var imgD3:Image = new Image();
+				reference.addItem(imgD3);
+				imgD3.source = String(a[0]) + "_24.jpg";
+				imgD3.width = 24;
+				imgD3.height = 24;
+				
+				var bc1:BorderContainer = new BorderContainer();
+				bc1.setStyle('borderColor',OutlineColor);
+				bc1.setStyle('backgroundAlpha',0);
+				bc1.width = 24;
+				bc1.height = 24;
+				
+				var bc2:BorderContainer = new BorderContainer();
+				bc2.setStyle('borderColor',OutlineColor);
+				bc2.setStyle('backgroundAlpha',0);
+				bc2.width = 24;
+				bc2.height = 24;
+				
+				var bc3:BorderContainer = new BorderContainer();
+				bc3.setStyle('borderColor',OutlineColor);
+				bc3.setStyle('backgroundAlpha',0);
+				bc3.width = 24;
+				bc3.height = 24;
+				
+				imgD1.cacheAsBitmap = true;
+				D1.cacheAsBitmap = true;
+				imgD1.mask = D1;
+				
+				imgD2.cacheAsBitmap = true;
+				D2.cacheAsBitmap = true;
+				imgD2.mask = D2;
+				
+				imgD3.cacheAsBitmap = true;
+				D3.cacheAsBitmap = true;
+				imgD3.mask = D3;
+				
+				bc1.addElement(D1);
+				bc1.addElement(imgD1);
+				bc2.addElement(D2);
+				bc2.addElement(imgD2);
+				bc3.addElement(D3);
+				bc3.addElement(imgD3);
+				
+				plategroup.addElement(bc1);
+				plategroup.addElement(bc2);
+				plategroup.addElement(bc3);
+				
+				//plategroup.addElement(D1);
+				//plategroup.addElement(D2);
+				//plategroup.addElement(D3);
 				
 				/*	LeftDateBox.includeInLayout=true; LeftDateBox.visible=true;
 				LeftDateBox.addElement(plategroup);	*/
@@ -2038,7 +1956,7 @@
 					}
 					
 					LeftFlagBox.width = FlagWidth;
-					LeftFlagBox.includeInLayout=true;
+					LeftFlagBox.includeInLayout=true; LeftFlagBox.visible=true;
 					LeftFlagBox.addElement(plateimage);
 					
 					AdjustBoxWidths('LeftFlag','+');
@@ -2054,13 +1972,11 @@
 					}
 					
 					RightFlagBox.width = FlagWidth;
-					RightFlagBox.includeInLayout=true;
+					RightFlagBox.includeInLayout=true; RightFlagBox.visible=true;
 					RightFlagBox.addElement(plateimage);
 					
 					AdjustBoxWidths('RightFlag','+');
 				}
-				
-				HideShow();
 				
 				StackAction.push(plateimage);
 				
@@ -2134,6 +2050,24 @@
 					CenterSymbolBox.visible = true;
 				}
 				
+				if (X1.includeInLayout == false)
+				{
+					X1.visible = false;
+				}
+				else if (X1.includeInLayout == true)
+				{
+					X1.visible = true;
+				}
+				
+				if (X1A.includeInLayout == false)
+				{
+					X1A.visible = false;
+				}
+				else if (X1A.includeInLayout == true)
+				{
+					X1A.visible = true;
+				}
+				
 				if (X1B.includeInLayout == false)
 				{
 					X1B.visible = false;
@@ -2170,49 +2104,50 @@
 					X2B.visible = true;
 				}
 				
-				Outlines();
+				/*		if (X1B.includeInLayout == false && X2.includeInLayout == false)
+				{
+				SwitchButtonVisible = false;
+				}
+				else
+				{
+				SwitchButtonVisible = true;
+				}
+				
+				Outlines();  */
 			}
 			
 			private function Outlines():void
-			{				
-				X1A.setStyle('borderVisible',true);
-				X2A.setStyle('borderVisible',true);
-				X1B.setStyle('borderVisible',true);
-				X2B.setStyle('borderVisible',true);
+			{
 				X1A.setStyle('borderAlpha',.25);
 				X1B.setStyle('borderAlpha',.25);
 				X2A.setStyle('borderAlpha',.25);
 				X2B.setStyle('borderAlpha',.25);
-			//	X1A.setStyle('backgroundColor',0xffffff);
-			//	X1B.setStyle('backgroundColor',0xffffff);
-			//	X2A.setStyle('backgroundColor',0xffffff);
-			//	X2B.setStyle('backgroundColor',0xffffff);
+				X1A.setStyle('backgroundColor',0xffffff);
+				X1B.setStyle('backgroundColor',0xffffff);
+				X2A.setStyle('backgroundColor',0xffffff);
+				X2B.setStyle('backgroundColor',0xffffff);
 				
 				if (CurrentBox == 'X1A')
 				{
-					X1A.setStyle('borderVisible',true);
-					X1A.setStyle('borderAlpha',CurrentOutlineAlpha);
+					X1A.setStyle('borderAlpha',1);
 					X1A.setStyle('borderColor',OutlineColor);
 					X1A.setStyle('backgroundColor',CurrentBoxColor);
 				}
 				else if (CurrentBox == 'X1B')
 				{
-					X1B.setStyle('borderVisible',true);
-					X1B.setStyle('borderAlpha',CurrentOutlineAlpha);
+					X1B.setStyle('borderAlpha',1);
 					X1B.setStyle('borderColor',OutlineColor);
 					X1B.setStyle('backgroundColor',CurrentBoxColor);
 				}
 				else if (CurrentBox == 'X2A')
 				{
-					X2A.setStyle('borderVisible',true);
-					X2A.setStyle('borderAlpha',CurrentOutlineAlpha);
+					X2A.setStyle('borderAlpha',1);
 					X2A.setStyle('borderColor',OutlineColor);
 					X2A.setStyle('backgroundColor',CurrentBoxColor);
 				}
 				else if (CurrentBox == 'X2B')
 				{
-					X2B.setStyle('borderVisible',true);
-					X2B.setStyle('borderAlpha',CurrentOutlineAlpha);
+					X2B.setStyle('borderAlpha',1);
 					X2B.setStyle('borderColor',OutlineColor);
 					X2B.setStyle('backgroundColor',CurrentBoxColor);
 				}
@@ -2232,7 +2167,7 @@
 				//fontWeight: normal;
 				//kerning: true;
 			}
-			
+
 			private function AddSymbolToCurrentBox(event:MouseEvent):void
 			{
 				/*	var plateimage:Image = new Image;
@@ -2240,8 +2175,125 @@
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;	*/
 				
-				trace(SelectedSymbolFrame.numElements);
-				var bdTmp:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
+				trace(SelectedSymbolBC.numElements);
+				var bdTmp:BorderContainer = SelectedSymbolBC.getElementAt(0) as BorderContainer;
+				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
+				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
+				
+				var imgTmp:Image = new Image;
+				imgTmp.source = imgTmp1.source;
+				imgTmp.width = SymbolWidth;
+				imgTmp.height = SymbolHeight;
+				imgTmp.fillMode = imgTmp1.fillMode;
+				imgTmp.scaleMode = imgTmp1.scaleMode;
+				
+				for (var i:int=0; i < Symbols_AC.length; i++)
+				{
+					var img:Image = Symbols_AC.getItemAt(i) as Image;
+					
+					if (img.source == imgTmp.source)
+					{
+						imgTmp = new Image();
+						imgTmp.source = img.source;
+						imgTmp.width = img.width * 2.1;
+						imgTmp.height = img.height * 2.1;
+						break;
+					}
+				}
+				
+				var imgTxt:Image = new Image;
+				imgTxt.source = imgTxt1.source;
+				imgTxt.width = imgTmp.width;
+				imgTxt.height = imgTmp.height;
+				//imgTxt.fillMode = imgTxt1.fillMode;
+				//imgTxt.scaleMode = imgTxt1.scaleMode;
+				
+				reference.addItem(imgTxt);
+				
+				var tt:TexturedText = new TexturedText();
+				var plateimage:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
+				plateimage.width=imgTxt.width;
+				plateimage.height=imgTxt.height;
+				
+				//if (FoilIsImage == true)
+				//{
+				//var bd:BorderContainer = AddTextureImage(plateimage);
+				//bd.width = plateimage.width;
+				//bd.height = plateimage.height;	
+				//}
+				
+				if (CurrentBox == 'X1A')
+				{
+					AdjustBoxWidths('1ASymbol','+');
+					//if (FoilIsImage == true)
+					//{
+					//	X1A.addElement(bd);
+					//}
+					//else
+					//{
+					X1A.addElement(plateimage);
+					//}
+				}
+				else if (CurrentBox == 'X1B')
+				{
+					AdjustBoxWidths('1BSymbol','+');
+					//if (FoilIsImage == true)
+					//{
+					//	X1B.addElement(bd);
+					//}
+					//else
+					//
+					X1B.addElement(plateimage);
+					//}
+				}
+				else if (CurrentBox == 'X2A')
+				{
+					AdjustBoxWidths('2ASymbol','+');
+					//if (FoilIsImage == true)
+					//
+					//	X2A.addElement(bd);
+					//}
+					//else
+					//{
+					X2A.addElement(plateimage);
+					//}
+				}
+				else if (CurrentBox == 'X2B')
+				{
+					AdjustBoxWidths('2BSymbol','+');
+					//if (FoilIsImage == true)
+					//{
+					//	X2B.addElement(bd);
+					//}
+					//else
+					//{
+					X2B.addElement(plateimage);
+					//}
+				}
+				
+				HideShow();
+				
+				//	StackAction.push(bd);
+				
+				if (SymbolSize == 'Tall')
+				{
+					TallSymbolCount == (TallSymbolCount + 1);
+				}
+				else if (SymbolSize == 'Short')
+				{
+					ShortSymbolCount == (ShortSymbolCount + 1);
+				}
+			}
+			
+			private function AddSymbolToCurrentBox2(event:MouseEvent):void
+			{
+				/*	var plateimage:Image = new Image;
+				plateimage.source = SelectedSymbol;
+				plateimage.width = SymbolWidth;
+				plateimage.height = SymbolHeight;	*/
+				
+				trace(SelectedSymbolBC.numElements);
+				var bdTmp:BorderContainer = SelectedSymbolBC.getElementAt(0) as BorderContainer;
 				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
 				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
 				
@@ -2271,25 +2323,25 @@
 				if (CurrentBox == 'X1A')
 				{
 					AdjustBoxWidths('1ASymbol','+');
-					
+
 					X1A.addElement(plateimage);
 				}
 				else if (CurrentBox == 'X1B')
 				{
 					AdjustBoxWidths('1BSymbol','+');
-					
+
 					X1B.addElement(plateimage);
 				}
 				else if (CurrentBox == 'X2A')
 				{
 					AdjustBoxWidths('2ASymbol','+');
-					
+
 					X2A.addElement(plateimage);
 				}
 				else if (CurrentBox == 'X2B')
 				{
 					AdjustBoxWidths('2BSymbol','+');
-					
+
 					X2B.addElement(plateimage);
 				}
 				
@@ -2306,8 +2358,191 @@
 					ShortSymbolCount == (ShortSymbolCount + 1);
 				}
 			}
-			
+
 			private function AddCharacterToPlate(event:MouseEvent):void
+			{
+				var keypadbutton:Button = event.target as Button;
+				var platelabel:Label = new Label;
+				var img:Image = new Image();
+				
+				//if (FoilIsImage == true)
+				//{
+					//var char:String = keypadbutton.label as String;
+					
+					//SelectedCharacter = char;
+					
+					//var bd:BorderContainer = AddTextureText(SelectedCharacter);
+					//bd.width = CharacterWidth;
+					//bd.height = CharacterHeight;
+				//}
+				
+				// Do not set width or height on platelabel
+				platelabel.text = keypadbutton.label as String;
+				//platelabel.setStyle('color', FoilColor);
+				platelabel.horizontalCenter = 0;
+				platelabel.verticalCenter = 0;
+				
+				var bclayout:BasicLayout = new BasicLayout();
+				bclayout.clipAndEnableScrolling = true;
+				
+				var bc:BorderContainer = new BorderContainer();
+				bc.setStyle('borderColor',OutlineColor);
+				bc.setStyle('backgroundAlpha',0);
+				bc.verticalCenter = -44; //Compensate for problem font
+				bc.horizontalCenter = 0;
+				bc.layout = bclayout;
+				
+				/* It only works with BasicLayout		
+				var bclayout:HorizontalLayout = new HorizontalLayout();
+				//bclayout.clipAndEnableScrolling = true;
+				bclayout.gap = 0;
+				bclayout.horizontalAlign = 'center';
+				bclayout.verticalAlign = 'bottom';
+				bclayout.paddingTop = 0;
+				bclayout.paddingBottom = 0;
+				bclayout.paddingLeft = 0;
+				bclayout.paddingBottom = 0;
+				bclayout.clipAndEnableScrolling = true;
+				
+				var bc:BorderContainer = new BorderContainer();
+				bc.setStyle('borderColor','blue');
+				bc.setStyle('backgroundAlpha',0);
+				bc.verticalCenter = 0;
+				bc.horizontalCenter = 0;
+				bc.layout = bclayout;
+				*/
+				/* if (String(SelectedFoilSwatchImage).indexOf("RedFoilSwatch") > -1)
+				{
+					
+				}
+				else */
+				
+				var a:Array = String(SelectedFoilSwatchImage).split(".");
+				
+				if (CharacterSize == 'Small')
+				{
+					//if (FoilIsImage == true)
+					{
+						SelectedFoilSwatchImage;
+						img = new Image();
+						//img.source = "assets/foilsCharacter/RedFoilSwatch30*42.jpg";
+						img.source = String(a[0]) + "_S.jpg";
+						img.width = SmallCharacterWidth;
+						img.height = SmallCharacterHeight;	
+					}
+					bc.width = SmallCharacterWidth;
+					bc.height = SmallCharacterHeight;
+					platelabel.styleName = 'PlateCharacterSmall';
+				}
+				else if (CharacterSize == 'Medium')
+				{
+					//if (FoilIsImage == true)
+					{
+						SelectedFoilSwatchImage;
+						img = new Image();
+						//img.source = "assets/foilsCharacter/RedFoilSwatch31*58.jpg";
+						img.source = String(a[0]) + "_M.jpg";
+						img.width = MediumCharacterWidth;
+						img.height = MediumCharacterHeight;	
+					}
+					
+					bc.width = MediumCharacterWidth;
+					bc.height = MediumCharacterHeight;
+					platelabel.styleName = 'PlateCharacterMedium';
+				}
+				else if (CharacterSize == 'Large')
+				{
+					//if (FoilIsImage == true)
+					{
+						SelectedFoilSwatchImage;
+						img = new Image();
+						//img.source = "assets/foilsCharacter/RedFoilSwatch57*77.5.jpg";
+						img.source = String(a[0]) + "_L.jpg";
+						img.width = LargeCharacterWidth;
+						img.height = LargeCharacterHeight;	
+					}
+					bc.width = LargeCharacterWidth;
+					bc.height = LargeCharacterHeight;
+					platelabel.styleName = 'PlateCharacterLarge';
+				}		
+				
+				reference.addItem(img);
+				
+				TargetBox = CurrentBox;
+				
+				if (TargetBox == 'X1A')
+				{
+					//if (FoilIsImage == true)
+					{
+						img.cacheAsBitmap = true;
+						platelabel.cacheAsBitmap = true;
+						img.mask = platelabel;
+					}
+					
+					X1.includeInLayout = true; 
+					X1A.includeInLayout = true;
+					
+					bc.id = (TargetBox + String(X1A_Index));
+					
+					bc.addElement(platelabel);
+					
+					bc.addElement(img);
+					
+					X1A.addElement(bc);
+					
+					X1A_Index = (X1A_Index + 1);
+					
+					CurrentBox = 'X1A';
+				}
+				else if (TargetBox == 'X1B')
+				{
+					X1.includeInLayout = true;
+					X1B.includeInLayout = true;
+					
+					bc.id = (TargetBox + String(X1B_Index));
+					
+					bc.addElement(platelabel);
+					
+					X1B.addElement(bc);
+					
+					X1B_Index = (X1B_Index + 1);
+					
+					CurrentBox = 'X1B';
+				}
+				else if (TargetBox == 'X2A')
+				{
+					bc.id = (TargetBox + String(X2A_Index));
+					
+					bc.addElement(platelabel);
+					
+					X2A.addElement(bc);
+					
+					X2A_Index = (X2A_Index + 1);
+					
+					CurrentBox = 'X2A';
+				}
+				else if (TargetBox == 'X2B')
+				{	
+					bc.id = (TargetBox + String(X2B_Index));
+					
+					bc.addElement(platelabel);
+					
+					X1A.addElement(bc);
+					
+					X2B_Index = (X2B_Index + 1);
+					
+					CurrentBox = 'X2B';	
+				}
+				
+				LastBox = CurrentBox;
+				
+				HideShow();
+				Outlines();
+				
+				//ElementsArray.push(ElementId);		
+			}
+			
+			private function AddCharacterToPlate2(event:MouseEvent):void
 			{
 				var keypadbutton:Button = event.target as Button;
 				var platelabel:Label = new Label;
@@ -2377,8 +2612,13 @@
 				TargetBox = CurrentBox;
 				
 				if (TargetBox == 'X1A')
-				{					
+				{
+					X1.includeInLayout = true; 
+					X1A.includeInLayout = true;
+					
 					bc.id = (TargetBox + String(X1A_Index));
+					
+					bc.addElement(platelabel);
 					
 					bc.addElement(platelabel);
 					
@@ -2390,6 +2630,9 @@
 				}
 				else if (TargetBox == 'X1B')
 				{
+					X1.includeInLayout = true;
+					X1B.includeInLayout = true;
+					
 					bc.id = (TargetBox + String(X1B_Index));
 					
 					bc.addElement(platelabel);
@@ -2418,7 +2661,7 @@
 					
 					bc.addElement(platelabel);
 					
-					X2B.addElement(bc);
+					X1A.addElement(bc);
 					
 					X2B_Index = (X2B_Index + 1);
 					
@@ -2435,7 +2678,7 @@
 			
 			private function AddSymbolToSymbolBox(event:MouseEvent,SymbolBox:String):void 
 			{
-				/*	var plateimage:Image = new Image;
+			/*	var plateimage:Image = new Image;
 				plateimage.source = SelectedSymbol;
 				plateimage.width = SymbolWidth;
 				plateimage.height = SymbolHeight;
@@ -2444,8 +2687,8 @@
 				bd.width = plateimage.width;
 				bd.height = plateimage.height;	*/
 				
-				trace(SelectedSymbolFrame.numElements);
-				var bdTmp:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
+				trace(SelectedSymbolBC.numElements);
+				var bdTmp:BorderContainer = SelectedSymbolBC.getElementAt(0) as BorderContainer;
 				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
 				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
 				
@@ -2500,7 +2743,7 @@
 					LeftSymbolBox.width = SymbolWidth;
 					LeftSymbolBox.includeInLayout=true;
 					
-					//	LeftSymbolBox.addElement(bd);
+				//	LeftSymbolBox.addElement(bd);
 					LeftSymbolBox.addElement(plateimage);
 					
 					AdjustBoxWidths('LeftSymbol','+');
@@ -2514,40 +2757,35 @@
 						
 						AdjustBoxWidths('CenterSymbol','-');
 					}
-					// ! move this ?
+					// ! move this
 					if (X2.includeInLayout == false)
-					{	
-						if (X1_LineCount == 1 || X2_LineCount == 0)
-						{
-							X2.includeInLayout = true;
-							X2A.includeInLayout = true;
-							X2_LineCount = 1;
-						}
-						else if (X1_LineCount == 2 || X2_LineCount == 2)
+					{
+						X2.includeInLayout = true;
+						X2A.includeInLayout = true;
+						
+						if (X2_LineCount == 2)
 						{
 							X2B.includeInLayout = true;
-							X2_LineCount = 2;
 						}
 					}
 					
 					CenterSymbol=true;
 					
+					HideShow();
+					
 					CenterSymbolBox.width = SymbolWidth;
-					CenterSymbolBox.addElement(plateimage);
 					
 					AdjustBoxWidths('CenterSymbol','+');
 					
 					CenterSymbolBox.includeInLayout=true;
 					
-					HideShow();
-					
-					if (X1A.numElements == 0 && X1B.numElements == 0)
+					if (X1A.numElements > 0 || X1B.numElements > 0)
 					{
-						CurrentBox = 'X1A'
+						SetNextBoxAndSwitchButtonImage();
 					}
 					
-					SetNextBoxAndSwitchButtonImage();
-
+				//	CenterSymbolBox.addElement(bd);
+					CenterSymbolBox.addElement(plateimage);
 				}
 				else if (SymbolBox == 'Right')
 				{
@@ -2562,7 +2800,7 @@
 					RightSymbolBox.width = SymbolWidth;
 					RightSymbolBox.includeInLayout=true;
 					
-					//	RightSymbolBox.addElement(bd);
+				//	RightSymbolBox.addElement(bd);
 					RightSymbolBox.addElement(plateimage);
 					
 					AdjustBoxWidths('RightSymbol','+');
@@ -2721,143 +2959,128 @@
 			// ! Propagate calls to this in place of ad-hoc
 			private function SetNextBoxAndSwitchButtonImage():void
 			{
-				if(Debugging) Alert.show('CurrentBox ' + CurrentBox);
-				if(Debugging) Alert.show('CS ' + String(CenterSymbol));
-				if(Debugging) Alert.show('x1lc ' + String(X1_LineCount));
-				if(Debugging) Alert.show('x2lc ' + String(X2_LineCount));
-				
+				SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 				if (CurrentBox == 'X1A')
 				{
 					if (CenterSymbol == false)
 					{
-						if (X1_LineCount == 1)
-						{
-							NextBox = CurrentBox; 
-							
-							//SwitchButtonImage = '';							
-							SwitchButton.visible = false;
-						}
 						if (X1_LineCount == 2)
 						{
 							NextBox = 'X1B';
-							
-							SwitchButtonImage.source = CX1A_NX1B;					
-							SwitchButton.visible = true;
+							SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
+							SwitchButtonVisible = true;
+						}
+						else
+						{
+							NextBox = CurrentBox;
+							SwitchButtonImage = '';
+							SwitchButtonVisible = false;
 						}
 					}
-					else if (CenterSymbol == true)
+					else
 					{
 						NextBox = 'X2A';
 						
 						if (X1_LineCount == 1 && X2_LineCount == 1)
 						{
-							SwitchButtonImage.source = CX1_NX2;
+							SwitchButtonImage = 'assets/switch/CX1_NX2.jpg';
 						}
 						else if (X1_LineCount == 1 && X2_LineCount == 2)
 						{
-							SwitchButtonImage.source = CX1A_NX2A;
+							SwitchButtonImage = 'assets/switch/CX1A_NX2A.jpg';
 						}
 						else if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
-							SwitchButtonImage.source = CX1A_NX2;
+							SwitchButtonImage = 'assets/switch/CX1A_NX2.jpg';
 						}
 						else if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
-							SwitchButtonImage.source = CX1A_NX2A;
-						}
-						
-						SwitchButton.visible = true;
-						
-						if (X1_LineCount == 1 && X1A.numElements > 0)
-						{
-							CurrentBox = NextBox;
-						}
-						else if (X1_LineCount == 2 && X1A.numElements > 0 && X1B.numElements > 0)
-						{
-							CurrentBox = NextBox;
-						}
-						else
-						{
-							CurrentBox = CurrentBox;
-						}
+							SwitchButtonImage = 'assets/switch/CX1A_NX2A.jpg';
+						}			
 					}
+					
+					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X1B')
 				{
-					NextBox = 'X1A';
+					NextBox = 'X1A.jpg';
 					
 					if (CenterSymbol == false)
 					{
 						if (X1_LineCount == 2)
 						{
-							SwitchButtonImage.source = SPAN_CX1B_NX1A;
+							SwitchButtonImage = 'assets/switch/SPAN_CX1B_NX1A.jpg';
 						}
 					}
 					else
 					{
 						if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
-							SwitchButtonImage.source = CX1B_NX1A_SPAN;
+							SwitchButtonImage = 'assets/switch/CX1B_NX1A_SPAN.jpg';
 						}
 						else if (X1_LineCount == 2 && X2_LineCount == 2)
 						{
-							SwitchButtonImage.source = CX1B_NX1A;
+							SwitchButtonImage = 'assets/switch/CX1B_NX1A.jpg';
 						}
 					}
 					
-					SwitchButton.visible = true;
+					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X2A')
 				{
 					if (X1_LineCount == 1 && X2_LineCount == 1)
 					{
 						NextBox = 'X1A';
-						SwitchButtonImage.source = CX2_NX1;
+						SwitchButtonImage = 'assets/switch/CX2_NX1.jpg';
 					}
 					else if (X1_LineCount == 2 && X1_LineCount == 1)
 					{
 						NextBox = 'X1B';
-						SwitchButtonImage.source = CX2_NX1B;
+						SwitchButtonImage = 'assets/switch/CX2_NX1B.jpg';
 					}
 					else if (X1_LineCount == 1 && X2_LineCount == 2)
 					{
 						NextBox = 'X2B';
-						SwitchButtonImage.source = CX2A_NX2B_SPAN;
+						SwitchButtonImage = 'assets/switch/CX2A_NX2B_SPAN.jpg';
 					}
 					else if (X1_LineCount == 2 && X2_LineCount == 2)
 					{
 						NextBox = 'X2B';
-						SwitchButtonImage.source = CX2A_NX2B;
+						SwitchButtonImage = 'assets/switch/CX2A_NX2B.jpg';
 					}
 					
-					SwitchButton.visible = true;
+					SwitchButtonVisible = true;
 				}
 				else if (CurrentBox == 'X2B')
 				{
 					if (X1_LineCount == 1 && X2_LineCount == 2)
 					{
 						NextBox = 'X1A';
-						SwitchButtonImage.source = CX2B_NX1;
+						SwitchButtonImage = 'assets/switch/CX2B_NX1.jpg';
 					}
 					else if (X1_LineCount == 2 && X2_LineCount == 2)
 					{
 						NextBox = 'X1B';
-						SwitchButtonImage.source = CX2B_NX1B;
+						SwitchButtonImage = 'assets/switch/CX2B_NX1B.jpg';
 					}
 					
-					SwitchButton.visible = true;
+					SwitchButtonVisible = true;
 				}
 				
+				CurrentBox = NextBox;
+				
 				Outlines();
+				
+				SwitchButtonImage = 'assets/switch/SPAN_CX1A_NX1B.jpg';
 			}
 			
-		/*	private function ChangeLineCount(event:MouseEvent,RequestedLineCount:int):void
+			/*	private function ChangeLineCount(event:MouseEvent,RequestedLineCount:int):void
 			{
 			if (RequestedLineCount == 2 && TwoLines == false)
 			{
 			TwoLines = true;
 			
-				SwitchButton.visible = true;
+			// !!					SwitchButton.visible = true;
 			
 			if (CharacterSize == 'Large')
 			{
@@ -2868,7 +3091,7 @@
 			{
 			TwoLines = false;
 			
-				SwitchButton.visible = false;
+			// !!				SwitchButton.visible = false;
 			}
 			
 			SetCharacterDimensions();
@@ -3336,26 +3559,137 @@
 				<s:VerticalLayout paddingTop="10" paddingBottom="4" paddingLeft="10" paddingRight="10" gap="0"/>
 			</s:layout>
 			
-			<!--Preview frame (fixed-sized of large plate)-->
+			<!--Preview frame (fixed-sized for large plate)-->
 			<s:BorderContainer id="PreviewFrame"
-							   width="{LargePlateOuterWidth}" height="{LargePlateOuterHeight}" borderVisible="false" depth="1">
+							   width="{LargePlateOuterWidth}" height="{LargePlateOuterHeight}" borderVisible="true" depth="1">
 				<s:layout>
 					<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>
 				</s:layout>
 				
 				<!-- Preview container.  Background color or image set via functions -->
 				<s:BorderContainer id="PreviewContainer"
-								   width="{PlateOuterWidth}" height="{PlateOuterHeight}" horizontalCenter="0" verticalCenter="0"
+								   width="{PlateOuterWidth}" height="{PlateOuterHeight}" horizontalCenter="0" verticalCenter="0" color="red"
 								   borderVisible="true" borderWeight="2" cornerRadius="8">
 					<s:layout>
 						<s:BasicLayout clipAndEnableScrolling="true"/>
 					</s:layout>
-									
-					<s:BorderContainer id="PreviewPlateNonImageContainer" depth="1" includeInLayout="false" visible="false"
+										
+					<!-- Holes -->
+					<s:Ellipse id="TopLeftHole"
+							   x="5" y="5" visible="false" width="8" height="8" depth="11">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="TopRightHole"
+							   x="501" y="5" visible="false" width="8" height="8" depth="11">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="MiddleLeftHole"
+							   x="5" y="49.5" visible="false" width="8" height="8" depth="11">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="MiddleRightHole"
+							   x="501" y="49.5" visible="false" width="8" height="8" depth="11">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="BottomLeftHole"
+							   x="5" y="94" visible="false" width="8" height="8" depth="11">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="BottomRightHole"
+							   x="501" y="94" visible="false" width="8" height="8" depth="11">
+						<s:fill>
+							<s:SolidColor color="white"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="gray" weight=".25"/>
+						</s:stroke>
+					</s:Ellipse>
+					<!-- Suction cups -->
+					<s:Ellipse id="TopLeftCup"
+							   x="0" y="0" width="19" height="19" visible="false" depth="12">
+						<s:fill>
+							<s:SolidColor color="white" alpha=".5"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="white" weight="1.375"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="TopRightCup"
+							   x="496" y="0" width="19" height="19" visible="false" depth="12">
+						<s:fill>
+							<s:SolidColor color="white" alpha=".5"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="white" weight="1.375"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="MiddleLeftCup"
+							   x="0" y="44.5" width="19" height="19" visible="false" depth="12">
+						<s:fill>
+							<s:SolidColor color="white" alpha=".5"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="white" weight="1.375"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="MiddleRightCup"
+							   x="496" y="44.5" width="19" height="19" visible="false" depth="12">
+						<s:fill>
+							<s:SolidColor color="white" alpha=".5"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="white" weight="1.375"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="BottomLeftCup"
+							   x="0" y="89" width="19" height="19" visible="false" depth="12">
+						<s:fill>
+							<s:SolidColor color="white" alpha=".5"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="white" weight="1.375"/>
+						</s:stroke>
+					</s:Ellipse>
+					<s:Ellipse id="BottomRightCup"
+							   x="496" y="89" width="19" height="19" visible="false" depth="12">
+						<s:fill>
+							<s:SolidColor color="white" alpha=".5"/>
+						</s:fill>
+						<s:stroke>
+							<s:SolidColorStroke color="white" weight="1.375"/>
+						</s:stroke>
+					</s:Ellipse>
+					
+					<s:BorderContainer id="PreviewPlateNonImageContainer" depth="3" includeInLayout="false" visible="false" borderColor="green"
 									   width="{PlateOuterWidth}" height="{PlateOuterHeight}"
 									   cornerRadius="7" backgroundColor="{PlateColor}" backgroundAlpha="1">
 					</s:BorderContainer>
-					<s:BorderContainer id="PreviewPlateImageContainer" depth="1" includeInLayout="false" visible="false"
+					<s:BorderContainer id="PreviewPlateImageContainer" depth="3" includeInLayout="false" visible="false" borderColor="green"
 									   width="{PlateOuterWidth}" height="{PlateOuterHeight}" borderVisible="false" 
 									   horizontalCenter="0" verticalCenter="0">
 						<s:layout>
@@ -3365,264 +3699,151 @@
 								 x="0" y="0" width="100%" height="100%" horizontalCenter="0" verticalCenter="0"
 								 source="{SelectedPlateImage}" fillMode="scale" scaleMode="stretch"/>
 					</s:BorderContainer>
-						
+					
 					<!-- Plate outer (border) container which is bordered and transparent, with invisible border if plate is full size.  Border color is set via function. -->
-					<s:BorderContainer id="PlateBorder" depth="5"
-									   x="0" y="0" width="100%" height="100%" borderVisible="false" backgroundAlpha="0">
+					<s:BorderContainer id="PlateBorder" depth="4"
+									   x="{(((PlateOuterWidth-PlateInnerWidth)/2)-2)}" y="{(((PlateOuterHeight-PlateInnerHeight)/2)-2)}" 
+									   visible="{PreviewPlateNonImageContainer.visible}" includeInLayout="{PreviewPlateNonImageContainer.includeInLayout}"
+									   width="{PlateInnerWidth}" height="{PlateInnerHeight}" borderVisible="true" backgroundAlpha="0"
+									   cornerRadius="8" borderColor="white">
 						<s:layout>
 							<s:BasicLayout/>
 						</s:layout>
-						
-						<s:BorderContainer id="PreviewBorderImageContainer" visible="true" includeInLayout="true" depth="1"
+
+						<s:BorderContainer id="PreviewBorderImageContainer"
 										   x="0" y="0" width="100%" height="100%" borderVisible="false" backgroundAlpha="0">
 							<s:layout>
-								<s:HorizontalLayout clipAndEnableScrolling="true"/>
+								<s:HorizontalLayout paddingTop="{((PlateOuterWidth-PlateInnerWidth)/4)}"
+													paddingBottom="{((PlateOuterWidth-PlateInnerWidth)/4)}"
+													paddingLeft="{((PlateOuterHeight-PlateInnerHeight)/4)}"
+													paddingRight="{((PlateOuterHeight-PlateInnerHeight)/4)}"
+													clipAndEnableScrolling="true"/>
 							</s:layout>
 							<s:Image id="PlateBorderImage"
 									 width="100%" height="100%"
 									 fillMode="scale" scaleMode="stretch" source="{SelectedFoilBorderImage}"/>
 						</s:BorderContainer>
-					</s:BorderContainer>
-					
-					<!-- Plate elements container.  BackgroundColor or image set via functions -->
-					<s:BorderContainer id="PlateElementsContainer" depth="6"
-									   x="{((PlateOuterWidth-PlateInnerWidth)/2)}" y="{((PlateOuterHeight-PlateInnerHeight)/2)}" 
-									   width="{PlateInnerWidth-4}" height="{PlateInnerHeight}"
-									   horizontalCenter="0" verticalCenter="0" borderVisible="false" backgroundAlpha="0">
-						<s:layout>
-							<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"
-												horizontalAlign="left" verticalAlign="middle" clipAndEnableScrolling="true"/>
-						</s:layout>
 						
-						<!--Multiple containers for potential elements, which are hidden and shown as needed.  Widths are reset by functions"-->
-						<s:BorderContainer id="LeftFlagBox"
-										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0">
+						<!-- Plate elements container.  BackgroundColor or image set via functions -->
+						<s:BorderContainer id="PlateElementsContainer"
+										   x="5" y="5" width="{PlateBorder.width-10}" height="{PlateBorder.height-10}" depth="20"
+										   horizontalCenter="0" verticalCenter="0" borderVisible="false" backgroundAlpha="0">
 							<s:layout>
-								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-													paddingTop="0" paddingBottom="0" gap="0"/>
+								<s:HorizontalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"
+													horizontalAlign="left" verticalAlign="middle" clipAndEnableScrolling="true"/>
 							</s:layout>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="LeftDateBox"
-										   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0" kerning="off">
-							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
-							</s:layout>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="LeftSymbolBox"
-										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0">
-							<s:layout>
-								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-													paddingTop="0" paddingBottom="0" gap="0"/>
-							</s:layout>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="X1"
-										   width="{PlateElementsContainer.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
-										   borderVisible="false" backgroundAlpha="0">
-							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
-												  paddingTop="5" paddingBottom="5"/>
-							</s:layout>
-							<s:BorderContainer id="X1A"
-											   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true" 
-											   borderVisible="false" backgroundAlpha="0">
+							
+							<!--Multiple containers for potential elements, which are hidden and shown as needed.  Widths are reset by functions"-->
+							<s:BorderContainer id="LeftFlagBox"
+											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
 								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+														paddingTop="0" paddingBottom="0" gap="0"/>
 								</s:layout>
 							</s:BorderContainer>
-							<s:BorderContainer id="X1B"
-											   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
-											   borderVisible="false" backgroundAlpha="0">
+							
+							<s:BorderContainer id="LeftDateBox"
+											   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderColor="red" borderAlpha=".25" backgroundAlpha="0" kerning="off">
 								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
-														paddingTop="10" paddingBottom="10"/>
+									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
 								</s:layout>
 							</s:BorderContainer>
-						</s:BorderContainer>
-						
-						<!--No width set.  Let the symbol dictate the width-->
-						<s:BorderContainer id="CenterSymbolBox"
-										   height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0">
-							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
-												  paddingTop="5" paddingBottom="5"/>
-							</s:layout>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="X2"
-										   width="0" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0">
-							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
-												  paddingTop="5" paddingBottom="5"/>
-							</s:layout>
-							<s:BorderContainer id="X2A"
-											   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
-											   borderVisible="false" backgroundAlpha="0">
+							
+							<s:BorderContainer id="LeftSymbolBox"
+											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
 								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+														paddingTop="0" paddingBottom="0" gap="0"/>
 								</s:layout>
 							</s:BorderContainer>
-							<s:BorderContainer id="X2B"
-											   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+							
+							<s:BorderContainer id="X1"
+											   width="{PlateElementsContainer.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
 											   borderVisible="false" backgroundAlpha="0">
 								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
-														paddingTop="10" paddingBottom="10"/>
+									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"	  
+													  paddingTop="0" paddingBottom="0"/>
+								</s:layout>
+								<s:BorderContainer id="X1A" 
+												   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="true" visible="true"
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+									</s:layout>
+								</s:BorderContainer>
+								<s:BorderContainer id="X1B"
+												   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+									</s:layout>
+								</s:BorderContainer>
+							</s:BorderContainer>
+							
+							<!--No width set.  Let the symbol dictate the width-->
+							<s:BorderContainer id="CenterSymbolBox" borderColor="green"
+											   height="100%" verticalCenter="0" horizontalCenter="0" backgroundAlpha="0" includeInLayout="false" visible="false">
+								<s:layout>
+									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
+													  paddingTop="5" paddingBottom="5"/>
 								</s:layout>
 							</s:BorderContainer>
+							
+							<s:BorderContainer id="X2"
+											   width="0" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+											   borderVisible="false" backgroundAlpha="0">
+								<s:layout>
+									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="{vgap}" clipAndEnableScrolling="true"
+													  paddingTop="0" paddingBottom="0"/>
+								</s:layout>
+								<s:BorderContainer id="X2A"
+												   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false" 
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
+									</s:layout>
+								</s:BorderContainer>
+								<s:BorderContainer id="X2B"
+												   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
+												   borderVisible="false" backgroundAlpha="0">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
+															paddingTop="10" paddingBottom="10"/>
+									</s:layout>
+								</s:BorderContainer>
+							</s:BorderContainer>
+							
+							<s:BorderContainer id="RightSymbolBox"
+											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
+														paddingTop="0" paddingBottom="0"/>
+								</s:layout>
+							</s:BorderContainer>
+							
+							<s:BorderContainer id="RightDateBox"
+											   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderColor="red" borderAlpha=".25" backgroundAlpha="0" kerning="off">
+								<s:layout>
+									<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
+								</s:layout>
+							</s:BorderContainer>
+							
+							<s:BorderContainer id="RightFlagBox"
+											   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
+											   borderColor="red" borderAlpha=".25" backgroundAlpha="0">
+								<s:layout>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
+														paddingTop="0" paddingBottom="0"/>
+								</s:layout>
+								<!--/s:BorderContainer-->
+							</s:BorderContainer>							
+							
 						</s:BorderContainer>
-						
-						<s:BorderContainer id="RightSymbolBox"
-										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0">
-							<s:layout>
-								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
-													paddingTop="0" paddingBottom="0"/>
-							</s:layout>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="RightDateBox"
-										   width="{DateWidth}" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0" kerning="off">
-							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"/>
-							</s:layout>
-						</s:BorderContainer>
-						
-						<s:BorderContainer id="RightFlagBox"
-										   width="0" height="100%" horizontalCenter="0" verticalCenter="0" includeInLayout="false" visible="false"
-										   borderVisible="false" backgroundAlpha="0">
-							<s:layout>
-								<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="0" clipAndEnableScrolling="true"
-													paddingTop="0" paddingBottom="0"/>
-							</s:layout>
-						</s:BorderContainer>
-					</s:BorderContainer>
-
-					<!-- Holes -->
-					<s:BorderContainer id="HolesPreview"
-									   x="{((PlateOuterWidth-PlateInnerWidth)/2)}" y="{((PlateOuterHeight-PlateInnerHeight)/2)}"
-									   width="{PlateInnerWidth}" height="{PlateInnerHeight}" horizontalCenter="0" verticalCenter="0"
-									   borderVisible="false" backgroundAlpha="0" depth="10">
-						<s:layout>
-							<s:BasicLayout clipAndEnableScrolling="true"/>
-						</s:layout>
-						<s:Ellipse id="TopLeftHole"
-								   x="5" y="5" visible="false" width="8" height="8" depth="1">
-							<s:fill>
-								<s:SolidColor color="white"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="gray" weight=".25"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="TopRightHole"
-								   x="501" y="5" visible="false" width="8" height="8" depth="1">
-							<s:fill>
-								<s:SolidColor color="white"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="gray" weight=".25"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="MiddleLeftHole"
-								   x="5" y="49.5" visible="false" width="8" height="8" depth="1">
-							<s:fill>
-								<s:SolidColor color="white"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="gray" weight=".25"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="MiddleRightHole"
-								   x="501" y="49.5" visible="false" width="8" height="8" depth="1">
-							<s:fill>
-								<s:SolidColor color="white"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="gray" weight=".25"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="BottomLeftHole"
-								   x="5" y="94" visible="false" width="8" height="8" depth="1">
-							<s:fill>
-								<s:SolidColor color="white"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="gray" weight=".25"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="BottomRightHole"
-								   x="501" y="94" visible="false" width="8" height="8" depth="1">
-							<s:fill>
-								<s:SolidColor color="white"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="gray" weight=".25"/>
-							</s:stroke>
-						</s:Ellipse>
-						<!-- Suction cups -->
-						<s:Ellipse id="TopLeftCup"
-								   x="0" y="0" width="19" height="19" visible="false" depth="2">
-							<s:fill>
-								<s:SolidColor color="white" alpha=".5"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="white" weight="1.375"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="TopRightCup"
-								   x="496" y="0" width="19" height="19" visible="false" depth="2">
-							<s:fill>
-								<s:SolidColor color="white" alpha=".5"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="white" weight="1.375"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="MiddleLeftCup"
-								   x="0" y="44.5" width="19" height="19" visible="false" depth="2">
-							<s:fill>
-								<s:SolidColor color="white" alpha=".5"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="white" weight="1.375"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="MiddleRightCup"
-								   x="496" y="44.5" width="19" height="19" visible="false" depth="2">
-							<s:fill>
-								<s:SolidColor color="white" alpha=".5"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="white" weight="1.375"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="BottomLeftCup"
-								   x="0" y="89" width="19" height="19" visible="false" depth="2">
-							<s:fill>
-								<s:SolidColor color="white" alpha=".5"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="white" weight="1.375"/>
-							</s:stroke>
-						</s:Ellipse>
-						<s:Ellipse id="BottomRightCup"
-								   x="496" y="89" width="19" height="19" visible="false" depth="2">
-							<s:fill>
-								<s:SolidColor color="white" alpha=".5"/>
-							</s:fill>
-							<s:stroke>
-								<s:SolidColorStroke color="white" weight="1.375"/>
-							</s:stroke>
-						</s:Ellipse>
 					</s:BorderContainer>
 					
 				</s:BorderContainer>
@@ -3769,26 +3990,26 @@
 							 fontFamily="Arial" fontSize="11"/>
 				</s:HGroup>
 				
-				<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
-						 source="{SwitchButtonImage}"/-->
+				<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+						 source="{SwitchButtonImage}"/>
 				
 				<!--Switch button image is set and visibility is toggled via function-->
-				<s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="false" includeInLayout="true"
-								   chromeColor="gray" borderColor="black" cornerRadius="3" 
-								   useHandCursor="true" buttonMode="true" 
-								   click="SetNextBoxAndSwitchButtonImage()">
-					<s:layout>
-						<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-										  paddingTop="1" paddingBottom="2" paddingLeft="2" paddingRight="2"/>
-					</s:layout>
-					<s:BorderContainer width="100%" height="16" borderVisible="true" borderWeight=".5">
-						<s:layout>
-							<s:HorizontalLayout clipAndEnableScrolling="false"/>
-						</s:layout>
-						<s:Image id="SwitchButtonImage" width="100%" height="100%" 
-								 source="" fillMode="scale" scaleMode="stretch"/>
-					</s:BorderContainer>
-				</s:BorderContainer>
+				<!--s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="{SwitchButtonVisible}" 
+				chromeColor="gray" borderColor="black" cornerRadius="3" 
+				useHandCursor="true" buttonMode="true" 
+				click="SetNextBoxAndSwitchButtonImage()">
+				<s:layout>
+				<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+				paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2"/>
+				</s:layout>
+				<s:BorderContainer width="100%" height="100%" borderVisible="true" borderWeight=".5">
+				<s:layout>
+				<s:HorizontalLayout clipAndEnableScrolling="false"/>
+				</s:layout>
+				<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch"
+				source="{SwitchButtonImage}"/>
+				<!/s:BorderContainer>
+				</s:BorderContainer-->
 				
 				<!--Switch button image is set and visibility is toggled via function-->
 				<!--s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="13" verticalCenter="0"
@@ -4193,12 +4414,11 @@
 					<s:BorderContainer id="FlagChooser"
 									   width="100%" height="60" borderVisible="false"
 									   toolTip="Click on the flag to open the flag gallery to select the flag.  Then click on the 'L' or 'R' button to place the flag"
-									   buttonMode="true">
+									   buttonMode="true" click="OpenFlagGallery(event)">
 						<s:layout>
 							<s:VerticalLayout gap="0" horizontalAlign="center" verticalAlign="top"/>
 						</s:layout>
-						<s:BorderContainer width="30" height="60" borderVisible="true"
-										   buttonMode="true" click="OpenFlagGallery(event)">
+						<s:BorderContainer width="30" height="60" borderVisible="true">
 							<s:layout>
 								<s:BasicLayout/>
 							</s:layout>
@@ -4260,14 +4480,9 @@
 								<s:layout>
 									<s:VerticalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5"/>
 								</s:layout>	
-								<s:BorderContainer id="SelectedSymbolFrame"
+								<s:BorderContainer id="SelectedSymbolBC"
 												   width="100%" height="100%" horizontalCenter="0" verticalCenter="0"
-												   buttonMode="true" borderVisible="false" backgroundAlpha="0">
-									<s:layout>
-										<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle"/>
-									</s:layout>
-									<!--s:Image width="100%" height="100%" source="{SelectedSymbol}"/-->
-								</s:BorderContainer>
+												   buttonMode="true" click="AddSymbolToCurrentBox(event)" borderVisible="false"/>
 							</s:BorderContainer>
 							<s:Image id="SymbolGalleryButton"
 									 width="16" height="10" verticalAlign="top" verticalCenter="0" horizontalAlign="center" horizontalCenter="0" 
@@ -4503,65 +4718,49 @@
 											</s:BorderContainer>								
 										</s:BorderContainer>
 									</s:BorderContainer>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/White.jpg" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/White.jpg" 
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/Black.jpg" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Black.jpg" 
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/BrightGreen.jpg"
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkBlue.jpg"
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/DarkBlue.jpg"
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkGreen.jpg" 
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/DarkGreen.jpg" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/DarkYellow.jpg"
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/DarkYellow.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/LightGreen.jpg" 
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/LimeGreen.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/OliveGreen.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/Orange.jpg" 
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/Pink.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/Purple.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/Red.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/ReflexWhite.jpg" 
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/ShockingPink.jpg"
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/Silver.jpg" 
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/solid/YellowGreen.jpg" 
-											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/Bayern.png" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterBlue.jpg" 
 											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/BlueDiamonds.png" 
+									<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterGold.jpg"
+									click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/-->
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterGreen.jpg" 
 											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/GermanFlagColors.png" 
-											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>									
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/GlitterBlue.jpg" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GlitterRed.jpg"
 											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/GlitterGreen.jpg"
-											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/GlitterGreenRainbow.jpg" 
-											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/GlitterRed.jpg"
-											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/Rainbow.jpg" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/LightGreen.jpg" 
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/Raindrops.jpg"
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Pink.jpg"
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/Space.jpg"
+									<!--s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Rainbow.jpg" 
+									click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/-->
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Raindrops.jpg"
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/metallic/Woodgrain.jpg"
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Red.jpg"
 											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
-									<s:Image width="50%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/house/HouseWhite.png" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/ReflexWhite.jpg" 
+											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/ShockingPink.jpg"
+											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Silver.jpg" 
+											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Space.jpg"
+											 click="SelectPlateGalleryImage(event,false); CloseGallery(event);"/>
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/Bayern.png" 
 											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
-									<s:Image width="50%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/house/HouseBlue.png" 
+									<s:Image width="100%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/GermanFlagColors.png" 
+											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
+									<s:Image width="50%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/HouseWhite.png" 
+											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
+									<s:Image width="50%" height="100%" fillMode="scale" scaleMode="stretch" source="assets/plates/HouseBlue.png" 
 											 click="SelectPlateGalleryImage(event,true); CloseGallery(event);"/>
 								</s:ArrayList>
 							</s:dataProvider>

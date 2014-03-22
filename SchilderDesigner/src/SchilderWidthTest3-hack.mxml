@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   creationComplete="init()">
+	
+	<fx:Declarations>
+		<s:Parallel id="ArrowX1A_X1B" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="90" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX1A_X2A" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="0" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX1A_X2B" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="45" autoCenterTransform="true"/>
+		</s:Parallel>
+		
+		<s:Parallel id="ArrowX1B_X2A" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="-45" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX1B_X2B" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="0" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX1B_X1A" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="90" angleTo="-90" autoCenterTransform="true"/>
+		</s:Parallel>
+		
+		<s:Parallel id="ArrowX2A_X2B" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="90" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX2A_X1A" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="-180" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX2A_X1B" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="-225" autoCenterTransform="true"/>
+		</s:Parallel>
+		
+		<s:Parallel id="ArrowX2B_X1A" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="-225" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX2B_X1B" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="-215" autoCenterTransform="true"/>
+		</s:Parallel>
+		<s:Parallel id="ArrowX2B_X2A" target="{Arrow}" repeatCount="1" duration="{RotateDuration}">
+			<s:Rotate angleFrom="0" angleTo="-90" autoCenterTransform="true"/>
+		</s:Parallel>
+	</fx:Declarations>
+	
+	<!--Remarks:
+	1. If 1 line and CS=false, blue 1A
+	
+	2. If 1 line and CS=true and 1A is empty, resize, unhide 2 and 2A, blue 2A, make 1A the target, show right button which when pressed makes 2A the target, 
+	change to left button which makes 1A the target
+
+	3. If 1A is not empty, same but make 2A the target
+	
+	4. If 2 lines and CS=false and 1A is empty, unhide 2 and 2A and 2B, blue both, make 1A the target, show down button which makes 1B the target, 
+	change to right button which makes 2A the target, change to down button which makes 2B the target, change to left button which makes 1A the target
+	
+	5. If 2 lines to 1 line and 1B ... cs and not cs
+	
+	6. If 2 lines to 1 line and 1B is not empty, leave 1 as-is and unhide 2 and 2A and 2B
+	
+	7. If 2 lines to 1 line and current is 
+	
+
+	1A is always the starting target
+	When set target, make it the current
+	Highlight the target (and unhide the previous target)
+	If focus into a Box, undo should delete elements from the right
+	
+	
+	If 1 line and CS and no chars, blue 1A and 2A and give right button
+	If 1 line and CS and chars in 1A, unblue 1A and blue 2A and put cursor into right (no button)
+	If 2 lines and no CS and no chars, blue all four and give down button 
+	If 2 lines and CS and chars in 1A, give 
+	
+	Rainbow foil with 2 lines:  need to have a different texture for line 1 and line 2 which match up
+	
+	WHY DO WE NEED TO PASS THE EVENT TYPE?
+	-->
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import spark.components.Label;
+			import spark.components.VGroup;
+			
+			public static const TallSymbolHeight:int = 80;
+			public static const TallSymbolWidth:int = 40;
+			public static const ShortSymbolHeight:int = 40;
+			public static const ShortSymbolWidth:int = 20;
+			public static const LargeCharacterFontSize:int = 96;			
+			public static const LargeCharacterWidth:int = 40;
+			public static const LargeCharacterHeight:int = 100;
+			public static const MediumCharacterFontSize:int = 50;
+			public static const MediumCharacterWidth:int = 20;
+			public static const MediumCharacterHeight:int = 50;	
+			public static const SmallCharacterFontSize:int = 30;	
+			public static const SmallCharacterWidth:int = 40;
+			public static const SmallCharacterHeight:int = 30;
+			public static const RotateDuration:int = 200;
+			
+			[Bindable] private var SwitchVisible:Boolean;
+			[Bindable] private var vgap:int = 5;
+			//private var NumChildren:uint = Target.numChildren;
+			private var ElementType:String;
+			private var LastBox:String;
+			private var CenterSymbol:Boolean = false;
+			[Bindable] private var CurrentBox:String = 'X1A';
+			private var CurrentBoxIsFull:Boolean;
+			private var TargetBox:String;
+			[Bindable] private var OutlineColor:uint = 0x00ced1;
+			private var X1A_Index:int = 1;
+			private var X1B_Index:int = 1;
+			private var X2A_Index:int = 1;
+			private var X2B_Index:int = 1;
+			private var C1A_RunningLength:int = 0;
+			private var C1B_RunningLength:int = 0;
+			private var C2A_RunningLength:int = 0;
+			private var C2B_RunningLength:int = 0;
+			private var ElementsArray:Array;
+			
+			[Bindable]
+			[Embed(source="assets/arrow.png")]
+			private var ArrowImage:Class;
+			
+			private var SymbolSize:String;
+			private var CharacterSize:String;
+						
+			private function UndoAll():void
+			{
+				if (X1A.numElements > 0)
+				{
+					X1A.removeAllElements();
+				}
+				if (X1B.numElements > 0)
+				{
+					X1B.removeAllElements();
+				}
+				if (X0.numElements > 0)
+				{
+					X0.removeAllElements();
+				}
+				if (X2A.numElements > 0)
+				{
+					X2A.removeAllElements();
+				}
+				if (X2B.numElements > 0)
+				{
+					X2B.removeAllElements();
+				}
+			}
+			
+			private function Undo():void
+			{
+				if (LastBox == 'X1A')
+				{
+					if (X1A.numElements > 0)
+					{
+						X1A.removeElementAt(numElements-1);
+					}
+				}
+				if (LastBox == 'X1B')
+				{
+					if (X1B.numElements > 0)
+					{
+						X1B.removeElementAt(numElements-1);
+					}
+				}
+				if (LastBox == 'X0')
+				{
+					if (X0.numElements > 0)
+					{
+						X0.removeElementAt(numElements-1);
+					}
+				}
+				if (LastBox == 'X2A')
+				{
+					if (X2A.numElements > 0)
+					{
+						X2A.removeElementAt(numElements-1);
+					}
+				}
+				if (LastBox == 'X2B')
+				{
+					if (X2B.numElements > 0)
+					{
+						X2B.removeElementAt(numElements-1);
+					}
+				}
+			}
+			
+			
+			
+
+			
+			private function Full():void
+			{
+				Alert.show(CurrentBox + ' is full');
+			}
+			
+			/*Element types:		
+			LC = Large Character
+			MC = Medium Character
+			SC = Small Character
+			TS = Tall Symbol
+			SS = Short Symbol
+			CS = Center symbol
+			*/
+			private function AddElement(ElementType:String):void
+			{
+				//We know current Box so don't need to make it a parm
+				
+				//SetTargetCBox(ElementType);
+				
+				var parent:VGroup = new VGroup;
+				var child:BorderContainer = new BorderContainer;
+				var ElementLabel:Label = new Label;
+				var ElementId:String;
+				
+				if (ElementType == 'SC' || ElementType == 'MC' || ElementType == 'LC')
+				{
+					//Child has no ID
+					if (ElementType == 'SC')
+					{
+						child.width = SmallCharacterWidth;
+						child.height = SmallCharacterHeight;
+					}
+					else if (ElementType == 'MC')
+					{
+						child.width = MediumCharacterWidth;
+						child.height = MediumCharacterHeight;
+					}
+					else if (ElementType == 'LC')
+					{
+						child.width = LargeCharacterWidth;
+						child.height = LargeCharacterHeight;
+					}
+					child.setStyle('borderColor','blue');
+					
+					//Parent ID is assigned later
+					parent.width = child.width;
+					parent.percentHeight = 100;
+					parent.setStyle('borderColor','yellow');
+					
+					TargetBox = CurrentBox;
+				}			
+				else if (ElementType == 'SS' || ElementType == 'TS' || ElementType == 'CS')
+				{
+					if (ElementType == 'SS')
+					{
+						child.width = ShortSymbolWidth;
+						child.height = ShortSymbolHeight;
+					}
+					else if (ElementType == 'TS')
+					{
+						child.width = TallSymbolWidth;
+						child.height = TallSymbolHeight;
+					}
+					child.setStyle('borderColor','green');
+					
+					parent.width = child.width;
+					parent.percentHeight = 100;
+					parent.setStyle('paddingTop',5);
+					parent.setStyle('paddingBottom',5);
+					parent.setStyle('borderColor','yellow');
+					
+					if (ElementType == 'CS')
+					{
+						TargetBox = 'X0';
+					}
+					else
+					{
+						TargetBox = CurrentBox;
+					}
+				}
+
+				
+				if (TargetBox == 'X0')
+				{
+					X0.includeInLayout = true;
+					
+					//Replace any existing center symbol					
+					if (X0.numElements > 0)
+					{
+						X0.removeElementAt(numElements-1);
+					}
+					
+					ElementId = (TargetBox);
+					
+					ElementLabel.text = ElementId;
+					
+					child.addElement(ElementLabel);
+					
+					parent.addElement(child);
+					
+					X0.addElement(parent);
+				
+					X2.includeInLayout = true;
+					X2A.includeInLayout = true;
+					
+					if (X2_LineCount == 2)
+					{
+						X2B.includeInLayout = true; X2B.visible = true;
+					}
+					
+					//Set current box to X2 if X1 is non-empty
+					if (X1A.numElements == 0)
+					{
+						CurrentBox = 'X1A';
+					}
+					else
+					{
+						CurrentBox = 'X2A';	
+					}
+				}		
+				else if (TargetBox == 'X1A')
+				{
+					X1.includeInLayout = true; 
+					X1A.includeInLayout = true;
+					
+					ElementId = (TargetBox + String(X1A_Index));
+					
+					ElementLabel.text = ElementId;
+					
+					child.addElement(ElementLabel);
+					
+					parent.addElement(child);
+					
+					X1A.addElement(parent);
+									
+					X1A_Index = (X1A_Index + 1);
+					
+					CurrentBox = 'X1A';
+				}
+				else if (TargetBox == 'X1B')
+				{
+					X1.includeInLayout = true;
+					X1B.includeInLayout = true;
+					
+					ElementId = (TargetBox + String(X1B_Index));
+					
+					ElementLabel.text = ElementId;
+					
+					child.addElement(ElementLabel);
+					
+					parent.addElement(child);
+					
+					X1B.addElement(parent);
+					
+					X1B_Index = (X1B_Index + 1);
+					
+					CurrentBox = 'X1B';
+				}
+				else if (TargetBox == 'X2A')
+				{
+					X2.includeInLayout = true;
+					X2A.includeInLayout = true;
+					
+					ElementId = (TargetBox + String(X2A_Index));
+					
+					ElementLabel.text = ElementId;
+					
+					child.addElement(ElementLabel);
+					
+					parent.addElement(child);
+					
+					X2A.addElement(parent);
+					
+					X2A_Index = (X2A_Index + 1);
+					
+					CurrentBox = 'X2A';
+				}
+				else if (TargetBox == 'X2B')
+				{
+					X2.includeInLayout = true;
+					X2B.includeInLayout = true;
+					
+					ElementId = (TargetBox + String(X2B_Index));
+					
+					ElementLabel.text = ElementId;
+					
+					child.addElement(ElementLabel);
+					
+					parent.addElement(child);
+					
+					X1A.addElement(parent);
+					
+					X2B_Index = (X2B_Index + 1);
+					
+					CurrentBox = 'X2B';
+				}
+				
+				LastBox = CurrentBox;
+				
+				HideShow();
+				Outlines();
+				
+//				ElementsArray.push(ElementId);				
+			}
+		]]>
+	</fx:Script>
+	
+	<s:BorderContainer borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+		
+		<s:HGroup gap="5">
+
+			<s:BorderContainer id="ArrowButton" width="24" height="24" horizontalCenter="0" verticalCenter="0" chromeColor="gray" borderColor="blue"
+							   useHandCursor="true" buttonMode="true" visible="{SwitchVisible}" click="Switch()">
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+									  paddingTop="1" paddingBottom="1" paddingLeft="1" paddingRight="1"/>
+				</s:layout>
+				<s:Image id="Arrow" width="100%" height="100%" source="{ArrowImage}"/>
+			</s:BorderContainer>
+			<s:Label text="{CurrentBox}"/>
+			<s:Spacer width="5"/>
+			<s:Button label="Undo" click="Undo()"/>
+			<s:Spacer width="10"/>			
+			<s:Button label="Small character" click="AddElement('SC')"/>
+			<s:Button label="Medium character" click="AddElement('MC')"/>
+			<s:Button label="Large character" click="AddElement('LC')"/>
+			<s:Spacer width="5"/>
+			<s:Button label="Tall symbol" click="AddElement('TS')"/>
+			<s:Button label="Short symbol" click="AddElement('SS')"/>
+			<s:Button label="Center Symbol" click="AddElement('CS')"/>
+		</s:HGroup>
+		
+
+			
+		</s:BorderContainer>
+		
+	</s:BorderContainer>
+			
+</s:Application>

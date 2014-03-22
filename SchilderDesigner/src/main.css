@@ -1,0 +1,185 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+@font-face
+{
+	src: url("assets/GL-Nummernschild-Eng.otf");
+	font-family: "GL-Nummernschild-Eng";
+	fontStyle: normal;
+	fontWeight: normal;
+	embed-as-cff: true;
+}
+
+/*
+@font-face
+{
+	src: url("assets/GL-Nummernschild-Eng.otf");
+	font-family: "GL-Nummernschild-Eng";
+	fontStyle: bold; 
+	fontWeight: bold;
+	embed-as-cff: false;
+}
+
+@font-face
+{
+	src: url("assets/GL-Nummernschild-Mtl.otf");
+	font-family: GL-Nummernschild-Mtl;
+	fontStyle: normal; 
+	fontWeight: bold;
+	embed-as-cff: false;
+}
+
+@font-face
+{
+	src: url("assets/GL-Nummernschild-Mtl.otf");
+	font-family: GL-Nummernschild-Mtl;
+	fontStyle: bold; 
+	fontWeight: bold;
+	embed-as-cff: false;
+}
+*/
+
+.GL-Nummernschild-Eng
+{
+	font-family: GL-Nummernschild-Eng;
+	font-lookup: embeddedCFF;
+}
+
+.GL-Nummernschild-Mtl
+{
+	font-family: GL-Nummernschild-Mtl;
+	font-lookup: embeddedCFF;
+}
+
+.PlateCharacterSmall
+{
+	fontFamily: GL-Nummernschild-Eng;
+	fontSize: 66;
+	fontWeight: normal;
+	kerning: true;
+}
+
+.PlateCharacterMedium
+{
+	fontFamily: GL-Nummernschild-Eng;
+	fontSize: 94;
+	fontWeight: normal;
+	kerning: true;
+}
+	
+.PlateCharacterLarge
+{
+	fontFamily: GL-Nummernschild-Eng;
+	fontSize: 126;
+	fontWeight: normal;
+	kerning: true;
+}
+	
+.MiniPlateText
+{
+	fontFamily: GL-Nummernschild-Eng;
+	fontSize: 18;
+	fontWeight: normal;
+	kerning: false;
+}
+.MiniPlateOuterContainer
+{
+	cornerRadius: 4;
+	backgroundAlpha: .5;
+	borderColor: black;
+	borderAlpha: .2;
+	borderWeight: .025;
+}
+.MiniPlateInnerContainer
+{
+	cornerRadius: 4;
+	backgroundAlpha: 1;
+	borderColor: gray;
+	borderAlpha: .5;
+	borderWeight: .02;
+}
+.MiniPlateCoreContainer
+{
+	cornerRadius: 4;
+	backgroundAlpha: 1;
+	borderColor: black;
+	borderAlpha: .8;
+	borderWeight: .075;
+}
+.GalleryPlate_A 
+{
+	cornerRadius: 4;
+	borderColor: black;
+	borderAlpha: .2;
+	borderWeight: .025;
+}
+.GalleryPlate_B
+{
+	cornerRadius: 4;
+	borderColor: gray;
+	borderAlpha: .5;
+	borderWeight: .2;
+}
+.GalleryPlate_C
+{
+	cornerRadius: 4;
+	borderColor: white;
+	borderAlpha: .8;
+	borderWeight: .075;
+}	
+.CharacterButton
+{
+	fontFamily: GL-Nummernschild-Eng;
+	fontSize: 28;
+	fontWeight: normal;
+	kerning: true;
+	color: black;
+	borderColor: blue;
+	chromeColor: white;
+}
+.PositioningButton
+{
+	color: white;
+	fontFamily: Tahoma;
+	fontSize: 9;
+	fontWeight: bold;
+	kerning: true;
+	borderColor: blue;
+	chromeColor: blue;
+}
+.NumericStepperDate
+{
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: normal;
+}
+.PlateDate
+{
+	fontFamily: Arial;
+	fontSize: 20;
+	fontWeight: normal;
+	kerning: off;
+}
+.DirectiveLabel
+{
+	color: blue;
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+}
+.HTMLButton
+{
+	color: blue;
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+	text-decoration: underline;
+}
+.DisplayPrice
+{
+	color: white;
+	fontFamily: Arial;
+	fontSize: 11;
+	fontWeight: bold;
+}

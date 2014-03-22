@@ -1,0 +1,1078 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:component="component.*"
+			   width="100%" height="100%"
+			   creationComplete="Initialize()">
+	
+	<fx:Script>
+		<![CDATA[
+			private var Current_ME_Child:NavigatorContent;
+			private var Current_SM_Child:NavigatorContent;
+			private var Current_TM_Child:NavigatorContent;
+			private var Current_MC_Child:NavigatorContent;
+			private var Current_CD_Child:NavigatorContent;
+			
+			private function Initialize():void
+			{
+				/*	Current_ME_Child = ME_0;
+				Current_MA_Child = MA_0;
+				Current_MC_Child = MC_0;				
+				ME_VS.selectedChild = Current_ME_Child;	*/
+				
+				ME_VS.selectedChild = ME_0;
+				ME.visible = true; ME.includeInLayout = true;
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Style source="Styles.css"/>
+	
+	<fx:Declarations>
+		<s:Animate id="SlideDCIn" target="{DC}" duration="{SlideDuration}" effectEnd="PostSlideDCIn()">
+			<s:SimpleMotionPath property="x" valueFrom="{0}" valueTo="{MidPoint}"/>
+		</s:Animate>
+		<s:Animate id="SlideDCOut" target="{DC}" duration="{SlideDuration}" effectEnd="PostSlideDCOut()">
+			<s:SimpleMotionPath property="x" valueFrom="{MidPoint}" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="SlideREIn" target="{RE}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{StageLeft}" valueTo="{MidPoint}"/>
+		</s:Animate>
+		<s:Animate id="SlideREOut" target="{RE}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{MidPoint}" valueTo="{StageLeft}"/>
+		</s:Animate>
+		<s:Animate id="SlideRACIn" target="{RAC}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{StageRight}" valueTo="0"/>
+		</s:Animate>
+		<s:Animate id="SlideRACOut" target="{RAC}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{StageRight}"/>
+		</s:Animate>
+
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.*;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.HierarchicalData;
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.core.Container;
+			import mx.effects.AnimateProperty;
+			import mx.events.CloseEvent;
+			import mx.events.DragEvent;
+			import mx.events.IndexChangedEvent;
+			import mx.events.ListEvent;
+			import mx.events.MenuEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.effects.Animate;
+			import spark.events.IndexChangeEvent;
+			
+			public const FullWidth:Number = 1162;
+			public const HalfWidth:Number = (FullWidth / 2);
+			public const QuarterWidth:Number = (FullWidth / 4);
+			public const EighthWidth:Number = (FullWidth / 8);
+			public const FullHeightPct:Number = 80;
+			
+			public const DGHeaderHeight:Number = 22;
+			public const DGRowHeight:Number = 20;
+			
+			public const CheckBoxWidth:Number = 14;
+			public const CBW:Number = CheckBoxWidth;
+			public const InfoButtonWidth:Number = 14;
+			public const IBW:Number = InfoButtonWidth;
+			public const DispositionToggleWidth:Number = 10;
+			public const DTW:Number = DispositionToggleWidth;
+			public const DeleteButtonWidth:Number = 14;
+			public const DBW:Number = DeleteButtonWidth;
+			
+			public const ScrollBarWidth:int = 20;
+			
+			[Bindable] public var M_ScrollBarWidth:int = 0; //Set dynamically if current Master DG becomes scrollable
+			[Bindable] public var D_ScrollBarWidth:int = 0; //Set dynamically if current Detail DG becomes scrollable
+			
+			[Bindable] private var StageLeft:int = (-HalfWidth);
+			[Bindable] private var MidPoint:int = HalfWidth;
+			[Bindable] private var StageRight:int = FullWidth;
+			
+			[Bindable] private var Indent1:Number = 15;
+			[Bindable] private var Indent2:Number = 30;
+			[Bindable] private var Indent:Number;
+			[Bindable] private var SM_Indent:Number = Indent1;
+			[Bindable] private var TM_Indent:Number = Indent2;
+			[Bindable] private var SlideDuration:Number = 800;
+			[Bindable] private var FadeDuration:Number = (SlideDuration*1.5);
+			[Bindable] private var ResizeDuration:Number = (SlideDuration/2);
+			
+			[Bindable] private var NonShadeAlpha:Number = 1;
+			[Bindable] private var FinalShadeAlpha:Number=.3;
+			[Bindable] private var M_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var SM_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var DD_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var M_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var SM_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var DD_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var M_RowShade_Alpha:Number = .4;
+			
+			[Bindable] private var ME_Depth:Number = 1;
+			[Bindable] private var MA_Depth:Number = 2;
+			[Bindable] private var MC_Depth:Number = 3;
+			
+			[Bindable] private var DE_Depth:Number = 4;
+			[Bindable] private var DA_Depth:Number = 5;
+			[Bindable] private var DC_Depth:Number = 6;	
+			
+			[Bindable] private var MET_Depth:Number = 7;
+
+			[Bindable] private var M_RowShade_Depth:Number = 8;
+			[Bindable] private var M_Shade_Depth:Number = 9;
+			
+			[Bindable] private var RE_Depth:Number = 10;
+			[Bindable] private var RAC_Depth:Number = 11;
+			
+			private var CategoryGroup:String //1 letter
+			private var Category:String //2 letters
+			private var CategoryView:String //3 letters
+			private var LastCategory:String
+			
+			[Bindable] private var ME_View:Boolean;
+			[Bindable] private var SM_View:Boolean;
+			[Bindable] private var TM_View:Boolean;
+			[Bindable] private var MC_View:Boolean;
+			[Bindable] private var CD_View:Boolean;
+			[Bindable] private var XM_View:Boolean;
+			[Bindable] private var VM_View:Boolean;
+			private var Layout:String;
+			
+			private function SetLayout(Layout:String):void
+			{
+				/*	if (Layout == 'FullMaster')
+				{
+				M.percentWidth = 100;
+				D.percentWidth = 0;
+				D.includeInLayout = false;
+				D.visible = false;
+				}
+				else if (Layout == 'MasterDetail')
+				{
+				M.percentWidth = 100;
+				D.percentWidth = 100;
+				D.includeInLayout = true;
+				D.visible = true;
+				SD.includeInLayout = false; 
+				SD.visible = false;
+				DD_HBox.setStyle('horizontalGap',0);
+				}
+				else if (Layout == 'MasterSplitDetail')
+				{
+				M.percentWidth = 100;
+				D.percentWidth = 100;
+				D.includeInLayout = true;
+				D.visible = true;
+				SD.includeInLayout = true;
+				SD.visible = true;
+				DD_HBox.setStyle('horizontalGap',0);
+				}
+				else if (Layout == 'GappedMasterDetail')
+				{
+				M.percentWidth = 100;
+				D.percentWidth = 100;
+				D.includeInLayout = true;
+				D.visible = true;
+				DD_HBox.setStyle('horizontalGap',0);
+				}
+				else if (Layout == 'MasterGappedDetail')
+				{
+				B0.setStyle('horizontalGap',0);
+				M.percentWidth = 100;
+				D.percentWidth = 100;
+				D.includeInLayout = true;
+				D.visible = true;
+				DD_HBox.setStyle('horizontalGap',10);
+				}
+				else if (Layout == 'GappedMasterGappedDetail')
+				{
+				B0.setStyle('horizontalGap', 10);
+				M.percentWidth = 100;
+				D.percentWidth = 100;
+				D.includeInLayout = true;
+				D.visible = true;
+				DD_HBox.setStyle('horizontalGap',10);
+				}
+				
+				MidPoint = ((FullWidth/2)-(B0.getStyle('horizontalGap')/2));	*/
+			}
+			
+			/*			private function TM_View():void
+			{
+			M_Shade.includeInLayout=true; M_Shade.visible=true; 
+			
+			if (SM_View==true)
+			{
+			ME_Indent=Indent1;
+			}
+			else
+			{
+			SM_ShadeFinalAlpha=FinalShadeAlpha;
+			}
+			if (SM_View=false)
+			{
+			SM_Indent=Indent1;
+			TM_Indent=Indent2;
+			M_Shade.includeInLayout=true; M_Shade.visible=true; 
+			SM_Shade.includeInLayout=true; SM_Shade.visible=true; 
+			SM_ShadeFinalAlpha=FinalShadeAlpha;
+			M_ShadeFinalAlpha=(FinalShadeAlpha/2);
+			}
+			if (TM_View==true)
+			{
+			TM_Indent=Indent1;
+			M_Shade.includeInLayout=true; M_Shade.visible=true; 
+			M_ShadeFinalAlpha=FinalShadeAlpha
+			SM_Shade.includeInLayout=false; SM_Shade.visible=false; ;
+			}	
+			if (TM_View==false)
+			{
+			SM_Indent=0;
+			TM_Indent=0;
+			M_Shade.includeInLayout=false; M_Shade.visible=false; 
+			SM_Shade.includeInLayout=false; SM_Shade.visible=false; 
+			}
+			}   */
+			
+			private function ClearAll():void
+			{
+				ME.visible=false;ME.includeInLayout=false;
+				MET.visible=false;MET.includeInLayout=false;
+				MA.visible=false;MA.includeInLayout=false;
+				MC.visible=false;MC.includeInLayout=false;
+				RE.visible=false; RE.includeInLayout=false;
+				DE.visible=false;DE.includeInLayout=false;
+				DA.visible=false;DA.includeInLayout=false;
+				DC.visible=false;DC.includeInLayout=false;
+				RAC.visible=false; RAC.includeInLayout=false;
+				BB2.visible=false; BB2.includeInLayout=false;
+			}
+			
+			protected function ClearMaster():void
+			{
+				/*				m_VS.includeInLayout = false; m_VS.visible = false;
+				SM_VS.includeInLayout = false; SM_VS.visible = false;
+				MC_VS.includeInLayout = false; MC_VS.visible = false;*/
+			}
+			
+			protected function ClearDetail():void
+			{
+				/*				A_d_VS.includeInLayout = false; A_d_VS.visible = false;
+				F_d_VS.includeInLayout = false; F_d_VS.visible = false;
+				W_d_VS.includeInLayout = false; W_d_VS.visible = false;
+				SD_VS.includeInLayout = false; SD_VS.visible = false;*/
+			}
+			
+			protected function CategoryMenuChangeHandler(event:ListEvent):void
+			{
+				var CategoryItem:Object = event.target.selectedItem as Object;
+				
+				Category = CategoryItem.Alias;
+				CategoryGroup = CategoryItem.Alias.substring(0, 1);
+				CategoryView = "ID";
+				
+				SetCAView(Category, CategoryView);
+				
+				//Save last-used category to var to detect change of category
+				LastCategory = Category;
+			}
+			
+			protected function TabBarChangeHandler(event:IndexChangeEvent):void
+			{
+				var TB_Value:Object = event.target.selectedItem as Object;
+				
+				var TabValue:String = TB_Value.Data;
+				
+				//*** This is defective ? ***
+				//If category changes, select first tabbar tab
+				if (Category != LastCategory)
+				{
+					//					TB.selectedIndex = 0;
+				}
+				
+				if (Category == "AU" && TabValue == "ID") //User ID
+				{
+					CategoryView = "ID";
+				}
+				else if (Category == "AU" && TabValue == "P1") //Properties...
+				{
+					CategoryView = "P1";
+				}
+				else if (Category == "AU" && TabValue == "CO") //Companies
+				{
+					CategoryView = "CO";
+				}
+				else if (Category == "AU" && TabValue == "AC") //Access controls
+				{
+					CategoryView = "AC";
+				}
+				else if (Category == "FF" && TabValue == "FormUsage1") 
+				{
+					CategoryView = "FormUsage1";
+				}
+				else if (Category == "FF" && TabValue == "FormUsage2") 
+				{
+					CategoryView = "FormUsage2";
+				}
+				else if (Category == "FF" && TabValue == "Fieldsets") 
+				{
+					CategoryView = "Fieldsets";
+				}
+				if (Category == "WO" && TabValue == "ListForms|Preview")
+				{
+					CategoryView = "W1";
+				}
+				if (Category == "WO" && TabValue == "ListForms|Properties")
+				{
+					CategoryView = "W2";
+				}
+				if (Category == "WO" && TabValue == "ListForms|FormFields")
+				{
+					CategoryView = "W3";
+				}
+				if (Category == "WO" && TabValue == "CRUD")
+				{
+					CategoryView = "W4";
+				}
+				if (Category == "WO" && TabValue == "ListFormFields|Preview")
+				{
+					CategoryView = "W5";
+				}
+				if (Category == "WO" && TabValue == "PreviewFormViewer")
+				{
+					CategoryView = "W6";
+				}
+				else if (Category == "WP" && TabValue == "CRUD") 
+				{
+					CategoryView = "CRUD";
+				}			
+				else if (Category == "WP" && TabValue == "Forms") 
+				{
+					CategoryView = "Forms";
+				}
+				else if (Category == "WP" && TabValue == "Steps") 
+				{
+					CategoryView = "Steps";
+				}
+				else if (Category == "WP" && TabValue == "Tasks") 
+				{
+					CategoryView = "Tasks";
+				}
+				else if (Category == "WP" && TabValue == "Actions") 
+				{
+					CategoryView = "Actions";
+				}
+				
+				SetCAView(Category, CategoryView);
+			}
+			
+			protected function SetCAView(Category:String, CategoryView:String):void
+			{
+				if (CategoryGroup == "A")
+				{
+					//Account Management
+					TB.visible = true;
+				}
+				if (Category == "AX")
+				{
+					//Blank the stage
+					ClearAll();
+				}
+				if (Category == "AU")
+				{
+					//					TB.dataProvider = AU_TB_AC;
+					TW.title = 'Users';
+					//AU_m_view.includeInLayout=true; AU_m_view.visible=true; m_VS.selectedChild=AU_m_view;
+				}
+			}
+			
+			[Bindable]
+			private var Dummy_TB_AC:ArrayCollection = new ArrayCollection
+				([
+					{Label:"Tab1", Data:"Tab1"}, 
+					{Label:"Tab2", Data:"Tab2"}, 
+					{Label:"Tab3", Data:"Tab3"},
+					{Label:"Tab4", Data:"Tab4"},
+					{Label:"Tab5", Data:"Tab5"},
+					{Label:"Tab6", Data:"Tab6"}
+				]);
+			
+			private function PostSlideDCIn():void
+			{
+				MET.visible=false;MET.includeInLayout=false;
+			}
+			
+			private function PostSlideDCOut():void
+			{
+				DC.visible=false;DC.includeInLayout=false;
+				MET.visible=false;MET.includeInLayout=false;
+			}
+		]]>
+	</fx:Script>
+	
+	<!--Master container-->
+	<s:BorderContainer width="100%" height="100%" borderVisible="false">
+		<s:layout>
+			<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+		</s:layout>
+		
+		<!--Stage-->
+		<s:BorderContainer id="Stage" width="100%" height="100%" borderVisible="false" styleName="Gutter">
+			<s:layout>
+				<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+			</s:layout>
+			
+			<!--Category chooser, buttons, and tabbar -->
+			<s:BorderContainer id="CategoryChooser" width="100%" height="100%" borderVisible="false" styleName="Gutter">
+				<s:layout>
+					<s:HorizontalLayout paddingTop="5" paddingBottom="5" paddingLeft="5" paddingRight="5" gap="0"/>
+				</s:layout>
+				<s:Spacer width="10"/>
+				<s:BorderContainer id="CategoryList" width="170" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" gap="0"/>
+					</s:layout>
+					<s:BorderContainer width="170" height="20" borderVisible="true" styleName="MenuHeader" verticalCenter="0">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="5" gap="0" verticalAlign="middle"/>
+						</s:layout>
+						<s:Label text="Choose category:" 
+								 styleName="MenuHeader"/>
+					</s:BorderContainer>
+					<s:BorderContainer width="170" height="100%" borderVisible="true" borderWeight="2" styleName="MenuBody">
+						<s:layout>
+							<s:VerticalLayout paddingTop="0" paddingBottom="0" paddingLeft="5" paddingRight="0" gap="0"/>
+						</s:layout>
+						<fx:Script>
+							<![CDATA[
+								[Bindable]
+								private var Categories_AC:ArrayCollection = new ArrayCollection(
+									[
+										{Category:"Accounts", Alias:"AX", children: [
+											{Category:"Users", Alias:"AU"},
+											{Category:"Groups", Alias:"AG"},
+											{Category:"Roles", Alias:"AR"}
+										]},
+										{Category:"Document Management", Alias:"DX", children: [
+											{Category:"Document Types", Alias:"DT"}
+										]},
+										{Category:"Fieldsets / Fields", Alias:"FF"},
+										{Category:"Folders", Alias:"FD"},
+										{Category:"Work Management", Alias:"WX", children: [
+											{Category:"Procedures / Plans", Alias:"WP"},
+											{Category:"Steps Types / Steps", Alias:"WS"},
+											{Category:"Task Types / Tasks", Alias:"WT"},
+											{Category:"Action Types / Actions", Alias:"WA"},
+											{Category:"Forms", Alias:"WO"},
+											{Category:"Queries", Alias:"WQ"},
+											{Category:"Scripts", Alias:"WC"},
+											{Category:"Events", Alias:"WE"},
+											{Category:"Messages", Alias:"WM"}
+										]},
+										{Category:"Jobs", Alias:"J"},
+										{Category:"System", Alias:"S"}
+									]);	
+							]]>
+						</fx:Script>
+						<mx:Tree id="CategoryMenu" width="159" height="100%" rowHeight="{DGRowHeight}" borderVisible="false"
+								 styleName="MenuBody" contentBackgroundAlpha=".0"
+								 indentation="7" folderClosedIcon="{null}" folderOpenIcon="{null}" defaultLeafIcon="{null}"
+								 dataProvider="{Categories_AC}" labelField="Category"
+								 change="CategoryMenuChangeHandler(event);"/>
+					</s:BorderContainer>
+				</s:BorderContainer>
+				<s:Spacer width="10"/>
+				
+				<!--Start control buttons, tabbar, and datagrid stack-->
+				<s:BorderContainer width="100%" height="100%" borderVisible="false">
+					<s:layout>
+						<s:VerticalLayout paddingTop="0" gap="0" horizontalAlign="right"/>
+					</s:layout>
+					
+					<s:VGroup id="butter" width="100%">
+						<s:HGroup>
+							<s:Button label="ME" click="
+									  ClearAll();
+									  ME_VS.selectedChild=ME_0;
+									  ME.visible=true;ME.includeInLayout=true;
+									  M_ScrollBarWidth=ScrollBarWidth;
+									  "/>
+							<s:Button label="MA" click="
+									  ClearAll();
+									  MA_VS.selectedChild=MA_0;
+									  MA.visible=true;MA.includeInLayout=true;
+									  "/>
+							<s:Button label="MC" click="
+									  ClearAll();
+									  MC_VS.selectedChild=MC_0;
+									  MC.visible=true;MC.includeInLayout=true;
+									  "/>
+							<s:Button label="DE" click="
+									  ClearAll();
+									  ME_VS.selectedChild=ME_0;
+									  ME.visible=true;ME.includeInLayout=true;
+									  M_RowShade1.visible=false;M_RowShade1.includeInLayout=false;
+									  M_RowShade2.visible=false;M_RowShade2.includeInLayout=false;
+									  DA_VS.selectedChild=DA_0;
+									  DA.visible=false;DA.includeInLayout=false;
+									  DC.visible=false;DC.includeInLayout=false;
+									  DE.visible=true;DE.includeInLayout=true;
+									  M_ScrollBarWidth=0;
+									  "/>
+							<s:Button label="DA" click="
+									  ClearAll();
+									  ME_VS.selectedChild=ME_0;
+									  ME.visible=true;ME.includeInLayout=true;
+									  M_ScrollBarWidth=ScrollBarWidth;
+									  M_RowShade1.visible=true;M_RowShade1.includeInLayout=true;
+									  M_RowShade2.visible=true;M_RowShade2.includeInLayout=true;
+									  DE_VS.selectedChild=DE_0;
+									  DE.visible=true;DE.includeInLayout=true;
+									  DA_VS.selectedChild=DA_0;
+									  DA.visible=true;DA.includeInLayout=true;
+									  D_ScrollBarWidth=ScrollBarWidth;
+									  BB2.visible=true;BB2.includeInLayout=true;
+									  "/>
+							<s:Button label="DCin" click="
+									  ClearAll();
+									  ME_VS.selectedChild=ME_0;
+									  ME.visible=true;ME.includeInLayout=true;
+									  MET_VS.selectedChild=MET_0;
+									  MET.visible=true;MET.includeInLayout=true;
+									  M_RowShade1.visible=true;M_RowShade1.includeInLayout=true;
+									  M_RowShade2.visible=true;M_RowShade2.includeInLayout=true;
+									  DA_VS.selectedChild=DA_0;
+									  DA.visible=true;DA.includeInLayout=true;
+									  DC_VS.selectedChild=DC_0;
+									  DC.visible=true;DC.includeInLayout=true;
+									  D_ScrollBarWidth=ScrollBarWidth;
+									  BB2.visible=true;BB2.includeInLayout=true;
+									  SlideDCIn.play();
+									  //This is done via a post-animation function (to serialize it):
+									  //MET.visible=false;MET.includeInLayout=false;
+									  "/>
+							<s:Button label="DCout" click="
+									  MET_VS.selectedChild=MET_0;
+									  MET.visible=true;MET.includeInLayout=true;
+									  M_RowShade1.visible=false;M_RowShade1.includeInLayout=false;
+									  M_RowShade2.visible=false;M_RowShade2.includeInLayout=false;
+									  D_ScrollBarWidth=0;
+									  BB2.visible=false;BB2.includeInLayout=false;
+									  SlideDCOut.play();
+									  //This is done via a post-animation function (to serialize it):
+									  //DC.visible=false;DC.includeInLayout=false;
+									  //MET.visible=false;MET.includeInLayout=false;
+									  "/>
+							<s:Button label="REin" click="
+									  ClearAll();
+									  ME_VS.selectedChild=ME_0;
+									  ME.visible=true;ME.includeInLayout=true;
+									  RE_VS.selectedChild=RE_0;
+									  RE.visible=true;RE.includeInLayout=true;
+									  SlideREIn.play();
+									  "/>
+							<s:Button label="REout" click="
+									  SlideREOut.play();
+									  "/>
+							<s:Button label="RACin" click="
+									  ClearAll();
+									  ME_VS.selectedChild=ME_0;
+									  ME.visible=true;ME.includeInLayout=true;
+									  RAC_VS.selectedChild=RAC_0;
+									  RAC.visible=true;RAC.includeInLayout=true;
+									  SlideRACIn.play();
+									  "/>
+							<s:Button label="RACout" click="
+									  SlideRACOut.play();
+									  "/>
+						</s:HGroup>
+					</s:VGroup>
+					<s:Spacer height="20"/>
+					
+					<!--Control buttons and tab bar-->
+					<s:BorderContainer width="100%" height="24" borderVisible="false" styleName="GutterOverlay">
+						<s:layout>
+							<s:HorizontalLayout gap="0" horizontalAlign="left" verticalAlign="bottom" clipAndEnableScrolling="true"/>
+						</s:layout>
+						
+						<s:VGroup id="BB_1_VG" width="100%" height="100%" paddingTop="0" verticalAlign="top">
+							<s:HGroup id="BB_1_HG" width="{HalfWidth}" height="100%" horizontalAlign="left" paddingTop="0" verticalAlign="top" styleName="Gutter">
+								<fx:Script>
+									<![CDATA[
+										[Bindable] private var Create_PB_1_AC:ArrayCollection = new ArrayCollection(
+											[
+												{Label:"Create new", Data:""}, 
+												{Label:"Create based on existing", Data:""}, 
+												{Label:"Create synched with existing", Data:""},
+												{Label:"Create based on profile", Data:""},
+												{Label:"Create based on template", Data:""},
+												{Label:"Create using Wizard", Data:""}
+											]);
+										
+										private var Create_PB_1_Menu:Menu;
+										
+										private function Create_PB_1_Init():void 
+										{
+											Create_PB_1_Menu = new Menu();
+											Create_PB_1_Menu.dataProvider = Create_PB_1_AC;
+											Create_PB_1_Menu.labelField = 'Label';
+											Create_PB_1.addEventListener("itemClick", Create_PB_1_ChangeHandler);
+											Create_PB_1.popUp = Create_PB_1_Menu;
+										}
+										
+										private function Create_PB_1_ChangeHandler(event:MenuEvent):void 
+										{
+											var Create_PB_1_Label:String = event.label;
+											Create_PB_1.label = Create_PB_1_Label;
+											Create_PB_1.close();
+										}
+										
+										private function Create_PB_1_MouseOverHandler(event:MouseEvent):void
+										{
+											Create_PB_1.setStyle('color','white');
+										}
+									]]>
+								</fx:Script>
+								<mx:PopUpButton id="Create_PB_1" label="Create new"
+												width="180" height="19" labelPlacement="left" styleName="InsertPopUpButton"
+												creationComplete="Create_PB_1_Init()"
+												mouseOver="Create_PB_1_MouseOverHandler(event)"/>
+								<s:Button label="Delete" width="180" height="19" styleName="DeleteButton"/>
+								<s:Spacer width="100%"/>
+								<s:Button label="Save" width="180" height="19" styleName="SaveButton"/>
+								<s:Spacer width="100%"/>
+							</s:HGroup>
+						</s:VGroup>
+						
+						<s:HGroup width="{HalfWidth}" height="24" gap="0">
+							<fx:Script>
+								<![CDATA[
+									[Bindable] private var WP_TB_AC:ArrayCollection = new ArrayCollection
+										([
+											{Label:"Properties", Data:"Properties"}, 
+											{Label:"Transitions", Data:"Transitions"}, 
+											{Label:"Events", Data:"Events"},
+											{Label:"Schedules", Data:"Schedules"}, 
+											{Label:"Access Controls", Data:"AccessControls"}
+										]);
+									
+									[Bindable] private var LastTab_TB_AC:ArrayCollection = new ArrayCollection
+										([
+											{Label:"", Data:""},
+										]);
+								]]>
+							</fx:Script>
+							<s:TabBar id="TB"
+									  height="24" maxWidth="{(HalfWidth-LastTab.width)}" horizontalCenter="0" verticalCenter="0" depth="2"
+									  styleName="TabText" labelField="Label"
+									  dataProvider="{WP_TB_AC}" 
+									  change="TabBarChangeHandler(event)">
+								<s:layout>
+									<s:HorizontalLayout variableColumnWidth="true" gap="-1"/>
+								</s:layout>
+							</s:TabBar>
+							<s:Group>
+								<s:layout>
+									<s:BasicLayout/>
+								</s:layout>
+								<s:TabBar id="LastTab" x="0" y="0" width="120" height="{TB.height}" depth="1"
+										  dataProvider="{LastTab_TB_AC}"/>
+								<!--s:DropDownList id="TB_DD" x="2" y="2" width="{LastTab.width-4}" height="{(LastTab.height)-4}" dropShadowVisible="false" depth="2"							
+								dataProvider="{MC_1_LastTab_DD_AC}" labelField="Label" prompt="Components" styleName="TabText"/-->
+							</s:Group>
+						</s:HGroup>
+					</s:BorderContainer>
+					
+					<!-- Title window container for all datagrids -->
+					<component:CustomTitleWindow id="TW" title=""
+												 width="1162" height="100%" headerHeight="{DGHeaderHeight}" borderVisible="true" dropShadowVisible="false"
+												 styleName="TitleWindowTitleText" skinClass="skin.CustomTitleWindowSkin">
+						
+						<s:VGroup width="100%" height="100%" gap="0" clipAndEnableScrolling="false">
+							
+							<fx:Script>
+								<![CDATA[
+									[Bindable]
+									public var Nav1_LB_AC:ArrayCollection = new ArrayCollection
+										([
+											{Label:"Link1", Data:"Link1"}, 
+											{Label:"Link2", Data:"Link2"}, 
+											{Label:"Link3", Data:"Link3"},
+											{Label:"Link4", Data:"Link4"},
+											{Label:"Link5", Data:"Link5"},
+											{Label:"Link6", Data:"Link6"}
+										]);
+									
+									[Bindable]
+									public var Nav2_LB_AC:ArrayCollection = new ArrayCollection
+										([
+											{Label:"Link1", Data:"Link1"}, 
+											{Label:"Link2", Data:"Link2"}, 
+											{Label:"Link3", Data:"Link3"},
+											{Label:"Link4", Data:"Link4"},
+											{Label:"Link5", Data:"Link5"},
+											{Label:"Link6", Data:"Link6"}
+										]);
+								]]>
+							</fx:Script>
+							
+							<s:BorderContainer id="Nav" width="100%" height="18" borderVisible="false" backgroundColor="blue" backgroundAlpha=".5"
+											   contentBackgroundColor="gray" contentBackgroundAlpha=".7">
+								<s:layout>
+									<s:HorizontalLayout verticalAlign="middle"/>
+								</s:layout>
+								<s:HGroup width="50%" height="100%" horizontalAlign="left" verticalAlign="baseline" paddingLeft="5" paddingRight="5">
+									<s:Label text="Nav1" fontFamily="Arial" fontSize="11"/>
+									<mx:LinkBar height="{Nav.height-2}" dataProvider="{Nav1_LB_AC}" labelField="Label" verticalAlign="middle"
+												paddingTop="-2" paddingBottom="-2" paddingLeft="0" paddingRight="0"
+												fontFamily="Arial" fontSize="11"/>
+								</s:HGroup>
+								<mx:VRule height="{Nav.height}" strokeWidth="2" strokeColor="black"/>
+								<s:HGroup width="50%" height="100%" horizontalAlign="left" verticalAlign="baseline" paddingLeft="5" paddingRight="5">
+									<s:Label text="Nav2" fontFamily="Arial" fontSize="11"/>
+									<mx:LinkBar height="{Nav.height-2}" dataProvider="{Nav2_LB_AC}" labelField="Label" verticalAlign="middle"
+												paddingTop="-2" paddingBottom="-2" paddingLeft="0" paddingRight="0"
+												fontFamily="Arial" fontSize="11"/>
+								</s:HGroup>
+							</s:BorderContainer>
+							
+							<s:BorderContainer id="DG_Stage" width="100%" height="100%" borderVisible="false">
+								<s:layout>
+									<s:BasicLayout clipAndEnableScrolling="false"/>
+								</s:layout>
+								
+								<mx:HRule x="{MidPoint}" y="{(BB2.y-2)}" width="{BB2.width}" strokeWidth="2" depth="20"
+										  visible="{BB2.visible}" includeInLayout="{BB2.includeInLayout}"/>
+								<s:BorderContainer id="BB2"
+												   x="{MidPoint}" y="{(DG_Stage.height-BB2.height)}" width="{HalfWidth-M_ScrollBarWidth}" height="34" 
+												   borderVisible="false" backgroundColor="white" backgroundAlpha="1"
+												   styleName="Gutter" depth="21" visible="false" includeInLayout="false">
+									<s:layout>
+										<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle" clipAndEnableScrolling="false"
+															paddingLeft="10" paddingRight="{(10+D_ScrollBarWidth)}"/>
+									</s:layout>
+									<fx:Script>
+										<![CDATA[
+											[Bindable] private var Create_PB_2_AC:ArrayCollection = new ArrayCollection(
+												[
+													{Label:"Create new", Data:""}, 
+													{Label:"Create based on existing", Data:""}, 
+													{Label:"Create synched with existing", Data:""},
+													{Label:"Create based on profile", Data:""},
+													{Label:"Create based on template", Data:""},
+													{Label:"Create using Wizard", Data:""}
+												]);
+											
+											private var Create_PB_2_Menu:Menu;
+											
+											private function Create_PB_2_Init():void 
+											{
+												Create_PB_2_Menu = new Menu();
+												Create_PB_2_Menu.dataProvider = Create_PB_2_AC;
+												Create_PB_2_Menu.labelField = 'Label';
+												Create_PB_2.addEventListener("itemClick", Create_PB_2_ChangeHandler);
+												Create_PB_2.popUp = Create_PB_2_Menu;
+											}
+											
+											private function Create_PB_2_ChangeHandler(event:MenuEvent):void 
+											{
+												var Create_PB_2_Label:String = event.label;
+												Create_PB_2.label = Create_PB_2_Label;
+												Create_PB_2.close();
+											}
+											
+											private function Create_PB_2_MouseOverHandler(event:MouseEvent):void
+											{
+												Create_PB_2.setStyle('color','white');
+											}
+										]]>
+									</fx:Script>
+									<mx:PopUpButton id="Create_PB_2" label="Create new"
+													width="170" height="19" labelPlacement="left" styleName="InsertPopUpButton"
+													creationComplete="Create_PB_2_Init()"
+													mouseOver="Create_PB_2_MouseOverHandler(event)"/>
+									<s:Spacer width="100%"/>
+									<s:Button label="Delete" width="170" height="19" styleName="DeleteButton"/>
+									<s:Spacer width="100%"/>
+									<s:Button label="Save" width="170" height="19" styleName="SaveButton"/>						
+								</s:BorderContainer>
+								
+								<!--mx:VRule x="{MidPoint}" height="100%" depth="20"/-->
+								
+								<s:VGroup id="ME" x="0" y="0" width="100%" height="100%" depth="{ME_Depth}" visible="false" includeInLayout="false">
+									<mx:ViewStack id="ME_VS" width="100%" height="100%" borderVisible="false">
+										<s:NavigatorContent id="ME_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off" borderVisible="false">
+												<s:VGroup width="100%" height="100%">
+													<fx:Script>
+														<![CDATA[
+															import mx.collections.ArrayCollection;
+															
+															[Bindable] public var CM_1_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
+																([
+																	{Label:"S|T|A 1 Name", Data:"STA1"},
+																	{Label:"S|T|A 2 Name", Data:"STA2"},
+																	{Label:"S|T|A 3 Name", Data:"STA3"}
+																]);
+															
+															[Bindable] public var CM_X_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
+																([
+																	{Label:"Transaction Type 1", Data:"TT1"},
+																	{Label:"Transaction Type 2", Data:"TT2"},
+																	{Label:"Transaction Type 3", Data:"TT3"}
+																]);
+														]]>
+													</fx:Script>
+													<mx:AdvancedDataGrid id="ME_0_DG" width="{FullWidth}" height="100%" borderVisible="true" 
+																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="10" 
+																		 horizontalScrollPolicy="off" verticalScrollPolicy="on" editable="true">
+														<mx:groupedColumns>
+															<!--mx:AdvancedDataGridColumnGroup width="{HalfWidth}" headerText="ME - Entity Master" editable="false"-->
+																<mx:AdvancedDataGridColumnGroup width="{HalfWidth}">
+																	<mx:headerRenderer>
+																		<fx:Component>
+																			<mx:Canvas width="{(outerDocument.HalfWidth-outerDocument.M_ScrollBarWidth)}" height="100%"
+																					   horizontalScrollPolicy="off" verticalScrollPolicy="off">
+																				<s:HGroup width="100%" height="100%" 
+																						  verticalAlign="baseline" paddingLeft="5" paddingRight="5" gap="5">
+																					<s:Label height="18" text="S|T|A Name"/>
+																					<component:CustomDropDownList width="100%" height="18" 
+																												  dataProvider="{outerDocument.CM_1_DG_FormContext_TB_AC}" 
+																												  labelField="Label"/>
+																				</s:HGroup>
+																			</mx:Canvas>
+																		</fx:Component>
+																	</mx:headerRenderer>
+																	<mx:AdvancedDataGridColumnGroup width="{HalfWidth}" headerText="ID" editable="false">
+																		<mx:AdvancedDataGridColumn width="{QuarterWidth}" headerText="Name" editable="false"/>
+																		<mx:AdvancedDataGridColumn width="{QuarterWidth}" headerText="Description" editable="false"/>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:AdvancedDataGridColumnGroup>
+															<!--/mx:AdvancedDataGridColumnGroup-->
+															<!--mx:AdvancedDataGridColumnGroup width="{(HalfWidth-M_ScrollBarWidth-D_ScrollBarWidth)}" 
+																						   headerText="Properties" editable="true"-->
+																<mx:AdvancedDataGridColumnGroup width="{HalfWidth}" 
+																								headerText="test" editable="false">
+																	<mx:headerRenderer>
+																		<fx:Component>
+																			<mx:Canvas width="{(outerDocument.HalfWidth-outerDocument.D_ScrollBarWidth)}" height="100%"
+																					   horizontalScrollPolicy="off" verticalScrollPolicy="off">
+																				<s:HGroup width="100%" height="100%" 
+																						  verticalAlign="baseline" paddingLeft="5" paddingRight="5" gap="5">
+																					<s:Label height="18" text="Transaction type"/>
+																					<component:CustomDropDownList width="100%" height="18" 
+																												  dataProvider="{outerDocument.CM_X_DG_FormContext_TB_AC}" 
+																												  labelField="Label"/>
+																				</s:HGroup>
+																			</mx:Canvas>
+																		</fx:Component>
+																	</mx:headerRenderer>
+																	<mx:AdvancedDataGridColumnGroup width="{HalfWidth}" headerText="PropertiesA" editable="false">
+																		<!--mx:AdvancedDataGridColumn width="{(QuarterWidth-(D_ScrollBarWidth/2))}" headerText="PropertyA1" editable="false"/>
+																		<mx:AdvancedDataGridColumn width="{(QuarterWidth-(D_ScrollBarWidth/2))}" headerText="PropertyA2" editable="false"/-->
+																		<mx:AdvancedDataGridColumn width="{QuarterWidth}" headerText="PropertyA1" editable="false"/>
+																		<mx:AdvancedDataGridColumn width="{QuarterWidth}" headerText="PropertyA2" editable="false"/>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:AdvancedDataGridColumnGroup>
+															<!--/mx:AdvancedDataGridColumnGroup-->
+														</mx:groupedColumns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="MET" 
+										  x="0" y="0" width="{HalfWidth}" height="100%" depth="{MET_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="MET_VS" width="100%" height="100%">
+										<s:NavigatorContent id="MET_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderVisible="false" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="MET_0_DG" width="{MET.width}" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="off"  borderVisible="false" editable="false">
+														<mx:groupedColumns>
+															<mx:AdvancedDataGridColumnGroup>
+																<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="ME - Entity Master" editable="false"/>
+															</mx:AdvancedDataGridColumnGroup>
+														</mx:groupedColumns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="MA"
+										  x="0" y="0" width="{FullWidth}" height="100%" depth="{MA_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="MA_VS" width="100%" height="100%">
+										<s:NavigatorContent id="MA_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="MA_0_DG" width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="on"  borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="MA - Attribute master" editable="true"/>
+															<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="Properties" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="MC"
+										  x="0" y="0" width="{FullWidth}" height="100%" depth="{MC_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="MC_VS" width="100%" height="100%">
+										<s:NavigatorContent id="MC_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="MC_0_DG" width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="on"  borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="MC - Component master" editable="true"/>
+															<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="Properties" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="RE"
+										  x="{StageLeft}" y="0" width="{HalfWidth}" height="100%" depth="{RE_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="RE_VS" width="100%" height="100%">
+										<s:NavigatorContent id="RE_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="RE_0_DG" width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="on"  borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="RE-Reference entity" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:Group id="M_RowShade1" x="0" y="{(DGRowHeight*1)}" width="{HalfWidth}" height="{DGRowHeight}" depth="{M_RowShade_Depth}" includeInLayout="false" visible="false">
+									<s:Rect width="100%" height="100%">
+										<s:fill>
+											<s:SolidColor color="black" alpha="{M_RowShade_Alpha}"/>
+										</s:fill>
+									</s:Rect>
+								</s:Group>
+								<s:Group id="M_RowShade2" x="0" y="{(DGRowHeight*3)}" width="{HalfWidth}" height="{(DG_Stage.height-M_RowShade1.height-DGRowHeight)}" depth="{M_RowShade_Depth}" includeInLayout="false" visible="false">
+									<s:Rect width="100%" height="100%">
+										<s:fill>
+											<s:SolidColor color="black" alpha="{M_RowShade_Alpha}"/>
+										</s:fill>
+									</s:Rect>
+								</s:Group>
+								
+								<s:Group id="M_Shade" x="0" y="0" width="{FullWidth}" height="100%" alpha="0" depth="{M_Shade_Depth}" includeInLayout="false" visible="false">
+									<s:Rect width="100%" height="100%">
+										<s:fill>
+											<s:SolidColor color="black"/>
+										</s:fill>
+									</s:Rect>
+								</s:Group>
+								
+								<s:VGroup id="DE"
+										  x="{MidPoint}" y="0" width="{HalfWidth-15}" height="100%" depth="{DE_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="DE_VS" width="100%" height="100%">
+										<s:NavigatorContent id="DE_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="DE_0_DG" 
+																		 width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" 
+																		 rowCount="30" verticalScrollPolicy="off" borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{HalfWidth}" headerText="DE-Entity detail" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="DA"
+										  x="{MidPoint}" y="0" width="{HalfWidth-15}" height="{(DG_Stage.height-BB2.height)}" gap="0" depth="{DA_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="DA_VS" width="100%" height="100%">
+										<s:NavigatorContent id="DA_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%" gap="0">
+													<mx:AdvancedDataGrid id="DA_0_DG" width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="on"  borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{(HalfWidth-D_ScrollBarWidth)}" headerText="DA-Attribute detail" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="DC"
+										  x="0" y="0" width="{HalfWidth-15}" height="{(DG_Stage.height-BB2.height)}" depth="{DC_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="DC_VS" width="100%" height="100%">
+										<s:NavigatorContent id="DC_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%" gap="0">
+													<mx:AdvancedDataGrid id="DC_0_DG" width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="on"  borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{(HalfWidth-D_ScrollBarWidth)}" headerText="DC-Component detail" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+								<s:VGroup id="RAC"
+										  x="{StageRight}" y="0" width="{HalfWidth}" height="100%" depth="{RAC_Depth}" includeInLayout="false" visible="false">
+									<mx:ViewStack id="RAC_VS" width="100%" height="100%">
+										<s:NavigatorContent id="RAC_0" width="100%" height="100%">
+											<mx:Canvas width="100%" height="100%" borderColor="blue" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+												<s:VGroup width="100%" height="100%">
+													<mx:AdvancedDataGrid id="RAC_0_DG" width="100%" height="100%" headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" rowCount="30" verticalScrollPolicy="on"  borderVisible="false" editable="true">
+														<mx:columns>
+															<mx:AdvancedDataGridColumn width="{RAC_0_DG.width}" headerText="RAC-Reference attribute or component" editable="true"/>
+														</mx:columns>
+													</mx:AdvancedDataGrid>
+												</s:VGroup>
+											</mx:Canvas>
+										</s:NavigatorContent>
+									</mx:ViewStack>
+								</s:VGroup>
+								
+							</s:BorderContainer>
+							
+						</s:VGroup>
+						
+					</component:CustomTitleWindow>
+					
+					<!--End control buttons, tabbar, and datagrids -->
+				</s:BorderContainer>
+				
+				<!--End category chooser-->
+			</s:BorderContainer>
+			
+			<!--End stage-->
+		</s:BorderContainer>
+		
+		<!--End Master container-->
+	</s:BorderContainer>
+	
+</s:Application>

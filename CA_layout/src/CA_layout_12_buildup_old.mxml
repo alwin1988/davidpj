@@ -6,6 +6,175 @@
 			   width="100%" height="100%"
 			   creationComplete="Initialize()">
 	
+	<fx:Script>
+		<![CDATA[
+			private var Current_M1_Child:NavigatorContent;
+			private var Current_M2_Child:NavigatorContent;
+			private var Current_M3_Child:NavigatorContent;
+			private var Current_CM_Child:NavigatorContent;
+			private var Current_CD_Child:NavigatorContent;
+			
+			private function Initialize():void
+			{
+				Current_M1_Child = M1_1;
+				Current_M2_Child = M2_1;
+				Current_M3_Child = M3_1;
+				Current_CM_Child = CM_1;
+				Current_CD_Child = CD_1;
+				
+				M1_Box.selectedChild = Current_M1_Child;
+			}
+		]]>
+	</fx:Script>
+	
+	<!--Procs:
+	Land on full master of PSTA and Qualifier
+	Qualifier is in with props, cycle via hide/show
+	Tabs have proc-related that are not simple props and not components, which are on tab
+	Props and components take the right side
+	When go to vertical thing like entry/exit points (multiple per step), cut master in half and show new thing in detail
+		Since there is a one-to-n relationship between left and right and some left may not have corresponding right, need to
+	visualize that - maybe mask non-current one in left side via DG row background color
+	When a component is chosen, can start it off in the right slot and grow it if need be to the left.  Why?  master/sub?
+	Render form on left
+	Visiting master on left - drag and drop to right thing
+	So seems like better to constrain the right thing
+	Alternative is bring submaster to overlay master but can't get at the master controls then unless slide out but keep
+	them exposed
+	What's wide about forms are the fields and there are other props, prolly could not crowd even the tabs into right side 1/2
+	
+	so let' say can only get to forms via form master and form action in a step
+	form master is it's own thing and can take the full width but still have issues with fields, which seems ok to slide out and
+	overlay.  Where to put the field master?
+	
+	want left-right d&d of forms from form master to wp's forms and current action blah form.  once dropped want to modify it.
+	
+	Also d&d of fields from field master to form
+	
+	Will also need d&d of fields and fieldsets to WP fields blah
+	
+	So ok to bring visiting masters in the easy way
+	
+	Seems like normal case would be a wide master with odd bits on the right and bring in drag/drop guys and try to crowd props
+	
+	Component tabbar
+	If vertical, header that tells that
+	Maybe subheader with tabs
+	So different flavors of DGs
+	Plus the oddball stuff for A/Cs
+	When visiting master slides in, tweak the buttons
+
+	Properties and maybe other are in master DGs and ACs
+	
+	So views needed are:
+	- Full-width DG or HDG master where all fits and no children
+	- Full width DG or HDG master that has hidden columns by tabs and/or subtabs
+	- Full-width master that splits for children shown on tabs.  Need to mask
+	- Full-width master that splits for children shown on subtabs.  Need to mask
+	- Full-width master that spilts for components shown on lasttab.  Maybe need to mask
+	- Full-width master that splits and children get D&D from right-side slide in external masters
+	- Full width master that wants to get D&D from external master ...
+	so if master is full width and so is visitor they both need to get cut in half for d&d and the cut should be during the slide
+	and the visitor comes in half width
+	But they doth want to be on the left side.  Either bring the visitor in on the right or slide the incumbent to the right
+	When clipping a master, some columns vanish.  Need to ensure there are controls to get them back, which can dynamically appear
+	Masters that visit and don't visit need to be in separate VS's or can just juggle and re-size and re-depth them
+		But each box is a viewstack but like there can be 3 masters that can do all - primary, secondary, and tierary or M1-3
+	Details if we slide out multiple, could be an exchange so could have 2 or 3 detail VSs so either can overlay or they cross
+		otherwise should change the child by slideout-in
+	
+	
+	Generic slide-in, slide-out
+	Tabbars for masters
+	Subtabbars and related subbtabbar
+	
+	So what makes up a view is:
+	
+	
+	Put the masters in 3 boxes, where masters that need to appear together are in separate boxes
+	Name each such master
+	Determine tabbar for each such master
+	Determine masters with components
+	For those, what are they.  They go in last tab
+	Determine what one-to-n relationships exist
+	Determine what masters need to visit and for who
+	Determine A/C UI for each
+	
+	Dynamic column resize when resizing DG is wonky
+	
+	Could slide submaster into 1/2 of left side, then expand out.  Make it a master and serve it from under detail and 
+	
+	
+	WP
+		rollover a row and the tabbar and subtabs change for task types and action types and those props and components that are not applicable are filtered  what
+	
+	so these dgs are side by side and could be many-to-1 or 1-to-many
+	
+	
+	
+	Procedure	Step	Task	Action	Form
+	Procedure	Step	Task	Action	Form
+	Procedure	
+	
+	Doc Type	Fieldset
+					Field
+					Field
+					Field
+	
+	WP			Field
+				Field
+				Field
+	
+	Form		Field
+				Field
+				Field
+	
+	Form		PSTA
+				PSTA
+	
+	Script		PSTA	Script
+	
+	Step	Proc
+		Task
+			Action
+	
+	
+	Proc	Step	Task	Action	Query
+	
+	Query		PSTA
+				PSTA
+	
+	PSTA	Event	Event Type	PSTA
+	
+	PSTA	BCR		Page any
+					BC1
+	
+	Danger of putting n-to-1 next to an HDG since if rows closed will not see
+	
+	
+	Queries master
+	Scripts master
+	Forms master
+	Fields/Fieldsets master
+	User master
+	Group master
+	Role master
+	Folder master
+	Events master
+	Messages
+	Notifications
+	
+	Forms for procs, steps, tasks, and actions
+	
+	
+	
+	
+	
+
+	-->
+	
+	
+	
 	<!--Remarks:
 	- Use Spark controls where possible
 	- Use percentage widths and heights where possible to facilitate browser resizing
@@ -18,10 +187,10 @@
 	<fx:Style source="Styles.css"/>
 		
 	<fx:Declarations>
-		<s:Fade id="FadePM_ShadeOn" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
-		<s:Fade id="FadePM_ShadeOff" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
-		<s:Fade id="FadeSM_ShadeOn" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
-		<s:Fade id="FadeSM_ShadeOff" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeM1_ShadeOn" target="{M1_Shade}" alphaFrom="{M1_Shade.alpha}" alphaTo="{M1_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeM1_ShadeOff" target="{M1_Shade}" alphaFrom="{M1_Shade.alpha}" alphaTo="{M1_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeM2_ShadeOn" target="{M2_Shade}" alphaFrom="{M2_Shade.alpha}" alphaTo="{M2_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeM2_ShadeOff" target="{M2_Shade}" alphaFrom="{M2_Shade.alpha}" alphaTo="{M2_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 		<s:Fade id="FadeDD_ShadeOn" target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
 		<s:Fade id="FadeDD_ShadeOff" target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 		
@@ -38,36 +207,37 @@
 		<s:Resize id="ContractVM" target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{M_Box.width}" duration="{ResizeDuration}"/>
 		<s:Resize id="ResizeMBoxToZero" target="{M_Box}" widthFrom="{M_Box.width}" widthTo="0" duration="400"/>
 		<s:Resize id="ResizeMBoxToHalf" target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}" duration="400"/>
+<!--Could be hidden off screen or under D, or always hide off screen?-->
 		
-		<s:Animate id="SlideSMIn" target="{SM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent}"/>
+		<s:Animate id="Slide_M1_In" target="{M1_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{M1_Box.x}" valueTo="{M_Box.x}"/>
 		</s:Animate>
-		<s:Animate id="SlideSMOut" target="{SM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{D_Box.x}"/>
+		<s:Animate id="Slide_M1_Out" target="{M1_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{M1_Box.x}" valueTo="{FullWidth+5}"/>
 		</s:Animate>
-		<s:Animate id="SlideTMIn" target="{TM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{TM_Box.x}" valueTo="{M_Box.x+TM_Indent}"/>
+		<s:Animate id="Slide_M2_In" target="{M2_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{M2_Box.x}" valueTo="{M_Box.x+M2_Indent}"/>
 		</s:Animate>
-		<s:Animate id="SlideTMOut" target="{TM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{TM_Box.x}" valueTo="{D_Box.x}"/>
+		<s:Animate id="Slide_M2_Out" target="{M2_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{M2_Box.x}" valueTo="{FullWidth+5}"/>
 		</s:Animate>
-		<s:Animate id="SlideCMIn" target="{CM_Box}" duration="{SlideDuration}">
+		<s:Animate id="Slide_M3_In" target="{M3_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{M3_Box.x}" valueTo="{M_Box.x+M3_Indent}"/>
+		</s:Animate>
+		<s:Animate id="Slide_M3_Out" target="{M3_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{M3_Box.x}" valueTo="{FullWidth+5}"/>
+		</s:Animate>
+		<s:Animate id="Slide_CM_In" target="{CM_Box}" duration="{SlideDuration}">
 			<s:SimpleMotionPath property="x" valueFrom="{MidPoint}" valueTo="0"/>
 		</s:Animate>
-		<s:Animate id="SlideCMOut" target="{CM_Box}" duration="{SlideDuration}">
+		<s:Animate id="Slide_CM_Out" target="{CM_Box}" duration="{SlideDuration}">
 			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{MidPoint}"/>
 		</s:Animate>
-		<s:Animate id="SlideCDIn" target="{CD_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+		<s:Animate id="Slide_VM_In" target="{VM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="{VM_Box.x}" valueTo="0"/>
 		</s:Animate>
-		<s:Animate id="SlideCDOut" target="{CD_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
-		</s:Animate>
-		<s:Animate id="SlideVMIn" target="{VM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{VM_Box.x}" valueTo="{M_Box.x}"/>
-		</s:Animate>
-		<s:Animate id="SlideVMOut" target="{VM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{VM_Box.x}" valueTo="{-HalfWidth}"/>
+		<s:Animate id="Slide_VM_Out" target="{VM_Box}" duration="{SlideDuration}">
+			<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-FullWidth}"/>
 		</s:Animate>
 		
 		<s:Sequence id="Do_CM_In">
@@ -102,47 +272,13 @@
 				</s:Animate>
 			</s:Parallel>
 		</s:Sequence>
-		
-		<s:Sequence id="Do_CD_In">
-			<s:Parallel>
-				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
-				<s:Fade target="{BB_1_HG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
-				<s:Animate target="{CD_Box}" duration="{SlideDuration}">
-					<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
-				</s:Animate>
-			</s:Parallel>
-			<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="24" duration="250"/>
-			<s:Parallel duration="500">
-				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="19"/>
-				<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="19"/>
-				<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="19"/>
-				<s:Fade target="{D2_HG}" alphaFrom="0" alphaTo="1"/>
-			</s:Parallel>
-		</s:Sequence>
-		
-		<s:Sequence id="Do_CD_Out">
-			<s:Parallel duration="500">
-				<s:Fade target="{D2_HG}" alphaFrom="1" alphaTo="0"/>
-				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="0"/>
-				<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="0"/>
-				<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="0"/>
-			</s:Parallel>
-			<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="0" duration="250"/>
-			<s:Parallel>
-				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeInitialAlpha}" duration="{FadeDuration}"/>
-				<s:Animate target="{CD_Box}" duration="{SlideDuration}">
-					<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
-				</s:Animate>
-			</s:Parallel>
-		</s:Sequence>
 
-		
-		<s:Sequence id="Do_SM_In_CM_In">
+		<s:Sequence id="Do_M2_In_CM_In">
 			<s:Parallel>
-				<s:Fade target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{M1_Shade}" alphaFrom="{M1_Shade.alpha}" alphaTo="{M1_ShadeFinalAlpha}" duration="{FadeDuration}"/>
 				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
-				<s:Animate target="{SM_Box}" duration="{SlideDuration}">
-					<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent}"/>
+				<s:Animate target="{M2_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="{M2_Box.x}" valueTo="{M_Box.x+M2_Indent}"/>
 				</s:Animate>
 				<s:Animate target="{CM_Box}" duration="{SlideDuration}">
 					<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
@@ -157,7 +293,7 @@
 			</s:Parallel>
 		</s:Sequence>
 		
-		<s:Sequence id="Do_SM_Out_CM_Out">
+		<s:Sequence id="Do_M2_Out_CM_Out">
 			<s:Parallel duration="500">
 				<s:Fade target="{D2_HG}" alphaFrom="1" alphaTo="0"/>
 				<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="0"/>
@@ -171,10 +307,10 @@
 				<s:Animate target="{CM_Box}" duration="{SlideDuration}">
 					<s:SimpleMotionPath property="x" valueFrom="0" valueTo="{-HalfWidth}"/>
 				</s:Animate>
-				<s:Animate target="{SM_Box}" duration="{SlideDuration}">
-					<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{D_Box.x}"/>
+				<s:Animate target="{M2_Box}" duration="{SlideDuration}">
+					<s:SimpleMotionPath property="x" valueFrom="{M2_Box.x}" valueTo="{D_Box.x}"/>
 				</s:Animate>
-				<s:Fade target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{M1_Shade}" alphaFrom="{M1_Shade.alpha}" alphaTo="{M1_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 			</s:Parallel>
 		</s:Sequence>
 		
@@ -228,6 +364,29 @@
 				<s:Resize target="{D_Box}" widthFrom="{D_Box.width}" widthTo="{HalfWidth}"/>
 				<s:Resize target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}"/>
 			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="XXX">
+			<s:Parallel duration="400">
+				<s:Resize target="{M1_1_DG_Qualifier}" widthFrom="{M1_1_DG_Qualifier.width}" widthTo="0"/>
+				<s:Resize target="{M_Box}" widthFrom="{FullWidth}" widthTo="{HalfWidth}"/>
+				<s:Resize target="{D_Box}" widthFrom="0" widthTo="{HalfWidth}"/>
+				<s:Parallel>
+					<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+					<s:Fade target="{BB_1_HG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+					<s:Animate target="{CM_Box}" duration="{SlideDuration}">
+						<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+					</s:Animate>
+				</s:Parallel>
+				<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="24" duration="250"/>
+				<s:Parallel duration="500">
+					<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="19"/>
+					<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="19"/>
+					<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="19"/>
+					<s:Fade target="{D2_HG}" alphaFrom="0" alphaTo="1"/>
+				</s:Parallel>
+			</s:Parallel>
+			
 		</s:Sequence>
 		
 		<fx:XML id="woid_1">
@@ -302,26 +461,26 @@
 			[Bindable] private var Indent1:Number = 15;
 			[Bindable] private var Indent2:Number = 30;
 			[Bindable] private var Indent:Number;
-			[Bindable] private var SM_Indent:Number = Indent1;
-			[Bindable] private var TM_Indent:Number = Indent2;
+			[Bindable] private var M2_Indent:Number = Indent1;
+			[Bindable] private var M3_Indent:Number = Indent2;
 			[Bindable] private var SlideDuration:Number = 800;
 			[Bindable] private var FadeDuration:Number = (SlideDuration*1.5);
 			[Bindable] private var ResizeDuration:Number = (SlideDuration/2);
 			
 			[Bindable] private var NonShadeAlpha:Number = 1;
 			[Bindable] private var FinalShadeAlpha:Number=.3;
-			[Bindable] private var PM_ShadeInitialAlpha:Number = 0;
-			[Bindable] private var SM_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var M1_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var M2_ShadeInitialAlpha:Number = 0;
 			[Bindable] private var DD_ShadeInitialAlpha:Number = 0;
-			[Bindable] private var PM_ShadeFinalAlpha:Number = .3;
-			[Bindable] private var SM_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var M1_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var M2_ShadeFinalAlpha:Number = .3;
 			[Bindable] private var DD_ShadeFinalAlpha:Number = .3;
 						
-			[Bindable] private var PM_Depth:Number = 1;
-			[Bindable] private var PM_Shade_Depth:Number = 2;
-			[Bindable] private var SM_Depth:Number = 3;
-			[Bindable] private var SM_Shade_Depth:Number = 4;
-			[Bindable] private var TM_Depth:Number = 5;
+			[Bindable] private var M1_Depth:Number = 1;
+			[Bindable] private var M1_Shade_Depth:Number = 2;
+			[Bindable] private var M2_Depth:Number = 3;
+			[Bindable] private var M2_Shade_Depth:Number = 4;
+			[Bindable] private var M3_Depth:Number = 5;
 			[Bindable] private var VM_Depth:Number = 6;
 			[Bindable] private var DD_Depth:Number = 7;	
 			[Bindable] private var DD_Shade_Depth:Number = 8;
@@ -333,19 +492,14 @@
 			private var CategoryView:String //3 letters
 			private var LastCategory:String
 			
-			[Bindable] private var PM_View:Boolean;
-			[Bindable] private var SM_View:Boolean;
-			[Bindable] private var TM_View:Boolean;
+			[Bindable] private var M1_View:Boolean;
+			[Bindable] private var M2_View:Boolean;
+			[Bindable] private var M3_View:Boolean;
 			[Bindable] private var CM_View:Boolean;
 			[Bindable] private var CD_View:Boolean;
 			[Bindable] private var XM_View:Boolean;
 			[Bindable] private var VM_View:Boolean;
 			private var Layout:String;
-			
-			private function Initialize():void
-			{
-				PM_Box.selectedChild = PM_1;
-			}
 			
 			private function SetLayout(Layout:String):void
 			{
@@ -410,47 +564,47 @@
 				MidPoint = ((FullWidth/2)-(B0.getStyle('horizontalGap')/2));
 			}
 				
-/*			private function TM_View():void
+/*			private function M3_View():void
 			{
-				PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
+				M1_Shade.includeInLayout=true; M1_Shade.visible=true; 
 					
-				if (SM_View==true)
+				if (M2_View==true)
 				{
-					PM_Indent=Indent1;
+					M1_Indent=Indent1;
 				}
 				else
 				{
-					SM_ShadeFinalAlpha=FinalShadeAlpha;
+					M2_ShadeFinalAlpha=FinalShadeAlpha;
 				}
-			if (SM_View=false)
+			if (M2_View=false)
 				{
-					SM_Indent=Indent1;
-					TM_Indent=Indent2;
-					PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
-					SM_Shade.includeInLayout=true; SM_Shade.visible=true; 
-					SM_ShadeFinalAlpha=FinalShadeAlpha;
-					PM_ShadeFinalAlpha=(FinalShadeAlpha/2);
+					M2_Indent=Indent1;
+					M3_Indent=Indent2;
+					M1_Shade.includeInLayout=true; M1_Shade.visible=true; 
+					M2_Shade.includeInLayout=true; M2_Shade.visible=true; 
+					M2_ShadeFinalAlpha=FinalShadeAlpha;
+					M1_ShadeFinalAlpha=(FinalShadeAlpha/2);
 				}
-				if (TM_View==true)
+				if (M3_View==true)
 				{
-					TM_Indent=Indent1;
-					PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
-					PM_ShadeFinalAlpha=FinalShadeAlpha
-					SM_Shade.includeInLayout=false; SM_Shade.visible=false; ;
+					M3_Indent=Indent1;
+					M1_Shade.includeInLayout=true; M1_Shade.visible=true; 
+					M1_ShadeFinalAlpha=FinalShadeAlpha
+					M2_Shade.includeInLayout=false; M2_Shade.visible=false; ;
 				}	
-				if (TM_View==false)
+				if (M3_View==false)
 				{
-					SM_Indent=0;
-					TM_Indent=0;
-					PM_Shade.includeInLayout=false; PM_Shade.visible=false; 
-					SM_Shade.includeInLayout=false; SM_Shade.visible=false; 
+					M2_Indent=0;
+					M3_Indent=0;
+					M1_Shade.includeInLayout=false; M1_Shade.visible=false; 
+					M2_Shade.includeInLayout=false; M2_Shade.visible=false; 
 				}
 			}   */
 			
 			protected function ClearAll():void 
 			{
 /*				m_VS.includeInLayout = false; m_VS.visible = false;
-				SM_VS.includeInLayout = false; SM_VS.visible = false;
+				M2_VS.includeInLayout = false; M2_VS.visible = false;
 				CM_VS.includeInLayout = false; CM_VS.visible = false;*/
 				ClearDetail();
 			}
@@ -458,7 +612,7 @@
 			protected function ClearMaster():void
 			{
 /*				m_VS.includeInLayout = false; m_VS.visible = false;
-				SM_VS.includeInLayout = false; SM_VS.visible = false;
+				M2_VS.includeInLayout = false; M2_VS.visible = false;
 				CM_VS.includeInLayout = false; CM_VS.visible = false;*/
 			}
 			
@@ -599,16 +753,16 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0);
 					
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
-					PM_BX_HD.setStyle('horizontalGap',0);
+					M1_BX_SC.includeInLayout=true; M1_BX_SC.visible=true; M1_BX_SC.percentWidth=100; 
+					M1_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=true;
 					AU_m_DG_propertiesB.visible=false;
 					AU_m_DG_propertiesC.visible=false;
 					SetColumnWidths_AU_m_DG();
-					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					M2_VS.includeInLayout=false; M2_VS.visible=false;
 					
-					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false; 
+					M2_BX_SC.includeInLayout=false; M2_BX_SC.visible=false; 
 					CM_VS.includeInLayout=false; CM_VS.visible=false;
 					
 					PD_BX_SC.includeInLayout=false; PD_BX_SC.visible=false;
@@ -620,16 +774,16 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0);
 					
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
-					PM_BX_HD.setStyle('horizontalGap',0);
+					M1_BX_SC.includeInLayout=true; M1_BX_SC.visible=true; M1_BX_SC.percentWidth=100; 
+					M1_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=true;
 					AU_m_DG_propertiesC.visible=false;
 					SetColumnWidths_AU_m_DG();
-					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					M2_VS.includeInLayout=false; M2_VS.visible=false;
 					
-					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false; 
+					M2_BX_SC.includeInLayout=false; M2_BX_SC.visible=false; 
 					CM_VS.includeInLayout=false; CM_VS.visible=false;
 					
 					PD_BX_SC.includeInLayout=false; PD_BX_SC.visible=false;
@@ -641,16 +795,16 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0);
 					
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
-					PM_BX_HD.setStyle('horizontalGap',0);
+					M1_BX_SC.includeInLayout=true; M1_BX_SC.visible=true; M1_BX_SC.percentWidth=100; 
+					M1_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=false;
 					AU_m_DG_propertiesC.visible=true;
 					SetColumnWidths_AU_m_DG();
-					SM_VS.includeInLayout=false; SM_VS.visible=false;
+					M2_VS.includeInLayout=false; M2_VS.visible=false;
 					
-					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false; 
+					M2_BX_SC.includeInLayout=false; M2_BX_SC.visible=false; 
 					CM_VS.includeInLayout=false; CM_VS.visible=false;
 					
 					PD_BX_SC.includeInLayout=false; PD_BX_SC.visible=false;
@@ -662,17 +816,17 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0); */
 					
-					/*PM_BX_SC.x=0; PM_BX_SC.depth=2;
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=50;
-					PM_BX_HD.setStyle('horizontalGap',0);
+					/*M1_BX_SC.x=0; M1_BX_SC.depth=2;
+					M1_BX_SC.includeInLayout=true; M1_BX_SC.visible=true; M1_BX_SC.percentWidth=50;
+					M1_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=false;
 					AU_m_DG_propertiesC.visible=false;
 					SetColumnWidths_AU_m_DG();
 					
-/*					SM_BX_SC.includeInLayout=false; SM_BX_SC.visible=false;
-					SM_VS.includeInLayout=false; SM_VS.visible=false;
+/*					M2_BX_SC.includeInLayout=false; M2_BX_SC.visible=false;
+					M2_VS.includeInLayout=false; M2_VS.visible=false;
 					
 					CM_BX_SC.includeInLayout=false; CM_BX_SC.visible=false;
 					CM_VS.includeInLayout=false; CM_VS.visible=false;
@@ -818,32 +972,44 @@
 							<s:Button label = "GMD" click="SetLayout('GappedMasterDetail')"/>
 							<s:Button label = "MGD" click="SetLayout('MasterGappedDetail')"/>
 							<s:Button label = "GMGD" click="SetLayout('GappedMasterGappedDetail')"/>
-							<s:Button label="SMin" click="
-									  SM_View=true;
-									  FadePM_ShadeOn.play();
+							<!--s:Button label = "Slide_M_In" click="
+									  Slide_M_In.target=Mxxxx.box;
+									  valueFrom jkljkl
+									  valueTo
+									  duration
+									  "/-->
+							<!--s:Animate id="Slide_M_In" target="{M2_Box}" duration="{SlideDuration}">
+								<s:SimpleMotionPath property="x" valueFrom="{M2_Box.x}" valueTo="{M_Box.x+M2_Indent}"/>
+							</s:Animate-->
+
+							<s:Button label="M2in" click="
+									  M2_View=true;
+									  M2_Box.selectedChild = Current_M2_Child;
+									  FadeM1_ShadeOn.play();
 									  FadeBB1Off.play();
-									  SlideSMIn.play();
+									  Slide_M2_In.play();
 									  "/>
-							<s:Button label="SMout" click="
-									  SM_View=false;
-									  SlideSMOut.play();
+							<s:Button label="M2out" click="
+									  M2_View=false;
+									  Slide_M2_Out.play();
 									  FadeBB1On.play();
-									  FadePM_ShadeOff.play();
+									  FadeM1_ShadeOff.play();
 									  "/>
-							<s:Button label="TMin" click="
-									  TM_View=true;
-									  TM_Box.height=M_Box.height;
-									  FadeSM_ShadeOn.play();
-									  SlideTMIn.play();
+							<s:Button label="M3in" click="
+									  M3_View=true;
+									  M3_Box.selectedChild = Current_M3_Child;
+									  M3_Box.height=M_Box.height;
+									  FadeM2_ShadeOn.play();
+									  Slide_M3_In.play();
 									  "/>
-							<s:Button label="TMout" click="
-									  TM_View=false;
-									  SlideTMOut.play();
-									  FadeSM_ShadeOff.play();
+							<s:Button label="M3out" click="
+									  M3_View=false;
+									  Slide_M3_Out.play();
+									  FadeM2_ShadeOff.play();
 									  "/>
 							<s:Button label="CMin" click="
 									  CM_View=true;
-									  CM_Box.selectedChild=CM_1;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  D2_Box.includeInLayout=true; D2_Box.visible=true;
 									  Do_CM_In.play();
 									  "/>
@@ -852,43 +1018,33 @@
 									  Do_CM_Out.play();
 									  //D2_Box.includeInLayout=false; D2_Box.visible=false;
 									  "/>
-							<s:Button label="CDin" click="
-									  CD_View=true;
-									  CD_Box.selectedChild=CD_1;
-									  D2_Box.includeInLayout=true; D2_Box.visible=true;
-									  Do_CD_In.play();
-									  "/>
-							<s:Button label="CDout" click="
-									  CD_View=false;
-									  Do_CD_Out.play();
-									  //D2_Box.includeInLayout=false; D2_Box.visible=false;
-									  "/>
 						</s:HGroup>
 						<s:HGroup>
 							<s:Button label="SMCMIn" click="
 									  XM_View=true;
-									  CM_Box.selectedChild=CM_1;
-									  Do_SM_In_CM_In.play();
+									  M2_Box.selectedChild = Current_M2_Child;
+									  CM_Box.selectedChild = Current_CM_Child;
+									  Do_M2_In_CM_In.play();
 									  "/>
 							<s:Button label="SMCMOut" click="
 									  XM_View=false;
-									  Do_SM_Out_CM_Out.play();
+									  Do_M2_Out_CM_Out.play();
 									  "/>
 							<s:Button label="VMin" click="
 									  VM_View=true;
-									  FadePM_ShadeOn.play();
+									  FadeM1_ShadeOn.play();
 									  FadeBB1Off.play();
 									  ResizeVMIn.play();
-									  SlideVMIn.play();
+									  Slide_VM_In.play();
 									  FadeBB2On.play();
 									  "/>
 							<s:Button label="VMout" click="
 									  VM_View=false;
 									  FadeBB1Off.play();
-									  SlideVMOut.play();
+									  Slide_VM_Out.play();
 									  ResizeVMOut.play();
 									  FadeBB1On.play();
-									  FadePM_ShadeOff.play();
+									  FadeM1_ShadeOff.play();
 									  "/>
 							<s:Button label="Expand VM" click="
 									  VM_View=true;
@@ -900,12 +1056,12 @@
 									  Do_Contract_VM.play();
 									  //ContractVM.play();
 									  FadeDD_ShadeOff.play();
-									  FadePM_ShadeOn.play();
+									  FadeM1_ShadeOn.play();
 									  "/>
 <!--This does not achieve the desired effect, which is to fade-in-shade the current M and slide CM over it.  To do that, maybe re-depth CM
 to the same depth as PM and resize it, also shade-->
 							<s:Button label="Slide CM left" click="
-									  CM_Box.selectedChild=CM_1;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CM_Box.width=FullWidth;
 									  CM_1_DG.width=FullWidth;
@@ -919,7 +1075,7 @@ to the same depth as PM and resize it, also shade-->
 									  D1_Box.clipAndEnableScrolling=true;
 									  "/>
 							<s:Button label="Slide CM left2" click="
-									  CM_Box.selectedChild=CM_1;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CM_Box.width=FullWidth;
 									  CM_1_DG.width=FullWidth;
@@ -939,7 +1095,7 @@ to the same depth as PM and resize it, also shade-->
 									  "/>
 <!--This won't work since CM is in the way and M is already 0 width-->
 							<s:Button label="Slide CD left" click="
-									  CD_Box.selectedChild=CD_1;
+									  CD_Box.selectedChild = Current_CD_Child;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CD_Box.width=FullWidth;
 									  CD_1_DG.width=FullWidth;
@@ -957,10 +1113,23 @@ to the same depth as PM and resize it, also shade-->
 									  SlideCDRight.play();
 									  //The rest of this  is in a post-effect function									  
 									  "/>
+							<s:Button label="XXX" click="XXX.play()"/>
+							<s:Button label="yyy" click="
+									  B0.setStyle('horizontalGap', 5);
+									  CM_Box.selectedChild = CM_1;
+									  CM_Box.visible=true; CM_Box.includeInLayout=true;
+									  D_Box.includeInLayout = true;
+									  D_Box.visible = true;
+									  SD_Box.includeInLayout = false; 
+									  SD_Box.visible = false;
+									  DD_HBox.setStyle('horizontalGap',0);
+									  XXX.play();
+									  M1_1_DG_Qualifier.visible = false;
+									  "/>
 						</s:HGroup>
 					</s:VGroup>
 					<s:Spacer height="20"/>
-					
+										
 					<!--Control buttons and tab bar-->
 					<s:BorderContainer width="100%" height="24" borderVisible="false" styleName="GutterOverlay">
 						<s:layout>
@@ -1067,25 +1236,25 @@ to the same depth as PM and resize it, also shade-->
 								<s:layout>
 									<s:BasicLayout clipAndEnableScrolling="true"/>
 								</s:layout>
-								<mx:ViewStack id="PM_Box" 
-											  x="0" y="0" width="{M_Box.width}" height="100%" depth="{PM_Depth}">
-									<s:NavigatorContent id="PM_0" width="100%" height="100%">
+								<mx:ViewStack id="M1_Box" 
+											  x="0" y="0" width="{M1_Box.width}" height="100%" depth="{M1_Depth}">
+									<s:NavigatorContent id="M1_0" width="100%" height="100%">
 										<mx:Canvas width="100%" height="100%" borderVisible="false">
 											<s:VGroup y="0" width="100%" height="100%">
-												<mx:AdvancedDataGrid width="{PM_Box.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
+												<mx:AdvancedDataGrid width="{M1_Box.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
 													<mx:columns>
-														<mx:AdvancedDataGridColumn width="{PM_Box.width}" headerText="PM - Primary master" editable="true"/>
+														<mx:AdvancedDataGridColumn width="{M1_Box.width}" headerText="PM - Primary master" editable="true"/>
 													</mx:columns>
 												</mx:AdvancedDataGrid>
 											</s:VGroup>
 										</mx:Canvas>
 									</s:NavigatorContent>
-									<s:NavigatorContent id="PM_1" width="100%" height="100%">
+									<s:NavigatorContent id="M1_1" width="100%" height="100%">
 										<mx:Canvas width="100%" height="100%" borderVisible="false">
 											<s:VGroup y="0" width="100%" height="100%">
 												<fx:Script>
 													<![CDATA[
-														[Bindable] private var PM_1_DG_AC:ArrayCollection = new ArrayCollection(
+														[Bindable] private var M1_1_DG_AC:ArrayCollection = new ArrayCollection(
 															[
 																{EntityType:"Procedure", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", Sequence:"", 
 																	PProp1Name:"PProp1Value", PProp2Name:"PProp2Value", PProp3Name:"PProp3Value", 
@@ -1296,466 +1465,52 @@ to the same depth as PM and resize it, also shade-->
 																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
 																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
 																							checked:false}
-																					]}
-																			]}
-																	]},
-																{EntityType:"Procedure", Name:"Procedure2Name", Description:"Procedure2Description", Type:"", Sequence:"", 
-																	PProp1Name:"PProp1Value", PProp2Name:"PProp2Value", PProp3Name:"PProp3Value", 
-																	PProp4Name:"PProp4Value", PProp5Name:"PProp5Value", PProp6Name:"PProp6Value",
-																	checked:false, children: [
-																		{EntityType:"Step", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", Sequence:"1",
-																			Qualifier:"SQualifier", 
-																			SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", 
-																			SProp4Name:"SProp4Value", SProp5Name:"Sprop5Value", SProp6Name:"SProp6Value",
-																			checked:false, children: [
-																				{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
-																					Qualifier:"TQualifier",
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}														]},
-																				{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}														]}
-																			]},
-																		{EntityType:"Step", Name:"Step2Name", Description:"Step2Description", Type:"Step2Type", Sequence:"2",
-																			Qualifier:"SQualifier", 
-																			SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", 
-																			SProp4Name:"SProp4Value", SProp5Name:"Sprop5Value", SProp6Name:"SProp6Value",
-																			checked:false, children: [
-																				{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]}
-																			]},
-																		{EntityType:"Step", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", Sequence:"3",
-																			Qualifier:"SQualifier", 
-																			SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", 
-																			SProp4Name:"SProp4Value", SProp5Name:"Sprop5Value", SProp6Name:"SProp6Value",
-																			checked:false, children: [
-																				{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]}
-																			]}
-																	]},
-																{EntityType:"Procedure", Name:"Procedure3Name", Description:"Procedure3Description", Type:"", Sequence:"", 
-																	PProp1Name:"PProp1Value", PProp2Name:"PProp2Value", PProp3Name:"PProp3Value", 
-																	PProp4Name:"PProp4Value", PProp5Name:"PProp5Value", PProp6Name:"PProp6Value",
-																	checked:false, children: [
-																		{EntityType:"Step", Name:"Step1Name", Description:"Step1Description", Type:"Step1Type", Sequence:"1",
-																			Qualifier:"SQualifier",
-																			SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", 
-																			SProp4Name:"SProp4Value", SProp5Name:"Sprop5Value", SProp6Name:"SProp6Value", 
-																			checked:false, children: [
-																				{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}								
-																					]},
-																				{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]}
-																			]},
-																		{EntityType:"Step", Name:"Step2Name", Description:"Step2Description", Type:"Step2Type", Sequence:"2",
-																			Qualifier:"SQualifier", 
-																			SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", 
-																			SProp4Name:"SProp4Value", SProp5Name:"Sprop5Value", SProp6Name:"SProp6Value",
-																			checked:false, children: [
-																				{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}										
-																					]},
-																				{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]}
-																			]},
-																		{EntityType:"Step", Name:"Step3Name", Description:"Step3Description", Type:"Step3Type", Sequence:"3",
-																			Qualifier:"SQualifier", 
-																			SProp1Name:"SProp1Value", SProp2Name:"SProp2Value", SProp3Name:"SProp3Value", 
-																			SProp4Name:"SProp4Value", SProp5Name:"Sprop5Value", SProp6Name:"SProp6Value",
-																			checked:false, children: [
-																				{EntityType:"Task", Name:"Task1Name", Description:"Task1Description", Type:"Task1Type", Sequence:"1",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}										
-																					]},
-																				{EntityType:"Task", Name:"Task2Name", Description:"Task2Description", Type:"Task2Type", Sequence:"2",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value",
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}
-																					]},
-																				{EntityType:"Task", Name:"Task3Name", Description:"Task3Description", Type:"Task3Type", Sequence:"3",
-																					Qualifier:"TQualifier", 
-																					TProp1Name:"TProp1Value", TProp2Name:"TProp2Value", TProp3Name:"TProp3Value", 
-																					TProp4Name:"TProp4Value", TProp5Name:"TProp5Value", TProp6Name:"TProp6Value", 
-																					checked:false, children: [
-																						{EntityType:"Action", Name:"Action1Name", Description:"Action1Description", Type:"Action1Type", Sequence:"1",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action2Name", Description:"Action2Description", Type:"Action2Type", Sequence:"2",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false},
-																						{EntityType:"Action", Name:"Action3Name", Description:"Action3Description", Type:"Action3Type", Sequence:"3",
-																							Qualifier:"AQualifier", 
-																							AProp1Name:"AProp1Value", AProp2Name:"AProp2Value", AProp3Name:"AProp3Value", 
-																							AProp1Name:"AProp4Value", AProp2Name:"AProp5Value", AProp3Name:"AProp6Value", 
-																							checked:false}	
 																					]},
 																			]}
 																	]}
 															]);
 														
-														private function PM_1_DG_SetColumnWidths():void
+														private function M1_1_DG_SetColumnWidths():void
 														{
-															PM_1_DG.horizontalScrollPolicy='on';
-															PM_1_DG_Checkbox.width=(PM_1_DG.width-PM_1_DG.width)+CBW;
-															PM_1_DG_Information.width=(PM_1_DG.width-PM_1_DG.width)+IBW;
-															PM_1_DG_Disposition.width=(PM_1_DG.width-PM_1_DG.width)+DTW;
-															PM_1_DG_Sequence.width=20;
-															PM_1_DG_Name.width=230;
-															//PM_1_DG_Description.width=150;
+															M1_1_DG.horizontalScrollPolicy='on';
+															M1_1_DG_Checkbox.width=(M1_1_DG.width-M1_1_DG.width)+CBW;
+															M1_1_DG_Information.width=(M1_1_DG.width-M1_1_DG.width)+IBW;
+															M1_1_DG_Disposition.width=(M1_1_DG.width-M1_1_DG.width)+DTW;
+															M1_1_DG_Sequence.width=20;
+															M1_1_DG_Name.width=230;
+															//M1_1_DG_Description.width=150;
 // How to catch event when scrollbar is shown and not shown so can adjust the width
-															if (PM_1_DG.maxVerticalScrollPosition > 0)
+															if (M1_1_DG.maxVerticalScrollPosition > 0)
 															{
-																PM_1_DG_Qualifier.width = (PM_1_DG.width-PM_1_DG.width)+HalfWidth-DBW-12-15;
+																M1_1_DG_Qualifier.width = (M1_1_DG.width-M1_1_DG.width)+HalfWidth-DBW-12-15;
 															}
 															else
 															{
-																PM_1_DG_Qualifier.width = (PM_1_DG.width-PM_1_DG.width)+HalfWidth-DBW-12;
+																M1_1_DG_Qualifier.width = (M1_1_DG.width-M1_1_DG.width)+HalfWidth-DBW-12;
 															}
-															PM_1_DG_PropertyA1.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyA2.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyA3.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyA4.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB1.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB2.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB3.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB4.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC1.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC2.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC3.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC4.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_Delete.width=(PM_1_DG.width-PM_1_DG.width)+DBW;
-															PM_1_DG.horizontalScrollPolicy='off';
+															M1_1_DG_PropertyA1.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyA2.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyA3.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyA4.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyB1.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyB2.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyB3.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyB4.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyC1.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyC2.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyC3.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_PropertyC4.width = (M1_1_DG.width-M1_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M1_1_DG_Delete.width=(M1_1_DG.width-M1_1_DG.width)+DBW;
+															M1_1_DG.horizontalScrollPolicy='off';
 														}
+														
+														[Bindable] public var CM_X_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
+															([
+																{Label:"Qualifier", Data:"PropsA"},
+																{Label:"PropertiesA", Data:"PropsA"},
+																{Label:"PropertiesB", Data:"PropsB"},
+																{Label:"PropertiesC", Data:"PropsC"}
+															]);
 													]]>
 												</fx:Script>
 												<s:Group width="100%" height="100%">
@@ -1763,148 +1518,526 @@ to the same depth as PM and resize it, also shade-->
 														<s:BasicLayout clipAndEnableScrolling="true"/>
 													</s:layout>
 													
-													<mx:AdvancedDataGrid id="PM_1_DG"
+													<mx:AdvancedDataGrid id="M1_1_DG"
 																		 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0" depth="1"
 																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" minColumnWidth="0"
 																		 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 																		 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-																		 displayItemsExpanded="true" treeColumn="{PM_1_DG_Name}" indentation="10"
+																		 displayItemsExpanded="true" treeColumn="{M1_1_DG_Name}" indentation="10"
 																		 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
 																		 dragEnabled="false" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
 																		 draggableColumns="true" resizableColumns="true" sortableColumns="false"
 																		 doubleClickEnabled="false" sortExpertMode="true" 
 																		 allowMultipleSelection="true" editable="false"
-																		 dataProvider="{new HierarchicalData(PM_1_DG_AC)}"
-																		 creationComplete="PM_1_DG_SetColumnWidths()"
-																		 resize="PM_1_DG_SetColumnWidths()">
+																		 dataProvider="{new HierarchicalData(M1_1_DG_AC)}"
+																		 creationComplete="M1_1_DG_SetColumnWidths()"
+																		 resize="M1_1_DG_SetColumnWidths()">
 														<!-- itemClick="row_click(event)" -->
 														<mx:groupedColumns>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Checkbox"
+															<mx:AdvancedDataGridColumn id="M1_1_DG_Checkbox"
 																					   dataField="checked"
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Information"
+															<mx:AdvancedDataGridColumn id="M1_1_DG_Information"
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Disposition"
+															<mx:AdvancedDataGridColumn id="M1_1_DG_Disposition"
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   dataField="Disposition"
 																					   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
 																					   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
 															<mx:AdvancedDataGridColumnGroup headerText="Procedures/Steps/Tasks/Actions Identification">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Sequence"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_Sequence"
 																						   dataField="Sequence" headerText="#"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Name"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_Name"
 																						   dataField="Name" editable="true"
 																						   headerText="Name"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Description"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_Description"
 																						   dataField="Description" editable="true"
 																						   headerText="Description"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Type" dataField="Type"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_Type" dataField="Type"
 																						   editable="true" headerText="Type"/>
 															</mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumnGroup>
-																<mx:AdvancedDataGridColumnGroup id="PM_1_DG_qualifier">
-																	<mx:headerRenderer>
-																		<fx:Component>
-																			<mx:Box height="100%" paddingTop="2" verticalAlign="bottom">
-																				<fx:Script>
-																					<![CDATA[
-																						import mx.collections.ArrayCollection;
-																						
-																						[Bindable] private var CM_1_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
-																							([
-																								{Label:"Qualifier", Data:"PropsA"},
-																								{Label:"PropertiesA", Data:"PropsA"},
-																								{Label:"PropertiesB", Data:"PropsB"},
-																								{Label:"PropertiesC", Data:"PropsC"}
-																							]);
-																					]]>
-																				</fx:Script>
-																				<s:TabBar height="100%" 
-																						  styleName="SubTabText"
-																						  dataProvider="{CM_1_DG_FormContext_TB_AC}" labelField="Label"/>
-																			</mx:Box>
-																		</fx:Component>
-																	</mx:headerRenderer>
-																	<mx:AdvancedDataGridColumn id="PM_1_DG_Qualifier"
-																							   dataField="Qualifier" editable="true"
-																							   headerText="Qualifier expression"/>
-																</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumnGroup id="M1_1_DG_qualifier">
+																<mx:headerRenderer>
+																	<fx:Component>
+																		<mx:Box height="100%" paddingTop="2" verticalAlign="bottom">
+																			<s:TabBar height="100%" 
+																					  styleName="SubTabText"
+																					  dataProvider="{outerDocument.CM_X_DG_FormContext_TB_AC}" labelField="Label"/>
+																		</mx:Box>
+																	</fx:Component>
+																</mx:headerRenderer>
+																<mx:AdvancedDataGridColumn id="M1_1_DG_Qualifier"
+																						   dataField="Qualifier" editable="true"
+																						   headerText="Qualifier expression"/>
 															</mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumnGroup id="PM_1_DG_propertiesA" headerText="Properties A" visible="false">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA1"
+															<mx:AdvancedDataGridColumnGroup id="M1_1_DG_propertiesA" headerText="Properties A" visible="false">
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyA1"
 																						   headerText="Property A1" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA2"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyA2"
 																						   headerText="Property A2" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA3"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyA3"
 																						   headerText="Property A3" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA4"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyA4"
 																						   headerText="Property A4" visible="false"/>
 															</mx:AdvancedDataGridColumnGroup>	
-															<mx:AdvancedDataGridColumnGroup id="PM_1_DG_propertiesB" headerText="Properties B" visible="false">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB1"
+															<mx:AdvancedDataGridColumnGroup id="M1_1_DG_propertiesB" headerText="Properties B" visible="false">
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyB1"
 																						   headerText="Property B1" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB2"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyB2"
 																						   headerText="Property B2" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB3"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyB3"
 																						   headerText="Property B3" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB4"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyB4"
 																						   headerText="Property B4" visible="false"/>
 															</mx:AdvancedDataGridColumnGroup>	
-															<mx:AdvancedDataGridColumnGroup id="PM_1_DG_propertiesC" headerText="Properties C" visible="false">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC1" 
+															<mx:AdvancedDataGridColumnGroup id="M1_1_DG_propertiesC" headerText="Properties C" visible="false">
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyC1" 
 																						   headerText="Property C1" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC2" 
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyC2" 
 																						   headerText="Property C2" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC3"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyC3"
 																						   headerText="Property C3" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC4"
+																<mx:AdvancedDataGridColumn id="M1_1_DG_PropertyC4"
 																						   headerText="Property C4" visible="false"/>
 															</mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Delete" 
+															<mx:AdvancedDataGridColumn id="M1_1_DG_Delete" 
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
 														</mx:groupedColumns>
 													</mx:AdvancedDataGrid>
 													
-													<mx:VRule x="{MidPoint}" y="{PM_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+													<mx:VRule x="{MidPoint}" y="{M1_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
 												</s:Group>
 											</s:VGroup>
 										</mx:Canvas>
 									</s:NavigatorContent>
 								</mx:ViewStack>
-								<mx:ViewStack id="SM_Box"
-											  x="{D_Box.x}" y="0" width="{(M_Box.width-SM_Indent)}" height="100%" depth="{SM_Depth}">
-									<s:NavigatorContent id="SM_0" width="100%" height="100%">
+								<mx:ViewStack id="M2_Box"
+											  x="{D_Box.x}" y="0" width="{(M_Box.width-M2_Indent)}" height="100%" depth="{M2_Depth}">
+									<s:NavigatorContent id="M2_0" width="100%" height="100%">
 										<mx:Canvas width="100%" height="100%" borderColor="blue">
 											<s:VGroup width="100%" height="100%">
-												<mx:AdvancedDataGrid id="SM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
+												<mx:AdvancedDataGrid id="M2_0_DG" width="100%" height="100%" rowCount="10" editable="true">
 													<mx:columns>
-														<mx:AdvancedDataGridColumn width="{SM_0_DG.width}" headerText="SM - Secondary master" editable="true"/>
+														<mx:AdvancedDataGridColumn width="{M2_0_DG.width}" headerText="SM - Secondary master" editable="true"/>
 													</mx:columns>
 												</mx:AdvancedDataGrid>
 											</s:VGroup>
 										</mx:Canvas>
 									</s:NavigatorContent>
+									<s:NavigatorContent id="M2_1" width="100%" height="100%">
+										<mx:Canvas width="100%" height="100%">
+											<s:VGroup width="100%" height="100%">
+												<fx:Script>
+													<![CDATA[
+														[Bindable] private var M2_1_LastTab_DD_AC:ArrayCollection = new ArrayCollection
+															([
+																{Label:"Paths", Data:"P"}, 
+																{Label:"Chains", Data:"C"}, 
+																{Label:"Forms", Data:"F"}, 
+																{Label:"Queries", Data:"Q"}, 
+																{Label:"Scripts", Data:"S"},
+																{Label:"Notifications", Data:"N"},
+																{Label:"Messages", Data:"M"}
+															]);
+														
+														[Bindable] private var M2_1_DG_AC:ArrayCollection = new ArrayCollection(
+															[
+																{EntityType:"Form", UID:"1", Name:"Form1Name", Description:"Form1Description",
+																	Disposition:"Enabled", checked:false},
+																{EntityType:"Form", UID:"2", Name:"Form2Name", Description:"Form2Description",
+																	Disposition:"Enabled", checked:false},
+																{EntityType:"Form", UID:"3", Name:"Form3Name", Description:"Form3Description",
+																	Disposition:"Enabled", checked:false}
+															]);
+														
+														
+														private function M2_1_DG_SetColumnWidths():void
+														{
+															M2_1_DG.horizontalScrollPolicy='on';
+															M2_1_DG_Checkbox.width=(M2_1_DG.width-M2_1_DG.width)+CBW;
+															M2_1_DG_Information.width=(M2_1_DG.width-M2_1_DG.width)+IBW;
+															M2_1_DG_Disposition.width=(M2_1_DG.width-M2_1_DG.width)+DTW;
+															M2_1_DG_Name.width=180;
+															//M2_1_DG_Description.width=331;
+															M2_1_DG_PropertyA1.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyA2.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyA3.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyA4.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyB1.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyB2.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyB3.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyB4.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyC1.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyC2.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyC3.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_PropertyC4.width = (M2_1_DG.width-M2_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M2_1_DG_Delete.width=(M2_1_DG.width-M2_1_DG.width)+DBW;
+															M2_1_DG.horizontalScrollPolicy='off';
+														}
+													]]>
+												</fx:Script>
+												
+												<s:Group width="100%" height="100%">
+													<s:layout>
+														<s:BasicLayout clipAndEnableScrolling="true"/>
+													</s:layout>
+													<mx:AdvancedDataGrid id="M2_1_DG"
+																		 x="0" y="0" width="100%" height="100%" verticalCenter="0" depth="1"
+																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}"
+																		 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+																		 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+																		 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+																		 draggableColumns="true" resizableColumns="true" sortableColumns="false"
+																		 doubleClickEnabled="false" sortExpertMode="true" 
+																		 allowMultipleSelection="true" editable="true"
+																		 dataProvider="{M2_1_DG_AC}"
+																		 creationComplete="M2_1_DG_SetColumnWidths()"
+																		 resize="M2_1_DG_SetColumnWidths()">
+														<mx:groupedColumns>
+															<mx:AdvancedDataGridColumn id="M2_1_DG_Checkbox"
+																					   dataField="checked"
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																					   rendererIsEditor="false"/>
+															<mx:AdvancedDataGridColumn id="M2_1_DG_Information"
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+															<mx:AdvancedDataGridColumn id="M2_1_DG_Disposition"
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   dataField="Disposition"
+																					   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+																					   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+															<mx:AdvancedDataGridColumnGroup headerText="Identification">
+																<mx:AdvancedDataGridColumn id="M2_1_DG_Name"
+																						   headerText="Name" dataField="Name"/>
+																<mx:AdvancedDataGridColumn id="M2_1_DG_Description"
+																						   headerText="Description" dataField="Description"
+																						   editable="true"/>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumnGroup>
+																<mx:headerRenderer>
+																	<fx:Component>
+																		<mx:Box height="100%" paddingTop="2" verticalAlign="bottom">
+																			<fx:Script>
+																				<![CDATA[
+																					import mx.collections.ArrayCollection;
+																					
+																					[Bindable] private var M2_1_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
+																						([
+																							{Label:"PropertiesA", Data:"PropsA"},
+																							{Label:"PropertiesB", Data:"PropsB"},
+																							{Label:"PropertiesC", Data:"PropsC"},
+																							{Label:"Fields", Data:"Fields"}
+																						]);
+																				]]>
+																			</fx:Script>
+																			<s:TabBar height="100%" 
+																					  styleName="SubTabText"
+																					  dataProvider="{M2_1_DG_FormContext_TB_AC}" labelField="Label"/>
+																		</mx:Box>
+																	</fx:Component>
+																</mx:headerRenderer>
+																<mx:AdvancedDataGridColumnGroup>
+																	<mx:headerRenderer>
+																		<fx:Component>
+																			<mx:HBox height="100%" 
+																					 paddingTop="2" paddingBottom="2" paddingLeft="5" paddingRight="5"
+																					 verticalAlign="middle">
+																				<fx:Script>
+																					<![CDATA[
+																						import mx.collections.ArrayCollection;
+																						
+																						[Bindable] private var M2_1_DG_Properties_DD_AC:ArrayCollection = new ArrayCollection
+																							([
+																								{Label:"Selected procedure: Procedure1Name", Data:"SelectedProc"},
+																								{Label:"All procedures", Data:"AllProcs"}
+																							]);
+																					]]>
+																				</fx:Script>
+																				<s:Label height="100%" text="Forms for " styleName="MenuBodyHeading" fontWeight="bold"/>
+																				<s:DropDownList height="100%" width="100%" styleName="DropDownListText"
+																								dataProvider="{M2_1_DG_Properties_DD_AC}" labelField="Label"/>
+																			</mx:HBox>
+																		</fx:Component>
+																	</mx:headerRenderer>
+																	<mx:AdvancedDataGridColumnGroup id="M2_1_DG_propertiesA" headerText="Properties A" visible="false">
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyA1"
+																								   headerText="Property A1" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyA2"
+																								   headerText="Property A2" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyA3"
+																								   headerText="Property A3" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyA4"
+																								   headerText="Property A4" visible="false"/>
+																	</mx:AdvancedDataGridColumnGroup>	
+																	<mx:AdvancedDataGridColumnGroup id="M2_1_DG_propertiesB" headerText="Properties B" visible="false">
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyB1"
+																								   headerText="Property B1" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyB2"
+																								   headerText="Property B2" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyB3"
+																								   headerText="Property B3" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyB4"
+																								   headerText="Property B4" visible="false"/>
+																	</mx:AdvancedDataGridColumnGroup>	
+																	<mx:AdvancedDataGridColumnGroup id="M2_1_DG_propertiesC" headerText="Properties C" visible="false">
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyC1" 
+																								   headerText="Property C1" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyC2" 
+																								   headerText="Property C2" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyC3"
+																								   headerText="Property C3" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="M2_1_DG_PropertyC4"
+																								   headerText="Property C4" visible="false"/>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:AdvancedDataGridColumnGroup>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumn id="M2_1_DG_Delete" 
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
+																					   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+														</mx:groupedColumns>
+													</mx:AdvancedDataGrid>
+													
+													<mx:VRule x="{MidPoint}" y="{M2_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+												</s:Group>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:NavigatorContent>
 								</mx:ViewStack>
-								<!--Setting TM_Box.x to D_Box.x makes it vanish on B0 grip move so set it to a value that is off left stage-->
+								<!--Setting M3_Box.x to D_Box.x makes it vanish on B0 grip move so set it to a value that is off left stage-->
 								<!--TM is hidden under D even though it has a high depth because D is not Spark and doesn't follow depth-->
-								<s:Group id="TM_Box" x="{D_Box.x}" width="{M_Box.width-TM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{TM_Depth}" includeInLayout="true" visible="true">
-									<mx:Canvas width="100%" height="100%" borderColor="blue">
-										<s:VGroup width="100%" height="100%">
-											<mx:AdvancedDataGrid id="TM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
-												<mx:columns>
-													<mx:AdvancedDataGridColumn width="{TM_0_DG.width}" headerText="TM - Tiertary master"/>
-												</mx:columns>
-											</mx:AdvancedDataGrid>
-										</s:VGroup>
-									</mx:Canvas>
-								</s:Group>
+								<mx:ViewStack id="M3_Box" 
+											 x="{D_Box.x}" width="{M_Box.width-M3_Indent}" height="100%" depth="{M3_Depth}">
+									<s:NavigatorContent id="M3_0" width="100" height="100">
+										<mx:Canvas width="100%" height="100%" borderColor="blue">
+											<s:VGroup width="100%" height="100%">
+												<mx:AdvancedDataGrid id="M3_0_DG" width="100%" height="100%" rowCount="10" editable="true">
+													<mx:columns>
+														<mx:AdvancedDataGridColumn width="{M3_0_DG.width}" headerText="TM - Tiertary master"/>
+													</mx:columns>
+												</mx:AdvancedDataGrid>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:NavigatorContent>
+									<s:NavigatorContent id="M3_1" width="100%" height="100%">
+										<mx:Canvas width="100%" height="100%">
+											<s:VGroup width="100%" height="100%">
+												<fx:Script>
+													<![CDATA[
+														private var FF_TB_AC:ArrayCollection = new ArrayCollection(
+															[
+																{Label:"Attributes", Data:"Attributes"},
+																{Label:"FormUsage1", Data:"FormUsage1"},
+																{Label:"FormUsage2", Data:"FormUsage2"},
+																{Label:"Fieldsets", Data:"Fieldsets"}
+															]);	
+														
+														[Bindable]
+														private var M3_1_DG_AC:ArrayCollection = new ArrayCollection(
+															[
+																{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
+																	Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+																	Label:"Field1Label", FieldControl:"Text Box", Disposition:"Enabled", checked:false},
+																{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
+																	Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+																	Label:"Field2Label", FieldControl:"Text Box", Disposition:"Enabled", checked:false},
+																{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
+																	Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", 
+																	Label:"Field3Label", FieldControl:"Text Box", Disposition:"Enabled", checked:false}
+															]);	
+														
+														private function SetColumnWidths_M3_1_DG():void
+														{
+															M3_1_DG.horizontalScrollPolicy = 'on';
+															M3_1_DG.dragEnabled = true;
+															M3_1_DG_Checkbox.width = (M3_1_DG.width-M3_1_DG.width)+CBW;
+															M3_1_DG_Information.width = (M3_1_DG.width-M3_1_DG.width)+IBW;
+															M3_1_DG_Disposition.width = (M3_1_DG.width-M3_1_DG.width)+DTW;
+															M3_1_DG.horizontalScrollPolicy = 'off';
+														}														
+														
+														private function M3_1_DG_SetColumnWidths():void
+														{
+															M3_1_DG.horizontalScrollPolicy='on';
+															M3_1_DG_Checkbox.width=(M3_1_DG.width-M3_1_DG.width)+CBW;
+															M3_1_DG_Information.width=(M3_1_DG.width-M3_1_DG.width)+IBW;
+															M3_1_DG_Disposition.width=(M3_1_DG.width-M3_1_DG.width)+DTW;
+															M3_1_DG_Name.width=180;
+															M3_1_DG_Name.width=120;
+															//M3_1_DG_Description.width=245;
+															M3_1_DG_DataType.width=70;
+															M3_1_DG_Length.width=30;
+															M3_1_DG_Precision.width=30;
+															M3_1_DG_Label.width=60;
+															//	M3_1_DG_FieldControl.width=65;
+															M3_1_DG_Style.width=69;
+															M3_1_DG_Width.width=25;
+															M3_1_DG_Column.width=25;
+															M3_1_DG_MinLength.width=25;
+															M3_1_DG_MaxLength.width=25;
+															M3_1_DG_MinValue.width=53;
+															M3_1_DG_MaxValue.width=53;
+															M3_1_DG_Pattern.width=16;
+															M3_1_DG_Required.width=30;
+															M3_1_DG_InitialValue.width=53;
+															M3_1_DG_MultiValue.width=16;
+															//	M3_1_DG_formUsage.width=HalfWidth;
+															//	M3_1_DG_ToolTip.width=160;
+															//M3_1_DG_Description.width=331;
+															/*M3_1_DG_PropertyA1.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyA2.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyA3.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyA4.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyB1.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyB2.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyB3.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyB4.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyC1.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyC2.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyC3.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;
+															M3_1_DG_PropertyC4.width = (M3_1_DG.width-M3_1_DG.width)+EighthWidth-(DBW/4)-2;*/
+															M3_1_DG_Delete.width=(M3_1_DG.width-M3_1_DG.width)+DBW;
+															M3_1_DG.horizontalScrollPolicy='off';
+														}
+													]]>
+												</fx:Script>
+												
+												<s:Group width="100%" height="100%">
+													<s:layout>
+														<s:BasicLayout clipAndEnableScrolling="true"/>
+													</s:layout>
+													<mx:AdvancedDataGrid id="M3_1_DG"
+																		 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
+																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" minColumnWidth="0"
+																		 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+																		 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+																		 displayItemsExpanded="true" treeColumn="{M3_1_DG_Name}" indentation="10"
+																		 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+																		 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}"
+																		 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+																		 draggableColumns="true" resizableColumns="true" sortableColumns="false"
+																		 doubleClickEnabled="false" sortExpertMode="true" 
+																		 allowMultipleSelection="true" editable="false"
+																		 dataProvider="{new HierarchicalData(M3_1_DG_AC)}"
+																		 creationComplete="M3_1_DG_SetColumnWidths()"
+																		 resize="M3_1_DG_SetColumnWidths()">
+														<mx:groupedColumns>
+															<mx:AdvancedDataGridColumnGroup headerText = "..." color="red">
+																<mx:AdvancedDataGridColumnGroup headerText="Fieldsets/fields" textAlign="center">
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumn id="M3_1_DG_Checkbox"
+																								   dataField="checked"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+																								   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																								   rendererIsEditor="false"/>
+																		<mx:AdvancedDataGridColumn id="M3_1_DG_Information"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+																								   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		<mx:AdvancedDataGridColumn id="M3_1_DG_Disposition"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   dataField="Disposition"
+																								   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+																								   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_identification" headerText="Document Types" textAlign="center">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Name"
+																									   headerText="Name" dataField="Name"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Description"
+																									   headerText="Description" dataField="Description"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_datatypespec" headerText="Format" color="red">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_DataType"
+																									   headerText="Type" dataField="DataType"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Length"
+																									   headerText="Length" dataField="Length" textAlign="center"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Precision"
+																									   headerText="Dec" dataField="Precision"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_formusage1" headerText="Form Usage 1" color="red"																	
+																										width="{HalfWidth}" visible="false">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Label" dataField="Label" headerText="Label"/>					
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_fieldcontrol" headerText="Field Control">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Control" headerText="Control" dataField="FieldControl"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Style" headerText="Style" dataField="Style"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Width" headerText="Width" dataField="Width"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Column" headerText="Col." dataField="Column"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_length" headerText="Length" textAlign="center">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_MinLength" headerText="Min" dataField="MinLength"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_MaxLength" headerText="Max" dataField="MaxLength"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_value" headerText="Value" textAlign="center">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_MinValue" headerText="Min" dataField="MinValue"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_MaxValue" headerText="Max" dataField="MaxValue"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Pattern" headerText="Pattern" dataField="Pattern"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Required" 
+																									   headerText="Req" dataField="Required" textAlign="center"
+																									   itemRenderer="itemRenderer.CheckBoxItemRenderer"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_InitialValue" headerText="Initial" dataField="InitialValue"/>
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_MultiValue" headerText="Multi" dataField="MultiValue"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="M3_1_DG_formusage2" headerText="Form Usage 2" color="red"
+																										width="{HalfWidth}" visible="false">
+																			<mx:AdvancedDataGridColumn id="M3_1_DG_Tooltip" headerText="Tooltip" dataField="Tooltip"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:AdvancedDataGridColumnGroup>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumnGroup id="M3_1_DG_propertiesA" headerText="Properties A" visible="false">
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyA1"
+																						   headerText="Property A1" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyA2"
+																						   headerText="Property A2" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyA3"
+																						   headerText="Property A3" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyA4"
+																						   headerText="Property A4" visible="false"/>
+															</mx:AdvancedDataGridColumnGroup>	
+															<mx:AdvancedDataGridColumnGroup id="M3_1_DG_propertiesB" headerText="Properties B" visible="false">
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyB1"
+																						   headerText="Property B1" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyB2"
+																						   headerText="Property B2" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyB3"
+																						   headerText="Property B3" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyB4"
+																						   headerText="Property B4" visible="false"/>
+															</mx:AdvancedDataGridColumnGroup>	
+															<mx:AdvancedDataGridColumnGroup id="M3_1_DG_propertiesC" headerText="Properties C" visible="false">
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyC1" 
+																						   headerText="Property C1" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyC2" 
+																						   headerText="Property C2" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyC3"
+																						   headerText="Property C3" visible="false"/>
+																<mx:AdvancedDataGridColumn id="M3_1_DG_PropertyC4"
+																						   headerText="Property C4" visible="false"/>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumn id="M3_1_DG_Delete" 
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
+																					   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+														</mx:groupedColumns>
+													</mx:AdvancedDataGrid>
+													
+													<mx:VRule x="{MidPoint}" y="{M3_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+												</s:Group>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:NavigatorContent>
+								</mx:ViewStack>
 								<s:Group id="VM_Box" x="0" y="0" width="{-HalfWidth}" height="100%" alpha="{NonShadeAlpha}" depth="{VM_Depth}" includeInLayout="true" visible="true">
 									<mx:Canvas width="100%" height="100%" borderColor="green">
 										<s:VGroup width="100%" height="100%">
@@ -1917,14 +2050,14 @@ to the same depth as PM and resize it, also shade-->
 										</s:VGroup>
 									</mx:Canvas>
 								</s:Group>
-								<s:Group id="PM_Shade" x="{PM_Box.x}" y="{PM_Box.y}" width="{PM_Box.width}" height="{PM_Box.height}" alpha="0" depth="{PM_Shade_Depth}" includeInLayout="false" visible="false">
+								<s:Group id="M1_Shade" x="{M1_Box.x}" y="{M1_Box.y}" width="{M1_Box.width}" height="{M1_Box.height}" alpha="0" depth="{M1_Shade_Depth}" includeInLayout="false" visible="false">
 									<s:Rect width="100%" height="100%">
 										<s:fill>
 											<s:SolidColor color="black"/>
 										</s:fill>
 									</s:Rect>
 								</s:Group>
-								<s:Group id="SM_Shade" x="{SM_Box.x}" y="{SM_Box.y}" width="{SM_Box.width}" height="{SM_Box.height}" alpha="0" depth="{SM_Shade_Depth}" includeInLayout="false" visible="false">
+								<s:Group id="M2_Shade" x="{M2_Box.x}" y="{M2_Box.y}" width="{M2_Box.width}" height="{M2_Box.height}" alpha="0" depth="{M2_Shade_Depth}" includeInLayout="false" visible="false">
 									<s:Rect width="100%" height="100%">
 										<s:fill>
 											<s:SolidColor color="black"/>
@@ -1941,7 +2074,7 @@ to the same depth as PM and resize it, also shade-->
 										<s:BasicLayout clipAndEnableScrolling="true"/>
 									</s:layout>
 									<!--If use a calculated value for x or M_Box.x, it does not work properly or throws errors-->
-									<mx:ViewStack id="CM_Box" x="{MidPoint}" width="100%" height="100%" depth="{CM_Depth}" includeInLayout="true" visible="true">
+									<mx:ViewStack id="CM_Box" x="{-HalfWidth}" width="100%" height="100%" depth="{CM_Depth}" includeInLayout="true" visible="true">
 										<s:NavigatorContent id="CM_0" width="100%" height="100%">
 											<mx:Canvas width="100%" height="100%" borderColor="blue">
 												<s:VGroup width="100%" height="100%">
@@ -2153,7 +2286,7 @@ to the same depth as PM and resize it, also shade-->
 												<s:VGroup width="100%" height="100%">
 													<fx:Script>
 														<![CDATA[
-															private var FF_TB_AC:ArrayCollection = new ArrayCollection(
+															private var CD_1_TB_AC:ArrayCollection = new ArrayCollection(
 																[
 																	{Label:"Attributes", Data:"Attributes"},
 																	{Label:"FormUsage1", Data:"FormUsage1"},

@@ -5,23 +5,33 @@
 			   xmlns:component="component.*"
 			   width="100%" height="100%"
 			   creationComplete="Initialize()">
-	
-	<!--Remarks:
-	- Use Spark controls where possible
-	- Use percentage widths and heights where possible to facilitate browser resizing
-	- Use item renderers instead of item editors where possible
-	- Use event.currentTarget instead of event.target
-	- Use arraycollections instead of XML where possible
-	- Fixed datagrid column widths are accomplished via (dg.width-dg.width)+col.width
-	-->
-	
+
+	<fx:Script>
+		<![CDATA[
+			private var Current_EM_Child:NavigatorContent;
+			private var Current_SM_Child:NavigatorContent;
+			private var Current_TM_Child:NavigatorContent;
+			private var Current_CM_Child:NavigatorContent;
+			private var Current_CD_Child:NavigatorContent;
+			
+			private function Initialize():void
+			{
+				Current_EM_Child = EM_1;
+				Current_SM_Child = SM_1;
+				Current_TM_Child = TM_1;
+				Current_CM_Child = CM_1;
+				Current_CD_Child = CD_1;
+				
+				EM_Box.selectedChild = Current_EM_Child;
+			}
+		]]>
+	</fx:Script>
+		
 	<fx:Style source="Styles.css"/>
 		
 	<fx:Declarations>
-		<s:Fade id="FadePM_ShadeOn" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
-		<s:Fade id="FadePM_ShadeOff" target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
-		<s:Fade id="FadeSM_ShadeOn" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
-		<s:Fade id="FadeSM_ShadeOff" target="{SM_Shade}" alphaFrom="{SM_Shade.alpha}" alphaTo="{SM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeM_ShadeOn" target="{M_Shade}" alphaFrom="{M_Shade.alpha}" alphaTo="{M_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+		<s:Fade id="FadeM_ShadeOff" target="{M_Shade}" alphaFrom="{M_Shade.alpha}" alphaTo="{M_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 		<s:Fade id="FadeDD_ShadeOn" target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
 		<s:Fade id="FadeDD_ShadeOff" target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 		
@@ -38,12 +48,14 @@
 		<s:Resize id="ContractVM" target="{VM_Box}" widthFrom="{VM_Box.width}" widthTo="{M_Box.width}" duration="{ResizeDuration}"/>
 		<s:Resize id="ResizeMBoxToZero" target="{M_Box}" widthFrom="{M_Box.width}" widthTo="0" duration="400"/>
 		<s:Resize id="ResizeMBoxToHalf" target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}" duration="400"/>
+<!--Could be hidden off screen or under D, or always hide off screen?-->
+
 		
 		<s:Animate id="SlideSMIn" target="{SM_Box}" duration="{SlideDuration}">
 			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent}"/>
 		</s:Animate>
 		<s:Animate id="SlideSMOut" target="{SM_Box}" duration="{SlideDuration}">
-			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{D_Box.x}"/>
+			<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{FullWidth+5}"/>
 		</s:Animate>
 		<s:Animate id="SlideTMIn" target="{TM_Box}" duration="{SlideDuration}">
 			<s:SimpleMotionPath property="x" valueFrom="{TM_Box.x}" valueTo="{M_Box.x+TM_Indent}"/>
@@ -136,10 +148,9 @@
 			</s:Parallel>
 		</s:Sequence>
 
-		
 		<s:Sequence id="Do_SM_In_CM_In">
 			<s:Parallel>
-				<s:Fade target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{M_Shade}" alphaFrom="{M_Shade.alpha}" alphaTo="{M_ShadeFinalAlpha}" duration="{FadeDuration}"/>
 				<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
 				<s:Animate target="{SM_Box}" duration="{SlideDuration}">
 					<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent}"/>
@@ -174,7 +185,7 @@
 				<s:Animate target="{SM_Box}" duration="{SlideDuration}">
 					<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{D_Box.x}"/>
 				</s:Animate>
-				<s:Fade target="{PM_Shade}" alphaFrom="{PM_Shade.alpha}" alphaTo="{PM_ShadeInitialAlpha}" duration="{FadeDuration}"/>
+				<s:Fade target="{M_Shade}" alphaFrom="{M_Shade.alpha}" alphaTo="{M_ShadeInitialAlpha}" duration="{FadeDuration}"/>
 			</s:Parallel>
 		</s:Sequence>
 		
@@ -228,6 +239,40 @@
 				<s:Resize target="{D_Box}" widthFrom="{D_Box.width}" widthTo="{HalfWidth}"/>
 				<s:Resize target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}"/>
 			</s:Parallel>
+		</s:Sequence>
+		
+		<s:Sequence id="XXX">
+			<s:Parallel duration="400">
+				<s:Resize target="{EM_1_DG_Qualifier}" widthFrom="{EM_1_DG_Qualifier.width}" widthTo="0"/>
+				<s:Resize target="{M_Box}" widthFrom="{FullWidth}" widthTo="{HalfWidth}"/>
+				<s:Resize target="{D_Box}" widthFrom="0" widthTo="{HalfWidth}"/>
+				<s:Parallel>
+					<s:Fade target="{DD_Shade}" alphaFrom="{DD_Shade.alpha}" alphaTo="{DD_ShadeFinalAlpha}" duration="{FadeDuration}"/>
+					<s:Fade target="{BB_1_HG}" alphaFrom="1" alphaTo="0" duration="{FadeDuration}"/>
+					<s:Animate target="{CM_Box}" duration="{SlideDuration}">
+						<s:SimpleMotionPath property="x" valueFrom="{-HalfWidth}" valueTo="0"/>
+					</s:Animate>
+				</s:Parallel>
+				<s:Resize target="{D2_Box}" heightFrom="{D2_Box.height}" heightTo="24" duration="250"/>
+				<s:Parallel duration="500">
+					<s:Resize target="{Create_PB_2}" heightFrom="{Create_PB_2.height}" heightTo="19"/>
+					<s:Resize target="{BB_2_DeleteButton}" heightFrom="{BB_2_DeleteButton.height}" heightTo="19"/>
+					<s:Resize target="{BB_2_SaveButton}" heightFrom="{BB_2_SaveButton.height}" heightTo="19"/>
+					<s:Fade target="{D2_HG}" alphaFrom="0" alphaTo="1"/>
+				</s:Parallel>
+			</s:Parallel>
+			
+		</s:Sequence>
+
+		<s:Sequence id="I200">
+			<s:Resize target="{D_Box}" widthFrom="0" widthTo="{HalfWidth}"/>
+			<s:Parallel>
+				<s:Resize target="{SM_Box}" widthFrom="{SM_Box.width}" widthTo="{HalfWidth+200}"/>
+				<s:Resize target="{M_Box}" widthFrom="{M_Box.width}" widthTo="{HalfWidth}"/>
+			</s:Parallel>
+			<s:Animate target="{SM_Box}" duration="{SlideDuration}">
+				<s:SimpleMotionPath property="x" valueFrom="{SM_Box.x}" valueTo="{M_Box.x+SM_Indent+200}"/>
+			</s:Animate>
 		</s:Sequence>
 		
 		<fx:XML id="woid_1">
@@ -297,7 +342,9 @@
 			public const DeleteButtonWidth:Number = 14;
 			public const DBW:Number = DeleteButtonWidth;
 			
-			[Bindable] private var MidPoint:Number = HalfWidth;
+			[Bindable] private var StageLeft:uint = (0 - HalfWidth);
+			[Bindable] private var MidPoint:uint = HalfWidth;
+			[Bindable] private var StageRight:uint = (FullWidth + HalfWidth);
 			
 			[Bindable] private var Indent1:Number = 15;
 			[Bindable] private var Indent2:Number = 30;
@@ -310,15 +357,15 @@
 			
 			[Bindable] private var NonShadeAlpha:Number = 1;
 			[Bindable] private var FinalShadeAlpha:Number=.3;
-			[Bindable] private var PM_ShadeInitialAlpha:Number = 0;
+			[Bindable] private var M_ShadeInitialAlpha:Number = 0;
 			[Bindable] private var SM_ShadeInitialAlpha:Number = 0;
 			[Bindable] private var DD_ShadeInitialAlpha:Number = 0;
-			[Bindable] private var PM_ShadeFinalAlpha:Number = .3;
+			[Bindable] private var M_ShadeFinalAlpha:Number = .3;
 			[Bindable] private var SM_ShadeFinalAlpha:Number = .3;
 			[Bindable] private var DD_ShadeFinalAlpha:Number = .3;
 						
-			[Bindable] private var PM_Depth:Number = 1;
-			[Bindable] private var PM_Shade_Depth:Number = 2;
+			[Bindable] private var EM_Depth:Number = 1;
+			[Bindable] private var M_Shade_Depth:Number = 2;
 			[Bindable] private var SM_Depth:Number = 3;
 			[Bindable] private var SM_Shade_Depth:Number = 4;
 			[Bindable] private var TM_Depth:Number = 5;
@@ -333,7 +380,7 @@
 			private var CategoryView:String //3 letters
 			private var LastCategory:String
 			
-			[Bindable] private var PM_View:Boolean;
+			[Bindable] private var EM_View:Boolean;
 			[Bindable] private var SM_View:Boolean;
 			[Bindable] private var TM_View:Boolean;
 			[Bindable] private var CM_View:Boolean;
@@ -342,16 +389,10 @@
 			[Bindable] private var VM_View:Boolean;
 			private var Layout:String;
 			
-			private function Initialize():void
-			{
-				PM_Box.selectedChild = PM_1;
-			}
-			
 			private function SetLayout(Layout:String):void
 			{
-				if (Layout == 'FullMaster')
+			/*	if (Layout == 'FullMaster')
 				{
-					B0.setStyle('horizontalGap', 0);
 					M_Box.percentWidth = 100;
 					D_Box.percentWidth = 0;
 					D_Box.includeInLayout = false;
@@ -359,7 +400,6 @@
 				}
 				else if (Layout == 'MasterDetail')
 				{
-					B0.setStyle('horizontalGap', 0);
 					M_Box.percentWidth = 100;
 					D_Box.percentWidth = 100;
 					D_Box.includeInLayout = true;
@@ -370,7 +410,6 @@
 				}
 				else if (Layout == 'MasterSplitDetail')
 				{
-					B0.setStyle('horizontalGap', 0);
 					M_Box.percentWidth = 100;
 					D_Box.percentWidth = 100;
 					D_Box.includeInLayout = true;
@@ -381,7 +420,6 @@
 				}
 				else if (Layout == 'GappedMasterDetail')
 				{
-					B0.setStyle('horizontalGap', 10);
 					M_Box.percentWidth = 100;
 					D_Box.percentWidth = 100;
 					D_Box.includeInLayout = true;
@@ -407,16 +445,16 @@
 					DD_HBox.setStyle('horizontalGap',10);
 				}
 				
-				MidPoint = ((FullWidth/2)-(B0.getStyle('horizontalGap')/2));
+				MidPoint = ((FullWidth/2)-(B0.getStyle('horizontalGap')/2));	*/
 			}
 				
 /*			private function TM_View():void
 			{
-				PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
+				M_Shade.includeInLayout=true; M_Shade.visible=true; 
 					
 				if (SM_View==true)
 				{
-					PM_Indent=Indent1;
+					EM_Indent=Indent1;
 				}
 				else
 				{
@@ -426,23 +464,23 @@
 				{
 					SM_Indent=Indent1;
 					TM_Indent=Indent2;
-					PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
+					M_Shade.includeInLayout=true; M_Shade.visible=true; 
 					SM_Shade.includeInLayout=true; SM_Shade.visible=true; 
 					SM_ShadeFinalAlpha=FinalShadeAlpha;
-					PM_ShadeFinalAlpha=(FinalShadeAlpha/2);
+					M_ShadeFinalAlpha=(FinalShadeAlpha/2);
 				}
 				if (TM_View==true)
 				{
 					TM_Indent=Indent1;
-					PM_Shade.includeInLayout=true; PM_Shade.visible=true; 
-					PM_ShadeFinalAlpha=FinalShadeAlpha
+					M_Shade.includeInLayout=true; M_Shade.visible=true; 
+					M_ShadeFinalAlpha=FinalShadeAlpha
 					SM_Shade.includeInLayout=false; SM_Shade.visible=false; ;
 				}	
 				if (TM_View==false)
 				{
 					SM_Indent=0;
 					TM_Indent=0;
-					PM_Shade.includeInLayout=false; PM_Shade.visible=false; 
+					M_Shade.includeInLayout=false; M_Shade.visible=false; 
 					SM_Shade.includeInLayout=false; SM_Shade.visible=false; 
 				}
 			}   */
@@ -599,8 +637,8 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0);
 					
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
-					PM_BX_HD.setStyle('horizontalGap',0);
+					EM_BX_SC.includeInLayout=true; EM_BX_SC.visible=true; EM_BX_SC.percentWidth=100; 
+					EM_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=true;
 					AU_m_DG_propertiesB.visible=false;
@@ -620,8 +658,8 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0);
 					
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
-					PM_BX_HD.setStyle('horizontalGap',0);
+					EM_BX_SC.includeInLayout=true; EM_BX_SC.visible=true; EM_BX_SC.percentWidth=100; 
+					EM_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=true;
@@ -641,8 +679,8 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0);
 					
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=100; 
-					PM_BX_HD.setStyle('horizontalGap',0);
+					EM_BX_SC.includeInLayout=true; EM_BX_SC.visible=true; EM_BX_SC.percentWidth=100; 
+					EM_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=false;
@@ -662,9 +700,9 @@
 					
 /*					BX_HD.setStyle('horizontalGap',0); */
 					
-					/*PM_BX_SC.x=0; PM_BX_SC.depth=2;
-					PM_BX_SC.includeInLayout=true; PM_BX_SC.visible=true; PM_BX_SC.percentWidth=50;
-					PM_BX_HD.setStyle('horizontalGap',0);
+					/*EM_BX_SC.x=0; EM_BX_SC.depth=2;
+					EM_BX_SC.includeInLayout=true; EM_BX_SC.visible=true; EM_BX_SC.percentWidth=50;
+					EM_BX_HD.setStyle('horizontalGap',0);
 					m_VS.includeInLayout=true; m_VS.visible=true; m_VS.selectedChild=AU_m_view;
 					AU_m_DG_propertiesA.visible=false;
 					AU_m_DG_propertiesB.visible=false;
@@ -812,15 +850,19 @@
 					<s:Spacer height="20"/>
 					<s:VGroup width="100%">
 						<s:HGroup>
+							<s:Button label = "I200" click="I200.play()"/>
 							<s:Button label = "FM" click="SetLayout('FullMaster')"/>
 							<s:Button label = "MD" click="SetLayout('MasterDetail')"/>
 							<s:Button label = "MSD" click="SetLayout('MasterSplitDetail')"/>
 							<s:Button label = "GMD" click="SetLayout('GappedMasterDetail')"/>
 							<s:Button label = "MGD" click="SetLayout('MasterGappedDetail')"/>
 							<s:Button label = "GMGD" click="SetLayout('GappedMasterGappedDetail')"/>
+							
+							
 							<s:Button label="SMin" click="
 									  SM_View=true;
-									  FadePM_ShadeOn.play();
+									  SM_Box.selectedChild = Current_SM_Child;
+									  FadeM_ShadeOn.play();
 									  FadeBB1Off.play();
 									  SlideSMIn.play();
 									  "/>
@@ -828,10 +870,11 @@
 									  SM_View=false;
 									  SlideSMOut.play();
 									  FadeBB1On.play();
-									  FadePM_ShadeOff.play();
+									  FadeM_ShadeOff.play();
 									  "/>
-							<s:Button label="TMin" click="
+							<!--s:Button label="TMin" click="
 									  TM_View=true;
+									  TM_Box.selectedChild = Current_TM_Child;
 									  TM_Box.height=M_Box.height;
 									  FadeSM_ShadeOn.play();
 									  SlideTMIn.play();
@@ -840,10 +883,10 @@
 									  TM_View=false;
 									  SlideTMOut.play();
 									  FadeSM_ShadeOff.play();
-									  "/>
+									  "/-->
 							<s:Button label="CMin" click="
 									  CM_View=true;
-									  CM_Box.selectedChild=CM_1;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  D2_Box.includeInLayout=true; D2_Box.visible=true;
 									  Do_CM_In.play();
 									  "/>
@@ -854,7 +897,7 @@
 									  "/>
 							<s:Button label="CDin" click="
 									  CD_View=true;
-									  CD_Box.selectedChild=CD_1;
+									  CD_Box.selectedChild = Current_CD_Child;
 									  D2_Box.includeInLayout=true; D2_Box.visible=true;
 									  Do_CD_In.play();
 									  "/>
@@ -867,7 +910,8 @@
 						<s:HGroup>
 							<s:Button label="SMCMIn" click="
 									  XM_View=true;
-									  CM_Box.selectedChild=CM_1;
+									  SM_Box.selectedChild = Current_SM_Child;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  Do_SM_In_CM_In.play();
 									  "/>
 							<s:Button label="SMCMOut" click="
@@ -876,7 +920,7 @@
 									  "/>
 							<s:Button label="VMin" click="
 									  VM_View=true;
-									  FadePM_ShadeOn.play();
+									  FadeM_ShadeOn.play();
 									  FadeBB1Off.play();
 									  ResizeVMIn.play();
 									  SlideVMIn.play();
@@ -888,7 +932,7 @@
 									  SlideVMOut.play();
 									  ResizeVMOut.play();
 									  FadeBB1On.play();
-									  FadePM_ShadeOff.play();
+									  FadeM_ShadeOff.play();
 									  "/>
 							<s:Button label="Expand VM" click="
 									  VM_View=true;
@@ -900,12 +944,12 @@
 									  Do_Contract_VM.play();
 									  //ContractVM.play();
 									  FadeDD_ShadeOff.play();
-									  FadePM_ShadeOn.play();
+									  FadeM_ShadeOn.play();
 									  "/>
 <!--This does not achieve the desired effect, which is to fade-in-shade the current M and slide CM over it.  To do that, maybe re-depth CM
 to the same depth as PM and resize it, also shade-->
 							<s:Button label="Slide CM left" click="
-									  CM_Box.selectedChild=CM_1;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CM_Box.width=FullWidth;
 									  CM_1_DG.width=FullWidth;
@@ -919,7 +963,7 @@ to the same depth as PM and resize it, also shade-->
 									  D1_Box.clipAndEnableScrolling=true;
 									  "/>
 							<s:Button label="Slide CM left2" click="
-									  CM_Box.selectedChild=CM_1;
+									  CM_Box.selectedChild = Current_CM_Child;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CM_Box.width=FullWidth;
 									  CM_1_DG.width=FullWidth;
@@ -939,7 +983,7 @@ to the same depth as PM and resize it, also shade-->
 									  "/>
 <!--This won't work since CM is in the way and M is already 0 width-->
 							<s:Button label="Slide CD left" click="
-									  CD_Box.selectedChild=CD_1;
+									  CD_Box.selectedChild = Current_CD_Child;
 									  D1_Box.clipAndEnableScrolling=false;
 									  CD_Box.width=FullWidth;
 									  CD_1_DG.width=FullWidth;
@@ -956,6 +1000,18 @@ to the same depth as PM and resize it, also shade-->
 									  D1_Box.clipAndEnableScrolling=false;
 									  SlideCDRight.play();
 									  //The rest of this  is in a post-effect function									  
+									  "/>
+							<s:Button label="XXX" click="XXX.play()"/>
+							<s:Button label="yyy" click="
+									  CM_Box.selectedChild = CM_1;
+									  CM_Box.visible=true; CM_Box.includeInLayout=true;
+									  D_Box.includeInLayout = true;
+									  D_Box.visible = true;
+									  SD_Box.includeInLayout = false; 
+									  SD_Box.visible = false;
+									  DD_HBox.setStyle('horizontalGap',0);
+									  XXX.play();
+									  EM_1_DG_Qualifier.visible = false;
 									  "/>
 						</s:HGroup>
 					</s:VGroup>
@@ -1059,33 +1115,41 @@ to the same depth as PM and resize it, also shade-->
 					<component:CustomTitleWindow id="DG_TW" title=""
 												 width="100%" height="100%" headerHeight="{DGHeaderHeight}" borderVisible="true" dropShadowVisible="false"
 												 styleName="TitleWindowTitleText" skinClass="skin.CustomTitleWindowSkin">
-						<mx:HDividedBox id="B0" width="100%" height="100%" horizontalGap="0" paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0">
-							
-							<!--Stage left-->
-							<!--All children are groups with x/y and alpha and depth-->
+						
+						<s:BorderContainer id="N_Box" width="100%" height="24" borderVisible="false">
+							<s:Label text="Nav1"/>
+							<s:Label text="Nav2"/>
+						</s:BorderContainer>
+						
+						<s:BorderContainer>
+							<s:layout>
+								<s:BasicLayout clipAndEnableScrolling="true"/>
+							</s:layout>
+	
 							<s:BorderContainer id="M_Box" width="100%" height="100%" borderVisible="false"> <!--Don't set alpha on this but rather its children-->
 								<s:layout>
 									<s:BasicLayout clipAndEnableScrolling="true"/>
 								</s:layout>
-								<mx:ViewStack id="PM_Box" 
-											  x="0" y="0" width="{M_Box.width}" height="100%" depth="{PM_Depth}">
-									<s:NavigatorContent id="PM_0" width="100%" height="100%">
+								
+								<mx:ViewStack id="EM_Box" 
+											  x="0" y="0" width="{M_Box.width}" height="100%" depth="{EM_Depth}">
+									<s:NavigatorContent id="EM_0" width="100%" height="100%">
 										<mx:Canvas width="100%" height="100%" borderVisible="false">
 											<s:VGroup y="0" width="100%" height="100%">
-												<mx:AdvancedDataGrid width="{PM_Box.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
+												<mx:AdvancedDataGrid width="{EM_Box.width}" height="100%" rowCount="10" editable="true" verticalScrollPolicy="off">
 													<mx:columns>
-														<mx:AdvancedDataGridColumn width="{PM_Box.width}" headerText="PM - Primary master" editable="true"/>
+														<mx:AdvancedDataGridColumn width="{EM_Box.width}" headerText="EM - Primary master" editable="true"/>
 													</mx:columns>
 												</mx:AdvancedDataGrid>
 											</s:VGroup>
 										</mx:Canvas>
 									</s:NavigatorContent>
-									<s:NavigatorContent id="PM_1" width="100%" height="100%">
+									<s:NavigatorContent id="EM_1" width="100%" height="100%">
 										<mx:Canvas width="100%" height="100%" borderVisible="false">
 											<s:VGroup y="0" width="100%" height="100%">
 												<fx:Script>
 													<![CDATA[
-														[Bindable] private var PM_1_DG_AC:ArrayCollection = new ArrayCollection(
+														[Bindable] private var EM_1_DG_AC:ArrayCollection = new ArrayCollection(
 															[
 																{EntityType:"Procedure", Name:"Procedure1Name", Description:"Procedure1Description", Type:"", Sequence:"", 
 																	PProp1Name:"PProp1Value", PProp2Name:"PProp2Value", PProp3Name:"PProp3Value", 
@@ -1723,38 +1787,38 @@ to the same depth as PM and resize it, also shade-->
 																	]}
 															]);
 														
-														private function PM_1_DG_SetColumnWidths():void
+														private function EM_1_DG_SetColumnWidths():void
 														{
-															PM_1_DG.horizontalScrollPolicy='on';
-															PM_1_DG_Checkbox.width=(PM_1_DG.width-PM_1_DG.width)+CBW;
-															PM_1_DG_Information.width=(PM_1_DG.width-PM_1_DG.width)+IBW;
-															PM_1_DG_Disposition.width=(PM_1_DG.width-PM_1_DG.width)+DTW;
-															PM_1_DG_Sequence.width=20;
-															PM_1_DG_Name.width=230;
-															//PM_1_DG_Description.width=150;
+															EM_1_DG.horizontalScrollPolicy='on';
+															EM_1_DG_Checkbox.width=(EM_1_DG.width-EM_1_DG.width)+CBW;
+															EM_1_DG_Information.width=(EM_1_DG.width-EM_1_DG.width)+IBW;
+															EM_1_DG_Disposition.width=(EM_1_DG.width-EM_1_DG.width)+DTW;
+															EM_1_DG_Sequence.width=20;
+															EM_1_DG_Name.width=230;
+															//EM_1_DG_Description.width=150;
 // How to catch event when scrollbar is shown and not shown so can adjust the width
-															if (PM_1_DG.maxVerticalScrollPosition > 0)
+															if (EM_1_DG.maxVerticalScrollPosition > 0)
 															{
-																PM_1_DG_Qualifier.width = (PM_1_DG.width-PM_1_DG.width)+HalfWidth-DBW-12-15;
+																EM_1_DG_Qualifier.width = (EM_1_DG.width-EM_1_DG.width)+HalfWidth-DBW-12-15;
 															}
 															else
 															{
-																PM_1_DG_Qualifier.width = (PM_1_DG.width-PM_1_DG.width)+HalfWidth-DBW-12;
+																EM_1_DG_Qualifier.width = (EM_1_DG.width-EM_1_DG.width)+HalfWidth-DBW-12;
 															}
-															PM_1_DG_PropertyA1.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyA2.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyA3.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyA4.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB1.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB2.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB3.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyB4.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC1.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC2.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC3.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_PropertyC4.width = (PM_1_DG.width-PM_1_DG.width)+EighthWidth-(DBW/4)-2;
-															PM_1_DG_Delete.width=(PM_1_DG.width-PM_1_DG.width)+DBW;
-															PM_1_DG.horizontalScrollPolicy='off';
+															EM_1_DG_PropertyA1.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyA2.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyA3.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyA4.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyB1.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyB2.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyB3.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyB4.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyC1.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyC2.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyC3.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_PropertyC4.width = (EM_1_DG.width-EM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															EM_1_DG_Delete.width=(EM_1_DG.width-EM_1_DG.width)+DBW;
+															EM_1_DG.horizontalScrollPolicy='off';
 														}
 													]]>
 												</fx:Script>
@@ -1763,121 +1827,120 @@ to the same depth as PM and resize it, also shade-->
 														<s:BasicLayout clipAndEnableScrolling="true"/>
 													</s:layout>
 													
-													<mx:AdvancedDataGrid id="PM_1_DG"
+													<mx:AdvancedDataGrid id="EM_1_DG"
 																		 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0" depth="1"
 																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" minColumnWidth="0"
 																		 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
 																		 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
-																		 displayItemsExpanded="true" treeColumn="{PM_1_DG_Name}" indentation="10"
+																		 displayItemsExpanded="true" treeColumn="{EM_1_DG_Name}" indentation="10"
 																		 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
 																		 dragEnabled="false" dragMoveEnabled="false" dropEnabled="true" allowDragSelection="true"
 																		 draggableColumns="true" resizableColumns="true" sortableColumns="false"
 																		 doubleClickEnabled="false" sortExpertMode="true" 
 																		 allowMultipleSelection="true" editable="false"
-																		 dataProvider="{new HierarchicalData(PM_1_DG_AC)}"
-																		 creationComplete="PM_1_DG_SetColumnWidths()"
-																		 resize="PM_1_DG_SetColumnWidths()">
+																		 dataProvider="{new HierarchicalData(EM_1_DG_AC)}"
+																		 creationComplete="EM_1_DG_SetColumnWidths()"
+																		 resize="EM_1_DG_SetColumnWidths()">
 														<!-- itemClick="row_click(event)" -->
 														<mx:groupedColumns>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Checkbox"
+															<mx:AdvancedDataGridColumn id="EM_1_DG_Checkbox"
 																					   dataField="checked"
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
 																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
 																					   rendererIsEditor="false"/>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Information"
+															<mx:AdvancedDataGridColumn id="EM_1_DG_Information"
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Disposition"
+															<mx:AdvancedDataGridColumn id="EM_1_DG_Disposition"
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   dataField="Disposition"
 																					   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
 																					   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
 															<mx:AdvancedDataGridColumnGroup headerText="Procedures/Steps/Tasks/Actions Identification">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Sequence"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_Sequence"
 																						   dataField="Sequence" headerText="#"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Name"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_Name"
 																						   dataField="Name" editable="true"
 																						   headerText="Name"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Description"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_Description"
 																						   dataField="Description" editable="true"
 																						   headerText="Description"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_Type" dataField="Type"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_Type" dataField="Type"
 																						   editable="true" headerText="Type"/>
 															</mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumnGroup>
-																<mx:AdvancedDataGridColumnGroup id="PM_1_DG_qualifier">
-																	<mx:headerRenderer>
-																		<fx:Component>
-																			<mx:Box height="100%" paddingTop="2" verticalAlign="bottom">
-																				<fx:Script>
-																					<![CDATA[
-																						import mx.collections.ArrayCollection;
-																						
-																						[Bindable] private var CM_1_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
-																							([
-																								{Label:"Qualifier", Data:"PropsA"},
-																								{Label:"PropertiesA", Data:"PropsA"},
-																								{Label:"PropertiesB", Data:"PropsB"},
-																								{Label:"PropertiesC", Data:"PropsC"}
-																							]);
-																					]]>
-																				</fx:Script>
-																				<s:TabBar height="100%" 
-																						  styleName="SubTabText"
-																						  dataProvider="{CM_1_DG_FormContext_TB_AC}" labelField="Label"/>
-																			</mx:Box>
-																		</fx:Component>
-																	</mx:headerRenderer>
-																	<mx:AdvancedDataGridColumn id="PM_1_DG_Qualifier"
-																							   dataField="Qualifier" editable="true"
-																							   headerText="Qualifier expression"/>
-																</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumnGroup id="EM_1_DG_qualifier">
+																<mx:headerRenderer>
+																	<fx:Component>
+																		<mx:Box height="100%" paddingTop="2" verticalAlign="bottom">
+																			<fx:Script>
+																				<![CDATA[
+																					import mx.collections.ArrayCollection;
+																					
+																					[Bindable] private var CM_1_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
+																						([
+																							{Label:"Qualifier", Data:"PropsA"},
+																							{Label:"PropertiesA", Data:"PropsA"},
+																							{Label:"PropertiesB", Data:"PropsB"},
+																							{Label:"PropertiesC", Data:"PropsC"}
+																						]);
+																				]]>
+																			</fx:Script>
+																			<s:TabBar height="100%" 
+																					  styleName="SubTabText"
+																					  dataProvider="{CM_1_DG_FormContext_TB_AC}" labelField="Label"/>
+																		</mx:Box>
+																	</fx:Component>
+																</mx:headerRenderer>
+																<mx:AdvancedDataGridColumn id="EM_1_DG_Qualifier"
+																						   dataField="Qualifier" editable="true"
+																						   headerText="Qualifier expression"/>
 															</mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumnGroup id="PM_1_DG_propertiesA" headerText="Properties A" visible="false">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA1"
+															<mx:AdvancedDataGridColumnGroup id="EM_1_DG_propertiesA" headerText="Properties A" visible="false">
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyA1"
 																						   headerText="Property A1" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA2"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyA2"
 																						   headerText="Property A2" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA3"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyA3"
 																						   headerText="Property A3" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyA4"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyA4"
 																						   headerText="Property A4" visible="false"/>
 															</mx:AdvancedDataGridColumnGroup>	
-															<mx:AdvancedDataGridColumnGroup id="PM_1_DG_propertiesB" headerText="Properties B" visible="false">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB1"
+															<mx:AdvancedDataGridColumnGroup id="EM_1_DG_propertiesB" headerText="Properties B" visible="false">
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyB1"
 																						   headerText="Property B1" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB2"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyB2"
 																						   headerText="Property B2" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB3"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyB3"
 																						   headerText="Property B3" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyB4"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyB4"
 																						   headerText="Property B4" visible="false"/>
 															</mx:AdvancedDataGridColumnGroup>	
-															<mx:AdvancedDataGridColumnGroup id="PM_1_DG_propertiesC" headerText="Properties C" visible="false">
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC1" 
+															<mx:AdvancedDataGridColumnGroup id="EM_1_DG_propertiesC" headerText="Properties C" visible="false">
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyC1" 
 																						   headerText="Property C1" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC2" 
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyC2" 
 																						   headerText="Property C2" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC3"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyC3"
 																						   headerText="Property C3" visible="false"/>
-																<mx:AdvancedDataGridColumn id="PM_1_DG_PropertyC4"
+																<mx:AdvancedDataGridColumn id="EM_1_DG_PropertyC4"
 																						   headerText="Property C4" visible="false"/>
 															</mx:AdvancedDataGridColumnGroup>
-															<mx:AdvancedDataGridColumn id="PM_1_DG_Delete" 
+															<mx:AdvancedDataGridColumn id="EM_1_DG_Delete" 
 																					   draggable="false" resizable="false" sortable="false" editable="false"
 																					   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
 																					   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
 														</mx:groupedColumns>
 													</mx:AdvancedDataGrid>
 													
-													<mx:VRule x="{MidPoint}" y="{PM_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+													<mx:VRule x="{MidPoint}" y="{EM_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
 												</s:Group>
 											</s:VGroup>
 										</mx:Canvas>
 									</s:NavigatorContent>
 								</mx:ViewStack>
+								
 								<mx:ViewStack id="SM_Box"
 											  x="{D_Box.x}" y="0" width="{(M_Box.width-SM_Indent)}" height="100%" depth="{SM_Depth}">
 									<s:NavigatorContent id="SM_0" width="100%" height="100%">
@@ -1891,20 +1954,413 @@ to the same depth as PM and resize it, also shade-->
 											</s:VGroup>
 										</mx:Canvas>
 									</s:NavigatorContent>
+									<s:NavigatorContent id="SM_1" width="100%" height="100%">
+										<mx:Canvas width="100%" height="100%">
+											<s:VGroup width="100%" height="100%">
+												<fx:Script>
+													<![CDATA[
+														[Bindable] private var SM_1_LastTab_DD_AC:ArrayCollection = new ArrayCollection
+															([
+																{Label:"Paths", Data:"P"}, 
+																{Label:"Chains", Data:"C"}, 
+																{Label:"Forms", Data:"F"}, 
+																{Label:"Queries", Data:"Q"}, 
+																{Label:"Scripts", Data:"S"},
+																{Label:"Notifications", Data:"N"},
+																{Label:"Messages", Data:"M"}
+															]);
+														
+														[Bindable] private var SM_1_DG_AC:ArrayCollection = new ArrayCollection(
+															[
+																{EntityType:"Form", UID:"1", Name:"Form1Name", Description:"Form1Description",
+																	Disposition:"Enabled", checked:false},
+																{EntityType:"Form", UID:"2", Name:"Form2Name", Description:"Form2Description",
+																	Disposition:"Enabled", checked:false},
+																{EntityType:"Form", UID:"3", Name:"Form3Name", Description:"Form3Description",
+																	Disposition:"Enabled", checked:false}
+															]);
+														
+														
+														private function SM_1_DG_SetColumnWidths():void
+														{
+															SM_1_DG.horizontalScrollPolicy='on';
+															SM_1_DG_Checkbox.width=(SM_1_DG.width-SM_1_DG.width)+CBW;
+															SM_1_DG_Information.width=(SM_1_DG.width-SM_1_DG.width)+IBW;
+															SM_1_DG_Disposition.width=(SM_1_DG.width-SM_1_DG.width)+DTW;
+															SM_1_DG_Name.width=180;
+															//SM_1_DG_Description.width=331;
+															SM_1_DG_PropertyA1.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyA2.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyA3.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyA4.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyB1.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyB2.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyB3.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyB4.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyC1.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyC2.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyC3.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_PropertyC4.width = (SM_1_DG.width-SM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															SM_1_DG_Delete.width=(SM_1_DG.width-SM_1_DG.width)+DBW;
+															SM_1_DG.horizontalScrollPolicy='off';
+														}
+													]]>
+												</fx:Script>
+												
+												<s:Group width="100%" height="100%">
+													<s:layout>
+														<s:BasicLayout clipAndEnableScrolling="true"/>
+													</s:layout>
+													<mx:AdvancedDataGrid id="SM_1_DG"
+																		 x="0" y="0" width="100%" height="100%" verticalCenter="0" depth="1"
+																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}"
+																		 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+																		 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+																		 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+																		 draggableColumns="true" resizableColumns="true" sortableColumns="false"
+																		 doubleClickEnabled="false" sortExpertMode="true" 
+																		 allowMultipleSelection="true" editable="true"
+																		 dataProvider="{SM_1_DG_AC}"
+																		 creationComplete="SM_1_DG_SetColumnWidths()"
+																		 resize="SM_1_DG_SetColumnWidths()">
+														<mx:groupedColumns>
+															<mx:AdvancedDataGridColumn id="SM_1_DG_Checkbox"
+																					   dataField="checked"
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+																					   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																					   rendererIsEditor="false"/>
+															<mx:AdvancedDataGridColumn id="SM_1_DG_Information"
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+																					   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+															<mx:AdvancedDataGridColumn id="SM_1_DG_Disposition"
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   dataField="Disposition"
+																					   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+																					   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+															<mx:AdvancedDataGridColumnGroup headerText="Identification">
+																<mx:AdvancedDataGridColumn id="SM_1_DG_Name"
+																						   headerText="Name" dataField="Name"/>
+																<mx:AdvancedDataGridColumn id="SM_1_DG_Description"
+																						   headerText="Description" dataField="Description"
+																						   editable="true"/>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumnGroup>
+																<mx:headerRenderer>
+																	<fx:Component>
+																		<mx:Box height="100%" paddingTop="2" verticalAlign="bottom">
+																			<fx:Script>
+																				<![CDATA[
+																					import mx.collections.ArrayCollection;
+																					
+																					[Bindable] private var SM_1_DG_FormContext_TB_AC:ArrayCollection = new ArrayCollection
+																						([
+																							{Label:"PropertiesA", Data:"PropsA"},
+																							{Label:"PropertiesB", Data:"PropsB"},
+																							{Label:"PropertiesC", Data:"PropsC"},
+																							{Label:"Fields", Data:"Fields"}
+																						]);
+																				]]>
+																			</fx:Script>
+																			<s:TabBar height="100%" 
+																					  styleName="SubTabText"
+																					  dataProvider="{SM_1_DG_FormContext_TB_AC}" labelField="Label"/>
+																		</mx:Box>
+																	</fx:Component>
+																</mx:headerRenderer>
+																<mx:AdvancedDataGridColumnGroup>
+																	<mx:headerRenderer>
+																		<fx:Component>
+																			<mx:HBox height="100%" 
+																					 paddingTop="2" paddingBottom="2" paddingLeft="5" paddingRight="5"
+																					 verticalAlign="middle">
+																				<fx:Script>
+																					<![CDATA[
+																						import mx.collections.ArrayCollection;
+																						
+																						[Bindable] private var SM_1_DG_Properties_DD_AC:ArrayCollection = new ArrayCollection
+																							([
+																								{Label:"Selected procedure: Procedure1Name", Data:"SelectedProc"},
+																								{Label:"All procedures", Data:"AllProcs"}
+																							]);
+																					]]>
+																				</fx:Script>
+																				<s:Label height="100%" text="Forms for " styleName="MenuBodyHeading" fontWeight="bold"/>
+																				<s:DropDownList height="100%" width="100%" styleName="DropDownListText"
+																								dataProvider="{SM_1_DG_Properties_DD_AC}" labelField="Label"/>
+																			</mx:HBox>
+																		</fx:Component>
+																	</mx:headerRenderer>
+																	<mx:AdvancedDataGridColumnGroup id="SM_1_DG_propertiesA" headerText="Properties A" visible="false">
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyA1"
+																								   headerText="Property A1" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyA2"
+																								   headerText="Property A2" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyA3"
+																								   headerText="Property A3" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyA4"
+																								   headerText="Property A4" visible="false"/>
+																	</mx:AdvancedDataGridColumnGroup>	
+																	<mx:AdvancedDataGridColumnGroup id="SM_1_DG_propertiesB" headerText="Properties B" visible="false">
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyB1"
+																								   headerText="Property B1" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyB2"
+																								   headerText="Property B2" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyB3"
+																								   headerText="Property B3" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyB4"
+																								   headerText="Property B4" visible="false"/>
+																	</mx:AdvancedDataGridColumnGroup>	
+																	<mx:AdvancedDataGridColumnGroup id="SM_1_DG_propertiesC" headerText="Properties C" visible="false">
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyC1" 
+																								   headerText="Property C1" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyC2" 
+																								   headerText="Property C2" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyC3"
+																								   headerText="Property C3" visible="false"/>
+																		<mx:AdvancedDataGridColumn id="SM_1_DG_PropertyC4"
+																								   headerText="Property C4" visible="false"/>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:AdvancedDataGridColumnGroup>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumn id="SM_1_DG_Delete" 
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
+																					   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+														</mx:groupedColumns>
+													</mx:AdvancedDataGrid>
+													
+													<mx:VRule x="{MidPoint}" y="{SM_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+												</s:Group>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:NavigatorContent>
 								</mx:ViewStack>
 								<!--Setting TM_Box.x to D_Box.x makes it vanish on B0 grip move so set it to a value that is off left stage-->
 								<!--TM is hidden under D even though it has a high depth because D is not Spark and doesn't follow depth-->
-								<s:Group id="TM_Box" x="{D_Box.x}" width="{M_Box.width-TM_Indent}" height="100%" alpha="{NonShadeAlpha}" depth="{TM_Depth}" includeInLayout="true" visible="true">
-									<mx:Canvas width="100%" height="100%" borderColor="blue">
-										<s:VGroup width="100%" height="100%">
-											<mx:AdvancedDataGrid id="TM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
-												<mx:columns>
-													<mx:AdvancedDataGridColumn width="{TM_0_DG.width}" headerText="TM - Tiertary master"/>
-												</mx:columns>
-											</mx:AdvancedDataGrid>
-										</s:VGroup>
-									</mx:Canvas>
-								</s:Group>
+								<mx:ViewStack id="TM_Box" 
+											 x="{D_Box.x}" width="{M_Box.width-TM_Indent}" height="100%" depth="{TM_Depth}">
+									<s:NavigatorContent id="TM_0" width="100" height="100">
+										<mx:Canvas width="100%" height="100%" borderColor="blue">
+											<s:VGroup width="100%" height="100%">
+												<mx:AdvancedDataGrid id="TM_0_DG" width="100%" height="100%" rowCount="10" editable="true">
+													<mx:columns>
+														<mx:AdvancedDataGridColumn width="{TM_0_DG.width}" headerText="TM - Tiertary master"/>
+													</mx:columns>
+												</mx:AdvancedDataGrid>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:NavigatorContent>
+									<s:NavigatorContent id="TM_1" width="100%" height="100%">
+										<mx:Canvas width="100%" height="100%">
+											<s:VGroup width="100%" height="100%">
+												<fx:Script>
+													<![CDATA[
+														private var FF_TB_AC:ArrayCollection = new ArrayCollection(
+															[
+																{Label:"Attributes", Data:"Attributes"},
+																{Label:"FormUsage1", Data:"FormUsage1"},
+																{Label:"FormUsage2", Data:"FormUsage2"},
+																{Label:"Fieldsets", Data:"Fieldsets"}
+															]);	
+														
+														[Bindable]
+														private var TM_1_DG_AC:ArrayCollection = new ArrayCollection(
+															[
+																{EntityType:"Field", ObjId:"1", Name:"Field1Name", Description:"Field1Description",
+																	Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+																	Label:"Field1Label", FieldControl:"Text Box", Disposition:"Enabled", checked:false},
+																{EntityType:"Field", ObjId:"2", Name:"Field2Name", Description:"Field1Description",
+																	Type:"Text", Precision:"", MinLength:"1", MaxLength:"40", MinValue:"", MaxValue:"", InitialValue:"", 
+																	Label:"Field2Label", FieldControl:"Text Box", Disposition:"Enabled", checked:false},
+																{EntityType:"Field", ObjId:"3", Name:"Field3Name", Description:"Field1Description",
+																	Type:"Date", Precision:"", MinLength:"", MaxLength:"", MinValue:"", MaxValue:"", InitialValue:"", 
+																	Label:"Field3Label", FieldControl:"Text Box", Disposition:"Enabled", checked:false}
+															]);	
+														
+														private function SetColumnWidths_TM_1_DG():void
+														{
+															TM_1_DG.horizontalScrollPolicy = 'on';
+															TM_1_DG.dragEnabled = true;
+															TM_1_DG_Checkbox.width = (TM_1_DG.width-TM_1_DG.width)+CBW;
+															TM_1_DG_Information.width = (TM_1_DG.width-TM_1_DG.width)+IBW;
+															TM_1_DG_Disposition.width = (TM_1_DG.width-TM_1_DG.width)+DTW;
+															TM_1_DG.horizontalScrollPolicy = 'off';
+														}														
+														
+														private function TM_1_DG_SetColumnWidths():void
+														{
+															TM_1_DG.horizontalScrollPolicy='on';
+															TM_1_DG_Checkbox.width=(TM_1_DG.width-TM_1_DG.width)+CBW;
+															TM_1_DG_Information.width=(TM_1_DG.width-TM_1_DG.width)+IBW;
+															TM_1_DG_Disposition.width=(TM_1_DG.width-TM_1_DG.width)+DTW;
+															TM_1_DG_Name.width=180;
+															TM_1_DG_Name.width=120;
+															//TM_1_DG_Description.width=245;
+															TM_1_DG_DataType.width=70;
+															TM_1_DG_Length.width=30;
+															TM_1_DG_Precision.width=30;
+															TM_1_DG_Label.width=60;
+															//	TM_1_DG_FieldControl.width=65;
+															TM_1_DG_Style.width=69;
+															TM_1_DG_Width.width=25;
+															TM_1_DG_Column.width=25;
+															TM_1_DG_MinLength.width=25;
+															TM_1_DG_MaxLength.width=25;
+															TM_1_DG_MinValue.width=53;
+															TM_1_DG_MaxValue.width=53;
+															TM_1_DG_Pattern.width=16;
+															TM_1_DG_Required.width=30;
+															TM_1_DG_InitialValue.width=53;
+															TM_1_DG_MultiValue.width=16;
+															//	TM_1_DG_formUsage.width=HalfWidth;
+															//	TM_1_DG_ToolTip.width=160;
+															//TM_1_DG_Description.width=331;
+															/*TM_1_DG_PropertyA1.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyA2.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyA3.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyA4.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyB1.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyB2.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyB3.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyB4.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyC1.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyC2.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyC3.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;
+															TM_1_DG_PropertyC4.width = (TM_1_DG.width-TM_1_DG.width)+EighthWidth-(DBW/4)-2;*/
+															TM_1_DG_Delete.width=(TM_1_DG.width-TM_1_DG.width)+DBW;
+															TM_1_DG.horizontalScrollPolicy='off';
+														}
+													]]>
+												</fx:Script>
+												
+												<s:Group width="100%" height="100%">
+													<s:layout>
+														<s:BasicLayout clipAndEnableScrolling="true"/>
+													</s:layout>
+													<mx:AdvancedDataGrid id="TM_1_DG"
+																		 width="100%" height="100%" borderVisible="true" verticalAlign="middle" verticalCenter="0"
+																		 headerHeight="{DGHeaderHeight}" rowHeight="{DGRowHeight}" minColumnWidth="0"
+																		 headerStyleName="DataGridHeader" styleName="DataGridBody" wordWrap="true" headerWordWrap="true"
+																		 horizontalScrollPolicy="off" verticalScrollPolicy="auto"
+																		 displayItemsExpanded="true" treeColumn="{TM_1_DG_Name}" indentation="10"
+																		 folderOpenIcon="{null}" folderClosedIcon="{null}" defaultLeafIcon="{null}"
+																		 disclosureOpenIcon="{null}" disclosureClosedIcon="{null}"
+																		 dragEnabled="false" dragMoveEnabled="false" dropEnabled="false" allowDragSelection="false"
+																		 draggableColumns="true" resizableColumns="true" sortableColumns="false"
+																		 doubleClickEnabled="false" sortExpertMode="true" 
+																		 allowMultipleSelection="true" editable="false"
+																		 dataProvider="{new HierarchicalData(TM_1_DG_AC)}"
+																		 creationComplete="TM_1_DG_SetColumnWidths()"
+																		 resize="TM_1_DG_SetColumnWidths()">
+														<mx:groupedColumns>
+															<mx:AdvancedDataGridColumnGroup headerText = "..." color="red">
+																<mx:AdvancedDataGridColumnGroup headerText="Fieldsets/fields" textAlign="center">
+																	<mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumn id="TM_1_DG_Checkbox"
+																								   dataField="checked"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   headerRenderer="headerRenderer.ThreeStateCheckBoxHeaderRenderer"
+																								   itemRenderer="itemRenderer.CheckBoxItemRenderer"
+																								   rendererIsEditor="false"/>
+																		<mx:AdvancedDataGridColumn id="TM_1_DG_Information"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   headerRenderer="headerRenderer.InfoIconHeaderRenderer"
+																								   itemRenderer="itemRenderer.InfoButtonItemRenderer"/>
+																		<mx:AdvancedDataGridColumn id="TM_1_DG_Disposition"
+																								   draggable="false" resizable="false" sortable="false" editable="false"
+																								   dataField="Disposition"
+																								   headerRenderer="headerRenderer.DispositionToggleButtonHeaderRenderer"
+																								   itemRenderer="itemRenderer.DispositionToggleButtonItemRenderer"/>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_identification" headerText="Document Types" textAlign="center">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Name"
+																									   headerText="Name" dataField="Name"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Description"
+																									   headerText="Description" dataField="Description"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_datatypespec" headerText="Format" color="red">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_DataType"
+																									   headerText="Type" dataField="DataType"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Length"
+																									   headerText="Length" dataField="Length" textAlign="center"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Precision"
+																									   headerText="Dec" dataField="Precision"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_formusage1" headerText="Form Usage 1" color="red"																	
+																										width="{HalfWidth}" visible="false">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Label" dataField="Label" headerText="Label"/>					
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_fieldcontrol" headerText="Field Control">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Control" headerText="Control" dataField="FieldControl"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Style" headerText="Style" dataField="Style"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Width" headerText="Width" dataField="Width"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Column" headerText="Col." dataField="Column"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_length" headerText="Length" textAlign="center">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_MinLength" headerText="Min" dataField="MinLength"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_MaxLength" headerText="Max" dataField="MaxLength"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_value" headerText="Value" textAlign="center">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_MinValue" headerText="Min" dataField="MinValue"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_MaxValue" headerText="Max" dataField="MaxValue"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Pattern" headerText="Pattern" dataField="Pattern"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Required" 
+																									   headerText="Req" dataField="Required" textAlign="center"
+																									   itemRenderer="itemRenderer.CheckBoxItemRenderer"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_InitialValue" headerText="Initial" dataField="InitialValue"/>
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_MultiValue" headerText="Multi" dataField="MultiValue"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																		<mx:AdvancedDataGridColumnGroup id="TM_1_DG_formusage2" headerText="Form Usage 2" color="red"
+																										width="{HalfWidth}" visible="false">
+																			<mx:AdvancedDataGridColumn id="TM_1_DG_Tooltip" headerText="Tooltip" dataField="Tooltip"/>
+																		</mx:AdvancedDataGridColumnGroup>
+																	</mx:AdvancedDataGridColumnGroup>
+																</mx:AdvancedDataGridColumnGroup>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumnGroup id="TM_1_DG_propertiesA" headerText="Properties A" visible="false">
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyA1"
+																						   headerText="Property A1" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyA2"
+																						   headerText="Property A2" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyA3"
+																						   headerText="Property A3" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyA4"
+																						   headerText="Property A4" visible="false"/>
+															</mx:AdvancedDataGridColumnGroup>	
+															<mx:AdvancedDataGridColumnGroup id="TM_1_DG_propertiesB" headerText="Properties B" visible="false">
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyB1"
+																						   headerText="Property B1" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyB2"
+																						   headerText="Property B2" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyB3"
+																						   headerText="Property B3" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyB4"
+																						   headerText="Property B4" visible="false"/>
+															</mx:AdvancedDataGridColumnGroup>	
+															<mx:AdvancedDataGridColumnGroup id="TM_1_DG_propertiesC" headerText="Properties C" visible="false">
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyC1" 
+																						   headerText="Property C1" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyC2" 
+																						   headerText="Property C2" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyC3"
+																						   headerText="Property C3" visible="false"/>
+																<mx:AdvancedDataGridColumn id="TM_1_DG_PropertyC4"
+																						   headerText="Property C4" visible="false"/>
+															</mx:AdvancedDataGridColumnGroup>
+															<mx:AdvancedDataGridColumn id="TM_1_DG_Delete" 
+																					   draggable="false" resizable="false" sortable="false" editable="false"
+																					   headerRenderer="headerRenderer.DeleteIconHeaderRenderer"
+																					   itemRenderer="itemRenderer.DeleteButtonItemRenderer"/>
+														</mx:groupedColumns>
+													</mx:AdvancedDataGrid>
+													
+													<mx:VRule x="{MidPoint}" y="{TM_1_DG.headerHeight+2}" strokeWidth="2" strokeColor="black" height="100%" depth="2"/>
+												</s:Group>
+											</s:VGroup>
+										</mx:Canvas>
+									</s:NavigatorContent>
+								</mx:ViewStack>
 								<s:Group id="VM_Box" x="0" y="0" width="{-HalfWidth}" height="100%" alpha="{NonShadeAlpha}" depth="{VM_Depth}" includeInLayout="true" visible="true">
 									<mx:Canvas width="100%" height="100%" borderColor="green">
 										<s:VGroup width="100%" height="100%">
@@ -1917,14 +2373,7 @@ to the same depth as PM and resize it, also shade-->
 										</s:VGroup>
 									</mx:Canvas>
 								</s:Group>
-								<s:Group id="PM_Shade" x="{PM_Box.x}" y="{PM_Box.y}" width="{PM_Box.width}" height="{PM_Box.height}" alpha="0" depth="{PM_Shade_Depth}" includeInLayout="false" visible="false">
-									<s:Rect width="100%" height="100%">
-										<s:fill>
-											<s:SolidColor color="black"/>
-										</s:fill>
-									</s:Rect>
-								</s:Group>
-								<s:Group id="SM_Shade" x="{SM_Box.x}" y="{SM_Box.y}" width="{SM_Box.width}" height="{SM_Box.height}" alpha="0" depth="{SM_Shade_Depth}" includeInLayout="false" visible="false">
+								<s:Group id="M_Shade" x="{M_Box.x}" y="{M_Box.y}" width="{M_Box.width}" height="{M_Box.height}" alpha="0" depth="{M_Shade_Depth}" includeInLayout="false" visible="false">
 									<s:Rect width="100%" height="100%">
 										<s:fill>
 											<s:SolidColor color="black"/>
@@ -1941,7 +2390,7 @@ to the same depth as PM and resize it, also shade-->
 										<s:BasicLayout clipAndEnableScrolling="true"/>
 									</s:layout>
 									<!--If use a calculated value for x or M_Box.x, it does not work properly or throws errors-->
-									<mx:ViewStack id="CM_Box" x="{MidPoint}" width="100%" height="100%" depth="{CM_Depth}" includeInLayout="true" visible="true">
+									<mx:ViewStack id="CM_Box" x="{-HalfWidth}" width="100%" height="100%" depth="{CM_Depth}" includeInLayout="true" visible="true">
 										<s:NavigatorContent id="CM_0" width="100%" height="100%">
 											<mx:Canvas width="100%" height="100%" borderColor="blue">
 												<s:VGroup width="100%" height="100%">
@@ -2153,7 +2602,7 @@ to the same depth as PM and resize it, also shade-->
 												<s:VGroup width="100%" height="100%">
 													<fx:Script>
 														<![CDATA[
-															private var FF_TB_AC:ArrayCollection = new ArrayCollection(
+															private var CD_1_TB_AC:ArrayCollection = new ArrayCollection(
 																[
 																	{Label:"Attributes", Data:"Attributes"},
 																	{Label:"FormUsage1", Data:"FormUsage1"},
@@ -2437,7 +2886,7 @@ to the same depth as PM and resize it, also shade-->
 									</s:HGroup>									
 								</s:VGroup>
 							</s:VGroup>
-						</mx:HDividedBox>		
+						</s:BorderContainer>		
 					</component:CustomTitleWindow>
 					
 				<!--End control buttons, tabbar, and datagrids -->

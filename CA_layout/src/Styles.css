@@ -152,6 +152,14 @@
 	kerning: true;
 }
 
+.SubTabText {
+	fontFamily: 'Arial Black';
+	fontSize: 10.5;
+	fontWeight: normal;
+	color: black;
+	kerning: true;
+}
+
 .ControlButtonText {
 	fontFamily: 'Arial Black';
 	fontSize: 12;

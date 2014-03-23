@@ -1102,7 +1102,50 @@
 					SelectedSymbolImageName = event.currentTarget.id;
 					
 					SelectedSymbol = drawUISnapShot(event.currentTarget as BorderContainer);
-					SelectedSymbolFrame.addElement(event.currentTarget as BorderContainer);
+					
+					/*
+					imgTmp = Symbols_AC.getItemAt(i) as Image;	
+					SelectedFoilSwatchImage;
+					imgTxt = new Image();
+					imgTxt.source = String(SelectedFoilSwatchImage);
+					imgTxt.width = imgTmp.width;
+					imgTxt.height = imgTmp.height;
+					imgTxt.fillMode = 'scale';
+					imgTxt.scaleMode = 'letterbox';
+					var bc:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
+					bc.id = imgTmp.source as String;
+					bc.width = 42;
+					bc.height = 42;
+					var bclayout:HorizontalLayout = new HorizontalLayout();
+					bclayout.horizontalAlign = 'center';
+					bclayout.verticalAlign = 'bottom';
+					bc.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
+					bc.addEventListener(MouseEvent.CLICK, CloseGallery);
+					ac.addItem(bc);
+					*/
+					
+					var imgTmp1:Image = (event.currentTarget as BorderContainer).getElementAt(0) as Image;
+					var imgTmp2:Image = (event.currentTarget as BorderContainer).getElementAt(1) as Image;
+					
+					var imgCpy1:Image = new Image();
+					imgCpy1.source = imgTmp1.source;
+					imgCpy1.width = imgTmp1.width;
+					imgCpy1.height = imgTmp1.height;
+					imgCpy1.fillMode = 'scale';
+					imgCpy1.scaleMode = 'letterbox';
+					var imgCpy2:Image = new Image();
+					imgCpy2.source = imgTmp2.source;
+					imgCpy2.width = imgTmp2.width;
+					imgCpy2.height = imgTmp2.height;
+					imgCpy2.fillMode = 'scale';
+					imgCpy2.scaleMode = 'letterbox';
+					var tt:TexturedText = new TexturedText();
+					var bcCpy:BorderContainer = tt.getTextMaskImage(imgCpy1, imgCpy2);
+					bcCpy.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
+					bcCpy.addEventListener(MouseEvent.CLICK, CloseGallery);
+					
+					//SelectedSymbolFrame.addElement(event.currentTarget as BorderContainer);
+					SelectedSymbolFrame.addElement(bcCpy);
 									
 				//	PreviewElementsAC.addItem(event.currentTarget as BorderContainer);
 				}

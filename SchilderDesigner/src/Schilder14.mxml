@@ -531,9 +531,31 @@
 				img.source = SelectedSymbol;
 				img.height = 26.6;
 				img.width = 22.8;
-				var bc:BorderContainer = new BorderContainer();
+				//var bc:BorderContainer = new BorderContainer();
+				//bc.setStyle('borderVisible',false);
+				//bc.addElement(img as Image);
+				
+				
+				SelectedFoilSwatchImage;
+				var imgTxt:Image = new Image();
+				imgTxt.source = String(SelectedFoilSwatchImage);
+				imgTxt.width = img.width;
+				imgTxt.height = img.height;
+				imgTxt.fillMode = 'scale';
+				imgTxt.scaleMode = 'letterbox';
+				var bc:BorderContainer = (new TexturedText).getTextMaskImage(imgTxt, img);
+				bc.id = img.source as String;
 				bc.setStyle('borderVisible',false);
-				bc.addElement(img as Image);
+				//bc.addElement(img as Image);
+				
+				var bclayout:HorizontalLayout = new HorizontalLayout();
+				bclayout.horizontalAlign = 'center';
+				bclayout.verticalAlign = 'bottom';
+				bc.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
+				bc.addEventListener(MouseEvent.CLICK, CloseGallery);
+				//ac.addItem(bc);
+				
+				
 				SelectedSymbolFrame.addElement(bc);
 				
 				PreviewElementsAC = new ArrayCollection();
@@ -1049,6 +1071,35 @@
 					ChangePreviewElementsFoil();		
 				}
 				
+				var base:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
+				if (base.numElements > 1)
+				{
+					var imgTmp1:Image = base.getElementAt(0) as Image;
+					var imgTmp2:Image = base.getElementAt(1) as Image;
+					
+					var imgCpy1:Image = new Image();
+					imgCpy1.source = String(SelectedFoilSwatchImage);
+					imgCpy1.width = imgTmp1.width;
+					imgCpy1.height = imgTmp1.height;
+					imgCpy1.fillMode = 'scale';
+					imgCpy1.scaleMode = 'letterbox';
+					var imgCpy2:Image = new Image();
+					imgCpy2.source = imgTmp2.source;
+					imgCpy2.width = imgTmp2.width;
+					imgCpy2.height = imgTmp2.height;
+					imgCpy2.fillMode = 'scale';
+					imgCpy2.scaleMode = 'letterbox';
+					var tt:TexturedText = new TexturedText();
+					var bcCpy:BorderContainer = tt.getTextMaskImage(imgCpy1, imgCpy2);
+					bcCpy.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
+					bcCpy.addEventListener(MouseEvent.CLICK, CloseGallery);
+					SelectedSymbolFrame.removeAllElements();
+					SelectedSymbolFrame.addElement(bcCpy);					
+				}
+				else
+				{
+					var imgTmp4:Object = base.getElementAt(0);
+				}
 				/*
 				var imgTmp1:Image = (event.currentTarget as BorderContainer).getElementAt(0) as Image;
 				var imgTmp2:Image = (event.currentTarget as BorderContainer).getElementAt(1) as Image;

@@ -561,6 +561,10 @@
 					for (var i:int=0; i < Symbols_AC.length; i++)
 					{
 						imgTmp = Symbols_AC.getItemAt(i) as Image;	
+						if (String(imgTmp.source) == "assets/symbols/Football.png")
+						{
+							trace("");
+						}
 						SelectedFoilSwatchImage;
 						imgTxt = new Image();
 						imgTxt.source = String(SelectedFoilSwatchImage);
@@ -1044,6 +1048,29 @@
 					
 					ChangePreviewElementsFoil();		
 				}
+				
+				/*
+				var imgTmp1:Image = (event.currentTarget as BorderContainer).getElementAt(0) as Image;
+				var imgTmp2:Image = (event.currentTarget as BorderContainer).getElementAt(1) as Image;
+				
+				var imgCpy1:Image = new Image();
+				imgCpy1.source = imgTmp1.source;
+				imgCpy1.width = imgTmp1.width;
+				imgCpy1.height = imgTmp1.height;
+				imgCpy1.fillMode = 'scale';
+				imgCpy1.scaleMode = 'letterbox';
+				var imgCpy2:Image = new Image();
+				imgCpy2.source = imgTmp2.source;
+				imgCpy2.width = imgTmp2.width;
+				imgCpy2.height = imgTmp2.height;
+				imgCpy2.fillMode = 'scale';
+				imgCpy2.scaleMode = 'letterbox';
+				var tt:TexturedText = new TexturedText();
+				var bcCpy:BorderContainer = tt.getTextMaskImage(imgCpy1, imgCpy2);
+				bcCpy.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
+				bcCpy.addEventListener(MouseEvent.CLICK, CloseGallery);
+				SelectedSymbolFrame.addElement(bcCpy);
+				*/
 			}
 			
 			private function ChangePreviewElementsFoil():void
@@ -2114,8 +2141,22 @@
 			private function AddSymbolToSymbolBox(event:MouseEvent,SymbolBox:String):void 
 			{
 				var bdTmp:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
-				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
-				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
+				
+				if (bdTmp.numElements > 1)
+				{
+					var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
+					var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
+				}
+				else
+				{
+					var imgTmp1:Image = bdTmp.getElementAt(0) as Image;
+					var imgTxt1:Image = new Image();
+					imgTxt1.source = "assets/foils/BlackFoilSwatch.jpg";
+					imgTxt1.width = (imgTmp1.width);
+					imgTxt1.height = (imgTmp1.height);
+					imgTxt1.fillMode = imgTmp1.fillMode;
+					imgTxt1.scaleMode = imgTmp1.scaleMode;
+				}
 				
 				var imgTxt:Image = new Image;
 				imgTxt.source = imgTxt1.source;
@@ -2123,6 +2164,8 @@
 				imgTxt.height = (imgTxt1.height * 2.1);
 				imgTxt.fillMode = imgTxt1.fillMode;
 				imgTxt.scaleMode = imgTxt1.scaleMode;
+				
+				PreviewElementsAC.addItem(imgTxt);
 				
 				var imgTmp:Image = new Image;
 				imgTmp.source = imgTmp1.source;

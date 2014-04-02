@@ -27,6 +27,7 @@
     <application path="SchilderX.mxml"/>
     <application path="Schilder9.mxml"/>
     <application path="Schilder10.mxml"/>
+    <application path="Schilder15.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

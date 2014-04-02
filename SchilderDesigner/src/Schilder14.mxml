@@ -601,6 +601,12 @@
 						var bclayout:HorizontalLayout = new HorizontalLayout();
 						bclayout.horizontalAlign = 'center';
 						bclayout.verticalAlign = 'bottom';
+						
+						bc.setStyle('horizontalAlign','center')
+						bc.setStyle('verticalAlign','middle')
+						bc.verticalCenter = 0;
+						bc.horizontalCenter = 0;
+							
 						bc.addEventListener(MouseEvent.CLICK, SelectSymbolGalleryImage);
 						bc.addEventListener(MouseEvent.CLICK, CloseGallery);
 						ac.addItem(bc);

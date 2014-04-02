@@ -56,7 +56,17 @@ package utility
 			bdc.setStyle('verticalAlign','middle')
 
 			imgTxt.cacheAsBitmap = true;
+			imgTxt.setStyle('horizontalAlign','center')
+			imgTxt.setStyle('verticalAlign','middle')
+			imgTxt.verticalCenter = 0;
+			imgTxt.horizontalCenter = 0;
+
 			imgSrc.cacheAsBitmap = true;
+			imgSrc.setStyle('horizontalAlign','center')
+			imgSrc.setStyle('verticalAlign','middle')
+			imgSrc.verticalCenter = 0;
+			imgSrc.horizontalCenter = 0;
+				
 			imgTxt.mask = imgSrc;
 			bdc.addElement(imgTxt);
 			bdc.addElement(imgSrc);

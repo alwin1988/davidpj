@@ -460,6 +460,9 @@
 			[Embed(source="assets/switch/CX1_NX2.png")]
 			public static const CX1_NX2:Class;
 			
+			[Embed(source="assets/switch/CX1_NX2A.png")]
+			public static const CX1_NX2A:Class;
+			
 			[Embed(source="assets/switch/CX1A_NX2.png")]
 			public static const CX1A_NX2:Class;
 			
@@ -888,7 +891,7 @@
 			}
 			
 			private function EnableDisableControls():void
-			{
+			{				
 				if (PlateSize == 'Large')
 				{					
 					DateChooser.enabled = true;
@@ -897,6 +900,9 @@
 					LinesChooser1.visible = true;
 					LinesChooser1.enabled = true;
 					LinesChooser2.enabled = true;
+					LargeCharacterRadioButton.enabled = true;
+					MediumCharacterRadioButton.enabled = true;
+					SmallCharacterRadioButton.enabled = true;
 				}
 				else if (PlateSize == 'Medium')
 				{
@@ -906,6 +912,9 @@
 					LinesChooser1.visible = true;
 					LinesChooser1.enabled = true;
 					LinesChooser2.enabled = true;
+					LargeCharacterRadioButton.enabled = true;
+					MediumCharacterRadioButton.enabled = true;
+					SmallCharacterRadioButton.enabled = true;
 				}
 				else if (PlateSize == 'Small')
 				{
@@ -915,6 +924,9 @@
 					LinesChooser1.visible = false;
 					LinesChooser1.enabled = false;
 					LinesChooser2.enabled = false;
+					LargeCharacterRadioButton.enabled = false;
+					MediumCharacterRadioButton.enabled = false;
+					SmallCharacterRadioButton.enabled = true;
 				}
 				else if (PlateSize == 'House')
 				{
@@ -924,6 +936,17 @@
 					LinesChooser1.visible = true;
 					LinesChooser1.enabled = true;
 					LinesChooser2.enabled = true;
+					LargeCharacterRadioButton.enabled = true;
+					MediumCharacterRadioButton.enabled = true;
+					SmallCharacterRadioButton.enabled = true;
+				}
+				
+				if (((CurrentBox == 'X1A' || CurrentBox == 'X1B') && X1_LineCount == 2) || ((CurrentBox == 'X2A' || CurrentBox == 'X2B') && X2_LineCount == 2))
+				{
+					LargeCharacterRadioButton.enabled = false;
+					MediumCharacterRadioButton.enabled = false;
+					SmallCharacterRadioButton.enabled = true;
+					AddSymbolToCurrentBoxButton.enabled = false;
 				}
 			}
 			
@@ -994,6 +1017,28 @@
 				
 				SetCharacterDimensions();
 			}
+
+			// !!! Changing character size needs to change existing characters, and could run into trouble
+			// !!! Changing plate size can compel changing character size
+			private function SetCharacterSize(RequestedCharacterSize:String):void
+			{
+				CharacterSize = RequestedCharacterSize;
+				
+				if (CharacterSize == 'Large')
+				{
+					LargeCharacterRadioButton.selected = true;
+				}
+				else if (CharacterSize == 'Medium')
+				{
+					MediumCharacterRadioButton.selected = true;
+				}
+				else if (CharacterSize == 'Small')
+				{
+					SmallCharacterRadioButton.selected = true;
+				}
+				
+				SetCharacterDimensions();
+			}
 			
 			private function SetCharacterDimensions():void
 			{
@@ -1001,28 +1046,20 @@
 				{
 					CharacterWidth = LargeCharacterWidth;
 					CharacterHeight = LargeCharacterHeight;
-					//					CharacterFontSize = LargeCharacterFontSize;
+					//CharacterFontSize = LargeCharacterFontSize;
 				}
 				else if (CharacterSize == 'Medium')
 				{
 					CharacterWidth = MediumCharacterWidth;
 					CharacterHeight = MediumCharacterHeight;
-					//					CharacterFontSize = MediumCharacterFontSize;
+					//CharacterFontSize = MediumCharacterFontSize;
 				}
 				else if (CharacterSize == 'Small')
 				{
 					CharacterWidth = SmallCharacterWidth;
 					CharacterHeight = SmallCharacterHeight;
-					//					CharacterFontSize = SmallCharacterFontSize;
+					//CharacterFontSize = SmallCharacterFontSize;
 				}
-			}
-			
-			// !!! Changing character size needs to change existing characters, and could run into trouble
-			// !!! Changing plate size can compel changing character size
-			private function ChangeCharacterSize(event:MouseEvent,RequestedCharacterSize:String):void
-			{
-				CharacterSize = RequestedCharacterSize;
-				SetCharacterDimensions();
 			}
 			
 			private function SetPreviewPlate():void
@@ -2586,6 +2623,7 @@
 					X1_LineCount = 2;
 					X1A.includeInLayout = true;
 					X1B.includeInLayout = true;
+					SetCharacterSize('Small')
 				}
 				else if (Box1or2 == 2 && RequestedLineCount == 1)
 				{
@@ -2598,10 +2636,15 @@
 					X2_LineCount = 2;
 					X2A.includeInLayout = true;
 					X2B.includeInLayout = true;
+					SetCharacterSize('Small')
 				}
+				
+				EnableDisableControls();
 				
 				HideShow();
 				Outlines();
+				
+				SetNextBoxAndSwitchButtonImage();
 			}
 			
 			// check for fullness?
@@ -2609,6 +2652,7 @@
 			private function SetNextBoxAndSwitchButtonImage():void
 			{
 				if(Debugging) Alert.show('CurrentBox ' + CurrentBox);
+				if(Debugging) Alert.show('NextBox ' + NextBox);
 				if(Debugging) Alert.show('CS ' + String(CenterSymbol));
 				if(Debugging) Alert.show('x1lc ' + String(X1_LineCount));
 				if(Debugging) Alert.show('x2lc ' + String(X2_LineCount));
@@ -2618,55 +2662,46 @@
 					if (CenterSymbol == false)
 					{
 						if (X1_LineCount == 1)
-						{
+							
 							NextBox = CurrentBox; 
-							
-							//SwitchButtonImage = '';							
-							SwitchButton.visible = false;
-						}
-						if (X1_LineCount == 2)
-						{
-							NextBox = 'X1B';
-							
-							SwitchButtonImage.source = CX1A_NX1B;					
-							SwitchButton.visible = true;
-						}
+						
+						//SwitchButtonImage = '';							
+						SwitchButton.visible = false;
 					}
-					else if (CenterSymbol == true)
+					if (X1_LineCount == 2)
 					{
-						NextBox = 'X2A';
+						NextBox = 'X1B';
 						
-						if (X1_LineCount == 1 && X2_LineCount == 1)
-						{
-							SwitchButtonImage.source = CX1_NX2;
-						}
-						else if (X1_LineCount == 1 && X2_LineCount == 2)
-						{
-							SwitchButtonImage.source = CX1A_NX2A;
-						}
-						else if (X1_LineCount == 2 && X2_LineCount == 1)
-						{
-							SwitchButtonImage.source = CX1A_NX2;
-						}
-						else if (X1_LineCount == 2 && X2_LineCount == 1)
-						{
-							SwitchButtonImage.source = CX1A_NX2A;
-						}
-						
+						SwitchButtonImage.source = CX1A_NX1B;					
 						SwitchButton.visible = true;
-						
-						if (X1_LineCount == 1 && X1A.numElements > 0)
-						{
-							CurrentBox = NextBox;
-						}
-						else if (X1_LineCount == 2 && X1A.numElements > 0 && X1B.numElements > 0)
-						{
-							CurrentBox = NextBox;
-						}
-						else
-						{
-							CurrentBox = CurrentBox;
-						}
+					}
+				}
+				else if (CenterSymbol == true)
+				{
+					NextBox = 'X2A';
+					
+					if (X1_LineCount == 1 && X2_LineCount == 1)
+					{
+						SwitchButtonImage.source = CX1_NX2;
+					}
+					else if (X1_LineCount == 1 && X2_LineCount == 2)
+					{
+						SwitchButtonImage.source = CX1_NX2A;
+					}
+					else if (X1_LineCount == 2 && X2_LineCount == 1)
+					{
+						SwitchButtonImage.source = CX1A_NX2;
+					}
+					else if (X1_LineCount == 2 && X2_LineCount == 2)
+					{
+						SwitchButtonImage.source = CX1A_NX2A;
+					}
+					
+					SwitchButton.visible = true;
+					
+					if ((X1_LineCount == 1 && X1A.numElements > 0) || (X1_LineCount == 2 && X1A.numElements > 0 && X1B.numElements > 0))
+					{
+						CurrentBox = NextBox;
 					}
 				}
 				else if (CurrentBox == 'X1B')
@@ -2680,7 +2715,7 @@
 							SwitchButtonImage.source = SPAN_CX1B_NX1A;
 						}
 					}
-					else
+					else if (CenterSymbol == true)
 					{
 						if (X1_LineCount == 2 && X2_LineCount == 1)
 						{
@@ -2701,7 +2736,7 @@
 						NextBox = 'X1A';
 						SwitchButtonImage.source = CX2_NX1;
 					}
-					else if (X1_LineCount == 2 && X1_LineCount == 1)
+					else if (X1_LineCount == 2 && X2_LineCount == 1)
 					{
 						NextBox = 'X1B';
 						SwitchButtonImage.source = CX2_NX1B;
@@ -3212,7 +3247,7 @@
 	
 	<!-- Outer (basic) container -->
 	<s:BorderContainer id="OuterContainer"
-					   width="540" height="410" horizontalCenter="0" verticalCenter="0" borderVisible="true">
+					   width="540" height="420" horizontalCenter="0" verticalCenter="0" borderVisible="true">
 		<s:layout>
 			<s:BasicLayout/>
 		</s:layout>
@@ -3326,8 +3361,7 @@
 											   width="{X1.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
 											   borderVisible="false" backgroundAlpha="0">
 								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
-														paddingTop="10" paddingBottom="10"/>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
 								</s:layout>
 							</s:BorderContainer>
 						</s:BorderContainer>
@@ -3360,8 +3394,7 @@
 											   width="{X2.width}" height="100%" verticalCenter="0" horizontalCenter="0" includeInLayout="false" visible="false"
 											   borderVisible="false" backgroundAlpha="0">
 								<s:layout>
-									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"
-														paddingTop="10" paddingBottom="10"/>
+									<s:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="-1" clipAndEnableScrolling="true"/>
 								</s:layout>
 							</s:BorderContainer>
 						</s:BorderContainer>
@@ -3643,7 +3676,7 @@
 							 styleName="DirectiveLabel"/>
 					<s:VGroup id="LinesChooser1" width="50%" gap="0" visible="false">
 						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
-							<s:RadioButton groupName="LineCount" 
+							<s:RadioButton groupName="LineCount1" 
 										   width="10" verticalCenter="0" symbolColor="blue"
 										   selected="true"							   
 										   click="SetLineCount(1,1)"/>
@@ -3652,7 +3685,7 @@
 									 fontFamily="Arial" fontSize="11"/>
 						</s:HGroup>
 						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
-							<s:RadioButton groupName="LineCount" 
+							<s:RadioButton groupName="LineCount1" 
 										   width="10" verticalCenter="0"
 										   click="SetLineCount(1,2)"/>
 							<s:Label text="2 lines"
@@ -3662,7 +3695,7 @@
 					</s:VGroup>
 					<s:VGroup id="LinesChooser2" width="50%" gap="0" visible="false">
 						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
-							<s:RadioButton groupName="LineCount" 
+							<s:RadioButton groupName="LineCount2" 
 										   width="10" verticalCenter="0" symbolColor="blue"
 										   selected="true"							   
 										   click="SetLineCount(2,1)"/>
@@ -3671,7 +3704,7 @@
 									 fontFamily="Arial" fontSize="11"/>
 						</s:HGroup>
 						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
-							<s:RadioButton groupName="LineCount" 
+							<s:RadioButton groupName="LineCount2" 
 										   width="10" verticalCenter="0"
 										   click="SetLineCount(2,2)"/>
 							<s:Label text="2 lines"
@@ -3986,41 +4019,43 @@
 					
 					<s:Spacer height="4"/>
 					
-					<!-- Controls to set the plate size -->
+					<!-- Controls to set the character size -->
 					<s:BorderContainer width="100%" height="15" borderVisible="false">
 						<s:layout>
 							<s:HorizontalLayout gap="0" verticalAlign="middle"/>
 						</s:layout>
 						<mx:Text text="Text size"
-								 width="63"
-								 verticalCenter="0"
+								 width="63" verticalCenter="0"
 								 styleName="DirectiveLabel"/>
-						<s:RadioButton groupName="CharacterSize" width="15" symbolColor="blue"
-									   click="ChangeCharacterSize(event,'Large')"/>
+						<s:RadioButton id="LargeCharacterRadioButton" 
+									   groupName="CharacterSize" width="15" symbolColor="blue"
+									   click="SetCharacterSize('Large')"/>
 						<mx:Text text="ABC"
-								 verticalCenter="0"
+								 verticalCenter="0" enabled="{LargeCharacterRadioButton.enabled}"
 								 fontFamily="GL-Nummernschild-Eng" fontSize="19.75"/>
 						<mx:Text text="(79mm)"
-								 verticalCenter="0"
+								 verticalCenter="0" enabled="{LargeCharacterRadioButton.enabled}"
 								 fontFamily="Arial Narrow" fontSize="12"/>
 						<s:Spacer width="100%"/>
-						<s:RadioButton groupName="CharacterSize" width="15" symbolColor="blue"
+						<s:RadioButton id="MediumCharacterRadioButton" 
+									   groupName="CharacterSize" width="15" symbolColor="blue"
 									   selected="true"
-									   click="ChangeCharacterSize(event,'Medium')"/>
+									   click="SetCharacterSize('Medium')"/>
 						<mx:Text text="ABC"
-								 verticalCenter="0"
+								 verticalCenter="0" enabled="{MediumCharacterRadioButton.enabled}"
 								 fontFamily="GL-Nummernschild-Eng" fontSize="14.5"/>
 						<mx:Text text="(58mm)" 
-								 verticalCenter="0"
+								 verticalCenter="0" enabled="{MediumCharacterRadioButton.enabled}"
 								 fontFamily="Arial Narrow" fontSize="11"/>
 						<s:Spacer width="100%"/>
-						<s:RadioButton groupName="CharacterSize" width="15" symbolColor="blue"
-									   click="ChangeCharacterSize(event,'Small')"/>
+						<s:RadioButton id="SmallCharacterRadioButton"
+									   groupName="CharacterSize" width="15" symbolColor="blue"
+									   click="SetCharacterSize('Small')"/>
 						<mx:Text text="ABC"
-								 verticalCenter="0"
+								 verticalCenter="0" enabled="{SmallCharacterRadioButton.enabled}"
 								 fontFamily="GL-Nummernschild-Eng" fontSize="10"/>
 						<mx:Text text="(40mm)"
-								 verticalCenter="0"
+								 verticalCenter="0" enabled="{SmallCharacterRadioButton.enabled}"
 								 fontFamily="Arial Narrow" fontSize="11"/>
 					</s:BorderContainer>		
 				</s:BorderContainer>

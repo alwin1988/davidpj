@@ -10,7 +10,7 @@
 	
 	<fx:Style source="main.css"/>
 	
-	<fx:Declarations>		
+	<fx:Declarations>
 		<s:ArrayCollection id="Foils_SmallPlate_AC">
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlackFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
@@ -396,11 +396,11 @@
 			// !		
 			import flash.utils.getQualifiedClassName;
 			
-			import flashx.textLayout.operations.RedoOperation;
-			
 			import mx.core.UIComponent;
 			
 			import spark.core.IGraphicElement;
+			
+			import flashx.textLayout.operations.RedoOperation;
 			
 			import utility.TexturedText;
 			
@@ -894,28 +894,36 @@
 					DateChooser.enabled = true;
 					FlagChooser.enabled = true;
 					SymbolChooser.enabled = true;
-					LinesChooser.enabled = true;
+					LinesChooser1.visible = true;
+					LinesChooser1.enabled = true;
+					LinesChooser2.enabled = true;
 				}
 				else if (PlateSize == 'Medium')
 				{
 					DateChooser.enabled = true;
 					FlagChooser.enabled = true;
 					SymbolChooser.enabled = true;
-					LinesChooser.enabled = false;
+					LinesChooser1.visible = true;
+					LinesChooser1.enabled = true;
+					LinesChooser2.enabled = true;
 				}
 				else if (PlateSize == 'Small')
 				{
 					DateChooser.enabled = false;
 					FlagChooser.enabled = false;
 					SymbolChooser.enabled = false;
-					LinesChooser.enabled = false;
+					LinesChooser1.visible = false;
+					LinesChooser1.enabled = false;
+					LinesChooser2.enabled = false;
 				}
 				else if (PlateSize == 'House')
 				{
 					DateChooser.enabled = false;
 					FlagChooser.enabled = false;
 					SymbolChooser.enabled = false;
-					LinesChooser.enabled = true;
+					LinesChooser1.visible = true;
+					LinesChooser1.enabled = true;
+					LinesChooser2.enabled = true;
 				}
 			}
 			
@@ -2426,6 +2434,8 @@
 							X2B.includeInLayout = true;
 							X2_LineCount = 2;
 						}
+						
+						LinesChooser2.visible = true;
 					}
 					
 					CenterSymbol=true;
@@ -2562,44 +2572,32 @@
 				}
 			}
 			
-			private function SetLineCount(RequestedLineCount:int):void
+			private function SetLineCount(Box1or2:int,RequestedLineCount:int):void
 			{
 				// !! Need to preserve what has content, maybe disallow if both have content.  Can B be active and A not?
-				if (RequestedLineCount == 1)
+				if (Box1or2 == 1 && RequestedLineCount == 1)
 				{
-					if (CurrentBox == 'X1A')
-					{
-						X1_LineCount = 1;
-						X1B.includeInLayout = false;
-					}
-					else if (CurrentBox == 'X1B')
-					{
-						X1_LineCount = 1;
-						X1B.includeInLayout = false;
-					}
-					else if (CurrentBox == 'X2A')
-					{
-						X2_LineCount = 1;
-						X2B.includeInLayout = false;
-					}
-					else if (CurrentBox == 'X2B')
-					{
-						X2_LineCount = 1;
-						X2B.includeInLayout = false;
-					}
+					X1_LineCount = 1;
+					X1A.includeInLayout = true;
+					X1B.includeInLayout = false;
 				}
-				else if (RequestedLineCount == 2)
+				else if (Box1or2 == 1 && RequestedLineCount == 2)
 				{
-					if (CurrentBox == 'X1A' || CurrentBox == 'X1B')
-					{
-						X2B.includeInLayout;
-						X1_LineCount = 2;
-					}
-					else if (CurrentBox == 'X2A' || CurrentBox == 'X2B')
-					{
-						X2A.includeInLayout;
-						X2_LineCount = 2;
-					}
+					X1_LineCount = 2;
+					X1A.includeInLayout = true;
+					X1B.includeInLayout = true;
+				}
+				else if (Box1or2 == 2 && RequestedLineCount == 1)
+				{
+					X2_LineCount = 1;
+					X2A.includeInLayout = true;
+					X2B.includeInLayout = false;
+				}
+				else if (Box1or2 == 2 && RequestedLineCount == 2)
+				{
+					X2_LineCount = 2;
+					X2A.includeInLayout = true;
+					X2B.includeInLayout = true;
 				}
 				
 				HideShow();
@@ -3634,60 +3632,78 @@
 			<s:Spacer height="1"/>
 			
 			<!-- Controls to choose orientation et al -->
-			<s:BorderContainer width="100%" height="24" borderVisible="false">
+			<s:BorderContainer width="100%" borderVisible="false">
 				<s:layout>
 					<s:HorizontalLayout horizontalAlign="left" verticalAlign="middle"/>				
 				</s:layout>
 				
-				<s:HGroup id="LinesChooser" width="30%" height="19" verticalAlign="baseline">
-					<mx:Text text="Lines"
+				<s:HGroup width="50%" verticalAlign="baseline">
+					<s:Label text="Lines"
 							 width="40" verticalCenter="0"
 							 styleName="DirectiveLabel"/>
-					<s:VGroup>
-						<s:RadioButton groupName="LineCount" 
-									   width="10" verticalCenter="0" symbolColor="blue"
-									   selected="true"							   
-									   click="SetLineCount(1)"/>
-						<mx:Text text="1 line"
-								 width="34" verticalCenter="0"
-								 fontFamily="Arial" fontSize="11"/>
-						<s:RadioButton groupName="LineCount" 
-									   width="10" verticalCenter="0"
-									   click="SetLineCount(2)"/>
-						<mx:Text text="2 lines"
-								 width="36" verticalCenter="0"
-								 fontFamily="Arial" fontSize="11"/>
+					<s:VGroup id="LinesChooser1" width="50%" gap="0" visible="false">
+						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
+							<s:RadioButton groupName="LineCount" 
+										   width="10" verticalCenter="0" symbolColor="blue"
+										   selected="true"							   
+										   click="SetLineCount(1,1)"/>
+							<s:Label text="1 line"
+									 width="34" verticalCenter="0"
+									 fontFamily="Arial" fontSize="11"/>
+						</s:HGroup>
+						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
+							<s:RadioButton groupName="LineCount" 
+										   width="10" verticalCenter="0"
+										   click="SetLineCount(1,2)"/>
+							<s:Label text="2 lines"
+									 width="36" verticalCenter="0"
+									 fontFamily="Arial" fontSize="11"/>
+						</s:HGroup>
 					</s:VGroup>
-					<s:VGroup>
-						<s:RadioButton groupName="LineCount" 
-									   width="10" verticalCenter="0" symbolColor="blue"
-									   selected="true"							   
-									   click="SetLineCount(1)"/>
-						<mx:Text text="1 line"
-								 width="34" verticalCenter="0"
-								 fontFamily="Arial" fontSize="11"/>
+					<s:VGroup id="LinesChooser2" width="50%" gap="0" visible="false">
+						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
+							<s:RadioButton groupName="LineCount" 
+										   width="10" verticalCenter="0" symbolColor="blue"
+										   selected="true"							   
+										   click="SetLineCount(2,1)"/>
+							<s:Label text="1 line"
+									 width="34" verticalCenter="0"
+									 fontFamily="Arial" fontSize="11"/>
+						</s:HGroup>
+						<s:HGroup width="100%" height="16" verticalAlign="baseline" gap="5">
+							<s:RadioButton groupName="LineCount" 
+										   width="10" verticalCenter="0"
+										   click="SetLineCount(2,2)"/>
+							<s:Label text="2 lines"
+									 width="36" verticalCenter="0"
+									 fontFamily="Arial" fontSize="11"/>
+						</s:HGroup>
 					</s:VGroup>
 				</s:HGroup>
 				
 				<s:Spacer width="100%"/>
-				
-				<!--Switch button image is set and visibility is toggled via function-->
-				<s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="false" includeInLayout="true"
-								   chromeColor="gray" borderColor="black" cornerRadius="3" 
-								   useHandCursor="true" buttonMode="true" 
-								   click="CurrentBox=NextBox; SetNextBoxAndSwitchButtonImage()">
-					<s:layout>
-						<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
-										  paddingTop="1" paddingBottom="2" paddingLeft="2" paddingRight="2"/>
-					</s:layout>
-					<s:BorderContainer width="100%" height="16" borderVisible="true" borderWeight=".5">
+			
+				<s:VGroup width="110" gap="0" visible="{SwitchButton.visible}">
+					<s:Label text="Current/next position" styleName="DirectiveLabel"/>
+					
+					<s:BorderContainer id="SwitchButton" width="110" height="22" horizontalCenter="0" verticalCenter="0" visible="false" includeInLayout="true"
+									   chromeColor="gray" borderColor="black" cornerRadius="3" 
+									   useHandCursor="true" buttonMode="true" 
+									   click="CurrentBox=NextBox; SetNextBoxAndSwitchButtonImage()">
 						<s:layout>
-							<s:HorizontalLayout clipAndEnableScrolling="false"/>
+							<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"
+											  paddingTop="1" paddingBottom="2" paddingLeft="2" paddingRight="2" gap="3"/>
 						</s:layout>
-						<s:Image id="SwitchButtonImage" width="100%" height="100%" 
-								 source="" fillMode="scale" scaleMode="stretch"/>
+						<s:BorderContainer width="100%" height="16" borderVisible="true" borderWeight=".5">
+							<s:layout>
+								<s:HorizontalLayout clipAndEnableScrolling="false"/>
+							</s:layout>
+							<s:Image id="SwitchButtonImage" width="100%" height="100%" 
+									 source="" fillMode="scale" scaleMode="stretch"/>
+						</s:BorderContainer>
 					</s:BorderContainer>
-				</s:BorderContainer>
+				</s:VGroup>
+				<!--Switch button image is set and visibility is toggled via function-->
 				
 				<s:Spacer width="100%"/>
 				

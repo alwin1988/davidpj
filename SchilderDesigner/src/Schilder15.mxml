@@ -781,16 +781,56 @@
 			
 			private function Galleries_changeHandler(event:IndexChangedEvent):void
 			{
+				/*
+				0:SmallPlateGallery
+				1:MediumPlateGallery
+				2:LargePlateGallery
+				3:HousePlateGallery
+				4:FoilGallery
+				5:HolesGallery
+				6:FlagGallery
+				7:SymbolGallery
+				*/
 				trace(event.newIndex);
-				//1:foil
-				//2:hole
-				//4:symbol
-				//0:plate color
-				if (event.newIndex == 1)
+				
+				//0:SmallPlateGallery
+				if (event.newIndex == 0)
 				{
+					
+				}
+				//1:MediumPlateGallery
+				else if (event.newIndex == 1)
+				{
+					
+				}
+				//2:LargePlateGallery
+				else if (event.newIndex == 2)
+				{
+					
+				}
+				//3:HousePlateGallery
+				else if (event.newIndex == 3)
+				{
+					
+				}
+				//4:FoilGallery
+				else if (event.newIndex == 4)
+				{
+					SetDataOpenFoilGallery();
 					TextureFoilGallery();
 				}
-				else if (event.newIndex == 4)
+				//5:HolesGallery
+				else if (event.newIndex == 5)
+				{
+					
+				}
+				//6:FlagGallery
+				else if (event.newIndex == 6)
+				{
+					
+				}
+				//7:SymbolGallery
+				else if (event.newIndex == 7)
 				{
 					TextureSymbolGallery();
 				}
@@ -1149,10 +1189,38 @@
 				}
 			}
 			
+			private function SetDataOpenFoilGallery():void
+			{
+				if (PlateSize == 'Small')
+				{
+					FoilGalleryListHorizontalGap = 153;
+					FoilGalleryList.dataProvider = Foils_SmallPlate_AC;
+					GalleryWindow.title = 'Small plate foil colors and patterns';
+				}
+				else if (PlateSize == 'Medium')
+				{
+					FoilGalleryListHorizontalGap = 83;
+					FoilGalleryList.dataProvider = Foils_MediumPlate_AC;
+					GalleryWindow.title = 'Medium plate foil colors and patterns';
+				}
+				else if (PlateSize == 'Large')
+				{
+					FoilGalleryListHorizontalGap = 43;
+					FoilGalleryList.dataProvider = Foils_LargePlate_AC;
+					GalleryWindow.title = 'Large plate foil colors and patterns';
+				}
+				else if (PlateSize == 'House')
+				{
+					FoilGalleryListHorizontalGap = 159;
+					FoilGalleryList.dataProvider = Foils_HousePlate_AC;
+					GalleryWindow.title = 'House plate foil colors and patterns';
+				}				
+			}
+			
 			private function OpenFoilGallery(event:MouseEvent):void
 			{
 				Galleries.selectedChild = FoilGallery;
-				
+				/*
 				if (PlateSize == 'Small')
 				{
 					FoilGalleryListHorizontalGap = 153;
@@ -1177,7 +1245,7 @@
 					FoilGalleryList.dataProvider = Foils_HousePlate_AC;
 					GalleryWindow.title = 'House plate foil colors and patterns';
 				}
-				
+				*/
 				GalleryWindow.visible = true;
 			}
 			
@@ -4305,7 +4373,7 @@
 						<!-- Foil chooser -->
 						<s:BorderContainer id="Foil_MiniPlateFrame" width="140.4" height="30.51" horizontalCenter="0" verticalCenter="0" borderVisible="true"	
 										   toolTip="Click on the plate to open the foil gallery to select the foil style"
-										   buttonMode="true" click="OpenFoilGallery(event)">
+										   buttonMode="true" ><!--click="OpenFoilGallery(event)"-->
 							<s:layout>
 								<s:VerticalLayout paddingTop="2" paddingBottom="2" paddingLeft="2" paddingRight="2" gap="0" 
 												  horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>

@@ -1944,19 +1944,19 @@
 				}
 				
 				var imgD1:Image = new Image();
-				imgD1.source = String(a[0]) + "_24.jpg";
+				imgD1.source = String(a[0]) + ".jpg";
 				PreviewElementsAC.addItem(imgD1);
 				imgD1.width = 24;
 				imgD1.height = 24;
 				
 				var imgD2:Image = new Image();
-				imgD2.source = String(a[0]) + "_24.jpg";
+				imgD2.source = String(a[0]) + ".jpg";
 				PreviewElementsAC.addItem(imgD2);
 				imgD2.width = 24;
 				imgD2.height = 24;
 				
 				var imgD3:Image = new Image();
-				imgD3.source = String(a[0]) + "_24.jpg";
+				imgD3.source = String(a[0]) + ".jpg";
 				PreviewElementsAC.addItem(imgD3);
 				imgD3.width = 24;
 				imgD3.height = 24;
@@ -2379,31 +2379,47 @@
 				
 				if (CharacterSize == 'Small')
 				{
-					img.source = String(a[0]) + "_S.jpg";
-					img.width = SmallCharacterWidth;
-					img.height = SmallCharacterHeight;
+					img.source = String(a[0]) + ".jpg";
+					//img.percentWidth = 100;
+					//img.percentHeight = 100;
 					bc.width = SmallCharacterWidth;
 					bc.height = SmallCharacterHeight;
 					platelabel.styleName = 'PlateCharacterSmall';
 				}
 				else if (CharacterSize == 'Medium')
 				{
-					img.source = String(a[0]) + "_M.jpg";
-					img.width = MediumCharacterWidth;
-					img.height = MediumCharacterHeight;
+					img.source = String(a[0]) + ".jpg";
+					//img.percentWidth = 100;
+					//img.percentHeight = 100;
 					bc.width = MediumCharacterWidth;
 					bc.height = MediumCharacterHeight;
 					platelabel.styleName = 'PlateCharacterMedium';
 				}
 				else if (CharacterSize == 'Large')
 				{
-					img.source = String(a[0]) + "_L.jpg";
-					img.width = LargeCharacterWidth;
-					img.height = LargeCharacterHeight;
+					img.source = String(a[0]) + ".jpg";
+					//img.percentWidth = 100;
+					//img.percentHeight = 100;
 					bc.width = LargeCharacterWidth;
 					bc.height = LargeCharacterHeight;
 					platelabel.styleName = 'PlateCharacterLarge';
 				}
+				
+				if (bc.width > bc.height)
+				{
+					img.percentWidth = 100;
+				}
+				else if (bc.width < bc.height)
+				{
+					img.percentHeight = 100;
+				}
+				else
+				{
+					img.percentHeight = 100;
+					img.percentWidth = 100;
+				}
+				img.verticalCenter = 0;
+				img.horizontalCenter = 0;
 				
 				PreviewElementsAC.addItem(img);
 				

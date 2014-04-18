@@ -20,10 +20,6 @@
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="64.81" height="25.25" fillMode="scale" scaleMode="stretch" source="assets/foils/WhiteFoilPlate.png" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/RainbowFoilSwatch.jpg" 
-					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="64.81" height="25.25" fillMode="scale" scaleMode="stretch" source="assets/foils/RainbowFoilPlate.png" 
-					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="64.81" height="25.25" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilPlate.png" 
@@ -94,10 +90,6 @@
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="174.87" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/WhiteFoilPlate.png" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/rainbow_slice.jpg" 
-					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="174.87" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/RainbowFoilPlate.png" 
-					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="174.87" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilPlate.png" 
@@ -132,10 +124,6 @@
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/WhiteFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="58.29" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/houseplate/WhiteFoilPlate.png" 
-					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/rainbow_slice.jpg" 
-					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
-			<s:Image width="58.29" height="38" fillMode="scale" scaleMode="stretch" source="assets/foils/houseplate/RainbowFoilPlate.png" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>
 			<s:Image width="38" height="36" fillMode="scale" scaleMode="stretch" source="assets/foils/BlueFoilSwatch.jpg" 
 					 click="SelectFoilGalleryImage(event); CloseGallery(event);"/>

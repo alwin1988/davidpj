@@ -23,7 +23,7 @@
 				   clipContent="true" horizontalScrollPolicy="auto" verticalScrollPolicy="off">
 			<s:HGroup height="{C1.height-15}"
 					  paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" gap="0" clipAndEnableScrolling="true">
-				<s:Image source="assets/LargePreviewSample.jpg" width="1600" height="100%" fillMode="scale" scaleMode="stretch" depth="1"/>
+				<s:Image source="{parentApplication.LargePreviewImage.source}" width="1600" height="100%" fillMode="scale" scaleMode="stretch" depth="1"/>
 			</s:HGroup>
 		</mx:Canvas>
 		

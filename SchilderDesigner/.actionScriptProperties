@@ -23,12 +23,13 @@
     <application path="Schilder11_old.mxml"/>
     <application path="SchilderWidthTest3.mxml"/>
     <application path="PlateChooser.mxml"/>
+    <application path="Schilder15.mxml"/>
     <application path="Schilder8.mxml"/>
     <application path="SchilderX.mxml"/>
+    <application path="Schilder15x.mxml"/>
     <application path="Schilder9.mxml"/>
     <application path="Schilder10.mxml"/>
-    <application path="Schilder15.mxml"/>
-    <application path="Schilder15x.mxml"/>
+    <application path="Schilder16.mxml"/>
   </applications>
   <modules/>
   <workers/>

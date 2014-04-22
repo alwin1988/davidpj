@@ -410,13 +410,16 @@
 	<fx:Script>
 		<![CDATA[
 			import component.LargePreview;
+			
 			import flash.display.Bitmap;
 			import flash.display.BitmapData;
-			import flash.geom.Rectangle;
 			import flash.geom.Point;
+			import flash.geom.Rectangle;
 			import flash.net.FileReference;
 			import flash.utils.getQualifiedClassName;
+			
 			import flashx.textLayout.operations.RedoOperation;
+			
 			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
@@ -424,9 +427,11 @@
 			import mx.events.*;
 			import mx.managers.PopUpManager;
 			import mx.utils.ObjectUtil;
+			
 			import spark.core.IGraphicElement;
 			import spark.layouts.*;
 			import spark.layouts.supportClasses.LayoutBase;
+			
 			import utility.TexturedText;
 			
 			//Non-Preview constants
@@ -599,6 +604,98 @@
 			[Bindable] public var LargePreviewImage:Image;
 			
 			private var StackAction:Array = new Array();
+			
+			[Embed(source="assets/foils/RainbowFoilSwatch.jpg")]
+			public static const rainbowFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/SilverFoilSwatch.jpg")]
+			public static const silverFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/RedFoilSwatch.jpg")]
+			public static const redFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/PinkFoilSwatch.jpg")]
+			public static const pinkFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/GreenFoilSwatch.jpg")]
+			public static const greenFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/GoldFoilSwatch.jpg")]
+			public static const goldFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/BlueFoilSwatch.jpg")]
+			public static const blueFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/WhiteFoilSwatch.jpg")]
+			public static const whiteFoilSwatch:Class;
+			
+			[Embed(source="assets/foils/BlackFoilSwatch.jpg")]
+			public static const blackFoilSwatch:Class;
+			
+			private function cropImage(x:int,y:int,width:int,height:int,foilName:String="RainbowFoilSwatch"):Image
+			{
+				var bm:Bitmap = new Bitmap();
+				var image:Image = new Image();
+				if (foilName == "RainbowFoilSwatch")
+				{
+					bm = new rainbowFoilSwatch();
+					//bm.height =113;
+					//bm.width=;
+				}
+				else if (foilName == "SilverFoilSwatch")
+				{
+					bm = new silverFoilSwatch();
+				}
+				else if (foilName == "RedFoilSwatch")
+				{
+					bm = new redFoilSwatch();
+				}
+				else if (foilName == "PinkFoilSwatch")
+				{
+					bm = new pinkFoilSwatch();
+				}
+				else if (foilName == "GreenFoilSwatch")
+				{
+					bm = new greenFoilSwatch();
+				}
+				else if (foilName == "GoldFoilSwatch")
+				{
+					bm = new goldFoilSwatch();
+				}
+				else if (foilName == "BlueFoilSwatch")
+				{
+					bm = new blueFoilSwatch();
+				}
+				else if (foilName == "WhiteFoilSwatch")
+				{
+					bm = new whiteFoilSwatch();
+				}
+				else if (foilName == "BlackFoilSwatch")
+				{
+					bm = new blackFoilSwatch();
+				}
+				else
+				{
+					bm = new blackFoilSwatch();
+				}
+				
+				/*
+				var scale:Number = 0.32;
+				var matrix:Matrix = new Matrix();
+				matrix.scale(scale, scale);
+				var smallBMD:BitmapData = new BitmapData(351 * 0.32, 113 * 0.32, true, 0x000000);
+				
+				smallBMD.draw(bd, matrix, null, null, null, true);*/
+				
+				var bd : BitmapData = bm.bitmapData.clone();
+				var cropRect:Rectangle = new Rectangle(x, y, width, height);
+				var bmpData:BitmapData = new BitmapData(cropRect.width, cropRect.height, true);
+				
+				bmpData.copyPixels(bd, cropRect, new Point(0, 0));
+				image.source = new Bitmap(bmpData);
+				image.visible = true;
+				return image;		
+			}
 			
 			private function SetDefaults():void
 			{
@@ -2070,18 +2167,21 @@
 				
 				var imgD1:Image = new Image();
 				imgD1.source = String(a[0]) + ".jpg";
+				imgD1.name = "1";
 				PreviewElementsAC.addItem(imgD1);
 				imgD1.width = 24;
 				imgD1.height = 24;
 				
 				var imgD2:Image = new Image();
 				imgD2.source = String(a[0]) + ".jpg";
+				imgD2.name = "1";
 				PreviewElementsAC.addItem(imgD2);
 				imgD2.width = 24;
 				imgD2.height = 24;
 				
 				var imgD3:Image = new Image();
 				imgD3.source = String(a[0]) + ".jpg";
+				imgD3.name = "1";
 				PreviewElementsAC.addItem(imgD3);
 				imgD3.width = 24;
 				imgD3.height = 24;
@@ -2409,6 +2509,7 @@
 				imgTxt.source = imgTxt1.source;
 				imgTxt.width = imgTmp.width;
 				imgTxt.height = imgTmp.height;
+				imgTxt.name = "1";
 				
 				PreviewElementsAC.addItem(imgTxt);
 				
@@ -2503,6 +2604,8 @@
 				*/
 				
 				var a:Array = String(SelectedFoilSwatchImage).split(".");
+				var b:Array = String(a[0]).split("/");
+				var foilName:String = String(b[2]);
 								
 				SelectedFoilSwatchImage;
 				img = new Image();
@@ -2535,6 +2638,7 @@
 					platelabel.styleName = 'PlateCharacterLarge';
 				}
 				
+				/*
 				if (bc.width > bc.height)
 				{
 					img.percentWidth = 100;
@@ -2548,8 +2652,13 @@
 					img.percentHeight = 100;
 					img.percentWidth = 100;
 				}
+				*/
+				img = cropImage(0,0,93,113,foilName);
+				
+				
 				img.verticalCenter = 0;
 				img.horizontalCenter = 0;
+				img.name = "1";
 				
 				PreviewElementsAC.addItem(img);
 				
@@ -2648,6 +2757,7 @@
 				imgTxt.height = (imgTxt1.height * 2.1);
 				imgTxt.fillMode = imgTxt1.fillMode;
 				imgTxt.scaleMode = imgTxt1.scaleMode;
+				imgTxt.name = "1";
 				
 				PreviewElementsAC.addItem(imgTxt);
 				

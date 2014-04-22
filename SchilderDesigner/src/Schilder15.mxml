@@ -412,11 +412,11 @@
 			// !		
 			import flash.utils.getQualifiedClassName;
 			
+			import flashx.textLayout.operations.RedoOperation;
+			
 			import mx.core.UIComponent;
 			
 			import spark.core.IGraphicElement;
-			
-			import flashx.textLayout.operations.RedoOperation;
 			
 			import utility.TexturedText;
 			

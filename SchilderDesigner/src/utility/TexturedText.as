@@ -48,7 +48,7 @@ package utility
 		public function getTextMaskImage(imgTxt:Image, imgSrc:Image):BorderContainer
 		{
 			var bdc:BorderContainer = new BorderContainer();
-			bdc.setStyle("borderVisible",false);
+			bdc.setStyle("borderVisible",true);
 			bdc.setStyle("backgroundAlpha",0);
 			bdc.horizontalCenter = 0;
 			bdc.verticalCenter = 0;

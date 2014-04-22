@@ -405,35 +405,29 @@
 			<s:Image width="38" height="38" fillMode="scale" scaleMode="letterbox" source="assets/symbols/WinnieThePooh.png"
 					 click="SelectSymbolGalleryImage(event); CloseGallery(event);"/>
 		</s:ArrayCollection>
-		
 	</fx:Declarations>	
+	
 	<fx:Script>
 		<![CDATA[
-			// !		
-			import flash.utils.getQualifiedClassName;
-			
-			import mx.core.UIComponent;
-			
-			import spark.core.IGraphicElement;
-			
-			import flashx.textLayout.operations.RedoOperation;
-			
-			import utility.TexturedText;
-			
-			[Bindable] private var PlateReduction:Number = .24; //% reduction from actual plate size to radio button'ed plates
-			
-			private var Debugging:Boolean = false;
-			
 			import component.LargePreview;
+			import flash.display.Bitmap;
+			import flash.display.BitmapData;
+			import flash.geom.Rectangle;
+			import flash.geom.Point;
 			import flash.net.FileReference;
+			import flash.utils.getQualifiedClassName;
+			import flashx.textLayout.operations.RedoOperation;
 			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
 			import mx.controls.Alert;
+			import mx.core.UIComponent;
 			import mx.events.*;
 			import mx.managers.PopUpManager;
 			import mx.utils.ObjectUtil;
+			import spark.core.IGraphicElement;
 			import spark.layouts.*;
 			import spark.layouts.supportClasses.LayoutBase;
+			import utility.TexturedText;
 			
 			//Non-Preview constants
 			public static const LargePlateOuterWidth:uint = 520;
@@ -517,6 +511,8 @@
 			[Embed(source="assets/switch/CX2B_NX1B.png")]
 			public static const CX2B_NX1B:Class;
 			
+			private var Debugging:Boolean = false;
+			
 			[Bindable] private var PlateSize:String;
 			[Bindable] private var PlateOuterWidth:uint;
 			[Bindable] private var PlateOuterHeight:uint;
@@ -592,11 +588,14 @@
 			[Bindable] private var OutlineColor:uint;
 			[Bindable] private var CurrentOutlineAlpha:int;
 			
+			[Bindable] private var LP:LargePreview;
 			[Bindable] private var Price:int;
 			[Bindable] private var DisplayPrice:String;
 			[Bindable] private var ac:ArrayCollection;
 			[Bindable] private var PreviewElementsAC:ArrayCollection;
 			
+			[Bindable] private var PlateReduction:Number = .24; //% reduction from actual plate size to radio button'ed plates
+			[Bindable] public var CroppedImage:Object;
 			[Bindable] public var LargePreviewImage:Image;
 			
 			private var StackAction:Array = new Array();
@@ -647,6 +646,7 @@
 				RightLoad = 0;
 				X1_LineCount = 1;
 				X2_LineCount = 0;
+				SwitchButton.visible = false;
 				CurrentLine = 'Line 1';
 				CurrentBox = 'X1A';
 				CurrentBoxColor = 0xff0000; //yellow = 0xffff00
@@ -986,7 +986,7 @@
 				{
 					DateChooser.enabled = false;
 					FlagChooser.enabled = false;
-					SymbolChooser.enabled = false;
+					SymbolChooser.enabled = true;
 					LinesChooser1.visible = true;
 					LinesChooser1.enabled = true;
 					LinesChooser2.enabled = true;
@@ -995,12 +995,22 @@
 					SmallCharacterRadioButton.enabled = true;
 				}
 				
-				if (((CurrentBox == 'X1A' || CurrentBox == 'X1B') && X1_LineCount == 2) || ((CurrentBox == 'X2A' || CurrentBox == 'X2B') && X2_LineCount == 2))
+				if (PlateSize != 'Small')
 				{
-					LargeCharacterRadioButton.enabled = false;
-					MediumCharacterRadioButton.enabled = false;
-					SmallCharacterRadioButton.enabled = true;
-					AddSymbolToCurrentBoxButton.enabled = false;
+					if (((CurrentBox == 'X1A' || CurrentBox == 'X1B') && X1_LineCount == 2) || ((CurrentBox == 'X2A' || CurrentBox == 'X2B') && X2_LineCount == 2))
+					{
+						LargeCharacterRadioButton.enabled = false;
+						MediumCharacterRadioButton.enabled = false;
+						SmallCharacterRadioButton.enabled = true;
+						AddSymbolToCurrentBoxButton.enabled = false;
+					}
+					else
+					{
+						LargeCharacterRadioButton.enabled = true;
+						MediumCharacterRadioButton.enabled = true;
+						SmallCharacterRadioButton.enabled = true;
+						AddSymbolToCurrentBoxButton.enabled = true;
+					}
 				}
 			}
 			
@@ -1008,6 +1018,121 @@
 			{
 				PlateSize = RequestedPlateSize;
 				SetPlateSize();
+				
+				if (PlateSize == 'Small')
+				{
+					LeftFlagBox.includeInLayout = false; 					
+					LeftDateBox.includeInLayout = false; 
+					LeftSymbolBox.includeInLayout = false; 
+					CenterSymbolBox.includeInLayout = false; 
+					RightSymbolBox.includeInLayout = false;
+					RightDateBox.includeInLayout = false; 
+					RightFlagBox.includeInLayout = false; 
+				}
+				else if (PlateSize == 'House')
+				{
+					LeftFlagBox.includeInLayout = false; 
+					LeftDateBox.includeInLayout = false; 
+					
+					if (LeftSymbolBox.numElements > 0)
+					{
+						LeftSymbolBox.includeInLayout = true; 
+					}
+					else
+					{
+						LeftSymbolBox.includeInLayout = false;
+					}
+
+					if (CenterSymbolBox.numElements > 0)
+					{
+						CenterSymbolBox.includeInLayout = true; 
+					}
+					else
+					{
+						CenterSymbolBox.includeInLayout = false;
+					}
+
+					if (RightSymbolBox.numElements > 0)
+					{
+						RightSymbolBox.includeInLayout = true; 
+					}
+					else
+					{
+						RightSymbolBox.includeInLayout = false;
+					}					
+					
+					RightDateBox.includeInLayout = false; 
+					RightFlagBox.includeInLayout = false; 
+				}
+				else
+				{
+					if (LeftFlagBox.numElements > 0)
+					{
+						LeftFlagBox.includeInLayout = true; 
+					}
+					else
+					{
+						LeftFlagBox.includeInLayout = false;
+					}
+					
+					if (LeftDateBox.numElements > 0)
+					{
+						LeftDateBox.includeInLayout = true; 
+					}
+					else
+					{
+						LeftDateBox.includeInLayout = false;
+					}
+					
+					if (LeftSymbolBox.numElements > 0)
+					{
+						LeftSymbolBox.includeInLayout = true; 
+					}
+					else
+					{
+						LeftSymbolBox.includeInLayout = false;
+					}
+					
+					if (CenterSymbolBox.numElements > 0)
+					{
+						CenterSymbolBox.includeInLayout = true; 
+					}
+					else
+					{
+						CenterSymbolBox.includeInLayout = false;
+					}
+					
+					if (RightSymbolBox.numElements > 0)
+					{
+						RightSymbolBox.includeInLayout = true; 
+					}
+					else
+					{
+						RightSymbolBox.includeInLayout = false;
+					}
+					
+					if (RightDateBox.numElements > 0)
+					{
+						RightDateBox.includeInLayout = true; 
+					}
+					else
+					{
+						RightDateBox.includeInLayout = false;
+					}
+					
+					if (RightFlagBox.numElements > 0)
+					{
+						RightFlagBox.includeInLayout = true; 
+					}
+					else
+					{
+						RightFlagBox.includeInLayout = false;
+					}
+				}
+				
+				HideShow();
+				
+				AdjustAllBoxWidths();
 			}
 			
 			private function SetMiniPlatePlate():void
@@ -1203,7 +1328,7 @@
 				}
 			}
 			
-			//Gap is reduced by 20px to account for list (left and right) padding
+			//Gap is reduced by 20px to account for list (Right and right) padding
 			private function SetDataOpenFoilGallery():void
 			{
 				if (PlateSize == 'Small')
@@ -1407,6 +1532,8 @@
 			
 			private function ChangePreviewElementsFoil():void
 			{
+				PreviewContainer.visible = false;
+				
 				for (var i:int=0; i < PreviewElementsAC.length; i++)
 				{
 					var imgTmp:Image = PreviewElementsAC.getItemAt(i) as Image;
@@ -1425,7 +1552,9 @@
 					{
 						
 					}
-				}	
+				}
+				
+				PreviewContainer.visible = true;
 			}
 
 			private function OpenFlagGallery(event:MouseEvent):void
@@ -1599,7 +1728,7 @@
 			{
 				if (Holes == 'FourCups')
 				{
-					TopLeftHole.visible = true;
+					TopRightHole.visible = true;
 					TopRightHole.visible = true;
 					MiddleLeftHole.visible = false;
 					MiddleRightHole.visible = false;
@@ -2284,6 +2413,8 @@
 				var plateimage:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
 				plateimage.width=imgTxt.width;
 				plateimage.height=imgTxt.height;
+				plateimage.setStyle('borderColor',OutlineColor);
+				plateimage.setStyle('backgroundAlpha',0);
 				
 				if (CurrentBox == 'X1A')
 				{
@@ -2483,7 +2614,7 @@
 				HideShow();
 				Outlines();
 				
-				//ElementsArray.push(ElementId);		
+				//ElementsArray.push(ElementId);
 			}
 			
 			private function AddSymbolToSymbolBox(event:MouseEvent,SymbolBox:String):void 
@@ -2526,6 +2657,8 @@
 				var plateimage:BorderContainer = tt.getTextMaskImage(imgTxt, imgTmp);
 				plateimage.width=(imgTmp.width);
 				plateimage.height=(imgTmp.height);
+				plateimage.setStyle('borderColor',OutlineColor);
+				plateimage.setStyle('backgroundAlpha',0);
 				
 				SymbolWidth = imgTmp.width;
 				
@@ -2708,6 +2841,32 @@
 				}
 			}
 			
+			private function AdjustAllBoxWidths():void
+			{
+				LeftLoad = 0;
+				RightLoad = 0;
+					
+				LeftLoad = (LeftLoad + LeftFlagBox.width);
+				LeftLoad = (LeftLoad + LeftDateBox.width);
+				LeftLoad = (LeftLoad + LeftSymbolBox.width);
+				LeftLoad = (LeftLoad - (CenterSymbolBox.width/2));
+				
+				RightLoad = (RightLoad + RightFlagBox.width);
+				RightLoad = (RightLoad + RightDateBox.width);
+				RightLoad = (RightLoad + RightSymbolBox.width);
+				RightLoad = (RightLoad - (CenterSymbolBox.width/2));
+				
+				if (X2.includeInLayout == true)
+				{
+					X1.width = ((PlateElementsContainer.width/2) - LeftLoad);
+					X2.width = ((PlateElementsContainer.width/2) - RightLoad);
+				}
+				else
+				{
+					X1.width = (PlateElementsContainer.width- LeftLoad - RightLoad);
+				}
+			}
+			
 			private function SetLineCount(Box1or2:int,RequestedLineCount:int):void
 			{
 				// !! Need to preserve what has content, maybe disallow if both have content.  Can B be active and A not?
@@ -2761,46 +2920,36 @@
 					if (CenterSymbol == false)
 					{
 						if (X1_LineCount == 1)
-							
+						{
 							NextBox = CurrentBox; 
+						}
+						else if (X1_LineCount == 2)
+						{
+							NextBox = 'X1B';
 						
-						//SwitchButtonImage = '';							
-						SwitchButton.visible = false;
+							SwitchButtonImage.source = CX1A_NX1B;
+						}
 					}
-					if (X1_LineCount == 2)
+					else if (CenterSymbol == true)
 					{
-						NextBox = 'X1B';
-						
-						SwitchButtonImage.source = CX1A_NX1B;					
-						SwitchButton.visible = true;
-					}
-				}
-				else if (CenterSymbol == true)
-				{
-					NextBox = 'X2A';
+						NextBox = 'X2A';
 					
-					if (X1_LineCount == 1 && X2_LineCount == 1)
-					{
-						SwitchButtonImage.source = CX1_NX2;
-					}
-					else if (X1_LineCount == 1 && X2_LineCount == 2)
-					{
-						SwitchButtonImage.source = CX1_NX2A;
-					}
-					else if (X1_LineCount == 2 && X2_LineCount == 1)
-					{
-						SwitchButtonImage.source = CX1A_NX2;
-					}
-					else if (X1_LineCount == 2 && X2_LineCount == 2)
-					{
-						SwitchButtonImage.source = CX1A_NX2A;
-					}
-					
-					SwitchButton.visible = true;
-					
-					if ((X1_LineCount == 1 && X1A.numElements > 0) || (X1_LineCount == 2 && X1A.numElements > 0 && X1B.numElements > 0))
-					{
-						CurrentBox = NextBox;
+						if (X1_LineCount == 1 && X2_LineCount == 1)
+						{
+							SwitchButtonImage.source = CX1_NX2;
+						}
+						else if (X1_LineCount == 1 && X2_LineCount == 2)
+						{
+							SwitchButtonImage.source = CX1_NX2A;
+						}
+						else if (X1_LineCount == 2 && X2_LineCount == 1)
+						{
+							SwitchButtonImage.source = CX1A_NX2;
+						}
+						else if (X1_LineCount == 2 && X2_LineCount == 2)
+						{
+							SwitchButtonImage.source = CX1A_NX2A;
+						}
 					}
 				}
 				else if (CurrentBox == 'X1B')
@@ -2825,8 +2974,6 @@
 							SwitchButtonImage.source = CX1B_NX1A;
 						}
 					}
-					
-					SwitchButton.visible = true;
 				}
 				else if (CurrentBox == 'X2A')
 				{
@@ -2850,8 +2997,6 @@
 						NextBox = 'X2B';
 						SwitchButtonImage.source = CX2A_NX2B;
 					}
-					
-					SwitchButton.visible = true;
 				}
 				else if (CurrentBox == 'X2B')
 				{
@@ -2865,89 +3010,27 @@
 						NextBox = 'X1B';
 						SwitchButtonImage.source = CX2B_NX1B;
 					}
-					
+				}
+				
+				
+				if ((X1_LineCount == 1 && X1A.numElements > 0) || (X1_LineCount == 2 && X1A.numElements > 0 && X1B.numElements > 0))
+				{
+					CurrentBox = NextBox;
+				}
+				
+				
+				if (X1_LineCount == 2 || X2_LineCount == 2 || CenterSymbol == true)
+				{
 					SwitchButton.visible = true;
+				}
+				
+				if (X1_LineCount == 1 && (X2_LineCount == 0 || X2_LineCount == 1) && CenterSymbol == false)
+				{
+					SwitchButton.visible = false;
 				}
 				
 				Outlines();
 			}
-			
-			/*	private function ChangeLineCount(event:MouseEvent,RequestedLineCount:int):void
-			{
-			if (RequestedLineCount == 2 && TwoLines == false)
-			{
-			TwoLines = true;
-			
-			SwitchButton.visible = true;
-			
-			if (CharacterSize == 'Large')
-			{
-			CharacterSize = 'Medium';
-			}
-			}
-			else if (RequestedLineCount == 1 && TwoLines == true)
-			{
-			TwoLines = false;
-			
-			SwitchButton.visible = false;
-			}
-			
-			SetCharacterDimensions();
-			
-			Outlines();
-			
-			CalculatePrice();
-			}	*/
-			
-			/*	private function ChangeCurrentBox():void
-			{
-			if (TwoLines == false)
-			{
-			if (CurrentBox == 'X1A')
-			{
-			CurrentBox = 'X2A';
-			X1B.includeInLayout=false; X1B.visible=false;
-			X2.includeInLayout=true; X2.visible=true;
-			X2A.includeInLayout=true; X2A.visible=true;
-			X2B.includeInLayout=false; X2B.visible=false;
-			CurrentLine = 'Line 1';
-			}
-			else if (CurrentBox == 'X1B')
-			{
-			CurrentLine = 'Line 2';
-			}
-			}
-			else if (TwoLines == true)
-			{
-			if (CurrentBox == 'X1A')
-			{
-			CurrentBox = 'X1B';
-			X1B.includeInLayout=true; X1B.visible=true;
-			CurrentLine = 'Line 2';
-			}
-			if (CurrentBox == 'X1B')
-			{
-			CurrentBox = 'X2A';
-			X2.includeInLayout=true; X2.visible=true;
-			X2A.includeInLayout=true; X2A.visible=true;
-			X2B.includeInLayout=true; X2B.visible=true;
-			CurrentLine = 'Line 1';
-			}
-			if (CurrentBox == 'X2A')
-			{
-			CurrentBox = 'X2B';
-			X2B.includeInLayout=true; X2B.visible=true;
-			CurrentLine = 'Line 2';
-			}
-			if (CurrentBox == 'X2B')
-			{
-			CurrentLine = 'Line 2';
-			}
-			}
-			Outlines();
-			}	*/
-			
-			[Bindable] private var LP:LargePreview;
 			
 			private function SnapshotPreviewPlate(event:MouseEvent):void
 			{
@@ -3021,6 +3104,12 @@
 					X1B.removeAllElements();
 				}
 				
+				if (CenterSymbolBox.numElements > 0)
+				{
+					CenterSymbolBox.removeAllElements();
+				}
+				CenterSymbolBox.width=0; CenterSymbolBox.includeInLayout= false;
+				
 				if (X2A.numElements > 0)
 				{
 					X2A.removeAllElements();
@@ -3053,6 +3142,11 @@
 				}
 				RightSymbolBox.width=0; RightSymbolBox.includeInLayout= false;
 				
+				
+				CurrentBox = 'X1A';
+				
+				EnableDisableControls();
+				
 				CharactersAdded = 0;
 				CenterSymbol = false;
 				
@@ -3063,7 +3157,7 @@
 				CalculatePrice();
 			}
 			
-			private function StartOver():void
+			private function ResetPreview():void
 			{
 				// ! also reset default symbol etc.
 				ClearPreview();
@@ -3073,8 +3167,6 @@
 				X2B.width=0; X2B.includeInLayout=false; X2B.visible=false;
 				
 				SetDefaults();
-				
-				CharactersAdded = 0;
 			}
 			
 			//!!! Put into vars, granular
@@ -3108,6 +3200,33 @@
 				}
 				
 				DisplayPrice = String(Price);
+			}
+			
+			private function PrepareTexture():void
+			{
+				var imgTxt:Image = new Image();
+			//	imgTxt.source = String(SelectedFoilSwatchImage);
+				imgTxt = SelectedFoilSwatchImage as Image;
+				
+	//			var sourceimg:Image = imgTxt as Image;
+				
+	//			var sourceimg:Object = 'assets/foils/RainbowFoilSwatch.jpg' as Image;
+	///			var targetimg:Image = new Image;
+								
+	//			var sourceimg:Object = 'assets/foils/RainbowFoilSwatch.jpg' as Image;
+	///			var sourcebmd:BitmapData = new BitmapData(20,20);
+				var targetbmd:BitmapData = new BitmapData(10,10);
+
+	///			targetbmd.draw(sourcebmd);
+				
+	//			return targetbmd;
+				
+	//			var sourcebmd:BitmapData = new BitmapData(40, 40, true, 0x00000000);
+	////			var targetbmd:BitmapData = new BitmapData(40, 40, true, 0x00000000);
+				
+				targetbmd.copyPixels(imgTxt.bitmapData, new Rectangle(0, 0, 20, 20), new Point(5,5));
+							
+	////			CroppedImage = targetbmd as Image;
 			}
 			
 			/*		
@@ -3353,7 +3472,7 @@
 		]]>
 	</fx:Script>
 	
-	<!-- Outer (basic) container -->
+	<!-- Outer (basic) container.  [Height=420] -->
 	<s:BorderContainer id="OuterContainer"
 					   width="540" height="540" horizontalCenter="0" verticalCenter="0" borderVisible="false">
 		<s:layout>
@@ -3374,7 +3493,7 @@
 					<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" clipAndEnableScrolling="true"/>
 				</s:layout>
 				
-				<!-- Preview container.  Background color or image set via functions -->
+				<!-- Preview container.  Background color or image set via functions.  Visibility may be set via function. -->
 				<s:BorderContainer id="PreviewContainer"
 								   width="{PlateOuterWidth}" height="{PlateOuterHeight}" horizontalCenter="0" verticalCenter="0"
 								   borderVisible="true" borderWeight="2" cornerRadius="8">
@@ -3699,7 +3818,7 @@
 								  width="55" height="16" verticalCenter="0"
 								  chromeColor="white" skinClass="skins.HTMLButtonSkin"
 								  fontStyle="normal" styleName="HTMLButton"
-								  click="StartOver()"/>
+								  click="ResetPreview()"/>
 					</s:HGroup>
 				</s:BorderContainer>
 			</s:BorderContainer>
@@ -4316,6 +4435,7 @@
 							<s:layout>
 								<s:VerticalLayout gap="1"/>
 							</s:layout>
+							<!--AddSymbolToCurrentBoxButton button can be disabled via function-->
 							<s:Button id="AddSymbolToCurrentBoxButton" label="X"
 									  width="14" height="14"
 									  styleName="PositioningButton" skinClass="skins.CharacterButtonSkin"
@@ -5023,7 +5143,16 @@
 		
 		<s:BorderContainer id="InfoContainer"
 						   x="0" y="430" width="100%" height="100%" borderVisible="true"> 
-
+			<s:layout>
+				<s:HorizontalLayout gap="10"/>
+			</s:layout>
+						
+			<s:Image width="50" height="100%" fillMode="scale" scaleMode="stretch" source="assets/foils/RainbowFoilSwatch.jpg"/>
+			<s:Image width="50" height="100%" x="0" y="100" fillMode="clip" source="assets/foils/RainbowFoilSwatch.jpg"/>
+			
+			<s:Button click="PrepareTexture()"/>
+			
+			<s:Image width="50" height="100%" x="0" y="100" fillMode="scale" source="{CroppedImage.source}"/>
 		</s:BorderContainer>
 		
 	</s:BorderContainer>

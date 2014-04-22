@@ -2380,6 +2380,9 @@
 				var imgTxt1:Image = bdTmp.getElementAt(0) as Image;
 				var imgTmp1:Image = bdTmp.getElementAt(1) as Image;
 				
+				bdTmp.setStyle('borderColor',OutlineColor);
+				bdTmp.setStyle('backgroundAlpha',0);
+				
 				var imgTmp:Image = new Image;
 				imgTmp.source = imgTmp1.source;
 				imgTmp.width = imgTmp1.width;
@@ -2620,6 +2623,8 @@
 			private function AddSymbolToSymbolBox(event:MouseEvent,SymbolBox:String):void 
 			{
 				var bdTmp:BorderContainer = SelectedSymbolFrame.getElementAt(0) as BorderContainer;
+				bdTmp.setStyle('borderColor',OutlineColor);
+				bdTmp.setStyle('backgroundAlpha',0);
 				
 				if (bdTmp.numElements > 1)
 				{
